@@ -1,0 +1,8 @@
+*xcodeproj/*
+!*xcodeproj/project.pbxproj
+!*xcworkspace/contents.xcworkspacedata
+.DS_Store
+/*.xmind
+*UserInterfaceState.xcuserstate
+/*.asta
+/*.asta.lock
