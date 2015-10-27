@@ -14,6 +14,7 @@
 		370ACE051BDF486700AB73EB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 370ACE031BDF486700AB73EB /* LaunchScreen.storyboard */; };
 		370ACE101BDF486700AB73EB /* masamonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370ACE0F1BDF486700AB73EB /* masamonTests.swift */; };
 		370ACE1B1BDF486700AB73EB /* masamonUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370ACE1A1BDF486700AB73EB /* masamonUITests.swift */; };
+		370ACE291BDF4B7700AB73EB /* images in Resources */ = {isa = PBXBuildFile; fileRef = 370ACE281BDF4B7700AB73EB /* images */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,7 @@
 		370ACE161BDF486700AB73EB /* masamonUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = masamonUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		370ACE1A1BDF486700AB73EB /* masamonUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = masamonUITests.swift; sourceTree = "<group>"; };
 		370ACE1C1BDF486700AB73EB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		370ACE281BDF4B7700AB73EB /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = images; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +79,7 @@
 		370ACDEE1BDF486600AB73EB = {
 			isa = PBXGroup;
 			children = (
+				370ACE281BDF4B7700AB73EB /* images */,
 				370ACDF91BDF486600AB73EB /* masamon */,
 				370ACE0E1BDF486700AB73EB /* masamonTests */,
 				370ACE191BDF486700AB73EB /* masamonUITests */,
@@ -232,6 +235,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				370ACE291BDF4B7700AB73EB /* images in Resources */,
 				370ACE051BDF486700AB73EB /* LaunchScreen.storyboard in Resources */,
 				370ACE021BDF486700AB73EB /* Assets.xcassets in Resources */,
 				370ACE001BDF486700AB73EB /* Main.storyboard in Resources */,
@@ -485,6 +489,7 @@
 				370ACE211BDF486700AB73EB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		370ACE221BDF486700AB73EB /* Build configuration list for PBXNativeTarget "masamonTests" */ = {
 			isa = XCConfigurationList;
@@ -493,6 +498,7 @@
 				370ACE241BDF486700AB73EB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		370ACE251BDF486700AB73EB /* Build configuration list for PBXNativeTarget "masamonUITests" */ = {
 			isa = XCConfigurationList;
@@ -501,6 +507,7 @@
 				370ACE271BDF486700AB73EB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
