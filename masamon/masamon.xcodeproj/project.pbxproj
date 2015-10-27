@@ -20,6 +20,7 @@
 		370ACE401BDF572600AB73EB /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 370ACE3D1BDF572600AB73EB /* RealmSwift.framework */; };
 		370ACE411BDF572600AB73EB /* RealmSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 370ACE3D1BDF572600AB73EB /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		370ACE441BDF573500AB73EB /* DB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370ACE431BDF573500AB73EB /* DB.swift */; };
+		370ACE4A1BDF9C8A00AB73EB /* DBmethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370ACE491BDF9C8A00AB73EB /* DBmethod.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,6 +73,7 @@
 		370ACE3C1BDF572600AB73EB /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Realm.framework; sourceTree = "<group>"; };
 		370ACE3D1BDF572600AB73EB /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RealmSwift.framework; sourceTree = "<group>"; };
 		370ACE431BDF573500AB73EB /* DB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DB.swift; sourceTree = "<group>"; };
+		370ACE491BDF9C8A00AB73EB /* DBmethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBmethod.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +132,7 @@
 				370ACDFA1BDF486700AB73EB /* AppDelegate.swift */,
 				370ACDFC1BDF486700AB73EB /* ViewController.swift */,
 				370ACE431BDF573500AB73EB /* DB.swift */,
+				370ACE491BDF9C8A00AB73EB /* DBmethod.swift */,
 				370ACDFE1BDF486700AB73EB /* Main.storyboard */,
 				370ACE011BDF486700AB73EB /* Assets.xcassets */,
 				370ACE031BDF486700AB73EB /* LaunchScreen.storyboard */,
@@ -292,6 +295,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				370ACE4A1BDF9C8A00AB73EB /* DBmethod.swift in Sources */,
 				370ACDFD1BDF486700AB73EB /* ViewController.swift in Sources */,
 				370ACE441BDF573500AB73EB /* DB.swift in Sources */,
 				370ACDFB1BDF486700AB73EB /* AppDelegate.swift in Sources */,

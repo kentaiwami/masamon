@@ -13,7 +13,10 @@ import UIKit
 import RealmSwift
 
 class ViewController: UIViewController {
-
+    
+    let shiftdb = ShiftDB()
+    let shiftdetaildb = ShiftDetailDB()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -26,22 +29,32 @@ class ViewController: UIViewController {
         imageButton.addTarget(self, action: "MenuButtontapped:", forControlEvents:.TouchUpInside)
         
         self.view.addSubview(imageButton)
-       
+        
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-
+    
     func MenuButtontapped(sender: UIButton){
         
+        shiftdb.id = 1
+        shiftdb.name = "AAA"
+        shiftdb.imagepath = "Apath"
+        shiftdb.saraly = 10000
+        
+        shiftdetaildb.id = 1
+        shiftdetaildb.date = "11"
+        shiftdetaildb.staff = "A1,B1,C1"
+        shiftdetaildb.user = "遅"
+        DBmethod().testadd(shiftdb)
+        DBmethod().testadd(shiftdetaildb)
         do{
-            let aaa = try Realm()
-            print(aaa.path)
+            print(try Realm().path)
         }catch{
-            //Error
-        }
+    //Error
     }
+}
 
 }
 
