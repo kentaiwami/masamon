@@ -6,6 +6,8 @@
 //  Copyright © 2015年 Kenta. All rights reserved.
 //
 
+//TODO: pickerViewで選択した名前に対応する月給を表示する
+
 import UIKit
 import RealmSwift
 
@@ -15,6 +17,8 @@ class ViewController: UIViewController,UIPickerViewDelegate, UIPickerViewDataSou
     let shiftdetaildb = ShiftDetailDB()
     let shiftlist: NSMutableArray = []
     var myUIPicker: UIPickerView = UIPickerView()
+    
+    @IBOutlet weak var SaralyLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,8 +39,8 @@ class ViewController: UIViewController,UIPickerViewDelegate, UIPickerViewDataSou
         myUIPicker.dataSource = self
         self.view.addSubview(myUIPicker)
         
+        //NSArrayへの追加
         let newNSArray = shiftlist
-        
         for(var i = 0; i < DBmethod().ShiftDBSize(); i++){
             newNSArray.addObject(DBmethod().ShiftDBNameGet(i+1))
         }
@@ -86,8 +90,9 @@ class ViewController: UIViewController,UIPickerViewDelegate, UIPickerViewDataSou
     
     //選択時
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        print("列: \(row)")
-        print("値: \(shiftlist[row])")
+//        print("列: \(row)")
+//        print("値: \(shiftlist[row])")
+        SaralyLabel.text = "a"
     }
 }
 
