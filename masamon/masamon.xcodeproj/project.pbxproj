@@ -1,0 +1,508 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		370ACDFB1BDF486700AB73EB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370ACDFA1BDF486700AB73EB /* AppDelegate.swift */; };
+		370ACDFD1BDF486700AB73EB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370ACDFC1BDF486700AB73EB /* ViewController.swift */; };
+		370ACE001BDF486700AB73EB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 370ACDFE1BDF486700AB73EB /* Main.storyboard */; };
+		370ACE021BDF486700AB73EB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 370ACE011BDF486700AB73EB /* Assets.xcassets */; };
+		370ACE051BDF486700AB73EB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 370ACE031BDF486700AB73EB /* LaunchScreen.storyboard */; };
+		370ACE101BDF486700AB73EB /* masamonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370ACE0F1BDF486700AB73EB /* masamonTests.swift */; };
+		370ACE1B1BDF486700AB73EB /* masamonUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370ACE1A1BDF486700AB73EB /* masamonUITests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		370ACE0C1BDF486700AB73EB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 370ACDEF1BDF486600AB73EB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 370ACDF61BDF486600AB73EB;
+			remoteInfo = masamon;
+		};
+		370ACE171BDF486700AB73EB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 370ACDEF1BDF486600AB73EB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 370ACDF61BDF486600AB73EB;
+			remoteInfo = masamon;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		370ACDF71BDF486600AB73EB /* masamon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = masamon.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		370ACDFA1BDF486700AB73EB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		370ACDFC1BDF486700AB73EB /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		370ACDFF1BDF486700AB73EB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		370ACE011BDF486700AB73EB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		370ACE041BDF486700AB73EB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		370ACE061BDF486700AB73EB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		370ACE0B1BDF486700AB73EB /* masamonTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = masamonTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		370ACE0F1BDF486700AB73EB /* masamonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = masamonTests.swift; sourceTree = "<group>"; };
+		370ACE111BDF486700AB73EB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		370ACE161BDF486700AB73EB /* masamonUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = masamonUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		370ACE1A1BDF486700AB73EB /* masamonUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = masamonUITests.swift; sourceTree = "<group>"; };
+		370ACE1C1BDF486700AB73EB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		370ACDF41BDF486600AB73EB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		370ACE081BDF486700AB73EB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		370ACE131BDF486700AB73EB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		370ACDEE1BDF486600AB73EB = {
+			isa = PBXGroup;
+			children = (
+				370ACDF91BDF486600AB73EB /* masamon */,
+				370ACE0E1BDF486700AB73EB /* masamonTests */,
+				370ACE191BDF486700AB73EB /* masamonUITests */,
+				370ACDF81BDF486600AB73EB /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		370ACDF81BDF486600AB73EB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				370ACDF71BDF486600AB73EB /* masamon.app */,
+				370ACE0B1BDF486700AB73EB /* masamonTests.xctest */,
+				370ACE161BDF486700AB73EB /* masamonUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		370ACDF91BDF486600AB73EB /* masamon */ = {
+			isa = PBXGroup;
+			children = (
+				370ACDFA1BDF486700AB73EB /* AppDelegate.swift */,
+				370ACDFC1BDF486700AB73EB /* ViewController.swift */,
+				370ACDFE1BDF486700AB73EB /* Main.storyboard */,
+				370ACE011BDF486700AB73EB /* Assets.xcassets */,
+				370ACE031BDF486700AB73EB /* LaunchScreen.storyboard */,
+				370ACE061BDF486700AB73EB /* Info.plist */,
+			);
+			path = masamon;
+			sourceTree = "<group>";
+		};
+		370ACE0E1BDF486700AB73EB /* masamonTests */ = {
+			isa = PBXGroup;
+			children = (
+				370ACE0F1BDF486700AB73EB /* masamonTests.swift */,
+				370ACE111BDF486700AB73EB /* Info.plist */,
+			);
+			path = masamonTests;
+			sourceTree = "<group>";
+		};
+		370ACE191BDF486700AB73EB /* masamonUITests */ = {
+			isa = PBXGroup;
+			children = (
+				370ACE1A1BDF486700AB73EB /* masamonUITests.swift */,
+				370ACE1C1BDF486700AB73EB /* Info.plist */,
+			);
+			path = masamonUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		370ACDF61BDF486600AB73EB /* masamon */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 370ACE1F1BDF486700AB73EB /* Build configuration list for PBXNativeTarget "masamon" */;
+			buildPhases = (
+				370ACDF31BDF486600AB73EB /* Sources */,
+				370ACDF41BDF486600AB73EB /* Frameworks */,
+				370ACDF51BDF486600AB73EB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = masamon;
+			productName = masamon;
+			productReference = 370ACDF71BDF486600AB73EB /* masamon.app */;
+			productType = "com.apple.product-type.application";
+		};
+		370ACE0A1BDF486700AB73EB /* masamonTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 370ACE221BDF486700AB73EB /* Build configuration list for PBXNativeTarget "masamonTests" */;
+			buildPhases = (
+				370ACE071BDF486700AB73EB /* Sources */,
+				370ACE081BDF486700AB73EB /* Frameworks */,
+				370ACE091BDF486700AB73EB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				370ACE0D1BDF486700AB73EB /* PBXTargetDependency */,
+			);
+			name = masamonTests;
+			productName = masamonTests;
+			productReference = 370ACE0B1BDF486700AB73EB /* masamonTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		370ACE151BDF486700AB73EB /* masamonUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 370ACE251BDF486700AB73EB /* Build configuration list for PBXNativeTarget "masamonUITests" */;
+			buildPhases = (
+				370ACE121BDF486700AB73EB /* Sources */,
+				370ACE131BDF486700AB73EB /* Frameworks */,
+				370ACE141BDF486700AB73EB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				370ACE181BDF486700AB73EB /* PBXTargetDependency */,
+			);
+			name = masamonUITests;
+			productName = masamonUITests;
+			productReference = 370ACE161BDF486700AB73EB /* masamonUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		370ACDEF1BDF486600AB73EB /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0710;
+				LastUpgradeCheck = 0710;
+				ORGANIZATIONNAME = Kenta;
+				TargetAttributes = {
+					370ACDF61BDF486600AB73EB = {
+						CreatedOnToolsVersion = 7.1;
+						DevelopmentTeam = TLVYAZUQZL;
+					};
+					370ACE0A1BDF486700AB73EB = {
+						CreatedOnToolsVersion = 7.1;
+						DevelopmentTeam = TLVYAZUQZL;
+						TestTargetID = 370ACDF61BDF486600AB73EB;
+					};
+					370ACE151BDF486700AB73EB = {
+						CreatedOnToolsVersion = 7.1;
+						DevelopmentTeam = TLVYAZUQZL;
+						TestTargetID = 370ACDF61BDF486600AB73EB;
+					};
+				};
+			};
+			buildConfigurationList = 370ACDF21BDF486600AB73EB /* Build configuration list for PBXProject "masamon" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 370ACDEE1BDF486600AB73EB;
+			productRefGroup = 370ACDF81BDF486600AB73EB /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				370ACDF61BDF486600AB73EB /* masamon */,
+				370ACE0A1BDF486700AB73EB /* masamonTests */,
+				370ACE151BDF486700AB73EB /* masamonUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		370ACDF51BDF486600AB73EB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				370ACE051BDF486700AB73EB /* LaunchScreen.storyboard in Resources */,
+				370ACE021BDF486700AB73EB /* Assets.xcassets in Resources */,
+				370ACE001BDF486700AB73EB /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		370ACE091BDF486700AB73EB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		370ACE141BDF486700AB73EB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		370ACDF31BDF486600AB73EB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				370ACDFD1BDF486700AB73EB /* ViewController.swift in Sources */,
+				370ACDFB1BDF486700AB73EB /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		370ACE071BDF486700AB73EB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				370ACE101BDF486700AB73EB /* masamonTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		370ACE121BDF486700AB73EB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				370ACE1B1BDF486700AB73EB /* masamonUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		370ACE0D1BDF486700AB73EB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 370ACDF61BDF486600AB73EB /* masamon */;
+			targetProxy = 370ACE0C1BDF486700AB73EB /* PBXContainerItemProxy */;
+		};
+		370ACE181BDF486700AB73EB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 370ACDF61BDF486600AB73EB /* masamon */;
+			targetProxy = 370ACE171BDF486700AB73EB /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		370ACDFE1BDF486700AB73EB /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				370ACDFF1BDF486700AB73EB /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		370ACE031BDF486700AB73EB /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				370ACE041BDF486700AB73EB /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		370ACE1D1BDF486700AB73EB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		370ACE1E1BDF486700AB73EB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		370ACE201BDF486700AB73EB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = masamon/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.Kenta.masamon;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		370ACE211BDF486700AB73EB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = masamon/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.Kenta.masamon;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		370ACE231BDF486700AB73EB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = masamonTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.Kenta.masamonTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/masamon.app/masamon";
+			};
+			name = Debug;
+		};
+		370ACE241BDF486700AB73EB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = masamonTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.Kenta.masamonTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/masamon.app/masamon";
+			};
+			name = Release;
+		};
+		370ACE261BDF486700AB73EB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = masamonUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.Kenta.masamonUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = masamon;
+				USES_XCTRUNNER = YES;
+			};
+			name = Debug;
+		};
+		370ACE271BDF486700AB73EB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = masamonUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.Kenta.masamonUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = masamon;
+				USES_XCTRUNNER = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		370ACDF21BDF486600AB73EB /* Build configuration list for PBXProject "masamon" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				370ACE1D1BDF486700AB73EB /* Debug */,
+				370ACE1E1BDF486700AB73EB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		370ACE1F1BDF486700AB73EB /* Build configuration list for PBXNativeTarget "masamon" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				370ACE201BDF486700AB73EB /* Debug */,
+				370ACE211BDF486700AB73EB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		370ACE221BDF486700AB73EB /* Build configuration list for PBXNativeTarget "masamonTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				370ACE231BDF486700AB73EB /* Debug */,
+				370ACE241BDF486700AB73EB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		370ACE251BDF486700AB73EB /* Build configuration list for PBXNativeTarget "masamonUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				370ACE261BDF486700AB73EB /* Debug */,
+				370ACE271BDF486700AB73EB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 370ACDEF1BDF486600AB73EB /* Project object */;
+}
