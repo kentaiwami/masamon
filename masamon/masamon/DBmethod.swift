@@ -12,6 +12,7 @@ import RealmSwift
 
 class DBmethod: UIViewController {
 
+    //データベースへの追加
     func testadd(record: Object){
         do{
             let realm = try Realm()
@@ -21,5 +22,37 @@ class DBmethod: UIViewController {
         }catch{
             //Error
         }
+    }
+    
+    //データベースからのデータ取得をして表示
+    func dataGet() {
+        
+        let realm = try! Realm()
+        
+        let dataContent = realm.objects(ShiftDB)
+        print(dataContent)
+    }
+    
+    //カードリストの大きさを返す
+    func ShiftDBSize() -> Int {
+        var shiftdbcount = 0
+        
+        do{
+            shiftdbcount = try (Realm().objects(ShiftDB).count)
+
+        }catch{
+            //Error
+        }
+        return shiftdbcount
+    }
+    
+    //レコードのIDを受け取って名前を返す
+    func ShiftDBNameGet(id: Int) ->String{
+        var name = ""
+        
+        let realm = try!  Realm()
+        name = realm.objects(ShiftDB).filter("id = %@", id)[0].name
+        
+        return name
     }
 }
