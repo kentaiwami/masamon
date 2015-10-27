@@ -6,9 +6,6 @@
 //  Copyright © 2015年 Kenta. All rights reserved.
 //
 
-//TODO: 月給表示画面にパーツを置く
-//TODO: データベースから存在しているシフト登録の名前をもってくる
-
 import UIKit
 import RealmSwift
 
@@ -33,7 +30,7 @@ class ViewController: UIViewController,UIPickerViewDelegate, UIPickerViewDataSou
         self.view.addSubview(imageButton)
         
         //PickerViewの追加
-        myUIPicker.frame = CGRectMake(0,0,self.view.bounds.width/2, 400.0)
+        myUIPicker.frame = CGRectMake(0,0,self.view.bounds.width/2+20, 400.0)
         myUIPicker.delegate = self
         myUIPicker.dataSource = self
         self.view.addSubview(myUIPicker)
@@ -51,17 +48,18 @@ class ViewController: UIViewController,UIPickerViewDelegate, UIPickerViewDataSou
     
     func MenuButtontapped(sender: UIButton){
         
-        shiftdb.id = 3
-        shiftdb.name = "CCC"
-        shiftdb.imagepath = "Cpath"
-        shiftdb.saraly = 30000
+        shiftdb.id = 4
+        shiftdb.name = "DDD"
+        shiftdb.imagepath = "Dpath"
+        shiftdb.saraly = 40000
         
         shiftdetaildb.id = 1
         shiftdetaildb.date = "11"
         shiftdetaildb.staff = "A1,B1,C1"
         shiftdetaildb.user = "遅"
-       // DBmethod().testadd(shiftdb)
+        //DBmethod().testadd(shiftdb)
        // DBmethod().testadd(shiftdetaildb)
+        
         do{
             print(try Realm().path)
         }catch{
