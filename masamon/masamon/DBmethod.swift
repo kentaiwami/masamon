@@ -55,4 +55,14 @@ class DBmethod: UIViewController {
         
         return name
     }
+    
+    //レコードのIDを受け取って月給を返す
+    func ShiftDBSaralyGet(id: Int) ->Int{
+        var saraly = 0
+        
+        let realm = try! Realm()
+        saraly = realm.objects(ShiftDB).filter("id = %@", id)[0].saraly
+        
+        return saraly
+    }
 }

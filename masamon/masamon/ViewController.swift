@@ -6,7 +6,7 @@
 //  Copyright © 2015年 Kenta. All rights reserved.
 //
 
-//TODO: pickerViewで選択した名前に対応する月給を表示する
+//TODO: 
 
 import UIKit
 import RealmSwift
@@ -92,7 +92,7 @@ class ViewController: UIViewController,UIPickerViewDelegate, UIPickerViewDataSou
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
 //        print("列: \(row)")
 //        print("値: \(shiftlist[row])")
-        SaralyLabel.text = "a"
+        SaralyLabel.text = String(DBmethod().ShiftDBSaralyGet(row+1))
     }
 }
 
