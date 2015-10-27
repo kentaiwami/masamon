@@ -12,10 +12,12 @@
 import UIKit
 import RealmSwift
 
-class ViewController: UIViewController {
+class ViewController: UIViewController,UIPickerViewDelegate, UIPickerViewDataSource{
     
     let shiftdb = ShiftDB()
     let shiftdetaildb = ShiftDetailDB()
+    let test: NSMutableArray = []
+    var myUIPicker: UIPickerView = UIPickerView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +32,14 @@ class ViewController: UIViewController {
         
         self.view.addSubview(imageButton)
         
+        myUIPicker.frame = CGRectMake(0,0,self.view.bounds.width, 250.0)
+        myUIPicker.delegate = self
+        myUIPicker.dataSource = self
+        self.view.addSubview(myUIPicker)
+        
+        let newNSArray = test
+        newNSArray.addObject("aaa")
+        print(newNSArray)
     }
     
     override func didReceiveMemoryWarning() {
@@ -58,5 +68,25 @@ class ViewController: UIViewController {
         DBmethod().dataGet()
     }
     
+    //表示列
+    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    //表示個数
+    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return test.count
+    }
+    
+    //表示内容
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return test[row] as? String
+    }
+    
+    //選択時
+    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        print("列: \(row)")
+        print("値: \(test[row])")
+    }
 }
 
