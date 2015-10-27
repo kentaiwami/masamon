@@ -6,7 +6,10 @@
 //  Copyright © 2015年 Kenta. All rights reserved.
 //
 
-//TODO: 
+//TODO: pickerviewのデフォ表示
+//TODO: pickerviewのUIを再検討
+//TODO: シフトが誰と一緒なのかを表示
+//TODO: 今日のシフトは何番なのかを表示
 
 import UIKit
 import RealmSwift
