@@ -6,6 +6,9 @@
 //  Copyright © 2015年 Kenta. All rights reserved.
 //
 
+//TODO: データベースにサンプルデータを記録する
+//TODO: 月給表示画面にパーツを置く
+
 import UIKit
 import RealmSwift
 
