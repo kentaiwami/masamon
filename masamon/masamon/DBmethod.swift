@@ -22,4 +22,12 @@ class DBmethod: UIViewController {
             //Error
         }
     }
+    
+    func dataGet() {
+        
+        let realm = try! Realm()
+        
+        let dataContent = realm.objects(ShiftDB)
+        print(dataContent)
+    }
 }

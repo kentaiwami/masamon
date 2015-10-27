@@ -38,7 +38,7 @@ class ViewController: UIViewController {
     
     func MenuButtontapped(sender: UIButton){
         
-        shiftdb.id = 1
+        shiftdb.id = 2
         shiftdb.name = "AAA"
         shiftdb.imagepath = "Apath"
         shiftdb.saraly = 10000
@@ -52,9 +52,11 @@ class ViewController: UIViewController {
         do{
             print(try Realm().path)
         }catch{
-    //Error
+            //Error
+        }
+        
+        DBmethod().dataGet()
     }
-}
-
+    
 }
 
