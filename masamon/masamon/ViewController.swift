@@ -10,6 +10,7 @@
 //TODO: pickerviewのUIを再検討
 //TODO: シフトが誰と一緒なのかを表示
 //TODO: 今日のシフトは何番なのかを表示
+//TODO: ShiftDetailDBにサンプルデータを入れる
 
 import UIKit
 import RealmSwift
