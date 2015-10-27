@@ -6,8 +6,8 @@
 //  Copyright © 2015年 Kenta. All rights reserved.
 //
 
-//TODO: データベースにサンプルデータを記録する
 //TODO: 月給表示画面にパーツを置く
+//TODO: データベースから存在しているシフト登録の名前をもってくる
 
 import UIKit
 import RealmSwift
@@ -16,7 +16,7 @@ class ViewController: UIViewController,UIPickerViewDelegate, UIPickerViewDataSou
     
     let shiftdb = ShiftDB()
     let shiftdetaildb = ShiftDetailDB()
-    let test: NSMutableArray = []
+    let shiftlist: NSMutableArray = []
     var myUIPicker: UIPickerView = UIPickerView()
     
     override func viewDidLoad() {
@@ -32,14 +32,16 @@ class ViewController: UIViewController,UIPickerViewDelegate, UIPickerViewDataSou
         
         self.view.addSubview(imageButton)
         
-        myUIPicker.frame = CGRectMake(0,0,self.view.bounds.width, 250.0)
+        myUIPicker.frame = CGRectMake(0,0,self.view.bounds.width/2, 400.0)
         myUIPicker.delegate = self
         myUIPicker.dataSource = self
         self.view.addSubview(myUIPicker)
         
-        let newNSArray = test
-        newNSArray.addObject("aaa")
+        let newNSArray = shiftlist
+        newNSArray.addObject("test")
         print(newNSArray)
+        
+        print(DBmethod().ShiftDBSize())
     }
     
     override func didReceiveMemoryWarning() {
@@ -48,7 +50,7 @@ class ViewController: UIViewController,UIPickerViewDelegate, UIPickerViewDataSou
     
     func MenuButtontapped(sender: UIButton){
         
-        shiftdb.id = 2
+        shiftdb.id = 3
         shiftdb.name = "AAA"
         shiftdb.imagepath = "Apath"
         shiftdb.saraly = 10000
@@ -75,18 +77,18 @@ class ViewController: UIViewController,UIPickerViewDelegate, UIPickerViewDataSou
     
     //表示個数
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return test.count
+        return shiftlist.count
     }
     
     //表示内容
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return test[row] as? String
+        return shiftlist[row] as? String
     }
     
     //選択時
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         print("列: \(row)")
-        print("値: \(test[row])")
+        print("値: \(shiftlist[row])")
     }
 }
 

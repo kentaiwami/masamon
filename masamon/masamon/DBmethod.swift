@@ -30,4 +30,17 @@ class DBmethod: UIViewController {
         let dataContent = realm.objects(ShiftDB)
         print(dataContent)
     }
+    
+    //カードリストの大きさを返す
+    func ShiftDBSize() -> Int {
+        var shiftdbcount = 0
+        
+        do{
+            shiftdbcount = try (Realm().objects(ShiftDB).count)
+
+        }catch{
+            //Error
+        }
+        return shiftdbcount
+    }
 }
