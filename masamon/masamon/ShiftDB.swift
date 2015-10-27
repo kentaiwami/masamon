@@ -7,8 +7,11 @@
 //
 
 import RealmSwift
+import Foundation
 
 class ShiftDB: Object {
-    
-
+    dynamic var ID = 0
+    dynamic var Name = ""
+    dynamic var ImagePath = ""
+    dynamic var Saraly = 0
 }
