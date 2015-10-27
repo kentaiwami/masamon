@@ -19,7 +19,7 @@
 		370ACE3F1BDF572600AB73EB /* Realm.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 370ACE3C1BDF572600AB73EB /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		370ACE401BDF572600AB73EB /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 370ACE3D1BDF572600AB73EB /* RealmSwift.framework */; };
 		370ACE411BDF572600AB73EB /* RealmSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 370ACE3D1BDF572600AB73EB /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		370ACE441BDF573500AB73EB /* ShiftDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370ACE431BDF573500AB73EB /* ShiftDB.swift */; };
+		370ACE441BDF573500AB73EB /* DB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370ACE431BDF573500AB73EB /* DB.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,7 +71,7 @@
 		370ACE281BDF4B7700AB73EB /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = images; sourceTree = "<group>"; };
 		370ACE3C1BDF572600AB73EB /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Realm.framework; sourceTree = "<group>"; };
 		370ACE3D1BDF572600AB73EB /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RealmSwift.framework; sourceTree = "<group>"; };
-		370ACE431BDF573500AB73EB /* ShiftDB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShiftDB.swift; sourceTree = "<group>"; };
+		370ACE431BDF573500AB73EB /* DB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DB.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,7 +129,7 @@
 			children = (
 				370ACDFA1BDF486700AB73EB /* AppDelegate.swift */,
 				370ACDFC1BDF486700AB73EB /* ViewController.swift */,
-				370ACE431BDF573500AB73EB /* ShiftDB.swift */,
+				370ACE431BDF573500AB73EB /* DB.swift */,
 				370ACDFE1BDF486700AB73EB /* Main.storyboard */,
 				370ACE011BDF486700AB73EB /* Assets.xcassets */,
 				370ACE031BDF486700AB73EB /* LaunchScreen.storyboard */,
@@ -293,7 +293,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				370ACDFD1BDF486700AB73EB /* ViewController.swift in Sources */,
-				370ACE441BDF573500AB73EB /* ShiftDB.swift in Sources */,
+				370ACE441BDF573500AB73EB /* DB.swift in Sources */,
 				370ACDFB1BDF486700AB73EB /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
