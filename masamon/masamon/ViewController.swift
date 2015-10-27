@@ -7,11 +7,10 @@
 //
 
 import UIKit
+import RealmSwift
 
 class ViewController: UIViewController {
 
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -32,7 +31,13 @@ class ViewController: UIViewController {
     }
 
     func MenuButtontapped(sender: UIButton){
-        print("MenuButtonTapped")
+        
+        do{
+            let aaa = try Realm()
+            print(aaa.path)
+        }catch{
+            //Error
+        }
     }
 
 }

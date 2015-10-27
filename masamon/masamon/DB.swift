@@ -11,13 +11,13 @@ import Foundation
 
 class ShiftDB: Object {
     dynamic var ID = 0
-    dynamic var Name = ""
-    dynamic var ImagePath = ""
-    dynamic var Saraly = 0
+    dynamic var Name = ""       //ユーザが入力した名前を記録
+    dynamic var ImagePath = ""  //取り込んだイメージの保存パスを記録
+    dynamic var Saraly = 0      //取り込んだシフトの月給を記録
     let ShiftDetails = List<ShiftDetailDB>()
     
     override class func primaryKey() -> String {
-        return "ShiftID"
+        return "ID"
     }
 }
 
