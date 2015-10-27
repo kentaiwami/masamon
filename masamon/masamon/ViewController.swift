@@ -22,6 +22,7 @@ class ViewController: UIViewController,UIPickerViewDelegate, UIPickerViewDataSou
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //メニューボタンの追加
         let image = UIImage(named: "../images/Menu-50.png")! as UIImage
         let imageButton   = UIButton()
         imageButton.tag = 0
@@ -29,19 +30,19 @@ class ViewController: UIViewController,UIPickerViewDelegate, UIPickerViewDataSou
         imageButton.layer.position = CGPoint(x: self.view.frame.width-30, y:60)
         imageButton.setImage(image, forState: .Normal)
         imageButton.addTarget(self, action: "MenuButtontapped:", forControlEvents:.TouchUpInside)
-        
         self.view.addSubview(imageButton)
         
+        //PickerViewの追加
         myUIPicker.frame = CGRectMake(0,0,self.view.bounds.width/2, 400.0)
         myUIPicker.delegate = self
         myUIPicker.dataSource = self
         self.view.addSubview(myUIPicker)
         
         let newNSArray = shiftlist
-        newNSArray.addObject("test")
-        print(newNSArray)
         
-        print(DBmethod().ShiftDBSize())
+        for(var i = 0; i < DBmethod().ShiftDBSize(); i++){
+            newNSArray.addObject(DBmethod().ShiftDBNameGet(i+1))
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -51,16 +52,16 @@ class ViewController: UIViewController,UIPickerViewDelegate, UIPickerViewDataSou
     func MenuButtontapped(sender: UIButton){
         
         shiftdb.id = 3
-        shiftdb.name = "AAA"
-        shiftdb.imagepath = "Apath"
-        shiftdb.saraly = 10000
+        shiftdb.name = "CCC"
+        shiftdb.imagepath = "Cpath"
+        shiftdb.saraly = 30000
         
         shiftdetaildb.id = 1
         shiftdetaildb.date = "11"
         shiftdetaildb.staff = "A1,B1,C1"
         shiftdetaildb.user = "遅"
-        DBmethod().testadd(shiftdb)
-        DBmethod().testadd(shiftdetaildb)
+       // DBmethod().testadd(shiftdb)
+       // DBmethod().testadd(shiftdetaildb)
         do{
             print(try Realm().path)
         }catch{
