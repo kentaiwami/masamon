@@ -11,6 +11,7 @@
 //TODO: シフトが誰と一緒なのかを表示
 //TODO: 今日のシフトは何番なのかを表示
 //TODO: ShiftDetailDBにサンプルデータを入れる
+//T0DO: Coreanimation？を使ってメニューボタンの演出を行う
 
 import UIKit
 import RealmSwift
