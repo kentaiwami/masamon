@@ -9,7 +9,7 @@
 //TODO: pickerviewのUIを再検討
 //TODO: シフトが誰と一緒なのかを表示
 //TODO: 今日のシフトは何番なのかを表示
-//TODO: ShiftDetailDBにサンプルデータを入れる
+//TODO: ShiftDetailDBにサンプルデータを入れる               Now!!
 //T0DO: Coreanimation？を使ってメニューボタンの演出を行う
 
 import UIKit
@@ -26,6 +26,18 @@ class ViewController: UIViewController,UIPickerViewDelegate, UIPickerViewDataSou
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        shiftdb.id = 1
+        shiftdb.name = "2015年8月シフト"
+        shiftdb.imagepath = "8月path"
+        shiftdb.saraly = 100000
+        
+        shiftdetaildb.id = 1
+        shiftdetaildb.date = "11"
+        shiftdetaildb.staff = "A1,B1,C1"
+        shiftdetaildb.user = 1
+        //DBmethod().testadd(shiftdb)
+        //DBmethod().testadd(shiftdetaildb)
         
         //メニューボタンの追加
         let image = UIImage(named: "../images/Menu-50.png")! as UIImage
@@ -58,18 +70,6 @@ class ViewController: UIViewController,UIPickerViewDelegate, UIPickerViewDataSou
     }
     
     func MenuButtontapped(sender: UIButton){
-        
-        shiftdb.id = 4
-        shiftdb.name = "2015年11月シフト"
-        shiftdb.imagepath = "11月path"
-        shiftdb.saraly = 400000
-        
-        shiftdetaildb.id = 1
-        shiftdetaildb.date = "11"
-        shiftdetaildb.staff = "A1,B1,C1"
-        shiftdetaildb.user = "遅"
-       // DBmethod().testadd(shiftdb)
-       // DBmethod().testadd(shiftdetaildb)
         
         do{
             print(try Realm().path)
