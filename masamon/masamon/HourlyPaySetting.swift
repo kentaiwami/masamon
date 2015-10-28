@@ -91,8 +91,13 @@ class HourlyPaySetting: UIViewController,UIPickerViewDelegate, UIPickerViewDataS
         //        print("値: \(shiftlist[row])")
     }
     
+    //幅を変更
     func pickerView(pickerView: UIPickerView, widthForComponent component: Int) -> CGFloat {
         return 80
+    }
+    //高さを変更
+    func pickerView(pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
+        return 50
     }
     
     //pickerview上のボタン動作
