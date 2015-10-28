@@ -51,5 +51,25 @@
             </objects>
             <point key="canvasLocation" x="254.5" y="353.5"/>
         </scene>
+        <!--Hourly Pay Setting-->
+        <scene sceneID="V1x-uh-v1g">
+            <objects>
+                <viewController id="tsi-6b-VUl" customClass="HourlyPaySetting" customModule="masamon" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="64P-wR-0Tu"/>
+                        <viewControllerLayoutGuide type="bottom" id="1cZ-Jy-mkv"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="cYS-E5-jDS">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ObL-QC-7fR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="685.5" y="353.5"/>
+        </scene>
     </scenes>
 </document>
