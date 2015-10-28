@@ -36,7 +36,7 @@ class ViewController: UIViewController,UIPickerViewDelegate, UIPickerViewDataSou
         shiftdetaildb.date = "11"
         shiftdetaildb.staff = "A1,B1,C1"
         shiftdetaildb.user = 1
-        //DBmethod().testadd(shiftdb)
+        DBmethod().testadd(shiftdb)
         //DBmethod().testadd(shiftdetaildb)
         
         //メニューボタンの追加
