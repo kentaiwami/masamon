@@ -91,12 +91,17 @@ class HourlyPaySetting: UIViewController,UIPickerViewDelegate, UIPickerViewDataS
         //        print("値: \(shiftlist[row])")
     }
     
+    func pickerView(pickerView: UIPickerView, widthForComponent component: Int) -> CGFloat {
+        return 80
+    }
+    
+    //pickerview上のボタン動作
     func donePicker(sender: UIButton){
         switch(sender.tag){
-        case 1:
+        case 1: //Doneボタン
             print("tap Done")
             
-        case 2:
+        case 2: //calcelボタン
             print("tap cancel")
             
         default:
