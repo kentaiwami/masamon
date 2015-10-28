@@ -51,7 +51,7 @@ class ViewController: UIViewController,UIPickerViewDelegate, UIPickerViewDataSou
         }
         
         //pickerviewのデフォルト表示
-        SaralyLabel.text = "a"
+        SaralyLabel.text = String(DBmethod().ShiftDBSaralyGet(DBmethod().ShiftDBSize()))
     }
     
     override func didReceiveMemoryWarning() {
