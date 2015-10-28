@@ -15,8 +15,9 @@ class HourlyPaySetting: UIViewController,UIPickerViewDelegate, UIPickerViewDataS
 
     var myUIPicker1: UIPickerView = UIPickerView()
     var myUIPicker2: UIPickerView = UIPickerView()
-    let time: [String] = []
-    
+    let timefrom: [String] = ["0:00","1:00","2:00","3:00","4:00","5:00","6:00","7:00","8:00","9:00","10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00","18:00","19:00","20:00","21:00","22:00","23:00","24:00"]
+    let timeto: [String] = ["0:00","1:00","2:00","3:00","4:00","5:00","6:00","7:00","8:00","9:00","10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00","18:00","19:00","20:00","21:00","22:00","23:00","24:00"]
+    let line: [String] = ["〜"]
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -25,10 +26,6 @@ class HourlyPaySetting: UIViewController,UIPickerViewDelegate, UIPickerViewDataS
         myUIPicker1.delegate = self
         myUIPicker1.dataSource = self
         self.view.addSubview(myUIPicker1)
-        myUIPicker2.frame = CGRectMake(0,0,self.view.bounds.width/2+20, 450.0)
-        myUIPicker2.delegate = self
-        myUIPicker2.dataSource = self
-        self.view.addSubview(myUIPicker2)
     }
 
     override func didReceiveMemoryWarning() {
@@ -37,17 +34,29 @@ class HourlyPaySetting: UIViewController,UIPickerViewDelegate, UIPickerViewDataS
 
     //表示列
     func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
-        return 1
+        return 3
     }
     
     //表示個数
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return time.count
+        if(component == 0){
+            return timefrom.count
+        }else if(component == 1){
+            return line.count
+        }else{
+            return timeto.count
+        }
     }
     
     //表示内容
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return time[row]
+        if(component == 0){
+            return timefrom[row]
+        }else if(component == 1){
+            return line[row]
+        }else{
+            return timeto[row]
+        }
     }
     
     //選択時
