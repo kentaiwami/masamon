@@ -43,7 +43,7 @@ class HourlyPaySetting: UIViewController,UIPickerViewDelegate, UIPickerViewDataS
         toolBar.userInteractionEnabled = true
         
         //PickerViewの追加
-        myUIPicker1.frame = CGRectMake(0,0,self.view.bounds.width/2+20, 400.0)
+        myUIPicker1.frame = CGRectMake(0,0,self.view.bounds.width/2+20, 260.0)
         myUIPicker1.delegate = self
         myUIPicker1.dataSource = self
         //self.view.addSubview(myUIPicker1)
