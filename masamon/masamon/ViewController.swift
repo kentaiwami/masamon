@@ -46,7 +46,7 @@ class ViewController: UIViewController,UIPickerViewDelegate, UIPickerViewDataSou
         
         //NSArrayへの追加
         let newNSArray = shiftlist
-        for(var i = 0; i < DBmethod().ShiftDBSize(); i++){
+        for(var i = DBmethod().ShiftDBSize()-1; i >= 0; i--){
             newNSArray.addObject(DBmethod().ShiftDBNameGet(i+1))
         }
         
@@ -61,15 +61,15 @@ class ViewController: UIViewController,UIPickerViewDelegate, UIPickerViewDataSou
     func MenuButtontapped(sender: UIButton){
         
         shiftdb.id = 4
-        shiftdb.name = "DDD"
-        shiftdb.imagepath = "Dpath"
-        shiftdb.saraly = 40000
+        shiftdb.name = "2015年11月シフト"
+        shiftdb.imagepath = "11月path"
+        shiftdb.saraly = 400000
         
         shiftdetaildb.id = 1
         shiftdetaildb.date = "11"
         shiftdetaildb.staff = "A1,B1,C1"
         shiftdetaildb.user = "遅"
-        //DBmethod().testadd(shiftdb)
+       // DBmethod().testadd(shiftdb)
        // DBmethod().testadd(shiftdetaildb)
         
         do{
@@ -101,6 +101,7 @@ class ViewController: UIViewController,UIPickerViewDelegate, UIPickerViewDataSou
 //        print("列: \(row)")
 //        print("値: \(shiftlist[row])")
         SaralyLabel.text = String(DBmethod().ShiftDBSaralyGet(row+1))
+        //TODO: ここのrowを逆にする必要がある
     }
 }
 
