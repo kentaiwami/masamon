@@ -26,3 +26,9 @@ class ShiftDetailDB: Object {
     dynamic var staff = ""      //例えば、Aさんが早番、Bさんが遅番、Cさんが公休、Dさんが早番の場合は"A1,B3,D1"となる予定
     dynamic var user = 0       //userのシフトを記録
 }
+
+class HourlyPay: Object{
+    dynamic var timefrom = 0.00  //開始時間
+    dynamic var timeto = 0.00    //終了時間
+    dynamic var pay = 0         //時給を記録
+}

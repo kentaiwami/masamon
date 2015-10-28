@@ -97,8 +97,8 @@ class ViewController: UIViewController,UIPickerViewDelegate, UIPickerViewDataSou
     
     //選択時
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-//        print("列: \(row)")
-//        print("値: \(shiftlist[row])")
+        //        print("列: \(row)")
+        //        print("値: \(shiftlist[row])")
         SaralyLabel.text = String(DBmethod().ShiftDBSaralyGet(DBmethod().ShiftDBSize()-row))
     }
 }
