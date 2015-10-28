@@ -49,6 +49,9 @@ class ViewController: UIViewController,UIPickerViewDelegate, UIPickerViewDataSou
         for(var i = 0; i < DBmethod().ShiftDBSize(); i++){
             newNSArray.addObject(DBmethod().ShiftDBNameGet(i+1))
         }
+        
+        //pickerviewのデフォルト表示
+        SaralyLabel.text = "a"
     }
     
     override func didReceiveMemoryWarning() {
