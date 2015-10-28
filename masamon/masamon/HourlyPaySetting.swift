@@ -24,17 +24,21 @@ class HourlyPaySetting: UIViewController,UIPickerViewDelegate, UIPickerViewDataS
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        //Toolbarの作成
         let toolBar = UIToolbar()
         toolBar.barStyle = UIBarStyle.Default
         toolBar.translucent = true
         toolBar.tintColor = UIColor(red: 76/255, green: 217/255, blue: 100/255, alpha: 1)
         toolBar.sizeToFit()
         
-        let doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: "donePicker")
-        let cancelButton = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.Plain, target: self, action: "donePicker")
-       
+        //Toolbarにつけるボタンの作成
+        let doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: "donePicker:")
+        let cancelButton = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.Plain, target: self, action: "donePicker:")
         let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
+        doneButton.tag = 1
+        cancelButton.tag = 2
         
+        //Toolbarへボタンの追加
         toolBar.setItems([cancelButton,flexSpace,doneButton], animated: false)
         toolBar.userInteractionEnabled = true
         
@@ -48,8 +52,6 @@ class HourlyPaySetting: UIViewController,UIPickerViewDelegate, UIPickerViewDataS
         SalalyLabel2.keyboardType = .Default
         TEST.inputView = myUIPicker1
         TEST.inputAccessoryView = toolBar
-        
-        
     }
 
     override func didReceiveMemoryWarning() {
@@ -87,5 +89,19 @@ class HourlyPaySetting: UIViewController,UIPickerViewDelegate, UIPickerViewDataS
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         //        print("列: \(row)")
         //        print("値: \(shiftlist[row])")
+    }
+    
+    func donePicker(sender: UIButton){
+        switch(sender.tag){
+        case 1:
+            print("tap Done")
+            
+        case 2:
+            print("tap cancel")
+            
+        default:
+            break
+            
+        }
     }
 }
