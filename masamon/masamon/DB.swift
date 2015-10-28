@@ -27,7 +27,7 @@ class ShiftDetailDB: Object {
     dynamic var user = 0       //userのシフトを記録
 }
 
-class HourlyPay {
+class HourlyPay: Object{
     dynamic var timefrom = 0.00  //開始時間
     dynamic var timeto = 0.00    //終了時間
     dynamic var pay = 0         //時給を記録
