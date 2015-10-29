@@ -218,6 +218,7 @@ class HourlyPaySetting: UIViewController,UIPickerViewDelegate, UIPickerViewDataS
         }
     }
     
+    //時給入力時の完了を押した時
     func doneSalalyLabel(sender: UIButton){
         switch(sender.tag){
         case 30:
@@ -244,7 +245,9 @@ class HourlyPaySetting: UIViewController,UIPickerViewDelegate, UIPickerViewDataS
         }
     }
     
-    func SaveButtontapped(sender: UIButton){        
+    //セーブボタンを押した時
+    func SaveButtontapped(sender: UIButton){
+
         if(TimeFrom1.text?.isEmpty == true || TimeTo1.text?.isEmpty == true || TimeFrom2.text?.isEmpty == true || TimeTo2.text?.isEmpty == true || SalalyLabel1.text?.isEmpty == true || SalalyLabel2.text?.isEmpty == true){
             
             let alertController = UIAlertController(title: "Error!!", message: "全ての項目を埋めないと保存できんぞ", preferredStyle: .Alert)
@@ -254,15 +257,18 @@ class HourlyPaySetting: UIViewController,UIPickerViewDelegate, UIPickerViewDataS
             
             presentViewController(alertController, animated: true, completion: nil)
         }else{
-            for(var i = 0; i < 2; i++){
-                let hourlypayrecord = HourlyPay()
-                hourlypayrecord.id = i+1
-                hourlypayrecord.timefrom = ""
-                hourlypayrecord.timeto = ""
-                
-                DBmethod().add(hourlypayrecord)
-                DBmethod().ShowDBpass()
-            }
+            let hourlypayrecord1 = HourlyPay()
+            let hourlypayrecord2 = HourlyPay()
+            hourlypayrecord1.id = 1
+            hourlypayrecord1.timefrom = Double(time.indexOf(TimeFrom1.text!)!)-(Double(time.indexOf(TimeFrom1.text!)!)*0.5)
+            hourlypayrecord1.timeto = Double(time.indexOf(TimeTo1.text!)!)-(Double(time.indexOf(TimeTo1.text!)!)*0.5)
+            hourlypayrecord2.id = 2
+            hourlypayrecord2.timefrom = Double(time.indexOf(TimeFrom2.text!)!)-(Double(time.indexOf(TimeFrom2.text!)!)*0.5)
+            hourlypayrecord2.timeto = Double(time.indexOf(TimeTo2.text!)!)-(Double(time.indexOf(TimeTo2.text!)!)*0.5)
+            
+            //DBmethod().add(hourlypayrecord1)
+            //DBmethod().add(hourlypayrecord2)
+            DBmethod().ShowDBpass()
         }
         
     }
