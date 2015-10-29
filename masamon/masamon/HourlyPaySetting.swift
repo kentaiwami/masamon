@@ -101,8 +101,8 @@ class HourlyPaySetting: UIViewController,UIPickerViewDelegate, UIPickerViewDataS
         myUIPicker2.delegate = self
         myUIPicker2.dataSource = self
         
-        SalalyLabel1.keyboardType = .Default
-        SalalyLabel2.keyboardType = .Default
+        SalalyLabel1.keyboardType = .NumberPad
+        SalalyLabel2.keyboardType = .NumberPad
         SalalyLabel1.inputAccessoryView = toolBarsalaly1
         SalalyLabel2.inputAccessoryView = toolBarsalaly2
 
