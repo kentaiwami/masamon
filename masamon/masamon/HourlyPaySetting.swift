@@ -10,7 +10,7 @@
 
 import UIKit
 
-class HourlyPaySetting: UIViewController,UIPickerViewDelegate, UIPickerViewDataSource{
+class HourlyPaySetting: UIViewController,UIPickerViewDelegate, UIPickerViewDataSource,UITextFieldDelegate{
 
     @IBOutlet weak var TimeFrom1: UITextField!
     @IBOutlet weak var TimeTo1: UITextField!
@@ -21,10 +21,13 @@ class HourlyPaySetting: UIViewController,UIPickerViewDelegate, UIPickerViewDataS
     let line: [String] = ["〜"]
     var textfieldrowfrom = 9
     var textfieldrowto = 22
+    let square = UIView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        TimeFrom1.delegate = self
+        
         //Toolbarの作成
         let toolBar = UIToolbar()
         toolBar.barStyle = UIBarStyle.Default
@@ -118,10 +121,9 @@ class HourlyPaySetting: UIViewController,UIPickerViewDelegate, UIPickerViewDataS
         case 1: //Doneボタン
             TimeFrom1.text = time[textfieldrowfrom]
             TimeTo1.text = time[textfieldrowto]
-            myUIPicker1.hidden = true
+            TimeFrom1.resignFirstResponder()
         case 2: //calcelボタン
-            print("tap cancel")
-            
+            TimeFrom1.resignFirstResponder()
         default:
             break
             
