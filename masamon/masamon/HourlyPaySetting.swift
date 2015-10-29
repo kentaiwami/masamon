@@ -31,9 +31,16 @@ class HourlyPaySetting: UIViewController,UIPickerViewDelegate, UIPickerViewDataS
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        DBmethod().ShowDBpass()
         
+        //セーブボタンの追加
+        let image = UIImage(named: "../images/Menu-50.png")! as UIImage
+        let imageButton   = UIButton()
+        imageButton.tag = 0
+        imageButton.frame = CGRectMake(0, 0, 128, 128)
+        imageButton.layer.position = CGPoint(x: self.view.frame.width/2, y:500)
+        imageButton.setImage(image, forState: .Normal)
+        imageButton.addTarget(self, action: "SaveButtontapped:", forControlEvents:.TouchUpInside)
+        self.view.addSubview(imageButton)
         
         TimeFrom1.delegate = self
         TimeTo1.delegate = self
@@ -235,5 +242,9 @@ class HourlyPaySetting: UIViewController,UIPickerViewDelegate, UIPickerViewDataS
             TimeFrom2.text = time[textfieldrowfrom2]
             TimeTo2.text = time[textfieldrowto2]
         }
+    }
+    
+    func SaveButtontapped(sender: UIButton){
+        print("save tap")
     }
 }
