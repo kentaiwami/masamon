@@ -262,12 +262,14 @@ class HourlyPaySetting: UIViewController,UIPickerViewDelegate, UIPickerViewDataS
             hourlypayrecord1.id = 1
             hourlypayrecord1.timefrom = Double(time.indexOf(TimeFrom1.text!)!)-(Double(time.indexOf(TimeFrom1.text!)!)*0.5)
             hourlypayrecord1.timeto = Double(time.indexOf(TimeTo1.text!)!)-(Double(time.indexOf(TimeTo1.text!)!)*0.5)
+            hourlypayrecord1.pay = Int(SalalyLabel1.text!)!
             hourlypayrecord2.id = 2
             hourlypayrecord2.timefrom = Double(time.indexOf(TimeFrom2.text!)!)-(Double(time.indexOf(TimeFrom2.text!)!)*0.5)
             hourlypayrecord2.timeto = Double(time.indexOf(TimeTo2.text!)!)-(Double(time.indexOf(TimeTo2.text!)!)*0.5)
+            hourlypayrecord2.pay = Int(SalalyLabel2.text!)!
             
-            //DBmethod().add(hourlypayrecord1)
-            //DBmethod().add(hourlypayrecord2)
+            DBmethod().add(hourlypayrecord1)
+            DBmethod().add(hourlypayrecord2)
             DBmethod().ShowDBpass()
         }
         
