@@ -5,9 +5,7 @@
 //  Created by 岩見建汰 on 2015/10/28.
 //  Copyright © 2015年 Kenta. All rights reserved.
 //
-//TODO: 時給をデータベースに格納
-//TODO: 時間帯をデータベースに格納
-//TODO: pickerviewのデフォ設定を治す
+
 import UIKit
 
 class HourlyPaySetting: UIViewController,UIPickerViewDelegate, UIPickerViewDataSource,UITextFieldDelegate{
