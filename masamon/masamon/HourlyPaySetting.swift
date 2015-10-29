@@ -5,8 +5,9 @@
 //  Created by 岩見建汰 on 2015/10/28.
 //  Copyright © 2015年 Kenta. All rights reserved.
 //
-//TODO: Textfieldを4つ配置する
 //TODO: 時給をデータベースに格納
+//TODO: 時間帯をデータベースに格納
+//TODO: 時給入力を数字のみ受け付けるようにする
 
 import UIKit
 
