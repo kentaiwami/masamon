@@ -19,9 +19,8 @@ class HourlyPaySetting: UIViewController,UIPickerViewDelegate, UIPickerViewDataS
     var myUIPicker1: UIPickerView = UIPickerView()
     let time: [String] = ["0:00","1:00","2:00","3:00","4:00","5:00","6:00","7:00","8:00","9:00","10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00","18:00","19:00","20:00","21:00","22:00","23:00","24:00"]
     let line: [String] = ["〜"]
-    var textfieldrowfrom = 9
-    var textfieldrowto = 22
-    let square = UIView()
+    var textfieldrowfrom1 = 9
+    var textfieldrowto1 = 22
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -99,10 +98,10 @@ class HourlyPaySetting: UIViewController,UIPickerViewDelegate, UIPickerViewDataS
         
         if(component == 0){
             TimeFrom1.text = time[row]
-            textfieldrowfrom = row
+            textfieldrowfrom1 = row
         }else if(component == 2){
             TimeTo1.text = time[row]
-            textfieldrowto = row
+            textfieldrowto1 = row
         }
     }
     
@@ -119,14 +118,21 @@ class HourlyPaySetting: UIViewController,UIPickerViewDelegate, UIPickerViewDataS
     func donePicker(sender: UIButton){
         switch(sender.tag){
         case 1: //Doneボタン
-            TimeFrom1.text = time[textfieldrowfrom]
-            TimeTo1.text = time[textfieldrowto]
+            TimeFrom1.text = time[textfieldrowfrom1]
+            TimeTo1.text = time[textfieldrowto1]
             TimeFrom1.resignFirstResponder()
         case 2: //calcelボタン
+            TimeFrom1.text = ""
+            TimeTo1.text = ""
             TimeFrom1.resignFirstResponder()
         default:
             break
             
         }
+    }
+    
+    func textFieldDidBeginEditing(textField: UITextField) {
+        TimeFrom1.text = time[textfieldrowfrom1]
+        TimeTo1.text = time[textfieldrowto1]
     }
 }
