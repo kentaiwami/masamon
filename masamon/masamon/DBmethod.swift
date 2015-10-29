@@ -13,7 +13,7 @@ import RealmSwift
 class DBmethod: UIViewController {
 
     //データベースへの追加
-    func testadd(record: Object){
+    func add(record: Object){
         do{
             let realm = try Realm()
             try realm.write{
