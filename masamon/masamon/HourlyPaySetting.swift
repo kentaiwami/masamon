@@ -26,6 +26,7 @@ class HourlyPaySetting: UIViewController,UIPickerViewDelegate, UIPickerViewDataS
         super.viewDidLoad()
 
         TimeFrom1.delegate = self
+        TimeTo1.delegate = self
         
         //Toolbarの作成
         let toolBar = UIToolbar()
@@ -54,6 +55,8 @@ class HourlyPaySetting: UIViewController,UIPickerViewDelegate, UIPickerViewDataS
         SalalyLabel2.keyboardType = .Default
         TimeFrom1.inputView = myUIPicker1
         TimeFrom1.inputAccessoryView = toolBar
+        TimeTo1.inputView = myUIPicker1
+        TimeTo1.inputAccessoryView = toolBar
         
         myUIPicker1.selectRow(9, inComponent: 0, animated: true)
         myUIPicker1.selectRow(22, inComponent: 2, animated: true)
@@ -121,16 +124,19 @@ class HourlyPaySetting: UIViewController,UIPickerViewDelegate, UIPickerViewDataS
             TimeFrom1.text = time[textfieldrowfrom1]
             TimeTo1.text = time[textfieldrowto1]
             TimeFrom1.resignFirstResponder()
+            TimeTo1.resignFirstResponder()
         case 2: //calcelボタン
             TimeFrom1.text = ""
             TimeTo1.text = ""
             TimeFrom1.resignFirstResponder()
+            TimeTo1.resignFirstResponder()
         default:
             break
             
         }
     }
     
+    //textfieldがタップされた時
     func textFieldDidBeginEditing(textField: UITextField) {
         TimeFrom1.text = time[textfieldrowfrom1]
         TimeTo1.text = time[textfieldrowto1]
