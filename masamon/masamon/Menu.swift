@@ -14,10 +14,10 @@ class Menu: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         aaaaaa.frame = CGRectMake(0, 0, 30, 30)
-        aaaaaa.backgroundColor = UIColor(red: 1.0, green: 0.0, blue: 1.0, alpha: 1.0)
-        self.AnimationMenuView.addSubview(aaaaaa)
-        self.view.addSubview(AnimationMenuView)
+        aaaaaa.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 1.0, alpha: 1.0)
+        
         //メニューボタンの追加
         let image = UIImage(named: "../images/Menu-50.png")! as UIImage
         let imageButton   = UIButton()
@@ -27,6 +27,8 @@ class Menu: UIViewController {
         imageButton.setImage(image, forState: .Normal)
         imageButton.addTarget(self, action: "MenuButtontapped:", forControlEvents:.TouchUpInside)
         self.view.addSubview(imageButton)
+        self.AnimationMenuView.addSubview(aaaaaa)
+        self.view.addSubview(AnimationMenuView)
     }
     
     override func didReceiveMemoryWarning() {
@@ -35,10 +37,9 @@ class Menu: UIViewController {
     
     func MenuButtontapped(sender: UIButton){
         
-        
         UIView.animateWithDuration(0.3, animations: { () -> Void in
-            self.AnimationMenuView.backgroundColor = UIColor.greenColor()
-            self.AnimationMenuView.frame = CGRectMake(self.view.frame.width/2-250, self.view.frame.height/2-150, 500, 300)
+            self.AnimationMenuView.backgroundColor = UIColor(red: 1.0, green: 0.0, blue: 1.0, alpha: 0.5)
+            self.AnimationMenuView.frame = CGRectMake(10,80, self.view.frame.width-20, 500)
         })
     }
     
