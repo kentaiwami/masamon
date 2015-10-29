@@ -13,7 +13,7 @@ import RealmSwift
 class DBmethod: UIViewController {
 
     //データベースへの追加
-    func testadd(record: Object){
+    func add(record: Object){
         do{
             let realm = try Realm()
             try realm.write{
@@ -64,5 +64,14 @@ class DBmethod: UIViewController {
         saraly = realm.objects(ShiftDB).filter("id = %@", id)[0].saraly
         
         return saraly
+    }
+    
+    func ShowDBpass(){
+        do{
+            print(try Realm().path)
+        }catch{
+            //Error
+        }
+
     }
 }
