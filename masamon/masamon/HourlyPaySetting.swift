@@ -7,8 +7,7 @@
 //
 //TODO: 時給をデータベースに格納
 //TODO: 時間帯をデータベースに格納
-//TODO: 時給入力を数字のみ受け付けるようにする
-
+//TODO: pickerviewのデフォ設定を治す
 import UIKit
 
 class HourlyPaySetting: UIViewController,UIPickerViewDelegate, UIPickerViewDataSource,UITextFieldDelegate{
@@ -33,6 +32,9 @@ class HourlyPaySetting: UIViewController,UIPickerViewDelegate, UIPickerViewDataS
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        DBmethod().ShowDBpass()
+        
+        
         TimeFrom1.delegate = self
         TimeTo1.delegate = self
         TimeFrom2.delegate = self

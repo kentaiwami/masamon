@@ -65,4 +65,13 @@ class DBmethod: UIViewController {
         
         return saraly
     }
+    
+    func ShowDBpass(){
+        do{
+            print(try Realm().path)
+        }catch{
+            //Error
+        }
+
+    }
 }
