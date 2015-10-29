@@ -136,7 +136,9 @@
                         <outlet property="SalalyLabel1" destination="5om-Ih-YdK" id="2zj-Zs-aKt"/>
                         <outlet property="SalalyLabel2" destination="Ngr-tK-qPC" id="xA5-Bh-lW0"/>
                         <outlet property="TimeFrom1" destination="WZn-fS-lGq" id="m1W-6b-pDX"/>
+                        <outlet property="TimeFrom2" destination="sF4-8Z-uh9" id="4c2-Uk-1uK"/>
                         <outlet property="TimeTo1" destination="WPM-wm-Uok" id="N7e-SM-vF9"/>
+                        <outlet property="TimeTo2" destination="qyL-Wo-9ko" id="Gzk-BG-9D0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ObL-QC-7fR" userLabel="First Responder" sceneMemberID="firstResponder"/>
