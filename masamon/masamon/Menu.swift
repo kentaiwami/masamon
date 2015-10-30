@@ -36,11 +36,11 @@ class Menu: UIViewController {
         
         //メニューの背景を作成
         menubackgroundimageview.image = menubackgroundimage
-        //menubackgroundimageview.frame = CGRectMake(345, 60,100, 100)
+        menubackgroundimageview.frame = CGRectMake(345, 60,100, 100)
         
         self.AnimationMenuView.addSubview(menubackgroundimageview)
         self.view.addSubview(imageButton)
-        self.AnimationMenuView.addSubview(testbutton)
+       // self.AnimationMenuView.addSubview(testbutton)
         self.view.addSubview(AnimationMenuView)
     }
     
@@ -51,9 +51,9 @@ class Menu: UIViewController {
     func MenuButtontapped(sender: UIButton){
         
         UIView.animateWithDuration(0.3, animations: { () -> Void in
-            //self.AnimationMenuView.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
+            //self.AnimationMenuView.backgroundColor = UIColor(red: 0.0, green: 1.0, blue: 0.0, alpha: 1.0)
             self.AnimationMenuView.frame = CGRectMake(10,80, self.view.frame.width-20, 500)
-            self.menubackgroundimageview.frame = CGRectMake(10,80, self.view.frame.width-40, 500)
+            self.menubackgroundimageview.frame = CGRectMake(-10,0, self.view.frame.width, self.view.frame.height-80)
             self.view.bringSubviewToFront(self.AnimationMenuView)
         })
     }
