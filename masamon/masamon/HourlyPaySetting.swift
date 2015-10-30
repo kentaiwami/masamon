@@ -27,18 +27,19 @@ class HourlyPaySetting: Menu, UIPickerViewDelegate, UIPickerViewDataSource,UITex
     var textfieldrowfrom2 = 44
     var textfieldrowto2 = 10
     
+    let image = UIImage(named: "../images/Menu-50.png")! as UIImage
+    let savebutton   = UIButton()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         //セーブボタンの追加
-        let image = UIImage(named: "../images/Menu-50.png")! as UIImage
-        let imageButton   = UIButton()
-        imageButton.tag = 0
-        imageButton.frame = CGRectMake(0, 0, 128, 128)
-        imageButton.layer.position = CGPoint(x: self.view.frame.width/2, y:500)
-        imageButton.setImage(image, forState: .Normal)
-        imageButton.addTarget(self, action: "SaveButtontapped:", forControlEvents:.TouchUpInside)
-        self.view.addSubview(imageButton)
+        savebutton.tag = 0
+        savebutton.frame = CGRectMake(0, 0, 128, 128)
+        savebutton.layer.position = CGPoint(x: self.view.frame.width/2, y:500)
+        savebutton.setImage(image, forState: .Normal)
+        savebutton.addTarget(self, action: "SaveButtontapped:", forControlEvents:.TouchUpInside)
+        self.view.addSubview(savebutton)
         
         TimeFrom1.delegate = self
         TimeTo1.delegate = self
@@ -245,7 +246,15 @@ class HourlyPaySetting: Menu, UIPickerViewDelegate, UIPickerViewDataSource,UITex
     
     //セーブボタンを押した時
     func SaveButtontapped(sender: UIButton){
-
+        
+//        UIView.animateWithDuration(4.0, animations: { () -> Void in
+//            self.imageButton.removeFromSuperview()
+//            
+//            
+//            
+//            })
+//
+        
         if(TimeFrom1.text?.isEmpty == true || TimeTo1.text?.isEmpty == true || TimeFrom2.text?.isEmpty == true || TimeTo2.text?.isEmpty == true || SalalyLabel1.text?.isEmpty == true || SalalyLabel2.text?.isEmpty == true){
             
             let alertController = UIAlertController(title: "Error!!", message: "全ての項目を埋めないと保存できんぞ", preferredStyle: .Alert)
@@ -270,6 +279,5 @@ class HourlyPaySetting: Menu, UIPickerViewDelegate, UIPickerViewDataSource,UITex
             DBmethod().add(hourlypayrecord2)
             DBmethod().ShowDBpass()
         }
-        
     }
 }
