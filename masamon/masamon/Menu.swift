@@ -6,6 +6,11 @@
 //  Copyright © 2015年 Kenta. All rights reserved.
 //
 
+//TODO: 背景素材を決定する
+//TODO: エフェクトについて調査
+//TODO: ボタンの配置
+//TODO: 現在いる画面のボタン以外を表示するように設定
+
 import UIKit
 
 class Menu: UIViewController {
