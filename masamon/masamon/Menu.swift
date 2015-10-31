@@ -16,12 +16,10 @@ import UIKit
 class Menu: UIViewController {
     let AnimationMenuView = UIView(frame: CGRectMake(345, 60, 100, 100))
     //let testbutton = UIButton()
-    let menubackgroundimage = UIImage(named: "../images/aaa.jpg")
-    let menubackgroundimageview = UIImageView()
-    let menuimage = UIImage(named: "../images/Menu-50_Red.png")
-    //let imageButton   = UIButton()
+    let menuimage = UIImage(named: "../images/Menu-50_White.png")
+    let imageButton   = UIButton()
     var ToolBar = UIToolbar()
-    var backimage = UIImage(named: "../images/aaa.jpg")
+    var backimage = UIImage(named: "../images/background.jpg")
     var backimageview = UIImageView()
     
     
@@ -45,19 +43,14 @@ class Menu: UIViewController {
         
         
         //メニューボタンの作成
-//        imageButton.tag = 999
-//        imageButton.frame = CGRectMake(0, 0, 128, 128)
-//        imageButton.layer.position = CGPoint(x: self.view.frame.width-30, y:60)
-//        imageButton.setImage(menuimage, forState: .Normal)
-//        imageButton.addTarget(self, action: "MenuButtontapped:", forControlEvents:.TouchUpInside)
-        
-        //メニューの背景を作成
-        menubackgroundimageview.image = menubackgroundimage
-        menubackgroundimageview.frame = CGRectMake(345, 60,100, 100)
+        imageButton.tag = 999
+        imageButton.frame = CGRectMake(0, 0, 50, 50)
+        imageButton.layer.position = CGPoint(x: self.view.frame.width-30, y:43)
+        imageButton.setImage(menuimage, forState: .Normal)
+        imageButton.addTarget(self, action: "MenuButtontapped:", forControlEvents:.TouchUpInside)
         
         self.view.addSubview(ToolBar)
-        self.AnimationMenuView.addSubview(menubackgroundimageview)
-       // self.view.addSubview(imageButton)
+        self.view.addSubview(imageButton)
        // self.AnimationMenuView.addSubview(testbutton)
         self.view.addSubview(AnimationMenuView)
     }
@@ -69,11 +62,9 @@ class Menu: UIViewController {
     func MenuButtontapped(sender: UIButton){
         
         UIView.animateWithDuration(0.3, animations: { () -> Void in
-            //self.AnimationMenuView.backgroundColor = UIColor(red: 0.0, green: 1.0, blue: 0.0, alpha: 1.0)
-            self.AnimationMenuView.frame = CGRectMake(0,0, self.view.frame.width, self.view.frame.height)
-            self.menubackgroundimageview.frame = CGRectMake(0,0, self.view.frame.width, self.view.frame.height)
+            self.AnimationMenuView.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
+            self.AnimationMenuView.frame = CGRectMake(0,65, self.view.frame.width, self.view.frame.height)
             self.view.bringSubviewToFront(self.AnimationMenuView)
-          //  self.view.bringSubviewToFront(self.imageButton)
         })
     }
     
