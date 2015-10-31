@@ -20,19 +20,19 @@ class Menu: UIViewController {
     var ToolBar = UIToolbar()
     var backimage = UIImage(named: "../images/background.jpg")
     var backimageview = UIImageView()
-    
+    var menushow = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         //背景を設定
         backimageview.image = backimage
         backimageview.frame = CGRectMake(0.0, 0.0, self.view.frame.width, self.view.frame.height)
         self.view.addSubview(backimageview)
         self.view.sendSubviewToBack(backimageview)
-//        testbutton.frame = CGRectMake(0, 0, 30, 30)
-//        testbutton.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 1.0, alpha: 1.0)
-
+        //        testbutton.frame = CGRectMake(0, 0, 30, 30)
+        //        testbutton.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 1.0, alpha: 1.0)
+        
         //ツールバーの作成
         ToolBar = UIToolbar(frame: CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: 140.0))
         ToolBar.layer.position = CGPoint(x: self.view.bounds.width/2, y: 0.0)
@@ -50,7 +50,7 @@ class Menu: UIViewController {
         
         self.view.addSubview(ToolBar)
         self.view.addSubview(imageButton)
-       // self.AnimationMenuView.addSubview(testbutton)
+        // self.AnimationMenuView.addSubview(testbutton)
         self.view.addSubview(AnimationMenuView)
     }
     
@@ -60,11 +60,22 @@ class Menu: UIViewController {
     
     func MenuButtontapped(sender: UIButton){
         
-        UIView.animateWithDuration(0.3, animations: { () -> Void in
-            self.AnimationMenuView.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
-            self.AnimationMenuView.frame = CGRectMake(0,65, self.view.frame.width, self.view.frame.height)
-            self.view.bringSubviewToFront(self.AnimationMenuView)
-        })
+        if(menushow == 0){      //Menuが出ていない時
+            UIView.animateWithDuration(0.3, animations: { () -> Void in
+                self.AnimationMenuView.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
+                self.AnimationMenuView.frame = CGRectMake(0,65, self.view.frame.width, self.view.frame.height)
+                self.view.bringSubviewToFront(self.AnimationMenuView)
+                self.menushow = 1
+            })
+        }else{
+            UIView.animateWithDuration(0.3, animations: { () -> Void in
+                self.AnimationMenuView.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
+                self.AnimationMenuView.frame = CGRectMake(380,60, 100, 100)
+                self.view.bringSubviewToFront(self.AnimationMenuView)
+                self.menushow = 0
+            })
+        }
+        
     }
     
 }
