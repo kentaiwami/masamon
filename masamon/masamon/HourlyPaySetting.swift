@@ -30,7 +30,7 @@ class HourlyPaySetting: Menu, UIPickerViewDelegate, UIPickerViewDataSource,UITex
     var textfieldrowfrom2 = 44
     var textfieldrowto2 = 10
     
-    let image = UIImage(named: "../images/Menu-50_Black.png")! as UIImage
+    let saveimage = UIImage(named: "../images/save.png")! as UIImage
     let savebutton   = UIButton()
     
     override func viewDidLoad() {
@@ -40,7 +40,7 @@ class HourlyPaySetting: Menu, UIPickerViewDelegate, UIPickerViewDataSource,UITex
         savebutton.tag = 0
         savebutton.frame = CGRectMake(0, 0, 128, 128)
         savebutton.layer.position = CGPoint(x: self.view.frame.width/2, y:500)
-        savebutton.setImage(image, forState: .Normal)
+        savebutton.setImage(saveimage, forState: .Normal)
         savebutton.addTarget(self, action: "SaveButtontapped:", forControlEvents:.TouchUpInside)
         self.view.addSubview(savebutton)
         
