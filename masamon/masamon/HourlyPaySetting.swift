@@ -6,6 +6,9 @@
 //  Copyright © 2015年 Kenta. All rights reserved.
 //
 
+//TODO: テキストフィールドから血が垂れているようにする
+//TODO: セーブボタンを見やすい素材に変える
+
 import UIKit
 
 class HourlyPaySetting: Menu, UIPickerViewDelegate, UIPickerViewDataSource,UITextFieldDelegate{
@@ -27,7 +30,7 @@ class HourlyPaySetting: Menu, UIPickerViewDelegate, UIPickerViewDataSource,UITex
     var textfieldrowfrom2 = 44
     var textfieldrowto2 = 10
     
-    let image = UIImage(named: "../images/Menu-50.png")! as UIImage
+    let image = UIImage(named: "../images/Menu-50_Black.png")! as UIImage
     let savebutton   = UIButton()
     
     override func viewDidLoad() {
@@ -246,14 +249,6 @@ class HourlyPaySetting: Menu, UIPickerViewDelegate, UIPickerViewDataSource,UITex
     
     //セーブボタンを押した時
     func SaveButtontapped(sender: UIButton){
-        
-//        UIView.animateWithDuration(4.0, animations: { () -> Void in
-//            self.imageButton.removeFromSuperview()
-//            
-//            
-//            
-//            })
-//
         
         if(TimeFrom1.text?.isEmpty == true || TimeTo1.text?.isEmpty == true || TimeFrom2.text?.isEmpty == true || TimeTo2.text?.isEmpty == true || SalalyLabel1.text?.isEmpty == true || SalalyLabel2.text?.isEmpty == true){
             
