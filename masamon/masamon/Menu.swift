@@ -6,9 +6,6 @@
 //  Copyright © 2015年 Kenta. All rights reserved.
 //
 
-//TODO: ボタンの配置
-//TODO: 現在いる画面のボタン以外を表示するように設定
-
 import UIKit
 
 class Menu: UIViewController {
@@ -23,13 +20,7 @@ class Menu: UIViewController {
     var circleimageview = UIImageView()
     
     var screentransitionbuttonarray: [UIButton] = []
-    let buttonarrayinfo: [[Int]] = [[225,171,50],[75,260,50],[200,330,50],[145,217,90]]
-    //x:225 y:171 w:50 h:50 右上
-    //x:75  y:260 w:50 h:50 左下
-    //x:200 y:330 w:50 h:50 右下
-    //x:145 y:217 w:90 h:90 真ん中
-    
-    let testbutton = UIButton()
+    let buttonarrayinfo: [[Int]] = [[225,171,50],[75,260,50],[200,330,50],[145,217,90]] //右上,左下,右下,真ん中
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,6 +54,7 @@ class Menu: UIViewController {
         circleimageview.image = circleimage
         circleimageview.alpha = 0.0
         
+        //遷移ボタンの作成
         for(var i = 0; i < 4; i++){
             let screentransitionbutton = UIButton()
             screentransitionbutton.backgroundColor = UIColor(red: 1.0, green: 0.0, blue: 0.0, alpha: 0.0)
@@ -72,17 +64,14 @@ class Menu: UIViewController {
             }else{
                 screentransitionbutton.layer.cornerRadius = 25
             }
+            
             screentransitionbuttonarray.append(screentransitionbutton)
+            screentransitionbuttonarray[i].addTarget(self, action: "ScreenTransitionButtontapped:", forControlEvents: .TouchUpInside)
+            screentransitionbuttonarray[i].tag = i
             AnimationMenuView.addSubview(screentransitionbuttonarray[i])
         }
 
         
-        //遷移ボタンの作成
-//        testbutton.frame = CGRectMake(145, 217, 90, 90)
-//        testbutton.layer.cornerRadius = 45
-//        testbutton.backgroundColor = UIColor(red: 1.0, green: 0.0, blue: 0.0, alpha: 0.0)
-////        testbutton.layer.position = CGPoint(x: self.view.frame.width/2+65, y: self.view.frame.height/2-100)
-//        testbutton.addTarget(self, action: "TestButtontapped:", forControlEvents: .TouchUpInside)
         
         //viewへの追加と前後関係の調整
         self.AnimationMenuView.addSubview(circleimageview)
@@ -104,7 +93,11 @@ class Menu: UIViewController {
         if(menushow == 0){      //Menuが出ていない時
             UIView.animateWithDuration(0.3, animations: { () -> Void in
                 self.AnimationMenuView.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
-                self.testbutton.backgroundColor = UIColor(red: 1.0, green: 0.0, blue: 0.0, alpha: 1.0)
+                
+                for(var i = 0; i < 4; i++){
+                    self.screentransitionbuttonarray[i].backgroundColor = UIColor(red: 1.0, green: 0.0, blue: 0.0, alpha: 1.0)
+                }
+                
                 self.view.bringSubviewToFront(self.AnimationMenuView)
                 self.menushow = 1
             })
@@ -119,7 +112,9 @@ class Menu: UIViewController {
         }else{
             UIView.animateWithDuration(0.3, animations: { () -> Void in
                 self.circleimageview.alpha = 0.0
-                self.testbutton.backgroundColor = UIColor(red: 1.0, green: 0.0, blue: 0.0, alpha: 0.0)
+                for(var i = 0; i < 4; i++){
+                    self.screentransitionbuttonarray[i].backgroundColor = UIColor(red: 1.0, green: 0.0, blue: 0.0, alpha: 0.0)
+                }
                 self.menushow = 0
             })
             
@@ -132,4 +127,19 @@ class Menu: UIViewController {
         
     }
     
+    //TODO: 画面遷移を記述
+    func ScreenTransitionButtontapped(sender: UIButton){
+        switch(sender.tag){
+        case 0:
+            print("右上")
+        case 1:
+            print("左下")
+        case 2:
+            print("右下")
+        case 3:
+            print("真ん中")
+        default:
+            break
+        }
+    }
 }
