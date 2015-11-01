@@ -72,7 +72,9 @@ class Menu: UIViewController {
             tapwork.addTarget(self, action: "onTap:")
             screentransitionbuttonwork.frame = CGRectMake(CGFloat(buttonarrayinfo[i][0]),CGFloat(buttonarrayinfo[i][1]),CGFloat(buttonarrayinfo[i][2]),CGFloat(buttonarrayinfo[i][2]))
             GestureRecognizerViewwork.frame = CGRectMake(CGFloat(buttonarrayinfo[i][0]),CGFloat(buttonarrayinfo[i][1]),CGFloat(buttonarrayinfo[i][2]),CGFloat(buttonarrayinfo[i][2]))
-            GestureRecognizerViewwork.backgroundColor = UIColor.blueColor()
+            
+            //テスト用に色をつけてある
+//            GestureRecognizerViewwork.backgroundColor = UIColor.blueColor()
             
             if(i == 3){
                 screentransitionbuttonwork.layer.cornerRadius = 45
