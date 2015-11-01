@@ -9,13 +9,13 @@
 //TODO: pickerviewのUIを再検討
 //TODO: シフトが誰と一緒なのかを表示
 //TODO: 今日のシフトは何番なのかを表示
-//TODO: ShiftDetailDBにサンプルデータを入れる               Now!!
+//TODO: ShiftDetailDBにサンプルデータを入れる
 //T0DO: Coreanimation？を使ってメニューボタンの演出を行う
 
 import UIKit
 import RealmSwift
 
-class ViewController: UIViewController,UIPickerViewDelegate, UIPickerViewDataSource{
+class ViewController: Menu,UIPickerViewDelegate, UIPickerViewDataSource{
     
     let shiftdb = ShiftDB()
     let shiftdetaildb = ShiftDetailDB()
@@ -27,6 +27,7 @@ class ViewController: UIViewController,UIPickerViewDelegate, UIPickerViewDataSou
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.view.backgroundColor = UIColor.whiteColor()
         shiftdb.id = 1
         shiftdb.name = "2015年8月シフト"
         shiftdb.imagepath = "8月path"
@@ -47,12 +48,14 @@ class ViewController: UIViewController,UIPickerViewDelegate, UIPickerViewDataSou
         
         //NSArrayへの追加
         let newNSArray = shiftlist
-        for(var i = DBmethod().ShiftDBSize()-1; i >= 0; i--){
-            newNSArray.addObject(DBmethod().ShiftDBNameGet(i+1))
+        if(DBmethod().ShiftDBSize() != 0){
+            for(var i = DBmethod().ShiftDBSize()-1; i >= 0; i--){
+                newNSArray.addObject(DBmethod().ShiftDBNameGet(i+1))
+            }
+            
+            //pickerviewのデフォルト表示
+            SaralyLabel.text = String(DBmethod().ShiftDBSaralyGet(DBmethod().ShiftDBSize()))
         }
-        
-        //pickerviewのデフォルト表示
-        SaralyLabel.text = String(DBmethod().ShiftDBSaralyGet(DBmethod().ShiftDBSize()))
     }
     
     override func didReceiveMemoryWarning() {
