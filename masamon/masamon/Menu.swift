@@ -6,7 +6,6 @@
 //  Copyright © 2015年 Kenta. All rights reserved.
 //
 
-//TODO: エフェクトについて調査
 //TODO: ボタンの配置
 //TODO: 現在いる画面のボタン以外を表示するように設定
 
@@ -21,22 +20,17 @@ class Menu: UIViewController {
     var backimage = UIImage(named: "../images/background.jpg")
     var backimageview = UIImageView()
     var menushow = 0
-    let circleimage = UIImage(named: "../images/aaa.png")
+    let circleimage = UIImage(named: "../images/circle.png")
     var circleimageview = UIImageView()
-    
-
-//    let test = UIImage(named: "../images/button2.png")
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         //背景を設定
         backimageview.image = backimage
         backimageview.frame = CGRectMake(0.0, 0.0, self.view.frame.width, self.view.frame.height)
         self.view.addSubview(backimageview)
         self.view.sendSubviewToBack(backimageview)
-        //        testbutton.frame = CGRectMake(0, 0, 30, 30)
-        //        testbutton.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 1.0, alpha: 1.0)
         
         //ツールバーの作成
         ToolBar = UIToolbar(frame: CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: 140.0))
@@ -69,6 +63,7 @@ class Menu: UIViewController {
         testbutton.layer.position = CGPoint(x: self.view.frame.width/2+65, y: self.view.frame.height/2-100)
         testbutton.addTarget(self, action: "TestButtontapped:", forControlEvents: .TouchUpInside)
         
+        //viewへの追加と前後関係の調整
         self.AnimationMenuView.addSubview(circleimageview)
         self.AnimationMenuView.sendSubviewToBack(circleimageview)
         self.view.addSubview(ToolBar)
@@ -108,6 +103,7 @@ class Menu: UIViewController {
             UIView.animateWithDuration(0.3, delay: 0.1, options: opt, animations: { () -> Void in
                 self.AnimationMenuView.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.0)
                 }, completion: { _ in
+                    self.view.sendSubviewToBack(self.AnimationMenuView)
             })
         }
         
