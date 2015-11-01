@@ -6,6 +6,12 @@
 //  Copyright © 2015年 Kenta. All rights reserved.
 //
 
+//TODO: 枠線の色を分ける
+//TODO: 枠線をゆっくりと点滅させる
+//TODO: 枠線から点線を伸ばす
+//TODO: 点線の先にどの画面へ行くのかを文字で表示
+//TODO: ボタンに画面遷移を対応づける
+
 import UIKit
 
 class Menu: UIViewController {
@@ -131,7 +137,6 @@ class Menu: UIViewController {
         
     }
     
-    //TODO: 画面遷移を記述
     func ScreenTransitionButtontapped(sender: UIButton){
         switch(sender.tag){
         case 0:
