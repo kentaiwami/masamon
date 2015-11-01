@@ -27,7 +27,8 @@ class Menu: UIViewController {
     
     var screentransitionbuttonarray: [UIButton] = []
     let buttonarrayinfo: [[Int]] = [[225,171,50],[75,260,50],[200,330,50],[145,217,90]] //右上,左下,右下,真ん中
-    
+    let tap: UITapGestureRecognizer = UITapGestureRecognizer()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -94,10 +95,9 @@ class Menu: UIViewController {
     
     //メニューボタンを押した時のアニメーション
     func MenuButtontapped(sender: UIButton){
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "onTap:")
         
-        if(menushow == 0){      //Menuが出ていない時
-            
+        if(menushow == 0){      //Menuが出てくる
+            tap.addTarget(self, action: "onTap:")
             self.AnimationMenuView.addGestureRecognizer(tap)
             UIView.animateWithDuration(1.5, delay: 0.0, options: [UIViewAnimationOptions.Repeat,UIViewAnimationOptions.AllowUserInteraction], animations: { () -> Void in
                 
@@ -107,7 +107,7 @@ class Menu: UIViewController {
                 },
                 
                 completion: nil)
-
+            
             
             UIView.animateWithDuration(0.3, animations: { () -> Void in
                 self.AnimationMenuView.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
@@ -127,7 +127,7 @@ class Menu: UIViewController {
                 }, completion: { _ in
             })
             
-        }else{
+        }else{      //メニューが消える
             self.AnimationMenuView.removeGestureRecognizer(tap)
             UIView.animateWithDuration(0.3, animations: { () -> Void in
                 self.circleimageview.alpha = 0.0
@@ -146,7 +146,7 @@ class Menu: UIViewController {
         
     }
     
-    func onTap(sender: UIButton){
+    func onTap(gestureRecognizer: UITapGestureRecognizer){
         print("tap")
     }
     
