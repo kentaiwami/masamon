@@ -11,7 +11,6 @@
 //TODO: 丸から点線を伸ばす
 //TODO: 点線の先にどの画面へ行くのかを文字で表示
 //TODO: ボタンに画面遷移を対応づける
-//TODO: ボタンの箇所にビューを置く
 
 import UIKit
 
@@ -167,21 +166,6 @@ class Menu: UIViewController {
         if(menushow == 1){
             print("tap")
         }else{
-        }
-    }
-    
-    func ScreenTransitionButtontapped(sender: UIButton){
-        switch(sender.tag){
-        case 0:
-            print("右上")
-        case 1:
-            print("左下")
-        case 2:
-            print("右下")
-        case 3:
-            print("真ん中")
-        default:
-            break
         }
     }
 }
