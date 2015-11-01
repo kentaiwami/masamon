@@ -121,16 +121,17 @@ class Menu: UIViewController {
                     self.screentransitionbuttonarray[i].alpha = 0.0
                 }
                 
-                },
-                
-                completion: nil)
+                }, completion: { _ in
+                    
+            })
             
             
             UIView.animateWithDuration(0.3, animations: { () -> Void in
                 self.AnimationMenuView.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
                 
                 for(var i = 0; i < 4; i++){
-                    self.screentransitionbuttonarray[i].backgroundColor = UIColor(red: 1.0, green: 0.0, blue: 0.0, alpha: 0.0)
+                    self.screentransitionbuttonarray[i].backgroundColor =             UIColor.hex("00e6ff", alpha: 1.0)
+
                 }
                 
                 self.view.bringSubviewToFront(self.AnimationMenuView)
