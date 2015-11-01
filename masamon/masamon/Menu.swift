@@ -6,11 +6,12 @@
 //  Copyright © 2015年 Kenta. All rights reserved.
 //
 
-//TODO: 枠線の色を分ける
-//TODO: 枠線をゆっくりと点滅させる
-//TODO: 枠線から点線を伸ばす
+//TODO: 丸の色を分ける
+//TODO: 丸をゆっくりと点滅させる
+//TODO: 丸から点線を伸ばす
 //TODO: 点線の先にどの画面へ行くのかを文字で表示
 //TODO: ボタンに画面遷移を対応づける
+//TODO: ボタンの箇所にビューを置く
 
 import UIKit
 
@@ -28,9 +29,11 @@ class Menu: UIViewController {
     var screentransitionbuttonarray: [UIButton] = []
     let buttonarrayinfo: [[Int]] = [[225,171,50],[75,260,50],[200,330,50],[145,217,90]] //右上,左下,右下,真ん中
     let tap: UITapGestureRecognizer = UITapGestureRecognizer()
-
+    var GestureRecognizerViewArray: [UIView] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        tap.addTarget(self, action: "onTap:")
         
         //背景を設定
         //        backimageview.image = backimage
@@ -63,19 +66,28 @@ class Menu: UIViewController {
         
         //遷移ボタンの作成
         for(var i = 0; i < 4; i++){
-            let screentransitionbutton = UIButton()
-            screentransitionbutton.backgroundColor = UIColor(red: 1.0, green: 0.0, blue: 0.0, alpha: 0.0)
-            screentransitionbutton.frame = CGRectMake(CGFloat(buttonarrayinfo[i][0]),CGFloat(buttonarrayinfo[i][1]),CGFloat(buttonarrayinfo[i][2]),CGFloat(buttonarrayinfo[i][2]))
+            let screentransitionbuttonwork = UIButton()
+            let GestureRecognizerViewwork = UIView()
+            
+            screentransitionbuttonwork.backgroundColor = UIColor(red: 1.0, green: 0.0, blue: 0.0, alpha: 0.0)
+            screentransitionbuttonwork.frame = CGRectMake(CGFloat(buttonarrayinfo[i][0]),CGFloat(buttonarrayinfo[i][1]),CGFloat(buttonarrayinfo[i][2]),CGFloat(buttonarrayinfo[i][2]))
+            GestureRecognizerViewwork.frame = CGRectMake(CGFloat(buttonarrayinfo[i][0]),CGFloat(buttonarrayinfo[i][1]),CGFloat(buttonarrayinfo[i][2]),CGFloat(buttonarrayinfo[i][2]))
+            
             if(i == 3){
-                screentransitionbutton.layer.cornerRadius = 45
+                screentransitionbuttonwork.layer.cornerRadius = 45
+                GestureRecognizerViewwork.layer.cornerRadius = 45
             }else{
-                screentransitionbutton.layer.cornerRadius = 25
+                screentransitionbuttonwork.layer.cornerRadius = 25
+                GestureRecognizerViewwork.layer.cornerRadius = 25
             }
             
-            screentransitionbuttonarray.append(screentransitionbutton)
-            screentransitionbuttonarray[i].addTarget(self, action: "ScreenTransitionButtontapped:", forControlEvents: .TouchUpInside)
+            screentransitionbuttonarray.append(screentransitionbuttonwork)
+            GestureRecognizerViewArray.append(GestureRecognizerViewwork)
             screentransitionbuttonarray[i].tag = i
+            GestureRecognizerViewArray[i].tag = i
+            GestureRecognizerViewArray[i].addGestureRecognizer(tap)
             AnimationMenuView.addSubview(screentransitionbuttonarray[i])
+            AnimationMenuView.addSubview(GestureRecognizerViewArray[i])
         }
         
         
@@ -97,8 +109,7 @@ class Menu: UIViewController {
     func MenuButtontapped(sender: UIButton){
         
         if(menushow == 0){      //Menuが出てくる
-            tap.addTarget(self, action: "onTap:")
-            self.AnimationMenuView.addGestureRecognizer(tap)
+            
             UIView.animateWithDuration(1.5, delay: 0.0, options: [UIViewAnimationOptions.Repeat,UIViewAnimationOptions.AllowUserInteraction], animations: { () -> Void in
                 
                 for(var i = 0; i < 4; i++){
