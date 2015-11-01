@@ -92,12 +92,11 @@ class Menu: UIViewController {
                 self.menushow = 1
             })
             
-            UIView.animateWithDuration(0.3, delay: 0.5, options: opt, animations: { () -> Void in
-                // アニメーションの処理
+            UIView.animateWithDuration(0.3, delay: 0.1, options: opt, animations: { () -> Void in
+                // 魔法陣出現の処理
                 self.circleimageview.frame = CGRectMake(self.AnimationMenuView.frame.width/2, self.AnimationMenuView.frame.height/2, 400, 400)
                 self.circleimageview.alpha = 1.0
                 }, completion: { _ in
-                    // 完了時の処理
             })
             
         }else{
