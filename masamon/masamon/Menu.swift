@@ -57,7 +57,7 @@ class Menu: UIViewController {
         
         
         //魔法陣の設置
-        circleimageview.frame = CGRectMake(self.AnimationMenuView.frame.width/2, self.AnimationMenuView.frame.height/2, 400, 400)
+        circleimageview.frame = CGRectMake(0, 60, self.view.frame.width, 400)
         circleimageview.image = circleimage
         circleimageview.alpha = 0.0
         
@@ -94,7 +94,7 @@ class Menu: UIViewController {
             
             UIView.animateWithDuration(0.3, delay: 0.1, options: opt, animations: { () -> Void in
                 // 魔法陣出現の処理
-                self.circleimageview.frame = CGRectMake(self.AnimationMenuView.frame.width/2, self.AnimationMenuView.frame.height/2, 400, 400)
+                self.circleimageview.frame = CGRectMake(0, 60, self.view.frame.width, 400)
                 self.circleimageview.alpha = 1.0
                 }, completion: { _ in
             })
