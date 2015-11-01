@@ -95,7 +95,9 @@ class Menu: UIViewController {
                 self.AnimationMenuView.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
                 
                 for(var i = 0; i < 4; i++){
-                    self.screentransitionbuttonarray[i].backgroundColor = UIColor(red: 1.0, green: 0.0, blue: 0.0, alpha: 1.0)
+                    self.screentransitionbuttonarray[i].backgroundColor = UIColor(red: 1.0, green: 0.0, blue: 0.0, alpha: 0.0)
+                    self.screentransitionbuttonarray[i].layer.borderWidth = 3
+                    self.screentransitionbuttonarray[i].layer.borderColor = UIColor(red: 1.0, green: 1.0, blue: 0.0, alpha: 1.0).CGColor
                 }
                 
                 self.view.bringSubviewToFront(self.AnimationMenuView)
@@ -114,6 +116,8 @@ class Menu: UIViewController {
                 self.circleimageview.alpha = 0.0
                 for(var i = 0; i < 4; i++){
                     self.screentransitionbuttonarray[i].backgroundColor = UIColor(red: 1.0, green: 0.0, blue: 0.0, alpha: 0.0)
+                   self.screentransitionbuttonarray[i].layer.borderColor = UIColor(red: 0.0, green: 0.0, blue: 1.0, alpha: 0.0).CGColor
+
                 }
                 self.menushow = 0
             })
