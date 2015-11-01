@@ -25,14 +25,13 @@ class Menu: UIViewController {
     let circleimage = UIImage(named: "../images/circle.png")
     var circleimageview = UIImageView()
     
-    var screentransitionbuttonarray: [UIButton] = []
+ //   var screentransitionbuttonarray: [UIButton] = []
     let buttonarrayinfo: [[Int]] = [[225,171,50],[75,260,50],[200,330,50],[145,217,90]] //右上,左下,右下,真ん中
     var tap: [UITapGestureRecognizer] = []
     var GestureRecognizerViewArray: [UIView] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
-      //  tap.addTarget(self, action: "onTap:")
         
         //背景を設定
         //        backimageview.image = backimage
@@ -65,31 +64,31 @@ class Menu: UIViewController {
         
         //遷移ボタンの作成
         for(var i = 0; i < 4; i++){
-            let screentransitionbuttonwork = UIButton()
+          //  let screentransitionbuttonwork = UIButton()
             let GestureRecognizerViewwork = UIView()
             let tapwork = UITapGestureRecognizer()
             
             tapwork.addTarget(self, action: "onTap:")
-            screentransitionbuttonwork.frame = CGRectMake(CGFloat(buttonarrayinfo[i][0]),CGFloat(buttonarrayinfo[i][1]),CGFloat(buttonarrayinfo[i][2]),CGFloat(buttonarrayinfo[i][2]))
+        //    screentransitionbuttonwork.frame = CGRectMake(CGFloat(buttonarrayinfo[i][0]),CGFloat(buttonarrayinfo[i][1]),CGFloat(buttonarrayinfo[i][2]),CGFloat(buttonarrayinfo[i][2]))
             GestureRecognizerViewwork.frame = CGRectMake(CGFloat(buttonarrayinfo[i][0]),CGFloat(buttonarrayinfo[i][1]),CGFloat(buttonarrayinfo[i][2]),CGFloat(buttonarrayinfo[i][2]))
             
             //テスト用に色をつけてある
-//            GestureRecognizerViewwork.backgroundColor = UIColor.blueColor()
+            //            GestureRecognizerViewwork.backgroundColor = UIColor.blueColor()
             
             if(i == 3){
-                screentransitionbuttonwork.layer.cornerRadius = 45
+            //    screentransitionbuttonwork.layer.cornerRadius = 45
                 GestureRecognizerViewwork.layer.cornerRadius = 45
             }else{
-                screentransitionbuttonwork.layer.cornerRadius = 25
+              //  screentransitionbuttonwork.layer.cornerRadius = 25
                 GestureRecognizerViewwork.layer.cornerRadius = 25
             }
             
-            screentransitionbuttonarray.append(screentransitionbuttonwork)
+           // screentransitionbuttonarray.append(screentransitionbuttonwork)
             GestureRecognizerViewArray.append(GestureRecognizerViewwork)
             tap.append(tapwork)
-            screentransitionbuttonarray[i].tag = i
+       //     screentransitionbuttonarray[i].tag = i
             GestureRecognizerViewArray[i].tag = i
-            AnimationMenuView.addSubview(screentransitionbuttonarray[i])
+       //     AnimationMenuView.addSubview(screentransitionbuttonarray[i])
             GestureRecognizerViewArray[i].addGestureRecognizer(tap[i])
             AnimationMenuView.addSubview(GestureRecognizerViewArray[i])
             AnimationMenuView.sendSubviewToBack(GestureRecognizerViewArray[i])
@@ -115,25 +114,20 @@ class Menu: UIViewController {
         
         if(menushow == 0){      //Menuが出てくる
             
-            UIView.animateWithDuration(1.5, delay: 0.0, options: [UIViewAnimationOptions.Repeat,UIViewAnimationOptions.AllowUserInteraction], animations: { () -> Void in
+            UIView.animateWithDuration(2.0, delay: 0.0, options: [UIViewAnimationOptions.Repeat,UIViewAnimationOptions.AllowUserInteraction], animations: { () -> Void in
                 
                 for(var i = 0; i < 4; i++){
-                    self.screentransitionbuttonarray[i].alpha = 0.0
+                    
+                  //  self.screentransitionbuttonarray[i].backgroundColor = UIColor.hex("00e6ff", alpha: 0.4)
+                 //   self.screentransitionbuttonarray[i].backgroundColor = UIColor.hex("00e6ff", alpha: 0.0)
                 }
                 
                 }, completion: { _ in
-                    
             })
             
             
             UIView.animateWithDuration(0.3, animations: { () -> Void in
                 self.AnimationMenuView.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
-                
-                for(var i = 0; i < 4; i++){
-                    self.screentransitionbuttonarray[i].backgroundColor =             UIColor.hex("00e6ff", alpha: 1.0)
-
-                }
-                
                 self.view.bringSubviewToFront(self.AnimationMenuView)
                 self.menushow = 1
             })
@@ -150,7 +144,7 @@ class Menu: UIViewController {
             UIView.animateWithDuration(0.3, animations: { () -> Void in
                 self.circleimageview.alpha = 0.0
                 for(var i = 0; i < 4; i++){
-                    self.screentransitionbuttonarray[i].backgroundColor = UIColor(red: 1.0, green: 0.0, blue: 0.0, alpha: 0.0)
+               //     self.screentransitionbuttonarray[i].backgroundColor = UIColor(red: 1.0, green: 0.0, blue: 0.0, alpha: 0.0)
                 }
                 self.menushow = 0
             })
