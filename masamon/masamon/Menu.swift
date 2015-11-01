@@ -32,10 +32,10 @@ class Menu: UIViewController {
         super.viewDidLoad()
         
         //背景を設定
-//        backimageview.image = backimage
-//        backimageview.frame = CGRectMake(0.0, 0.0, self.view.frame.width, self.view.frame.height)
-//        self.view.addSubview(backimageview)
-//        self.view.sendSubviewToBack(backimageview)
+        //        backimageview.image = backimage
+        //        backimageview.frame = CGRectMake(0.0, 0.0, self.view.frame.width, self.view.frame.height)
+        //        self.view.addSubview(backimageview)
+        //        self.view.sendSubviewToBack(backimageview)
         
         //ツールバーの作成
         ToolBar = UIToolbar(frame: CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: 140.0))
@@ -76,7 +76,7 @@ class Menu: UIViewController {
             screentransitionbuttonarray[i].tag = i
             AnimationMenuView.addSubview(screentransitionbuttonarray[i])
         }
-
+        
         
         
         //viewへの追加と前後関係の調整
@@ -94,23 +94,33 @@ class Menu: UIViewController {
     
     //メニューボタンを押した時のアニメーション
     func MenuButtontapped(sender: UIButton){
-        let opt = UIViewAnimationOptions.TransitionCurlDown
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "onTap:")
         
         if(menushow == 0){      //Menuが出ていない時
+            
+            self.AnimationMenuView.addGestureRecognizer(tap)
+            UIView.animateWithDuration(1.5, delay: 0.0, options: [UIViewAnimationOptions.Repeat,UIViewAnimationOptions.AllowUserInteraction], animations: { () -> Void in
+                
+                for(var i = 0; i < 4; i++){
+                    self.screentransitionbuttonarray[i].alpha = 0.0
+                }
+                },
+                
+                completion: nil)
+
+            
             UIView.animateWithDuration(0.3, animations: { () -> Void in
                 self.AnimationMenuView.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
                 
                 for(var i = 0; i < 4; i++){
-                    self.screentransitionbuttonarray[i].backgroundColor = UIColor(red: 1.0, green: 0.0, blue: 0.0, alpha: 0.0)
-                    self.screentransitionbuttonarray[i].layer.borderWidth = 3
-                    self.screentransitionbuttonarray[i].layer.borderColor = UIColor(red: 1.0, green: 1.0, blue: 0.0, alpha: 1.0).CGColor
+                    self.screentransitionbuttonarray[i].backgroundColor = UIColor(red: 1.0, green: 0.0, blue: 0.0, alpha: 1.0)
                 }
                 
                 self.view.bringSubviewToFront(self.AnimationMenuView)
                 self.menushow = 1
             })
             
-            UIView.animateWithDuration(0.3, delay: 0.1, options: opt, animations: { () -> Void in
+            UIView.animateWithDuration(0.3, delay: 0.1, options: UIViewAnimationOptions.TransitionCurlDown, animations: { () -> Void in
                 // 魔法陣出現の処理
                 self.circleimageview.frame = CGRectMake(0, 60, self.view.frame.width, 400)
                 self.circleimageview.alpha = 1.0
@@ -118,23 +128,26 @@ class Menu: UIViewController {
             })
             
         }else{
+            self.AnimationMenuView.removeGestureRecognizer(tap)
             UIView.animateWithDuration(0.3, animations: { () -> Void in
                 self.circleimageview.alpha = 0.0
                 for(var i = 0; i < 4; i++){
                     self.screentransitionbuttonarray[i].backgroundColor = UIColor(red: 1.0, green: 0.0, blue: 0.0, alpha: 0.0)
-                   self.screentransitionbuttonarray[i].layer.borderColor = UIColor(red: 0.0, green: 0.0, blue: 1.0, alpha: 0.0).CGColor
-
                 }
                 self.menushow = 0
             })
             
-            UIView.animateWithDuration(0.3, delay: 0.1, options: opt, animations: { () -> Void in
+            UIView.animateWithDuration(0.3, delay: 0.1, options: UIViewAnimationOptions.TransitionCurlDown, animations: { () -> Void in
                 self.AnimationMenuView.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.0)
                 }, completion: { _ in
                     self.view.sendSubviewToBack(self.AnimationMenuView)
             })
         }
         
+    }
+    
+    func onTap(sender: UIButton){
+        print("tap")
     }
     
     func ScreenTransitionButtontapped(sender: UIButton){
