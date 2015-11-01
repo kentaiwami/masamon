@@ -21,10 +21,12 @@ class Menu: UIViewController {
     var backimage = UIImage(named: "../images/background.jpg")
     var backimageview = UIImageView()
     var menushow = 0
-    let candleimage = UIImage(named: "../images/candle.png")
-    var candleimageview = UIImageView()
-    let test = UIImage(named: "../images/button2.png")
-    var testbutton = UIButton()
+    let circleimage = UIImage(named: "../images/aaa.png")
+    var circleimageview = UIImageView()
+    
+
+//    let test = UIImage(named: "../images/button2.png")
+//    var testbutton = UIButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,18 +53,20 @@ class Menu: UIViewController {
         imageButton.setImage(menuimage, forState: .Normal)
         imageButton.addTarget(self, action: "MenuButtontapped:", forControlEvents:.TouchUpInside)
         
-        //ろうそくの作成
-        candleimageview.frame = CGRectMake(345, 60, 100, 100)
-        candleimageview.image = candleimage
         
-        //遷移ボタンの作成
-        testbutton.frame = CGRectMake(0, 0, 200, 300)
-        testbutton.layer.position = CGPoint(x: self.view.frame.width/2, y: self.view.frame.height/2-50)
-        testbutton.setImage(test, forState: .Normal)
-        testbutton.addTarget(self, action: "TestButtontapped:", forControlEvents: .TouchUpInside)
+        //魔法陣の設置
+        circleimageview.frame = CGRectMake(345, 60, 100, 100)
+        circleimageview.image = circleimage
         
-        self.AnimationMenuView.addSubview(testbutton)
-        self.AnimationMenuView.addSubview(candleimageview)
+//        
+//        //遷移ボタンの作成
+//        testbutton.frame = CGRectMake(0, 0, 200, 300)
+//        testbutton.layer.position = CGPoint(x: self.view.frame.width/2, y: self.view.frame.height/2-50)
+//        testbutton.setImage(test, forState: .Normal)
+//        testbutton.addTarget(self, action: "TestButtontapped:", forControlEvents: .TouchUpInside)
+        
+//        self.AnimationMenuView.addSubview(testbutton)
+        self.AnimationMenuView.addSubview(circleimageview)
         self.view.addSubview(ToolBar)
         self.view.addSubview(imageButton)
         self.view.addSubview(AnimationMenuView)
@@ -78,7 +82,7 @@ class Menu: UIViewController {
             UIView.animateWithDuration(0.3, animations: { () -> Void in
                 self.AnimationMenuView.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
                 self.AnimationMenuView.frame = CGRectMake(0,65, self.view.frame.width, self.view.frame.height)
-                self.candleimageview.frame = CGRectMake(0, self.view.frame.height/2, 400, 400)
+                self.circleimageview.frame = CGRectMake(-10, 80, 400, 400)
                 self.view.bringSubviewToFront(self.AnimationMenuView)
                 self.menushow = 1
             })
@@ -86,7 +90,7 @@ class Menu: UIViewController {
             UIView.animateWithDuration(0.3, animations: { () -> Void in
                 self.AnimationMenuView.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
                 self.AnimationMenuView.frame = CGRectMake(380,60, 100, 100)
-                self.candleimageview.frame = CGRectMake(345, 60, 100, 100)
+                self.circleimageview.frame = CGRectMake(345, 60, 100, 100)
                 self.view.bringSubviewToFront(self.AnimationMenuView)
                 self.menushow = 0
             })

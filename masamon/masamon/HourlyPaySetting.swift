@@ -31,7 +31,7 @@ class HourlyPaySetting: Menu, UIPickerViewDelegate, UIPickerViewDataSource,UITex
     var textfieldrowfrom2 = 44
     var textfieldrowto2 = 10
     
-    let saveimage = UIImage(named: "../images/fff.png")! as UIImage
+    let saveimage = UIImage(named: "../images/Menu-50_White.png")! as UIImage
     let savebutton   = UIButton()
     
     override func viewDidLoad() {
