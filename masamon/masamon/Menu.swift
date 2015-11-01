@@ -57,8 +57,9 @@ class Menu: UIViewController {
         
         
         //魔法陣の設置
-        circleimageview.frame = CGRectMake(40, 150, 400, 400)
+        circleimageview.frame = CGRectMake(self.AnimationMenuView.frame.width/2, self.AnimationMenuView.frame.height/2, 400, 400)
         circleimageview.image = circleimage
+        circleimageview.alpha = 0.0
         
         
         //遷移ボタンの作成
@@ -69,6 +70,7 @@ class Menu: UIViewController {
         testbutton.addTarget(self, action: "TestButtontapped:", forControlEvents: .TouchUpInside)
         
         self.AnimationMenuView.addSubview(circleimageview)
+        self.AnimationMenuView.sendSubviewToBack(circleimageview)
         self.view.addSubview(ToolBar)
         self.view.addSubview(MenuButton)
         self.view.addSubview(AnimationMenuView)
@@ -80,13 +82,24 @@ class Menu: UIViewController {
     }
     
     func MenuButtontapped(sender: UIButton){
+        let opt = UIViewAnimationOptions.TransitionCurlDown
         
         if(menushow == 0){      //Menuが出ていない時
             UIView.animateWithDuration(0.3, animations: { () -> Void in
                 self.AnimationMenuView.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
+                
                 self.view.bringSubviewToFront(self.AnimationMenuView)
                 self.menushow = 1
             })
+            
+            UIView.animateWithDuration(0.3, delay: 0.5, options: opt, animations: { () -> Void in
+                // アニメーションの処理
+                self.circleimageview.frame = CGRectMake(self.AnimationMenuView.frame.width/2, self.AnimationMenuView.frame.height/2, 400, 400)
+                self.circleimageview.alpha = 1.0
+                }, completion: { _ in
+                    // 完了時の処理
+            })
+            
         }else{
             UIView.animateWithDuration(0.3, animations: { () -> Void in
                 self.AnimationMenuView.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
