@@ -30,12 +30,12 @@ class HourlyPaySetting: Menu, UIPickerViewDelegate, UIPickerViewDataSource,UITex
     var textfieldrowfrom2 = 44
     var textfieldrowto2 = 10
     
-    let saveimage = UIImage(named: "../images/save.png")! as UIImage
+    let saveimage = UIImage(named: "../images/fff.png")! as UIImage
     let savebutton   = UIButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        DBmethod().ShowDBpass()
         //セーブボタンの追加
         savebutton.tag = 0
         savebutton.frame = CGRectMake(0, 0, 128, 128)
@@ -60,22 +60,22 @@ class HourlyPaySetting: Menu, UIPickerViewDelegate, UIPickerViewDataSource,UITex
         let toolBar1 = UIToolbar()
         toolBar1.barStyle = UIBarStyle.Default
         toolBar1.translucent = true
-        toolBar1.tintColor = UIColor(red: 76/255, green: 217/255, blue: 100/255, alpha: 1)
+        toolBar1.tintColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
         toolBar1.sizeToFit()
         let toolBar2 = UIToolbar()
         toolBar2.barStyle = UIBarStyle.Default
         toolBar2.translucent = true
-        toolBar2.tintColor = UIColor(red: 76/255, green: 217/255, blue: 100/255, alpha: 1)
+        toolBar2.tintColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
         toolBar2.sizeToFit()
         let toolBarsalaly1 = UIToolbar()
         toolBarsalaly1.barStyle = UIBarStyle.Default
         toolBarsalaly1.translucent = true
-        toolBarsalaly1.tintColor = UIColor(red: 76/255, green: 217/255, blue: 100/255, alpha: 1)
+        toolBarsalaly1.tintColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
         toolBarsalaly1.sizeToFit()
         let toolBarsalaly2 = UIToolbar()
         toolBarsalaly2.barStyle = UIBarStyle.Default
         toolBarsalaly2.translucent = true
-        toolBarsalaly2.tintColor = UIColor(red: 76/255, green: 217/255, blue: 100/255, alpha: 1)
+        toolBarsalaly2.tintColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
         toolBarsalaly2.sizeToFit()
         
         //Toolbarにつけるボタンの作成
@@ -272,7 +272,6 @@ class HourlyPaySetting: Menu, UIPickerViewDelegate, UIPickerViewDataSource,UITex
             
             DBmethod().add(hourlypayrecord1)
             DBmethod().add(hourlypayrecord2)
-            DBmethod().ShowDBpass()
         }
     }
 }
