@@ -68,9 +68,12 @@ class Menu: UIViewController {
         for(var i = 0; i < 4; i++){
             let screentransitionbuttonwork = UIButton()
             let GestureRecognizerViewwork = UIView()
+            let tapwork = UITapGestureRecognizer()
             
+            tapwork.addTarget(self, action: "onTap:")
             screentransitionbuttonwork.frame = CGRectMake(CGFloat(buttonarrayinfo[i][0]),CGFloat(buttonarrayinfo[i][1]),CGFloat(buttonarrayinfo[i][2]),CGFloat(buttonarrayinfo[i][2]))
             GestureRecognizerViewwork.frame = CGRectMake(CGFloat(buttonarrayinfo[i][0]),CGFloat(buttonarrayinfo[i][1]),CGFloat(buttonarrayinfo[i][2]),CGFloat(buttonarrayinfo[i][2]))
+            GestureRecognizerViewwork.backgroundColor = UIColor.blueColor()
             
             if(i == 3){
                 screentransitionbuttonwork.layer.cornerRadius = 45
@@ -82,11 +85,13 @@ class Menu: UIViewController {
             
             screentransitionbuttonarray.append(screentransitionbuttonwork)
             GestureRecognizerViewArray.append(GestureRecognizerViewwork)
-            tap.append(UITapGestureRecognizer(target: self, action: "onTap:"))
+            tap.append(tapwork)
             screentransitionbuttonarray[i].tag = i
             GestureRecognizerViewArray[i].tag = i
             AnimationMenuView.addSubview(screentransitionbuttonarray[i])
-//            AnimationMenuView.addSubview(GestureRecognizerViewArray[i])
+            GestureRecognizerViewArray[i].addGestureRecognizer(tap[i])
+            AnimationMenuView.addSubview(GestureRecognizerViewArray[i])
+            AnimationMenuView.sendSubviewToBack(GestureRecognizerViewArray[i])
         }
         
         
@@ -113,10 +118,6 @@ class Menu: UIViewController {
                 
                 for(var i = 0; i < 4; i++){
                     self.screentransitionbuttonarray[i].alpha = 0.0
-                    self.GestureRecognizerViewArray[i].addGestureRecognizer(self.tap[i])
-                    self.AnimationMenuView.addSubview(self.GestureRecognizerViewArray[i])
-                    self.AnimationMenuView.sendSubviewToBack(self.GestureRecognizerViewArray[i])
-
                 }
                 
                 },
@@ -143,6 +144,7 @@ class Menu: UIViewController {
             })
             
         }else{      //メニューが消える
+            
             UIView.animateWithDuration(0.3, animations: { () -> Void in
                 self.circleimageview.alpha = 0.0
                 for(var i = 0; i < 4; i++){
@@ -154,14 +156,18 @@ class Menu: UIViewController {
             UIView.animateWithDuration(0.3, delay: 0.1, options: UIViewAnimationOptions.TransitionCurlDown, animations: { () -> Void in
                 self.AnimationMenuView.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.0)
                 }, completion: { _ in
-                    self.view.sendSubviewToBack(self.AnimationMenuView)
             })
+            
+            self.view.sendSubviewToBack(self.AnimationMenuView)
         }
         
     }
     
     func onTap(gestureRecognizer: UITapGestureRecognizer){
-        print("tap")
+        if(menushow == 1){
+            print("tap")
+        }else{
+        }
     }
     
     func ScreenTransitionButtontapped(sender: UIButton){
