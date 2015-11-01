@@ -13,10 +13,10 @@
 import UIKit
 
 class Menu: UIViewController {
-    let AnimationMenuView = UIView(frame: CGRectMake(345, 60, 100, 100))
-    //let testbutton = UIButton()
+    var AnimationMenuView = UIView()
+    let testbutton = UIButton()
     let menuimage = UIImage(named: "../images/Menu-50_White.png")
-    let imageButton   = UIButton()
+    let MenuButton   = UIButton()
     var ToolBar = UIToolbar()
     var backimage = UIImage(named: "../images/background.jpg")
     var backimageview = UIImageView()
@@ -26,11 +26,10 @@ class Menu: UIViewController {
     
 
 //    let test = UIImage(named: "../images/button2.png")
-//    var testbutton = UIButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         //背景を設定
         backimageview.image = backimage
         backimageview.frame = CGRectMake(0.0, 0.0, self.view.frame.width, self.view.frame.height)
@@ -48,28 +47,32 @@ class Menu: UIViewController {
         
         
         //メニューボタンの作成
-        imageButton.frame = CGRectMake(0, 0, 50, 50)
-        imageButton.layer.position = CGPoint(x: self.view.frame.width-30, y:43)
-        imageButton.setImage(menuimage, forState: .Normal)
-        imageButton.addTarget(self, action: "MenuButtontapped:", forControlEvents:.TouchUpInside)
+        MenuButton.frame = CGRectMake(0, 0, 50, 50)
+        MenuButton.layer.position = CGPoint(x: self.view.frame.width-30, y:43)
+        MenuButton.setImage(menuimage, forState: .Normal)
+        MenuButton.addTarget(self, action: "MenuButtontapped:", forControlEvents:.TouchUpInside)
+        
+        //アニメーションのviewを設置
+        self.AnimationMenuView.frame = CGRectMake(0, 70, 375, 667)
         
         
         //魔法陣の設置
-        circleimageview.frame = CGRectMake(345, 60, 100, 100)
+        circleimageview.frame = CGRectMake(40, 150, 400, 400)
         circleimageview.image = circleimage
         
-//        
-//        //遷移ボタンの作成
-//        testbutton.frame = CGRectMake(0, 0, 200, 300)
-//        testbutton.layer.position = CGPoint(x: self.view.frame.width/2, y: self.view.frame.height/2-50)
-//        testbutton.setImage(test, forState: .Normal)
-//        testbutton.addTarget(self, action: "TestButtontapped:", forControlEvents: .TouchUpInside)
         
-//        self.AnimationMenuView.addSubview(testbutton)
+        //遷移ボタンの作成
+        testbutton.frame = CGRectMake(0, 0, 50, 50)
+        testbutton.layer.cornerRadius = 25
+        testbutton.backgroundColor = UIColor.redColor()
+        testbutton.layer.position = CGPoint(x: self.view.frame.width/2+65, y: self.view.frame.height/2-100)
+        testbutton.addTarget(self, action: "TestButtontapped:", forControlEvents: .TouchUpInside)
+        
         self.AnimationMenuView.addSubview(circleimageview)
         self.view.addSubview(ToolBar)
-        self.view.addSubview(imageButton)
+        self.view.addSubview(MenuButton)
         self.view.addSubview(AnimationMenuView)
+        self.view.sendSubviewToBack(AnimationMenuView)
     }
     
     override func didReceiveMemoryWarning() {
@@ -81,8 +84,6 @@ class Menu: UIViewController {
         if(menushow == 0){      //Menuが出ていない時
             UIView.animateWithDuration(0.3, animations: { () -> Void in
                 self.AnimationMenuView.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
-                self.AnimationMenuView.frame = CGRectMake(0,65, self.view.frame.width, self.view.frame.height)
-                self.circleimageview.frame = CGRectMake(-10, 80, 400, 400)
                 self.view.bringSubviewToFront(self.AnimationMenuView)
                 self.menushow = 1
             })
