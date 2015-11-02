@@ -14,7 +14,7 @@
 
 import UIKit
 
-class Menu: UIViewController {
+class Menu: UIViewController{
     var AnimationMenuView = UIView()
     let menuimage = UIImage(named: "../images/Menu-50_White.png")
     let MenuButton   = UIButton()
@@ -32,7 +32,7 @@ class Menu: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         //背景を設定
         //        backimageview.image = backimage
         //        backimageview.frame = CGRectMake(0.0, 0.0, self.view.frame.width, self.view.frame.height)
@@ -114,12 +114,13 @@ class Menu: UIViewController {
         
         if(menushow == 0){      //Menuが出てくる
             
-            UIView.animateWithDuration(2.0, delay: 0.0, options: [UIViewAnimationOptions.Repeat,UIViewAnimationOptions.AllowUserInteraction], animations: { () -> Void in
+            UIView.animateWithDuration(1.0, delay: 0.0, options: [UIViewAnimationOptions.Repeat,UIViewAnimationOptions.AllowUserInteraction], animations: { () -> Void in
                 
                 for(var i = 0; i < 4; i++){
                     
                   //  self.screentransitionbuttonarray[i].backgroundColor = UIColor.hex("00e6ff", alpha: 0.4)
                  //   self.screentransitionbuttonarray[i].backgroundColor = UIColor.hex("00e6ff", alpha: 0.0)
+                    self.GestureRecognizerViewArray[i].backgroundColor = UIColor.hex("00e6ff", alpha: 1.0)
                 }
                 
                 }, completion: { _ in
@@ -132,7 +133,7 @@ class Menu: UIViewController {
                 self.menushow = 1
             })
             
-            UIView.animateWithDuration(0.3, delay: 0.1, options: UIViewAnimationOptions.TransitionCurlDown, animations: { () -> Void in
+            UIView.animateWithDuration(0.3, delay: 0.1, options: UIViewAnimationOptions.TransitionNone, animations: { () -> Void in
                 // 魔法陣出現の処理
                 self.circleimageview.frame = CGRectMake(0, 60, self.view.frame.width, 400)
                 self.circleimageview.alpha = 1.0
@@ -145,11 +146,13 @@ class Menu: UIViewController {
                 self.circleimageview.alpha = 0.0
                 for(var i = 0; i < 4; i++){
                //     self.screentransitionbuttonarray[i].backgroundColor = UIColor(red: 1.0, green: 0.0, blue: 0.0, alpha: 0.0)
+                    self.GestureRecognizerViewArray[i].backgroundColor = UIColor.hex("00e6ff", alpha: 0.0)
+
                 }
                 self.menushow = 0
             })
             
-            UIView.animateWithDuration(0.3, delay: 0.1, options: UIViewAnimationOptions.TransitionCurlDown, animations: { () -> Void in
+            UIView.animateWithDuration(0.3, delay: 0.1, options: UIViewAnimationOptions.TransitionNone, animations: { () -> Void in
                 self.AnimationMenuView.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.0)
                 }, completion: { _ in
             })
@@ -160,9 +163,12 @@ class Menu: UIViewController {
     }
     
     func onTap(gestureRecognizer: UITapGestureRecognizer){
+        
+        //メニューが出ているときのみ動作
         if(menushow == 1){
             print("tap")
         }else{
+            //メニューが出ていない時は何も動作しない
         }
     }
 }
