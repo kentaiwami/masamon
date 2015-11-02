@@ -6,11 +6,10 @@
 //  Copyright © 2015年 Kenta. All rights reserved.
 //
 
-//TODO: 丸の色を分ける
-//TODO: 丸をゆっくりと点滅させる
-//TODO: 丸から点線を伸ばす
+//TODO: 丸をアニメーションの線にする
+//TODO: アニメーションから点線を伸ばす
 //TODO: 点線の先にどの画面へ行くのかを文字で表示
-//TODO: ボタンに画面遷移を対応づける
+//TODO: ボタンの3つに画面遷移を対応づける
 
 import UIKit
 
