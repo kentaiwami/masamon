@@ -24,9 +24,10 @@ class Menu: UIViewController{
     let circleimage = UIImage(named: "../images/circle.png")
     var circleimageview = UIImageView()
     
-    let buttonarrayinfo: [[Int]] = [[225,171,50],[75,260,50],[200,330,50],[145,217,90]] //右上,左下,右下,真ん中
+    let GesturePositionArray: [[Int]] = [[225,171,50],[75,260,50],[200,330,50],[145,217,90]] //右上,左下,右下,真ん中
     var tap: [UITapGestureRecognizer] = []
     var GestureRecognizerViewArray: [UIView] = []
+    let ovalShapeLayer = CAShapeLayer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,7 +67,7 @@ class Menu: UIViewController{
             let tapwork = UITapGestureRecognizer()
             
             tapwork.addTarget(self, action: "onTap:")
-            GestureRecognizerViewwork.frame = CGRectMake(CGFloat(buttonarrayinfo[i][0]),CGFloat(buttonarrayinfo[i][1]),CGFloat(buttonarrayinfo[i][2]),CGFloat(buttonarrayinfo[i][2]))
+            GestureRecognizerViewwork.frame = CGRectMake(CGFloat(GesturePositionArray[i][0]),CGFloat(GesturePositionArray[i][1]),CGFloat(GesturePositionArray[i][2]),CGFloat(GesturePositionArray[i][2]))
 
             
             if(i == 3){
@@ -83,10 +84,34 @@ class Menu: UIViewController{
             AnimationMenuView.sendSubviewToBack(GestureRecognizerViewArray[i])
         }
         
+        // 円のCALayer作成
+        ovalShapeLayer.strokeColor = UIColor.clearColor().CGColor
+        ovalShapeLayer.fillColor = UIColor.clearColor().CGColor
+        ovalShapeLayer.lineWidth = 6.0
+
+        // 図形は円形
+        ovalShapeLayer.path = UIBezierPath(ovalInRect: CGRect(x: view.bounds.size.width/2, y: view.bounds.size.height/2, width: 100.0, height: 100.0)).CGPath
         
+        // 輪郭の線をアニメーションする(くるくるする)
+        let strokeStartAnimation = CABasicAnimation(keyPath: "strokeStart")
+        strokeStartAnimation.fromValue = -0.5
+        strokeStartAnimation.toValue = 1.0
+        
+        let strokeEndAnimation = CABasicAnimation(keyPath: "strokeEnd")
+        strokeEndAnimation.fromValue = 0.0
+        strokeEndAnimation.toValue = 1.0
+        
+        
+        
+        let strokeAnimationGroup = CAAnimationGroup()
+        strokeAnimationGroup.duration = 0.2
+        strokeAnimationGroup.repeatDuration = CFTimeInterval.infinity
+        strokeAnimationGroup.animations = [strokeStartAnimation,strokeEndAnimation]
+        ovalShapeLayer.addAnimation(strokeAnimationGroup, forKey: nil)
         
         //viewへの追加と前後関係の調整
         self.AnimationMenuView.addSubview(circleimageview)
+        self.AnimationMenuView.layer.addSublayer(self.ovalShapeLayer)
         self.AnimationMenuView.sendSubviewToBack(circleimageview)
         self.view.addSubview(ToolBar)
         self.view.addSubview(MenuButton)
@@ -102,17 +127,7 @@ class Menu: UIViewController{
     func MenuButtontapped(sender: UIButton){
         
         if(menushow == 0){      //Menuが出てくる
-            
-            UIView.animateWithDuration(1.0, delay: 0.0, options: [UIViewAnimationOptions.Repeat,UIViewAnimationOptions.AllowUserInteraction], animations: { () -> Void in
-                
-                for(var i = 0; i < 4; i++){
-
-                    self.GestureRecognizerViewArray[i].backgroundColor = UIColor.hex("00e6ff", alpha: 1.0)
-                }
-                
-                }, completion: { _ in
-            })
-            
+            self.ovalShapeLayer.strokeColor = UIColor.redColor().CGColor
             
             UIView.animateWithDuration(0.3, animations: { () -> Void in
                 self.AnimationMenuView.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
@@ -128,6 +143,7 @@ class Menu: UIViewController{
             })
             
         }else{      //メニューが消える
+            self.ovalShapeLayer.strokeColor = UIColor.clearColor().CGColor
             
             UIView.animateWithDuration(0.3, animations: { () -> Void in
                 self.circleimageview.alpha = 0.0
