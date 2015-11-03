@@ -84,7 +84,7 @@ class Menu: UIViewController{
             let tapwork = UITapGestureRecognizer()
             let ovalShapeLayerwork = CAShapeLayer()
             
-            tapwork.addTarget(self, action: "onTap:")
+            tapwork.addTarget(self, action: "GestureRecognizerTap:")
             GestureRecognizerViewwork.frame = CGRectMake(CGFloat(GesturePositionArray[i][0]),CGFloat(GesturePositionArray[i][1]),CGFloat(GesturePositionArray[i][2]),CGFloat(GesturePositionArray[i][2]))
             
             ovalShapeLayerwork.strokeColor = UIColor.clearColor().CGColor
@@ -102,7 +102,7 @@ class Menu: UIViewController{
             tap.append(tapwork)
             ovalShapeLayerArray.append(ovalShapeLayerwork)
             ovalShapeLayerArray[i].addAnimation(strokeAnimationGroup, forKey: nil)
-            GestureRecognizerViewArray[i].tag = i
+            GestureRecognizerViewArray[i].tag = i+1
             GestureRecognizerViewArray[i].addGestureRecognizer(tap[i])
             AnimationMenuView.addSubview(GestureRecognizerViewArray[i])
             AnimationMenuView.sendSubviewToBack(GestureRecognizerViewArray[i])
@@ -213,14 +213,39 @@ class Menu: UIViewController{
         
     }
     
-    func onTap(gestureRecognizer: UITapGestureRecognizer){
+    func GestureRecognizerTap(gestureRecognizer: UITapGestureRecognizer){
         
         //メニューが出ているときのみ動作
         if(menushow == 1){
-            print("tap")
+            Screentransition(gestureRecognizer.view!.tag)     //画面遷移を行う関数へタグを渡す
         }else{
             //メニューが出ていない時は何も動作しない
         }
+    }
+    
+    func TransitionButtonTap(sender: UIButton){
+        if(menushow == 1){
+            Screentransition(sender.tag)                      //画面遷移を行う関数へタグを渡す
+        }else{
+            //何もしない
+        }
+    }
+    
+    //画面遷移を行う
+    func Screentransition(sendertag: Int){
+        switch(sendertag){
+        case 1:
+            print("時給設定")
+        case 2:
+            print("取り込み")
+        case 3:
+            print("月給表示")
+        case 4:
+            print("開発者ロール")
+        default:
+            break
+        }
+
     }
     
     var finishedcount = 0
@@ -241,7 +266,7 @@ class Menu: UIViewController{
                 ShowTransitionButton()
             }else{//生成している場合は表示だけ行う
                 for(var i = 0; i < 3; i++){
-                       self.transitionButton[i].setTitleColor(UIColor.hex(ColorCode[i], alpha: 1.0), forState: .Normal)
+                    self.transitionButton[i].setTitleColor(UIColor.hex(ColorCode[i], alpha: 1.0), forState: .Normal)
                 }
             }
         }
@@ -292,9 +317,9 @@ class Menu: UIViewController{
             transitionButtonwork.layer.position = CGPoint(x: transitionButtonPosition[i][0], y:transitionButtonPosition[i][1])
             transitionButtonwork.setTitle(transitionButtonTitle[i], forState: .Normal)
             transitionButtonwork.setTitleColor(UIColor.hex(ColorCode[i], alpha: 1.0), forState: .Normal)
-            transitionButtonwork.addTarget(self, action: "onTap:", forControlEvents:.TouchUpInside)
+            transitionButtonwork.addTarget(self, action: "TransitionButtonTap:", forControlEvents:.TouchUpInside)
+            transitionButtonwork.tag = i+1
             transitionButton.append(transitionButtonwork)
-            
             self.AnimationMenuView.addSubview(transitionButton[i])
         }
     }
