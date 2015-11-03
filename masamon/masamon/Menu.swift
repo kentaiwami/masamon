@@ -113,34 +113,8 @@ class Menu: UIViewController{
             self.AnimationMenuView.layer.addSublayer(self.ovalShapeLayerArray[i])
         }
         
-        // 円のCALayer作成
-//        ovalShapeLayer.strokeColor = UIColor.clearColor().CGColor
-//        ovalShapeLayer.fillColor = UIColor.clearColor().CGColor
-//        ovalShapeLayer.lineWidth = 6.0
-
-        // 図形は円形
-//        ovalShapeLayer.path = UIBezierPath(ovalInRect: CGRect(x: view.bounds.size.width/2, y: view.bounds.size.height/2, width: 100.0, height: 100.0)).CGPath
-        
-//        // 輪郭の線をアニメーションする(くるくるする)
-//        let strokeStartAnimation = CABasicAnimation(keyPath: "strokeStart")
-//        strokeStartAnimation.fromValue = -0.5
-//        strokeStartAnimation.toValue = 1.0
-//        
-//        let strokeEndAnimation = CABasicAnimation(keyPath: "strokeEnd")
-//        strokeEndAnimation.fromValue = 0.0
-//        strokeEndAnimation.toValue = 1.0
-//        
-//        
-//        
-//        let strokeAnimationGroup = CAAnimationGroup()
-//        strokeAnimationGroup.duration = 0.2
-//        strokeAnimationGroup.repeatDuration = CFTimeInterval.infinity
-//        strokeAnimationGroup.animations = [strokeStartAnimation,strokeEndAnimation]
-//        ovalShapeLayer.addAnimation(strokeAnimationGroup, forKey: nil)
-        
         //viewへの追加と前後関係の調整
         self.AnimationMenuView.addSubview(circleimageview)
-//        self.AnimationMenuView.layer.addSublayer(self.ovalShapeLayer)
         self.AnimationMenuView.sendSubviewToBack(circleimageview)
         self.view.addSubview(ToolBar)
         self.view.addSubview(MenuButton)
