@@ -6,10 +6,11 @@
 //  Copyright © 2015年 Kenta. All rights reserved.
 //
 
-//TODO: 丸をアニメーションの線にする
+//TODO: 丸をアニメーションの線にする Done
 //TODO: アニメーションから点線を伸ばす
 //TODO: 点線の先にどの画面へ行くのかを文字で表示
 //TODO: ボタンの3つに画面遷移を対応づける
+//TODO: ボタン3つを色分けする
 
 import UIKit
 
