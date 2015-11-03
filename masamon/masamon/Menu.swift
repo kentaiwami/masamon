@@ -6,11 +6,7 @@
 //  Copyright © 2015年 Kenta. All rights reserved.
 //
 
-//TODO: 丸をアニメーションの線にする Done
-//TODO: アニメーションから点線を伸ばす Done
-//TODO: 点線の先にどの画面へ行くのかを文字で表示
 //TODO: ボタンの3つに画面遷移を対応づける
-//TODO: ボタン3つを色分けする Done
 
 import UIKit
 
@@ -153,6 +149,7 @@ class Menu: UIViewController{
     func MenuButtontapped(sender: UIButton){
         
         if(menushow == 0){      //Menuが出てくる
+            
             for(var i = 0; i < 4; i++){         //ぐるぐる円
                 self.ovalShapeLayerArray[i].strokeColor = UIColor.hex(ColorCode[i], alpha: 1.0).CGColor
             }
@@ -164,7 +161,7 @@ class Menu: UIViewController{
                     self.lineShapeLayer[i+3].strokeColor = UIColor.hex(ColorCode[i], alpha: 1.0).CGColor
                 }
             }
-
+            
             UIView.animateWithDuration(0.3, animations: { () -> Void in
                 self.AnimationMenuView.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
                 self.view.bringSubviewToFront(self.AnimationMenuView)
@@ -190,6 +187,14 @@ class Menu: UIViewController{
             for(var i = 0; i < 3; i++){
                 self.lineShapeLayer[i].strokeColor = UIColor.clearColor().CGColor
                 self.lineShapeLayer[i+3].strokeColor = UIColor.clearColor().CGColor
+                
+                if(transitionButton.isEmpty){
+                    
+                }else{
+                    for(var i = 0; i < 3; i++){
+                        self.transitionButton[i].setTitleColor(UIColor.clearColor(), forState: .Normal)
+                    }
+                }
             }
             
             UIView.animateWithDuration(0.3, animations: { () -> Void in
@@ -219,24 +224,30 @@ class Menu: UIViewController{
     }
     
     var finishedcount = 0
-    let moveToPointSecond: [[Int]] = [[110,110],[200,570],[300,640]]
+    let moveToPointSecond: [[Int]] = [[110,110],[200,570],[330,640]]
     let addToPointSecond: [[Int]] = [[248,110],[100,570],[230,640]]
     
     //CAanimation終了後に呼ばれる
     override func animationDidStop(anim: CAAnimation, finished flag: Bool) {
         
         finishedcount++
-
+        
         if(finishedcount == 3){  //最初の線が伸びていくアニメーション終了後
             ShowSecondLine()
         }
         
         if(finishedcount == 6){ //2番目に線が伸びていくアニメーション終了後
-            ShowLabel()
+            if(transitionButton.isEmpty){                               //アニメーションを最後まで見て生成しているかどうかを判断
+                ShowTransitionButton()
+            }else{//生成している場合は表示だけ行う
+                for(var i = 0; i < 3; i++){
+                       self.transitionButton[i].setTitleColor(UIColor.hex(ColorCode[i], alpha: 1.0), forState: .Normal)
+                }
+            }
         }
-        
     }
     
+    //2番目の点線を表示
     func ShowSecondLine(){
         for(var i = 3; i < 6; i++){
             let linework = UIBezierPath()
@@ -269,7 +280,22 @@ class Menu: UIViewController{
         }
     }
     
-    func ShowLabel(){
-        
+    var transitionButton: [UIButton] = []
+    let transitionButtonTitle: [String] = ["時給設定","取り込み","月給表示"]
+    let transitionButtonPosition: [[Int]] = [[150,25],[165,485],[295,555]]
+    
+    func ShowTransitionButton(){
+        for(var i = 0; i < 3; i++){
+            let transitionButtonwork = UIButton()
+            transitionButtonwork.frame = CGRectMake(0, 0, 100, 50)
+            transitionButtonwork.backgroundColor = UIColor.clearColor()
+            transitionButtonwork.layer.position = CGPoint(x: transitionButtonPosition[i][0], y:transitionButtonPosition[i][1])
+            transitionButtonwork.setTitle(transitionButtonTitle[i], forState: .Normal)
+            transitionButtonwork.setTitleColor(UIColor.hex(ColorCode[i], alpha: 1.0), forState: .Normal)
+            transitionButtonwork.addTarget(self, action: "onTap:", forControlEvents:.TouchUpInside)
+            transitionButton.append(transitionButtonwork)
+            
+            self.AnimationMenuView.addSubview(transitionButton[i])
+        }
     }
 }
