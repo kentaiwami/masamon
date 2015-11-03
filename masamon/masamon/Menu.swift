@@ -36,11 +36,11 @@ class Menu: UIViewController{
     var lineShapeLayer: [CAShapeLayer] = []
     var lineAnimation: [CABasicAnimation] = []
     
-//    let ovalShapeLayer = CAShapeLayer()
+    //    let ovalShapeLayer = CAShapeLayer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         //背景を設定
         //        backimageview.image = backimage
         //        backimageview.frame = CGRectMake(0.0, 0.0, self.view.frame.width, self.view.frame.height)
@@ -81,7 +81,7 @@ class Menu: UIViewController{
         strokeAnimationGroup.duration = 0.2
         strokeAnimationGroup.repeatDuration = CFTimeInterval.infinity
         strokeAnimationGroup.animations = [strokeStartAnimation,strokeEndAnimation]
-
+        
         
         
         //遷移ボタンの作成
@@ -123,9 +123,9 @@ class Menu: UIViewController{
             linework.addLineToPoint(CGPointMake(CGFloat(addToPoint[i][0]), CGFloat(addToPoint[i][1])))
             Straightline.append(linework)
             Straightline[i].stroke()
-
+            
             lineShapeLayerwork.path = Straightline[i].CGPath
-            lineShapeLayerwork.strokeColor = UIColor.redColor().CGColor
+            lineShapeLayerwork.strokeColor = UIColor.clearColor().CGColor
             lineShapeLayerwork.lineWidth = 5.0
             lineShapeLayerwork.lineDashPattern = [2,3]
             lineShapeLayer.append(lineShapeLayerwork)
@@ -134,7 +134,7 @@ class Menu: UIViewController{
             lineAnimationwork.toValue = 0.0
             lineAnimationwork.duration = 15.0
             lineAnimation.append(lineAnimationwork)
-
+            
         }
         
         //viewへの追加と前後関係の調整
@@ -152,11 +152,11 @@ class Menu: UIViewController{
     
     //メニューボタンを押した時のアニメーション
     func MenuButtontapped(sender: UIButton){
-   
+        
         if(menushow == 0){      //Menuが出てくる
             for(var i = 0; i < 4; i++){
                 self.ovalShapeLayerArray[i].strokeColor = UIColor.hex(ovalShapeLayerArrayColorCode[i], alpha: 1.0).CGColor
-
+                self.lineShapeLayer[i].strokeColor = UIColor.hex("ffffff", alpha: 1.0).CGColor
             }
             
             UIView.animateWithDuration(0.3, animations: { () -> Void in
@@ -171,14 +171,15 @@ class Menu: UIViewController{
                 self.circleimageview.alpha = 1.0
                 }, completion: { _ in
                     for(var i = 0; i < 4; i++){
-                    self.lineShapeLayer[i].addAnimation(self.lineAnimation[i], forKey: nil)
-                    self.view.layer.addSublayer(self.lineShapeLayer[i])
+                        self.lineShapeLayer[i].addAnimation(self.lineAnimation[i], forKey: nil)
+                        self.view.layer.addSublayer(self.lineShapeLayer[i])
                     }
             })
             
         }else{      //メニューが消える
             for(var i = 0; i < 4; i++){
                 self.ovalShapeLayerArray[i].strokeColor = UIColor.clearColor().CGColor
+                self.lineShapeLayer[i].strokeColor = UIColor.clearColor().CGColor
             }
             
             UIView.animateWithDuration(0.3, animations: { () -> Void in
