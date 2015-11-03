@@ -27,9 +27,15 @@ class Menu: UIViewController{
     
     let GesturePositionArray: [[Int]] = [[225,171,50],[75,260,50],[200,330,50],[145,217,90]] //右上,左下,右下,真ん中
     var GestureRecognizerViewArray: [UIView] = []
-    let ovalShapeLayerArrayColorCode: [String] = ["6648ff","6648ff","6648ff","6648ff"]                                          //ぐるぐる円のRGBカラーコード
+    let ovalShapeLayerArrayColorCode: [String] = ["6648ff","6648ff","6648ff","6648ff"]       //ぐるぐる円のRGBカラーコード
     var ovalShapeLayerArray: [CAShapeLayer] = []
     var tap: [UITapGestureRecognizer] = []
+    let moveToPoint: [[Int]] = [[50,100],[100,100],[150,100],[200,100]]
+    let addToPoint: [[Int]] = [[50,300],[100,300],[150,300],[200,300]]
+    var Straightline: [UIBezierPath] = []
+    var lineShapeLayer: [CAShapeLayer] = []
+    var lineAnimation: [CABasicAnimation] = []
+    
 //    let ovalShapeLayer = CAShapeLayer()
     
     override func viewDidLoad() {
@@ -68,19 +74,15 @@ class Menu: UIViewController{
         let strokeStartAnimation = CABasicAnimation(keyPath: "strokeStart")
         strokeStartAnimation.fromValue = -0.5
         strokeStartAnimation.toValue = 1.0
-        
         let strokeEndAnimation = CABasicAnimation(keyPath: "strokeEnd")
         strokeEndAnimation.fromValue = 0.0
         strokeEndAnimation.toValue = 1.0
-        
-        
-        
         let strokeAnimationGroup = CAAnimationGroup()
         strokeAnimationGroup.duration = 0.2
         strokeAnimationGroup.repeatDuration = CFTimeInterval.infinity
         strokeAnimationGroup.animations = [strokeStartAnimation,strokeEndAnimation]
-//        ovalShapeLayer.addAnimation(strokeAnimationGroup, forKey: nil)
 
+        
         
         //遷移ボタンの作成
         for(var i = 0; i < 4; i++){
@@ -111,6 +113,28 @@ class Menu: UIViewController{
             AnimationMenuView.addSubview(GestureRecognizerViewArray[i])
             AnimationMenuView.sendSubviewToBack(GestureRecognizerViewArray[i])
             self.AnimationMenuView.layer.addSublayer(self.ovalShapeLayerArray[i])
+            
+            //線のアニメーション
+            let linework = UIBezierPath()
+            let lineShapeLayerwork = CAShapeLayer()
+            let lineAnimationwork = CABasicAnimation(keyPath: "strokeStart")
+            
+            linework.moveToPoint(CGPointMake(CGFloat(moveToPoint[i][0]), CGFloat(moveToPoint[i][1])))
+            linework.addLineToPoint(CGPointMake(CGFloat(addToPoint[i][0]), CGFloat(addToPoint[i][1])))
+            Straightline.append(linework)
+            Straightline[i].stroke()
+
+            lineShapeLayerwork.path = Straightline[i].CGPath
+            lineShapeLayerwork.strokeColor = UIColor.redColor().CGColor
+            lineShapeLayerwork.lineWidth = 5.0
+            lineShapeLayerwork.lineDashPattern = [2,3]
+            lineShapeLayer.append(lineShapeLayerwork)
+            
+            lineAnimationwork.fromValue = 1.0
+            lineAnimationwork.toValue = 0.0
+            lineAnimationwork.duration = 15.0
+            lineAnimation.append(lineAnimationwork)
+
         }
         
         //viewへの追加と前後関係の調整
@@ -128,10 +152,11 @@ class Menu: UIViewController{
     
     //メニューボタンを押した時のアニメーション
     func MenuButtontapped(sender: UIButton){
-        
+   
         if(menushow == 0){      //Menuが出てくる
             for(var i = 0; i < 4; i++){
                 self.ovalShapeLayerArray[i].strokeColor = UIColor.hex(ovalShapeLayerArrayColorCode[i], alpha: 1.0).CGColor
+
             }
             
             UIView.animateWithDuration(0.3, animations: { () -> Void in
@@ -145,6 +170,10 @@ class Menu: UIViewController{
                 self.circleimageview.frame = CGRectMake(0, 60, self.view.frame.width, 400)
                 self.circleimageview.alpha = 1.0
                 }, completion: { _ in
+                    for(var i = 0; i < 4; i++){
+                    self.lineShapeLayer[i].addAnimation(self.lineAnimation[i], forKey: nil)
+                    self.view.layer.addSublayer(self.lineShapeLayer[i])
+                    }
             })
             
         }else{      //メニューが消える
