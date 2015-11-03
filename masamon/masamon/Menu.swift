@@ -7,7 +7,7 @@
 //
 
 //TODO: 丸をアニメーションの線にする Done
-//TODO: アニメーションから点線を伸ばす
+//TODO: アニメーションから点線を伸ばす Done
 //TODO: 点線の先にどの画面へ行くのかを文字で表示
 //TODO: ボタンの3つに画面遷移を対応づける
 //TODO: ボタン3つを色分けする
@@ -30,8 +30,8 @@ class Menu: UIViewController{
     let ovalShapeLayerArrayColorCode: [String] = ["6648ff","6648ff","6648ff","6648ff"]       //ぐるぐる円のRGBカラーコード
     var ovalShapeLayerArray: [CAShapeLayer] = []
     var tap: [UITapGestureRecognizer] = []
-    let moveToPoint: [[Int]] = [[248,110],[100,570],[230,640]]
-    let addToPoint: [[Int]] = [[248,270],[100,350],[230,420]]
+    let moveToPointFirst: [[Int]] = [[248,110],[100,570],[230,640]]
+    let addToPointFirst: [[Int]] = [[248,270],[100,350],[230,420]]
     var Straightline: [UIBezierPath] = []
     var lineShapeLayer: [CAShapeLayer] = []
     var lineAnimation: [CABasicAnimation] = []
@@ -121,10 +121,9 @@ class Menu: UIViewController{
             let lineShapeLayerwork = CAShapeLayer()
             let lineAnimationwork = CABasicAnimation(keyPath: "strokeStart")
             
-            linework.moveToPoint(CGPointMake(CGFloat(moveToPoint[i][0]), CGFloat(moveToPoint[i][1])))
-            linework.addLineToPoint(CGPointMake(CGFloat(addToPoint[i][0]), CGFloat(addToPoint[i][1])))
+            linework.moveToPoint(CGPointMake(CGFloat(moveToPointFirst[i][0]), CGFloat(moveToPointFirst[i][1])))
+            linework.addLineToPoint(CGPointMake(CGFloat(addToPointFirst[i][0]), CGFloat(addToPointFirst[i][1])))
             Straightline.append(linework)
-            Straightline[i].stroke()
             
             lineShapeLayerwork.path = Straightline[i].CGPath
             lineShapeLayerwork.strokeColor = UIColor.clearColor().CGColor
@@ -136,7 +135,7 @@ class Menu: UIViewController{
             lineAnimationwork.toValue = 0.0
             lineAnimationwork.duration = 0.3
             lineAnimation.append(lineAnimationwork)
-            
+            lineAnimation[i].delegate = self
         }
         
         //viewへの追加と前後関係の調整
@@ -161,7 +160,11 @@ class Menu: UIViewController{
             }
             
             for(var i = 0; i < 3; i++){
-                self.lineShapeLayer[i].strokeColor = UIColor.hex("ff0000", alpha: 1.0).CGColor
+                self.lineShapeLayer[i].strokeColor = UIColor.hex("ffffff", alpha: 1.0).CGColor
+                
+                if(self.lineShapeLayer.isEmpty){    //aut of indexを避けるため
+                    self.lineShapeLayer[i+3].strokeColor = UIColor.hex("ffffff", alpha: 1.0).CGColor
+                }
             }
 
             UIView.animateWithDuration(0.3, animations: { () -> Void in
@@ -188,6 +191,7 @@ class Menu: UIViewController{
             
             for(var i = 0; i < 3; i++){
                 self.lineShapeLayer[i].strokeColor = UIColor.clearColor().CGColor
+                self.lineShapeLayer[i+3].strokeColor = UIColor.clearColor().CGColor
             }
             
             UIView.animateWithDuration(0.3, animations: { () -> Void in
@@ -201,6 +205,7 @@ class Menu: UIViewController{
             })
             
             self.view.sendSubviewToBack(self.AnimationMenuView)
+            finishedcount = 0
         }
         
     }
@@ -213,5 +218,60 @@ class Menu: UIViewController{
         }else{
             //メニューが出ていない時は何も動作しない
         }
+    }
+    
+    var finishedcount = 0
+    let moveToPointSecond: [[Int]] = [[110,110],[200,570],[300,640]]
+    let addToPointSecond: [[Int]] = [[248,110],[100,570],[230,640]]
+    
+    //CAanimation終了後に呼ばれる
+    override func animationDidStop(anim: CAAnimation, finished flag: Bool) {
+        
+        finishedcount++
+
+        if(finishedcount == 3){  //最初の線が伸びていくアニメーション終了後
+            ShowSecondLine()
+        }
+        
+        if(finishedcount == 6){ //2番目に線が伸びていくアニメーション終了後
+            ShowLabel()
+        }
+        
+    }
+    
+    func ShowSecondLine(){
+        for(var i = 3; i < 6; i++){
+            let linework = UIBezierPath()
+            let lineShapeLayerwork = CAShapeLayer()
+            let lineAnimationwork = CABasicAnimation(keyPath: "strokeStart")
+            
+            linework.moveToPoint(CGPointMake(CGFloat(moveToPointSecond[i-3][0]), CGFloat(moveToPointSecond[i-3][1])))
+            linework.addLineToPoint(CGPointMake(CGFloat(addToPointSecond[i-3][0]), CGFloat(addToPointSecond[i-3][1])))
+            Straightline.append(linework)
+            
+            lineShapeLayerwork.path = Straightline[i].CGPath
+            lineShapeLayerwork.strokeColor = UIColor.clearColor().CGColor
+            lineShapeLayerwork.lineWidth = 2.0
+            lineShapeLayerwork.lineDashPattern = [2,3]
+            lineShapeLayer.append(lineShapeLayerwork)
+            
+            lineAnimationwork.fromValue = 1.0
+            lineAnimationwork.toValue = 0.0
+            lineAnimationwork.duration = 0.3
+            lineAnimation.append(lineAnimationwork)
+            lineAnimation[i].delegate = self
+            
+            //アニメーションの途中でボタンを押されても見えないようにするため
+            if(menushow == 1){
+                self.lineShapeLayer[i].strokeColor = UIColor.hex("ffffff", alpha: 1.0).CGColor
+            }else{
+            }
+            self.lineShapeLayer[i].addAnimation(self.lineAnimation[i], forKey: nil)
+            self.view.layer.addSublayer(self.lineShapeLayer[i])
+        }
+    }
+    
+    func ShowLabel(){
+        
     }
 }
