@@ -10,7 +10,7 @@
 //TODO: アニメーションから点線を伸ばす Done
 //TODO: 点線の先にどの画面へ行くのかを文字で表示
 //TODO: ボタンの3つに画面遷移を対応づける
-//TODO: ボタン3つを色分けする
+//TODO: ボタン3つを色分けする Done
 
 import UIKit
 
@@ -27,7 +27,7 @@ class Menu: UIViewController{
     
     let GesturePositionArray: [[Int]] = [[225,171,50],[75,260,50],[200,330,50],[145,217,90]] //右上,左下,右下,真ん中
     var GestureRecognizerViewArray: [UIView] = []
-    let ovalShapeLayerArrayColorCode: [String] = ["6648ff","6648ff","6648ff","6648ff"]       //ぐるぐる円のRGBカラーコード
+    let ColorCode: [String] = ["b31aa0","277cff","ffff00","000000"]       //ぐるぐる円のRGBカラーコード
     var ovalShapeLayerArray: [CAShapeLayer] = []
     var tap: [UITapGestureRecognizer] = []
     let moveToPointFirst: [[Int]] = [[248,110],[100,570],[230,640]]
@@ -35,8 +35,6 @@ class Menu: UIViewController{
     var Straightline: [UIBezierPath] = []
     var lineShapeLayer: [CAShapeLayer] = []
     var lineAnimation: [CABasicAnimation] = []
-    
-    //    let ovalShapeLayer = CAShapeLayer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -155,15 +153,15 @@ class Menu: UIViewController{
     func MenuButtontapped(sender: UIButton){
         
         if(menushow == 0){      //Menuが出てくる
-            for(var i = 0; i < 4; i++){
-                self.ovalShapeLayerArray[i].strokeColor = UIColor.hex(ovalShapeLayerArrayColorCode[i], alpha: 1.0).CGColor
+            for(var i = 0; i < 4; i++){         //ぐるぐる円
+                self.ovalShapeLayerArray[i].strokeColor = UIColor.hex(ColorCode[i], alpha: 1.0).CGColor
             }
             
-            for(var i = 0; i < 3; i++){
-                self.lineShapeLayer[i].strokeColor = UIColor.hex("ffffff", alpha: 1.0).CGColor
+            for(var i = 0; i < 3; i++){     //１番目の点線
+                self.lineShapeLayer[i].strokeColor = UIColor.hex(ColorCode[i], alpha: 1.0).CGColor
                 
                 if(self.lineShapeLayer.isEmpty){    //aut of indexを避けるため
-                    self.lineShapeLayer[i+3].strokeColor = UIColor.hex("ffffff", alpha: 1.0).CGColor
+                    self.lineShapeLayer[i+3].strokeColor = UIColor.hex(ColorCode[i], alpha: 1.0).CGColor
                 }
             }
 
@@ -263,7 +261,7 @@ class Menu: UIViewController{
             
             //アニメーションの途中でボタンを押されても見えないようにするため
             if(menushow == 1){
-                self.lineShapeLayer[i].strokeColor = UIColor.hex("ffffff", alpha: 1.0).CGColor
+                self.lineShapeLayer[i].strokeColor = UIColor.hex(ColorCode[i-3], alpha: 1.0).CGColor
             }else{
             }
             self.lineShapeLayer[i].addAnimation(self.lineAnimation[i], forKey: nil)
