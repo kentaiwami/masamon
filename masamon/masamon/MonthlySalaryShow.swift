@@ -15,7 +15,7 @@
 import UIKit
 import RealmSwift
 
-class ViewController: Menu,UIPickerViewDelegate, UIPickerViewDataSource{
+class MonthlySalaryShow: Menu,UIPickerViewDelegate, UIPickerViewDataSource{
     
     let shiftdb = ShiftDB()
     let shiftdetaildb = ShiftDetailDB()

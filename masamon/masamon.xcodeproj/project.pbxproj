@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		370ACDFB1BDF486700AB73EB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370ACDFA1BDF486700AB73EB /* AppDelegate.swift */; };
-		370ACDFD1BDF486700AB73EB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370ACDFC1BDF486700AB73EB /* ViewController.swift */; };
+		370ACDFD1BDF486700AB73EB /* MonthlySalaryShow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370ACDFC1BDF486700AB73EB /* MonthlySalaryShow.swift */; };
 		370ACE001BDF486700AB73EB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 370ACDFE1BDF486700AB73EB /* Main.storyboard */; };
 		370ACE021BDF486700AB73EB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 370ACE011BDF486700AB73EB /* Assets.xcassets */; };
 		370ACE051BDF486700AB73EB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 370ACE031BDF486700AB73EB /* LaunchScreen.storyboard */; };
@@ -61,7 +61,7 @@
 /* Begin PBXFileReference section */
 		370ACDF71BDF486600AB73EB /* masamon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = masamon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		370ACDFA1BDF486700AB73EB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		370ACDFC1BDF486700AB73EB /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		370ACDFC1BDF486700AB73EB /* MonthlySalaryShow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlySalaryShow.swift; sourceTree = "<group>"; };
 		370ACDFF1BDF486700AB73EB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		370ACE011BDF486700AB73EB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		370ACE041BDF486700AB73EB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -136,7 +136,7 @@
 			isa = PBXGroup;
 			children = (
 				370ACDFA1BDF486700AB73EB /* AppDelegate.swift */,
-				370ACDFC1BDF486700AB73EB /* ViewController.swift */,
+				370ACDFC1BDF486700AB73EB /* MonthlySalaryShow.swift */,
 				37D4B34B1BE2691400F06759 /* Menu.swift */,
 				376C92D51BE695D000D45FC2 /* extentions.swift */,
 				370ACE431BDF573500AB73EB /* DB.swift */,
@@ -306,7 +306,7 @@
 			files = (
 				37D4B34C1BE2691400F06759 /* Menu.swift in Sources */,
 				370ACE4A1BDF9C8A00AB73EB /* DBmethod.swift in Sources */,
-				370ACDFD1BDF486700AB73EB /* ViewController.swift in Sources */,
+				370ACDFD1BDF486700AB73EB /* MonthlySalaryShow.swift in Sources */,
 				376C92D61BE695D000D45FC2 /* extentions.swift in Sources */,
 				370ACE441BDF573500AB73EB /* DB.swift in Sources */,
 				37D4B3101BE0F59900F06759 /* HourlyPaySetting.swift in Sources */,
