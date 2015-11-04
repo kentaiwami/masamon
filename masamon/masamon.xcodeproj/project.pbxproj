@@ -21,6 +21,7 @@
 		370ACE411BDF572600AB73EB /* RealmSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 370ACE3D1BDF572600AB73EB /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		370ACE441BDF573500AB73EB /* DB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370ACE431BDF573500AB73EB /* DB.swift */; };
 		370ACE4A1BDF9C8A00AB73EB /* DBmethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370ACE491BDF9C8A00AB73EB /* DBmethod.swift */; };
+		371432A81BE98F060088CDCC /* ShiftImport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371432A71BE98F060088CDCC /* ShiftImport.swift */; };
 		376C92D61BE695D000D45FC2 /* extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376C92D51BE695D000D45FC2 /* extentions.swift */; };
 		37D4B3101BE0F59900F06759 /* HourlyPaySetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D4B30F1BE0F59900F06759 /* HourlyPaySetting.swift */; };
 		37D4B34C1BE2691400F06759 /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D4B34B1BE2691400F06759 /* Menu.swift */; };
@@ -77,6 +78,7 @@
 		370ACE3D1BDF572600AB73EB /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RealmSwift.framework; sourceTree = "<group>"; };
 		370ACE431BDF573500AB73EB /* DB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DB.swift; sourceTree = "<group>"; };
 		370ACE491BDF9C8A00AB73EB /* DBmethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBmethod.swift; sourceTree = "<group>"; };
+		371432A71BE98F060088CDCC /* ShiftImport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShiftImport.swift; sourceTree = "<group>"; };
 		376C92D51BE695D000D45FC2 /* extentions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = extentions.swift; sourceTree = "<group>"; };
 		37D4B30F1BE0F59900F06759 /* HourlyPaySetting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HourlyPaySetting.swift; sourceTree = "<group>"; };
 		37D4B34B1BE2691400F06759 /* Menu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
@@ -142,6 +144,7 @@
 				370ACE431BDF573500AB73EB /* DB.swift */,
 				370ACE491BDF9C8A00AB73EB /* DBmethod.swift */,
 				370ACDFE1BDF486700AB73EB /* Main.storyboard */,
+				371432A71BE98F060088CDCC /* ShiftImport.swift */,
 				37D4B30F1BE0F59900F06759 /* HourlyPaySetting.swift */,
 				370ACE011BDF486700AB73EB /* Assets.xcassets */,
 				370ACE031BDF486700AB73EB /* LaunchScreen.storyboard */,
@@ -309,6 +312,7 @@
 				370ACDFD1BDF486700AB73EB /* MonthlySalaryShow.swift in Sources */,
 				376C92D61BE695D000D45FC2 /* extentions.swift in Sources */,
 				370ACE441BDF573500AB73EB /* DB.swift in Sources */,
+				371432A81BE98F060088CDCC /* ShiftImport.swift in Sources */,
 				37D4B3101BE0F59900F06759 /* HourlyPaySetting.swift in Sources */,
 				370ACDFB1BDF486700AB73EB /* AppDelegate.swift in Sources */,
 			);
