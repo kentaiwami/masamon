@@ -6,10 +6,6 @@
 //  Copyright © 2015年 Kenta. All rights reserved.
 //
 
-//TODO: テキストフィールドから血が垂れているようにする
-//TODO: セーブボタンを見やすいイメージにあったやつにする
-//TODO: 全体的に少し下に下げて間隔を調整する Done
-
 import UIKit
 
 class HourlyPaySetting: Menu, UIPickerViewDelegate, UIPickerViewDataSource,UITextFieldDelegate{
