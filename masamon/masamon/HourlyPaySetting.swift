@@ -34,8 +34,8 @@ class HourlyPaySetting: Menu, UIPickerViewDelegate, UIPickerViewDataSource,UITex
     let saveimage = UIImage(named: "../images/save.png")
     let savebutton   = UIButton()
     
-    let catimagepath: [String] = ["../images/cat1.png","../images/cat2.png","../images/cat3.png","../images/cat4.png"]
-    let catinfo: [[Int]] = [[60,166,60],[250,169,70],[60,314,70],[320,385,80]]
+    let catimagepath: [String] = ["../images/cat1.png","../images/cat2.png","../images/cat3.png","../images/cat4.png","../images/cat5.png"]
+    let catinfo: [[Int]] = [[60,166,60],[250,169,70],[60,314,70],[320,385,80],[250,329,50]]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,7 +44,7 @@ class HourlyPaySetting: Menu, UIPickerViewDelegate, UIPickerViewDataSource,UITex
         self.view.backgroundColor = UIColor.hex("ff00ff", alpha: 0.7)
         
         //猫の追加
-        for(var i = 0; i < 4; i++){
+        for(var i = 0; i < 5; i++){
             let catimage = UIImage(named: catimagepath[i])
             let catimageview = UIImageView()
             
