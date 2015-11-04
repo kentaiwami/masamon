@@ -6,10 +6,6 @@
 //  Copyright © 2015年 Kenta. All rights reserved.
 //
 
-//TODO: テキストフィールドから血が垂れているようにする
-//TODO: セーブボタンを見やすいイメージにあったやつにする
-//TODO: 全体的に少し下に下げて間隔を調整する
-
 import UIKit
 
 class HourlyPaySetting: Menu, UIPickerViewDelegate, UIPickerViewDataSource,UITextFieldDelegate{
@@ -25,22 +21,41 @@ class HourlyPaySetting: Menu, UIPickerViewDelegate, UIPickerViewDataSource,UITex
     var myUIPicker2: UIPickerView = UIPickerView()
     
     let time: [String] = ["0:00","0:30","1:00","1:30","2:00","2:30","3:00","3:30","4:00","4:30","5:00","5:30","6:00","6:30","7:00","7:30","8:00","8:30","9:00","9:30","10:00","10:30","11:00","11:30","12:00","12:30","13:00","13:30","14:00","14:30","15:00","15:30","16:00","16:30","17:00","17:30","18:00","18:30","19:00","19:30","20:00","20:00","21:00","21:30","22:00","22:30","23:00","23:30"]
-    let line: [String] = ["〜"]
+    let wavyline: [String] = ["〜"]
     var textfieldrowfrom1 = 10
     var textfieldrowto1 = 44
     var textfieldrowfrom2 = 44
     var textfieldrowto2 = 10
     
-    let saveimage = UIImage(named: "../images/Menu-50_White.png")! as UIImage
+    let saveimage = UIImage(named: "../images/save.png")
     let savebutton   = UIButton()
+    
+    let catimagepath: [String] = ["../images/cat1.png","../images/cat2.png","../images/cat3.png","../images/cat4.png","../images/cat5.png"]
+    let catinfo: [[Int]] = [[60,166,60],[250,169,70],[60,314,70],[320,385,80],[250,329,50]]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         DBmethod().ShowDBpass()
+        
+        self.view.backgroundColor = UIColor.hex("ff00ff", alpha: 0.7)
+        
+        //猫の追加
+        for(var i = 0; i < 5; i++){
+            let catimage = UIImage(named: catimagepath[i])
+            let catimageview = UIImageView()
+            
+            catimageview.frame = CGRectMake(0, 0, CGFloat(catinfo[i][2]), CGFloat(catinfo[i][2]))
+            catimageview.image = catimage
+            catimageview.layer.position = CGPoint(x: catinfo[i][0], y: catinfo[i][1])
+            
+            self.view.addSubview(catimageview)
+            
+        }
+
         //セーブボタンの追加
         savebutton.tag = 0
-        savebutton.frame = CGRectMake(0, 0, 128, 128)
-        savebutton.layer.position = CGPoint(x: self.view.frame.width/2, y:500)
+        savebutton.frame = CGRectMake(0, 0, 100, 100)
+        savebutton.layer.position = CGPoint(x: self.view.frame.width/2, y:550)
         savebutton.setImage(saveimage, forState: .Normal)
         savebutton.addTarget(self, action: "SaveButtontapped:", forControlEvents:.TouchUpInside)
         self.view.addSubview(savebutton)
@@ -142,7 +157,7 @@ class HourlyPaySetting: Menu, UIPickerViewDelegate, UIPickerViewDataSource,UITex
         if(component == 0){
             return time.count
         }else if(component == 1){
-            return line.count
+            return wavyline.count
         }else{
             return time.count
         }
@@ -154,7 +169,7 @@ class HourlyPaySetting: Menu, UIPickerViewDelegate, UIPickerViewDataSource,UITex
         if(component == 0){
             return time[row]
         }else if(component == 1){
-            return line[row]
+            return wavyline[row]
         }else{
             return time[row]
         }
@@ -253,9 +268,9 @@ class HourlyPaySetting: Menu, UIPickerViewDelegate, UIPickerViewDataSource,UITex
         
         if(TimeFrom1.text?.isEmpty == true || TimeTo1.text?.isEmpty == true || TimeFrom2.text?.isEmpty == true || TimeTo2.text?.isEmpty == true || SalalyLabel1.text?.isEmpty == true || SalalyLabel2.text?.isEmpty == true){
             
-            let alertController = UIAlertController(title: "Error!!", message: "全ての項目を埋めないと保存できんぞ", preferredStyle: .Alert)
+            let alertController = UIAlertController(title: "ニャ!!", message: "項目を埋めてから押すニャ", preferredStyle: .Alert)
             
-            let defaultAction = UIAlertAction(title: "懺悔する", style: .Default, handler: nil)
+            let defaultAction = UIAlertAction(title: "ニャーさんに土下座する", style: .Default, handler: nil)
             alertController.addAction(defaultAction)
             
             presentViewController(alertController, animated: true, completion: nil)
