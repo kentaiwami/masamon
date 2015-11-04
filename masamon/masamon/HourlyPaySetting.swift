@@ -34,14 +34,8 @@ class HourlyPaySetting: Menu, UIPickerViewDelegate, UIPickerViewDataSource,UITex
     let saveimage = UIImage(named: "../images/save.png")
     let savebutton   = UIButton()
     
-    let catimage1 = UIImage(named: "../images/cat1.png")
-    let catimageview1 = UIImageView()
-    let catimage2 = UIImage(named: "../images/cat2.png")
-    let catimageview2 = UIImageView()
-    let catimage3 = UIImage(named: "../images/cat3.png")
-    let catimageview3 = UIImageView()
-    let catimage4 = UIImage(named: "../images/cat4.png")
-    let catimageview4 = UIImageView()
+    let catimagepath: [String] = ["../images/cat1.png","../images/cat2.png","../images/cat3.png","../images/cat4.png"]
+    let catinfo: [[Int]] = [[60,166,60],[250,169,70],[60,314,70],[320,385,80]]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,30 +44,18 @@ class HourlyPaySetting: Menu, UIPickerViewDelegate, UIPickerViewDataSource,UITex
         self.view.backgroundColor = UIColor.hex("ff00ff", alpha: 0.7)
         
         //猫の追加
-        catimageview1.frame = CGRectMake(0, 0, 60, 60)
-        catimageview1.image = catimage1
-        catimageview1.layer.position = CGPoint(x: 60, y: 166)
-        self.view.addSubview(catimageview1)
-        
-        catimageview2.frame = CGRectMake(0, 0, 70, 70)
-        catimageview2.image = catimage2
-        catimageview2.layer.position = CGPoint(x: 250, y: 169)
-        self.view.addSubview(catimageview2)
+        for(var i = 0; i < 4; i++){
+            let catimage = UIImage(named: catimagepath[i])
+            let catimageview = UIImageView()
+            
+            catimageview.frame = CGRectMake(0, 0, CGFloat(catinfo[i][2]), CGFloat(catinfo[i][2]))
+            catimageview.image = catimage
+            catimageview.layer.position = CGPoint(x: catinfo[i][0], y: catinfo[i][1])
+            
+            self.view.addSubview(catimageview)
+            
+        }
 
-        catimageview3.frame = CGRectMake(0, 0, 70, 70)
-        catimageview3.image = catimage3
-        catimageview3.layer.position = CGPoint(x: 60, y: 314)
-        self.view.addSubview(catimageview3)
-        
-        catimageview4.frame = CGRectMake(0, 0, 80, 80)
-        catimageview4.image = catimage4
-        catimageview4.layer.position = CGPoint(x: 320, y: 385)
-        self.view.addSubview(catimageview4)
-        
-        
-        
-        
-        
         //セーブボタンの追加
         savebutton.tag = 0
         savebutton.frame = CGRectMake(0, 0, 100, 100)
@@ -290,9 +272,9 @@ class HourlyPaySetting: Menu, UIPickerViewDelegate, UIPickerViewDataSource,UITex
         
         if(TimeFrom1.text?.isEmpty == true || TimeTo1.text?.isEmpty == true || TimeFrom2.text?.isEmpty == true || TimeTo2.text?.isEmpty == true || SalalyLabel1.text?.isEmpty == true || SalalyLabel2.text?.isEmpty == true){
             
-            let alertController = UIAlertController(title: "Error!!", message: "全ての項目を埋めないと保存できんぞ", preferredStyle: .Alert)
+            let alertController = UIAlertController(title: "ニャ!!", message: "項目を埋めてから押すニャ", preferredStyle: .Alert)
             
-            let defaultAction = UIAlertAction(title: "懺悔する", style: .Default, handler: nil)
+            let defaultAction = UIAlertAction(title: "ニャーさんに土下座する", style: .Default, handler: nil)
             alertController.addAction(defaultAction)
             
             presentViewController(alertController, animated: true, completion: nil)
