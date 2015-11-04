@@ -6,6 +6,9 @@
 //  Copyright © 2015年 Kenta. All rights reserved.
 //
 
+//TODO: DBにデータが入っている場合はテキストフィールドに表示する
+//TODO: なければ何も表示しない
+
 import UIKit
 
 class HourlyPaySetting: Menu, UIPickerViewDelegate, UIPickerViewDataSource,UITextFieldDelegate{
