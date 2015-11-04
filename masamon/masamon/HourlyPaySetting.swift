@@ -37,6 +37,9 @@ class HourlyPaySetting: Menu, UIPickerViewDelegate, UIPickerViewDataSource,UITex
     override func viewDidLoad() {
         super.viewDidLoad()
         DBmethod().ShowDBpass()
+        
+        self.view.backgroundColor = UIColor.hex("ff00ff", alpha: 0.7)
+        
         //セーブボタンの追加
         savebutton.tag = 0
         savebutton.frame = CGRectMake(0, 0, 128, 128)
