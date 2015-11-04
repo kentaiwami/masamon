@@ -236,10 +236,16 @@ class Menu: UIViewController{
         switch(sendertag){
         case 1:
             print("時給設定")
+            let targetViewController = self.storyboard!.instantiateViewControllerWithIdentifier("HourlyPaySetting")
+            self.presentViewController( targetViewController, animated: true, completion: nil)
         case 2:
             print("取り込み")
+            let targetViewController = self.storyboard!.instantiateViewControllerWithIdentifier("ShiftImport")
+            self.presentViewController( targetViewController, animated: true, completion: nil)
         case 3:
             print("月給表示")
+            let targetViewController = self.storyboard!.instantiateViewControllerWithIdentifier("MonthlySalaryShow")
+            self.presentViewController( targetViewController, animated: true, completion: nil)
         case 4:
             print("開発者ロール")
         default:
