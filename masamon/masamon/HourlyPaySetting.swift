@@ -31,8 +31,17 @@ class HourlyPaySetting: Menu, UIPickerViewDelegate, UIPickerViewDataSource,UITex
     var textfieldrowfrom2 = 44
     var textfieldrowto2 = 10
     
-    let saveimage = UIImage(named: "../images/Menu-50_White.png")! as UIImage
+    let saveimage = UIImage(named: "../images/save.png")
     let savebutton   = UIButton()
+    
+    let catimage1 = UIImage(named: "../images/cat1.png")
+    let catimageview1 = UIImageView()
+    let catimage2 = UIImage(named: "../images/cat2.png")
+    let catimageview2 = UIImageView()
+    let catimage3 = UIImage(named: "../images/cat3.png")
+    let catimageview3 = UIImageView()
+    let catimage4 = UIImage(named: "../images/cat4.png")
+    let catimageview4 = UIImageView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,10 +49,35 @@ class HourlyPaySetting: Menu, UIPickerViewDelegate, UIPickerViewDataSource,UITex
         
         self.view.backgroundColor = UIColor.hex("ff00ff", alpha: 0.7)
         
+        //猫の追加
+        catimageview1.frame = CGRectMake(0, 0, 60, 60)
+        catimageview1.image = catimage1
+        catimageview1.layer.position = CGPoint(x: 60, y: 166)
+        self.view.addSubview(catimageview1)
+        
+        catimageview2.frame = CGRectMake(0, 0, 70, 70)
+        catimageview2.image = catimage2
+        catimageview2.layer.position = CGPoint(x: 250, y: 169)
+        self.view.addSubview(catimageview2)
+
+        catimageview3.frame = CGRectMake(0, 0, 70, 70)
+        catimageview3.image = catimage3
+        catimageview3.layer.position = CGPoint(x: 60, y: 314)
+        self.view.addSubview(catimageview3)
+        
+        catimageview4.frame = CGRectMake(0, 0, 80, 80)
+        catimageview4.image = catimage4
+        catimageview4.layer.position = CGPoint(x: 320, y: 385)
+        self.view.addSubview(catimageview4)
+        
+        
+        
+        
+        
         //セーブボタンの追加
         savebutton.tag = 0
-        savebutton.frame = CGRectMake(0, 0, 128, 128)
-        savebutton.layer.position = CGPoint(x: self.view.frame.width/2, y:500)
+        savebutton.frame = CGRectMake(0, 0, 100, 100)
+        savebutton.layer.position = CGPoint(x: self.view.frame.width/2, y:550)
         savebutton.setImage(saveimage, forState: .Normal)
         savebutton.addTarget(self, action: "SaveButtontapped:", forControlEvents:.TouchUpInside)
         self.view.addSubview(savebutton)
