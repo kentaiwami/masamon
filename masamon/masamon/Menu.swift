@@ -32,6 +32,8 @@ class Menu: UIViewController{
     var lineShapeLayer: [CAShapeLayer] = []
     var lineAnimation: [CABasicAnimation] = []
     
+    let strokeAnimationGroup = CAAnimationGroup()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -71,7 +73,6 @@ class Menu: UIViewController{
         let strokeEndAnimation = CABasicAnimation(keyPath: "strokeEnd")
         strokeEndAnimation.fromValue = 0.0
         strokeEndAnimation.toValue = 1.0
-        let strokeAnimationGroup = CAAnimationGroup()
         strokeAnimationGroup.duration = 0.2
         strokeAnimationGroup.repeatDuration = CFTimeInterval.infinity
         strokeAnimationGroup.animations = [strokeStartAnimation,strokeEndAnimation]
@@ -101,12 +102,10 @@ class Menu: UIViewController{
             GestureRecognizerViewArray.append(GestureRecognizerViewwork)
             tap.append(tapwork)
             ovalShapeLayerArray.append(ovalShapeLayerwork)
-            ovalShapeLayerArray[i].addAnimation(strokeAnimationGroup, forKey: nil)
             GestureRecognizerViewArray[i].tag = i+1
             GestureRecognizerViewArray[i].addGestureRecognizer(tap[i])
             AnimationMenuView.addSubview(GestureRecognizerViewArray[i])
             AnimationMenuView.sendSubviewToBack(GestureRecognizerViewArray[i])
-            self.AnimationMenuView.layer.addSublayer(self.ovalShapeLayerArray[i])
         }
         
         //線のアニメーション
@@ -151,6 +150,8 @@ class Menu: UIViewController{
         if(menushow == 0){      //Menuが出てくる
             
             for(var i = 0; i < 4; i++){         //ぐるぐる円
+                self.ovalShapeLayerArray[i].addAnimation(strokeAnimationGroup, forKey: nil)
+                self.AnimationMenuView.layer.addSublayer(self.ovalShapeLayerArray[i])
                 self.ovalShapeLayerArray[i].strokeColor = UIColor.hex(ColorCode[i], alpha: 1.0).CGColor
             }
             
