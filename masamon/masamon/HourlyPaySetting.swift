@@ -42,6 +42,23 @@ class HourlyPaySetting: Menu, UIPickerViewDelegate, UIPickerViewDataSource,UITex
         
         self.view.backgroundColor = UIColor.hex("ff00ff", alpha: 0.7)
         
+        if(DBmethod().HourlyPayRecordGet().isEmpty){
+            print("nil")
+        }else{
+            var test: [HourlyPay]
+            test = DBmethod().HourlyPayRecordGet()
+            print(test[0].timefrom)
+            TimeFrom1.text = ""
+            TimeTo1.text = ""
+            TimeFrom2.text = ""
+            TimeTo2.text = ""
+            SalalyLabel1.text = ""
+            SalalyLabel2.text = ""
+        }
+        
+        
+        
+        
         //猫の追加
         for(var i = 0; i < 5; i++){
             let catimage = UIImage(named: catimagepath[i])

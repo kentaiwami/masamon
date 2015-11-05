@@ -33,7 +33,7 @@ class DBmethod: UIViewController {
         print(dataContent)
     }
     
-    //カードリストの大きさを返す
+    //シフトDBの大きさを返す
     func ShiftDBSize() -> Int {
         var shiftdbcount = 0
         
@@ -66,6 +66,7 @@ class DBmethod: UIViewController {
         return saraly
     }
     
+    //データベースのパスを表示
     func ShowDBpass(){
         do{
             print(try Realm().path)
@@ -73,5 +74,13 @@ class DBmethod: UIViewController {
             //Error
         }
 
+    }
+    //TODO: レコードを1件ずつ取得して配列に格納する
+    //時給設定の情報を配列にして返す
+    func HourlyPayRecordGet() -> [HourlyPay]{
+        
+        var array: [HourlyPay] = []
+        
+        return array
     }
 }
