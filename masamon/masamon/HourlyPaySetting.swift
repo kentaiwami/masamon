@@ -6,8 +6,7 @@
 //  Copyright © 2015年 Kenta. All rights reserved.
 //
 
-//TODO: DBにデータが入っている場合はテキストフィールドに表示する
-//TODO: なければ何も表示しない
+//TODO: 背景をもう少し目に優しくする？
 
 import UIKit
 
@@ -42,18 +41,18 @@ class HourlyPaySetting: Menu, UIPickerViewDelegate, UIPickerViewDataSource,UITex
         
         self.view.backgroundColor = UIColor.hex("ff00ff", alpha: 0.7)
         
+        //時給がすでに登録されていたら登録内容を表示する
         if(DBmethod().HourlyPayRecordGet().isEmpty){
-            print("nil")
+            print("HourlyPayRecord is nil")
         }else{
-            var test: [HourlyPay]
-            test = DBmethod().HourlyPayRecordGet()
-            print(test[0].timefrom)
-            TimeFrom1.text = ""
-            TimeTo1.text = ""
-            TimeFrom2.text = ""
-            TimeTo2.text = ""
-            SalalyLabel1.text = ""
-            SalalyLabel2.text = ""
+            let test = DBmethod().HourlyPayRecordGet()
+
+            TimeFrom1.text = time[Int(test[0].timefrom * 2)]
+            TimeTo1.text = time[Int(test[0].timeto * 2)]
+            TimeFrom2.text = time[Int(test[1].timefrom * 2)]
+            TimeTo2.text = time[Int(test[1].timeto * 2)]
+            SalalyLabel1.text = String(test[0].pay)
+            SalalyLabel2.text = String(test[1].pay)
         }
         
         

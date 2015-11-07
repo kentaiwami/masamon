@@ -12,12 +12,12 @@ import RealmSwift
 
 class DBmethod: UIViewController {
 
-    //データベースへの追加
+    //データベースへの追加(ID重複の場合は上書き)
     func add(record: Object){
         do{
             let realm = try Realm()
             try realm.write{
-                realm.add(record)
+                realm.add(record, update: true)
             }
         }catch{
             //Error
@@ -71,16 +71,15 @@ class DBmethod: UIViewController {
         do{
             print(try Realm().path)
         }catch{
-            //Error
+            print("ShowDBpassError")
         }
 
     }
     //TODO: レコードを1件ずつ取得して配列に格納する
     //時給設定の情報を配列にして返す
-    func HourlyPayRecordGet() -> [HourlyPay]{
-        
-        var array: [HourlyPay] = []
-        
-        return array
+    func HourlyPayRecordGet() -> Results<HourlyPay>{
+        let realm = try! Realm()
+        return realm.objects(HourlyPay)
     }
+    
 }
