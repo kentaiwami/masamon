@@ -148,7 +148,7 @@ class Menu: UIViewController{
     func MenuButtontapped(sender: UIButton){
         
         if(menushow == 0){      //Menuが出てくる
-            
+            self.MenuButton.enabled = false
             for(var i = 0; i < 4; i++){         //ぐるぐる円
                 self.ovalShapeLayerArray[i].addAnimation(strokeAnimationGroup, forKey: nil)
                 self.AnimationMenuView.layer.addSublayer(self.ovalShapeLayerArray[i])
@@ -269,6 +269,7 @@ class Menu: UIViewController{
         }
         
         if(finishedcount == 6){ //2番目に線が伸びていくアニメーション終了後
+            self.MenuButton.enabled = true
             if(transitionButton.isEmpty){                               //アニメーションを最後まで見て生成しているかどうかを判断
                 ShowTransitionButton()
             }else{//生成している場合は表示だけ行う
