@@ -84,6 +84,8 @@ class HourlyPaySetting: Menu, UIPickerViewDelegate, UIPickerViewDataSource,UITex
         TimeTo1.delegate = self
         TimeFrom2.delegate = self
         TimeTo2.delegate = self
+        SalalyLabel1.delegate = self
+        SalalyLabel2.delegate = self
         TimeFrom1.tag = 1
         TimeTo1.tag = 1
         TimeFrom2.tag = 2
