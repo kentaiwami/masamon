@@ -13,7 +13,7 @@ import RealmSwift
 class DBmethod: UIViewController {
 
     //データベースへの追加(ID重複の場合は上書き)
-    func add(record: Object){
+    func AddandUpdate(record: Object){
         do{
             let realm = try Realm()
             try realm.write{
