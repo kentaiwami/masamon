@@ -32,4 +32,8 @@ class HourlyPay: Object{
     dynamic var timefrom = 0.0  //開始時間
     dynamic var timeto = 0.0    //終了時間
     dynamic var pay = 0         //時給を記録
+    
+    override class func primaryKey() -> String {
+        return "id"
+    }
 }

@@ -12,12 +12,12 @@ import RealmSwift
 
 class DBmethod: UIViewController {
 
-    //データベースへの追加
-    func add(record: Object){
+    //データベースへの追加(ID重複の場合は上書き)
+    func AddandUpdate(record: Object){
         do{
             let realm = try Realm()
             try realm.write{
-                realm.add(record)
+                realm.add(record, update: true)
             }
         }catch{
             //Error
@@ -33,7 +33,7 @@ class DBmethod: UIViewController {
         print(dataContent)
     }
     
-    //カードリストの大きさを返す
+    //シフトDBの大きさを返す
     func ShiftDBSize() -> Int {
         var shiftdbcount = 0
         
@@ -66,12 +66,20 @@ class DBmethod: UIViewController {
         return saraly
     }
     
+    //データベースのパスを表示
     func ShowDBpass(){
         do{
             print(try Realm().path)
         }catch{
-            //Error
+            print("ShowDBpassError")
         }
 
     }
+    //TODO: レコードを1件ずつ取得して配列に格納する
+    //時給設定の情報を配列にして返す
+    func HourlyPayRecordGet() -> Results<HourlyPay>{
+        let realm = try! Realm()
+        return realm.objects(HourlyPay)
+    }
+    
 }
