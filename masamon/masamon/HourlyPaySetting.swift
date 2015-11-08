@@ -68,7 +68,7 @@ class HourlyPaySetting: Menu, UIPickerViewDelegate, UIPickerViewDataSource,UITex
             catimageview.image = catimage
             catimageview.layer.position = CGPoint(x: catinfo[i][0], y: catinfo[i][1])
             
-            self.view.addSubview(catimageview)
+            self.HPSView.addSubview(catimageview)
             
         }
         
