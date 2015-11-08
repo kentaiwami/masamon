@@ -7,7 +7,6 @@
 //
 
 //TODO: 背景をもう少し目に優しくする？
-//TODO: キーボードが出る位置をもう少し下にする
 
 import UIKit
 
@@ -37,20 +36,21 @@ class HourlyPaySetting: Menu, UIPickerViewDelegate, UIPickerViewDataSource,UITex
     let catimagepath: [String] = ["../images/cat1.png","../images/cat2.png","../images/cat3.png","../images/cat4.png","../images/cat5.png"]
     let catinfo: [[Int]] = [[60,166,60],[250,169,70],[60,314,70],[320,385,80],[250,329,50]]
     
+    @IBOutlet weak var HPSView: UIView!
     var txtActiveField = UITextField()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         DBmethod().ShowDBpass()
         
-        self.view.backgroundColor = UIColor.hex("ff00ff", alpha: 0.7)
-        
+        self.HPSView.backgroundColor = UIColor.hex("ff00ff", alpha: 0.7)
+
         //時給がすでに登録されていたら登録内容を表示する
         if(DBmethod().HourlyPayRecordGet().isEmpty){
             print("HourlyPayRecord is nil")
         }else{
             let test = DBmethod().HourlyPayRecordGet()
-
+            
             TimeFrom1.text = time[Int(test[0].timefrom * 2)]
             TimeTo1.text = time[Int(test[0].timeto * 2)]
             TimeFrom2.text = time[Int(test[1].timefrom * 2)]
@@ -58,9 +58,6 @@ class HourlyPaySetting: Menu, UIPickerViewDelegate, UIPickerViewDataSource,UITex
             SalalyLabel1.text = String(test[0].pay)
             SalalyLabel2.text = String(test[1].pay)
         }
-        
-        
-        
         
         //猫の追加
         for(var i = 0; i < 5; i++){
@@ -74,7 +71,7 @@ class HourlyPaySetting: Menu, UIPickerViewDelegate, UIPickerViewDataSource,UITex
             self.view.addSubview(catimageview)
             
         }
-
+        
         //セーブボタンの追加
         savebutton.tag = 0
         savebutton.frame = CGRectMake(0, 0, 100, 100)
@@ -170,54 +167,6 @@ class HourlyPaySetting: Menu, UIPickerViewDelegate, UIPickerViewDataSource,UITex
         super.didReceiveMemoryWarning()
     }
     
-    
-    func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
-        txtActiveField = textField
-        return true
-    }
-    
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
-        view.endEditing(true)
-        return true
-    }
-    
-    func handleKeyboardWillShowNotification(notification: NSNotification) {
-        
-        let userInfo = notification.userInfo!
-        let keyboardScreenEndFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
-        let myBoundSize: CGSize = UIScreen.mainScreen().bounds.size
-        
-        let txtLimit = txtActiveField.frame.origin.y + txtActiveField.frame.height + 8.0
-        let kbdLimit = myBoundSize.height - keyboardScreenEndFrame.size.height
-        
-        print("テキストフィールドの下辺：(txtLimit)")
-        print("キーボードの上辺：(kbdLimit)")
-        
-        if txtLimit >= kbdLimit {
-            AddScrollView.contentOffset.y = txtLimit - kbdLimit
-        }
-    }
-    
-    func handleKeyboardWillHideNotification(notification: NSNotification) {
-        AddScrollView.contentOffset.y = 0
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        let notificationCenter = NSNotificationCenter.defaultCenter()
-        notificationCenter.addObserver(self, selector: "handleKeyboardWillShowNotification:", name: UIKeyboardWillShowNotification, object: nil)
-        notificationCenter.addObserver(self, selector: "handleKeyboardWillHideNotification:", name: UIKeyboardWillHideNotification, object: nil)
-    }
-    
-    override func viewDidDisappear(animated: Bool) {
-        super.viewDidDisappear(animated)
-        
-        let notificationCenter = NSNotificationCenter.defaultCenter()
-        notificationCenter.removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
-        notificationCenter.removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
-    }
-
     //表示列
     func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
         return 3
@@ -368,4 +317,53 @@ class HourlyPaySetting: Menu, UIPickerViewDelegate, UIPickerViewDataSource,UITex
             presentViewController(alertController, animated: true, completion: nil)
         }
     }
+    
+    //テキストフィールドが入力状態になった際に動作
+    func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
+        txtActiveField = textField
+        return true
+    }
+    //リターンキーを押した時に動作
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        view.endEditing(true)
+        return true
+    }
+    
+    func handleKeyboardWillShowNotification(notification: NSNotification) {
+        
+        let userInfo = notification.userInfo!
+        let keyboardScreenEndFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
+        let myBoundSize: CGSize = UIScreen.mainScreen().bounds.size
+        
+        let txtLimit = txtActiveField.frame.origin.y + txtActiveField.frame.height + 8.0
+        let kbdLimit = myBoundSize.height - keyboardScreenEndFrame.size.height
+        
+        print("テキストフィールドの下辺：(txtLimit)")
+        print("キーボードの上辺：(kbdLimit)")
+        
+        if txtLimit >= kbdLimit {
+            AddScrollView.contentOffset.y = txtLimit - kbdLimit
+        }
+    }
+    
+    func handleKeyboardWillHideNotification(notification: NSNotification) {
+        AddScrollView.contentOffset.y = 0
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        let notificationCenter = NSNotificationCenter.defaultCenter()
+        notificationCenter.addObserver(self, selector: "handleKeyboardWillShowNotification:", name: UIKeyboardWillShowNotification, object: nil)
+        notificationCenter.addObserver(self, selector: "handleKeyboardWillHideNotification:", name: UIKeyboardWillHideNotification, object: nil)
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        let notificationCenter = NSNotificationCenter.defaultCenter()
+        notificationCenter.removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
+        notificationCenter.removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+    }
+    
 }
