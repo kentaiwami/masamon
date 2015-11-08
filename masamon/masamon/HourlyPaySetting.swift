@@ -307,6 +307,13 @@ class HourlyPaySetting: Menu, UIPickerViewDelegate, UIPickerViewDataSource,UITex
             
             DBmethod().AddandUpdate(hourlypayrecord1)
             DBmethod().AddandUpdate(hourlypayrecord2)
+            
+            let alertController = UIAlertController(title: "ニャ!!", message: "保存したニャ", preferredStyle: .Alert)
+            
+            let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+            alertController.addAction(defaultAction)
+            
+            presentViewController(alertController, animated: true, completion: nil)
         }
     }
 }
