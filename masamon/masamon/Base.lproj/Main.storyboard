@@ -127,12 +127,17 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ReX-lv-aWl">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <animations/>
+                            </scrollView>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
+                        <outlet property="AddScrollView" destination="ReX-lv-aWl" id="Fhr-vg-9Bp"/>
                         <outlet property="SalalyLabel1" destination="5om-Ih-YdK" id="2zj-Zs-aKt"/>
                         <outlet property="SalalyLabel2" destination="Ngr-tK-qPC" id="xA5-Bh-lW0"/>
                         <outlet property="TimeFrom1" destination="WZn-fS-lGq" id="m1W-6b-pDX"/>
