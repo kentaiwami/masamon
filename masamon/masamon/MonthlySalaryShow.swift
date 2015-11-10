@@ -10,7 +10,6 @@
 //TODO: シフトが誰と一緒なのかを表示
 //TODO: 今日のシフトは何番なのかを表示
 //TODO: ShiftDetailDBにサンプルデータを入れる
-//T0DO: Coreanimation？を使ってメニューボタンの演出を行う
 
 import UIKit
 import RealmSwift
@@ -27,6 +26,7 @@ class MonthlySalaryShow: Menu,UIPickerViewDelegate, UIPickerViewDataSource{
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        DBmethod().ShowDBpass()
         self.view.backgroundColor = UIColor.whiteColor()
         shiftdb.id = 1
         shiftdb.name = "2015年8月シフト"
