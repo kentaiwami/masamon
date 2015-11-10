@@ -152,7 +152,7 @@
 				370ACDF91BDF486600AB73EB /* masamon */,
 				370ACE0E1BDF486700AB73EB /* masamonTests */,
 				370ACE191BDF486700AB73EB /* masamonUITests */,
-				37F1E2951BF21126000A22B0 /* masamon act */,
+				37F1E2951BF21126000A22B0 /* PDF,ExcelAction */,
 				370ACDF81BDF486600AB73EB /* Products */,
 			);
 			sourceTree = "<group>";
@@ -205,13 +205,14 @@
 			path = masamonUITests;
 			sourceTree = "<group>";
 		};
-		37F1E2951BF21126000A22B0 /* masamon act */ = {
+		37F1E2951BF21126000A22B0 /* PDF,ExcelAction */ = {
 			isa = PBXGroup;
 			children = (
 				37F1E2961BF21126000A22B0 /* ActionViewController.swift */,
 				37F1E2981BF21126000A22B0 /* MainInterface.storyboard */,
 				37F1E29B1BF21126000A22B0 /* Info.plist */,
 			);
+			name = "PDF,ExcelAction";
 			path = "masamon act";
 			sourceTree = "<group>";
 		};
