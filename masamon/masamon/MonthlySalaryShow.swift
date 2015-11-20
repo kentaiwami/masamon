@@ -16,6 +16,7 @@ import RealmSwift
 
 class MonthlySalaryShow: Menu,UIPickerViewDelegate, UIPickerViewDataSource{
     
+    @IBOutlet weak var testlabel: UILabel!
     let shiftdb = ShiftDB()
     let shiftdetaildb = ShiftDetailDB()
     let shiftlist: NSMutableArray = []
@@ -25,6 +26,13 @@ class MonthlySalaryShow: Menu,UIPickerViewDelegate, UIPickerViewDataSource{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+ 
+        let app:AppDelegate =
+        (UIApplication.sharedApplication().delegate as! AppDelegate)
+        print(app.fileURL)
+        
+        
         
         DBmethod().ShowDBpass()
         self.view.backgroundColor = UIColor.whiteColor()
