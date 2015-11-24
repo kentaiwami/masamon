@@ -25,7 +25,6 @@
 		376C92D61BE695D000D45FC2 /* extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376C92D51BE695D000D45FC2 /* extentions.swift */; };
 		37D4B3101BE0F59900F06759 /* HourlyPaySetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D4B30F1BE0F59900F06759 /* HourlyPaySetting.swift */; };
 		37D4B34C1BE2691400F06759 /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D4B34B1BE2691400F06759 /* Menu.swift */; };
-		37F1E29E1BF21126000A22B0 /* masamon act.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 37F1E2941BF21126000A22B0 /* masamon act.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,13 +41,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 370ACDF61BDF486600AB73EB;
 			remoteInfo = masamon;
-		};
-		37F1E29C1BF21126000A22B0 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 370ACDEF1BDF486600AB73EB /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 37F1E2931BF21126000A22B0;
-			remoteInfo = "masamon act";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -71,7 +63,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				37F1E29E1BF21126000A22B0 /* masamon act.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -101,7 +92,6 @@
 		376C92D51BE695D000D45FC2 /* extentions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = extentions.swift; sourceTree = "<group>"; };
 		37D4B30F1BE0F59900F06759 /* HourlyPaySetting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HourlyPaySetting.swift; sourceTree = "<group>"; };
 		37D4B34B1BE2691400F06759 /* Menu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
-		37F1E2941BF21126000A22B0 /* masamon act.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "masamon act.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,13 +112,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		370ACE131BDF486700AB73EB /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		37F1E2911BF21126000A22B0 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -157,7 +140,6 @@
 				370ACDF71BDF486600AB73EB /* masamon.app */,
 				370ACE0B1BDF486700AB73EB /* masamonTests.xctest */,
 				370ACE161BDF486700AB73EB /* masamonUITests.xctest */,
-				37F1E2941BF21126000A22B0 /* masamon act.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -215,7 +197,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				37F1E29D1BF21126000A22B0 /* PBXTargetDependency */,
 			);
 			name = masamon;
 			productName = masamon;
@@ -258,23 +239,6 @@
 			productReference = 370ACE161BDF486700AB73EB /* masamonUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
-		37F1E2931BF21126000A22B0 /* masamon act */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 37F1E2A11BF21126000A22B0 /* Build configuration list for PBXNativeTarget "masamon act" */;
-			buildPhases = (
-				37F1E2901BF21126000A22B0 /* Sources */,
-				37F1E2911BF21126000A22B0 /* Frameworks */,
-				37F1E2921BF21126000A22B0 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "masamon act";
-			productName = "masamon act";
-			productReference = 37F1E2941BF21126000A22B0 /* masamon act.appex */;
-			productType = "com.apple.product-type.app-extension";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -299,10 +263,6 @@
 						DevelopmentTeam = TLVYAZUQZL;
 						TestTargetID = 370ACDF61BDF486600AB73EB;
 					};
-					37F1E2931BF21126000A22B0 = {
-						CreatedOnToolsVersion = 7.1;
-						DevelopmentTeam = TLVYAZUQZL;
-					};
 				};
 			};
 			buildConfigurationList = 370ACDF21BDF486600AB73EB /* Build configuration list for PBXProject "masamon" */;
@@ -321,7 +281,6 @@
 				370ACDF61BDF486600AB73EB /* masamon */,
 				370ACE0A1BDF486700AB73EB /* masamonTests */,
 				370ACE151BDF486700AB73EB /* masamonUITests */,
-				37F1E2931BF21126000A22B0 /* masamon act */,
 			);
 		};
 /* End PBXProject section */
@@ -346,13 +305,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		370ACE141BDF486700AB73EB /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		37F1E2921BF21126000A22B0 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -393,13 +345,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		37F1E2901BF21126000A22B0 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -412,11 +357,6 @@
 			isa = PBXTargetDependency;
 			target = 370ACDF61BDF486600AB73EB /* masamon */;
 			targetProxy = 370ACE171BDF486700AB73EB /* PBXContainerItemProxy */;
-		};
-		37F1E29D1BF21126000A22B0 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 37F1E2931BF21126000A22B0 /* masamon act */;
-			targetProxy = 37F1E29C1BF21126000A22B0 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -599,28 +539,6 @@
 			};
 			name = Release;
 		};
-		37F1E29F1BF21126000A22B0 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = "masamon act/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.Kenta.masamon.masamon-act";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-			};
-			name = Debug;
-		};
-		37F1E2A01BF21126000A22B0 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = "masamon act/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.Kenta.masamon.masamon-act";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -656,15 +574,6 @@
 			buildConfigurations = (
 				370ACE261BDF486700AB73EB /* Debug */,
 				370ACE271BDF486700AB73EB /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		37F1E2A11BF21126000A22B0 /* Build configuration list for PBXNativeTarget "masamon act" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				37F1E29F1BF21126000A22B0 /* Debug */,
-				37F1E2A01BF21126000A22B0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

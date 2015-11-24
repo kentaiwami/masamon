@@ -43,7 +43,8 @@ class HourlyPaySetting: Menu, UIPickerViewDelegate, UIPickerViewDataSource,UITex
         super.viewDidLoad()
         DBmethod().ShowDBpass()
         
-        self.HPSView.backgroundColor = UIColor.hex("ff00ff", alpha: 0.7)
+        //self.HPSView.backgroundColor = UIColor.hex("ff00ff", alpha: 0.7)
+        self.HPSView.backgroundColor = UIColor(patternImage: UIImage(named: "../images/aaa.png")!)
 
         //時給がすでに登録されていたら登録内容を表示する
         if(DBmethod().HourlyPayRecordGet().isEmpty){
