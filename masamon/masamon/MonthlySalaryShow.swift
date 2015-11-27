@@ -26,13 +26,10 @@ class MonthlySalaryShow: Menu,UIPickerViewDelegate, UIPickerViewDataSource{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        print("unko")
  
-        let app:AppDelegate =
-        (UIApplication.sharedApplication().delegate as! AppDelegate)
-        print(app.fileURL)
-        
-        
+        let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得
+        print("fileURL=>" + appDelegate.fileURL)
         
         DBmethod().ShowDBpass()
         self.view.backgroundColor = UIColor.whiteColor()
