@@ -10,13 +10,20 @@ import UIKit
 
 class ShiftImport: Menu{
 
+    let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得
+    @IBOutlet weak var Label: UILabel!
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        Label.text = appDelegate.fileURL    //アプリを起動しながらファイルコピーした時に表示される
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
 
+    func TEST(path: String){
+        Label.text = path
+    }
 }
