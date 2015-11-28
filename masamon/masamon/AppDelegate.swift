@@ -25,31 +25,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
-        var flg = true
+        if(DBmethod().InboxFileCountDBSize() == 0){
+            //レコードを追加
+            let InboxFileCountRecord = InboxFileCount()
+            InboxFileCountRecord.id = 0
+            InboxFileCountRecord.counts = 0
+            DBmethod().AddandUpdate(InboxFileCountRecord)
+        }else{
+            //何もしない
+        }
         
         let storyboard:UIStoryboard =  UIStoryboard(name: "Main",bundle:nil)
         var viewController:UIViewController
         
-        if(self.fileURL.isEmpty){
-            flg = true
-        }else{
-            flg = false
-        }
-        
         let filemanager:NSFileManager = NSFileManager()
         let files = filemanager.enumeratorAtPath(NSHomeDirectory() + "/Documents/Inbox")
-
+        
         while let file = files?.nextObject() {
             print(file)
             filecount++
         }
         print("ファイルの数=>" + String(filecount))
-        //ファイルの数をデータベースへ記録
         
         //表示するビューコントローラーを指定
-        if  flg {
+        if(DBmethod().InboxFileCountsGet() < self.filecount){   //ファイル数が増えていたら(新規でダウンロードしていたら)
+            //ファイルの数をデータベースへ記録
+            let InboxFileCountRecord = InboxFileCount()
+            InboxFileCountRecord.id = 0
+            InboxFileCountRecord.counts = filecount
+            DBmethod().AddandUpdate(InboxFileCountRecord)
+            
             viewController = storyboard.instantiateViewControllerWithIdentifier("firstViewController") as UIViewController
-        } else {
+        }else{
             viewController = storyboard.instantiateViewControllerWithIdentifier("secondViewController") as UIViewController
         }
         

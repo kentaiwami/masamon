@@ -82,4 +82,27 @@ class DBmethod: UIViewController {
         return realm.objects(HourlyPayDB)
     }
     
+    //Inbox内のファイル数を返す
+    func InboxFileCountsGet() -> Int{
+        var count = 0
+        
+        let realm = try! Realm()
+        count = realm.objects(InboxFileCount).filter("id = %@", 0)[0].counts
+        
+        return count
+    }
+    
+    //InboxFileCountDBの大きさを返す
+    func InboxFileCountDBSize() -> Int {
+        var inboxfilecount = 0
+        
+        do{
+            inboxfilecount = try (Realm().objects(InboxFileCount).count)
+            
+        }catch{
+            //Error
+        }
+        return inboxfilecount
+    }
+
 }
