@@ -13,6 +13,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     var fileURL = ""
+    var filecount = 0
     
     func application(app: UIApplication, openURL url: NSURL, options: [String : AnyObject]) -> Bool {
         fileURL = String(url)
@@ -40,8 +41,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         while let file = files?.nextObject() {
             print(file)
+            filecount++
         }
-        
+        print("ファイルの数=>" + String(filecount))
         //表示するビューコントローラーを指定
         if  flg {
             viewController = storyboard.instantiateViewControllerWithIdentifier("firstViewController") as UIViewController
@@ -50,7 +52,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         
-        window?.rootViewController = viewController
+      //  window?.rootViewController = viewController
         return true
     }
     

@@ -26,7 +26,6 @@ class MonthlySalaryShow: Menu,UIPickerViewDelegate, UIPickerViewDataSource{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("unko")
  
         let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得
         print("fileURL=>" + appDelegate.fileURL)

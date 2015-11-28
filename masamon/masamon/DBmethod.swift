@@ -77,9 +77,9 @@ class DBmethod: UIViewController {
     }
     //TODO: レコードを1件ずつ取得して配列に格納する
     //時給設定の情報を配列にして返す
-    func HourlyPayRecordGet() -> Results<HourlyPay>{
+    func HourlyPayRecordGet() -> Results<HourlyPayDB>{
         let realm = try! Realm()
-        return realm.objects(HourlyPay)
+        return realm.objects(HourlyPayDB)
     }
     
 }

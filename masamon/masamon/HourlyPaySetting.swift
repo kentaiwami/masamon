@@ -298,8 +298,8 @@ class HourlyPaySetting: Menu, UIPickerViewDelegate, UIPickerViewDataSource,UITex
             
             presentViewController(alertController, animated: true, completion: nil)
         }else{
-            let hourlypayrecord1 = HourlyPay()
-            let hourlypayrecord2 = HourlyPay()
+            let hourlypayrecord1 = HourlyPayDB()
+            let hourlypayrecord2 = HourlyPayDB()
             hourlypayrecord1.id = 1
             hourlypayrecord1.timefrom = Double(time.indexOf(TimeFrom1.text!)!)-(Double(time.indexOf(TimeFrom1.text!)!)*0.5)
             hourlypayrecord1.timeto = Double(time.indexOf(TimeTo1.text!)!)-(Double(time.indexOf(TimeTo1.text!)!)*0.5)
