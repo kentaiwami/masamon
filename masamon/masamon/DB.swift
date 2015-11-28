@@ -38,6 +38,7 @@ class HourlyPayDB: Object{
     }
 }
 
-//class : Object {
-//    
-//}
+class InboxFileCount: Object {
+    dynamic var id = 0
+    dynamic var counts = 0
+}
