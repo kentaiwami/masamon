@@ -30,7 +30,7 @@ class MonthlySalaryShow: Menu,UIPickerViewDelegate, UIPickerViewDataSource{
         super.viewDidLoad()
  
         //アプリがアクティブになったとき
-        notificationCenter.addObserver(self,selector: "TEST",name:UIApplicationDidBecomeActiveNotification,object: nil)
+        notificationCenter.addObserver(self,selector: "MonthlySalaryShowViewActived",name:UIApplicationDidBecomeActiveNotification,object: nil)
         
         print("fileURL=>" + appDelegate.fileURL)
         
@@ -92,7 +92,7 @@ class MonthlySalaryShow: Menu,UIPickerViewDelegate, UIPickerViewDataSource{
         SaralyLabel.text = String(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB)-row))
     }
     
-    func TEST(){
+    func MonthlySalaryShowViewActived(){
         appDelegate.viewswitch()
         notificationCenter.removeObserver(self)
     }
