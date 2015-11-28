@@ -25,7 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
-        var flg: Bool //分岐条件
+        var flg = true
         
         let storyboard:UIStoryboard =  UIStoryboard(name: "Main",bundle:nil)
         var viewController:UIViewController
@@ -44,6 +44,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             filecount++
         }
         print("ファイルの数=>" + String(filecount))
+        //ファイルの数をデータベースへ記録
+        
         //表示するビューコントローラーを指定
         if  flg {
             viewController = storyboard.instantiateViewControllerWithIdentifier("firstViewController") as UIViewController
@@ -52,7 +54,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         
-      //  window?.rootViewController = viewController
+        window?.rootViewController = viewController
         return true
     }
     

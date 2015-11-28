@@ -41,4 +41,8 @@ class HourlyPayDB: Object{
 class InboxFileCount: Object {
     dynamic var id = 0
     dynamic var counts = 0
+    
+    override class func primaryKey() -> String {
+        return "id"
+    }
 }
