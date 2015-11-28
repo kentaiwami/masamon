@@ -13,7 +13,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     var fileURL = ""
-    var filecount = 0
     
     func application(app: UIApplication, openURL url: NSURL, options: [String : AnyObject]) -> Bool {
         fileURL = String(url)
@@ -24,44 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        
-        if(DBmethod().DBRecordCount(InboxFileCount) == 0){
-            //レコードを追加
-            let InboxFileCountRecord = InboxFileCount()
-            InboxFileCountRecord.id = 0
-            InboxFileCountRecord.counts = 0
-            DBmethod().AddandUpdate(InboxFileCountRecord)
-        }else{
-            //何もしない
-        }
-        
-        let storyboard:UIStoryboard =  UIStoryboard(name: "Main",bundle:nil)
-        var viewController:UIViewController
-        
-        let filemanager:NSFileManager = NSFileManager()
-        let files = filemanager.enumeratorAtPath(NSHomeDirectory() + "/Documents/Inbox")
-        
-        while let file = files?.nextObject() {
-            print(file)
-            filecount++
-        }
-        print("ファイルの数=>" + String(filecount))
-        
-        //表示するビューコントローラーを指定
-        if(DBmethod().InboxFileCountsGet() < self.filecount){   //ファイル数が増えていたら(新規でダウンロードしていたら)
-            //ファイルの数をデータベースへ記録
-            let InboxFileCountRecord = InboxFileCount()
-            InboxFileCountRecord.id = 0
-            InboxFileCountRecord.counts = filecount
-            DBmethod().AddandUpdate(InboxFileCountRecord)
-            
-            viewController = storyboard.instantiateViewControllerWithIdentifier("firstViewController") as UIViewController
-        }else{
-            viewController = storyboard.instantiateViewControllerWithIdentifier("secondViewController") as UIViewController
-        }
-        
-        
-        window?.rootViewController = viewController
+        viewswitch()
         return true
     }
     
@@ -87,5 +49,45 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
     
+    func viewswitch(){
+        print("viewswitch 起動なう")
+        if(DBmethod().DBRecordCount(InboxFileCount) == 0){
+            //レコードを追加
+            let InboxFileCountRecord = InboxFileCount()
+            InboxFileCountRecord.id = 0
+            InboxFileCountRecord.counts = 0
+            DBmethod().AddandUpdate(InboxFileCountRecord)
+        }else{
+            //何もしない
+        }
+        
+        let storyboard:UIStoryboard =  UIStoryboard(name: "Main",bundle:nil)
+        var viewController:UIViewController
+        
+        let filemanager:NSFileManager = NSFileManager()
+        let files = filemanager.enumeratorAtPath(NSHomeDirectory() + "/Documents/Inbox")
+        var filecount = 0
+        while let file = files?.nextObject() {
+            print(file)
+            filecount++
+        }
+        print("ファイルの数=>" + String(filecount))
+        
+        //表示するビューコントローラーを指定
+        if(DBmethod().InboxFileCountsGet() < filecount){   //ファイル数が増えていたら(新規でダウンロードしていたら)
+            //ファイルの数をデータベースへ記録
+            let InboxFileCountRecord = InboxFileCount()
+            InboxFileCountRecord.id = 0
+            InboxFileCountRecord.counts = filecount
+            DBmethod().AddandUpdate(InboxFileCountRecord)
+            
+            viewController = storyboard.instantiateViewControllerWithIdentifier("firstViewController") as UIViewController
+        }else{
+            viewController = storyboard.instantiateViewControllerWithIdentifier("MonthlySalaryShow") as UIViewController
+        }
+        
+        
+        window?.rootViewController = viewController
+    }
 }
 

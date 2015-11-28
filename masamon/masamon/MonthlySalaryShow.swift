@@ -21,13 +21,17 @@ class MonthlySalaryShow: Menu,UIPickerViewDelegate, UIPickerViewDataSource{
     let shiftdetaildb = ShiftDetailDB()
     let shiftlist: NSMutableArray = []
     var myUIPicker: UIPickerView = UIPickerView()
-    
     @IBOutlet weak var SaralyLabel: UILabel!
+    
+    let notificationCenter = NSNotificationCenter.defaultCenter()
+    let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得
     
     override func viewDidLoad() {
         super.viewDidLoad()
  
-        let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得
+        //アプリがアクティブになったとき
+        notificationCenter.addObserver(self,selector: "TEST",name:UIApplicationDidBecomeActiveNotification,object: nil)
+        
         print("fileURL=>" + appDelegate.fileURL)
         
         DBmethod().ShowDBpass()
@@ -86,6 +90,11 @@ class MonthlySalaryShow: Menu,UIPickerViewDelegate, UIPickerViewDataSource{
         //        print("列: \(row)")
         //        print("値: \(shiftlist[row])")
         SaralyLabel.text = String(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB)-row))
+    }
+    
+    func TEST(){
+        appDelegate.viewswitch()
+        notificationCenter.removeObserver(self)
     }
 }
 
