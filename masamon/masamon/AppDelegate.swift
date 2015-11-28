@@ -25,7 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
-        if(DBmethod().InboxFileCountDBSize() == 0){
+        if(DBmethod().DBRecordCount(InboxFileCount) == 0){
             //レコードを追加
             let InboxFileCountRecord = InboxFileCount()
             InboxFileCountRecord.id = 0

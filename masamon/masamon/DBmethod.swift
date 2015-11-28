@@ -33,17 +33,17 @@ class DBmethod: UIViewController {
         print(dataContent)
     }
     
-    //シフトDBの大きさを返す
-    func ShiftDBSize() -> Int {
-        var shiftdbcount = 0
+    //指定したDBのレコード数を返す
+    func DBRecordCount(DBName: Object.Type) -> Int {
+        var dbrecordcount = 0
         
         do{
-            shiftdbcount = try (Realm().objects(ShiftDB).count)
+            dbrecordcount = try (Realm().objects(DBName).count)
 
         }catch{
             //Error
         }
-        return shiftdbcount
+        return dbrecordcount
     }
     
     //レコードのIDを受け取って名前を返す
@@ -91,18 +91,4 @@ class DBmethod: UIViewController {
         
         return count
     }
-    
-    //InboxFileCountDBの大きさを返す
-    func InboxFileCountDBSize() -> Int {
-        var inboxfilecount = 0
-        
-        do{
-            inboxfilecount = try (Realm().objects(InboxFileCount).count)
-            
-        }catch{
-            //Error
-        }
-        return inboxfilecount
-    }
-
 }

@@ -52,13 +52,13 @@ class MonthlySalaryShow: Menu,UIPickerViewDelegate, UIPickerViewDataSource{
         
         //NSArrayへの追加
         let newNSArray = shiftlist
-        if(DBmethod().ShiftDBSize() != 0){
-            for(var i = DBmethod().ShiftDBSize()-1; i >= 0; i--){
+        if(DBmethod().DBRecordCount(ShiftDB) != 0){
+            for(var i = DBmethod().DBRecordCount(ShiftDB)-1; i >= 0; i--){
                 newNSArray.addObject(DBmethod().ShiftDBNameGet(i+1))
             }
             
             //pickerviewのデフォルト表示
-            SaralyLabel.text = String(DBmethod().ShiftDBSaralyGet(DBmethod().ShiftDBSize()))
+            SaralyLabel.text = String(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB)))
         }
     }
     
@@ -85,7 +85,7 @@ class MonthlySalaryShow: Menu,UIPickerViewDelegate, UIPickerViewDataSource{
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         //        print("列: \(row)")
         //        print("値: \(shiftlist[row])")
-        SaralyLabel.text = String(DBmethod().ShiftDBSaralyGet(DBmethod().ShiftDBSize()-row))
+        SaralyLabel.text = String(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB)-row))
     }
 }
 
