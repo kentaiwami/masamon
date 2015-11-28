@@ -15,10 +15,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var fileURL = ""
     
     func application(app: UIApplication, openURL url: NSURL, options: [String : AnyObject]) -> Bool {
+        fileURL = ""
         fileURL = String(url)
-        
-        print(fileURL)
-        
+        //DBへパスを記録
+        let filepathrecord = FilePathTmp()
+        filepathrecord.id = 0
+        filepathrecord.path = fileURL
+        DBmethod().AddandUpdate(filepathrecord)
         return true
     }
     

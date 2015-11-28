@@ -46,3 +46,12 @@ class InboxFileCount: Object {
         return "id"
     }
 }
+
+class FilePathTmp: Object{
+    dynamic var id = 0
+    dynamic var path = ""
+    
+    override class func primaryKey() -> String {
+        return "id"
+    }
+}

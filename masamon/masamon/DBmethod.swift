@@ -91,4 +91,12 @@ class DBmethod: UIViewController {
         
         return count
     }
+    
+    func FilePathTmpGet() -> String{
+        var path = ""
+        
+        let realm = try! Realm()
+        path = realm.objects(FilePathTmp).filter("id = %@", 0)[0].path
+        return path
+    }
 }

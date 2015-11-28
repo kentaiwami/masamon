@@ -11,19 +11,28 @@ import UIKit
 class ShiftImport: Menu{
 
     let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得
+    let notificationCenter = NSNotificationCenter.defaultCenter()
+    
     @IBOutlet weak var Label: UILabel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        Label.text = appDelegate.fileURL    //アプリを起動しながらファイルコピーした時に表示される
+        //アプリがアクティブになったとき
+        notificationCenter.addObserver(self,selector: "ShiftImportViewActived",name:UIApplicationDidBecomeActiveNotification,object: nil)
+        
+//        if(DBmethod().FilePathTmpGet().isEmpty){
+//            Label.text = "nil!!!!"
+//        }else{
+//            Label.text = "not nil"
+//        }
+        Label.text = DBmethod().FilePathTmpGet()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
 
-    func TEST(path: String){
-        Label.text = path
+    func ShiftImportViewActived(){
+        Label.text = DBmethod().FilePathTmpGet()
     }
 }
