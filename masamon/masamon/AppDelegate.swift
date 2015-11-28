@@ -35,51 +35,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             flg = false
         }
         
-        let documentsPath = NSURL(fileURLWithPath: NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0])
-        
-        print(documentsPath)
-        let unko = String(documentsPath) + "Inbox/"
-        print(unko)
-        
-//        let fileMgr = NSFileManager.defaultManager()
-        
-//        if let enumerator: NSDirectoryEnumerator = fileMgr.enumeratorAtPath(String(unko)) {
-//            while let element = enumerator.nextObject() as? String {
-//                print(element)
-//            }
-//        }
-        
         let filemanager:NSFileManager = NSFileManager()
-        let files = filemanager.enumeratorAtPath(NSHomeDirectory())
-        filemanager.enumeratorAtPath()
+        let files = filemanager.enumeratorAtPath(NSHomeDirectory() + "/Documents/Inbox")
+
         while let file = files?.nextObject() {
             print(file)
         }
-        
-//        // ドキュメントフォルダのパス文字列を取得
-//        var paths: [AnyObject] = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
-//        var aDirectory: String = paths[0] as! String
-//        var error: NSErrorPointer
-//        // zipファイルを列挙してみる
-//        var suffix: String = ".zip"
-//        // ファイルマネージャクラスを取得
-//        var fileManager: NSFileManager = NSFileManager.defaultManager()
-//        // ドキュメントディレクトリ直下の.zipで終わるファイル名のファイルを列挙
-//        do{
-//            for path: String in try fileManager.contentsOfDirectoryAtPath(aDirectory){
-//                var attrs: [NSObject : AnyObject] = try fileManager.attributesOfItemAtPath(path)
-//                // レギュラーファイルで且つ.zipで終わるもの
-//                if .Regular.compare(attrs[NSFileType]) && path.hasSuffix(suffix) {
-//                    // ファイル名だけなので、ディレクトリへのパスにアペンド
-//                    var fullPath: String = documentsDirectory.stringByAppendingPathComponent(path)
-//                    var fullPath1: String =
-//                    /*do somthing to fullPath*/
-//                }
-//                
-//            }
-//        }catch{
-//            print("Error")
-//        }
         
         //表示するビューコントローラーを指定
         if  flg {
