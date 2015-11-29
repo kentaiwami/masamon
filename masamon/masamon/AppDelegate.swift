@@ -73,9 +73,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             //何もしない
         }
         
-        let storyboard:UIStoryboard =  UIStoryboard(name: "Main",bundle:nil)
-        var viewController:UIViewController
-        
         let filemanager:NSFileManager = NSFileManager()
         let files = filemanager.enumeratorAtPath(NSHomeDirectory() + "/Documents/Inbox")
         var filecount = 0
@@ -84,6 +81,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         //表示するビューコントローラーを指定
+        let storyboard:UIStoryboard =  UIStoryboard(name: "Main",bundle:nil)
+        var viewController:UIViewController
+        
         if(DBmethod().InboxFileCountsGet() < filecount){   //ファイル数が増えていたら(新規でダウンロードしていたら)
             //ファイルの数をデータベースへ記録
             let InboxFileCountRecord = InboxFileCount()
