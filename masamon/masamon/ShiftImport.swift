@@ -35,6 +35,7 @@ class ShiftImport: UIViewController{
     }
     
     @IBAction func cancel(sender: AnyObject) {
+        //TODO: コピーしたファイルの削除を実装
         self.dismissViewControllerAnimated(true, completion: nil)
 
     }
