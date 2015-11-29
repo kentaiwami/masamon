@@ -34,7 +34,8 @@ class ShiftImport: UIViewController{
         //まだ未定
     }
     
-    func cancel(sender: UIButton){
-        //画面を閉じる(下に下がっていく感じ)
+    @IBAction func cancel(sender: AnyObject) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+
     }
 }

@@ -236,7 +236,11 @@
                                 <animations/>
                                 <items>
                                     <navigationItem title="シフト取り込み" id="ryy-dr-qF6">
-                                        <barButtonItem key="leftBarButtonItem" title="キャンセル" id="vkC-RF-0mK"/>
+                                        <barButtonItem key="leftBarButtonItem" title="キャンセル" id="vkC-RF-0mK">
+                                            <connections>
+                                                <action selector="cancel:" destination="8Lc-eg-fgw" id="OGq-cG-0XD"/>
+                                            </connections>
+                                        </barButtonItem>
                                         <barButtonItem key="rightBarButtonItem" title="取り込む" id="dOw-E5-E9o"/>
                                     </navigationItem>
                                 </items>
