@@ -10,7 +10,6 @@ import UIKit
 
 class ShiftImport: UIViewController{
 
-    let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得
     let notificationCenter = NSNotificationCenter.defaultCenter()
     
     @IBOutlet weak var Label: UILabel!
@@ -25,13 +24,6 @@ class ShiftImport: UIViewController{
         }else{
             Label.text = DBmethod().FilePathTmpGet()
         }
-        
-        
-        let rightBarButtonItem:UIBarButtonItem = UIBarButtonItem(title: "取り込む", style: UIBarButtonItemStyle.Plain, target: self, action: "xlsximport:")
-        let leftBarButtonItem:UIBarButtonItem = UIBarButtonItem(title: "キャンセル", style: UIBarButtonItemStyle.Plain, target: self, action: "cancel:")
-//        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
-        
-        self.navigationItem.setRightBarButtonItems([rightBarButtonItem], animated: true)
     }
 
     override func didReceiveMemoryWarning() {
