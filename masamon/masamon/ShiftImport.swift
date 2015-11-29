@@ -9,15 +9,11 @@
 import UIKit
 
 class ShiftImport: UIViewController{
-
-    let notificationCenter = NSNotificationCenter.defaultCenter()
     
     @IBOutlet weak var Label: UILabel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        //アプリがアクティブになったとき
-        notificationCenter.addObserver(self,selector: "ShiftImportViewActived",name:UIApplicationDidBecomeActiveNotification,object: nil)
         
         if(DBmethod().FilePathTmpGet().isEmpty){
             Label.text = "nil"
@@ -35,10 +31,10 @@ class ShiftImport: UIViewController{
     }
     
     func xlsximport(sender: UIButton){
-        
+        //まだ未定
     }
     
     func cancel(sender: UIButton){
-        
+        //画面を閉じる(下に下がっていく感じ)
     }
 }

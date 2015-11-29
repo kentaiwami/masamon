@@ -94,8 +94,28 @@ class MonthlySalaryShow: Menu,UIPickerViewDelegate, UIPickerViewDataSource{
     
     //月給表示画面が表示(アプリがアクティブ)されたら呼ばれる
     func MonthlySalaryShowViewActived(){
-        appDelegate.viewswitch()
-        notificationCenter.removeObserver(self)
+        print("a")
+        //ファイル数のカウント
+        let filemanager:NSFileManager = NSFileManager()
+        let files = filemanager.enumeratorAtPath(NSHomeDirectory() + "/Documents/Inbox")
+        var filecount = 0
+        while let _ = files?.nextObject() {
+            filecount++
+            print("bbb")
+        }
+
+        if(DBmethod().InboxFileCountsGet() < filecount){   //ファイル数が増えていたら(新規でダウンロードしていたら)
+            //ファイルの数をデータベースへ記録
+            let InboxFileCountRecord = InboxFileCount()
+            InboxFileCountRecord.id = 0
+            InboxFileCountRecord.counts = filecount
+            DBmethod().AddandUpdate(InboxFileCountRecord)
+            
+            let targetViewController = self.storyboard!.instantiateViewControllerWithIdentifier("ShiftImport")
+            self.presentViewController( targetViewController, animated: true, completion: nil)
+        }else{
+            
+        }
     }
 }
 
