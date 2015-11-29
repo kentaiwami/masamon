@@ -29,6 +29,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        //InboxFileCountに空レコード(ダミー)を追加
+        if(DBmethod().DBRecordCount(InboxFileCount) == 0){
+            //レコードを追加
+            let InboxFileCountRecord = InboxFileCount()
+            InboxFileCountRecord.id = 0
+            InboxFileCountRecord.counts = 0
+            DBmethod().AddandUpdate(InboxFileCountRecord)
+        }
+        
+        //FilePathTmpに空レコード(ダミー)を追加
+        if(DBmethod().DBRecordCount(FilePathTmp) == 0){
+            let aaa = FilePathTmp()
+            aaa.id = 0
+            aaa.path = "nil"
+            DBmethod().AddandUpdate(aaa)
+        }
         
         viewswitch()        //アプリ起動後にファイル数の比較をして画面遷移を決定
         return true
@@ -46,16 +62,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationWillEnterForeground(application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+        
     }
     
     func applicationDidBecomeActive(application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-//        print("PATH=>" + self.fileURL)
-        if(fileURL.isEmpty){
-            
-        }else{
-            print("[applicationDidBecomeActive]   " + "PATH=>" + fileURL)
-        }
     }
     
     func applicationWillTerminate(application: UIApplication) {
@@ -63,16 +74,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func viewswitch(){
-        if(DBmethod().DBRecordCount(InboxFileCount) == 0){
-            //レコードを追加
-            let InboxFileCountRecord = InboxFileCount()
-            InboxFileCountRecord.id = 0
-            InboxFileCountRecord.counts = 0
-            DBmethod().AddandUpdate(InboxFileCountRecord)
-        }else{
-            //何もしない
-        }
-        
+        //ファイル数のカウント
         let filemanager:NSFileManager = NSFileManager()
         let files = filemanager.enumeratorAtPath(NSHomeDirectory() + "/Documents/Inbox")
         var filecount = 0
