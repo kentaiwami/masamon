@@ -20,12 +20,13 @@ class ShiftImport: Menu{
         //アプリがアクティブになったとき
         notificationCenter.addObserver(self,selector: "ShiftImportViewActived",name:UIApplicationDidBecomeActiveNotification,object: nil)
         
-//        if(DBmethod().FilePathTmpGet().isEmpty){
-//            Label.text = "nil!!!!"
-//        }else{
-//            Label.text = "not nil"
-//        }
-        Label.text = DBmethod().FilePathTmpGet()
+        print("[ShiftImport]   " + "PATH=>" + DBmethod().FilePathTmpGet())
+        
+        if(DBmethod().FilePathTmpGet().isEmpty){
+            Label.text = "nil"
+        }else{
+            Label.text = DBmethod().FilePathTmpGet()
+        }
     }
 
     override func didReceiveMemoryWarning() {
