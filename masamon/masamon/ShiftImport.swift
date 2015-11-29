@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ShiftImport: Menu{
+class ShiftImport: UIViewController{
 
     let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得
     let notificationCenter = NSNotificationCenter.defaultCenter()
@@ -19,9 +19,7 @@ class ShiftImport: Menu{
         super.viewDidLoad()
         //アプリがアクティブになったとき
         notificationCenter.addObserver(self,selector: "ShiftImportViewActived",name:UIApplicationDidBecomeActiveNotification,object: nil)
-        
-        print("[ShiftImport]   " + "PATH=>" + DBmethod().FilePathTmpGet())
-        
+                
         if(DBmethod().FilePathTmpGet().isEmpty){
             Label.text = "nil"
         }else{
