@@ -8,19 +8,12 @@
 
 import UIKit
 
-class ShiftImport: Menu{
-
-    let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得
-    let notificationCenter = NSNotificationCenter.defaultCenter()
+class ShiftImport: UIViewController{
     
     @IBOutlet weak var Label: UILabel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        //アプリがアクティブになったとき
-        notificationCenter.addObserver(self,selector: "ShiftImportViewActived",name:UIApplicationDidBecomeActiveNotification,object: nil)
-        
-        print("[ShiftImport]   " + "PATH=>" + DBmethod().FilePathTmpGet())
         
         if(DBmethod().FilePathTmpGet().isEmpty){
             Label.text = "nil"
@@ -35,5 +28,15 @@ class ShiftImport: Menu{
 
     func ShiftImportViewActived(){
         Label.text = DBmethod().FilePathTmpGet()
+    }
+    
+    func xlsximport(sender: UIButton){
+        //まだ未定
+    }
+    
+    @IBAction func cancel(sender: AnyObject) {
+        //TODO: コピーしたファイルの削除を実装
+        self.dismissViewControllerAnimated(true, completion: nil)
+
     }
 }

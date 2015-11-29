@@ -40,13 +40,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         //FilePathTmpに空レコード(ダミー)を追加
         if(DBmethod().DBRecordCount(FilePathTmp) == 0){
-            let aaa = FilePathTmp()
-            aaa.id = 0
-            aaa.path = "nil"
-            DBmethod().AddandUpdate(aaa)
+            let FilePathTmpRecord = FilePathTmp()
+            FilePathTmpRecord.id = 0
+            FilePathTmpRecord.path = "nil"
+            DBmethod().AddandUpdate(FilePathTmpRecord)
         }
-        
-        viewswitch()        //アプリ起動後にファイル数の比較をして画面遷移を決定
         return true
     }
     
@@ -73,33 +71,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
     
-    func viewswitch(){
-        //ファイル数のカウント
-        let filemanager:NSFileManager = NSFileManager()
-        let files = filemanager.enumeratorAtPath(NSHomeDirectory() + "/Documents/Inbox")
-        var filecount = 0
-        while let _ = files?.nextObject() {
-            filecount++
-        }
+    func filecount(){
+//        //ファイル数のカウント
+//        let filemanager:NSFileManager = NSFileManager()
+//        let files = filemanager.enumeratorAtPath(NSHomeDirectory() + "/Documents/Inbox")
+//        var filecount = 0
+//        while let _ = files?.nextObject() {
+//            filecount++
+//        }
         
-        //表示するビューコントローラーを指定
-        let storyboard:UIStoryboard =  UIStoryboard(name: "Main",bundle:nil)
-        var viewController:UIViewController
-        
-        if(DBmethod().InboxFileCountsGet() < filecount){   //ファイル数が増えていたら(新規でダウンロードしていたら)
-            //ファイルの数をデータベースへ記録
-            let InboxFileCountRecord = InboxFileCount()
-            InboxFileCountRecord.id = 0
-            InboxFileCountRecord.counts = filecount
-            DBmethod().AddandUpdate(InboxFileCountRecord)
-            
-            viewController = storyboard.instantiateViewControllerWithIdentifier("ShiftImport") as UIViewController
-        }else{
-            viewController = storyboard.instantiateViewControllerWithIdentifier("MonthlySalaryShow") as UIViewController
-        }
-        
-        
-        window?.rootViewController = viewController
+//        if(DBmethod().InboxFileCountsGet() < filecount){   //ファイル数が増えていたら(新規でダウンロードしていたら)
+//            //ファイルの数をデータベースへ記録
+//            let InboxFileCountRecord = InboxFileCount()
+//            InboxFileCountRecord.id = 0
+//            InboxFileCountRecord.counts = filecount
+//            DBmethod().AddandUpdate(InboxFileCountRecord)
+//            
+//        }else{
+//            
+//        }
     }
 }
 
