@@ -19,12 +19,19 @@ class ShiftImport: UIViewController{
         super.viewDidLoad()
         //アプリがアクティブになったとき
         notificationCenter.addObserver(self,selector: "ShiftImportViewActived",name:UIApplicationDidBecomeActiveNotification,object: nil)
-                
+        
         if(DBmethod().FilePathTmpGet().isEmpty){
             Label.text = "nil"
         }else{
             Label.text = DBmethod().FilePathTmpGet()
         }
+        
+        
+        let rightBarButtonItem:UIBarButtonItem = UIBarButtonItem(title: "取り込む", style: UIBarButtonItemStyle.Plain, target: self, action: "xlsximport:")
+        let leftBarButtonItem:UIBarButtonItem = UIBarButtonItem(title: "キャンセル", style: UIBarButtonItemStyle.Plain, target: self, action: "cancel:")
+//        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
+        
+        self.navigationItem.setRightBarButtonItems([rightBarButtonItem], animated: true)
     }
 
     override func didReceiveMemoryWarning() {
@@ -33,5 +40,13 @@ class ShiftImport: UIViewController{
 
     func ShiftImportViewActived(){
         Label.text = DBmethod().FilePathTmpGet()
+    }
+    
+    func xlsximport(sender: UIButton){
+        
+    }
+    
+    func cancel(sender: UIButton){
+        
     }
 }
