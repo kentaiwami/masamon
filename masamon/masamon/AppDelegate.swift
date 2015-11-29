@@ -17,6 +17,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(app: UIApplication, openURL url: NSURL, options: [String : AnyObject]) -> Bool {
         fileURL = ""
         fileURL = String(url)
+        
+        print("[applicationopenURL]   " + "PATH=>" + fileURL)
+        
         //DBへパスを記録
         let filepathrecord = FilePathTmp()
         filepathrecord.id = 0
@@ -51,7 +54,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if(fileURL.isEmpty){
             
         }else{
-            print("PATH=>" + fileURL)
+            print("[applicationDidBecomeActive]   " + "PATH=>" + fileURL)
         }
     }
     
