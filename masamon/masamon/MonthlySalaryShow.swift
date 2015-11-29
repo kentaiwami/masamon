@@ -32,9 +32,9 @@ class MonthlySalaryShow: Menu,UIPickerViewDelegate, UIPickerViewDataSource{
         //アプリがアクティブになったとき
         notificationCenter.addObserver(self,selector: "MonthlySalaryShowViewActived",name:UIApplicationDidBecomeActiveNotification,object: nil)
         
-        print("fileURL=>" + appDelegate.fileURL)
+        //print("fileURL=>" + appDelegate.fileURL)
         
-        DBmethod().ShowDBpass()
+//        DBmethod().ShowDBpass()
         self.view.backgroundColor = UIColor.whiteColor()
         shiftdb.id = 1
         shiftdb.name = "2015年8月シフト"
@@ -92,6 +92,7 @@ class MonthlySalaryShow: Menu,UIPickerViewDelegate, UIPickerViewDataSource{
         SaralyLabel.text = String(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB)-row))
     }
     
+    //月給表示画面が表示(アプリがアクティブ)されたら呼ばれる
     func MonthlySalaryShowViewActived(){
         appDelegate.viewswitch()
         notificationCenter.removeObserver(self)
