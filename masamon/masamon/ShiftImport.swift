@@ -13,6 +13,10 @@ class ShiftImport: UIViewController{
     @IBOutlet weak var Label: UILabel!
     @IBOutlet weak var textfield: UITextField!
 
+    let filemanager:NSFileManager = NSFileManager()
+    let documentspath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
+    let filename = DBmethod().FilePathTmpGet().lastPathComponent    //ファイル名の抽出
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -32,7 +36,25 @@ class ShiftImport: UIViewController{
     
     //取り込むボタンを押したら動作
     @IBAction func xlsximport(sender: AnyObject) {
-        //TODO: テキストフィールドのファイル名を検出
+        if(textfield.text != ""){
+            let inboxpath = documentspath + "/Inbox/"   //Inboxまでのパス
+            let filemanager = NSFileManager()
+            
+            do{
+                try filemanager.moveItemAtPath(inboxpath+filename, toPath: inboxpath+textfield.text!)
+            }catch{
+                print(error)
+            }
+            
+        }else{
+            let alertController = UIAlertController(title: "取り込みエラー", message: "ファイル名を入力して下さい", preferredStyle: .Alert)
+            
+            let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+            alertController.addAction(defaultAction)
+            
+            presentViewController(alertController, animated: true, completion: nil)
+        }
+        
         //TODO: 抽出したファイル名で保存しなおす(rename)
         //TODO: 画面を閉じる
         //TODO: うすく表示するアラートを表示
@@ -41,10 +63,7 @@ class ShiftImport: UIViewController{
     
     //キャンセルボタンをタップしたら動作
     @IBAction func cancel(sender: AnyObject) {
-        let filemanager:NSFileManager = NSFileManager()
-        let documentspath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
         let inboxpath = documentspath + "/Inbox/"   //Inboxまでのパス
-        let filename = DBmethod().FilePathTmpGet().lastPathComponent    //ファイル名の抽出
         
         //コピーしたファイルの削除
         do{
@@ -55,7 +74,7 @@ class ShiftImport: UIViewController{
             InboxFileCountRecord.counts = DBmethod().InboxFileCountsGet()-1
             DBmethod().AddandUpdate(InboxFileCountRecord)
         }catch{
-            print("FileRemove Error")
+            print(error)
         }
         self.dismissViewControllerAnimated(true, completion: nil)
 
