@@ -18,8 +18,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         fileURL = ""
         fileURL = String(url)
         
-        print("[applicationopenURL]   " + "PATH=>" + fileURL)
-        
         //DBへパスを記録
         let filepathrecord = FilePathTmp()
         filepathrecord.id = 0
@@ -69,27 +67,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-    }
-    
-    func filecount(){
-//        //ファイル数のカウント
-//        let filemanager:NSFileManager = NSFileManager()
-//        let files = filemanager.enumeratorAtPath(NSHomeDirectory() + "/Documents/Inbox")
-//        var filecount = 0
-//        while let _ = files?.nextObject() {
-//            filecount++
-//        }
-        
-//        if(DBmethod().InboxFileCountsGet() < filecount){   //ファイル数が増えていたら(新規でダウンロードしていたら)
-//            //ファイルの数をデータベースへ記録
-//            let InboxFileCountRecord = InboxFileCount()
-//            InboxFileCountRecord.id = 0
-//            InboxFileCountRecord.counts = filecount
-//            DBmethod().AddandUpdate(InboxFileCountRecord)
-//            
-//        }else{
-//            
-//        }
     }
 }
 

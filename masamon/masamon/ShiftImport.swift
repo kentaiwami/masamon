@@ -34,8 +34,25 @@ class ShiftImport: UIViewController{
         //まだ未定
     }
     
+    //メモ: file:///private/var/mobile/Containers/Data/Application/1F4788A9-5CD0-4521-95D4-85272141FBDC/Documents/Inbox/2015CSR_FData-11.xlsx
+    
     @IBAction func cancel(sender: AnyObject) {
         //TODO: コピーしたファイルの削除を実装
+        let filemanager:NSFileManager = NSFileManager()
+       // let AAA = filemanager.enumeratorAtPath(NSHomeDirectory() + "Documents/Inbox")
+        //let AAA = filemanager.enumeratorAtPath(NSHomeDirectory())
+        let documentspath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
+        let inboxpath = documentspath + "/Inbox/"
+        print("origin filepath=>" + DBmethod().FilePathTmpGet())
+        //print(documentspath)
+        print(filemanager.fileExistsAtPath(inboxpath + "2015CSR_FData-10.xlsx"))
+        
+        
+        do{
+            try filemanager.removeItemAtPath(inboxpath + "2015CSR_FData-10.xlsx")
+        }catch{
+            print("FileRemove Error")
+        }
         self.dismissViewControllerAnimated(true, completion: nil)
 
     }

@@ -94,14 +94,12 @@ class MonthlySalaryShow: Menu,UIPickerViewDelegate, UIPickerViewDataSource{
     
     //月給表示画面が表示(アプリがアクティブ)されたら呼ばれる
     func MonthlySalaryShowViewActived(){
-        print("a")
         //ファイル数のカウント
         let filemanager:NSFileManager = NSFileManager()
         let files = filemanager.enumeratorAtPath(NSHomeDirectory() + "/Documents/Inbox")
         var filecount = 0
         while let _ = files?.nextObject() {
             filecount++
-            print("bbb")
         }
 
         if(DBmethod().InboxFileCountsGet() < filecount){   //ファイル数が増えていたら(新規でダウンロードしていたら)
