@@ -30,10 +30,14 @@ class ShiftImport: UIViewController{
         Label.text = DBmethod().FilePathTmpGet() as String
     }
     
-    func xlsximport(sender: UIButton){
-        //まだ未定
+    //取り込むボタンを押したら動作
+    @IBAction func xlsximport(sender: AnyObject) {
+        //TODO: 画面を閉じる
+        //TODO: うすく表示するアラートを表示
+        //TODO: アラートを消す
     }
     
+    //キャンセルボタンをタップしたら動作
     @IBAction func cancel(sender: AnyObject) {
         let filemanager:NSFileManager = NSFileManager()
         let documentspath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String

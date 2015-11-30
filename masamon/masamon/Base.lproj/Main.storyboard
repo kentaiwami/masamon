@@ -241,7 +241,11 @@
                                                 <action selector="cancel:" destination="8Lc-eg-fgw" id="OGq-cG-0XD"/>
                                             </connections>
                                         </barButtonItem>
-                                        <barButtonItem key="rightBarButtonItem" title="取り込む" id="dOw-E5-E9o"/>
+                                        <barButtonItem key="rightBarButtonItem" title="取り込む" id="dOw-E5-E9o">
+                                            <connections>
+                                                <action selector="xlsximport:" destination="8Lc-eg-fgw" id="ZIQ-OM-4ke"/>
+                                            </connections>
+                                        </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
