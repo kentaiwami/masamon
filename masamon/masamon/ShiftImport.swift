@@ -11,14 +11,14 @@ import UIKit
 class ShiftImport: UIViewController{
     
     @IBOutlet weak var Label: UILabel!
+    @IBOutlet weak var textfield: UITextField!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if(DBmethod().FilePathTmpGet() == ""){
-            Label.text = "nil"
-        }else{
+        if(DBmethod().FilePathTmpGet() != ""){
             Label.text = DBmethod().FilePathTmpGet() as String
+            textfield.text = DBmethod().FilePathTmpGet().lastPathComponent
         }
     }
 
@@ -32,6 +32,8 @@ class ShiftImport: UIViewController{
     
     //取り込むボタンを押したら動作
     @IBAction func xlsximport(sender: AnyObject) {
+        //TODO: テキストフィールドのファイル名を検出
+        //TODO: 抽出したファイル名で保存しなおす(rename)
         //TODO: 画面を閉じる
         //TODO: うすく表示するアラートを表示
         //TODO: アラートを消す
