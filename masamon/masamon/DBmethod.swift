@@ -92,8 +92,8 @@ class DBmethod: UIViewController {
         return count
     }
     
-    func FilePathTmpGet() -> String{
-        var path = ""
+    func FilePathTmpGet() -> NSString{
+        var path: NSString = ""
         
         let realm = try! Realm()
         path = realm.objects(FilePathTmp).filter("id = %@", 0)[0].path

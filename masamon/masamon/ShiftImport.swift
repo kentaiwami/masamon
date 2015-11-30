@@ -15,10 +15,10 @@ class ShiftImport: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if(DBmethod().FilePathTmpGet().isEmpty){
+        if(DBmethod().FilePathTmpGet() == ""){
             Label.text = "nil"
         }else{
-            Label.text = DBmethod().FilePathTmpGet()
+            Label.text = DBmethod().FilePathTmpGet() as String
         }
     }
 
@@ -27,31 +27,22 @@ class ShiftImport: UIViewController{
     }
 
     func ShiftImportViewActived(){
-        Label.text = DBmethod().FilePathTmpGet()
+        Label.text = DBmethod().FilePathTmpGet() as String
     }
     
     func xlsximport(sender: UIButton){
         //まだ未定
     }
     
-    //メモ: file:///private/var/mobile/Containers/Data/Application/1F4788A9-5CD0-4521-95D4-85272141FBDC/Documents/Inbox/2015CSR_FData-11.xlsx
-    
     @IBAction func cancel(sender: AnyObject) {
-        //TODO: コピーしたファイルの削除を実装
         let filemanager:NSFileManager = NSFileManager()
         let documentspath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
-        let inboxpath = documentspath + "/Inbox/"
-        let loc = inboxpath.rangeOfString("Inbox/")
-
-        print(loc!)
-        print(loc!.startIndex)
-        print(loc!.endIndex)
+        let inboxpath = documentspath + "/Inbox/"   //Inboxまでのパス
+        let filename = DBmethod().FilePathTmpGet().lastPathComponent    //ファイル名の抽出
         
-        print("origin filepath=>" + DBmethod().FilePathTmpGet())
-//        print(filemanager.fileExistsAtPath(inboxpath + "2015CSR_FData-10.xlsx"))
-        
+        //コピーしたファイルの削除
         do{
-            try filemanager.removeItemAtPath(inboxpath + "2015CSR_FData-10.xlsx")
+            try filemanager.removeItemAtPath(inboxpath + filename)
         }catch{
             print("FileRemove Error")
         }
