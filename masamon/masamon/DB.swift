@@ -49,7 +49,7 @@ class InboxFileCount: Object {
 
 class FilePathTmp: Object{
     dynamic var id = 0
-    dynamic var path = ""
+    dynamic var path: NSString = ""
     
     override class func primaryKey() -> String {
         return "id"
