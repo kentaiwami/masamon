@@ -39,14 +39,16 @@ class ShiftImport: UIViewController{
     @IBAction func cancel(sender: AnyObject) {
         //TODO: コピーしたファイルの削除を実装
         let filemanager:NSFileManager = NSFileManager()
-       // let AAA = filemanager.enumeratorAtPath(NSHomeDirectory() + "Documents/Inbox")
-        //let AAA = filemanager.enumeratorAtPath(NSHomeDirectory())
         let documentspath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
         let inboxpath = documentspath + "/Inbox/"
-        print("origin filepath=>" + DBmethod().FilePathTmpGet())
-        //print(documentspath)
-        print(filemanager.fileExistsAtPath(inboxpath + "2015CSR_FData-10.xlsx"))
+        let loc = inboxpath.rangeOfString("Inbox/")
+
+        print(loc!)
+        print(loc!.startIndex)
+        print(loc!.endIndex)
         
+        print("origin filepath=>" + DBmethod().FilePathTmpGet())
+//        print(filemanager.fileExistsAtPath(inboxpath + "2015CSR_FData-10.xlsx"))
         
         do{
             try filemanager.removeItemAtPath(inboxpath + "2015CSR_FData-10.xlsx")
