@@ -43,6 +43,11 @@ class ShiftImport: UIViewController{
         //コピーしたファイルの削除
         do{
             try filemanager.removeItemAtPath(inboxpath + filename)
+            //データベースに記録しているファイル数を1減らして更新
+            let InboxFileCountRecord = InboxFileCount()
+            InboxFileCountRecord.id = 0
+            InboxFileCountRecord.counts = DBmethod().InboxFileCountsGet()-1
+            DBmethod().AddandUpdate(InboxFileCountRecord)
         }catch{
             print("FileRemove Error")
         }
