@@ -15,10 +15,10 @@ class ShiftImport: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if(DBmethod().FilePathTmpGet().isEmpty){
+        if(DBmethod().FilePathTmpGet() == ""){
             Label.text = "nil"
         }else{
-            Label.text = DBmethod().FilePathTmpGet()
+            Label.text = DBmethod().FilePathTmpGet() as String
         }
     }
 
@@ -27,7 +27,7 @@ class ShiftImport: UIViewController{
     }
 
     func ShiftImportViewActived(){
-        Label.text = DBmethod().FilePathTmpGet()
+        Label.text = DBmethod().FilePathTmpGet() as String
     }
     
     func xlsximport(sender: UIButton){
@@ -43,11 +43,13 @@ class ShiftImport: UIViewController{
         let inboxpath = documentspath + "/Inbox/"
         let loc = inboxpath.rangeOfString("Inbox/")
 
-        print(loc!)
-        print(loc!.startIndex)
-        print(loc!.endIndex)
+//        print(loc!)
+//        print(loc!.startIndex)
+//        print(loc!.endIndex)
         
-        print("origin filepath=>" + DBmethod().FilePathTmpGet())
+        print(DBmethod().FilePathTmpGet().lastPathComponent)
+        
+//        print("origin filepath=>" + (DBmethod().FilePathTmpGet() as String))
 //        print(filemanager.fileExistsAtPath(inboxpath + "2015CSR_FData-10.xlsx"))
         
         do{
