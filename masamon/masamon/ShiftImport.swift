@@ -10,7 +10,8 @@ import UIKit
 
 class ShiftImport: UIViewController,UITextFieldDelegate{
     
-    @IBOutlet weak var textfield: UITextField!
+    @IBOutlet weak var filenamefield: UITextField!
+    @IBOutlet weak var fileimporthistoryview: UITextView!
     
     let filemanager:NSFileManager = NSFileManager()
     let documentspath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
@@ -23,8 +24,10 @@ class ShiftImport: UIViewController,UITextFieldDelegate{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        textfield.delegate = self
-        textfield.returnKeyType = .Done
+        filenamefield.delegate = self
+        filenamefield.returnKeyType = .Done
+        
+        fileimporthistoryview.editable = false
         
         backgournd.image = backgourndimage
         backgournd.frame = CGRectMake(0.0, 65.0, self.view.frame.width, self.view.frame.height)
@@ -32,7 +35,7 @@ class ShiftImport: UIViewController,UITextFieldDelegate{
         self.view.sendSubviewToBack(backgournd)
         
         if(DBmethod().FilePathTmpGet() != ""){
-            textfield.text = DBmethod().FilePathTmpGet().lastPathComponent
+            filenamefield.text = DBmethod().FilePathTmpGet().lastPathComponent
         }
     }
     
@@ -42,11 +45,11 @@ class ShiftImport: UIViewController,UITextFieldDelegate{
     
     //取り込むボタンを押したら動作
     @IBAction func xlsximport(sender: AnyObject) {
-        if(textfield.text != ""){
+        if(filenamefield.text != ""){
             let Inboxpath = documentspath + "/Inbox/"       //Inboxまでのパス
             let filemanager = NSFileManager()
             
-            if(filemanager.fileExistsAtPath(Libralypath+"/"+textfield.text!)){       //入力したファイル名が既に存在する場合
+            if(filemanager.fileExistsAtPath(Libralypath+"/"+filenamefield.text!)){       //入力したファイル名が既に存在する場合
                 //アラートを表示して上書きかキャンセルかを選択させる
                 let alert:UIAlertController = UIAlertController(title:"取り込みエラー",
                     message: "既に同じファイル名が存在します",
@@ -62,8 +65,8 @@ class ShiftImport: UIViewController,UITextFieldDelegate{
                     handler:{
                         (action:UIAlertAction!) -> Void in
                         do{
-                            try filemanager.removeItemAtPath(self.Libralypath+"/"+self.textfield.text!)
-                            try filemanager.moveItemAtPath(Inboxpath+self.textfield.text!, toPath: self.Libralypath+"/"+self.textfield.text!)
+                            try filemanager.removeItemAtPath(self.Libralypath+"/"+self.filenamefield.text!)
+                            try filemanager.moveItemAtPath(Inboxpath+self.filenamefield.text!, toPath: self.Libralypath+"/"+self.filenamefield.text!)
                             self.InboxFileCountsMinusOne()
                             self.dismissViewControllerAnimated(true, completion: nil)
                             self.appDelegate.filesavealert = true
@@ -77,7 +80,7 @@ class ShiftImport: UIViewController,UITextFieldDelegate{
                 presentViewController(alert, animated: true, completion: nil)
             }else{      //入力したファイル名が被ってない場合
                 do{
-                    try filemanager.moveItemAtPath(Inboxpath+filename, toPath: Libralypath+"/"+textfield.text!)
+                    try filemanager.moveItemAtPath(Inboxpath+filename, toPath: Libralypath+"/"+filenamefield.text!)
                     self.InboxFileCountsMinusOne()
                     self.dismissViewControllerAnimated(true, completion: nil)
                     appDelegate.filesavealert = true

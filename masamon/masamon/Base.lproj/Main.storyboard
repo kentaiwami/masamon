@@ -285,7 +285,8 @@
                     <nil key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
-                        <outlet property="textfield" destination="gm6-rn-UNB" id="b8z-hJ-Ore"/>
+                        <outlet property="fileimporthistoryview" destination="JIw-Wn-8lL" id="bTV-50-D1X"/>
+                        <outlet property="filenamefield" destination="gm6-rn-UNB" id="oZA-LR-93H"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="O39-ht-nAe" userLabel="First Responder" sceneMemberID="firstResponder"/>
