@@ -94,7 +94,7 @@ class ShiftImport: UIViewController,UITextFieldDelegate{
                     print(error)
                 }
             }
-            self.showhistory()  //履歴を上書きして表示する
+            self.showhistory()
             
         }else{      //テキストフィールドが空の場合
             let alertController = UIAlertController(title: "取り込みエラー", message: "ファイル名を入力して下さい", preferredStyle: .Alert)
