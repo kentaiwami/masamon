@@ -25,6 +25,7 @@ class MonthlySalaryShow: Menu,UIPickerViewDelegate, UIPickerViewDataSource{
     
     let notificationCenter = NSNotificationCenter.defaultCenter()
     let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得
+    let alertview = UIImageView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -123,21 +124,24 @@ class MonthlySalaryShow: Menu,UIPickerViewDelegate, UIPickerViewDataSource{
     func FileSaveSuccessfulAlertShow(){
         //ファイルの保存が成功していたら
         if(appDelegate.filesavealert){
-            let alertview = UIView()
-            alertview.frame = CGRectMake(self.view.frame.width/2-25, self.view.frame.height/2-25, 50.0, 50.0)
+            let image = UIImage(named: "../images/check.png")
+            alertview.image = image
+            let alertwidth = 140.0
+            let alertheight = 140.0
+            alertview.frame = CGRectMake(self.view.frame.width/2-CGFloat(alertwidth)/2, self.view.frame.height/2-CGFloat(alertheight)/2, CGFloat(alertwidth), CGFloat(alertheight))
             alertview.alpha = 0.0
+            
             self.view.addSubview(alertview)
             
             //表示アニメーション
             UIView.animateWithDuration(0.4, animations: { () -> Void in
-                alertview.frame = CGRectMake(self.view.frame.width/2-25, self.view.frame.height/2-25, 50.0, 50.0)
-                alertview.backgroundColor = UIColor.blueColor()
-                alertview.alpha = 1.0
+                self.alertview.frame = CGRectMake(self.view.frame.width/2-CGFloat(alertwidth)/2, self.view.frame.height/2-CGFloat(alertheight)/2, CGFloat(alertwidth), CGFloat(alertheight))
+                self.alertview.alpha = 1.0
             })
             
             //消すアニメーション
             UIView.animateWithDuration(1.0, animations: { () -> Void in
-                alertview.alpha = 0.0
+                self.alertview.alpha = 0.0
             })
             appDelegate.filesavealert = false
         }
