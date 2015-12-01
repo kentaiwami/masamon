@@ -38,7 +38,7 @@ class HourlyPayDB: Object{
     }
 }
 
-class InboxFileCount: Object {
+class InboxFileCountDB: Object {
     dynamic var id = 0
     dynamic var counts = 0
     
@@ -47,7 +47,7 @@ class InboxFileCount: Object {
     }
 }
 
-class FilePathTmp: Object{
+class FilePathTmpDB: Object{
     dynamic var id = 0
     dynamic var path: NSString = ""
     
@@ -56,7 +56,7 @@ class FilePathTmp: Object{
     }
 }
 
-class ShiftImportHistory: Object {
+class ShiftImportHistoryDB: Object {
     dynamic var id = 0
     dynamic var importname = ""
     dynamic var date = ""

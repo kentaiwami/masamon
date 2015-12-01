@@ -72,6 +72,7 @@ class ShiftImport: UIViewController,UITextFieldDelegate{
                             self.InboxFileCountsMinusOne()
                             self.dismissViewControllerAnimated(true, completion: nil)
                             self.appDelegate.filesavealert = true
+                            //TODO: finehistoryDBに記録する
                         }catch{
                             print(error)
                         }
@@ -86,6 +87,7 @@ class ShiftImport: UIViewController,UITextFieldDelegate{
                     self.InboxFileCountsMinusOne()
                     self.dismissViewControllerAnimated(true, completion: nil)
                     appDelegate.filesavealert = true
+                    //TODO: finehistoryDBに記録する
                 }catch{
                     print(error)
                 }
@@ -117,7 +119,7 @@ class ShiftImport: UIViewController,UITextFieldDelegate{
     
     //InboxFileCountsの数を1つ減らす
     func InboxFileCountsMinusOne(){
-        let InboxFileCountRecord = InboxFileCount()
+        let InboxFileCountRecord = InboxFileCountDB()
         InboxFileCountRecord.id = 0
         InboxFileCountRecord.counts = DBmethod().InboxFileCountsGet()-1
         DBmethod().AddandUpdate(InboxFileCountRecord)
@@ -128,4 +130,6 @@ class ShiftImport: UIViewController,UITextFieldDelegate{
         textfield.resignFirstResponder()
         return true
     }
+    
+   // func
 }

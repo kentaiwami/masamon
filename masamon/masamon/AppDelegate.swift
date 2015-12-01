@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         fileURL = String(url)
         
         //DBへパスを記録
-        let filepathrecord = FilePathTmp()
+        let filepathrecord = FilePathTmpDB()
         filepathrecord.id = 0
         filepathrecord.path = fileURL
         DBmethod().AddandUpdate(filepathrecord)
@@ -29,17 +29,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         //InboxFileCountに空レコード(ダミー)を追加
-        if(DBmethod().DBRecordCount(InboxFileCount) == 0){
+        if(DBmethod().DBRecordCount(InboxFileCountDB) == 0){
             //レコードを追加
-            let InboxFileCountRecord = InboxFileCount()
+            let InboxFileCountRecord = InboxFileCountDB()
             InboxFileCountRecord.id = 0
             InboxFileCountRecord.counts = 0
             DBmethod().AddandUpdate(InboxFileCountRecord)
         }
         
         //FilePathTmpに空レコード(ダミー)を追加
-        if(DBmethod().DBRecordCount(FilePathTmp) == 0){
-            let FilePathTmpRecord = FilePathTmp()
+        if(DBmethod().DBRecordCount(FilePathTmpDB) == 0){
+            let FilePathTmpRecord = FilePathTmpDB()
             FilePathTmpRecord.id = 0
             FilePathTmpRecord.path = "nil"
             DBmethod().AddandUpdate(FilePathTmpRecord)
