@@ -28,13 +28,16 @@ class MonthlySalaryShow: Menu,UIPickerViewDelegate, UIPickerViewDataSource{
     
     override func viewDidLoad() {
         super.viewDidLoad()
- 
+        
+        NSTimer.scheduledTimerWithTimeInterval(1.0,target:self,selector:Selector("FileSaveSuccessfulAlertShow"),
+            userInfo: nil, repeats: true);
+        
         //アプリがアクティブになったとき
         notificationCenter.addObserver(self,selector: "MonthlySalaryShowViewActived",name:UIApplicationDidBecomeActiveNotification,object: nil)
         
         //print("fileURL=>" + appDelegate.fileURL)
         
-//        DBmethod().ShowDBpass()
+        //        DBmethod().ShowDBpass()
         self.view.backgroundColor = UIColor.whiteColor()
         shiftdb.id = 1
         shiftdb.name = "2015年8月シフト"
@@ -94,6 +97,7 @@ class MonthlySalaryShow: Menu,UIPickerViewDelegate, UIPickerViewDataSource{
     
     //月給表示画面が表示(アプリがアクティブ)されたら呼ばれる
     func MonthlySalaryShowViewActived(){
+        
         //ファイル数のカウント
         let filemanager:NSFileManager = NSFileManager()
         let files = filemanager.enumeratorAtPath(NSHomeDirectory() + "/Documents/Inbox")
@@ -101,7 +105,7 @@ class MonthlySalaryShow: Menu,UIPickerViewDelegate, UIPickerViewDataSource{
         while let _ = files?.nextObject() {
             filecount++
         }
-
+        
         if(DBmethod().InboxFileCountsGet() < filecount){   //ファイル数が増えていたら(新規でダウンロードしていたら)
             //ファイルの数をデータベースへ記録
             let InboxFileCountRecord = InboxFileCount()
@@ -113,6 +117,24 @@ class MonthlySalaryShow: Menu,UIPickerViewDelegate, UIPickerViewDataSource{
             self.presentViewController( targetViewController, animated: true, completion: nil)
         }else{
             
+        }
+    }
+    
+    func FileSaveSuccessfulAlertShow(){
+        //ファイルの保存が成功していたら
+        if(appDelegate.filesavealert){
+            let alertview = UIView()
+            alertview.frame = CGRectMake(self.view.frame.width/2, self.view.frame.height/2, 50.0, 50.0)
+            alertview.alpha = 0.0
+            self.view.addSubview(alertview)
+            
+            //パッと表示されるアニメーション
+            UIView.animateWithDuration(0.4, animations: { () -> Void in
+                alertview.frame = CGRectMake(self.view.frame.width/2, self.view.frame.height/2, 50.0, 50.0)
+                alertview.backgroundColor = UIColor.blueColor()
+                alertview.alpha = 1.0
+            })
+            appDelegate.filesavealert = false
         }
     }
 }

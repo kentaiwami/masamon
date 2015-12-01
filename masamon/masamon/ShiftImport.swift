@@ -17,7 +17,8 @@ class ShiftImport: UIViewController{
     let documentspath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
     let Libralypath = NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0] as String
     let filename = DBmethod().FilePathTmpGet().lastPathComponent    //ファイル名の抽出
-    
+    let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -44,8 +45,7 @@ class ShiftImport: UIViewController{
             do{
                 try filemanager.moveItemAtPath(Inboxpath+filename, toPath: Libralypath+"/"+textfield.text!)
                 self.dismissViewControllerAnimated(true, completion: nil)
-                //TODO: 保存が完了したダイアログを表示(月給表示画面)
-                //TODO: ダイアログを消す(月給表示画面)
+                appDelegate.filesavealert = true
             }catch{
                 print(error)
             }
