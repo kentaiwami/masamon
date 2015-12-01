@@ -92,6 +92,8 @@
 		376C92D51BE695D000D45FC2 /* extentions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = extentions.swift; sourceTree = "<group>"; };
 		37D4B30F1BE0F59900F06759 /* HourlyPaySetting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HourlyPaySetting.swift; sourceTree = "<group>"; };
 		37D4B34B1BE2691400F06759 /* Menu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
+		37D8F4241C0CB1A000D5336A /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
+		37D8F4251C0CB1A000D5336A /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -365,6 +367,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				370ACDFF1BDF486700AB73EB /* Base */,
+				37D8F4241C0CB1A000D5336A /* ja */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -373,6 +376,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				370ACE041BDF486700AB73EB /* Base */,
+				37D8F4251C0CB1A000D5336A /* ja */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";

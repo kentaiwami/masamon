@@ -25,16 +25,20 @@ class MonthlySalaryShow: Menu,UIPickerViewDelegate, UIPickerViewDataSource{
     
     let notificationCenter = NSNotificationCenter.defaultCenter()
     let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得
+    let alertview = UIImageView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
- 
+        
+        NSTimer.scheduledTimerWithTimeInterval(1.0,target:self,selector:Selector("FileSaveSuccessfulAlertShow"),
+            userInfo: nil, repeats: true);
+        
         //アプリがアクティブになったとき
         notificationCenter.addObserver(self,selector: "MonthlySalaryShowViewActived",name:UIApplicationDidBecomeActiveNotification,object: nil)
         
         //print("fileURL=>" + appDelegate.fileURL)
         
-//        DBmethod().ShowDBpass()
+        //        DBmethod().ShowDBpass()
         self.view.backgroundColor = UIColor.whiteColor()
         shiftdb.id = 1
         shiftdb.name = "2015年8月シフト"
@@ -94,6 +98,7 @@ class MonthlySalaryShow: Menu,UIPickerViewDelegate, UIPickerViewDataSource{
     
     //月給表示画面が表示(アプリがアクティブ)されたら呼ばれる
     func MonthlySalaryShowViewActived(){
+        
         //ファイル数のカウント
         let filemanager:NSFileManager = NSFileManager()
         let files = filemanager.enumeratorAtPath(NSHomeDirectory() + "/Documents/Inbox")
@@ -101,7 +106,7 @@ class MonthlySalaryShow: Menu,UIPickerViewDelegate, UIPickerViewDataSource{
         while let _ = files?.nextObject() {
             filecount++
         }
-
+        
         if(DBmethod().InboxFileCountsGet() < filecount){   //ファイル数が増えていたら(新規でダウンロードしていたら)
             //ファイルの数をデータベースへ記録
             let InboxFileCountRecord = InboxFileCount()
@@ -113,6 +118,32 @@ class MonthlySalaryShow: Menu,UIPickerViewDelegate, UIPickerViewDataSource{
             self.presentViewController( targetViewController, animated: true, completion: nil)
         }else{
             
+        }
+    }
+    
+    func FileSaveSuccessfulAlertShow(){
+        //ファイルの保存が成功していたら
+        if(appDelegate.filesavealert){
+            let image = UIImage(named: "../images/check.png")
+            alertview.image = image
+            let alertwidth = 140.0
+            let alertheight = 140.0
+            alertview.frame = CGRectMake(self.view.frame.width/2-CGFloat(alertwidth)/2, self.view.frame.height/2-CGFloat(alertheight)/2, CGFloat(alertwidth), CGFloat(alertheight))
+            alertview.alpha = 0.0
+            
+            self.view.addSubview(alertview)
+            
+            //表示アニメーション
+            UIView.animateWithDuration(0.4, animations: { () -> Void in
+                self.alertview.frame = CGRectMake(self.view.frame.width/2-CGFloat(alertwidth)/2, self.view.frame.height/2-CGFloat(alertheight)/2, CGFloat(alertwidth), CGFloat(alertheight))
+                self.alertview.alpha = 1.0
+            })
+            
+            //消すアニメーション
+            UIView.animateWithDuration(1.0, animations: { () -> Void in
+                self.alertview.alpha = 0.0
+            })
+            appDelegate.filesavealert = false
         }
     }
 }

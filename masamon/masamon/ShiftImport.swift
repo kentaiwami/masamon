@@ -11,14 +11,20 @@ import UIKit
 class ShiftImport: UIViewController{
     
     @IBOutlet weak var Label: UILabel!
+    @IBOutlet weak var textfield: UITextField!
+
+    let filemanager:NSFileManager = NSFileManager()
+    let documentspath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
+    let Libralypath = NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0] as String
+    let filename = DBmethod().FilePathTmpGet().lastPathComponent    //ファイル名の抽出
+    let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if(DBmethod().FilePathTmpGet() == ""){
-            Label.text = "nil"
-        }else{
+        if(DBmethod().FilePathTmpGet() != ""){
             Label.text = DBmethod().FilePathTmpGet() as String
+            textfield.text = DBmethod().FilePathTmpGet().lastPathComponent
         }
     }
 
@@ -32,18 +38,32 @@ class ShiftImport: UIViewController{
     
     //取り込むボタンを押したら動作
     @IBAction func xlsximport(sender: AnyObject) {
-        //TODO: 画面を閉じる
-        //TODO: うすく表示するアラートを表示
-        //TODO: アラートを消す
+        if(textfield.text != ""){
+            let Inboxpath = documentspath + "/Inbox/"       //Inboxまでのパス
+            let filemanager = NSFileManager()
+
+            do{
+                try filemanager.moveItemAtPath(Inboxpath+filename, toPath: Libralypath+"/"+textfield.text!)
+                self.dismissViewControllerAnimated(true, completion: nil)
+                appDelegate.filesavealert = true
+            }catch{
+                print(error)
+            }
+            
+        }else{
+            let alertController = UIAlertController(title: "取り込みエラー", message: "ファイル名を入力して下さい", preferredStyle: .Alert)
+            
+            let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+            alertController.addAction(defaultAction)
+            
+            presentViewController(alertController, animated: true, completion: nil)
+        }
     }
     
     //キャンセルボタンをタップしたら動作
     @IBAction func cancel(sender: AnyObject) {
-        let filemanager:NSFileManager = NSFileManager()
-        let documentspath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
         let inboxpath = documentspath + "/Inbox/"   //Inboxまでのパス
-        let filename = DBmethod().FilePathTmpGet().lastPathComponent    //ファイル名の抽出
-        
+
         //コピーしたファイルの削除
         do{
             try filemanager.removeItemAtPath(inboxpath + filename)
@@ -53,7 +73,7 @@ class ShiftImport: UIViewController{
             InboxFileCountRecord.counts = DBmethod().InboxFileCountsGet()-1
             DBmethod().AddandUpdate(InboxFileCountRecord)
         }catch{
-            print("FileRemove Error")
+            print(error)
         }
         self.dismissViewControllerAnimated(true, completion: nil)
 
