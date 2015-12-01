@@ -30,6 +30,14 @@ class ShiftImport: UIViewController,UITextFieldDelegate{
         
         //テキストビューの編集を無効化
         fileimporthistoryview.editable = false
+        //TODO: 履歴の表示
+        let importhistoryarray = DBmethod().ShiftImportHistoryDBGet()
+        
+        for(var i = importhistoryarray.count-1; i >= 0; i--){
+            fileimporthistoryview.text = importhistoryarray[i].date + importhistoryarray[i].name + "\n"
+        }
+        
+        
         
         backgournd.image = backgourndimage
         backgournd.frame = CGRectMake(0.0, 65.0, self.view.frame.width, self.view.frame.height)
@@ -73,6 +81,7 @@ class ShiftImport: UIViewController,UITextFieldDelegate{
                             self.dismissViewControllerAnimated(true, completion: nil)
                             self.appDelegate.filesavealert = true
                             //TODO: finehistoryDBに記録する
+                            self.ShiftImportHistoryDBadd(NSDate(), importname: self.filenamefield.text!)
                         }catch{
                             print(error)
                         }
@@ -88,6 +97,7 @@ class ShiftImport: UIViewController,UITextFieldDelegate{
                     self.dismissViewControllerAnimated(true, completion: nil)
                     appDelegate.filesavealert = true
                     //TODO: finehistoryDBに記録する
+                    ShiftImportHistoryDBadd(NSDate(), importname: filenamefield.text!)
                 }catch{
                     print(error)
                 }

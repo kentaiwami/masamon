@@ -60,4 +60,8 @@ class ShiftImportHistoryDB: Object {
     dynamic var id = 0
     dynamic var name = ""
     dynamic var date = ""
+    
+    override class func primaryKey() -> String {
+        return "id"
+    }
 }
