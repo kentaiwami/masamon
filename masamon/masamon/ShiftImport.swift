@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ShiftImport: UIViewController{
+class ShiftImport: UIViewController,UITextFieldDelegate{
     
     @IBOutlet weak var textfield: UITextField!
     
@@ -23,11 +23,14 @@ class ShiftImport: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //self.view.backgroundColor = UIColor(patternImage: UIImage(named: "../images/33791975.jpeg")!)
+        textfield.delegate = self
+        textfield.returnKeyType = .Done
+        
         backgournd.image = backgourndimage
         backgournd.frame = CGRectMake(0.0, 65.0, self.view.frame.width, self.view.frame.height)
         self.view.addSubview(backgournd)
         self.view.sendSubviewToBack(backgournd)
+        
         if(DBmethod().FilePathTmpGet() != ""){
             textfield.text = DBmethod().FilePathTmpGet().lastPathComponent
         }
@@ -113,5 +116,10 @@ class ShiftImport: UIViewController{
         InboxFileCountRecord.id = 0
         InboxFileCountRecord.counts = DBmethod().InboxFileCountsGet()-1
         DBmethod().AddandUpdate(InboxFileCountRecord)
+    }
+    
+    func textFieldShouldReturn(aaa: UITextField) -> Bool {
+        aaa.resignFirstResponder()
+        return true
     }
 }
