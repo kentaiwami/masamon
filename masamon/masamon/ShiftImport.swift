@@ -8,23 +8,36 @@
 
 import UIKit
 
-class ShiftImport: UIViewController{
+class ShiftImport: UIViewController,UITextFieldDelegate{
     
-    @IBOutlet weak var Label: UILabel!
-    @IBOutlet weak var textfield: UITextField!
+    @IBOutlet weak var filenamefield: UITextField!
+    @IBOutlet weak var fileimporthistoryview: UITextView!
     
     let filemanager:NSFileManager = NSFileManager()
     let documentspath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
     let Libralypath = NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0] as String
     let filename = DBmethod().FilePathTmpGet().lastPathComponent    //ファイル名の抽出
     let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得
+    let backgournd = UIImageView()
+    let backgourndimage = UIImage(named: "../images/SIbackgournd.jpeg")
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //テキストフィールドの設定
+        filenamefield.delegate = self
+        filenamefield.returnKeyType = .Done
+        
+        //テキストビューの編集を無効化
+        fileimporthistoryview.editable = false
+        
+        backgournd.image = backgourndimage
+        backgournd.frame = CGRectMake(0.0, 65.0, self.view.frame.width, self.view.frame.height)
+        self.view.addSubview(backgournd)
+        self.view.sendSubviewToBack(backgournd)
+        
         if(DBmethod().FilePathTmpGet() != ""){
-            Label.text = DBmethod().FilePathTmpGet() as String
-            textfield.text = DBmethod().FilePathTmpGet().lastPathComponent
+            filenamefield.text = DBmethod().FilePathTmpGet().lastPathComponent
         }
     }
     
@@ -32,17 +45,13 @@ class ShiftImport: UIViewController{
         super.didReceiveMemoryWarning()
     }
     
-    func ShiftImportViewActived(){
-        Label.text = DBmethod().FilePathTmpGet() as String
-    }
-    
     //取り込むボタンを押したら動作
     @IBAction func xlsximport(sender: AnyObject) {
-        if(textfield.text != ""){
+        if(filenamefield.text != ""){
             let Inboxpath = documentspath + "/Inbox/"       //Inboxまでのパス
             let filemanager = NSFileManager()
             
-            if(filemanager.fileExistsAtPath(Libralypath+"/"+textfield.text!)){       //入力したファイル名が既に存在する場合
+            if(filemanager.fileExistsAtPath(Libralypath+"/"+filenamefield.text!)){       //入力したファイル名が既に存在する場合
                 //アラートを表示して上書きかキャンセルかを選択させる
                 let alert:UIAlertController = UIAlertController(title:"取り込みエラー",
                     message: "既に同じファイル名が存在します",
@@ -58,8 +67,8 @@ class ShiftImport: UIViewController{
                     handler:{
                         (action:UIAlertAction!) -> Void in
                         do{
-                            try filemanager.removeItemAtPath(self.Libralypath+"/"+self.textfield.text!)
-                            try filemanager.moveItemAtPath(Inboxpath+self.textfield.text!, toPath: self.Libralypath+"/"+self.textfield.text!)
+                            try filemanager.removeItemAtPath(self.Libralypath+"/"+self.filenamefield.text!)
+                            try filemanager.moveItemAtPath(Inboxpath+self.filenamefield.text!, toPath: self.Libralypath+"/"+self.filenamefield.text!)
                             self.InboxFileCountsMinusOne()
                             self.dismissViewControllerAnimated(true, completion: nil)
                             self.appDelegate.filesavealert = true
@@ -73,7 +82,7 @@ class ShiftImport: UIViewController{
                 presentViewController(alert, animated: true, completion: nil)
             }else{      //入力したファイル名が被ってない場合
                 do{
-                    try filemanager.moveItemAtPath(Inboxpath+filename, toPath: Libralypath+"/"+textfield.text!)
+                    try filemanager.moveItemAtPath(Inboxpath+filename, toPath: Libralypath+"/"+filenamefield.text!)
                     self.InboxFileCountsMinusOne()
                     self.dismissViewControllerAnimated(true, completion: nil)
                     appDelegate.filesavealert = true
@@ -112,5 +121,11 @@ class ShiftImport: UIViewController{
         InboxFileCountRecord.id = 0
         InboxFileCountRecord.counts = DBmethod().InboxFileCountsGet()-1
         DBmethod().AddandUpdate(InboxFileCountRecord)
+    }
+    
+    //キーボードの完了(改行)を押したらキーボードを閉じる
+    func textFieldShouldReturn(textfield: UITextField) -> Bool {
+        textfield.resignFirstResponder()
+        return true
     }
 }
