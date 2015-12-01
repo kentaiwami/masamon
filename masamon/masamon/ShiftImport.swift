@@ -30,14 +30,8 @@ class ShiftImport: UIViewController,UITextFieldDelegate{
         
         //テキストビューの編集を無効化
         fileimporthistoryview.editable = false
-        //TODO: 履歴の表示
-        let importhistoryarray = DBmethod().ShiftImportHistoryDBGet()
         
-        for(var i = importhistoryarray.count-1; i >= 0; i--){
-            fileimporthistoryview.text = importhistoryarray[i].date + importhistoryarray[i].name + "\n"
-        }
-        
-        
+        showhistory()
         
         backgournd.image = backgourndimage
         backgournd.frame = CGRectMake(0.0, 65.0, self.view.frame.width, self.view.frame.height)
@@ -80,7 +74,6 @@ class ShiftImport: UIViewController,UITextFieldDelegate{
                             self.InboxFileCountsDBMinusOne()
                             self.dismissViewControllerAnimated(true, completion: nil)
                             self.appDelegate.filesavealert = true
-                            //TODO: finehistoryDBに記録する
                             self.ShiftImportHistoryDBadd(NSDate(), importname: self.filenamefield.text!)
                         }catch{
                             print(error)
@@ -96,12 +89,13 @@ class ShiftImport: UIViewController,UITextFieldDelegate{
                     self.InboxFileCountsDBMinusOne()
                     self.dismissViewControllerAnimated(true, completion: nil)
                     appDelegate.filesavealert = true
-                    //TODO: finehistoryDBに記録する
                     ShiftImportHistoryDBadd(NSDate(), importname: filenamefield.text!)
                 }catch{
                     print(error)
                 }
             }
+            self.showhistory()  //履歴を上書きして表示する
+            
         }else{      //テキストフィールドが空の場合
             let alertController = UIAlertController(title: "取り込みエラー", message: "ファイル名を入力して下さい", preferredStyle: .Alert)
             
@@ -153,10 +147,19 @@ class ShiftImport: UIViewController,UITextFieldDelegate{
         if(DBmethod().DBRecordCount(ShiftImportHistoryDB) == 0){
             ShiftImportHistoryDBRecord.id = 0
         }else{
-            ShiftImportHistoryDBRecord.id = DBmethod().DBRecordCount(ShiftImportHistoryDB)+1
+            ShiftImportHistoryDBRecord.id = DBmethod().DBRecordCount(ShiftImportHistoryDB)
         }
         ShiftImportHistoryDBRecord.date = dateFormatter.stringFromDate(importdate)
         ShiftImportHistoryDBRecord.name = importname
-        DBmethod().AddandUpdate(ShiftImportHistoryDBRecord)
+        DBmethod().AddandUpdate(ShiftImportHistoryDBRecord)        
+    }
+    
+    func showhistory(){
+        //履歴の表示
+        let importhistoryarray = DBmethod().ShiftImportHistoryDBGet()
+        for(var i = importhistoryarray.count-1; i >= 0; i--){
+            fileimporthistoryview.text = fileimporthistoryview.text + importhistoryarray[i].date + "             " + importhistoryarray[i].name + "\n"
+        }
+
     }
 }
