@@ -12,13 +12,13 @@ class ShiftImport: UIViewController{
     
     @IBOutlet weak var Label: UILabel!
     @IBOutlet weak var textfield: UITextField!
-
+    
     let filemanager:NSFileManager = NSFileManager()
     let documentspath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
     let Libralypath = NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0] as String
     let filename = DBmethod().FilePathTmpGet().lastPathComponent    //ファイル名の抽出
     let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -27,11 +27,11 @@ class ShiftImport: UIViewController{
             textfield.text = DBmethod().FilePathTmpGet().lastPathComponent
         }
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-
+    
     func ShiftImportViewActived(){
         Label.text = DBmethod().FilePathTmpGet() as String
     }
@@ -41,16 +41,40 @@ class ShiftImport: UIViewController{
         if(textfield.text != ""){
             let Inboxpath = documentspath + "/Inbox/"       //Inboxまでのパス
             let filemanager = NSFileManager()
-
-            do{
-                try filemanager.moveItemAtPath(Inboxpath+filename, toPath: Libralypath+"/"+textfield.text!)
-                self.InboxFileCountsMinusOne()
-                self.dismissViewControllerAnimated(true, completion: nil)
-                appDelegate.filesavealert = true
-            }catch{
-                print(error)
-            }
             
+            if(filemanager.fileExistsAtPath(Libralypath+"/"+textfield.text!)){       //入力したファイル名が既に存在する場合
+                //TODO: アラートを表示して上書きかキャンセルかを選択させる
+                let alert:UIAlertController = UIAlertController(title:"取り込みエラー",
+                    message: "既に同じファイル名が存在します",
+                    preferredStyle: UIAlertControllerStyle.Alert)
+                
+                let cancelAction:UIAlertAction = UIAlertAction(title: "キャンセル",
+                    style: UIAlertActionStyle.Cancel,
+                    handler:{
+                        (action:UIAlertAction!) -> Void in
+                        print("Cancel")
+                })
+                
+                let updateAction:UIAlertAction = UIAlertAction(title: "上書き",
+                    style: UIAlertActionStyle.Default,
+                    handler:{
+                        (action:UIAlertAction!) -> Void in
+                        print("updateAction")
+                })
+                
+                alert.addAction(cancelAction)
+                alert.addAction(updateAction)
+                presentViewController(alert, animated: true, completion: nil)
+            }else{
+                do{
+                    try filemanager.moveItemAtPath(Inboxpath+filename, toPath: Libralypath+"/"+textfield.text!)
+                    self.InboxFileCountsMinusOne()
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                    appDelegate.filesavealert = true
+                }catch{
+                    print(error)
+                }
+            }
         }else{
             let alertController = UIAlertController(title: "取り込みエラー", message: "ファイル名を入力して下さい", preferredStyle: .Alert)
             
@@ -64,7 +88,7 @@ class ShiftImport: UIViewController{
     //キャンセルボタンをタップしたら動作
     @IBAction func cancel(sender: AnyObject) {
         let inboxpath = documentspath + "/Inbox/"   //Inboxまでのパス
-
+        
         //コピーしたファイルの削除
         do{
             try filemanager.removeItemAtPath(inboxpath + filename)
@@ -73,7 +97,7 @@ class ShiftImport: UIViewController{
             print(error)
         }
         self.dismissViewControllerAnimated(true, completion: nil)
-
+        
     }
     
     //InboxFileCountsの数を1つ減らす
