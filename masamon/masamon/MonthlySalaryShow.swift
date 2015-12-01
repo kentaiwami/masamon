@@ -29,7 +29,7 @@ class MonthlySalaryShow: Menu,UIPickerViewDelegate, UIPickerViewDataSource{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         NSTimer.scheduledTimerWithTimeInterval(1.0,target:self,selector:Selector("FileSaveSuccessfulAlertShow"),
             userInfo: nil, repeats: true);
         
