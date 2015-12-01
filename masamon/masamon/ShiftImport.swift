@@ -21,7 +21,7 @@ class ShiftImport: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         if(DBmethod().FilePathTmpGet() != ""){
             Label.text = DBmethod().FilePathTmpGet() as String
             textfield.text = DBmethod().FilePathTmpGet().lastPathComponent

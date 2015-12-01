@@ -55,3 +55,9 @@ class FilePathTmp: Object{
         return "id"
     }
 }
+
+class ShiftImportHistory: Object {
+    dynamic var id = 0
+    dynamic var importname = ""
+    dynamic var date = ""
+}
