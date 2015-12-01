@@ -25,6 +25,14 @@ class ShiftImport: UIViewController,UITextFieldDelegate,UITableViewDelegate,UITa
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //線を引いてみる？
+        let TEST = UIView()
+        TEST.frame = CGRectMake(self.view.frame.width/2-55, self.view.frame.height/2-75, 0.5, 300.0)
+        TEST.backgroundColor = UIColor.grayColor()
+        TEST.alpha = 0.5
+        self.view.addSubview(TEST)
+        
+        
         //テーブルビューの設定
         fileimporthistorytable.delegate = self
         fileimporthistorytable.dataSource = self
@@ -176,6 +184,10 @@ class ShiftImport: UIViewController,UITextFieldDelegate,UITableViewDelegate,UITa
             cell.textLabel?.text = tableviewcelltext[indexPath.row]
             return cell
         }
+    }
+    
+    func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+        return nil
     }
     
     func settableviewcell(){
