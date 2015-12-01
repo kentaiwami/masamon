@@ -10,7 +10,6 @@ import UIKit
 
 class ShiftImport: UIViewController{
     
-    @IBOutlet weak var Label: UILabel!
     @IBOutlet weak var textfield: UITextField!
     
     let filemanager:NSFileManager = NSFileManager()
@@ -18,22 +17,24 @@ class ShiftImport: UIViewController{
     let Libralypath = NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0] as String
     let filename = DBmethod().FilePathTmpGet().lastPathComponent    //ファイル名の抽出
     let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得
+    let backgournd = UIImageView()
+    let backgourndimage = UIImage(named: "../images/SIbackgournd.jpeg")
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        //self.view.backgroundColor = UIColor(patternImage: UIImage(named: "../images/33791975.jpeg")!)
+        backgournd.image = backgourndimage
+        backgournd.frame = CGRectMake(0.0, 65.0, self.view.frame.width, self.view.frame.height)
+        self.view.addSubview(backgournd)
+        self.view.sendSubviewToBack(backgournd)
         if(DBmethod().FilePathTmpGet() != ""){
-            Label.text = DBmethod().FilePathTmpGet() as String
             textfield.text = DBmethod().FilePathTmpGet().lastPathComponent
         }
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-    }
-    
-    func ShiftImportViewActived(){
-        Label.text = DBmethod().FilePathTmpGet() as String
     }
     
     //取り込むボタンを押したら動作
