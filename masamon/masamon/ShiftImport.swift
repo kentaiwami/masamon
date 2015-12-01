@@ -69,7 +69,7 @@ class ShiftImport: UIViewController,UITextFieldDelegate{
                         do{
                             try filemanager.removeItemAtPath(self.Libralypath+"/"+self.filenamefield.text!)
                             try filemanager.moveItemAtPath(Inboxpath+self.filenamefield.text!, toPath: self.Libralypath+"/"+self.filenamefield.text!)
-                            self.InboxFileCountsMinusOne()
+                            self.InboxFileCountsDBMinusOne()
                             self.dismissViewControllerAnimated(true, completion: nil)
                             self.appDelegate.filesavealert = true
                             //TODO: finehistoryDBに記録する
@@ -84,7 +84,7 @@ class ShiftImport: UIViewController,UITextFieldDelegate{
             }else{      //入力したファイル名が被ってない場合
                 do{
                     try filemanager.moveItemAtPath(Inboxpath+filename, toPath: Libralypath+"/"+filenamefield.text!)
-                    self.InboxFileCountsMinusOne()
+                    self.InboxFileCountsDBMinusOne()
                     self.dismissViewControllerAnimated(true, completion: nil)
                     appDelegate.filesavealert = true
                     //TODO: finehistoryDBに記録する
@@ -109,7 +109,7 @@ class ShiftImport: UIViewController,UITextFieldDelegate{
         //コピーしたファイルの削除
         do{
             try filemanager.removeItemAtPath(inboxpath + filename)
-            self.InboxFileCountsMinusOne()
+            self.InboxFileCountsDBMinusOne()
         }catch{
             print(error)
         }
@@ -118,11 +118,11 @@ class ShiftImport: UIViewController,UITextFieldDelegate{
     }
     
     //InboxFileCountsの数を1つ減らす
-    func InboxFileCountsMinusOne(){
-        let InboxFileCountRecord = InboxFileCountDB()
-        InboxFileCountRecord.id = 0
-        InboxFileCountRecord.counts = DBmethod().InboxFileCountsGet()-1
-        DBmethod().AddandUpdate(InboxFileCountRecord)
+    func InboxFileCountsDBMinusOne(){
+        let InboxFileCountDBRecord = InboxFileCountDB()
+        InboxFileCountDBRecord.id = 0
+        InboxFileCountDBRecord.counts = DBmethod().InboxFileCountsGet()-1
+        DBmethod().AddandUpdate(InboxFileCountDBRecord)
     }
     
     //キーボードの完了(改行)を押したらキーボードを閉じる
@@ -131,5 +131,12 @@ class ShiftImport: UIViewController,UITextFieldDelegate{
         return true
     }
     
-   // func
+    //取り込み履歴を追加する
+    func ShiftImportHistoryDBadd(importdate: NSDate, importname: String){
+        let ShiftImportHistoryDBRecord = ShiftImportHistoryDB()
+        ShiftImportHistoryDBRecord.id = 0
+        ShiftImportHistoryDBRecord.date = ""
+        ShiftImportHistoryDBRecord.name = ""
+        DBmethod().AddandUpdate(ShiftImportHistoryDBRecord)
+    }
 }

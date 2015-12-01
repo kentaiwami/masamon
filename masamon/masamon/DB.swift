@@ -58,6 +58,6 @@ class FilePathTmpDB: Object{
 
 class ShiftImportHistoryDB: Object {
     dynamic var id = 0
-    dynamic var importname = ""
+    dynamic var name = ""
     dynamic var date = ""
 }
