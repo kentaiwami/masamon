@@ -43,6 +43,9 @@ class ShiftImport: UIViewController{
 
             do{
                 try filemanager.moveItemAtPath(Inboxpath+filename, toPath: Libralypath+"/"+textfield.text!)
+                self.dismissViewControllerAnimated(true, completion: nil)
+                //TODO: 保存が完了したダイアログを表示(月給表示画面)
+                //TODO: ダイアログを消す(月給表示画面)
             }catch{
                 print(error)
             }
@@ -55,10 +58,6 @@ class ShiftImport: UIViewController{
             
             presentViewController(alertController, animated: true, completion: nil)
         }
-        
-        //TODO: 画面を閉じる
-        //TODO: うすく表示するアラートを表示
-        //TODO: アラートを消す
     }
     
     //キャンセルボタンをタップしたら動作
