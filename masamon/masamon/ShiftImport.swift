@@ -24,9 +24,11 @@ class ShiftImport: UIViewController,UITextFieldDelegate{
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //テキストフィールドの設定
         filenamefield.delegate = self
         filenamefield.returnKeyType = .Done
         
+        //テキストビューの編集を無効化
         fileimporthistoryview.editable = false
         
         backgournd.image = backgourndimage
@@ -121,8 +123,9 @@ class ShiftImport: UIViewController,UITextFieldDelegate{
         DBmethod().AddandUpdate(InboxFileCountRecord)
     }
     
-    func textFieldShouldReturn(aaa: UITextField) -> Bool {
-        aaa.resignFirstResponder()
+    //キーボードの完了(改行)を押したらキーボードを閉じる
+    func textFieldShouldReturn(textfield: UITextField) -> Bool {
+        textfield.resignFirstResponder()
         return true
     }
 }
