@@ -15,6 +15,7 @@ class ShiftImport: UIViewController{
 
     let filemanager:NSFileManager = NSFileManager()
     let documentspath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
+    let Libralypath = NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0] as String
     let filename = DBmethod().FilePathTmpGet().lastPathComponent    //ファイル名の抽出
     
     override func viewDidLoad() {
@@ -37,11 +38,11 @@ class ShiftImport: UIViewController{
     //取り込むボタンを押したら動作
     @IBAction func xlsximport(sender: AnyObject) {
         if(textfield.text != ""){
-            let inboxpath = documentspath + "/Inbox/"   //Inboxまでのパス
+            let Inboxpath = documentspath + "/Inbox/"       //Inboxまでのパス
             let filemanager = NSFileManager()
-            
+
             do{
-                try filemanager.moveItemAtPath(inboxpath+filename, toPath: inboxpath+textfield.text!)
+                try filemanager.moveItemAtPath(Inboxpath+filename, toPath: Libralypath+"/"+textfield.text!)
             }catch{
                 print(error)
             }
@@ -55,7 +56,6 @@ class ShiftImport: UIViewController{
             presentViewController(alertController, animated: true, completion: nil)
         }
         
-        //TODO: 抽出したファイル名で保存しなおす(rename)
         //TODO: 画面を閉じる
         //TODO: うすく表示するアラートを表示
         //TODO: アラートを消す
@@ -64,7 +64,7 @@ class ShiftImport: UIViewController{
     //キャンセルボタンをタップしたら動作
     @IBAction func cancel(sender: AnyObject) {
         let inboxpath = documentspath + "/Inbox/"   //Inboxまでのパス
-        
+
         //コピーしたファイルの削除
         do{
             try filemanager.removeItemAtPath(inboxpath + filename)
