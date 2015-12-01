@@ -50,14 +50,14 @@ class HourlyPaySetting: Menu, UIPickerViewDelegate, UIPickerViewDataSource,UITex
         if(DBmethod().HourlyPayRecordGet().isEmpty){
             print("HourlyPayRecord is nil")
         }else{
-            let test = DBmethod().HourlyPayRecordGet()
+            let hourlypayarray = DBmethod().HourlyPayRecordGet()
             
-            TimeFrom1.text = time[Int(test[0].timefrom * 2)]
-            TimeTo1.text = time[Int(test[0].timeto * 2)]
-            TimeFrom2.text = time[Int(test[1].timefrom * 2)]
-            TimeTo2.text = time[Int(test[1].timeto * 2)]
-            SalalyLabel1.text = String(test[0].pay)
-            SalalyLabel2.text = String(test[1].pay)
+            TimeFrom1.text = time[Int(hourlypayarray[0].timefrom * 2)]
+            TimeTo1.text = time[Int(hourlypayarray[0].timeto * 2)]
+            TimeFrom2.text = time[Int(hourlypayarray[1].timefrom * 2)]
+            TimeTo2.text = time[Int(hourlypayarray[1].timeto * 2)]
+            SalalyLabel1.text = String(hourlypayarray[0].pay)
+            SalalyLabel2.text = String(hourlypayarray[1].pay)
         }
         
         //猫の追加

@@ -75,7 +75,7 @@ class DBmethod: UIViewController {
         }
 
     }
-    //TODO: レコードを1件ずつ取得して配列に格納する
+
     //時給設定の情報を配列にして返す
     func HourlyPayRecordGet() -> Results<HourlyPayDB>{
         let realm = try! Realm()
@@ -87,16 +87,23 @@ class DBmethod: UIViewController {
         var count = 0
         
         let realm = try! Realm()
-        count = realm.objects(InboxFileCount).filter("id = %@", 0)[0].counts
+        count = realm.objects(InboxFileCountDB).filter("id = %@", 0)[0].counts
         
         return count
     }
     
+    //コピーしたファイルパスを保存(1件のみ)
     func FilePathTmpGet() -> NSString{
         var path: NSString = ""
         
         let realm = try! Realm()
-        path = realm.objects(FilePathTmp).filter("id = %@", 0)[0].path
+        path = realm.objects(FilePathTmpDB).filter("id = %@", 0)[0].path
         return path
+    }
+    
+    //インポート履歴のレコードを配列で返す
+    func ShiftImportHistoryDBGet() -> Results<ShiftImportHistoryDB>{
+        let realm = try! Realm()
+        return realm.objects(ShiftImportHistoryDB)
     }
 }

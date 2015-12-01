@@ -31,6 +31,8 @@ class ShiftImport: UIViewController,UITextFieldDelegate{
         //テキストビューの編集を無効化
         fileimporthistoryview.editable = false
         
+        showhistory()
+        
         backgournd.image = backgourndimage
         backgournd.frame = CGRectMake(0.0, 65.0, self.view.frame.width, self.view.frame.height)
         self.view.addSubview(backgournd)
@@ -69,9 +71,10 @@ class ShiftImport: UIViewController,UITextFieldDelegate{
                         do{
                             try filemanager.removeItemAtPath(self.Libralypath+"/"+self.filenamefield.text!)
                             try filemanager.moveItemAtPath(Inboxpath+self.filenamefield.text!, toPath: self.Libralypath+"/"+self.filenamefield.text!)
-                            self.InboxFileCountsMinusOne()
+                            self.InboxFileCountsDBMinusOne()
                             self.dismissViewControllerAnimated(true, completion: nil)
                             self.appDelegate.filesavealert = true
+                            self.ShiftImportHistoryDBadd(NSDate(), importname: self.filenamefield.text!)
                         }catch{
                             print(error)
                         }
@@ -83,13 +86,16 @@ class ShiftImport: UIViewController,UITextFieldDelegate{
             }else{      //入力したファイル名が被ってない場合
                 do{
                     try filemanager.moveItemAtPath(Inboxpath+filename, toPath: Libralypath+"/"+filenamefield.text!)
-                    self.InboxFileCountsMinusOne()
+                    self.InboxFileCountsDBMinusOne()
                     self.dismissViewControllerAnimated(true, completion: nil)
                     appDelegate.filesavealert = true
+                    ShiftImportHistoryDBadd(NSDate(), importname: filenamefield.text!)
                 }catch{
                     print(error)
                 }
             }
+            self.showhistory()
+            
         }else{      //テキストフィールドが空の場合
             let alertController = UIAlertController(title: "取り込みエラー", message: "ファイル名を入力して下さい", preferredStyle: .Alert)
             
@@ -107,7 +113,7 @@ class ShiftImport: UIViewController,UITextFieldDelegate{
         //コピーしたファイルの削除
         do{
             try filemanager.removeItemAtPath(inboxpath + filename)
-            self.InboxFileCountsMinusOne()
+            self.InboxFileCountsDBMinusOne()
         }catch{
             print(error)
         }
@@ -116,16 +122,44 @@ class ShiftImport: UIViewController,UITextFieldDelegate{
     }
     
     //InboxFileCountsの数を1つ減らす
-    func InboxFileCountsMinusOne(){
-        let InboxFileCountRecord = InboxFileCount()
-        InboxFileCountRecord.id = 0
-        InboxFileCountRecord.counts = DBmethod().InboxFileCountsGet()-1
-        DBmethod().AddandUpdate(InboxFileCountRecord)
+    func InboxFileCountsDBMinusOne(){
+        let InboxFileCountDBRecord = InboxFileCountDB()
+        InboxFileCountDBRecord.id = 0
+        InboxFileCountDBRecord.counts = DBmethod().InboxFileCountsGet()-1
+        DBmethod().AddandUpdate(InboxFileCountDBRecord)
     }
     
     //キーボードの完了(改行)を押したらキーボードを閉じる
     func textFieldShouldReturn(textfield: UITextField) -> Bool {
         textfield.resignFirstResponder()
         return true
+    }
+    
+    //取り込み履歴を追加する
+    func ShiftImportHistoryDBadd(importdate: NSDate, importname: String){
+        //日付のフォーマットを設定
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.locale = NSLocale(localeIdentifier: "ja_JP")
+        dateFormatter.dateFormat = "yyyy/MM/dd"
+        
+        //取り込み履歴へのレコード追加
+        let ShiftImportHistoryDBRecord = ShiftImportHistoryDB()
+        if(DBmethod().DBRecordCount(ShiftImportHistoryDB) == 0){
+            ShiftImportHistoryDBRecord.id = 0
+        }else{
+            ShiftImportHistoryDBRecord.id = DBmethod().DBRecordCount(ShiftImportHistoryDB)
+        }
+        ShiftImportHistoryDBRecord.date = dateFormatter.stringFromDate(importdate)
+        ShiftImportHistoryDBRecord.name = importname
+        DBmethod().AddandUpdate(ShiftImportHistoryDBRecord)        
+    }
+    
+    func showhistory(){
+        //履歴の表示
+        let importhistoryarray = DBmethod().ShiftImportHistoryDBGet()
+        for(var i = importhistoryarray.count-1; i >= 0; i--){
+            fileimporthistoryview.text = fileimporthistoryview.text + importhistoryarray[i].date + "             " + importhistoryarray[i].name + "\n"
+        }
+
     }
 }
