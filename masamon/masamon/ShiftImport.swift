@@ -8,10 +8,10 @@
 
 import UIKit
 
-class ShiftImport: UIViewController,UITextFieldDelegate{
+class ShiftImport: UIViewController,UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource{
     
     @IBOutlet weak var filenamefield: UITextField!
-    @IBOutlet weak var fileimporthistoryview: UITextView!
+    @IBOutlet weak var fileimporthistorytable: UITableView!
     
     let filemanager:NSFileManager = NSFileManager()
     let documentspath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
@@ -20,18 +20,32 @@ class ShiftImport: UIViewController,UITextFieldDelegate{
     let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得
     let backgournd = UIImageView()
     let backgourndimage = UIImage(named: "../images/SIbackgournd.jpeg")
+    var tableviewcelltext: [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //線を引いてみる？
+        let TEST = UIView()
+        TEST.frame = CGRectMake(self.view.frame.width/2-55, self.view.frame.height/2-75, 0.5, 300.0)
+        TEST.backgroundColor = UIColor.grayColor()
+        TEST.alpha = 0.5
+        self.view.addSubview(TEST)
+        
+        
+        //テーブルビューの設定
+        fileimporthistorytable.delegate = self
+        fileimporthistorytable.dataSource = self
         
         //テキストフィールドの設定
         filenamefield.delegate = self
         filenamefield.returnKeyType = .Done
         
-        //テキストビューの編集を無効化
-        fileimporthistoryview.editable = false
-        
-        showhistory()
+        //テーブルビューに最新順から追加していく
+        let importhistoryarray = DBmethod().ShiftImportHistoryDBGet()
+        for(var i = importhistoryarray.count-1; i >= 0; i--){
+            tableviewcelltext.append(importhistoryarray[i].date + "             " + importhistoryarray[i].name)
+        }
         
         backgournd.image = backgourndimage
         backgournd.frame = CGRectMake(0.0, 65.0, self.view.frame.width, self.view.frame.height)
@@ -94,8 +108,9 @@ class ShiftImport: UIViewController,UITextFieldDelegate{
                     print(error)
                 }
             }
-            self.showhistory()
-            
+            //配列の中身を削除してから入れ直す
+            tableviewcelltext.removeAll()
+            settableviewcell()
         }else{      //テキストフィールドが空の場合
             let alertController = UIAlertController(title: "取り込みエラー", message: "ファイル名を入力して下さい", preferredStyle: .Alert)
             
@@ -154,12 +169,31 @@ class ShiftImport: UIViewController,UITextFieldDelegate{
         DBmethod().AddandUpdate(ShiftImportHistoryDBRecord)        
     }
     
-    func showhistory(){
-        //履歴の表示
+    // セルの行数
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return tableviewcelltext.count
+    }
+    
+    // セルの内容を変更
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "Cell")
+        
+        if(tableviewcelltext.isEmpty){
+            return cell
+        }else{
+            cell.textLabel?.text = tableviewcelltext[indexPath.row]
+            return cell
+        }
+    }
+    
+    func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+        return nil
+    }
+    
+    func settableviewcell(){
         let importhistoryarray = DBmethod().ShiftImportHistoryDBGet()
         for(var i = importhistoryarray.count-1; i >= 0; i--){
-            fileimporthistoryview.text = fileimporthistoryview.text + importhistoryarray[i].date + "             " + importhistoryarray[i].name + "\n"
+            tableviewcelltext.append(importhistoryarray[i].date + "             " + importhistoryarray[i].name)
         }
-
     }
 }
