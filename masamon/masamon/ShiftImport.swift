@@ -43,7 +43,7 @@ class ShiftImport: UIViewController{
             let filemanager = NSFileManager()
             
             if(filemanager.fileExistsAtPath(Libralypath+"/"+textfield.text!)){       //入力したファイル名が既に存在する場合
-                //TODO: アラートを表示して上書きかキャンセルかを選択させる
+                //アラートを表示して上書きかキャンセルかを選択させる
                 let alert:UIAlertController = UIAlertController(title:"取り込みエラー",
                     message: "既に同じファイル名が存在します",
                     preferredStyle: UIAlertControllerStyle.Alert)
@@ -52,20 +52,26 @@ class ShiftImport: UIViewController{
                     style: UIAlertActionStyle.Cancel,
                     handler:{
                         (action:UIAlertAction!) -> Void in
-                        print("Cancel")
                 })
-                
                 let updateAction:UIAlertAction = UIAlertAction(title: "上書き",
                     style: UIAlertActionStyle.Default,
                     handler:{
                         (action:UIAlertAction!) -> Void in
-                        print("updateAction")
+                        do{
+                            try filemanager.removeItemAtPath(self.Libralypath+"/"+self.textfield.text!)
+                            try filemanager.moveItemAtPath(Inboxpath+self.textfield.text!, toPath: self.Libralypath+"/"+self.textfield.text!)
+                            self.InboxFileCountsMinusOne()
+                            self.dismissViewControllerAnimated(true, completion: nil)
+                            self.appDelegate.filesavealert = true
+                        }catch{
+                            print(error)
+                        }
                 })
                 
                 alert.addAction(cancelAction)
                 alert.addAction(updateAction)
                 presentViewController(alert, animated: true, completion: nil)
-            }else{
+            }else{      //入力したファイル名が被ってない場合
                 do{
                     try filemanager.moveItemAtPath(Inboxpath+filename, toPath: Libralypath+"/"+textfield.text!)
                     self.InboxFileCountsMinusOne()
@@ -75,7 +81,7 @@ class ShiftImport: UIViewController{
                     print(error)
                 }
             }
-        }else{
+        }else{      //テキストフィールドが空の場合
             let alertController = UIAlertController(title: "取り込みエラー", message: "ファイル名を入力して下さい", preferredStyle: .Alert)
             
             let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
