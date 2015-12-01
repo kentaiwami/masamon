@@ -44,6 +44,7 @@ class ShiftImport: UIViewController{
 
             do{
                 try filemanager.moveItemAtPath(Inboxpath+filename, toPath: Libralypath+"/"+textfield.text!)
+                self.InboxFileCountsMinusOne()
                 self.dismissViewControllerAnimated(true, completion: nil)
                 appDelegate.filesavealert = true
             }catch{
@@ -67,15 +68,19 @@ class ShiftImport: UIViewController{
         //コピーしたファイルの削除
         do{
             try filemanager.removeItemAtPath(inboxpath + filename)
-            //データベースに記録しているファイル数を1減らして更新
-            let InboxFileCountRecord = InboxFileCount()
-            InboxFileCountRecord.id = 0
-            InboxFileCountRecord.counts = DBmethod().InboxFileCountsGet()-1
-            DBmethod().AddandUpdate(InboxFileCountRecord)
+            self.InboxFileCountsMinusOne()
         }catch{
             print(error)
         }
         self.dismissViewControllerAnimated(true, completion: nil)
 
+    }
+    
+    //InboxFileCountsの数を1つ減らす
+    func InboxFileCountsMinusOne(){
+        let InboxFileCountRecord = InboxFileCount()
+        InboxFileCountRecord.id = 0
+        InboxFileCountRecord.counts = DBmethod().InboxFileCountsGet()-1
+        DBmethod().AddandUpdate(InboxFileCountRecord)
     }
 }
