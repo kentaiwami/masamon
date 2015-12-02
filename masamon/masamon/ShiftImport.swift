@@ -18,19 +18,19 @@ class ShiftImport: UIViewController,UITextFieldDelegate,UITableViewDelegate,UITa
     let Libralypath = NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0] as String
     let filename = DBmethod().FilePathTmpGet().lastPathComponent    //ファイル名の抽出
     let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得
-    let backgournd = UIImageView()
-    let backgourndimage = UIImage(named: "../images/SIbackgournd.jpeg")
     var tableviewcelltext: [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //線を引いてみる？
-        let TEST = UIView()
-        TEST.frame = CGRectMake(self.view.frame.width/2-55, self.view.frame.height/2-75, 0.5, 300.0)
-        TEST.backgroundColor = UIColor.grayColor()
-        TEST.alpha = 0.5
-        self.view.addSubview(TEST)
+        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "../images/SIbackground.jpeg")!)
+        
+        //線を引く
+        let splitline = UIView()
+        splitline.frame = CGRectMake(self.view.frame.width/2-55, self.view.frame.height/2-75, 0.5, 300.0)
+        splitline.backgroundColor = UIColor.grayColor()
+        splitline.alpha = 0.5
+        self.view.addSubview(splitline)
         
         
         //テーブルビューの設定
@@ -46,11 +46,6 @@ class ShiftImport: UIViewController,UITextFieldDelegate,UITableViewDelegate,UITa
         for(var i = importhistoryarray.count-1; i >= 0; i--){
             tableviewcelltext.append(importhistoryarray[i].date + "             " + importhistoryarray[i].name)
         }
-        
-        backgournd.image = backgourndimage
-        backgournd.frame = CGRectMake(0.0, 65.0, self.view.frame.width, self.view.frame.height)
-        self.view.addSubview(backgournd)
-        self.view.sendSubviewToBack(backgournd)
         
         if(DBmethod().FilePathTmpGet() != ""){
             filenamefield.text = DBmethod().FilePathTmpGet().lastPathComponent
