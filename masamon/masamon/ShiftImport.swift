@@ -25,6 +25,9 @@ class ShiftImport: UIViewController,UITextFieldDelegate,UITableViewDelegate,UITa
         
         self.view.backgroundColor = UIColor(patternImage: UIImage(named: "../images/SIbackground.png")!)
         
+        //蝶々を設置
+        setbutterfly()
+        
         //線を引く
         let splitline = UIView()
         splitline.frame = CGRectMake(self.view.frame.width/2-55, self.view.frame.height/2-75, 0.5, 300.0)
@@ -181,14 +184,32 @@ class ShiftImport: UIViewController,UITextFieldDelegate,UITableViewDelegate,UITa
         }
     }
     
+    //テーブルビューの選択を禁止する
     func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
         return nil
     }
     
+    //テーブルビューのセルに値を設定する
     func settableviewcell(){
         let importhistoryarray = DBmethod().ShiftImportHistoryDBGet()
         for(var i = importhistoryarray.count-1; i >= 0; i--){
             tableviewcelltext.append(importhistoryarray[i].date + "             " + importhistoryarray[i].name)
         }
+    }
+    
+    func setbutterfly(){
+        //蝶々の設置
+        let view = UIImageView()
+        let image = UIImage(named: "../images/aaa.png")
+        view.image = image
+        view.frame = CGRectMake(0, 0, 100, 100)
+        view.layer.position = CGPoint(x: 20, y: self.view.frame.height-40)
+        view.contentMode = UIViewContentMode.ScaleAspectFit
+        // radianで回転角度を指定(30度)する.
+        let angle:CGFloat = CGFloat((30.0 * M_PI) / 180.0)
+        
+        // 回転用のアフィン行列を生成する.
+        view.transform = CGAffineTransformMakeRotation(angle)
+        self.view.addSubview(view)
     }
 }
