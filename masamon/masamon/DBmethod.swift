@@ -33,17 +33,17 @@ class DBmethod: UIViewController {
         print(dataContent)
     }
     
-    //シフトDBの大きさを返す
-    func ShiftDBSize() -> Int {
-        var shiftdbcount = 0
+    //指定したDBのレコード数を返す
+    func DBRecordCount(DBName: Object.Type) -> Int {
+        var dbrecordcount = 0
         
         do{
-            shiftdbcount = try (Realm().objects(ShiftDB).count)
+            dbrecordcount = try (Realm().objects(DBName).count)
 
         }catch{
             //Error
         }
-        return shiftdbcount
+        return dbrecordcount
     }
     
     //レコードのIDを受け取って名前を返す
@@ -75,11 +75,35 @@ class DBmethod: UIViewController {
         }
 
     }
-    //TODO: レコードを1件ずつ取得して配列に格納する
+
     //時給設定の情報を配列にして返す
-    func HourlyPayRecordGet() -> Results<HourlyPay>{
+    func HourlyPayRecordGet() -> Results<HourlyPayDB>{
         let realm = try! Realm()
-        return realm.objects(HourlyPay)
+        return realm.objects(HourlyPayDB)
     }
     
+    //Inbox内のファイル数を返す
+    func InboxFileCountsGet() -> Int{
+        var count = 0
+        
+        let realm = try! Realm()
+        count = realm.objects(InboxFileCountDB).filter("id = %@", 0)[0].counts
+        
+        return count
+    }
+    
+    //コピーしたファイルパスを保存(1件のみ)
+    func FilePathTmpGet() -> NSString{
+        var path: NSString = ""
+        
+        let realm = try! Realm()
+        path = realm.objects(FilePathTmpDB).filter("id = %@", 0)[0].path
+        return path
+    }
+    
+    //インポート履歴のレコードを配列で返す
+    func ShiftImportHistoryDBGet() -> Results<ShiftImportHistoryDB>{
+        let realm = try! Realm()
+        return realm.objects(ShiftImportHistoryDB)
+    }
 }
