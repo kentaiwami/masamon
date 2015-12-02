@@ -198,18 +198,25 @@ class ShiftImport: UIViewController,UITextFieldDelegate,UITableViewDelegate,UITa
     }
     
     func setbutterfly(){
-        //蝶々の設置
-        let view = UIImageView()
-        let image = UIImage(named: "../images/aaa.png")
-        view.image = image
-        view.frame = CGRectMake(0, 0, 100, 100)
-        view.layer.position = CGPoint(x: 20, y: self.view.frame.height-40)
-        view.contentMode = UIViewContentMode.ScaleAspectFit
-        // radianで回転角度を指定(30度)する.
-        let angle:CGFloat = CGFloat((30.0 * M_PI) / 180.0)
+        let imagepath = ["../images/butterfly1.png","../images/butterfly2.png"]
+        let position:[[Int]] = [[Int(self.view.frame.width-50),Int(self.view.frame.height/2-120)],[60,Int(self.view.frame.height-40)]]
+        let theta = [30.0,-30.0]
         
-        // 回転用のアフィン行列を生成する.
-        view.transform = CGAffineTransformMakeRotation(angle)
-        self.view.addSubview(view)
+        //蝶々の設置
+        for(var i = 0; i < 2; i++){
+            let view = UIImageView()
+            let image = UIImage(named: imagepath[i])
+            view.image = image
+            view.frame = CGRectMake(0, 0, 100, 100)
+            view.layer.position = CGPoint(x: position[i][0], y: position[i][1])
+            view.contentMode = UIViewContentMode.ScaleAspectFit
+            // radianで回転角度を指定(30度)する.
+            let angle:CGFloat = CGFloat((theta[i] * M_PI) / 180.0)
+
+            // 回転用のアフィン行列を生成する.
+            view.transform = CGAffineTransformMakeRotation(angle)
+            self.view.addSubview(view)
+
+        }
     }
 }
