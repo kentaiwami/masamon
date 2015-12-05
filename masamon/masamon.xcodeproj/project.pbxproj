@@ -545,6 +545,7 @@
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Kenta.masamon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "\"/Users/Kenta/Desktop/XlsxReaderWriter-master\"/**";
 			};
 			name = Debug;
 		};
@@ -561,6 +562,7 @@
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Kenta.masamon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "\"/Users/Kenta/Desktop/XlsxReaderWriter-master\"/**";
 			};
 			name = Release;
 		};
