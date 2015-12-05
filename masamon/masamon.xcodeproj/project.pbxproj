@@ -24,6 +24,7 @@
 		371432A81BE98F060088CDCC /* ShiftImport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371432A71BE98F060088CDCC /* ShiftImport.swift */; };
 		3742AF541C12D884003AB33B /* libXlsxReaderWriter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3742AF4F1C12D821003AB33B /* libXlsxReaderWriter.a */; };
 		3742AF561C12D8D1003AB33B /* libz.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3742AF551C12D8D1003AB33B /* libz.1.dylib */; };
+		3742AF631C12E851003AB33B /* testWorkbook.xlsx in Resources */ = {isa = PBXBuildFile; fileRef = 3742AF621C12E851003AB33B /* testWorkbook.xlsx */; };
 		376C92D61BE695D000D45FC2 /* extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376C92D51BE695D000D45FC2 /* extentions.swift */; };
 		37D4B3101BE0F59900F06759 /* HourlyPaySetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D4B30F1BE0F59900F06759 /* HourlyPaySetting.swift */; };
 		37D4B34C1BE2691400F06759 /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D4B34B1BE2691400F06759 /* Menu.swift */; };
@@ -114,6 +115,7 @@
 		371432A71BE98F060088CDCC /* ShiftImport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShiftImport.swift; sourceTree = "<group>"; };
 		3742AF481C12D821003AB33B /* XlsxReaderWriter.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = XlsxReaderWriter.xcodeproj; path = "../../../../Desktop/XlsxReaderWriter-master/XlsxReaderWriter.xcodeproj"; sourceTree = "<group>"; };
 		3742AF551C12D8D1003AB33B /* libz.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.dylib; path = ../../../../../../usr/lib/libz.1.dylib; sourceTree = "<group>"; };
+		3742AF621C12E851003AB33B /* testWorkbook.xlsx */ = {isa = PBXFileReference; lastKnownFileType = file; path = testWorkbook.xlsx; sourceTree = "<group>"; };
 		376C92D51BE695D000D45FC2 /* extentions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = extentions.swift; sourceTree = "<group>"; };
 		37D4B30F1BE0F59900F06759 /* HourlyPaySetting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HourlyPaySetting.swift; sourceTree = "<group>"; };
 		37D4B34B1BE2691400F06759 /* Menu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
@@ -153,6 +155,7 @@
 		370ACDEE1BDF486600AB73EB = {
 			isa = PBXGroup;
 			children = (
+				3742AF621C12E851003AB33B /* testWorkbook.xlsx */,
 				3742AF551C12D8D1003AB33B /* libz.1.dylib */,
 				3742AF481C12D821003AB33B /* XlsxReaderWriter.xcodeproj */,
 				370ACE3C1BDF572600AB73EB /* Realm.framework */,
@@ -354,6 +357,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3742AF631C12E851003AB33B /* testWorkbook.xlsx in Resources */,
 				370ACE291BDF4B7700AB73EB /* images in Resources */,
 				370ACE051BDF486700AB73EB /* LaunchScreen.storyboard in Resources */,
 				370ACE021BDF486700AB73EB /* Assets.xcassets in Resources */,

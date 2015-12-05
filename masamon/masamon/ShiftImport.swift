@@ -23,6 +23,21 @@ class ShiftImport: UIViewController,UITextFieldDelegate,UITableViewDelegate,UITa
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //使ってみる
+        let documentPath: String = (NSBundle.mainBundle().pathForResource("testWorkbook", ofType: "xlsx"))!
+        
+//        let AAA = DBmethod().FilePathTmpGet() as String
+        let spreadsheet: BRAOfficeDocumentPackage = BRAOfficeDocumentPackage.open(documentPath)
+        let worksheet: BRAWorksheet = spreadsheet.workbook.worksheets[0] as! BRAWorksheet
+        let BBB: String = worksheet.cellForCellReference("C6").stringValue()
+        
+        print(BBB)
+//        print(spreadsheet)
+        
+//        print(documentPath)
+//        print(spreadsheet)
+        
+        
         self.view.backgroundColor = UIColor(patternImage: UIImage(named: "../images/SIbackground.png")!)
         
         //蝶々を設置
@@ -164,7 +179,7 @@ class ShiftImport: UIViewController,UITextFieldDelegate,UITableViewDelegate,UITa
         }
         ShiftImportHistoryDBRecord.date = dateFormatter.stringFromDate(importdate)
         ShiftImportHistoryDBRecord.name = importname
-        DBmethod().AddandUpdate(ShiftImportHistoryDBRecord)        
+        DBmethod().AddandUpdate(ShiftImportHistoryDBRecord)
     }
     
     // セルの行数
@@ -212,11 +227,11 @@ class ShiftImport: UIViewController,UITextFieldDelegate,UITableViewDelegate,UITa
             view.contentMode = UIViewContentMode.ScaleAspectFit
             // radianで回転角度を指定(30度)する.
             let angle:CGFloat = CGFloat((theta[i] * M_PI) / 180.0)
-
+            
             // 回転用のアフィン行列を生成する.
             view.transform = CGAffineTransformMakeRotation(angle)
             self.view.addSubview(view)
-
+            
         }
     }
 }
