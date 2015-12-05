@@ -22,7 +22,7 @@ class ShiftImport: UIViewController,UITextFieldDelegate,UITableViewDelegate,UITa
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         self.view.backgroundColor = UIColor(patternImage: UIImage(named: "../images/SIbackground.png")!)
         
         //蝶々を設置
@@ -164,7 +164,7 @@ class ShiftImport: UIViewController,UITextFieldDelegate,UITableViewDelegate,UITa
         }
         ShiftImportHistoryDBRecord.date = dateFormatter.stringFromDate(importdate)
         ShiftImportHistoryDBRecord.name = importname
-        DBmethod().AddandUpdate(ShiftImportHistoryDBRecord)        
+        DBmethod().AddandUpdate(ShiftImportHistoryDBRecord)
     }
     
     // セルの行数
@@ -196,7 +196,7 @@ class ShiftImport: UIViewController,UITextFieldDelegate,UITableViewDelegate,UITa
             tableviewcelltext.append(importhistoryarray[i].date + "             " + importhistoryarray[i].name)
         }
     }
-    
+
     func setbutterfly(){
         let imagepath = ["../images/butterfly1.png","../images/butterfly2.png"]
         let position:[[Int]] = [[Int(self.view.frame.width-50),Int(self.view.frame.height/2-120)],[60,Int(self.view.frame.height-40)]]
@@ -212,11 +212,11 @@ class ShiftImport: UIViewController,UITextFieldDelegate,UITableViewDelegate,UITa
             view.contentMode = UIViewContentMode.ScaleAspectFit
             // radianで回転角度を指定(30度)する.
             let angle:CGFloat = CGFloat((theta[i] * M_PI) / 180.0)
-
+            
             // 回転用のアフィン行列を生成する.
             view.transform = CGAffineTransformMakeRotation(angle)
             self.view.addSubview(view)
-
+            
         }
     }
 }
