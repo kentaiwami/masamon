@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		3742AF611C12E7C8003AB33B /* testWorkbook.xlsx in Resources */ = {isa = PBXBuildFile; fileRef = 45B6E2FA1A15099000288A78 /* testWorkbook.xlsx */; };
-		3742AF801C1301A6003AB33B /* libz.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3742AF7F1C1301A6003AB33B /* libz.1.dylib */; };
 		454D49FD1B4B27E40053CD86 /* BRATheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 454D49FC1B4B27E40053CD86 /* BRATheme.m */; };
 		455C23B61BB908D300CEE3A2 /* BRAVmlDrawing.m in Sources */ = {isa = PBXBuildFile; fileRef = 455C23B51BB908D300CEE3A2 /* BRAVmlDrawing.m */; };
 		457B68821B9DE8FC0096E1D1 /* SwiftTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457B68811B9DE8FC0096E1D1 /* SwiftTestCase.swift */; };
@@ -206,7 +205,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3742AF801C1301A6003AB33B /* libz.1.dylib in Frameworks */,
 				45B6E30D1A1512F700288A78 /* Foundation.framework in Frameworks */,
 				45B6E3051A15111800288A78 /* libSSZipArchive.a in Frameworks */,
 			);

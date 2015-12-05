@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3742AF941C1304FD003AB33B /* libz.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3742AF931C1304FD003AB33B /* libz.1.dylib */; };
 		A7A000681845716F00DA4DA2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21CC41A817DB7D1300201DDC /* Foundation.framework */; };
 		A7A000751845716F00DA4DA2 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21CC41C117DB7D1300201DDC /* XCTest.framework */; };
 		A7A000761845716F00DA4DA2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21CC41A817DB7D1300201DDC /* Foundation.framework */; };
@@ -82,7 +81,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3742AF941C1304FD003AB33B /* libz.1.dylib in Frameworks */,
 				A7A000681845716F00DA4DA2 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
