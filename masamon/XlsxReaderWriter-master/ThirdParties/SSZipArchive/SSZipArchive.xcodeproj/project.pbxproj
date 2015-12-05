@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3742AF5F1C12DF44003AB33B /* libz.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3742AF5E1C12DF44003AB33B /* libz.1.dylib */; };
+		3742AF941C1304FD003AB33B /* libz.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3742AF931C1304FD003AB33B /* libz.1.dylib */; };
 		A7A000681845716F00DA4DA2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21CC41A817DB7D1300201DDC /* Foundation.framework */; };
 		A7A000751845716F00DA4DA2 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21CC41C117DB7D1300201DDC /* XCTest.framework */; };
 		A7A000761845716F00DA4DA2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21CC41A817DB7D1300201DDC /* Foundation.framework */; };
@@ -71,7 +71,7 @@
 		21CC41F517DB7D3500201DDC /* Unicode.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = Unicode.zip; sourceTree = "<group>"; };
 		21CC41F617DB7D3500201DDC /* SSZipArchiveTests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "SSZipArchiveTests-Info.plist"; sourceTree = "<group>"; };
 		21CC41F717DB7D3500201DDC /* SSZipArchiveTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSZipArchiveTests.m; sourceTree = "<group>"; };
-		3742AF5E1C12DF44003AB33B /* libz.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.dylib; path = ../../../../../../usr/lib/libz.1.dylib; sourceTree = "<group>"; };
+		3742AF931C1304FD003AB33B /* libz.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.dylib; path = ../../../../../../../../../usr/lib/libz.1.dylib; sourceTree = "<group>"; };
 		A7A000671845716F00DA4DA2 /* libSSZipArchive.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSSZipArchive.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7A0006B1845716F00DA4DA2 /* SSZipArchive-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SSZipArchive-Prefix.pch"; sourceTree = "<group>"; };
 		A7A000741845716F00DA4DA2 /* SSZipArchiveTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SSZipArchiveTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -82,7 +82,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3742AF5F1C12DF44003AB33B /* libz.1.dylib in Frameworks */,
+				3742AF941C1304FD003AB33B /* libz.1.dylib in Frameworks */,
 				A7A000681845716F00DA4DA2 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -138,7 +138,7 @@
 		21CC41A717DB7D1300201DDC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				3742AF5E1C12DF44003AB33B /* libz.1.dylib */,
+				3742AF931C1304FD003AB33B /* libz.1.dylib */,
 				21CC41A817DB7D1300201DDC /* Foundation.framework */,
 				21CC41C117DB7D1300201DDC /* XCTest.framework */,
 			);
