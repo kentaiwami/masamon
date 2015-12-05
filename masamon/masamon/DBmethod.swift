@@ -6,7 +6,6 @@
 //  Copyright © 2015年 Kenta. All rights reserved.
 //
 
-import UIKit
 import Foundation
 import RealmSwift
 

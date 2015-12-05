@@ -102,6 +102,8 @@ class ShiftImport: UIViewController,UITextFieldDelegate,UITableViewDelegate,UITa
                     self.dismissViewControllerAnimated(true, completion: nil)
                     appDelegate.filesavealert = true
                     ShiftImportHistoryDBadd(NSDate(), importname: filenamefield.text!)
+                    
+                    print(ShiftRegister().BBB(Libralypath))
                 }catch{
                     print(error)
                 }
