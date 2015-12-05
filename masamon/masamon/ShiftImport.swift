@@ -22,22 +22,7 @@ class ShiftImport: UIViewController,UITextFieldDelegate,UITableViewDelegate,UITa
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        //使ってみる
-        let documentPath: String = (NSBundle.mainBundle().pathForResource("testWorkbook", ofType: "xlsx"))!
-        
-//        let AAA = DBmethod().FilePathTmpGet() as String
-        let spreadsheet: BRAOfficeDocumentPackage = BRAOfficeDocumentPackage.open(documentPath)
-        let worksheet: BRAWorksheet = spreadsheet.workbook.worksheets[0] as! BRAWorksheet
-        let BBB: String = worksheet.cellForCellReference("C6").stringValue()
-        
-        print(BBB)
-//        print(spreadsheet)
-        
-//        print(documentPath)
-//        print(spreadsheet)
-        
-        
+
         self.view.backgroundColor = UIColor(patternImage: UIImage(named: "../images/SIbackground.png")!)
         
         //蝶々を設置
@@ -211,7 +196,7 @@ class ShiftImport: UIViewController,UITextFieldDelegate,UITableViewDelegate,UITa
             tableviewcelltext.append(importhistoryarray[i].date + "             " + importhistoryarray[i].name)
         }
     }
-    
+
     func setbutterfly(){
         let imagepath = ["../images/butterfly1.png","../images/butterfly2.png"]
         let position:[[Int]] = [[Int(self.view.frame.width-50),Int(self.view.frame.height/2-120)],[60,Int(self.view.frame.height-40)]]
