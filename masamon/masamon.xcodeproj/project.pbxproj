@@ -56,6 +56,13 @@
 			remoteGlobalIDString = 45B6E2451A148F7500288A78;
 			remoteInfo = XlsxReaderWriterTests;
 		};
+		3742AF521C12D857003AB33B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3742AF481C12D821003AB33B /* XlsxReaderWriter.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 45B6E2391A148F7500288A78;
+			remoteInfo = XlsxReaderWriter;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -224,6 +231,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				3742AF531C12D857003AB33B /* PBXTargetDependency */,
 			);
 			name = masamon;
 			productName = masamon;
@@ -407,6 +415,11 @@
 			isa = PBXTargetDependency;
 			target = 370ACDF61BDF486600AB73EB /* masamon */;
 			targetProxy = 370ACE171BDF486700AB73EB /* PBXContainerItemProxy */;
+		};
+		3742AF531C12D857003AB33B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = XlsxReaderWriter;
+			targetProxy = 3742AF521C12D857003AB33B /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
