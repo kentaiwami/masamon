@@ -545,6 +545,7 @@
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Kenta.masamon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/Kenta/Desktop/XlsxReaderWriter-master/XlsxReaderWriterTests/XlsxReaderWriterTests-Bridging-Header.h";
 				USER_HEADER_SEARCH_PATHS = "\"/Users/Kenta/Desktop/XlsxReaderWriter-master\"/**";
 			};
 			name = Debug;
@@ -562,6 +563,7 @@
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Kenta.masamon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/Kenta/Desktop/XlsxReaderWriter-master/XlsxReaderWriterTests/XlsxReaderWriterTests-Bridging-Header.h";
 				USER_HEADER_SEARCH_PATHS = "\"/Users/Kenta/Desktop/XlsxReaderWriter-master\"/**";
 			};
 			name = Release;
