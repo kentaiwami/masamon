@@ -23,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let filepathrecord = FilePathTmpDB()
         filepathrecord.id = 0
         filepathrecord.path = fileURL
-        DBmethod().AddandUpdate(filepathrecord)
+        DBmethod().AddandUpdate(filepathrecord,update: true)
         return true
     }
     
@@ -34,7 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let InboxFileCountRecord = InboxFileCountDB()
             InboxFileCountRecord.id = 0
             InboxFileCountRecord.counts = 0
-            DBmethod().AddandUpdate(InboxFileCountRecord)
+            DBmethod().AddandUpdate(InboxFileCountRecord,update: true)
         }
         
         //FilePathTmpに空レコード(ダミー)を追加
@@ -42,7 +42,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let FilePathTmpRecord = FilePathTmpDB()
             FilePathTmpRecord.id = 0
             FilePathTmpRecord.path = "nil"
-            DBmethod().AddandUpdate(FilePathTmpRecord)
+            DBmethod().AddandUpdate(FilePathTmpRecord,update: true)
         }
         return true
     }

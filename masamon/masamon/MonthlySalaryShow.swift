@@ -112,7 +112,7 @@ class MonthlySalaryShow: Menu,UIPickerViewDelegate, UIPickerViewDataSource{
             let InboxFileCountRecord = InboxFileCountDB()
             InboxFileCountRecord.id = 0
             InboxFileCountRecord.counts = filecount
-            DBmethod().AddandUpdate(InboxFileCountRecord)
+            DBmethod().AddandUpdate(InboxFileCountRecord,update: true)
             
             let targetViewController = self.storyboard!.instantiateViewControllerWithIdentifier("ShiftImport")
             self.presentViewController( targetViewController, animated: true, completion: nil)

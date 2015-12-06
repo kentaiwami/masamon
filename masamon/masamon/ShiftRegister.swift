@@ -68,15 +68,8 @@ class ShiftRegister: UIViewController {
             
             let ID = shiftdb.id
             
-            do{
-                let realm = try Realm()
-                try realm.write{
-                    realm.add(shiftdb, update: true)
-                    realm.add(shiftdetaildb,update: false)
-                }
-            }catch{
-                //Error
-            }
+            DBmethod().AddandUpdate(shiftdb, update: true)
+            DBmethod().AddandUpdate(shiftdetaildb, update: false)
 
             abc = self.ShiftDBRelationArrayGet(ID)
         }

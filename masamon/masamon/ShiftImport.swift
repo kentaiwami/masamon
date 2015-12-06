@@ -143,7 +143,7 @@ class ShiftImport: UIViewController,UITextFieldDelegate,UITableViewDelegate,UITa
         let InboxFileCountDBRecord = InboxFileCountDB()
         InboxFileCountDBRecord.id = 0
         InboxFileCountDBRecord.counts = DBmethod().InboxFileCountsGet()-1
-        DBmethod().AddandUpdate(InboxFileCountDBRecord)
+        DBmethod().AddandUpdate(InboxFileCountDBRecord,update: true)
     }
     
     //キーボードの完了(改行)を押したらキーボードを閉じる
@@ -168,7 +168,7 @@ class ShiftImport: UIViewController,UITextFieldDelegate,UITableViewDelegate,UITa
         }
         ShiftImportHistoryDBRecord.date = dateFormatter.stringFromDate(importdate)
         ShiftImportHistoryDBRecord.name = importname
-        DBmethod().AddandUpdate(ShiftImportHistoryDBRecord)
+        DBmethod().AddandUpdate(ShiftImportHistoryDBRecord,update: true)
     }
     
     // セルの行数
