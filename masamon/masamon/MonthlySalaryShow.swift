@@ -45,14 +45,13 @@ class MonthlySalaryShow: Menu,UIPickerViewDelegate, UIPickerViewDataSource{
         //        DBmethod().ShowDBpass()
         self.view.backgroundColor = UIColor.whiteColor()
         shiftdb.id = 1
-        shiftdb.name = "2015年8月シフト"
-        shiftdb.imagepath = "8月path"
+        shiftdb.shiftimportname = "2015年8月シフト"
+        shiftdb.shiftimportpath = "8月path"
         shiftdb.saraly = 100000
         
         shiftdetaildb.id = 1
-        shiftdetaildb.date = "11"
+        shiftdetaildb.date = 11
         shiftdetaildb.staff = "A1,B1,C1"
-        shiftdetaildb.user = ""
         //DBmethod().add(shiftdb)
         //DBmethod().add(shiftdetaildb)
         

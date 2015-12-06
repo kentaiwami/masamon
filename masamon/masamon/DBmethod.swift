@@ -50,7 +50,7 @@ class DBmethod: UIViewController {
         var name = ""
         
         let realm = try!  Realm()
-        name = realm.objects(ShiftDB).filter("id = %@", id)[0].name
+        name = realm.objects(ShiftDB).filter("id = %@", id)[0].shiftimportname
         
         return name
     }

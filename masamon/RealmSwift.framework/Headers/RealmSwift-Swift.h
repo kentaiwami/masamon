@@ -114,6 +114,10 @@ typedef int swift_int4  __attribute__((__ext_vector_type__(4)));
 /// <ul><li><code>String
 /// </code>, <code>NSString
 /// </code></li><li><code>Int
+/// </code></li><li><code>Int8
+/// </code>, <code>Int16
+/// </code>, <code>Int32
+/// </code>, <code>Int64
 /// </code></li><li><code>Float
 /// </code></li><li><code>Double
 /// </code></li><li><code>Bool
@@ -130,18 +134,21 @@ typedef int swift_int4  __attribute__((__ext_vector_type__(4)));
 /// </code> and <code>Object
 /// </code> subclass properties can be
 /// optional. <code>Int
+/// </code>, <code>Int8
+/// </code>, Int16<code>, Int32
+/// </code>, <code>Int64
 /// </code>, <code>Float
 /// </code>, <code>Double
 /// </code>, <code>Bool
-/// </code> and <code>List
-/// </code> properties cannot. To store
-/// an optional number, instead use <code>RealmOptional<Int>
+/// </code>
+/// and <code>List
+/// </code> properties cannot. To store an optional number, instead use
+/// <code>RealmOptional<Int>
 /// </code>, <code>RealmOptional<Float>
-/// </code>,
-/// <code>RealmOptional<Double>
-/// </code>, or <code>RealmOptional<Bool>
-/// </code> instead, which wraps an optional
-/// value of the generic type.
+/// </code>, <code>RealmOptional<Double>
+/// </code>, or
+/// <code>RealmOptional<Bool>
+/// </code> instead, which wraps an optional value of the generic type.
 ///
 /// All property types except for <code>List
 /// </code> and <code>RealmOptional
@@ -155,10 +162,9 @@ typedef int swift_int4  __attribute__((__ext_vector_type__(4)));
 ///
 /// <h3>Querying</h3>
 /// You can gets <code>Results
-/// </code> of an Object subclass via tha <code>objects(_:)
-/// </code> free function or
-/// the <code>objects(_:)
-/// </code> instance method on <code>Realm
+/// </code> of an Object subclass via the <code>objects(_:)
+/// </code> instance
+/// method on <code>Realm
 /// </code>.
 ///
 /// <h3>Relationships</h3>
@@ -255,10 +261,10 @@ SWIFT_CLASS("_TtC10RealmSwift13DynamicObject")
 SWIFT_CLASS("_TtC10RealmSwift8ListBase")
 @interface ListBase : RLMListBase
 
-/// Returns a human-readable description of the objects contained in the list.
+/// Returns a human-readable description of the objects contained in the List.
 @property (nonatomic, readonly, copy) NSString * __nonnull description;
 
-/// Returns the number of objects in this list.
+/// Returns the number of objects in this List.
 @property (nonatomic, readonly) NSInteger count;
 - (null_unspecified instancetype)initWithArray:(RLMArray * __null_unspecified)array OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
