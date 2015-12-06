@@ -49,7 +49,7 @@ class DBmethod: UIViewController {
     }
     
     //レコードのIDを受け取って名前を返す
-    func ShiftDBNameGet(id: Int) ->String{
+    func a(id: Int) ->String{
         var name = ""
         
         let realm = try!  Realm()

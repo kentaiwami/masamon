@@ -59,14 +59,14 @@ class MonthlySalaryShow: Menu,UIPickerViewDelegate, UIPickerViewDataSource{
         self.view.addSubview(myUIPicker)
         
         //NSArrayへの追加
-        let newNSArray = shiftlist
+       // let newNSArray = shiftlist
         if(DBmethod().DBRecordCount(ShiftDB) != 0){
             for(var i = DBmethod().DBRecordCount(ShiftDB)-1; i >= 0; i--){
-                newNSArray.addObject(DBmethod().ShiftDBNameGet(i+1))
+//                newNSArray.addObject(DBmethod().ShiftDBNameGet(i+1))
             }
             
             //pickerviewのデフォルト表示
-            SaralyLabel.text = String(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB)))
+          //  SaralyLabel.text = String(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB)))
         }
     }
     
