@@ -10,7 +10,14 @@ import UIKit
 import RealmSwift
 
 class ShiftRegister: UIViewController {
-
+    
+    //cellの列(日付が記載されている範囲)
+    let cellrow = ["G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","AA","AB","AC","AD","AE","AF","AG","AH","AI","AJ"]
+    let holiday = ["公","夏","有"]     //表に記載される休暇日
+    let staffnumber = 27    //TODO: 仮に設定。あとで入力項目を設ける
+    let mark = "F"
+    var number = 6
+    
     //
     func AAA(importname: String, importpath: String){
         let shiftdb = ShiftDB()
@@ -18,7 +25,7 @@ class ShiftRegister: UIViewController {
         let documentPath: String = NSBundle.mainBundle().pathForResource("bbb", ofType: "xlsx")!
         let spreadsheet: BRAOfficeDocumentPackage = BRAOfficeDocumentPackage.open(documentPath)
         let worksheet: BRAWorksheet = spreadsheet.workbook.worksheets[0] as! BRAWorksheet
-
+        
         
         //shiftDBへidの追加
         if(DBmethod().DBRecordCount(ShiftDB) == 0){
@@ -29,14 +36,36 @@ class ShiftRegister: UIViewController {
         
         shiftdb.shiftimportname = importname
         shiftdb.shiftimportpath = importpath
-//        shiftdb.shiftdetail = 
+        //        shiftdb.shiftdetail =
         
         var date = 11
-        var abc = List<ShiftDetailDB>()
+        //var abc = List<ShiftDetailDB>()
         
-        for(var i = 0; i <= 30; i++){
+        let staffcellposition = self.StaffCellPositionGet()     //スタッフの名前が記載されているセル場所 ex.)F8,F9
+        
+        //30日分繰り返すループ
+        for(var i = 0; i < 30; i++){
+            
             shiftdetaildb.id = i
             shiftdetaildb.date = date
+            
+            //その日のシフトを全員分調べて出勤者だけ列挙する
+            for(var j = 0; j < 1; j++){
+                //TODO: 文字列の置換をするF6をG6、F18をG18とか
+                let nowstaff = staffcellposition[j]
+                var TEST2 = nowstaff.stringByReplacingOccurrencesOfString("F", withString: cellrow[i])
+                
+                print("nowstaff=>" + nowstaff)
+                print("TEST2=>" + TEST2)
+                
+                let formula: String = worksheet.cellForCellReference("F6").stringValue()
+                
+                if(holiday.contains(formula)){       //Holiday以外なら記録
+                    
+                }
+            }
+            
+            
             if(date < 30){
                 date++
             }else{
@@ -45,28 +74,18 @@ class ShiftRegister: UIViewController {
         }
         
         
-        let formula: String = worksheet.cellForCellReference("F6").stringValue()
-
-        
-        print(formula)
-        
-        
         
     }
     
     //表中にあるスタッフ名の場所を返す
     func StaffCellPositionGet() -> Array<String>{
-        //let shiftdb = ShiftDB()
-        //let shiftdetaildb = ShiftDetailDB()
         let documentPath: String = NSBundle.mainBundle().pathForResource("bbb", ofType: "xlsx")!
         let spreadsheet: BRAOfficeDocumentPackage = BRAOfficeDocumentPackage.open(documentPath)
         let worksheet: BRAWorksheet = spreadsheet.workbook.worksheets[0] as! BRAWorksheet
         
         
-        let staffnumber = 27    //TODO: 仮に設定。あとで入力項目を設ける
-        let mark = "F"
         var array:[String] = []
-        var number = 6
+        
         
         while(true){
             let Fcell: String = worksheet.cellForCellReference(mark+String(number)).stringValue()
@@ -77,12 +96,11 @@ class ShiftRegister: UIViewController {
                 number++
             }
             
-            
             if(staffnumber == array.count){       //設定したスタッフ人数と取り込み数が一致したら
                 break
             }
         }
         return array
     }
-
+    
 }
