@@ -55,7 +55,7 @@ class ShiftRegister: UIViewController {
     }
     
     //表中にあるスタッフ名の場所を返す
-    func BBB() -> Array<String>{
+    func StaffCellPositionGet() -> Array<String>{
         //let shiftdb = ShiftDB()
         //let shiftdetaildb = ShiftDetailDB()
         let documentPath: String = NSBundle.mainBundle().pathForResource("bbb", ofType: "xlsx")!
