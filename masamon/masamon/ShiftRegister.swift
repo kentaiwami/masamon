@@ -58,11 +58,12 @@ class ShiftRegister: UIViewController {
 //                print("nowstaff=>" + nowstaff)
 //                print("replaceday=>" + replaceday)
                 
-                let formula: String = worksheet.cellForCellReference(replaceday).stringValue()
+                let dayshift: String = worksheet.cellForCellReference(replaceday).stringValue()
+                let staffname: String = worksheet.cellForCellReference(nowstaff).stringValue()
                 
 //                print(formula)
-                if(holiday.contains(formula) == false){       //Holiday以外なら記録
-                    print(formula)      //TODO: データベースへの記録
+                if(holiday.contains(dayshift) == false){       //Holiday以外なら記録
+                    shiftdetaildb.staff = shiftdetaildb.staff + staffname + ":" + dayshift + ","
                 }
             }
             
@@ -74,7 +75,7 @@ class ShiftRegister: UIViewController {
             }
         }
         
-        
+        print(shiftdetaildb.staff)
         
     }
     
