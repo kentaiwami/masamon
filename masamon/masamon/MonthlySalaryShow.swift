@@ -30,6 +30,10 @@ class MonthlySalaryShow: Menu,UIPickerViewDelegate, UIPickerViewDataSource{
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        ShiftRegister().BBB("")
+        
+        
+        
         NSTimer.scheduledTimerWithTimeInterval(1.0,target:self,selector:Selector("FileSaveSuccessfulAlertShow"),
             userInfo: nil, repeats: true);
         
@@ -48,7 +52,7 @@ class MonthlySalaryShow: Menu,UIPickerViewDelegate, UIPickerViewDataSource{
         shiftdetaildb.id = 1
         shiftdetaildb.date = "11"
         shiftdetaildb.staff = "A1,B1,C1"
-        shiftdetaildb.user = 1
+        shiftdetaildb.user = ""
         //DBmethod().add(shiftdb)
         //DBmethod().add(shiftdetaildb)
         

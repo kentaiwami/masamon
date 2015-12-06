@@ -10,14 +10,15 @@ import UIKit
 
 class ShiftRegister: UIViewController {
     
-    func BBB(Libralypath: String) -> String {
-        let AAA = Libralypath+"/"+DBmethod().FilePathTmpGet().lastPathComponent
-        print("filepath=>" + AAA)
+    func BBB(Libralypath: String){
+        //let AAA = Libralypath+"/"+DBmethod().FilePathTmpGet().lastPathComponent
+        let AAA = NSBundle.mainBundle().pathForResource("bbb", ofType: "xlsx")
+        print("filepath=>" + AAA!)
         
         let spreadsheet: BRAOfficeDocumentPackage = BRAOfficeDocumentPackage.open(AAA)
         let worksheet: BRAWorksheet = spreadsheet.workbook.worksheets[0] as! BRAWorksheet
-        let BBB: String = worksheet.cellForCellReference("A1").stringValue()
+        let BBB: String = worksheet.cellForCellReference("G4").stringValue()
         
-        return BBB
+        print(BBB)
     }
 }

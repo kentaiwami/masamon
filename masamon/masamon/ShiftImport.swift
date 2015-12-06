@@ -103,7 +103,6 @@ class ShiftImport: UIViewController,UITextFieldDelegate,UITableViewDelegate,UITa
                     appDelegate.filesavealert = true
                     ShiftImportHistoryDBadd(NSDate(), importname: filenamefield.text!)
                     
-                    print(ShiftRegister().BBB(Libralypath))
                 }catch{
                     print(error)
                 }
