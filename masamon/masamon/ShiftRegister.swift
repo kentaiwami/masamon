@@ -25,6 +25,16 @@ class ShiftRegister: UIViewController {
         shiftdb.shiftimportname = importname
         shiftdb.shiftimportpath = importpath
         
+        let documentPath: String = NSBundle.mainBundle().pathForResource("bbb", ofType: "xlsx")!
+        let spreadsheet: BRAOfficeDocumentPackage = BRAOfficeDocumentPackage.open(documentPath)
+        let worksheet: BRAWorksheet = spreadsheet.workbook.worksheets[0] as! BRAWorksheet
+        
+        var formula: String = worksheet.cellForCellReference("F6").stringValue()
+
+        
+        print(formula)
+        
+        
         
     }
 
