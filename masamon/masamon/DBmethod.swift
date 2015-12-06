@@ -60,7 +60,7 @@ class DBmethod: UIViewController {
         var saraly = 0
         
         let realm = try! Realm()
-        saraly = realm.objects(ShiftDB).filter("id = %@", id)[0].saraly
+        saraly = realm.objects(ShiftDB).filter("id = %@", id)[0].saraly!
         
         return saraly
     }
