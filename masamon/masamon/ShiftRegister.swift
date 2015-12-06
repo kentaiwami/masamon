@@ -19,7 +19,7 @@ class ShiftRegister: UIViewController {
     var number = 6
     
     //
-    func AAA(importname: String, importpath: String){
+    func ShiftDBRegist(importname: String, importpath: String){
         let documentPath: String = NSBundle.mainBundle().pathForResource("bbb", ofType: "xlsx")!
         let spreadsheet: BRAOfficeDocumentPackage = BRAOfficeDocumentPackage.open(documentPath)
         let worksheet: BRAWorksheet = spreadsheet.workbook.worksheets[0] as! BRAWorksheet
@@ -32,18 +32,8 @@ class ShiftRegister: UIViewController {
         for(var i = 0; i < 30; i++){
             let shiftdb = ShiftDB()
             let shiftdetaildb = ShiftDetailDB()
-
-            //1回だけ書き込む
-            if(i == 0){
-                //shiftDBへidの追加
-                if(DBmethod().DBRecordCount(ShiftDB) == 0){
-                    shiftdb.id = 0
-                }else{
-                    shiftdb.id = DBmethod().DBRecordCount(ShiftDB)
-                }
-            }
             
-            
+            shiftdb.id = DBmethod().DBRecordCount(ShiftDetailDB)/30     //30レコードで1セットのため
             shiftdb.shiftimportname = importname
             shiftdb.shiftimportpath = importpath
             
@@ -64,16 +54,19 @@ class ShiftRegister: UIViewController {
                 }
             }
             
+            //シフトが11日〜来月10日のため日付のリセットを行うか判断
             if(date < 30){
                 date++
             }else{
                 date = 1
             }
             
-//            for(var i = 0; i < abc.count; i++){
-//                shiftdb.shiftdetail.append(abc[i])
-//            }
+            for(var i = 0; i < abc.count; i++){
+                shiftdb.shiftdetail.append(abc[i])
+            }
             shiftdb.shiftdetail.append(shiftdetaildb)
+            
+            let ID = shiftdb.id
             
             do{
                 let realm = try Realm()
@@ -84,7 +77,8 @@ class ShiftRegister: UIViewController {
             }catch{
                 //Error
             }
-            abc = self.BBB()
+
+            abc = self.ShiftDBRelationArrayGet(ID)
         }
     }
     
@@ -114,11 +108,12 @@ class ShiftRegister: UIViewController {
         return array
     }
     
-    func BBB() -> List<ShiftDetailDB>{
+    //ShiftDBのリレーションシップ配列を返す
+    func ShiftDBRelationArrayGet(id: Int) -> List<ShiftDetailDB>{
         var list = List<ShiftDetailDB>()
         let realm = try! Realm()
         
-        list = realm.objects(ShiftDB).filter("id = %@", 0)[0].shiftdetail
+        list = realm.objects(ShiftDB).filter("id = %@", id)[0].shiftdetail
         
         return list
         
