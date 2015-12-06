@@ -22,7 +22,6 @@
 		3724CDCE1C14317500D73528 /* Realm.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3724CDCB1C14317500D73528 /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3724CDCF1C14317500D73528 /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3724CDCC1C14317500D73528 /* RealmSwift.framework */; };
 		3724CDD01C14317500D73528 /* RealmSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3724CDCC1C14317500D73528 /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		3726AAAA1C131BD000FB71FE /* ShiftRegister.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3726AAA91C131BD000FB71FE /* ShiftRegister.swift */; };
 		3742AF561C12D8D1003AB33B /* libz.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3742AF551C12D8D1003AB33B /* libz.1.dylib */; };
 		3742AF631C12E851003AB33B /* testWorkbook.xlsx in Resources */ = {isa = PBXBuildFile; fileRef = 3742AF621C12E851003AB33B /* testWorkbook.xlsx */; };
 		3742AF6E1C12FEE8003AB33B /* bbb.xlsx in Resources */ = {isa = PBXBuildFile; fileRef = 3742AF6D1C12FEE8003AB33B /* bbb.xlsx */; };
@@ -117,7 +116,6 @@
 		371432A71BE98F060088CDCC /* ShiftImport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShiftImport.swift; sourceTree = "<group>"; };
 		3724CDCB1C14317500D73528 /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Realm.framework; sourceTree = "<group>"; };
 		3724CDCC1C14317500D73528 /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RealmSwift.framework; sourceTree = "<group>"; };
-		3726AAA91C131BD000FB71FE /* ShiftRegister.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShiftRegister.swift; sourceTree = "<group>"; };
 		3742AF551C12D8D1003AB33B /* libz.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.dylib; path = ../../../../../../usr/lib/libz.1.dylib; sourceTree = "<group>"; };
 		3742AF621C12E851003AB33B /* testWorkbook.xlsx */ = {isa = PBXFileReference; lastKnownFileType = file; path = testWorkbook.xlsx; sourceTree = "<group>"; };
 		3742AF6D1C12FEE8003AB33B /* bbb.xlsx */ = {isa = PBXFileReference; lastKnownFileType = file; path = bbb.xlsx; sourceTree = "<group>"; };
@@ -198,7 +196,6 @@
 				370ACE491BDF9C8A00AB73EB /* DBmethod.swift */,
 				370ACDFE1BDF486700AB73EB /* Main.storyboard */,
 				371432A71BE98F060088CDCC /* ShiftImport.swift */,
-				3726AAA91C131BD000FB71FE /* ShiftRegister.swift */,
 				37D4B30F1BE0F59900F06759 /* HourlyPaySetting.swift */,
 				370ACE011BDF486700AB73EB /* Assets.xcassets */,
 				370ACE031BDF486700AB73EB /* LaunchScreen.storyboard */,
@@ -397,7 +394,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3726AAAA1C131BD000FB71FE /* ShiftRegister.swift in Sources */,
 				37D4B34C1BE2691400F06759 /* Menu.swift in Sources */,
 				370ACE4A1BDF9C8A00AB73EB /* DBmethod.swift in Sources */,
 				370ACDFD1BDF486700AB73EB /* MonthlySalaryShow.swift in Sources */,
