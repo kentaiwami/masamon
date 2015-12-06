@@ -24,9 +24,9 @@ class ShiftDB: Object {
 //1日単位でのシフトを保存
 class ShiftDetailDB: Object {
     dynamic var id = 0
-    dynamic var date = ""       //日付のみ記録
+    dynamic var date = 0       //日付のみ記録
     dynamic var staff = ""      //例えば、Aさんが早番、Bさんが遅番、Cさんが公休、Dさんが早番の場合は"A1,B3,D1"となる予定
-    dynamic var user = ""       //userのシフトを記録
+    dynamic var shiftDBrelationship: ShiftDB?   //月単位でのシフトとの関連付け
 }
 
 class HourlyPayDB: Object{
