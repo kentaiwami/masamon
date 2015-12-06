@@ -88,7 +88,6 @@ class ShiftImport: UIViewController,UITextFieldDelegate,UITableViewDelegate,UITa
                             self.appDelegate.filesavealert = true
                             self.ShiftImportHistoryDBadd(NSDate(), importname: self.filenamefield.text!)
                             
-                            ShiftRegister().StaffCellPositionGet()
                             ShiftRegister().AAA(self.filenamefield.text!, importpath: self.Libralypath+"/"+self.filenamefield.text!)
                         }catch{
                             print(error)
@@ -106,7 +105,6 @@ class ShiftImport: UIViewController,UITextFieldDelegate,UITableViewDelegate,UITa
                     appDelegate.filesavealert = true
                     ShiftImportHistoryDBadd(NSDate(), importname: filenamefield.text!)
                     
-                    ShiftRegister().StaffCellPositionGet()
                     ShiftRegister().AAA(filenamefield.text!, importpath: Libralypath+"/"+filenamefield.text!)
                 }catch{
                     print(error)
