@@ -44,7 +44,7 @@ class ShiftRegister: UIViewController {
         let staffcellposition = self.StaffCellPositionGet()     //スタッフの名前が記載されているセル場所 ex.)F8,F9
         
         //30日分繰り返すループ
-        for(var i = 0; i < 30; i++){
+        for(var i = 0; i < 1; i++){
             
             shiftdetaildb.id = i
             shiftdetaildb.date = date
@@ -55,11 +55,12 @@ class ShiftRegister: UIViewController {
                 let nowstaff = staffcellposition[j]
                 let replaceday = nowstaff.stringByReplacingOccurrencesOfString("F", withString: cellrow[i])
                 
-                print("nowstaff=>" + nowstaff)
-                print("TEST2=>" + replaceday)
+//                print("nowstaff=>" + nowstaff)
+//                print("replaceday=>" + replaceday)
                 
-                let formula: String = worksheet.cellForCellReference("F6").stringValue()
+                let formula: String = worksheet.cellForCellReference(replaceday).stringValue()
                 
+//                print(formula)
                 if(holiday.contains(formula)){       //Holiday以外なら記録
                     
                 }
