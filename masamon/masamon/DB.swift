@@ -29,6 +29,7 @@ class ShiftDetailDB: Object {
     dynamic var shiftDBrelationship: ShiftDB?   //月単位でのシフトとの関連付け
 }
 
+//時給の設定を保存
 class HourlyPayDB: Object{
     dynamic var id = 0
     dynamic var timefrom = 0.0  //開始時間
@@ -40,6 +41,7 @@ class HourlyPayDB: Object{
     }
 }
 
+//Inbox内にあるファイルの数を保存
 class InboxFileCountDB: Object {
     dynamic var id = 0
     dynamic var counts = 0
@@ -49,6 +51,7 @@ class InboxFileCountDB: Object {
     }
 }
 
+//コピーしたファイルのパスを保存する
 class FilePathTmpDB: Object{
     dynamic var id = 0
     dynamic var path: NSString = ""
@@ -58,10 +61,23 @@ class FilePathTmpDB: Object{
     }
 }
 
+//取り込んだシフトの履歴を保存する
 class ShiftImportHistoryDB: Object {
     dynamic var id = 0
     dynamic var name = ""
     dynamic var date = ""
+    
+    override class func primaryKey() -> String {
+        return "id"
+    }
+}
+
+//シフト体制を保存
+class ShiftSystem: Object{
+    dynamic var id = 0
+    dynamic var name = ""           //何番か記録
+    dynamic var starttime = 0.0     //勤務開始時間
+    dynamic var endtime = 0.0       //勤務終了時間
     
     override class func primaryKey() -> String {
         return "id"
