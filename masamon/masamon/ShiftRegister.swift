@@ -51,7 +51,7 @@ class ShiftRegister: UIViewController {
             
             //その日のシフトを全員分調べて出勤者だけ列挙する
             for(var j = 0; j < staffnumber; j++){
-                //TODO: 文字列の置換をするF6をG6、F18をG18とか
+                
                 let nowstaff = staffcellposition[j]
                 let replaceday = nowstaff.stringByReplacingOccurrencesOfString("F", withString: cellrow[i])
                 
@@ -61,8 +61,8 @@ class ShiftRegister: UIViewController {
                 let formula: String = worksheet.cellForCellReference(replaceday).stringValue()
                 
 //                print(formula)
-                if(holiday.contains(formula)){       //Holiday以外なら記録
-                    
+                if(holiday.contains(formula) == false){       //Holiday以外なら記録
+                    print(formula)
                 }
             }
             
