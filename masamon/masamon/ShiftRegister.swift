@@ -50,13 +50,13 @@ class ShiftRegister: UIViewController {
             shiftdetaildb.date = date
             
             //その日のシフトを全員分調べて出勤者だけ列挙する
-            for(var j = 0; j < 1; j++){
+            for(var j = 0; j < staffnumber; j++){
                 //TODO: 文字列の置換をするF6をG6、F18をG18とか
                 let nowstaff = staffcellposition[j]
-                var TEST2 = nowstaff.stringByReplacingOccurrencesOfString("F", withString: cellrow[i])
+                let replaceday = nowstaff.stringByReplacingOccurrencesOfString("F", withString: cellrow[i])
                 
                 print("nowstaff=>" + nowstaff)
-                print("TEST2=>" + TEST2)
+                print("TEST2=>" + replaceday)
                 
                 let formula: String = worksheet.cellForCellReference("F6").stringValue()
                 
