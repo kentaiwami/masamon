@@ -62,7 +62,7 @@ class ShiftRegister: UIViewController {
                 
 //                print(formula)
                 if(holiday.contains(formula) == false){       //Holiday以外なら記録
-                    print(formula)
+                    print(formula)      //TODO: データベースへの記録
                 }
             }
             
