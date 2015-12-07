@@ -113,7 +113,9 @@ class ShiftRegistermethod: UIViewController {
     }
     
     //入力したユーザ名の1クール分の出勤(休みは除く)を配列で取得する
-    func UserOneCoursShiftGet(){
+    func UserOneCoursShiftGet() -> Array<String>{
+        var usershift:[String] = []
+        
         let username = DBmethod().UserNameGet()
         let staffcellposition = self.StaffCellPositionGet()
         
@@ -125,9 +127,9 @@ class ShiftRegistermethod: UIViewController {
         
         //F列からユーザ名と合致する箇所を探す
         for(var i = 0; i < staffnumber; i++){
-            let dayshift: String = worksheet.cellForCellReference(staffcellposition[i]).stringValue()
+            let nowcell: String = worksheet.cellForCellReference(staffcellposition[i]).stringValue()
             
-            if(dayshift == username){
+            if(nowcell == username){
                 userposition = staffcellposition[i]
                 break
             }
@@ -136,15 +138,23 @@ class ShiftRegistermethod: UIViewController {
         //1クール分行う
         for(var i = 0; i < 30; i++){
             let replaceday = userposition.stringByReplacingOccurrencesOfString("F", withString: cellrow[i])
-            if(holiday.contains(replaceday) == false){      //holiday以外なら
-                //TODO: データベースのシフト体制に含まれているか検索
-                //TODO: 含まれている、かつオーバーでなければ勤務終了時間-勤務開始時間-1(休憩時間)
-                
-                //TODO: 含まれていなければ休みとして処理
-                
-                //TODO: 時給設定と照らし合わせて金額を算出
+            let dayshift: String = worksheet.cellForCellReference(replaceday).stringValue()
+            
+            if(holiday.contains(dayshift) == false){      //holiday以外なら
+                usershift.append(dayshift)
             }
         }
+        return usershift
     }
     
 }
+
+
+//                //TODO: データベースのシフト体制に含まれているか検索
+//                DBmethod().SerachShiftSystem("")
+//                //TODO: 含まれている、かつオーバーでなければ勤務終了時間-勤務開始時間-1(休憩時間)
+//
+//                //TODO: 含まれていなければ休みとして処理
+//
+//                //TODO: 時給設定と照らし合わせて金額を算出
+
