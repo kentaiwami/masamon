@@ -19,7 +19,7 @@ class ShiftRegister: UIViewController {
     var number = 6
     
     //
-    func ShiftDBRegist(importname: String, importpath: String){
+    func ShiftDBOnecoursRegist(importname: String, importpath: String){
         let documentPath: String = NSBundle.mainBundle().pathForResource("bbb", ofType: "xlsx")!
         let spreadsheet: BRAOfficeDocumentPackage = BRAOfficeDocumentPackage.open(documentPath)
         let worksheet: BRAWorksheet = spreadsheet.workbook.worksheets[0] as! BRAWorksheet
