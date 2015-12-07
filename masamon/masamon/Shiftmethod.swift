@@ -147,11 +147,25 @@ class Shiftmethod: UIViewController {
         
         //月給の計算をする
         var shiftsystem = ShiftSystem()
+        var monthlysalary = 0.0
+        let AAA = DBmethod().HourlyPayRecordGet()
         
         for(var i = 0; i < usershift.count; i++){
             shiftsystem = DBmethod().SerachShiftSystem(usershift[i])
+            if(shiftsystem.endtime <= AAA[0].timeto){
+                monthlysalary = monthlysalary + ((shiftsystem.endtime - shiftsystem.starttime - 1) * Double(AAA[0].pay))
+            }else{
+                let BBB = shiftsystem.endtime - AAA[0].timeto
+                
+                monthlysalary = monthlysalary + (BBB * Double(AAA[1].pay))
+                monthlysalary = monthlysalary + ((shiftsystem.endtime - BBB) - (shiftsystem.starttime - 1)) * Double(AAA[0].pay)
+            }
+            
+            
             print(shiftsystem)
         }
+        
+        print(monthlysalary)
         
         return usershift
     }
