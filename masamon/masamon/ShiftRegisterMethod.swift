@@ -19,7 +19,7 @@ class ShiftRegistermethod: UIViewController {
     var number = 6
     
     //
-    func ShiftDBOnecoursRegist(importname: String, importpath: String){
+    func ShiftDBOneCoursRegist(importname: String, importpath: String){
         let documentPath: String = NSBundle.mainBundle().pathForResource("bbb", ofType: "xlsx")!
         let spreadsheet: BRAOfficeDocumentPackage = BRAOfficeDocumentPackage.open(documentPath)
         let worksheet: BRAWorksheet = spreadsheet.workbook.worksheets[0] as! BRAWorksheet
@@ -113,7 +113,7 @@ class ShiftRegistermethod: UIViewController {
     }
     
     //入力したユーザ名の1クール分の出勤(休みは除く)を配列で取得する
-    func AAA(){
+    func UserOneCoursShiftGet(){
         let username = DBmethod().UserNameGet()
         let staffcellposition = self.StaffCellPositionGet()
         
@@ -137,11 +137,14 @@ class ShiftRegistermethod: UIViewController {
         for(var i = 0; i < 30; i++){
             let replaceday = userposition.stringByReplacingOccurrencesOfString("F", withString: cellrow[i])
             if(holiday.contains(replaceday) == false){      //holiday以外なら
-                //TODO: データベースのシフト体制と時間を比較する
+                //TODO: データベースのシフト体制に含まれているか検索
+                //TODO: 含まれている、かつオーバーでなければ勤務終了時間-勤務開始時間-1(休憩時間)
+                
+                //TODO: 含まれていなければ休みとして処理
+                
                 //TODO: 時給設定と照らし合わせて金額を算出
             }
         }
-        //休み以外なら何番かをデータベースと照合して時間をとってくる
     }
     
 }

@@ -118,4 +118,13 @@ class DBmethod: UIViewController {
         
         return name
     }
+    
+    //受け取った文字列を検索し、該当するレコードを返す。ない場合はnilを返す
+    func SerachShiftSystem(shift: String) -> ShiftSystem{
+        var shiftsystem = ShiftSystem()
+        
+        let realm = try! Realm()
+        shiftsystem = realm.objects(ShiftSystem).filter("name = %@",shift)[0]
+        return shiftsystem
+    }
 }
