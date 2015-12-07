@@ -83,3 +83,13 @@ class ShiftSystem: Object{
         return "id"
     }
 }
+
+class UserName: Object {
+    dynamic var id = 0
+    dynamic var name = ""
+    
+    override class func primaryKey() -> String {
+        return "id"
+    }
+
+}
