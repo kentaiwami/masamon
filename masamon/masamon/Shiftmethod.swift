@@ -144,9 +144,17 @@ class Shiftmethod: UIViewController {
                 usershift.append(dayshift)
             }
         }
+        
+        //月給の計算をする
+        var shiftsystem = ShiftSystem()
+        
+        for(var i = 0; i < usershift.count; i++){
+            shiftsystem = DBmethod().SerachShiftSystem(usershift[i])
+            print(shiftsystem)
+        }
+        
         return usershift
     }
-    
 }
 
 
