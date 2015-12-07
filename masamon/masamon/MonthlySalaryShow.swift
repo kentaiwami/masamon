@@ -121,28 +121,35 @@ class MonthlySalaryShow: Menu,UIPickerViewDelegate, UIPickerViewDataSource{
         }
     }
     
+    //チェックマークを表示するアニメーション
+    func CheckMarkAnimation(){
+        let image = UIImage(named: "../images/check.png")
+        alertview.image = image
+        let alertwidth = 140.0
+        let alertheight = 140.0
+        alertview.frame = CGRectMake(self.view.frame.width/2-CGFloat(alertwidth)/2, self.view.frame.height/2-CGFloat(alertheight)/2, CGFloat(alertwidth), CGFloat(alertheight))
+        alertview.alpha = 0.0
+        
+        view.addSubview(alertview)
+        
+        //表示アニメーション
+        UIView.animateWithDuration(0.4, animations: { () -> Void in
+            self.alertview.frame = CGRectMake(self.view.frame.width/2-CGFloat(alertwidth)/2, self.view.frame.height/2-CGFloat(alertheight)/2, CGFloat(alertwidth), CGFloat(alertheight))
+            self.alertview.alpha = 1.0
+        })
+        
+        //消すアニメーション
+        UIView.animateWithDuration(1.0, animations: { () -> Void in
+            self.alertview.alpha = 0.0
+        })
+
+    }
+    
+    
     func FileSaveSuccessfulAlertShow(){
         //ファイルの保存が成功していたら
         if(appDelegate.filesavealert){
-            let image = UIImage(named: "../images/check.png")
-            alertview.image = image
-            let alertwidth = 140.0
-            let alertheight = 140.0
-            alertview.frame = CGRectMake(self.view.frame.width/2-CGFloat(alertwidth)/2, self.view.frame.height/2-CGFloat(alertheight)/2, CGFloat(alertwidth), CGFloat(alertheight))
-            alertview.alpha = 0.0
-            
-            self.view.addSubview(alertview)
-            
-            //表示アニメーション
-            UIView.animateWithDuration(0.4, animations: { () -> Void in
-                self.alertview.frame = CGRectMake(self.view.frame.width/2-CGFloat(alertwidth)/2, self.view.frame.height/2-CGFloat(alertheight)/2, CGFloat(alertwidth), CGFloat(alertheight))
-                self.alertview.alpha = 1.0
-            })
-            
-            //消すアニメーション
-            UIView.animateWithDuration(1.0, animations: { () -> Void in
-                self.alertview.alpha = 0.0
-            })
+            self.CheckMarkAnimation()
             appDelegate.filesavealert = false
         }
     }
