@@ -26,7 +26,7 @@ class ShiftRegistermethod: UIViewController {
         
         var date = 11
         let staffcellposition = self.StaffCellPositionGet()     //スタッフの名前が記載されているセル場所 ex.)F8,F9
-        var abc = List<ShiftDetailDB>()
+        var shiftdetailarray = List<ShiftDetailDB>()
         
         //30日分繰り返すループ
         for(var i = 0; i < 30; i++){
@@ -61,8 +61,8 @@ class ShiftRegistermethod: UIViewController {
                 date = 1
             }
             
-            for(var i = 0; i < abc.count; i++){
-                shiftdb.shiftdetail.append(abc[i])
+            for(var i = 0; i < shiftdetailarray.count; i++){
+                shiftdb.shiftdetail.append(shiftdetailarray[i])
             }
             shiftdb.shiftdetail.append(shiftdetaildb)
             
@@ -71,7 +71,7 @@ class ShiftRegistermethod: UIViewController {
             DBmethod().AddandUpdate(shiftdb, update: true)
             DBmethod().AddandUpdate(shiftdetaildb, update: false)
 
-            abc = self.ShiftDBRelationArrayGet(ID)
+            shiftdetailarray = self.ShiftDBRelationArrayGet(ID)
         }
     }
     
@@ -110,6 +110,38 @@ class ShiftRegistermethod: UIViewController {
         
         return list
         
+    }
+    
+    //入力したユーザ名の1クール分の出勤(休みは除く)を配列で取得する
+    func AAA(){
+        let username = DBmethod().UserNameGet()
+        let staffcellposition = self.StaffCellPositionGet()
+        
+        let documentPath: String = NSBundle.mainBundle().pathForResource("bbb", ofType: "xlsx")!
+        let spreadsheet: BRAOfficeDocumentPackage = BRAOfficeDocumentPackage.open(documentPath)
+        let worksheet: BRAWorksheet = spreadsheet.workbook.worksheets[0] as! BRAWorksheet
+        
+        var userposition = ""
+        
+        //F列からユーザ名と合致する箇所を探す
+        for(var i = 0; i < staffnumber; i++){
+            let dayshift: String = worksheet.cellForCellReference(staffcellposition[i]).stringValue()
+            
+            if(dayshift == username){
+                userposition = staffcellposition[i]
+                break
+            }
+        }
+        
+        //1クール分行う
+        for(var i = 0; i < 30; i++){
+            let replaceday = userposition.stringByReplacingOccurrencesOfString("F", withString: cellrow[i])
+            if(holiday.contains(replaceday) == false){      //holiday以外なら
+                //TODO: データベースのシフト体制と時間を比較する
+                //TODO: 時給設定と照らし合わせて金額を算出
+            }
+        }
+        //休み以外なら何番かをデータベースと照合して時間をとってくる
     }
     
 }

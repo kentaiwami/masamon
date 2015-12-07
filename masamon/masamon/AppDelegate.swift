@@ -44,6 +44,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             FilePathTmpRecord.path = "nil"
             DBmethod().AddandUpdate(FilePathTmpRecord,update: true)
         }
+        
+        //TODO: シフト体制のDBを初期化する
         return true
     }
     

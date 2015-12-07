@@ -108,4 +108,14 @@ class DBmethod: UIViewController {
         let realm = try! Realm()
         return realm.objects(ShiftImportHistoryDB)
     }
+    
+    //登録したユーザ名を返す
+    func UserNameGet() -> String{
+        var name = ""
+        
+        let realm = try! Realm()
+        name = realm.objects(UserName).filter("id = %@",0)[0].name
+        
+        return name
+    }
 }
