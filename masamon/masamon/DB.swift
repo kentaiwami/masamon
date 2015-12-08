@@ -27,6 +27,10 @@ class ShiftDetailDB: Object {
     dynamic var date = 0       //日付のみ記録
     dynamic var staff = ""      //例えば、Aさんが早番、Bさんが遅番、Cさんが公休、Dさんが早番の場合は"A:早,B:遅,D:早"となる予定
     dynamic var shiftDBrelationship: ShiftDB?   //月単位でのシフトとの関連付け
+    override class func primaryKey() -> String {
+        return "id"
+    }
+
 }
 
 //時給の設定を保存

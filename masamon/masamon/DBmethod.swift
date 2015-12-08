@@ -127,4 +127,14 @@ class DBmethod: UIViewController {
         shiftsystem = realm.objects(ShiftSystem).filter("name = %@",shift)[0]
         return shiftsystem
     }
+    
+    //受け取った文字列をShiftDBから検索し、該当するレコードを返す
+    func SerachShiftDB(importname: String) -> ShiftDB{
+        var shiftdb = ShiftDB()
+        
+        let realm = try! Realm()
+        shiftdb = realm.objects(ShiftDB).filter("shiftimportname = %@",importname)[0]
+        
+        return shiftdb
+    }
 }

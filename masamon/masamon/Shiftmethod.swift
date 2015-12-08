@@ -19,7 +19,7 @@ class Shiftmethod: UIViewController {
     var number = 6
     
     //
-    func ShiftDBOneCoursRegist(importname: String, importpath: String){
+    func ShiftDBOneCoursRegist(importname: String, importpath: String, update: Bool){
         let documentPath: String = NSBundle.mainBundle().pathForResource("bbb", ofType: "xlsx")!
         let spreadsheet: BRAOfficeDocumentPackage = BRAOfficeDocumentPackage.open(documentPath)
         let worksheet: BRAWorksheet = spreadsheet.workbook.worksheets[0] as! BRAWorksheet
@@ -33,7 +33,12 @@ class Shiftmethod: UIViewController {
             let shiftdb = ShiftDB()
             let shiftdetaildb = ShiftDetailDB()
             
-            shiftdb.id = DBmethod().DBRecordCount(ShiftDetailDB)/30     //30レコードで1セットのため
+            if(update){
+                shiftdb.id = DBmethod().SerachShiftDB(importname).id        //取り込みが上書きの場合は使われているidをそのまま使う
+            }else{
+                shiftdb.id = DBmethod().DBRecordCount(ShiftDetailDB)/30     //新規の場合はレコードの数を割ったidを使う
+            }
+
             shiftdb.shiftimportname = importname
             shiftdb.shiftimportpath = importpath
             
@@ -60,7 +65,7 @@ class Shiftmethod: UIViewController {
             }else{
                 date = 1
             }
-            
+
             for(var i = 0; i < shiftdetailarray.count; i++){
                 shiftdb.shiftdetail.append(shiftdetailarray[i])
             }
@@ -69,7 +74,7 @@ class Shiftmethod: UIViewController {
             let ID = shiftdb.id
             
             DBmethod().AddandUpdate(shiftdb, update: true)
-            DBmethod().AddandUpdate(shiftdetaildb, update: false)
+            DBmethod().AddandUpdate(shiftdetaildb, update: true)
 
             shiftdetailarray = self.ShiftDBRelationArrayGet(ID)
         }
