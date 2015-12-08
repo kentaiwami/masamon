@@ -36,14 +36,15 @@ class Shiftmethod: UIViewController {
             
             if(update){
                 shiftdb.id = DBmethod().SearchShiftDB(importname).id        //取り込みが上書きの場合は使われているidをそのまま使う
-                let AAA = DBmethod().SearchShiftDB(importname)
-                let BBB = ShiftDetailDB()
-                
-                BBB.id = AAA.shiftdetail[i].id
-                BBB.date = AAA.shiftdetail[i].date
-                BBB.staff = "BBB"
+                let existshiftdb = DBmethod().SearchShiftDB(importname)
+                let newshiftdetaildb = ShiftDetailDB()
 
-                DBmethod().AddandUpdate(BBB, update: true)
+                newshiftdetaildb.id = existshiftdb.shiftdetail[i].id
+                newshiftdetaildb.date = existshiftdb.shiftdetail[i].date
+                newshiftdetaildb.staff = TheDayStaffAttendance(i, staffcellpositionarray: staffcellposition, worksheet: worksheet)
+                newshiftdetaildb.shiftDBrelationship = DBmethod().SearchShiftDB(importname)
+                
+                DBmethod().AddandUpdate(newshiftdetaildb, update: true)
             }else{
                 shiftdb.id = DBmethod().DBRecordCount(ShiftDetailDB)/30     //新規の場合はレコードの数を割ったidを使う
                 shiftdb.shiftimportname = importname
