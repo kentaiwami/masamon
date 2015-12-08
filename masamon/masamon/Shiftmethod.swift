@@ -53,7 +53,7 @@ class Shiftmethod: UIViewController {
                 shiftdetailrecordcount++
                 shiftdetaildb.date = date
                 shiftdetaildb.shiftDBrelationship = shiftdb
-                shiftdetaildb.staff = ABS(i, staffcellpositionarray: staffcellposition, worksheet: worksheet)
+                shiftdetaildb.staff = TheDayStaffAttendance(i, staffcellpositionarray: staffcellposition, worksheet: worksheet)
                 
                 //シフトが11日〜来月10日のため日付のリセットを行うか判断
                 if(date < 30){
@@ -189,7 +189,7 @@ class Shiftmethod: UIViewController {
     staffcellpositionarray  =>スタッフのセル位置を配列で記録したもの
     worksheet               =>対象となるエクセルファイルのワークシート
     */
-    func ABS(day: Int, staffcellpositionarray: Array<String>, worksheet: BRAWorksheet) -> String{
+    func TheDayStaffAttendance(day: Int, staffcellpositionarray: Array<String>, worksheet: BRAWorksheet) -> String{
         
         var staffstring = ""
         
