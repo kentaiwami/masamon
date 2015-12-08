@@ -27,6 +27,7 @@ class Shiftmethod: UIViewController {
         var date = 11
         let staffcellposition = self.StaffCellPositionGet()     //スタッフの名前が記載されているセル場所 ex.)F8,F9
         var shiftdetailarray = List<ShiftDetailDB>()
+        var shiftdetailrecordcount = DBmethod().DBRecordCount(ShiftDetailDB)
         
         //30日分繰り返すループ
         for(var i = 0; i < 30; i++){
@@ -42,7 +43,8 @@ class Shiftmethod: UIViewController {
             shiftdb.shiftimportname = importname
             shiftdb.shiftimportpath = importpath
             
-            shiftdetaildb.id = i
+            shiftdetaildb.id = shiftdetailrecordcount
+            shiftdetailrecordcount++
             shiftdetaildb.date = date
             shiftdetaildb.shiftDBrelationship = shiftdb
             
