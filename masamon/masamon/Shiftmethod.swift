@@ -113,7 +113,7 @@ class Shiftmethod: UIViewController {
     }
     
     //入力したユーザ名の月給を計算して結果を返す
-    func UserMonthlySalaryGet() -> Double{
+    func UserMonthlySalaryRegist(){
         var usershift:[String] = []
         
         let username = DBmethod().UserNameGet()
@@ -165,8 +165,6 @@ class Shiftmethod: UIViewController {
         }
         
         print(monthlysalary)
-        
-        return monthlysalary
     }
 }
 
