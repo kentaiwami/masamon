@@ -36,63 +36,62 @@ class Shiftmethod: UIViewController {
             let shiftdetaildb = ShiftDetailDB()
             
             if(update){
-                shiftdb.id = DBmethod().SearchShiftDB(importname).id        //取り込みが上書きの場合は使われているidをそのまま使う
-                //TODO: ShiftDBのidで検索をかける
-                let AAA = DBmethod().SearchShiftDB(importname)
-                var BBB = ShiftDetailDB()
-                BBB.id = AAA.shiftdetail[i].id
-//                BBB.date = AAA.shiftdetail[i].date
-//                BBB.staff = "BBB"
-                if(TTT){
-                    print(AAA.shiftdetail[0].id)
-                    TTT = false
-                }
-             //   DBmethod().AddandUpdate(BBB, update: true)
+//                shiftdb.id = DBmethod().SearchShiftDB(importname).id        //取り込みが上書きの場合は使われているidをそのまま使う
+//                //TODO: ShiftDBのidで検索をかける
+//                let AAA = DBmethod().SearchShiftDB(importname)
+//                var BBB = ShiftDetailDB()
+//                BBB.id = AAA.shiftdetail[i].id
+//                //                BBB.date = AAA.shiftdetail[i].date
+//                //                BBB.staff = "BBB"
+//                if(TTT){
+//                    print(AAA.shiftdetail[0].id)
+//                    TTT = false
+//                }
+                //   DBmethod().AddandUpdate(BBB, update: true)
                 //TODO: 該当したレコードをもってくる
                 //TODO: レコード内にあるarrayの1つ1つに検索をかける
             }else{
                 shiftdb.id = DBmethod().DBRecordCount(ShiftDetailDB)/30     //新規の場合はレコードの数を割ったidを使う
-            }
-            
-            shiftdb.shiftimportname = importname
-            shiftdb.shiftimportpath = importpath
-            
-            shiftdetaildb.id = shiftdetailrecordcount
-            shiftdetailrecordcount++
-            shiftdetaildb.date = date
-            shiftdetaildb.shiftDBrelationship = shiftdb
-            
-            //その日のシフトを全員分調べて出勤者だけ列挙する
-            for(var j = 0; j < staffnumber; j++){
-                let nowstaff = staffcellposition[j]
-                let replaceday = nowstaff.stringByReplacingOccurrencesOfString("F", withString: cellrow[i])
+                shiftdb.shiftimportname = importname
+                shiftdb.shiftimportpath = importpath
+                shiftdetaildb.id = shiftdetailrecordcount
+                shiftdetailrecordcount++
+                shiftdetaildb.date = date
+                shiftdetaildb.shiftDBrelationship = shiftdb
                 
-                let dayshift: String = worksheet.cellForCellReference(replaceday).stringValue()
-                let staffname: String = worksheet.cellForCellReference(nowstaff).stringValue()
-                
-                if(holiday.contains(dayshift) == false){       //Holiday以外なら記録
-                    shiftdetaildb.staff = shiftdetaildb.staff + staffname + ":" + dayshift + ","
+                //その日のシフトを全員分調べて出勤者だけ列挙する
+                for(var j = 0; j < staffnumber; j++){
+                    let nowstaff = staffcellposition[j]
+                    let replaceday = nowstaff.stringByReplacingOccurrencesOfString("F", withString: cellrow[i])
+                    
+                    let dayshift: String = worksheet.cellForCellReference(replaceday).stringValue()
+                    let staffname: String = worksheet.cellForCellReference(nowstaff).stringValue()
+                    
+                    if(holiday.contains(dayshift) == false){       //Holiday以外なら記録
+                        shiftdetaildb.staff = shiftdetaildb.staff + staffname + ":" + dayshift + ","
+                    }
                 }
+                
+                //シフトが11日〜来月10日のため日付のリセットを行うか判断
+                if(date < 30){
+                    date++
+                }else{
+                    date = 1
+                }
+                
+                //すでに記録してあるListを取得して後ろに現在の記録を追加する
+                for(var i = 0; i < shiftdetailarray.count; i++){
+                    shiftdb.shiftdetail.append(shiftdetailarray[i])
+                }
+                shiftdb.shiftdetail.append(shiftdetaildb)
+                
+                let ID = shiftdb.id
+                
+                DBmethod().AddandUpdate(shiftdb, update: true)
+                DBmethod().AddandUpdate(shiftdetaildb, update: true)
+                
+                shiftdetailarray = self.ShiftDBRelationArrayGet(ID)
             }
-            
-            //シフトが11日〜来月10日のため日付のリセットを行うか判断
-            if(date < 30){
-                date++
-            }else{
-                date = 1
-            }
-
-            for(var i = 0; i < shiftdetailarray.count; i++){
-                shiftdb.shiftdetail.append(shiftdetailarray[i])
-            }
-            shiftdb.shiftdetail.append(shiftdetaildb)
-            
-            let ID = shiftdb.id
-            
-            DBmethod().AddandUpdate(shiftdb, update: true)
-            DBmethod().AddandUpdate(shiftdetaildb, update: true)
-
-            shiftdetailarray = self.ShiftDBRelationArrayGet(ID)
         }
     }
     
@@ -189,15 +188,15 @@ class Shiftmethod: UIViewController {
         
         print(monthlysalary)
         //TODO: データベースへ記録
-       // let realm = try! Realm()
-//        let todos = realm.objects(ShiftDB).filter("shiftimportname = %@",importname)
-//        todos.setValue(monthlysalary, forKey: "saraly")
-       // realm.create(ShiftDB.self, value: ["shiftimportname": importname,"saraly": monthlysalary], update: true)
-//        let AAA = ShiftDB()
-//        AAA.id = 1
-//        AAA.shiftimportname = importname
-//        AAA.saraly = Int(monthlysalary)
-//        DBmethod().AddandUpdate(AAA, update: true)
+        // let realm = try! Realm()
+        //        let todos = realm.objects(ShiftDB).filter("shiftimportname = %@",importname)
+        //        todos.setValue(monthlysalary, forKey: "saraly")
+        // realm.create(ShiftDB.self, value: ["shiftimportname": importname,"saraly": monthlysalary], update: true)
+        //        let AAA = ShiftDB()
+        //        AAA.id = 1
+        //        AAA.shiftimportname = importname
+        //        AAA.saraly = Int(monthlysalary)
+        //        DBmethod().AddandUpdate(AAA, update: true)
     }
 }
 
