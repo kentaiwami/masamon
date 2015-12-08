@@ -112,8 +112,8 @@ class Shiftmethod: UIViewController {
         
     }
     
-    //入力したユーザ名の1クール分の出勤(休みは除く)を配列で取得する
-    func UserOneCoursShiftGet() -> Array<String>{
+    //入力したユーザ名の月給を計算して結果を返す
+    func UserMonthlySalaryGet() -> Double{
         var usershift:[String] = []
         
         let username = DBmethod().UserNameGet()
@@ -148,26 +148,25 @@ class Shiftmethod: UIViewController {
         //月給の計算をする
         var shiftsystem = ShiftSystem()
         var monthlysalary = 0.0
-        let AAA = DBmethod().HourlyPayRecordGet()
+        let houlypayrecord = DBmethod().HourlyPayRecordGet()
         
         for(var i = 0; i < usershift.count; i++){
+            
             shiftsystem = DBmethod().SerachShiftSystem(usershift[i])
-            if(shiftsystem.endtime <= AAA[0].timeto){
-                monthlysalary = monthlysalary + ((shiftsystem.endtime - shiftsystem.starttime - 1) * Double(AAA[0].pay))
+            if(shiftsystem.endtime <= houlypayrecord[0].timeto){
+                monthlysalary = monthlysalary + (shiftsystem.endtime - shiftsystem.starttime - 1) * Double(houlypayrecord[0].pay)
             }else{
-                let BBB = shiftsystem.endtime - AAA[0].timeto
+                //22時以降の給与を先に計算
+                let latertime = shiftsystem.endtime - houlypayrecord[0].timeto
+                monthlysalary = monthlysalary + latertime * Double(houlypayrecord[1].pay)
                 
-                monthlysalary = monthlysalary + (BBB * Double(AAA[1].pay))
-                monthlysalary = monthlysalary + ((shiftsystem.endtime - BBB) - (shiftsystem.starttime - 1)) * Double(AAA[0].pay)
+                monthlysalary = monthlysalary + (shiftsystem.endtime - latertime - shiftsystem.starttime - 1) * Double(houlypayrecord[0].pay)
             }
-            
-            
-            print(shiftsystem)
         }
         
         print(monthlysalary)
         
-        return usershift
+        return monthlysalary
     }
 }
 
