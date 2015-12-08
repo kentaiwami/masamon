@@ -113,7 +113,7 @@ class Shiftmethod: UIViewController {
     }
     
     //入力したユーザ名の月給を計算して結果を返す
-    func UserMonthlySalaryRegist(){
+    func UserMonthlySalaryRegist(importname: String){
         var usershift:[String] = []
         
         let username = DBmethod().UserNameGet()
@@ -165,15 +165,16 @@ class Shiftmethod: UIViewController {
         }
         
         print(monthlysalary)
+        //TODO: データベースへ記録
+       // let realm = try! Realm()
+//        let todos = realm.objects(ShiftDB).filter("shiftimportname = %@",importname)
+//        todos.setValue(monthlysalary, forKey: "saraly")
+       // realm.create(ShiftDB.self, value: ["shiftimportname": importname,"saraly": monthlysalary], update: true)
+//        let AAA = ShiftDB()
+//        AAA.id = 1
+//        AAA.shiftimportname = importname
+//        AAA.saraly = Int(monthlysalary)
+//        DBmethod().AddandUpdate(AAA, update: true)
     }
 }
-
-
-//                //TODO: データベースのシフト体制に含まれているか検索
-//                DBmethod().SerachShiftSystem("")
-//                //TODO: 含まれている、かつオーバーでなければ勤務終了時間-勤務開始時間-1(休憩時間)
-//
-//                //TODO: 含まれていなければ休みとして処理
-//
-//                //TODO: 時給設定と照らし合わせて金額を算出
 

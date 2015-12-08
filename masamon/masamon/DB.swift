@@ -17,7 +17,7 @@ class ShiftDB: Object {
     var saraly: Int?      //取り込んだシフトの月給を記録
     let shiftdetail = List<ShiftDetailDB>()         //1日単位でのシフトとの関連付け
     override class func primaryKey() -> String {
-        return "id"
+        return "shiftimportname"
     }
 }
 
