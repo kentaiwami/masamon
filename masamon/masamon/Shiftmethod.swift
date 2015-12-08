@@ -53,19 +53,7 @@ class Shiftmethod: UIViewController {
                 shiftdetailrecordcount++
                 shiftdetaildb.date = date
                 shiftdetaildb.shiftDBrelationship = shiftdb
-                
-                //その日のシフトを全員分調べて出勤者だけ列挙する
-                for(var j = 0; j < staffnumber; j++){
-                    let nowstaff = staffcellposition[j]
-                    let replaceday = nowstaff.stringByReplacingOccurrencesOfString("F", withString: cellrow[i])
-                    
-                    let dayshift: String = worksheet.cellForCellReference(replaceday).stringValue()
-                    let staffname: String = worksheet.cellForCellReference(nowstaff).stringValue()
-                    
-                    if(holiday.contains(dayshift) == false){       //Holiday以外なら記録
-                        shiftdetaildb.staff = shiftdetaildb.staff + staffname + ":" + dayshift + ","
-                    }
-                }
+                shiftdetaildb.staff = ABS(i, staffcellpositionarray: staffcellposition, worksheet: worksheet)
                 
                 //シフトが11日〜来月10日のため日付のリセットを行うか判断
                 if(date < 30){
@@ -192,6 +180,32 @@ class Shiftmethod: UIViewController {
         //        AAA.shiftimportname = importname
         //        AAA.saraly = Int(monthlysalary)
         //        DBmethod().AddandUpdate(AAA, update: true)
+    }
+    
+    
+    //その日のシフトを全員分調べて出勤者だけ列挙する。
+    /*引数の説明。
+    day                     => その日の日付
+    staffcellpositionarray  =>スタッフのセル位置を配列で記録したもの
+    worksheet               =>対象となるエクセルファイルのワークシート
+    */
+    func ABS(day: Int, staffcellpositionarray: Array<String>, worksheet: BRAWorksheet) -> String{
+        
+        var staffstring = ""
+        
+        for(var i = 0; i < staffnumber; i++){
+            let nowstaff = staffcellpositionarray[i]
+            let replaceday = nowstaff.stringByReplacingOccurrencesOfString("F", withString: cellrow[day])
+            
+            let dayshift: String = worksheet.cellForCellReference(replaceday).stringValue()
+            let staffname: String = worksheet.cellForCellReference(nowstaff).stringValue()
+            
+            if(holiday.contains(dayshift) == false){       //Holiday以外なら記録
+                staffstring = staffstring + staffname + ":" + dayshift + ","
+            }
+        }
+        
+        return staffstring
     }
 }
 
