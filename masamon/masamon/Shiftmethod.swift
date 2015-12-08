@@ -29,17 +29,31 @@ class Shiftmethod: UIViewController {
         var shiftdetailarray = List<ShiftDetailDB>()
         var shiftdetailrecordcount = DBmethod().DBRecordCount(ShiftDetailDB)
         
+        var TTT = true
         //30日分繰り返すループ
         for(var i = 0; i < 30; i++){
             let shiftdb = ShiftDB()
             let shiftdetaildb = ShiftDetailDB()
             
             if(update){
-                shiftdb.id = DBmethod().SerachShiftDB(importname).id        //取り込みが上書きの場合は使われているidをそのまま使う
+                shiftdb.id = DBmethod().SearchShiftDB(importname).id        //取り込みが上書きの場合は使われているidをそのまま使う
+                //TODO: ShiftDBのidで検索をかける
+                let AAA = DBmethod().SearchShiftDB(importname)
+                var BBB = ShiftDetailDB()
+                BBB.id = AAA.shiftdetail[i].id
+//                BBB.date = AAA.shiftdetail[i].date
+//                BBB.staff = "BBB"
+                if(TTT){
+                    print(AAA.shiftdetail[0].id)
+                    TTT = false
+                }
+             //   DBmethod().AddandUpdate(BBB, update: true)
+                //TODO: 該当したレコードをもってくる
+                //TODO: レコード内にあるarrayの1つ1つに検索をかける
             }else{
                 shiftdb.id = DBmethod().DBRecordCount(ShiftDetailDB)/30     //新規の場合はレコードの数を割ったidを使う
             }
-
+            
             shiftdb.shiftimportname = importname
             shiftdb.shiftimportpath = importpath
             
@@ -81,6 +95,8 @@ class Shiftmethod: UIViewController {
             shiftdetailarray = self.ShiftDBRelationArrayGet(ID)
         }
     }
+    
+    //
     
     //表中にあるスタッフ名の場所を返す
     func StaffCellPositionGet() -> Array<String>{
@@ -159,7 +175,7 @@ class Shiftmethod: UIViewController {
         
         for(var i = 0; i < usershift.count; i++){
             
-            shiftsystem = DBmethod().SerachShiftSystem(usershift[i])
+            shiftsystem = DBmethod().SearchShiftSystem(usershift[i])
             if(shiftsystem.endtime <= houlypayrecord[0].timeto){
                 monthlysalary = monthlysalary + (shiftsystem.endtime - shiftsystem.starttime - 1) * Double(houlypayrecord[0].pay)
             }else{
