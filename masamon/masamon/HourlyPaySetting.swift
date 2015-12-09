@@ -34,7 +34,7 @@ class HourlyPaySetting: Menu, UIPickerViewDelegate, UIPickerViewDataSource,UITex
     let savebutton   = UIButton()
     
     let catimagepath: [String] = ["../images/cat1.png","../images/cat2.png","../images/cat3.png","../images/cat4.png","../images/cat5.png"]
-    let catinfo: [[Int]] = [[60,166,60],[250,169,70],[60,314,70],[320,385,80],[250,329,50]]
+    let catinfo: [[Int]] = [[250,160,70],[328,385,80],[250,320,60]]
     
     @IBOutlet weak var HPSView: UIView!
     var txtActiveField = UITextField()
@@ -61,7 +61,7 @@ class HourlyPaySetting: Menu, UIPickerViewDelegate, UIPickerViewDataSource,UITex
         }
         
         //猫の追加
-        for(var i = 0; i < 5; i++){
+        for(var i = 0; i < 3; i++){
             let catimage = UIImage(named: catimagepath[i])
             let catimageview = UIImageView()
             
