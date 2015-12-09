@@ -44,7 +44,7 @@ class MonthlySalaryShow: Menu,UIPickerViewDelegate, UIPickerViewDataSource{
         shiftdb.id = 1
         shiftdb.shiftimportname = "2015年8月シフト"
         shiftdb.shiftimportpath = "8月path"
-        shiftdb.saraly = 100000
+        shiftdb.salaly = 100000
         
         shiftdetaildb.id = 1
         shiftdetaildb.date = 11

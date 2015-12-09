@@ -39,8 +39,8 @@ class Shiftmethod: UIViewController {
                 let existshiftdb = DBmethod().SearchShiftDB(importname)
                 let newshiftdetaildb = ShiftDetailDB()
 
-                newshiftdetaildb.id = existshiftdb.shiftdetail[i].id
-                newshiftdetaildb.date = existshiftdb.shiftdetail[i].date
+                newshiftdetaildb.id = existshiftdb.shiftdetail[40].id
+                newshiftdetaildb.date = existshiftdb.shiftdetail[40].date
                 newshiftdetaildb.staff = TheDayStaffAttendance(i, staffcellpositionarray: staffcellposition, worksheet: worksheet)
                 newshiftdetaildb.shiftDBrelationship = DBmethod().SearchShiftDB(importname)
                 
@@ -49,6 +49,7 @@ class Shiftmethod: UIViewController {
                 shiftdb.id = DBmethod().DBRecordCount(ShiftDetailDB)/30     //新規の場合はレコードの数を割ったidを使う
                 shiftdb.shiftimportname = importname
                 shiftdb.shiftimportpath = importpath
+                shiftdb.salaly = 0
                 
                 shiftdetaildb.id = shiftdetailrecordcount
                 shiftdetailrecordcount++
@@ -171,16 +172,21 @@ class Shiftmethod: UIViewController {
         }
         
         print(monthlysalary)
-        //TODO: データベースへ記録
-        // let realm = try! Realm()
-        //        let todos = realm.objects(ShiftDB).filter("shiftimportname = %@",importname)
-        //        todos.setValue(monthlysalary, forKey: "saraly")
-        // realm.create(ShiftDB.self, value: ["shiftimportname": importname,"saraly": monthlysalary], update: true)
-        //        let AAA = ShiftDB()
-        //        AAA.id = 1
-        //        AAA.shiftimportname = importname
-        //        AAA.saraly = Int(monthlysalary)
-        //        DBmethod().AddandUpdate(AAA, update: true)
+        
+        //データベースへ記録上書き登録
+        let newshiftdbsalalyadd = ShiftDB()                                 //月給を追加するための新規インスタンス
+        let oldshiftdbsalalynone = DBmethod().SearchShiftDB(importname)     //月給がデフォルト値で登録されているShiftDBオブジェクト
+        
+        newshiftdbsalalyadd.id = oldshiftdbsalalynone.id
+        
+        for(var i = 0; i < oldshiftdbsalalynone.shiftdetail.count; i++){
+            newshiftdbsalalyadd.shiftdetail.append(oldshiftdbsalalynone.shiftdetail[i])
+        }
+        
+        newshiftdbsalalyadd.shiftimportname = oldshiftdbsalalynone.shiftimportname
+        newshiftdbsalalyadd.shiftimportpath = oldshiftdbsalalynone.shiftimportpath
+        newshiftdbsalalyadd.salaly = Int(monthlysalary)
+        DBmethod().AddandUpdate(newshiftdbsalalyadd, update: true)
     }
     
     

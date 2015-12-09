@@ -14,7 +14,8 @@ class ShiftDB: Object {
     dynamic var id = 0
     dynamic var shiftimportname = ""       //ユーザが入力した名前を記録
     dynamic var shiftimportpath = ""  //取り込んだイメージの保存パスを記録
-    var saraly: Int?      //取り込んだシフトの月給を記録
+    dynamic var salaly = 0      //取り込んだシフトの月給を記録
+//    var salaly: Int?
     let shiftdetail = List<ShiftDetailDB>()         //1日単位でのシフトとの関連付け
     override class func primaryKey() -> String {
         return "shiftimportname"
