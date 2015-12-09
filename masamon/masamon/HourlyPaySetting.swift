@@ -6,8 +6,6 @@
 //  Copyright © 2015年 Kenta. All rights reserved.
 //
 
-//TODO: 背景をもう少し目に優しくする？
-
 import UIKit
 
 class HourlyPaySetting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource,UITextFieldDelegate{
