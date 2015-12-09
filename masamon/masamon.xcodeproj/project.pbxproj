@@ -30,7 +30,6 @@
 		379955951C14431F00BAAD9E /* Shiftmethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379955941C14431F00BAAD9E /* Shiftmethod.swift */; };
 		37B8C7491C1507E700C11D40 /* UserNameRegister.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B8C7481C1507E700C11D40 /* UserNameRegister.swift */; };
 		37D4B3101BE0F59900F06759 /* HourlyPaySetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D4B30F1BE0F59900F06759 /* HourlyPaySetting.swift */; };
-		37D4B34C1BE2691400F06759 /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D4B34B1BE2691400F06759 /* Menu.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -126,7 +125,6 @@
 		379955941C14431F00BAAD9E /* Shiftmethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shiftmethod.swift; sourceTree = "<group>"; };
 		37B8C7481C1507E700C11D40 /* UserNameRegister.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserNameRegister.swift; sourceTree = "<group>"; };
 		37D4B30F1BE0F59900F06759 /* HourlyPaySetting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HourlyPaySetting.swift; sourceTree = "<group>"; };
-		37D4B34B1BE2691400F06759 /* Menu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
 		37D8F4241C0CB1A000D5336A /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
 		37D8F4251C0CB1A000D5336A /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -194,7 +192,6 @@
 			children = (
 				370ACDFA1BDF486700AB73EB /* AppDelegate.swift */,
 				370ACDFC1BDF486700AB73EB /* MonthlySalaryShow.swift */,
-				37D4B34B1BE2691400F06759 /* Menu.swift */,
 				376C92D51BE695D000D45FC2 /* extentions.swift */,
 				370ACE431BDF573500AB73EB /* DB.swift */,
 				370ACE491BDF9C8A00AB73EB /* DBmethod.swift */,
@@ -401,7 +398,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				379955951C14431F00BAAD9E /* Shiftmethod.swift in Sources */,
-				37D4B34C1BE2691400F06759 /* Menu.swift in Sources */,
 				37B8C7491C1507E700C11D40 /* UserNameRegister.swift in Sources */,
 				370ACE4A1BDF9C8A00AB73EB /* DBmethod.swift in Sources */,
 				370ACDFD1BDF486700AB73EB /* MonthlySalaryShow.swift in Sources */,
