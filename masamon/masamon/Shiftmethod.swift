@@ -39,8 +39,8 @@ class Shiftmethod: UIViewController {
                 let existshiftdb = DBmethod().SearchShiftDB(importname)
                 let newshiftdetaildb = ShiftDetailDB()
 
-                newshiftdetaildb.id = existshiftdb.shiftdetail[40].id
-                newshiftdetaildb.date = existshiftdb.shiftdetail[40].date
+                newshiftdetaildb.id = existshiftdb.shiftdetail[i].id
+                newshiftdetaildb.date = existshiftdb.shiftdetail[i].date
                 newshiftdetaildb.staff = TheDayStaffAttendance(i, staffcellpositionarray: staffcellposition, worksheet: worksheet)
                 newshiftdetaildb.shiftDBrelationship = DBmethod().SearchShiftDB(importname)
                 
@@ -170,8 +170,6 @@ class Shiftmethod: UIViewController {
                 monthlysalary = monthlysalary + (shiftsystem.endtime - latertime - shiftsystem.starttime - 1) * Double(houlypayrecord[0].pay)
             }
         }
-        
-        print(monthlysalary)
         
         //データベースへ記録上書き登録
         let newshiftdbsalalyadd = ShiftDB()                                 //月給を追加するための新規インスタンス

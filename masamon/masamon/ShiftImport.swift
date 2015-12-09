@@ -82,7 +82,8 @@ class ShiftImport: UIViewController,UITextFieldDelegate,UITableViewDelegate,UITa
                         (action:UIAlertAction!) -> Void in
                         do{
                             try filemanager.removeItemAtPath(self.Libralypath+"/"+self.filenamefield.text!)
-                            try filemanager.moveItemAtPath(Inboxpath+self.filenamefield.text!, toPath: self.Libralypath+"/"+self.filenamefield.text!)
+                            try filemanager.moveItemAtPath(Inboxpath+self.filename, toPath: self.Libralypath+"/"+self.filenamefield.text!)
+                            print("AAA")
                             self.InboxFileCountsDBMinusOne()
                             self.dismissViewControllerAnimated(true, completion: nil)
                             self.appDelegate.filesavealert = true
