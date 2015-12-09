@@ -14,7 +14,7 @@
 import UIKit
 import RealmSwift
 
-class MonthlySalaryShow: Menu,UIPickerViewDelegate, UIPickerViewDataSource{
+class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewDataSource{
     
     @IBOutlet weak var testlabel: UILabel!
     let shiftdb = ShiftDB()
