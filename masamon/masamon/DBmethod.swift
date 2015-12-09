@@ -6,18 +6,20 @@
 //  Copyright © 2015年 Kenta. All rights reserved.
 //
 
-import UIKit
+//TODO: 取り込みを行った後に落ちる
+//TODO: 上書きに対応する
+
 import Foundation
 import RealmSwift
 
 class DBmethod: UIViewController {
 
     //データベースへの追加(ID重複の場合は上書き)
-    func AddandUpdate(record: Object){
+    func AddandUpdate(record: Object, update: Bool){
         do{
             let realm = try Realm()
             try realm.write{
-                realm.add(record, update: true)
+                realm.add(record, update: update)
             }
         }catch{
             //Error
@@ -47,11 +49,11 @@ class DBmethod: UIViewController {
     }
     
     //レコードのIDを受け取って名前を返す
-    func ShiftDBNameGet(id: Int) ->String{
+    func a(id: Int) ->String{
         var name = ""
         
         let realm = try!  Realm()
-        name = realm.objects(ShiftDB).filter("id = %@", id)[0].name
+        name = realm.objects(ShiftDB).filter("id = %@", id)[0].shiftimportname
         
         return name
     }
@@ -61,7 +63,7 @@ class DBmethod: UIViewController {
         var saraly = 0
         
         let realm = try! Realm()
-        saraly = realm.objects(ShiftDB).filter("id = %@", id)[0].saraly
+        saraly = realm.objects(ShiftDB).filter("id = %@", id)[0].salaly
         
         return saraly
     }
@@ -105,5 +107,34 @@ class DBmethod: UIViewController {
     func ShiftImportHistoryDBGet() -> Results<ShiftImportHistoryDB>{
         let realm = try! Realm()
         return realm.objects(ShiftImportHistoryDB)
+    }
+    
+    //登録したユーザ名を返す
+    func UserNameGet() -> String{
+        var name = ""
+        
+        let realm = try! Realm()
+        name = realm.objects(UserName).filter("id = %@",0)[0].name
+        
+        return name
+    }
+    
+    //受け取った文字列をShiftSystemから検索し、該当するレコードを返す
+    func SearchShiftSystem(shift: String) -> ShiftSystem{
+        var shiftsystem = ShiftSystem()
+        
+        let realm = try! Realm()
+        shiftsystem = realm.objects(ShiftSystem).filter("name = %@",shift)[0]
+        return shiftsystem
+    }
+
+    //受け取った文字列をShiftDBから検索し、該当するレコードを返す
+    func SearchShiftDB(importname: String) -> ShiftDB{
+        var shiftdb = ShiftDB()
+        
+        let realm = try! Realm()
+        shiftdb = realm.objects(ShiftDB).filter("shiftimportname = %@",importname)[0]
+        
+        return shiftdb
     }
 }

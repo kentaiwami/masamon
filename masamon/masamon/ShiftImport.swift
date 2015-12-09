@@ -82,11 +82,15 @@ class ShiftImport: UIViewController,UITextFieldDelegate,UITableViewDelegate,UITa
                         (action:UIAlertAction!) -> Void in
                         do{
                             try filemanager.removeItemAtPath(self.Libralypath+"/"+self.filenamefield.text!)
-                            try filemanager.moveItemAtPath(Inboxpath+self.filenamefield.text!, toPath: self.Libralypath+"/"+self.filenamefield.text!)
+                            try filemanager.moveItemAtPath(Inboxpath+self.filename, toPath: self.Libralypath+"/"+self.filenamefield.text!)
+                            print("AAA")
                             self.InboxFileCountsDBMinusOne()
                             self.dismissViewControllerAnimated(true, completion: nil)
                             self.appDelegate.filesavealert = true
                             self.ShiftImportHistoryDBadd(NSDate(), importname: self.filenamefield.text!)
+                            
+                            Shiftmethod().ShiftDBOneCoursRegist(self.filenamefield.text!, importpath: self.Libralypath+"/"+self.filenamefield.text!, update: true)
+                            Shiftmethod().UserMonthlySalaryRegist(self.filenamefield.text!)
                         }catch{
                             print(error)
                         }
@@ -102,6 +106,9 @@ class ShiftImport: UIViewController,UITextFieldDelegate,UITableViewDelegate,UITa
                     self.dismissViewControllerAnimated(true, completion: nil)
                     appDelegate.filesavealert = true
                     ShiftImportHistoryDBadd(NSDate(), importname: filenamefield.text!)
+                    
+                    Shiftmethod().ShiftDBOneCoursRegist(filenamefield.text!, importpath: Libralypath+"/"+filenamefield.text!, update: false)
+                    Shiftmethod().UserMonthlySalaryRegist(filenamefield.text!)
                 }catch{
                     print(error)
                 }
@@ -139,7 +146,7 @@ class ShiftImport: UIViewController,UITextFieldDelegate,UITableViewDelegate,UITa
         let InboxFileCountDBRecord = InboxFileCountDB()
         InboxFileCountDBRecord.id = 0
         InboxFileCountDBRecord.counts = DBmethod().InboxFileCountsGet()-1
-        DBmethod().AddandUpdate(InboxFileCountDBRecord)
+        DBmethod().AddandUpdate(InboxFileCountDBRecord,update: true)
     }
     
     //キーボードの完了(改行)を押したらキーボードを閉じる
@@ -164,7 +171,7 @@ class ShiftImport: UIViewController,UITextFieldDelegate,UITableViewDelegate,UITa
         }
         ShiftImportHistoryDBRecord.date = dateFormatter.stringFromDate(importdate)
         ShiftImportHistoryDBRecord.name = importname
-        DBmethod().AddandUpdate(ShiftImportHistoryDBRecord)
+        DBmethod().AddandUpdate(ShiftImportHistoryDBRecord,update: true)
     }
     
     // セルの行数

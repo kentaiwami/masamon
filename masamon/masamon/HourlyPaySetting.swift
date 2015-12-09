@@ -309,8 +309,8 @@ class HourlyPaySetting: Menu, UIPickerViewDelegate, UIPickerViewDataSource,UITex
             hourlypayrecord2.timeto = Double(time.indexOf(TimeTo2.text!)!)-(Double(time.indexOf(TimeTo2.text!)!)*0.5)
             hourlypayrecord2.pay = Int(SalalyLabel2.text!)!
             
-            DBmethod().AddandUpdate(hourlypayrecord1)
-            DBmethod().AddandUpdate(hourlypayrecord2)
+            DBmethod().AddandUpdate(hourlypayrecord1,update: true)
+            DBmethod().AddandUpdate(hourlypayrecord2,update: true)
             
             let alertController = UIAlertController(title: "ニャ!!", message: "保存したニャ", preferredStyle: .Alert)
             

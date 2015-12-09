@@ -28,8 +28,9 @@ class MonthlySalaryShow: Menu,UIPickerViewDelegate, UIPickerViewDataSource{
     let alertview = UIImageView()
     
     override func viewDidLoad() {
-        super.viewDidLoad()
-
+        super.viewDidLoad()        
+        
+        
         NSTimer.scheduledTimerWithTimeInterval(1.0,target:self,selector:Selector("FileSaveSuccessfulAlertShow"),
             userInfo: nil, repeats: true);
         
@@ -41,14 +42,13 @@ class MonthlySalaryShow: Menu,UIPickerViewDelegate, UIPickerViewDataSource{
         //        DBmethod().ShowDBpass()
         self.view.backgroundColor = UIColor.whiteColor()
         shiftdb.id = 1
-        shiftdb.name = "2015年8月シフト"
-        shiftdb.imagepath = "8月path"
-        shiftdb.saraly = 100000
+        shiftdb.shiftimportname = "2015年8月シフト"
+        shiftdb.shiftimportpath = "8月path"
+        shiftdb.salaly = 100000
         
         shiftdetaildb.id = 1
-        shiftdetaildb.date = "11"
+        shiftdetaildb.date = 11
         shiftdetaildb.staff = "A1,B1,C1"
-        shiftdetaildb.user = 1
         //DBmethod().add(shiftdb)
         //DBmethod().add(shiftdetaildb)
         
@@ -59,14 +59,14 @@ class MonthlySalaryShow: Menu,UIPickerViewDelegate, UIPickerViewDataSource{
         self.view.addSubview(myUIPicker)
         
         //NSArrayへの追加
-        let newNSArray = shiftlist
+       // let newNSArray = shiftlist
         if(DBmethod().DBRecordCount(ShiftDB) != 0){
             for(var i = DBmethod().DBRecordCount(ShiftDB)-1; i >= 0; i--){
-                newNSArray.addObject(DBmethod().ShiftDBNameGet(i+1))
+//                newNSArray.addObject(DBmethod().ShiftDBNameGet(i+1))
             }
             
             //pickerviewのデフォルト表示
-            SaralyLabel.text = String(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB)))
+          //  SaralyLabel.text = String(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB)))
         }
     }
     
@@ -112,7 +112,7 @@ class MonthlySalaryShow: Menu,UIPickerViewDelegate, UIPickerViewDataSource{
             let InboxFileCountRecord = InboxFileCountDB()
             InboxFileCountRecord.id = 0
             InboxFileCountRecord.counts = filecount
-            DBmethod().AddandUpdate(InboxFileCountRecord)
+            DBmethod().AddandUpdate(InboxFileCountRecord,update: true)
             
             let targetViewController = self.storyboard!.instantiateViewControllerWithIdentifier("ShiftImport")
             self.presentViewController( targetViewController, animated: true, completion: nil)
@@ -121,28 +121,35 @@ class MonthlySalaryShow: Menu,UIPickerViewDelegate, UIPickerViewDataSource{
         }
     }
     
+    //チェックマークを表示するアニメーション
+    func CheckMarkAnimation(){
+        let image = UIImage(named: "../images/check.png")
+        alertview.image = image
+        let alertwidth = 140.0
+        let alertheight = 140.0
+        alertview.frame = CGRectMake(self.view.frame.width/2-CGFloat(alertwidth)/2, self.view.frame.height/2-CGFloat(alertheight)/2, CGFloat(alertwidth), CGFloat(alertheight))
+        alertview.alpha = 0.0
+        
+        view.addSubview(alertview)
+        
+        //表示アニメーション
+        UIView.animateWithDuration(0.4, animations: { () -> Void in
+            self.alertview.frame = CGRectMake(self.view.frame.width/2-CGFloat(alertwidth)/2, self.view.frame.height/2-CGFloat(alertheight)/2, CGFloat(alertwidth), CGFloat(alertheight))
+            self.alertview.alpha = 1.0
+        })
+        
+        //消すアニメーション
+        UIView.animateWithDuration(1.0, animations: { () -> Void in
+            self.alertview.alpha = 0.0
+        })
+
+    }
+    
+    
     func FileSaveSuccessfulAlertShow(){
         //ファイルの保存が成功していたら
         if(appDelegate.filesavealert){
-            let image = UIImage(named: "../images/check.png")
-            alertview.image = image
-            let alertwidth = 140.0
-            let alertheight = 140.0
-            alertview.frame = CGRectMake(self.view.frame.width/2-CGFloat(alertwidth)/2, self.view.frame.height/2-CGFloat(alertheight)/2, CGFloat(alertwidth), CGFloat(alertheight))
-            alertview.alpha = 0.0
-            
-            self.view.addSubview(alertview)
-            
-            //表示アニメーション
-            UIView.animateWithDuration(0.4, animations: { () -> Void in
-                self.alertview.frame = CGRectMake(self.view.frame.width/2-CGFloat(alertwidth)/2, self.view.frame.height/2-CGFloat(alertheight)/2, CGFloat(alertwidth), CGFloat(alertheight))
-                self.alertview.alpha = 1.0
-            })
-            
-            //消すアニメーション
-            UIView.animateWithDuration(1.0, animations: { () -> Void in
-                self.alertview.alpha = 0.0
-            })
+            self.CheckMarkAnimation()
             appDelegate.filesavealert = false
         }
     }

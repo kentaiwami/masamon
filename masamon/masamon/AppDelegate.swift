@@ -23,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let filepathrecord = FilePathTmpDB()
         filepathrecord.id = 0
         filepathrecord.path = fileURL
-        DBmethod().AddandUpdate(filepathrecord)
+        DBmethod().AddandUpdate(filepathrecord,update: true)
         return true
     }
     
@@ -34,7 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let InboxFileCountRecord = InboxFileCountDB()
             InboxFileCountRecord.id = 0
             InboxFileCountRecord.counts = 0
-            DBmethod().AddandUpdate(InboxFileCountRecord)
+            DBmethod().AddandUpdate(InboxFileCountRecord,update: true)
         }
         
         //FilePathTmpに空レコード(ダミー)を追加
@@ -42,7 +42,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let FilePathTmpRecord = FilePathTmpDB()
             FilePathTmpRecord.id = 0
             FilePathTmpRecord.path = "nil"
-            DBmethod().AddandUpdate(FilePathTmpRecord)
+            DBmethod().AddandUpdate(FilePathTmpRecord,update: true)
+        }
+        
+        //シフト体制データ
+        let shiftnamepattern = ["早","早M","早カ","はや","中","中2","中3","遅","遅M","遅カ"]
+        let shiftstartpattern = [8.0,8.0,8.0,8.0,12.0,13.5,14.5,16.0,16.0,16.0]
+        let shiftendpattern = [16.5,16.5,16.5,16.5,20.5,22.0,23.0,24.5,24.5,24.5]
+
+        if(DBmethod().DBRecordCount(ShiftSystem) == 0){
+            for(var i = 0; i < shiftnamepattern.count; i++){
+                let ShiftSystemRecord = ShiftSystem()
+                ShiftSystemRecord.id = i
+                ShiftSystemRecord.name = shiftnamepattern[i]
+                ShiftSystemRecord.starttime = shiftstartpattern[i]
+                ShiftSystemRecord.endtime = shiftendpattern[i]
+                DBmethod().AddandUpdate(ShiftSystemRecord, update: true)
+            }
         }
         return true
     }
