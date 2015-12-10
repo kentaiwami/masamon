@@ -50,6 +50,6 @@ class MenuBar: UIViewController {
     func MenuButtontapped(sender: UIButton){
         
         let targetViewController = self.storyboard!.instantiateViewControllerWithIdentifier("Menu")
-        self.presentViewController( targetViewController, animated: true, completion: nil)
+        self.presentViewController( targetViewController, animated: false, completion: nil)
     }
 }
