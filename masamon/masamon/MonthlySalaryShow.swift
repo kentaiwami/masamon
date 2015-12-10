@@ -40,7 +40,7 @@ class MonthlySalaryShow: MenuBar,UIPickerViewDelegate, UIPickerViewDataSource{
         //print("fileURL=>" + appDelegate.fileURL)
         
         //        DBmethod().ShowDBpass()
-        self.view.backgroundColor = UIColor.blueColor()
+        self.view.backgroundColor = UIColor.whiteColor()
         shiftdb.id = 1
         shiftdb.shiftimportname = "2015年8月シフト"
         shiftdb.shiftimportpath = "8月path"

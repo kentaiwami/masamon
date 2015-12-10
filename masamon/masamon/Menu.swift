@@ -10,11 +10,11 @@ import UIKit
 
 class Menu: MenuBar {
 
+    @IBOutlet weak var background: UIImageView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.view.backgroundColor = UIColor.blackColor()
-
+        background.image = UIImage(named: "../images/img298.png")
     }
 
     override func didReceiveMemoryWarning() {
