@@ -15,10 +15,10 @@ class MenuBar: UIViewController {
     var ToolBar = UIToolbar()
     var statusbar = UIView()
     var show = false
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         //ステータスバーに被せるviewの作成
         statusbar.frame = CGRectMake(0.0, 0.0, self.view.frame.width, 20.0)
         statusbar.backgroundColor = UIColor.whiteColor()
@@ -48,12 +48,8 @@ class MenuBar: UIViewController {
     
     //メニューボタンを押した時のアニメーション
     func MenuButtontapped(sender: UIButton){
-        if(show){
-            show = false
-            self.dismissViewControllerAnimated(true, completion: nil)
-        }else{
-            let targetViewController = self.storyboard!.instantiateViewControllerWithIdentifier("Menu")
-            self.presentViewController( targetViewController, animated: false, completion: nil)
-        }
+        
+        let targetViewController = self.storyboard!.instantiateViewControllerWithIdentifier("Menu")
+        self.presentViewController( targetViewController, animated: true, completion: nil)
     }
 }

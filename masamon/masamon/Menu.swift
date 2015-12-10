@@ -13,6 +13,7 @@ class Menu: MenuBar {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.view.backgroundColor = UIColor.blackColor()
 
     }
 
@@ -20,4 +21,8 @@ class Menu: MenuBar {
         super.didReceiveMemoryWarning()
     }
 
+    override func MenuButtontapped(sender: UIButton){
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
 }
