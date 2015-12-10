@@ -22,7 +22,7 @@ class Menu: MenuBar {
     }
 
     override func MenuButtontapped(sender: UIButton){
-        self.dismissViewControllerAnimated(false, completion: nil)
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     @IBAction func TapMonthlySalaryShow(sender: AnyObject) {
@@ -30,10 +30,13 @@ class Menu: MenuBar {
     
     @IBAction func TapShiftImport(sender: AnyObject) {
     }
+    
     @IBAction func TapHourlyPaySetting(sender: AnyObject) {
     }
+    
     @IBAction func TapUserSetting(sender: AnyObject) {
     }
+    
     @IBAction func TapEndRoll(sender: AnyObject) {
     }
 }
