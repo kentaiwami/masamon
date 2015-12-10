@@ -54,10 +54,10 @@
             </objects>
             <point key="canvasLocation" x="254.49999999999997" y="353.49999999999994"/>
         </scene>
-        <!--User Name Register-->
+        <!--User Setting-->
         <scene sceneID="3GS-EX-koR">
             <objects>
-                <viewController storyboardIdentifier="filecopy" useStoryboardIdentifierAsRestorationIdentifier="YES" id="R7a-LM-ZUL" customClass="UserNameRegister" customModule="masamon" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="UserSetting" useStoryboardIdentifierAsRestorationIdentifier="YES" id="R7a-LM-ZUL" customClass="UserSetting" customModule="masamon" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Rmu-V5-VI8"/>
                         <viewControllerLayoutGuide type="bottom" id="OWA-I7-qoZ"/>
@@ -160,7 +160,7 @@
         <!--Hourly Pay Setting-->
         <scene sceneID="V1x-uh-v1g">
             <objects>
-                <viewController storyboardIdentifier="HourlyPaySetting" id="tsi-6b-VUl" customClass="HourlyPaySetting" customModule="masamon" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HourlyPaySetting" useStoryboardIdentifierAsRestorationIdentifier="YES" id="tsi-6b-VUl" customClass="HourlyPaySetting" customModule="masamon" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="64P-wR-0Tu"/>
                         <viewControllerLayoutGuide type="bottom" id="1cZ-Jy-mkv"/>
