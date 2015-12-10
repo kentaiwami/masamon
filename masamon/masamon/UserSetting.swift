@@ -21,7 +21,11 @@ class UserSetting: MenuBar,UITextFieldDelegate{
         usernametextfield.delegate = self
         usernametextfield.returnKeyType = .Done
         
-        usernametextfield.text = "月給を表示するシフト表上での名前を入力"
+        if(DBmethod().DBRecordCount(UserName) == 0){
+            usernametextfield.text = "月給を表示するシフト表上での名前を入力"
+        }else{
+            usernametextfield.text = DBmethod().UserNameGet()
+        }
     }
 
     override func didReceiveMemoryWarning() {
