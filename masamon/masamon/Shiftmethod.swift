@@ -14,10 +14,10 @@ class Shiftmethod: UIViewController {
     //cellの列(日付が記載されている範囲)
     let cellrow = ["G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","AA","AB","AC","AD","AE","AF","AG","AH","AI","AJ"]
     let holiday = ["公","夏","有"]     //表に記載される休暇日
-    let staffnumber = 27    //TODO: 仮に設定。あとで入力項目を設ける
+    let staffnumber = DBmethod().StaffNumberGet()
     let mark = "F"
     var number = 6
-    
+
     //
     func ShiftDBOneCoursRegist(importname: String, importpath: String, update: Bool){
         let documentPath: String = NSBundle.mainBundle().pathForResource("bbb", ofType: "xlsx")!
