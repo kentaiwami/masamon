@@ -137,4 +137,14 @@ class DBmethod: UIViewController {
         
         return shiftdb
     }
+    
+    //登録したスタッフ人数を返す
+    func StaffNumberGet() -> Int{
+        var number = 0
+        
+        let realm = try! Realm()
+        number = realm.objects(StaffNumber).filter("id = %@",0)[0].number
+        
+        return number
+    }
 }

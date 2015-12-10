@@ -98,3 +98,13 @@ class UserName: Object {
     }
 
 }
+
+class StaffNumber: Object{
+    dynamic var id = 0
+    dynamic var number = 0
+    
+    override class func primaryKey() -> String {
+        return "id"
+    }
+    
+}

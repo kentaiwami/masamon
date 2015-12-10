@@ -51,7 +51,11 @@ class UserSetting: MenuBar,UITextFieldDelegate{
             usernametextfield.text = DBmethod().UserNameGet()
         }
         
-        
+        if(DBmethod().DBRecordCount(StaffNumber) == 0){
+            staffnumbertextfield.text = "シフト表に記載されているスタッフの人数を入力"
+        }else{
+            staffnumbertextfield.text = String(DBmethod().StaffNumberGet())
+        }
         
         
     }
@@ -115,7 +119,15 @@ class UserSetting: MenuBar,UITextFieldDelegate{
     func TapToolBarButton(sender: UIButton){
         switch(sender.tag){
         case 1:         //完了ボタン
-            print(staffnumbertextfield.text)
+            let staffnumberrecord = StaffNumber()
+            staffnumberrecord.id = 0
+            staffnumberrecord.number = Int(staffnumbertextfield.text!)!
+            
+            DBmethod().AddandUpdate(staffnumberrecord, update: true)
+            
+            staffnumbertextfield.resignFirstResponder()
+            
+            CheckMarkAnimation()
         case 2:         //キャンセルボタン
             staffnumbertextfield.resignFirstResponder()
         default:
