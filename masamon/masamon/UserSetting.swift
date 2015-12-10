@@ -8,7 +8,7 @@
 
 import UIKit
 
-class UserNameRegister: UIViewController,UITextFieldDelegate{
+class UserSetting: MenuBar,UITextFieldDelegate{
 
     @IBOutlet weak var usernametextfield: UITextField!
     @IBOutlet weak var messagelabel: UILabel!
