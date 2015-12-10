@@ -11,7 +11,7 @@ import UIKit
 class UserSetting: MenuBar,UITextFieldDelegate{
 
     @IBOutlet weak var usernametextfield: UITextField!
-    @IBOutlet weak var messagelabel: UILabel!
+    @IBOutlet weak var staffnumbertextfield: UITextField!
     
     let alertview = UIImageView()
     
@@ -21,14 +21,39 @@ class UserSetting: MenuBar,UITextFieldDelegate{
         self.ToolBar.alpha = 0.2
         self.view.backgroundColor = UIColor(hexString: "5e242d")
         
+        //Toolbarの作成
+        let keyboardtoolbar = UIToolbar()
+        keyboardtoolbar.barStyle = UIBarStyle.Default
+        keyboardtoolbar.translucent = true
+        keyboardtoolbar.tintColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
+        keyboardtoolbar.sizeToFit()
+        
+        //Toolbarにつけるボタンの作成
+        let donebutton = UIBarButtonItem(title: "完了", style: UIBarButtonItemStyle.Plain, target: self, action: "TapToolBarButton:")
+        let cancelbutton = UIBarButtonItem(title: "キャンセル", style: UIBarButtonItemStyle.Plain, target: self, action: "TapToolBarButton:")
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
+        donebutton.tag = 1
+        cancelbutton.tag = 2
+        
+        //Toolbarへボタンの追加
+        keyboardtoolbar.setItems([cancelbutton,flexSpace,donebutton], animated: false)
+        keyboardtoolbar.userInteractionEnabled = true
+        
         usernametextfield.delegate = self
         usernametextfield.returnKeyType = .Done
+        
+        staffnumbertextfield.keyboardType = .NumberPad
+        staffnumbertextfield.inputAccessoryView = keyboardtoolbar
         
         if(DBmethod().DBRecordCount(UserName) == 0){
             usernametextfield.text = "月給を表示するシフト表上での名前を入力"
         }else{
             usernametextfield.text = DBmethod().UserNameGet()
         }
+        
+        
+        
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -86,5 +111,15 @@ class UserSetting: MenuBar,UITextFieldDelegate{
         })
         
     }
-
+    
+    func TapToolBarButton(sender: UIButton){
+        switch(sender.tag){
+        case 1:         //完了ボタン
+            print(staffnumbertextfield.text)
+        case 2:         //キャンセルボタン
+            staffnumbertextfield.resignFirstResponder()
+        default:
+            break
+        }
+    }
 }
