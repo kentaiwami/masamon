@@ -8,7 +8,7 @@
 
 import UIKit
 
-class UserSetting: MenuBar,UITextFieldDelegate{
+class UserSetting: UIViewController,UITextFieldDelegate{
 
     @IBOutlet weak var usernametextfield: UITextField!
     @IBOutlet weak var staffnumbertextfield: UITextField!
@@ -18,7 +18,6 @@ class UserSetting: MenuBar,UITextFieldDelegate{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.ToolBar.alpha = 0.2
         self.view.backgroundColor = UIColor(hexString: "5e242d")
         
         //Toolbarの作成
