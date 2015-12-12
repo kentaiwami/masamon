@@ -28,6 +28,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let monthlysalaryshow = storyboard.instantiateViewControllerWithIdentifier("MonthlySalaryShow") as! MonthlySalaryShow
+      //  let monthlysalaryshow = storyboard.instantiateViewControllerWithIdentifier("MonthlySalaryShow") as! MonthlySalaryShow
+       // let monthlysalaryshow = storyboard.instantiateViewControllerWithIdentifier("MonthlySalaryShow") as! MonthlySalaryShow
+        
+        self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
+        
+        let pageController:UIPageViewController = UIPageViewController(transitionStyle: UIPageViewControllerTransitionStyle.Scroll, navigationOrientation: UIPageViewControllerNavigationOrientation.Horizontal, options: nil)
+        
+        let navigationController:SwipeBetweenViewControllers = SwipeBetweenViewControllers(rootViewController: pageController)
+        
+        // Override point for customization after application launch.
+        let demo:UIViewController = monthlysalaryshow
+        let demo2:UIViewController = UIViewController()
+        let demo3:UIViewController = UIViewController()
+        let demo4:UIViewController = UIViewController()
+        let demo5:UIViewController = UIViewController()
+        demo.view.backgroundColor = UIColor.redColor()
+        demo2.view.backgroundColor = UIColor.whiteColor()
+        demo3.view.backgroundColor = UIColor.grayColor()
+        demo4.view.backgroundColor = UIColor.orangeColor()
+        demo5.view.backgroundColor = UIColor.brownColor()
+        
+        navigationController.viewControllerArray = [demo,demo2,demo3,demo4,demo5]
+        
+        self.window?.rootViewController = navigationController
+        self.window?.makeKeyAndVisible()
+        
         //InboxFileCountに空レコード(ダミー)を追加
         if(DBmethod().DBRecordCount(InboxFileCountDB) == 0){
             //レコードを追加
