@@ -63,7 +63,8 @@ class SwipeBetweenViewControllers: UINavigationController,UIPageViewControllerDe
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationBar.barTintColor = UIColor(red:0.01, green:0.05, blue:0.06, alpha:1) //%%% bartint
+//        self.navigationBar.barTintColor = UIColor(red:0.01, green:0.05, blue:0.06, alpha:1) //%%% bartint
+        self.navigationBar.barTintColor = UIColor.grayColor()
         self.navigationBar.translucent = false
     }
 
@@ -87,7 +88,7 @@ class SwipeBetweenViewControllers: UINavigationController,UIPageViewControllerDe
         let numControllers :Int = viewControllerArray.count
 
         if (buttonText.count == 0) {
-            buttonText = ["first","second","third","fourth","etc","etc","etc","etc"] //%%%buttontitle
+            buttonText = ["月給","履歴","設定","？？？"] //%%%buttontitle
         }
 
         for (var i = 0 ; i < numControllers; i++) {
@@ -96,9 +97,11 @@ class SwipeBetweenViewControllers: UINavigationController,UIPageViewControllerDe
             navigationView.addSubview(button)
 
             button.tag = i //%%% IMPORTANT: if you make your own custom buttons, you have to tag them appropriately
-            button.backgroundColor = UIColor(red: 0.03, green: 0.07, blue: 0.08, alpha: 1) //%%% buttoncolors
+//            button.backgroundColor = UIColor(red: 0.03, green: 0.07, blue: 0.08, alpha: 1) //%%% buttoncolors
+            button.backgroundColor = UIColor.grayColor()
             button.addTarget(self, action: "tapSegmentButtonAction:", forControlEvents: UIControlEvents.TouchUpInside)
             button.setTitle(buttonText[i], forState:UIControlState.Normal) //%%%buttontitle
+           // button.setImage(UIImage(named: "../images/settings48-2.png"), forState: .Normal)
         }
         
         pageController.navigationController?.navigationBar.topItem?.titleView = navigationView

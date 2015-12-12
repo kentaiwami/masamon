@@ -31,7 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let monthlysalaryshow = storyboard.instantiateViewControllerWithIdentifier("MonthlySalaryShow") as! MonthlySalaryShow
-      //  let monthlysalaryshow = storyboard.instantiateViewControllerWithIdentifier("MonthlySalaryShow") as! MonthlySalaryShow
+        let hourlypaysetting = storyboard.instantiateViewControllerWithIdentifier("HourlyPaySetting") as! HourlyPaySetting
        // let monthlysalaryshow = storyboard.instantiateViewControllerWithIdentifier("MonthlySalaryShow") as! MonthlySalaryShow
         
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
@@ -41,18 +41,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let navigationController:SwipeBetweenViewControllers = SwipeBetweenViewControllers(rootViewController: pageController)
         
         // Override point for customization after application launch.
-        let demo:UIViewController = monthlysalaryshow
+        let demo1:UIViewController = monthlysalaryshow
         let demo2:UIViewController = UIViewController()
-        let demo3:UIViewController = UIViewController()
+        let demo3:UIViewController = hourlypaysetting
         let demo4:UIViewController = UIViewController()
-        let demo5:UIViewController = UIViewController()
-        demo.view.backgroundColor = UIColor.redColor()
-        demo2.view.backgroundColor = UIColor.whiteColor()
-        demo3.view.backgroundColor = UIColor.grayColor()
-        demo4.view.backgroundColor = UIColor.orangeColor()
-        demo5.view.backgroundColor = UIColor.brownColor()
         
-        navigationController.viewControllerArray = [demo,demo2,demo3,demo4,demo5]
+        demo1.view.backgroundColor = UIColor.redColor()
+        demo2.view.backgroundColor = UIColor.redColor()
+//        demo3.view.backgroundColor = UIColor.grayColor()
+        demo4.view.backgroundColor = UIColor.redColor()
+        
+        navigationController.viewControllerArray = [demo1,demo2,demo3,demo4]
         
         self.window?.rootViewController = navigationController
         self.window?.makeKeyAndVisible()

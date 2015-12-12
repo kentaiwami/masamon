@@ -59,17 +59,17 @@ class HourlyPaySetting: UIViewController, UIPickerViewDelegate, UIPickerViewData
         }
         
         //猫の追加
-        for(var i = 0; i < 3; i++){
-            let catimage = UIImage(named: catimagepath[i])
-            let catimageview = UIImageView()
-            
-            catimageview.frame = CGRectMake(0, 0, CGFloat(catinfo[i][2]), CGFloat(catinfo[i][2]))
-            catimageview.image = catimage
-            catimageview.layer.position = CGPoint(x: catinfo[i][0], y: catinfo[i][1])
-            
-            self.HPSView.addSubview(catimageview)
-            
-        }
+//        for(var i = 0; i < 3; i++){
+//            let catimage = UIImage(named: catimagepath[i])
+//            let catimageview = UIImageView()
+//            
+//            catimageview.frame = CGRectMake(0, 0, CGFloat(catinfo[i][2]), CGFloat(catinfo[i][2]))
+//            catimageview.image = catimage
+//            catimageview.layer.position = CGPoint(x: catinfo[i][0], y: catinfo[i][1])
+//            
+//            self.HPSView.addSubview(catimageview)
+//            
+//        }
         
         //セーブボタンの追加
         savebutton.tag = 0
