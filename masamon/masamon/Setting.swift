@@ -61,6 +61,20 @@ class Setting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource,UI
             SalalyLabel2.text = String(hourlypayarray[1].pay)
         }
         
+        //既に登録されていたら登録内容を表示する
+        if(DBmethod().DBRecordCount(UserName) == 0){
+            usernametextfield.text = "月給を表示するシフト表上での名前を入力"
+        }else{
+            usernametextfield.text = DBmethod().UserNameGet()
+        }
+        
+        if(DBmethod().DBRecordCount(StaffNumber) == 0){
+            staffnumbertextfield.text = "シフト表に記載されているスタッフの人数を入力"
+        }else{
+            staffnumbertextfield.text = String(DBmethod().StaffNumberGet())
+        }
+
+        
         //猫の追加
 //        for(var i = 0; i < 3; i++){
 //            let catimage = UIImage(named: catimagepath[i])
@@ -88,6 +102,9 @@ class Setting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource,UI
         TimeTo2.delegate = self
         SalalyLabel1.delegate = self
         SalalyLabel2.delegate = self
+        usernametextfield.delegate = self
+        staffnumbertextfield.delegate = self
+        
         TimeFrom1.tag = 1
         TimeTo1.tag = 1
         TimeFrom2.tag = 2
@@ -117,6 +134,11 @@ class Setting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource,UI
         toolBarsalaly2.translucent = true
         toolBarsalaly2.tintColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
         toolBarsalaly2.sizeToFit()
+        let keyboardtoolbar = UIToolbar()
+        keyboardtoolbar.barStyle = UIBarStyle.Default
+        keyboardtoolbar.translucent = true
+        keyboardtoolbar.tintColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
+        keyboardtoolbar.sizeToFit()
         
         //Toolbarにつけるボタンの作成
         let doneButton1 = UIBarButtonItem(title: "完了", style: UIBarButtonItemStyle.Plain, target: self, action: "donePicker:")
@@ -126,7 +148,11 @@ class Setting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource,UI
         let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
         let salalyButton1 = UIBarButtonItem(title: "完了", style: UIBarButtonItemStyle.Plain, target: self, action: "doneSalalyLabel:")
         let salalyButton2 = UIBarButtonItem(title: "完了", style: UIBarButtonItemStyle.Plain, target: self, action: "doneSalalyLabel:")
+        let donebutton = UIBarButtonItem(title: "完了", style: UIBarButtonItemStyle.Plain, target: self, action: "TapToolBarButton:")
+        let cancelbutton = UIBarButtonItem(title: "キャンセル", style: UIBarButtonItemStyle.Plain, target: self, action: "TapToolBarButton:")
         
+        donebutton.tag = 1
+        cancelbutton.tag = 2
         doneButton1.tag = 10
         cancelButton1.tag = 11
         doneButton2.tag = 20
@@ -143,6 +169,8 @@ class Setting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource,UI
         toolBarsalaly1.userInteractionEnabled = true
         toolBarsalaly2.setItems([flexSpace,salalyButton2], animated: false)
         toolBarsalaly2.userInteractionEnabled = true
+        keyboardtoolbar.setItems([cancelbutton,flexSpace,donebutton], animated: false)
+        keyboardtoolbar.userInteractionEnabled = true
         
         //PickerViewの追加
         myUIPicker1.frame = CGRectMake(0,0,self.view.bounds.width/2+20, 260.0)
@@ -165,6 +193,11 @@ class Setting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource,UI
         TimeFrom2.inputAccessoryView = toolBar2
         TimeTo2.inputView = myUIPicker2
         TimeTo2.inputAccessoryView = toolBar2
+        
+        usernametextfield.returnKeyType = .Done
+        
+        staffnumbertextfield.keyboardType = .NumberPad
+        staffnumbertextfield.inputAccessoryView = keyboardtoolbar
     }
     
     override func didReceiveMemoryWarning() {
@@ -339,7 +372,7 @@ class Setting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource,UI
         let keyboardScreenEndFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
         let myBoundSize: CGSize = UIScreen.mainScreen().bounds.size
         
-        let txtLimit = txtActiveField.frame.origin.y + txtActiveField.frame.height + 8.0
+        let txtLimit = txtActiveField.frame.origin.y + txtActiveField.frame.height + 70.0
         let kbdLimit = myBoundSize.height - keyboardScreenEndFrame.size.height
         
         print("テキストフィールドの下辺：(txtLimit)")
@@ -370,4 +403,21 @@ class Setting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource,UI
         notificationCenter.removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
     }
     
+    func TapToolBarButton(sender: UIButton){
+        switch(sender.tag){
+        case 1:         //完了ボタン
+            let staffnumberrecord = StaffNumber()
+            staffnumberrecord.id = 0
+            staffnumberrecord.number = Int(staffnumbertextfield.text!)!
+            
+            DBmethod().AddandUpdate(staffnumberrecord, update: true)
+            
+            staffnumbertextfield.resignFirstResponder()
+            
+        case 2:         //キャンセルボタン
+            staffnumbertextfield.resignFirstResponder()
+        default:
+            break
+        }
+    }
 }
