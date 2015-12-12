@@ -34,8 +34,8 @@ class Setting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource,UI
     let saveimage = UIImage(named: "../images/save.png")
     let savebutton   = UIButton()
     
-    let catimagepath: [String] = ["../images/cat1.png","../images/cat2.png","../images/cat3.png","../images/cat4.png","../images/cat5.png"]
-    let catinfo: [[Int]] = [[250,160,70],[328,385,80],[250,320,60]]
+    let catimagepath: [String] = ["../images/cat1.png","../images/cat2.png"]
+    let catinfo: [[Int]] = [[70,500,80],[328,560,80]]
     
     @IBOutlet weak var HPSView: UIView!
     var txtActiveField = UITextField()
@@ -44,7 +44,6 @@ class Setting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource,UI
         super.viewDidLoad()
         DBmethod().ShowDBpass()
         
-        //self.HPSView.backgroundColor = UIColor.hex("ff00ff", alpha: 0.7)
         self.HPSView.backgroundColor = UIColor(patternImage: UIImage(named: "../images/HPSbackground.png")!)
 
         //時給がすでに登録されていたら登録内容を表示する
@@ -76,17 +75,17 @@ class Setting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource,UI
 
         
         //猫の追加
-//        for(var i = 0; i < 3; i++){
-//            let catimage = UIImage(named: catimagepath[i])
-//            let catimageview = UIImageView()
-//            
-//            catimageview.frame = CGRectMake(0, 0, CGFloat(catinfo[i][2]), CGFloat(catinfo[i][2]))
-//            catimageview.image = catimage
-//            catimageview.layer.position = CGPoint(x: catinfo[i][0], y: catinfo[i][1])
-//            
-//            self.HPSView.addSubview(catimageview)
-//            
-//        }
+        for(var i = 0; i < catimagepath.count; i++){
+            let catimage = UIImage(named: catimagepath[i])
+            let catimageview = UIImageView()
+            
+            catimageview.frame = CGRectMake(0, 0, CGFloat(catinfo[i][2]), CGFloat(catinfo[i][2]))
+            catimageview.image = catimage
+            catimageview.layer.position = CGPoint(x: catinfo[i][0], y: catinfo[i][1])
+            
+            self.HPSView.addSubview(catimageview)
+            
+        }
         
         //セーブボタンの追加
         savebutton.tag = 0
