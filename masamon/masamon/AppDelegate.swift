@@ -46,7 +46,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let demo3:UIViewController = hourlypaysetting
         let demo4:UIViewController = UIViewController()
         
-        demo1.view.backgroundColor = UIColor.redColor()
+        demo1.view.backgroundColor = UIColor(patternImage: UIImage(named: "../images/aaa.png")!)
+        
+//        demo1.view.backgroundColor = UIColor.redColor()
         demo2.view.backgroundColor = UIColor.redColor()
 //        demo3.view.backgroundColor = UIColor.grayColor()
         demo4.view.backgroundColor = UIColor.redColor()
