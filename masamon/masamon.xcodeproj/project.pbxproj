@@ -29,7 +29,7 @@
 		376C92D61BE695D000D45FC2 /* extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376C92D51BE695D000D45FC2 /* extentions.swift */; };
 		379955951C14431F00BAAD9E /* Shiftmethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379955941C14431F00BAAD9E /* Shiftmethod.swift */; };
 		37B8C7491C1507E700C11D40 /* UserSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B8C7481C1507E700C11D40 /* UserSetting.swift */; };
-		37D4B3101BE0F59900F06759 /* HourlyPaySetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D4B30F1BE0F59900F06759 /* HourlyPaySetting.swift */; };
+		37D4B3101BE0F59900F06759 /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D4B30F1BE0F59900F06759 /* Setting.swift */; };
 		37DD8EF51C1C0135007C0E6C /* SwipeBetweenViewControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DD8EF41C1C0135007C0E6C /* SwipeBetweenViewControllers.swift */; };
 /* End PBXBuildFile section */
 
@@ -125,7 +125,7 @@
 		376C92D51BE695D000D45FC2 /* extentions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = extentions.swift; sourceTree = "<group>"; };
 		379955941C14431F00BAAD9E /* Shiftmethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shiftmethod.swift; sourceTree = "<group>"; };
 		37B8C7481C1507E700C11D40 /* UserSetting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSetting.swift; sourceTree = "<group>"; };
-		37D4B30F1BE0F59900F06759 /* HourlyPaySetting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HourlyPaySetting.swift; sourceTree = "<group>"; };
+		37D4B30F1BE0F59900F06759 /* Setting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
 		37D8F4241C0CB1A000D5336A /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
 		37D8F4251C0CB1A000D5336A /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		37DD8EF41C1C0135007C0E6C /* SwipeBetweenViewControllers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipeBetweenViewControllers.swift; sourceTree = "<group>"; };
@@ -202,7 +202,7 @@
 				37B8C7481C1507E700C11D40 /* UserSetting.swift */,
 				379955941C14431F00BAAD9E /* Shiftmethod.swift */,
 				371432A71BE98F060088CDCC /* ShiftImport.swift */,
-				37D4B30F1BE0F59900F06759 /* HourlyPaySetting.swift */,
+				37D4B30F1BE0F59900F06759 /* Setting.swift */,
 				370ACE011BDF486700AB73EB /* Assets.xcassets */,
 				370ACE031BDF486700AB73EB /* LaunchScreen.storyboard */,
 				370ACE061BDF486700AB73EB /* Info.plist */,
@@ -408,7 +408,7 @@
 				376C92D61BE695D000D45FC2 /* extentions.swift in Sources */,
 				370ACE441BDF573500AB73EB /* DB.swift in Sources */,
 				371432A81BE98F060088CDCC /* ShiftImport.swift in Sources */,
-				37D4B3101BE0F59900F06759 /* HourlyPaySetting.swift in Sources */,
+				37D4B3101BE0F59900F06759 /* Setting.swift in Sources */,
 				370ACDFB1BDF486700AB73EB /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

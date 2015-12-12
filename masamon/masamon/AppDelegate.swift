@@ -31,7 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let monthlysalaryshow = storyboard.instantiateViewControllerWithIdentifier("MonthlySalaryShow") as! MonthlySalaryShow
-        let hourlypaysetting = storyboard.instantiateViewControllerWithIdentifier("HourlyPaySetting") as! HourlyPaySetting
+        let hourlypaysetting = storyboard.instantiateViewControllerWithIdentifier("Setting") as! Setting
        // let monthlysalaryshow = storyboard.instantiateViewControllerWithIdentifier("MonthlySalaryShow") as! MonthlySalaryShow
         
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)

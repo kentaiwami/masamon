@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HourlyPaySetting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource,UITextFieldDelegate{
+class Setting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource,UITextFieldDelegate{
     
     @IBOutlet weak var AddScrollView: UIScrollView!
     @IBOutlet weak var TimeFrom1: UITextField!
