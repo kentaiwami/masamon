@@ -46,33 +46,7 @@ class Setting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource,UI
         
         self.HPSView.backgroundColor = UIColor(patternImage: UIImage(named: "../images/HPSbackground.png")!)
 
-        //時給がすでに登録されていたら登録内容を表示する
-        if(DBmethod().HourlyPayRecordGet().isEmpty){
-            print("HourlyPayRecord is nil")
-        }else{
-            let hourlypayarray = DBmethod().HourlyPayRecordGet()
-            
-            TimeFrom1.text = time[Int(hourlypayarray[0].timefrom * 2)]
-            TimeTo1.text = time[Int(hourlypayarray[0].timeto * 2)]
-            TimeFrom2.text = time[Int(hourlypayarray[1].timefrom * 2)]
-            TimeTo2.text = time[Int(hourlypayarray[1].timeto * 2)]
-            SalalyLabel1.text = String(hourlypayarray[0].pay)
-            SalalyLabel2.text = String(hourlypayarray[1].pay)
-        }
-        
-        //既に登録されていたら登録内容を表示する
-        if(DBmethod().DBRecordCount(UserName) == 0){
-            usernametextfield.text = "月給を表示するシフト表上での名前を入力"
-        }else{
-            usernametextfield.text = DBmethod().UserNameGet()
-        }
-        
-        if(DBmethod().DBRecordCount(StaffNumber) == 0){
-            staffnumbertextfield.text = "シフト表に記載されているスタッフの人数を入力"
-        }else{
-            staffnumbertextfield.text = String(DBmethod().StaffNumberGet())
-        }
-
+        SetText()
         
         //猫の追加
         for(var i = 0; i < catimagepath.count; i++){
@@ -409,6 +383,8 @@ class Setting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource,UI
         let notificationCenter = NSNotificationCenter.defaultCenter()
         notificationCenter.removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
         notificationCenter.removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+        
+        SetText()
     }
     
     func TapToolBarButton(sender: UIButton){
@@ -426,6 +402,35 @@ class Setting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource,UI
             staffnumbertextfield.resignFirstResponder()
         default:
             break
+        }
+    }
+    
+    func SetText(){
+        //時給がすでに登録されていたら登録内容を表示する
+        if(DBmethod().HourlyPayRecordGet().isEmpty){
+            print("HourlyPayRecord is nil")
+        }else{
+            let hourlypayarray = DBmethod().HourlyPayRecordGet()
+            
+            TimeFrom1.text = time[Int(hourlypayarray[0].timefrom * 2)]
+            TimeTo1.text = time[Int(hourlypayarray[0].timeto * 2)]
+            TimeFrom2.text = time[Int(hourlypayarray[1].timefrom * 2)]
+            TimeTo2.text = time[Int(hourlypayarray[1].timeto * 2)]
+            SalalyLabel1.text = String(hourlypayarray[0].pay)
+            SalalyLabel2.text = String(hourlypayarray[1].pay)
+        }
+        
+        //既に登録されていたら登録内容を表示する
+        if(DBmethod().DBRecordCount(UserName) == 0){
+            usernametextfield.text = "月給を表示するシフト表上での名前を入力"
+        }else{
+            usernametextfield.text = DBmethod().UserNameGet()
+        }
+        
+        if(DBmethod().DBRecordCount(StaffNumber) == 0){
+            staffnumbertextfield.text = "シフト表に記載されているスタッフの人数を入力"
+        }else{
+            staffnumbertextfield.text = String(DBmethod().StaffNumberGet())
         }
     }
 }
