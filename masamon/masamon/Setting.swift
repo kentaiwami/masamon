@@ -169,7 +169,7 @@ class Setting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource,UI
         toolBarsalaly1.userInteractionEnabled = true
         toolBarsalaly2.setItems([flexSpace,salalyButton2], animated: false)
         toolBarsalaly2.userInteractionEnabled = true
-        keyboardtoolbar.setItems([cancelbutton,flexSpace,donebutton], animated: false)
+        keyboardtoolbar.setItems([flexSpace,donebutton], animated: false)
         keyboardtoolbar.userInteractionEnabled = true
         
         //PickerViewの追加
