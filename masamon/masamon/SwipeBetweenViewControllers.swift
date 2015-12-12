@@ -64,7 +64,7 @@ class SwipeBetweenViewControllers: UINavigationController,UIPageViewControllerDe
         super.viewDidLoad()
         
 //        self.navigationBar.barTintColor = UIColor(red:0.01, green:0.05, blue:0.06, alpha:1) //%%% bartint
-        self.navigationBar.barTintColor = UIColor.grayColor()
+        self.navigationBar.barTintColor = UIColor.hex("55586B", alpha: 1.0)
         self.navigationBar.translucent = false
     }
 
@@ -98,7 +98,7 @@ class SwipeBetweenViewControllers: UINavigationController,UIPageViewControllerDe
 
             button.tag = i //%%% IMPORTANT: if you make your own custom buttons, you have to tag them appropriately
 //            button.backgroundColor = UIColor(red: 0.03, green: 0.07, blue: 0.08, alpha: 1) //%%% buttoncolors
-            button.backgroundColor = UIColor.grayColor()
+            button.backgroundColor = UIColor.hex("55586B", alpha: 1.0)
             button.addTarget(self, action: "tapSegmentButtonAction:", forControlEvents: UIControlEvents.TouchUpInside)
             button.setTitle(buttonText[i], forState:UIControlState.Normal) //%%%buttontitle
            // button.setImage(UIImage(named: "../images/settings48-2.png"), forState: .Normal)
