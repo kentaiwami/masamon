@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HourlyPaySetting: MenuBar, UIPickerViewDelegate, UIPickerViewDataSource,UITextFieldDelegate{
+class Setting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource,UITextFieldDelegate{
     
     @IBOutlet weak var AddScrollView: UIScrollView!
     @IBOutlet weak var TimeFrom1: UITextField!
@@ -17,6 +17,9 @@ class HourlyPaySetting: MenuBar, UIPickerViewDelegate, UIPickerViewDataSource,UI
     @IBOutlet weak var TimeTo2: UITextField!
     @IBOutlet weak var SalalyLabel1: UITextField!
     @IBOutlet weak var SalalyLabel2: UITextField!
+    @IBOutlet weak var usernametextfield: UITextField!
+    @IBOutlet weak var staffnumbertextfield: UITextField!
+    
     
     var myUIPicker1: UIPickerView = UIPickerView()
     var myUIPicker2: UIPickerView = UIPickerView()
@@ -58,18 +61,32 @@ class HourlyPaySetting: MenuBar, UIPickerViewDelegate, UIPickerViewDataSource,UI
             SalalyLabel2.text = String(hourlypayarray[1].pay)
         }
         
-        //猫の追加
-        for(var i = 0; i < 3; i++){
-            let catimage = UIImage(named: catimagepath[i])
-            let catimageview = UIImageView()
-            
-            catimageview.frame = CGRectMake(0, 0, CGFloat(catinfo[i][2]), CGFloat(catinfo[i][2]))
-            catimageview.image = catimage
-            catimageview.layer.position = CGPoint(x: catinfo[i][0], y: catinfo[i][1])
-            
-            self.HPSView.addSubview(catimageview)
-            
+        //既に登録されていたら登録内容を表示する
+        if(DBmethod().DBRecordCount(UserName) == 0){
+            usernametextfield.text = "月給を表示するシフト表上での名前を入力"
+        }else{
+            usernametextfield.text = DBmethod().UserNameGet()
         }
+        
+        if(DBmethod().DBRecordCount(StaffNumber) == 0){
+            staffnumbertextfield.text = "シフト表に記載されているスタッフの人数を入力"
+        }else{
+            staffnumbertextfield.text = String(DBmethod().StaffNumberGet())
+        }
+
+        
+        //猫の追加
+//        for(var i = 0; i < 3; i++){
+//            let catimage = UIImage(named: catimagepath[i])
+//            let catimageview = UIImageView()
+//            
+//            catimageview.frame = CGRectMake(0, 0, CGFloat(catinfo[i][2]), CGFloat(catinfo[i][2]))
+//            catimageview.image = catimage
+//            catimageview.layer.position = CGPoint(x: catinfo[i][0], y: catinfo[i][1])
+//            
+//            self.HPSView.addSubview(catimageview)
+//            
+//        }
         
         //セーブボタンの追加
         savebutton.tag = 0
@@ -85,6 +102,9 @@ class HourlyPaySetting: MenuBar, UIPickerViewDelegate, UIPickerViewDataSource,UI
         TimeTo2.delegate = self
         SalalyLabel1.delegate = self
         SalalyLabel2.delegate = self
+        usernametextfield.delegate = self
+        staffnumbertextfield.delegate = self
+        
         TimeFrom1.tag = 1
         TimeTo1.tag = 1
         TimeFrom2.tag = 2
@@ -114,6 +134,11 @@ class HourlyPaySetting: MenuBar, UIPickerViewDelegate, UIPickerViewDataSource,UI
         toolBarsalaly2.translucent = true
         toolBarsalaly2.tintColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
         toolBarsalaly2.sizeToFit()
+        let keyboardtoolbar = UIToolbar()
+        keyboardtoolbar.barStyle = UIBarStyle.Default
+        keyboardtoolbar.translucent = true
+        keyboardtoolbar.tintColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
+        keyboardtoolbar.sizeToFit()
         
         //Toolbarにつけるボタンの作成
         let doneButton1 = UIBarButtonItem(title: "完了", style: UIBarButtonItemStyle.Plain, target: self, action: "donePicker:")
@@ -123,7 +148,11 @@ class HourlyPaySetting: MenuBar, UIPickerViewDelegate, UIPickerViewDataSource,UI
         let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
         let salalyButton1 = UIBarButtonItem(title: "完了", style: UIBarButtonItemStyle.Plain, target: self, action: "doneSalalyLabel:")
         let salalyButton2 = UIBarButtonItem(title: "完了", style: UIBarButtonItemStyle.Plain, target: self, action: "doneSalalyLabel:")
+        let donebutton = UIBarButtonItem(title: "完了", style: UIBarButtonItemStyle.Plain, target: self, action: "TapToolBarButton:")
+        let cancelbutton = UIBarButtonItem(title: "キャンセル", style: UIBarButtonItemStyle.Plain, target: self, action: "TapToolBarButton:")
         
+        donebutton.tag = 1
+        cancelbutton.tag = 2
         doneButton1.tag = 10
         cancelButton1.tag = 11
         doneButton2.tag = 20
@@ -140,6 +169,8 @@ class HourlyPaySetting: MenuBar, UIPickerViewDelegate, UIPickerViewDataSource,UI
         toolBarsalaly1.userInteractionEnabled = true
         toolBarsalaly2.setItems([flexSpace,salalyButton2], animated: false)
         toolBarsalaly2.userInteractionEnabled = true
+        keyboardtoolbar.setItems([flexSpace,donebutton], animated: false)
+        keyboardtoolbar.userInteractionEnabled = true
         
         //PickerViewの追加
         myUIPicker1.frame = CGRectMake(0,0,self.view.bounds.width/2+20, 260.0)
@@ -162,6 +193,11 @@ class HourlyPaySetting: MenuBar, UIPickerViewDelegate, UIPickerViewDataSource,UI
         TimeFrom2.inputAccessoryView = toolBar2
         TimeTo2.inputView = myUIPicker2
         TimeTo2.inputAccessoryView = toolBar2
+        
+        usernametextfield.returnKeyType = .Done
+        
+        staffnumbertextfield.keyboardType = .NumberPad
+        staffnumbertextfield.inputAccessoryView = keyboardtoolbar
     }
     
     override func didReceiveMemoryWarning() {
@@ -287,7 +323,7 @@ class HourlyPaySetting: MenuBar, UIPickerViewDelegate, UIPickerViewDataSource,UI
     //セーブボタンを押した時
     func SaveButtontapped(sender: UIButton){
         
-        if(TimeFrom1.text?.isEmpty == true || TimeTo1.text?.isEmpty == true || TimeFrom2.text?.isEmpty == true || TimeTo2.text?.isEmpty == true || SalalyLabel1.text?.isEmpty == true || SalalyLabel2.text?.isEmpty == true){
+        if(TimeFrom1.text?.isEmpty == true || TimeTo1.text?.isEmpty == true || TimeFrom2.text?.isEmpty == true || TimeTo2.text?.isEmpty == true || SalalyLabel1.text?.isEmpty == true || SalalyLabel2.text?.isEmpty == true || usernametextfield.text?.isEmpty == true || staffnumbertextfield.text?.isEmpty == true){
             
             let alertController = UIAlertController(title: "ニャ!!", message: "項目を埋めてから押すニャ", preferredStyle: .Alert)
             
@@ -307,6 +343,15 @@ class HourlyPaySetting: MenuBar, UIPickerViewDelegate, UIPickerViewDataSource,UI
             hourlypayrecord2.timeto = Double(time.indexOf(TimeTo2.text!)!)-(Double(time.indexOf(TimeTo2.text!)!)*0.5)
             hourlypayrecord2.pay = Int(SalalyLabel2.text!)!
             
+            let staffnumberrecord = StaffNumber()
+            staffnumberrecord.id = 0
+            staffnumberrecord.number = Int(staffnumbertextfield.text!)!
+            let usernamerecord = UserName()
+            usernamerecord.id = 0
+            usernamerecord.name = usernametextfield.text!
+            
+            DBmethod().AddandUpdate(usernamerecord, update: true)
+            DBmethod().AddandUpdate(staffnumberrecord, update: true)
             DBmethod().AddandUpdate(hourlypayrecord1,update: true)
             DBmethod().AddandUpdate(hourlypayrecord2,update: true)
             
@@ -336,11 +381,11 @@ class HourlyPaySetting: MenuBar, UIPickerViewDelegate, UIPickerViewDataSource,UI
         let keyboardScreenEndFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
         let myBoundSize: CGSize = UIScreen.mainScreen().bounds.size
         
-        let txtLimit = txtActiveField.frame.origin.y + txtActiveField.frame.height + 8.0
+        let txtLimit = txtActiveField.frame.origin.y + txtActiveField.frame.height + 70.0
         let kbdLimit = myBoundSize.height - keyboardScreenEndFrame.size.height
         
-        print("テキストフィールドの下辺：(txtLimit)")
-        print("キーボードの上辺：(kbdLimit)")
+//        print("テキストフィールドの下辺：(txtLimit)")
+//        print("キーボードの上辺：(kbdLimit)")
         
         if txtLimit >= kbdLimit {
             AddScrollView.contentOffset.y = txtLimit - kbdLimit
@@ -367,4 +412,21 @@ class HourlyPaySetting: MenuBar, UIPickerViewDelegate, UIPickerViewDataSource,UI
         notificationCenter.removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
     }
     
+    func TapToolBarButton(sender: UIButton){
+        switch(sender.tag){
+        case 1:         //完了ボタン
+            let staffnumberrecord = StaffNumber()
+            staffnumberrecord.id = 0
+            staffnumberrecord.number = Int(staffnumbertextfield.text!)!
+            
+            DBmethod().AddandUpdate(staffnumberrecord, update: true)
+            
+            staffnumbertextfield.resignFirstResponder()
+            
+        case 2:         //キャンセルボタン
+            staffnumbertextfield.resignFirstResponder()
+        default:
+            break
+        }
+    }
 }

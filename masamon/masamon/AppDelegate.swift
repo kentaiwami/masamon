@@ -28,6 +28,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let monthlysalaryshow = storyboard.instantiateViewControllerWithIdentifier("MonthlySalaryShow") as! MonthlySalaryShow
+        let hourlypaysetting = storyboard.instantiateViewControllerWithIdentifier("Setting") as! Setting
+       // let monthlysalaryshow = storyboard.instantiateViewControllerWithIdentifier("MonthlySalaryShow") as! MonthlySalaryShow
+        
+        self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
+        
+        let pageController:UIPageViewController = UIPageViewController(transitionStyle: UIPageViewControllerTransitionStyle.Scroll, navigationOrientation: UIPageViewControllerNavigationOrientation.Horizontal, options: nil)
+        
+        let navigationController:SwipeBetweenViewControllers = SwipeBetweenViewControllers(rootViewController: pageController)
+        
+        // Override point for customization after application launch.
+        let demo1:UIViewController = monthlysalaryshow
+        let demo2:UIViewController = UIViewController()
+        let demo3:UIViewController = hourlypaysetting
+        let demo4:UIViewController = UIViewController()
+        
+        demo1.view.backgroundColor = UIColor.redColor()
+        demo2.view.backgroundColor = UIColor.redColor()
+//        demo3.view.backgroundColor = UIColor.grayColor()
+        demo4.view.backgroundColor = UIColor.redColor()
+        
+        navigationController.viewControllerArray = [demo1,demo2,demo3,demo4]
+        
+        self.window?.rootViewController = navigationController
+        self.window?.makeKeyAndVisible()
+        
         //InboxFileCountに空レコード(ダミー)を追加
         if(DBmethod().DBRecordCount(InboxFileCountDB) == 0){
             //レコードを追加
