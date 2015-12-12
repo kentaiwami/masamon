@@ -44,7 +44,7 @@ class Setting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource,UI
         super.viewDidLoad()
         DBmethod().ShowDBpass()
         
-        self.HPSView.backgroundColor = UIColor(patternImage: UIImage(named: "../images/HPSbackground.png")!)
+        self.HPSView.backgroundColor = UIColor(patternImage: UIImage(named: "../images/Settingbackground.png")!)
 
         SetText()
         
