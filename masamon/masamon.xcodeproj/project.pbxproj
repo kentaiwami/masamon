@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		370ACDFB1BDF486700AB73EB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370ACDFA1BDF486700AB73EB /* AppDelegate.swift */; };
 		370ACDFD1BDF486700AB73EB /* MonthlySalaryShow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370ACDFC1BDF486700AB73EB /* MonthlySalaryShow.swift */; };
-		370ACE001BDF486700AB73EB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 370ACDFE1BDF486700AB73EB /* Main.storyboard */; };
 		370ACE021BDF486700AB73EB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 370ACE011BDF486700AB73EB /* Assets.xcassets */; };
 		370ACE051BDF486700AB73EB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 370ACE031BDF486700AB73EB /* LaunchScreen.storyboard */; };
 		370ACE101BDF486700AB73EB /* masamonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370ACE0F1BDF486700AB73EB /* masamonTests.swift */; };
@@ -30,6 +29,7 @@
 		379955951C14431F00BAAD9E /* Shiftmethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379955941C14431F00BAAD9E /* Shiftmethod.swift */; };
 		37D4B3101BE0F59900F06759 /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D4B30F1BE0F59900F06759 /* Setting.swift */; };
 		37DD8EF51C1C0135007C0E6C /* SwipeBetweenViewControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DD8EF41C1C0135007C0E6C /* SwipeBetweenViewControllers.swift */; };
+		37DD8EFF1C1C29FF007C0E6C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 370ACDFE1BDF486700AB73EB /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -370,8 +370,8 @@
 				3742AF631C12E851003AB33B /* testWorkbook.xlsx in Resources */,
 				370ACE291BDF4B7700AB73EB /* images in Resources */,
 				370ACE051BDF486700AB73EB /* LaunchScreen.storyboard in Resources */,
+				37DD8EFF1C1C29FF007C0E6C /* Main.storyboard in Resources */,
 				370ACE021BDF486700AB73EB /* Assets.xcassets in Resources */,
-				370ACE001BDF486700AB73EB /* Main.storyboard in Resources */,
 				3742AF6E1C12FEE8003AB33B /* bbb.xlsx in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
