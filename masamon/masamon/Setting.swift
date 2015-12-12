@@ -323,7 +323,7 @@ class Setting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource,UI
     //セーブボタンを押した時
     func SaveButtontapped(sender: UIButton){
         
-        if(TimeFrom1.text?.isEmpty == true || TimeTo1.text?.isEmpty == true || TimeFrom2.text?.isEmpty == true || TimeTo2.text?.isEmpty == true || SalalyLabel1.text?.isEmpty == true || SalalyLabel2.text?.isEmpty == true){
+        if(TimeFrom1.text?.isEmpty == true || TimeTo1.text?.isEmpty == true || TimeFrom2.text?.isEmpty == true || TimeTo2.text?.isEmpty == true || SalalyLabel1.text?.isEmpty == true || SalalyLabel2.text?.isEmpty == true || usernametextfield.text?.isEmpty == true || staffnumbertextfield.text?.isEmpty == true){
             
             let alertController = UIAlertController(title: "ニャ!!", message: "項目を埋めてから押すニャ", preferredStyle: .Alert)
             
@@ -343,6 +343,15 @@ class Setting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource,UI
             hourlypayrecord2.timeto = Double(time.indexOf(TimeTo2.text!)!)-(Double(time.indexOf(TimeTo2.text!)!)*0.5)
             hourlypayrecord2.pay = Int(SalalyLabel2.text!)!
             
+            let staffnumberrecord = StaffNumber()
+            staffnumberrecord.id = 0
+            staffnumberrecord.number = Int(staffnumbertextfield.text!)!
+            let usernamerecord = UserName()
+            usernamerecord.id = 0
+            usernamerecord.name = usernametextfield.text!
+            
+            DBmethod().AddandUpdate(usernamerecord, update: true)
+            DBmethod().AddandUpdate(staffnumberrecord, update: true)
             DBmethod().AddandUpdate(hourlypayrecord1,update: true)
             DBmethod().AddandUpdate(hourlypayrecord2,update: true)
             
@@ -375,8 +384,8 @@ class Setting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource,UI
         let txtLimit = txtActiveField.frame.origin.y + txtActiveField.frame.height + 70.0
         let kbdLimit = myBoundSize.height - keyboardScreenEndFrame.size.height
         
-        print("テキストフィールドの下辺：(txtLimit)")
-        print("キーボードの上辺：(kbdLimit)")
+//        print("テキストフィールドの下辺：(txtLimit)")
+//        print("キーボードの上辺：(kbdLimit)")
         
         if txtLimit >= kbdLimit {
             AddScrollView.contentOffset.y = txtLimit - kbdLimit
