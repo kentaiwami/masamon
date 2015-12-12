@@ -388,21 +388,7 @@ class Setting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource,UI
     }
     
     func TapToolBarButton(sender: UIButton){
-        switch(sender.tag){
-        case 1:         //完了ボタン
-            let staffnumberrecord = StaffNumber()
-            staffnumberrecord.id = 0
-            staffnumberrecord.number = Int(staffnumbertextfield.text!)!
-            
-            DBmethod().AddandUpdate(staffnumberrecord, update: true)
-            
-            staffnumbertextfield.resignFirstResponder()
-            
-        case 2:         //キャンセルボタン
-            staffnumbertextfield.resignFirstResponder()
-        default:
-            break
-        }
+        staffnumbertextfield.resignFirstResponder()
     }
     
     func SetText(){
