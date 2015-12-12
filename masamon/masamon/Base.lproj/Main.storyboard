@@ -54,53 +54,6 @@
             </objects>
             <point key="canvasLocation" x="254.49999999999997" y="353.49999999999994"/>
         </scene>
-        <!--User Setting-->
-        <scene sceneID="3GS-EX-koR">
-            <objects>
-                <viewController storyboardIdentifier="UserSetting" useStoryboardIdentifierAsRestorationIdentifier="YES" id="R7a-LM-ZUL" customClass="UserSetting" customModule="masamon" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Rmu-V5-VI8"/>
-                        <viewControllerLayoutGuide type="bottom" id="OWA-I7-qoZ"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="iW4-g5-yDZ">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aCE-iO-OtN">
-                                <rect key="frame" x="53" y="184" width="268" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="ユーザ名" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IYT-dF-idt">
-                                <rect key="frame" x="53" y="155" width="68" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="スタッフ人数" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t9D-4R-9jk">
-                                <rect key="frame" x="53" y="346" width="102" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WyL-kL-sgh">
-                                <rect key="frame" x="53" y="375" width="268" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
-                    <connections>
-                        <outlet property="staffnumbertextfield" destination="WyL-kL-sgh" id="X4L-eI-tMY"/>
-                        <outlet property="usernametextfield" destination="aCE-iO-OtN" id="p40-qk-G1T"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="j4z-0k-2aB" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="253.5" y="1129.5"/>
-        </scene>
         <!--Setting-->
         <scene sceneID="V1x-uh-v1g">
             <objects>
@@ -240,6 +193,8 @@
                         <outlet property="TimeFrom2" destination="sF4-8Z-uh9" id="4c2-Uk-1uK"/>
                         <outlet property="TimeTo1" destination="WPM-wm-Uok" id="N7e-SM-vF9"/>
                         <outlet property="TimeTo2" destination="qyL-Wo-9ko" id="Gzk-BG-9D0"/>
+                        <outlet property="staffnumbertextfield" destination="U9q-ef-La6" id="pr5-dw-GDJ"/>
+                        <outlet property="usernametextfield" destination="0qy-ZU-SZE" id="YO3-3J-f2K"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ObL-QC-7fR" userLabel="First Responder" sceneMemberID="firstResponder"/>

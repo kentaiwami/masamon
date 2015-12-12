@@ -17,6 +17,9 @@ class Setting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource,UI
     @IBOutlet weak var TimeTo2: UITextField!
     @IBOutlet weak var SalalyLabel1: UITextField!
     @IBOutlet weak var SalalyLabel2: UITextField!
+    @IBOutlet weak var usernametextfield: UITextField!
+    @IBOutlet weak var staffnumbertextfield: UITextField!
+    
     
     var myUIPicker1: UIPickerView = UIPickerView()
     var myUIPicker2: UIPickerView = UIPickerView()
