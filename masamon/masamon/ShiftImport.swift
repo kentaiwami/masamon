@@ -20,6 +20,7 @@ class ShiftImport: UIViewController,UITextFieldDelegate,UITableViewDelegate,UITa
     let filename = DBmethod().FilePathTmpGet().lastPathComponent    //ファイル名の抽出
     let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得
     var tableviewcelltext: [String] = []
+    var AAA = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -198,6 +199,9 @@ class ShiftImport: UIViewController,UITextFieldDelegate,UITableViewDelegate,UITa
         let ql = QLPreviewController()
         ql.dataSource  = self
         presentViewController(ql, animated: true, completion: nil)
+//        print(tableviewcelltext[indexPath.row])
+        AAA = indexPath.row
+        
     }
     
     //テーブルビューのセルに値を設定する
@@ -231,14 +235,15 @@ class ShiftImport: UIViewController,UITextFieldDelegate,UITableViewDelegate,UITa
         }
     }
     
+    //プレビューでの表示数
     func numberOfPreviewItemsInPreviewController(controller: QLPreviewController) -> Int{
         return 1
     }
     
+    //プレビューで表示するファイルの設定
     func previewController(controller: QLPreviewController, previewItemAtIndex index: Int) -> QLPreviewItem{
-        
-        let mainbundle = NSBundle.mainBundle()
-        let url = mainbundle.pathForResource("bbb", ofType: "xlsx")!
+        //TODO: 履歴にあるファイル名をLibraryから探し出す
+        let url = Libralypath + "/" + "shoshiki-10.xlsx"
         print(url)
         let doc = NSURL(fileURLWithPath: url)
         return doc
