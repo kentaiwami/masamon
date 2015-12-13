@@ -8,17 +8,15 @@
 
 import UIKit
 
-class ShiftImport: UIViewController,UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource{
+class ShiftImport: UIViewController,UITextFieldDelegate{
     
     @IBOutlet weak var filenamefield: UITextField!
-    @IBOutlet weak var fileimporthistorytable: UITableView!
     
     let filemanager:NSFileManager = NSFileManager()
     let documentspath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
     let Libralypath = NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0] as String
     let filename = DBmethod().FilePathTmpGet().lastPathComponent    //ファイル名の抽出
     let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得
-    var tableviewcelltext: [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,27 +26,9 @@ class ShiftImport: UIViewController,UITextFieldDelegate,UITableViewDelegate,UITa
         //蝶々を設置
         setbutterfly()
         
-        //線を引く
-        let splitline = UIView()
-        splitline.frame = CGRectMake(self.view.frame.width/2-55, self.view.frame.height/2-75, 0.5, 300.0)
-        splitline.backgroundColor = UIColor.grayColor()
-        splitline.alpha = 0.5
-        self.view.addSubview(splitline)
-        
-        
-        //テーブルビューの設定
-        fileimporthistorytable.delegate = self
-        fileimporthistorytable.dataSource = self
-        
         //テキストフィールドの設定
         filenamefield.delegate = self
         filenamefield.returnKeyType = .Done
-        
-        //テーブルビューに最新順から追加していく
-        let importhistoryarray = DBmethod().ShiftImportHistoryDBGet()
-        for(var i = importhistoryarray.count-1; i >= 0; i--){
-            tableviewcelltext.append(importhistoryarray[i].date + "             " + importhistoryarray[i].name)
-        }
         
         if(DBmethod().FilePathTmpGet() != ""){
             filenamefield.text = DBmethod().FilePathTmpGet().lastPathComponent
@@ -113,9 +93,7 @@ class ShiftImport: UIViewController,UITextFieldDelegate,UITableViewDelegate,UITa
                     print(error)
                 }
             }
-            //配列の中身を削除してから入れ直す
-            tableviewcelltext.removeAll()
-            settableviewcell()
+
         }else{      //テキストフィールドが空の場合
             let alertController = UIAlertController(title: "取り込みエラー", message: "ファイル名を入力して下さい", preferredStyle: .Alert)
             
@@ -174,36 +152,6 @@ class ShiftImport: UIViewController,UITextFieldDelegate,UITableViewDelegate,UITa
         DBmethod().AddandUpdate(ShiftImportHistoryDBRecord,update: true)
     }
     
-    // セルの行数
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tableviewcelltext.count
-    }
-    
-    // セルの内容を変更
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "Cell")
-        
-        if(tableviewcelltext.isEmpty){
-            return cell
-        }else{
-            cell.textLabel?.text = tableviewcelltext[indexPath.row]
-            return cell
-        }
-    }
-    
-    //テーブルビューの選択を禁止する
-    func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
-        return nil
-    }
-    
-    //テーブルビューのセルに値を設定する
-    func settableviewcell(){
-        let importhistoryarray = DBmethod().ShiftImportHistoryDBGet()
-        for(var i = importhistoryarray.count-1; i >= 0; i--){
-            tableviewcelltext.append(importhistoryarray[i].date + "             " + importhistoryarray[i].name)
-        }
-    }
-
     func setbutterfly(){
         let imagepath = ["../images/butterfly1.png","../images/butterfly2.png"]
         let position:[[Int]] = [[Int(self.view.frame.width-50),Int(self.view.frame.height/2-120)],[60,Int(self.view.frame.height-40)]]
