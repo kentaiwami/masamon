@@ -44,22 +44,55 @@ class Setting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource,UI
         super.viewDidLoad()
         DBmethod().ShowDBpass()
         
-        self.HPSView.backgroundColor = UIColor(patternImage: UIImage(named: "../images/Settingbackground.png")!)
+        self.HPSView.backgroundColor = UIColor.blackColor()
+//        self.HPSView.backgroundColor = UIColor(patternImage: UIImage(named: "../images/bbb.png")!)
 
+        
+        
         SetText()
+      
+        let A = UIView()
+        A.frame = CGRectMake(0, 25, self.view.frame.width, 135)
+        A.backgroundColor = UIColor.clearColor()
+        A.layer.borderColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.4).CGColor
+        A.layer.borderWidth = 2
+        A.layer.cornerRadius = 30
+        self.HPSView.addSubview(A)
+        self.HPSView.sendSubviewToBack(A)
+    
+        let B = UIView()
+        B.frame = CGRectMake(0, 195, self.view.frame.width, 135)
+        B.backgroundColor = UIColor.clearColor()
+        B.layer.borderColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.4).CGColor
+        B.layer.borderWidth = 2
+        B.layer.cornerRadius = 30
+        self.HPSView.addSubview(B)
+        self.HPSView.sendSubviewToBack(B)
+        
+        let C = UIView()
+        C.frame = CGRectMake(0, 370, self.view.frame.width, 135)
+        C.backgroundColor = UIColor.clearColor()
+        C.layer.borderColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.4).CGColor
+        C.layer.borderWidth = 2
+        C.layer.cornerRadius = 30
+        self.HPSView.addSubview(C)
+        self.HPSView.sendSubviewToBack(C)
+        
+        
+        
         
         //猫の追加
-        for(var i = 0; i < catimagepath.count; i++){
-            let catimage = UIImage(named: catimagepath[i])
-            let catimageview = UIImageView()
-            
-            catimageview.frame = CGRectMake(0, 0, CGFloat(catinfo[i][2]), CGFloat(catinfo[i][2]))
-            catimageview.image = catimage
-            catimageview.layer.position = CGPoint(x: catinfo[i][0], y: catinfo[i][1])
-            
-            self.HPSView.addSubview(catimageview)
-            
-        }
+//        for(var i = 0; i < catimagepath.count; i++){
+//            let catimage = UIImage(named: catimagepath[i])
+//            let catimageview = UIImageView()
+//            
+//            catimageview.frame = CGRectMake(0, 0, CGFloat(catinfo[i][2]), CGFloat(catinfo[i][2]))
+//            catimageview.image = catimage
+//            catimageview.layer.position = CGPoint(x: catinfo[i][0], y: catinfo[i][1])
+//            
+//            self.HPSView.addSubview(catimageview)
+//            
+//        }
         
         //セーブボタンの追加
         savebutton.tag = 0
