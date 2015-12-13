@@ -24,7 +24,6 @@ class ShiftImport: UIViewController,UITextFieldDelegate,UITableViewDelegate,UITa
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
 
         self.view.backgroundColor = UIColor(patternImage: UIImage(named: "../images/SIbackground.png")!)
         
@@ -41,6 +40,7 @@ class ShiftImport: UIViewController,UITextFieldDelegate,UITableViewDelegate,UITa
         //テーブルビューの設定
         fileimporthistorytable.delegate = self
         fileimporthistorytable.dataSource = self
+        fileimporthistorytable.scrollEnabled = false
         
         //テキストフィールドの設定
         filenamefield.delegate = self
