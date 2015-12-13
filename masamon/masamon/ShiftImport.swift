@@ -12,7 +12,6 @@ import QuickLook
 class ShiftImport: UIViewController,UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource,QLPreviewControllerDataSource{
     
     @IBOutlet weak var filenamefield: UITextField!
-    @IBOutlet weak var fileimporthistorytable: UITableView!
     
     let filemanager:NSFileManager = NSFileManager()
     let documentspath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
@@ -31,27 +30,9 @@ class ShiftImport: UIViewController,UITextFieldDelegate,UITableViewDelegate,UITa
         //蝶々を設置
         setbutterfly()
         
-        //線を引く
-        let splitline = UIView()
-        splitline.frame = CGRectMake(self.view.frame.width/2-55, self.view.frame.height/2-75, 0.5, 300.0)
-        splitline.backgroundColor = UIColor.grayColor()
-        splitline.alpha = 0.5
-        self.view.addSubview(splitline)
-        
-        
-        //テーブルビューの設定
-        fileimporthistorytable.delegate = self
-        fileimporthistorytable.dataSource = self
-        
         //テキストフィールドの設定
         filenamefield.delegate = self
         filenamefield.returnKeyType = .Done
-        
-        //テーブルビューに最新順から追加していく
-        let importhistoryarray = DBmethod().ShiftImportHistoryDBGet()
-        for(var i = importhistoryarray.count-1; i >= 0; i--){
-            tableviewcelltext.append(importhistoryarray[i].date + "             " + importhistoryarray[i].name)
-        }
         
         if(DBmethod().FilePathTmpGet() != ""){
             filenamefield.text = DBmethod().FilePathTmpGet().lastPathComponent
@@ -116,9 +97,7 @@ class ShiftImport: UIViewController,UITextFieldDelegate,UITableViewDelegate,UITa
                     print(error)
                 }
             }
-            //配列の中身を削除してから入れ直す
-            tableviewcelltext.removeAll()
-            settableviewcell()
+
         }else{      //テキストフィールドが空の場合
             let alertController = UIAlertController(title: "取り込みエラー", message: "ファイル名を入力して下さい", preferredStyle: .Alert)
             
