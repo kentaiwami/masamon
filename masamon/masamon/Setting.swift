@@ -39,6 +39,8 @@ class Setting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource,UI
     
     let frameborder: [Int] = [25,195,370]
     
+    let clock: [Int] = [47,218]
+    
     @IBOutlet weak var HPSView: UIView!
     var txtActiveField = UITextField()
     
@@ -52,16 +54,36 @@ class Setting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource,UI
       
         //区切るための枠線を追加
         for(var i = 0; i < 3; i++){
-            let A = UIView()
-            A.frame = CGRectMake(0, CGFloat(frameborder[i]), self.view.frame.width, 135)
-            A.backgroundColor = UIColor.clearColor()
-            A.layer.borderColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.4).CGColor
-            A.layer.borderWidth = 2
-            A.layer.cornerRadius = 30
-            self.HPSView.addSubview(A)
-            self.HPSView.sendSubviewToBack(A)
+            let frameborderline = UIView()
+            frameborderline.frame = CGRectMake(0, CGFloat(frameborder[i]), self.view.frame.width, 135)
+            frameborderline.backgroundColor = UIColor.clearColor()
+            frameborderline.layer.borderColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.4).CGColor
+            frameborderline.layer.borderWidth = 2
+            frameborderline.layer.cornerRadius = 30
+            self.HPSView.addSubview(frameborderline)
+            self.HPSView.sendSubviewToBack(frameborderline)
         }
 
+        //時計アイコンの設置
+        for(var i = 0; i < 2; i++){
+            let clockicon = UIImageView()
+            clockicon.image = UIImage(named: "../images/clock2.png")
+            clockicon.frame = CGRectMake(24, CGFloat(clock[i]), 42, 40)
+            self.HPSView.addSubview(clockicon)
+        }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         //猫の追加
         for(var i = 0; i < catimagepath.count; i++){
             let catimage = UIImage(named: catimagepath[i])
