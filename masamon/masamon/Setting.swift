@@ -35,7 +35,14 @@ class Setting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource,UI
     let savebutton   = UIButton()
     
     let catimagepath: [String] = ["../images/cat1.png","../images/cat2.png"]
-    let catinfo: [[Int]] = [[70,500,80],[328,560,80]]
+    let catinfo: [[Int]] = [[70,540,80],[300,470,80]]
+    
+    let frameborder: [Int] = [25,195,370]
+    
+    let clock: [Int] = [47,218]
+    let yen: [Int] = [107,273]
+    let user: [Int] = [395,448]
+    let usericonfilename: [String] = ["../images/user.png","../images/user2.png"]
     
     @IBOutlet weak var HPSView: UIView!
     var txtActiveField = UITextField()
@@ -44,9 +51,54 @@ class Setting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource,UI
         super.viewDidLoad()
         DBmethod().ShowDBpass()
         
-        self.HPSView.backgroundColor = UIColor(patternImage: UIImage(named: "../images/Settingbackground.png")!)
-
+        self.HPSView.backgroundColor = UIColor.blackColor()
+        
         SetText()
+      
+        //区切るための枠線を追加
+        for(var i = 0; i < 3; i++){
+            let frameborderline = UIView()
+            frameborderline.frame = CGRectMake(0, CGFloat(frameborder[i]), self.view.frame.width, 135)
+            frameborderline.backgroundColor = UIColor.clearColor()
+            frameborderline.layer.borderColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.4).CGColor
+            frameborderline.layer.borderWidth = 2
+            frameborderline.layer.cornerRadius = 30
+            self.HPSView.addSubview(frameborderline)
+            self.HPSView.sendSubviewToBack(frameborderline)
+        }
+
+        //時計アイコンの設置
+        for(var i = 0; i < 2; i++){
+            let clockicon = UIImageView()
+            clockicon.image = UIImage(named: "../images/clock.png")
+            clockicon.frame = CGRectMake(24, CGFloat(clock[i]), 42, 40)
+            self.HPSView.addSubview(clockicon)
+        }
+        
+        //円アイコンの設置
+        for(var i = 0; i < 2; i++){
+            let yenicon = UIImageView()
+            yenicon.image = UIImage(named: "../images/yen.png")
+            yenicon.frame = CGRectMake(24, CGFloat(yen[i]), 42, 40)
+            self.HPSView.addSubview(yenicon)
+        }
+        
+        //シフト関連のアイコンを設置
+        for(var i = 0; i < 2; i++){
+            let usericon = UIImageView()
+            usericon.image = UIImage(named: usericonfilename[i])
+            usericon.frame = CGRectMake(24, CGFloat(user[i]), 42, 40)
+            self.HPSView.addSubview(usericon)
+
+        }
+        
+        
+        
+        
+        
+        
+        
+        
         
         //猫の追加
         for(var i = 0; i < catimagepath.count; i++){
@@ -63,7 +115,7 @@ class Setting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource,UI
         
         //セーブボタンの追加
         savebutton.tag = 0
-        savebutton.frame = CGRectMake(0, 0, 100, 100)
+        savebutton.frame = CGRectMake(0, 0, 70, 70)
         savebutton.layer.position = CGPoint(x: self.view.frame.width/2, y:550)
         savebutton.setImage(saveimage, forState: .Normal)
         savebutton.addTarget(self, action: "SaveButtontapped:", forControlEvents:.TouchUpInside)
