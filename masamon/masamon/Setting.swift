@@ -40,6 +40,7 @@ class Setting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource,UI
     let frameborder: [Int] = [25,195,370]
     
     let clock: [Int] = [47,218]
+    let yen: [Int] = [107,273]
     
     @IBOutlet weak var HPSView: UIView!
     var txtActiveField = UITextField()
@@ -67,12 +68,18 @@ class Setting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource,UI
         //時計アイコンの設置
         for(var i = 0; i < 2; i++){
             let clockicon = UIImageView()
-            clockicon.image = UIImage(named: "../images/clock2.png")
+            clockicon.image = UIImage(named: "../images/clock.png")
             clockicon.frame = CGRectMake(24, CGFloat(clock[i]), 42, 40)
             self.HPSView.addSubview(clockicon)
         }
         
-        
+        //円アイコンの設置
+        for(var i = 0; i < 2; i++){
+            let yenicon = UIImageView()
+            yenicon.image = UIImage(named: "../images/yen.png")
+            yenicon.frame = CGRectMake(24, CGFloat(yen[i]), 42, 40)
+            self.HPSView.addSubview(yenicon)
+        }
         
         
         
