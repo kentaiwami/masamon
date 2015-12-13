@@ -242,8 +242,8 @@ class ShiftImport: UIViewController,UITextFieldDelegate,UITableViewDelegate,UITa
     
     //プレビューで表示するファイルの設定
     func previewController(controller: QLPreviewController, previewItemAtIndex index: Int) -> QLPreviewItem{
-        //TODO: 履歴にあるファイル名をLibraryから探し出す
-        let url = Libralypath + "/" + "shoshiki-10.xlsx"
+
+        let url = Libralypath + "/" + (tableviewcelltext[AAA] as NSString).substringFromIndex(23)
         print(url)
         let doc = NSURL(fileURLWithPath: url)
         return doc
