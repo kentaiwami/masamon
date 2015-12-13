@@ -41,6 +41,8 @@ class Setting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource,UI
     
     let clock: [Int] = [47,218]
     let yen: [Int] = [107,273]
+    let user: [Int] = [395,448]
+    let usericonfilename: [String] = ["../images/user.png","../images/user2.png"]
     
     @IBOutlet weak var HPSView: UIView!
     var txtActiveField = UITextField()
@@ -81,7 +83,14 @@ class Setting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource,UI
             self.HPSView.addSubview(yenicon)
         }
         
-        
+        //シフト関連のアイコンを設置
+        for(var i = 0; i < 2; i++){
+            let usericon = UIImageView()
+            usericon.image = UIImage(named: usericonfilename[i])
+            usericon.frame = CGRectMake(24, CGFloat(user[i]), 42, 40)
+            self.HPSView.addSubview(usericon)
+
+        }
         
         
         
