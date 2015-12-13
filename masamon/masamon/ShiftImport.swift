@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import QuickLook
 
-class ShiftImport: UIViewController,UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource{
+class ShiftImport: UIViewController,UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource,QLPreviewControllerDataSource{
     
     @IBOutlet weak var filenamefield: UITextField!
     @IBOutlet weak var fileimporthistorytable: UITableView!
@@ -22,6 +23,7 @@ class ShiftImport: UIViewController,UITextFieldDelegate,UITableViewDelegate,UITa
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
 
         self.view.backgroundColor = UIColor(patternImage: UIImage(named: "../images/SIbackground.png")!)
         
@@ -191,9 +193,11 @@ class ShiftImport: UIViewController,UITextFieldDelegate,UITableViewDelegate,UITa
         }
     }
     
-    //テーブルビューの選択を禁止する
-    func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
-        return nil
+    //セルが選択された時
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let ql = QLPreviewController()
+        ql.dataSource  = self
+        presentViewController(ql, animated: true, completion: nil)
     }
     
     //テーブルビューのセルに値を設定する
@@ -225,5 +229,18 @@ class ShiftImport: UIViewController,UITextFieldDelegate,UITableViewDelegate,UITa
             self.view.addSubview(view)
             
         }
+    }
+    
+    func numberOfPreviewItemsInPreviewController(controller: QLPreviewController) -> Int{
+        return 1
+    }
+    
+    func previewController(controller: QLPreviewController, previewItemAtIndex index: Int) -> QLPreviewItem{
+        
+        let mainbundle = NSBundle.mainBundle()
+        let url = mainbundle.pathForResource("bbb", ofType: "xlsx")!
+        print(url)
+        let doc = NSURL(fileURLWithPath: url)
+        return doc
     }
 }
