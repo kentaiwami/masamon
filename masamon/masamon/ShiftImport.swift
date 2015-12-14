@@ -192,15 +192,19 @@ class ShiftImport: UIViewController,UITextFieldDelegate,QLPreviewControllerDataS
     
     //プレビューで表示するファイルの設定
     func previewController(controller: QLPreviewController, previewItemAtIndex index: Int) -> QLPreviewItem{
-        
-        if(filemanager.fileExistsAtPath(Libralypath + "/" + (tableviewcelltext[0] as NSString).substringFromIndex(23))){
-            lasttimeimportlabel.text = "前回の取り込み:" + (tableviewcelltext[0] as NSString).substringFromIndex(23)
-        }else{
+
+        if(tableviewcelltext.isEmpty){
             lasttimeimportlabel.text = "前回の取り込み: なし"
+            let mainbundle = NSBundle.mainBundle()
+            let url = mainbundle.pathForResource("bbb", ofType: "xlsx")!
+            let doc = NSURL(fileURLWithPath: url)
+            return doc
+            
+        }else{
+            lasttimeimportlabel.text = "前回の取り込み:" + (tableviewcelltext[0] as NSString).substringFromIndex(23)
+            let url = Libralypath + "/" + (tableviewcelltext[0] as NSString).substringFromIndex(23)
+            let doc = NSURL(fileURLWithPath: url)
+            return doc
         }
-        
-        let url = Libralypath + "/" + (tableviewcelltext[0] as NSString).substringFromIndex(23)
-        let doc = NSURL(fileURLWithPath: url)
-        return doc
     }
 }
