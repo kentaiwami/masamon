@@ -46,7 +46,7 @@ class ShiftImport: UIViewController,UITextFieldDelegate,QLPreviewControllerDataS
         //QLpreviewを表示させる
         let ql = QLPreviewController()
         ql.dataSource  = self
-        ql.view.frame = CGRectMake(0, self.view.frame.height/2-70, self.view.frame.width, self.view.frame.height-(self.view.frame.height/2-70))
+        ql.view.frame = CGRectMake(0, self.view.frame.height/2-70, self.view.frame.width, 400)
         self.view.addSubview(ql.view)
     }
     
@@ -201,7 +201,7 @@ class ShiftImport: UIViewController,UITextFieldDelegate,QLPreviewControllerDataS
             return doc
             
         }else{
-            lasttimeimportlabel.text = "前回の取り込み:" + (tableviewcelltext[0] as NSString).substringFromIndex(23)
+            lasttimeimportlabel.text = "前回の取り込み:「" + (tableviewcelltext[0] as NSString).substringFromIndex(23) + "」"
             let url = Libralypath + "/" + (tableviewcelltext[0] as NSString).substringFromIndex(23)
             let doc = NSURL(fileURLWithPath: url)
             return doc
