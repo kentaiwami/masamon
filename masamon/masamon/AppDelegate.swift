@@ -32,7 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let monthlysalaryshow = storyboard.instantiateViewControllerWithIdentifier("MonthlySalaryShow") as! MonthlySalaryShow
         let setting = storyboard.instantiateViewControllerWithIdentifier("Setting") as! Setting
-       // let monthlysalaryshow = storyboard.instantiateViewControllerWithIdentifier("MonthlySalaryShow") as! MonthlySalaryShow
+        let shiftgallery = storyboard.instantiateViewControllerWithIdentifier("ShiftGallery") as! ShiftGallery
         
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
         
@@ -42,14 +42,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Override point for customization after application launch.
         let demo1:UIViewController = monthlysalaryshow
-        let demo2:UIViewController = UIViewController()
+        let demo2:UIViewController = shiftgallery
         let demo3:UIViewController = setting
         let demo4:UIViewController = UIViewController()
         
         demo1.view.backgroundColor = UIColor(patternImage: UIImage(named: "../images/aaa.png")!)
         
 //        demo1.view.backgroundColor = UIColor.redColor()
-        demo2.view.backgroundColor = UIColor.redColor()
+//        demo2.view.backgroundColor = UIColor.redColor()
 //        demo3.view.backgroundColor = UIColor.blackColor()
         demo4.view.backgroundColor = UIColor.redColor()
         

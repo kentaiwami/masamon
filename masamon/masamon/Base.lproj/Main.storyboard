@@ -54,10 +54,10 @@
             </objects>
             <point key="canvasLocation" x="254.49999999999997" y="353.49999999999994"/>
         </scene>
-        <!--Shiftgallery-->
+        <!--Shift Gallery-->
         <scene sceneID="d8v-Tz-inF">
             <objects>
-                <viewController storyboardIdentifier="shiftgallery" useStoryboardIdentifierAsRestorationIdentifier="YES" id="MwN-S4-MNK" customClass="shiftgallery" customModule="masamon" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ShiftGallery" useStoryboardIdentifierAsRestorationIdentifier="YES" id="MwN-S4-MNK" customClass="ShiftGallery" customModule="masamon" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="KYk-oH-vK2"/>
                         <viewControllerLayoutGuide type="bottom" id="8qJ-wy-WN3"/>
