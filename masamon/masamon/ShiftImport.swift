@@ -9,10 +9,9 @@
 import UIKit
 import QuickLook
 
-class ShiftImport: UIViewController,UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource,QLPreviewControllerDataSource{
+class ShiftImport: UIViewController,UITextFieldDelegate,QLPreviewControllerDataSource{
     
     @IBOutlet weak var filenamefield: UITextField!
-    @IBOutlet weak var fileimporthistorytable: UITableView!
     
     let filemanager:NSFileManager = NSFileManager()
     let documentspath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
@@ -20,7 +19,6 @@ class ShiftImport: UIViewController,UITextFieldDelegate,UITableViewDelegate,UITa
     let filename = DBmethod().FilePathTmpGet().lastPathComponent    //ファイル名の抽出
     let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得
     var tableviewcelltext: [String] = []
-    var AAA = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,18 +27,6 @@ class ShiftImport: UIViewController,UITextFieldDelegate,UITableViewDelegate,UITa
         
         //蝶々を設置
         setbutterfly()
-        
-            //線を引く
-        let splitline = UIView()
-        splitline.frame = CGRectMake(self.view.frame.width/2-55, self.view.frame.height/2-75, 0.5, 300.0)
-        splitline.backgroundColor = UIColor.grayColor()
-        splitline.alpha = 0.5
-        self.view.addSubview(splitline)
-        
-        //テーブルビューの設定
-        fileimporthistorytable.delegate = self
-        fileimporthistorytable.dataSource = self
-        fileimporthistorytable.scrollEnabled = false
         
         //テキストフィールドの設定
         filenamefield.delegate = self
@@ -55,6 +41,11 @@ class ShiftImport: UIViewController,UITextFieldDelegate,UITableViewDelegate,UITa
         if(DBmethod().FilePathTmpGet() != ""){
             filenamefield.text = DBmethod().FilePathTmpGet().lastPathComponent
         }
+        
+        let ql = QLPreviewController()
+        ql.dataSource  = self
+        ql.view.frame = CGRectMake(self.view.frame.width/2, self.view.frame.height/2, 200, 200)
+        self.view.addSubview(ql.view)
     }
     
     override func didReceiveMemoryWarning() {
@@ -85,7 +76,6 @@ class ShiftImport: UIViewController,UITextFieldDelegate,UITableViewDelegate,UITa
                         do{
                             try filemanager.removeItemAtPath(self.Libralypath+"/"+self.filenamefield.text!)
                             try filemanager.moveItemAtPath(Inboxpath+self.filename, toPath: self.Libralypath+"/"+self.filenamefield.text!)
-                            print("AAA")
                             self.InboxFileCountsDBMinusOne()
                             self.dismissViewControllerAnimated(true, completion: nil)
                             self.appDelegate.filesavealert = true
@@ -118,7 +108,6 @@ class ShiftImport: UIViewController,UITextFieldDelegate,UITableViewDelegate,UITa
 
         //配列の中身を削除してから入れ直す
         tableviewcelltext.removeAll()
-        settableviewcell()
         
         }else{      //テキストフィールドが空の場合
             let alertController = UIAlertController(title: "取り込みエラー", message: "ファイル名を入力して下さい", preferredStyle: .Alert)
@@ -177,43 +166,6 @@ class ShiftImport: UIViewController,UITextFieldDelegate,UITableViewDelegate,UITa
         ShiftImportHistoryDBRecord.name = importname
         DBmethod().AddandUpdate(ShiftImportHistoryDBRecord,update: true)
     }
-    
-    // セルの行数
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tableviewcelltext.count
-    }
-    
-    // セルの内容を変更
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "Cell")
-        
-        if(tableviewcelltext.isEmpty){
-            return cell
-        }else{
-            cell.textLabel?.text = tableviewcelltext[indexPath.row]
-            return cell
-        }
-    }
-    
-    //セルが選択された時
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let ql = QLPreviewController()
-        ql.dataSource  = self
-        ql.view.frame = CGRectMake(self.view.frame.width/2, self.view.frame.height/2, 200, 200)
-        self.view.addSubview(ql.view)
-       // presentViewController(ql, animated: true, completion: nil)
-//        print(tableviewcelltext[indexPath.row])
-        AAA = indexPath.row
-        
-    }
-    
-    //テーブルビューのセルに値を設定する
-    func settableviewcell(){
-        let importhistoryarray = DBmethod().ShiftImportHistoryDBGet()
-        for(var i = importhistoryarray.count-1; i >= 0; i--){
-            tableviewcelltext.append(importhistoryarray[i].date + "             " + importhistoryarray[i].name)
-        }
-    }
 
     func setbutterfly(){
         let imagepath = ["../images/butterfly1.png","../images/butterfly2.png"]
@@ -221,7 +173,7 @@ class ShiftImport: UIViewController,UITextFieldDelegate,UITableViewDelegate,UITa
         let theta = [30.0,-30.0]
         
         //蝶々の設置
-        for(var i = 0; i < 2; i++){
+        for(var i = 0; i < 1; i++){
             let view = UIImageView()
             let image = UIImage(named: imagepath[i])
             view.image = image
@@ -245,9 +197,7 @@ class ShiftImport: UIViewController,UITextFieldDelegate,UITableViewDelegate,UITa
     
     //プレビューで表示するファイルの設定
     func previewController(controller: QLPreviewController, previewItemAtIndex index: Int) -> QLPreviewItem{
-
-        let url = Libralypath + "/" + (tableviewcelltext[AAA] as NSString).substringFromIndex(23)
-        print(url)
+        let url = Libralypath + "/" + (tableviewcelltext[0] as NSString).substringFromIndex(23)
         let doc = NSURL(fileURLWithPath: url)
         return doc
     }
