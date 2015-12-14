@@ -199,7 +199,9 @@ class ShiftImport: UIViewController,UITextFieldDelegate,UITableViewDelegate,UITa
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let ql = QLPreviewController()
         ql.dataSource  = self
-        presentViewController(ql, animated: true, completion: nil)
+        ql.view.frame = CGRectMake(self.view.frame.width/2, self.view.frame.height/2, 200, 200)
+        self.view.addSubview(ql.view)
+       // presentViewController(ql, animated: true, completion: nil)
 //        print(tableviewcelltext[indexPath.row])
         AAA = indexPath.row
         
