@@ -196,7 +196,7 @@ class ShiftImport: UIViewController,UITextFieldDelegate,QLPreviewControllerDataS
         if(tableviewcelltext.isEmpty){
             lasttimeimportlabel.text = "前回の取り込み: なし"
             let mainbundle = NSBundle.mainBundle()
-            let url = mainbundle.pathForResource("bbb", ofType: "xlsx")!
+            let url = mainbundle.pathForResource("no_data", ofType: "png")!
             let doc = NSURL(fileURLWithPath: url)
             return doc
             
