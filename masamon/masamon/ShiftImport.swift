@@ -12,6 +12,7 @@ import QuickLook
 class ShiftImport: UIViewController,UITextFieldDelegate,QLPreviewControllerDataSource{
     
     @IBOutlet weak var filenamefield: UITextField!
+    @IBOutlet weak var lasttimeimportlabel: UILabel!
     
     let filemanager:NSFileManager = NSFileManager()
     let documentspath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
@@ -22,7 +23,7 @@ class ShiftImport: UIViewController,UITextFieldDelegate,QLPreviewControllerDataS
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         self.view.backgroundColor = UIColor(patternImage: UIImage(named: "../images/SIbackground.png")!)
         
         //蝶々を設置
@@ -191,10 +192,14 @@ class ShiftImport: UIViewController,UITextFieldDelegate,QLPreviewControllerDataS
     
     //プレビューで表示するファイルの設定
     func previewController(controller: QLPreviewController, previewItemAtIndex index: Int) -> QLPreviewItem{
-        let mainbundle = NSBundle.mainBundle()
-        let url = mainbundle.pathForResource("bbb", ofType: "xlsx")!
         
-       // let url = Libralypath + "/" + (tableviewcelltext[0] as NSString).substringFromIndex(23)
+        if(filemanager.fileExistsAtPath(Libralypath + "/" + (tableviewcelltext[0] as NSString).substringFromIndex(23))){
+            lasttimeimportlabel.text = "前回の取り込み:" + (tableviewcelltext[0] as NSString).substringFromIndex(23)
+        }else{
+            lasttimeimportlabel.text = "前回の取り込み: なし"
+        }
+        
+        let url = Libralypath + "/" + (tableviewcelltext[0] as NSString).substringFromIndex(23)
         let doc = NSURL(fileURLWithPath: url)
         return doc
     }
