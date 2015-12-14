@@ -19,7 +19,6 @@ class ShiftImport: UIViewController,UITextFieldDelegate,QLPreviewControllerDataS
     let Libralypath = NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0] as String
     let filename = DBmethod().FilePathTmpGet().lastPathComponent    //ファイル名の抽出
     let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得
-    var tableviewcelltext: [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,12 +31,6 @@ class ShiftImport: UIViewController,UITextFieldDelegate,QLPreviewControllerDataS
         //テキストフィールドの設定
         filenamefield.delegate = self
         filenamefield.returnKeyType = .Done
-        
-        //テーブルビューに最新順から追加していく
-        let importhistoryarray = DBmethod().ShiftImportHistoryDBGet()
-        for(var i = importhistoryarray.count-1; i >= 0; i--){
-        tableviewcelltext.append(importhistoryarray[i].date + "             " + importhistoryarray[i].name)
-        }
         
         if(DBmethod().FilePathTmpGet() != ""){
             filenamefield.text = DBmethod().FilePathTmpGet().lastPathComponent
@@ -107,9 +100,6 @@ class ShiftImport: UIViewController,UITextFieldDelegate,QLPreviewControllerDataS
                     print(error)
                 }
             }
-
-        //配列の中身を削除してから入れ直す
-        tableviewcelltext.removeAll()
         
         }else{      //テキストフィールドが空の場合
             let alertController = UIAlertController(title: "取り込みエラー", message: "ファイル名を入力して下さい", preferredStyle: .Alert)
@@ -193,7 +183,7 @@ class ShiftImport: UIViewController,UITextFieldDelegate,QLPreviewControllerDataS
     //プレビューで表示するファイルの設定
     func previewController(controller: QLPreviewController, previewItemAtIndex index: Int) -> QLPreviewItem{
 
-        if(tableviewcelltext.isEmpty){
+        if(DBmethod().DBRecordCount(ShiftImportHistoryDB) == 0){
             lasttimeimportlabel.text = "前回の取り込み: なし"
             let mainbundle = NSBundle.mainBundle()
             let url = mainbundle.pathForResource("no_data", ofType: "png")!
@@ -201,8 +191,9 @@ class ShiftImport: UIViewController,UITextFieldDelegate,QLPreviewControllerDataS
             return doc
             
         }else{
-            lasttimeimportlabel.text = "前回の取り込み:「" + (tableviewcelltext[0] as NSString).substringFromIndex(23) + "」"
-            let url = Libralypath + "/" + (tableviewcelltext[0] as NSString).substringFromIndex(23)
+            let AAA = DBmethod().ShiftImportHistoryDBGet()
+            lasttimeimportlabel.text = "前回の取り込み：「" + AAA.name + "」"
+            let url = Libralypath + "/" + AAA.name
             let doc = NSURL(fileURLWithPath: url)
             return doc
         }
