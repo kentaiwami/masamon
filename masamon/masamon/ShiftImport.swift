@@ -42,9 +42,10 @@ class ShiftImport: UIViewController,UITextFieldDelegate,QLPreviewControllerDataS
             filenamefield.text = DBmethod().FilePathTmpGet().lastPathComponent
         }
         
+        //QLpreviewを表示させる
         let ql = QLPreviewController()
         ql.dataSource  = self
-        ql.view.frame = CGRectMake(self.view.frame.width/2, self.view.frame.height/2, 200, 200)
+        ql.view.frame = CGRectMake(0, self.view.frame.height/2-70, self.view.frame.width, self.view.frame.height-(self.view.frame.height/2-70))
         self.view.addSubview(ql.view)
     }
     
@@ -168,26 +169,19 @@ class ShiftImport: UIViewController,UITextFieldDelegate,QLPreviewControllerDataS
     }
 
     func setbutterfly(){
-        let imagepath = ["../images/butterfly1.png","../images/butterfly2.png"]
-        let position:[[Int]] = [[Int(self.view.frame.width-50),Int(self.view.frame.height/2-120)],[60,Int(self.view.frame.height-40)]]
-        let theta = [30.0,-30.0]
-        
         //蝶々の設置
-        for(var i = 0; i < 1; i++){
             let view = UIImageView()
-            let image = UIImage(named: imagepath[i])
+            let image = UIImage(named: "../images/butterfly1.png")
             view.image = image
             view.frame = CGRectMake(0, 0, 100, 100)
-            view.layer.position = CGPoint(x: position[i][0], y: position[i][1])
+            view.layer.position = CGPoint(x: self.view.frame.width-50, y: self.view.frame.height/2-120)
             view.contentMode = UIViewContentMode.ScaleAspectFit
             // radianで回転角度を指定(30度)する.
-            let angle:CGFloat = CGFloat((theta[i] * M_PI) / 180.0)
+            let angle:CGFloat = CGFloat((30 * M_PI) / 180.0)
             
             // 回転用のアフィン行列を生成する.
             view.transform = CGAffineTransformMakeRotation(angle)
             self.view.addSubview(view)
-            
-        }
     }
     
     //プレビューでの表示数
@@ -197,7 +191,10 @@ class ShiftImport: UIViewController,UITextFieldDelegate,QLPreviewControllerDataS
     
     //プレビューで表示するファイルの設定
     func previewController(controller: QLPreviewController, previewItemAtIndex index: Int) -> QLPreviewItem{
-        let url = Libralypath + "/" + (tableviewcelltext[0] as NSString).substringFromIndex(23)
+        let mainbundle = NSBundle.mainBundle()
+        let url = mainbundle.pathForResource("bbb", ofType: "xlsx")!
+        
+       // let url = Libralypath + "/" + (tableviewcelltext[0] as NSString).substringFromIndex(23)
         let doc = NSURL(fileURLWithPath: url)
         return doc
     }
