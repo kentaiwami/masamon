@@ -19,11 +19,12 @@ class ShiftGallery: UIViewController,UICollectionViewDelegate, UICollectionViewD
         let layout = UICollectionViewFlowLayout()
         
         // Cell一つ一つの大きさ.
-        layout.itemSize = CGSizeMake(self.view.frame.width, 250)
+        layout.itemSize = CGSizeMake(self.view.frame.width, 270)
         
         // Cellのマージン.
         layout.sectionInset = UIEdgeInsetsMake(0, 0, 30, 0)
-        layout.minimumInteritemSpacing = 70.0
+//        layout.minimumInteritemSpacing = 130.0
+        layout.minimumLineSpacing = 100.0
         
         // セクション毎のヘッダーサイズ.
         layout.headerReferenceSize = CGSizeMake(100,30)
@@ -61,7 +62,7 @@ class ShiftGallery: UIViewController,UICollectionViewDelegate, UICollectionViewD
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
         let cell : CustomUICollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("MyCell", forIndexPath: indexPath) as! CustomUICollectionViewCell
-       // cell.textLabel?.text = indexPath.row.description
+        cell.textLabel?.text = indexPath.row.description
         
         return cell
     }

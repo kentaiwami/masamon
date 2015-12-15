@@ -11,6 +11,8 @@ import QuickLook
 
 class CustomUICollectionViewCell: UICollectionViewCell,QLPreviewControllerDataSource{
     
+    var textLabel:UILabel?
+    
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)!
     }
@@ -21,17 +23,19 @@ class CustomUICollectionViewCell: UICollectionViewCell,QLPreviewControllerDataSo
         
         
         // UILabelを生成.
-//        textLabel = UILabel(frame: CGRectMake(0, 0, frame.width, frame.height))
-//        textLabel?.text = "nil"
-//        textLabel?.backgroundColor = UIColor.whiteColor()
-//        textLabel?.textAlignment = NSTextAlignment.Center
+        textLabel = UILabel(frame: CGRectMake(0, 0, frame.width, 30))
+        textLabel?.text = "nil"
+        textLabel?.backgroundColor = UIColor.clearColor()
+        textLabel?.textColor = UIColor.whiteColor()
+        textLabel?.textAlignment = NSTextAlignment.Center
         
         
         //QLpreviewを表示させる
         let ql = QLPreviewController()
         ql.dataSource  = self
-        ql.view.frame = CGRectMake(0,0,frame.width,frame.height)
+        ql.view.frame = CGRectMake(0,30,frame.width,frame.height-10)
         self.contentView.addSubview(ql.view)
+        self.contentView.addSubview(textLabel!)
     }
     
     //プレビューでの表示数
