@@ -12,6 +12,7 @@ import QuickLook
 class CustomUICollectionViewCell: UICollectionViewCell,QLPreviewControllerDataSource{
     
     var textLabel:UILabel?
+    var ql = QLPreviewController()
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)!
@@ -31,8 +32,7 @@ class CustomUICollectionViewCell: UICollectionViewCell,QLPreviewControllerDataSo
         
         
         //QLpreviewを表示させる
-        let ql = QLPreviewController()
-        ql.dataSource  = self
+        ql.dataSource = self
         ql.view.frame = CGRectMake(0,30,frame.width,frame.height-10)
         self.contentView.addSubview(ql.view)
         self.contentView.addSubview(textLabel!)

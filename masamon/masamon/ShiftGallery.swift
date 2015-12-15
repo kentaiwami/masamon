@@ -69,7 +69,7 @@ class ShiftGallery: UIViewController,UICollectionViewDelegate, UICollectionViewD
         
         let cell : CustomUICollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("MyCell", forIndexPath: indexPath) as! CustomUICollectionViewCell
         cell.textLabel?.text = indexPath.row.description
-        cell.textLabel?.text = shiftimportdbarray[indexPath.row].date  + "     " + shiftimportdbarray[indexPath.row].name
+        cell.textLabel?.text = shiftimportdbarray[(shiftimportdbarray.count-1) - indexPath.row].date  + "     " + shiftimportdbarray[(shiftimportdbarray.count-1) - indexPath.row].name
         
         return cell
     }
