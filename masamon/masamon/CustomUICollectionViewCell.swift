@@ -7,10 +7,9 @@
 //
 
 import UIKit
+import QuickLook
 
-class CustomUICollectionViewCell: UICollectionViewCell {
- 
-    var imageview: UIImageView?
+class CustomUICollectionViewCell: UICollectionViewCell,QLPreviewControllerDataSource{
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)!
@@ -19,20 +18,33 @@ class CustomUICollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
+        
+        
         // UILabelを生成.
 //        textLabel = UILabel(frame: CGRectMake(0, 0, frame.width, frame.height))
 //        textLabel?.text = "nil"
 //        textLabel?.backgroundColor = UIColor.whiteColor()
 //        textLabel?.textAlignment = NSTextAlignment.Center
         
-        //imageviewを作成
-        imageview = UIImageView(frame: CGRectMake(0, 0, frame.width, frame.height))
-        imageview?.image = UIImage(named: "../images/BBB.png")
         
-       // imageview?.backgroundColor = UIColor.blueColor()
-        
-        // Cellに追加.
-      //  self.contentView.addSubview(view!)
-        self.contentView.addSubview(imageview!)
+        //QLpreviewを表示させる
+        let ql = QLPreviewController()
+        ql.dataSource  = self
+        ql.view.frame = CGRectMake(0,0,frame.width,frame.height)
+        self.contentView.addSubview(ql.view)
     }
+    
+    //プレビューでの表示数
+    func numberOfPreviewItemsInPreviewController(controller: QLPreviewController) -> Int{
+        return 1
+    }
+    
+    //プレビューで表示するファイルの設定
+    func previewController(controller: QLPreviewController, previewItemAtIndex index: Int) -> QLPreviewItem{
+        let mainbundle = NSBundle.mainBundle()
+        let url = mainbundle.pathForResource("bbb", ofType: "xlsx")!
+        let doc = NSURL(fileURLWithPath: url)
+        return doc
+    }
+
 }

@@ -19,10 +19,11 @@ class ShiftGallery: UIViewController,UICollectionViewDelegate, UICollectionViewD
         let layout = UICollectionViewFlowLayout()
         
         // Cell一つ一つの大きさ.
-        layout.itemSize = CGSizeMake(160, 160)
+        layout.itemSize = CGSizeMake(self.view.frame.width, 250)
         
         // Cellのマージン.
-        layout.sectionInset = UIEdgeInsetsMake(16, 16, 80, 16)
+        layout.sectionInset = UIEdgeInsetsMake(0, 0, 30, 0)
+        layout.minimumInteritemSpacing = 70.0
         
         // セクション毎のヘッダーサイズ.
         layout.headerReferenceSize = CGSizeMake(100,30)
@@ -53,7 +54,7 @@ class ShiftGallery: UIViewController,UICollectionViewDelegate, UICollectionViewD
     
     //Cellの総数を返す
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 100
+        return 10
     }
     
     //Cellに値を設定する
