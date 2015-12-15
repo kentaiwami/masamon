@@ -191,7 +191,7 @@ class ShiftImport: UIViewController,UITextFieldDelegate,QLPreviewControllerDataS
             return doc
             
         }else{
-            let AAA = DBmethod().ShiftImportHistoryDBGet()
+            let AAA = DBmethod().ShiftImportHistoryDBLastGet()
             lasttimeimportlabel.text = "前回の取り込み：「" + AAA.name + "」"
             let url = Libralypath + "/" + AAA.name
             let doc = NSURL(fileURLWithPath: url)

@@ -42,6 +42,10 @@ class ShiftGallery: UIViewController,UICollectionViewDelegate, UICollectionViewD
         self.view.addSubview(myCollectionView)
     }
     
+    override func viewDidAppear(animated: Bool) {
+        self.myCollectionView.reloadData()
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -55,14 +59,17 @@ class ShiftGallery: UIViewController,UICollectionViewDelegate, UICollectionViewD
     
     //Cellの総数を返す
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return DBmethod().DBRecordCount(ShiftImportHistoryDB)
     }
     
     //Cellに値を設定する
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
+        let shiftimportdbarray = DBmethod().ShiftImportHistoryDBGet()
+        
         let cell : CustomUICollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("MyCell", forIndexPath: indexPath) as! CustomUICollectionViewCell
         cell.textLabel?.text = indexPath.row.description
+        cell.textLabel?.text = shiftimportdbarray[indexPath.row].date  + "     " + shiftimportdbarray[indexPath.row].name
         
         return cell
     }
