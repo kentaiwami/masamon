@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import QuickLook
 
-class ShiftGallery: UIViewController,UICollectionViewDelegate, UICollectionViewDataSource{
+class ShiftGallery: UIViewController,UICollectionViewDelegate, UICollectionViewDataSource,QLPreviewControllerDataSource{
     
     var myCollectionView : UICollectionView!
 
@@ -68,9 +69,26 @@ class ShiftGallery: UIViewController,UICollectionViewDelegate, UICollectionViewD
         let shiftimportdbarray = DBmethod().ShiftImportHistoryDBGet()
         
         let cell : CustomUICollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("MyCell", forIndexPath: indexPath) as! CustomUICollectionViewCell
-        cell.textLabel?.text = indexPath.row.description
         cell.textLabel?.text = shiftimportdbarray[(shiftimportdbarray.count-1) - indexPath.row].date  + "     " + shiftimportdbarray[(shiftimportdbarray.count-1) - indexPath.row].name
-        
+        cell.ql.dataSource = self
+        cell.ql.currentPreviewItemIndex = indexPath.row
+
         return cell
     }
+    
+    //プレビューでの表示数
+    func numberOfPreviewItemsInPreviewController(controller: QLPreviewController) -> Int{
+        return DBmethod().DBRecordCount(ShiftImportHistoryDB)
+    }
+    
+    //プレビューで表示するファイルの設定
+    func previewController(controller: QLPreviewController, previewItemAtIndex index: Int) -> QLPreviewItem{
+        let shiftimportdbarray = DBmethod().ShiftImportHistoryDBGet()
+        
+        let Libralypath = NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0] as String
+        let url = Libralypath + "/" + shiftimportdbarray[index].name
+        let doc = NSURL(fileURLWithPath: url)
+        return doc
+    }
+    
 }

@@ -9,7 +9,7 @@
 import UIKit
 import QuickLook
 
-class CustomUICollectionViewCell: UICollectionViewCell,QLPreviewControllerDataSource{
+class CustomUICollectionViewCell: UICollectionViewCell{
     
     var textLabel:UILabel?
     var ql = QLPreviewController()
@@ -32,23 +32,9 @@ class CustomUICollectionViewCell: UICollectionViewCell,QLPreviewControllerDataSo
         
         
         //QLpreviewを表示させる
-        ql.dataSource = self
         ql.view.frame = CGRectMake(0,30,frame.width,frame.height-10)
         self.contentView.addSubview(ql.view)
         self.contentView.addSubview(textLabel!)
-    }
-    
-    //プレビューでの表示数
-    func numberOfPreviewItemsInPreviewController(controller: QLPreviewController) -> Int{
-        return 1
-    }
-    
-    //プレビューで表示するファイルの設定
-    func previewController(controller: QLPreviewController, previewItemAtIndex index: Int) -> QLPreviewItem{
-        let mainbundle = NSBundle.mainBundle()
-        let url = mainbundle.pathForResource("bbb", ofType: "xlsx")!
-        let doc = NSURL(fileURLWithPath: url)
-        return doc
     }
 
 }
