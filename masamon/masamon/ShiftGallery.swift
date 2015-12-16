@@ -12,9 +12,18 @@ import QuickLook
 class ShiftGallery: UIViewController,UICollectionViewDelegate, UICollectionViewDataSource,QLPreviewControllerDataSource{
     
     var myCollectionView : UICollectionView!
+    let no_dataimageview = UIImageView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        no_dataimageview.image = UIImage(named: "../no_data.png")
+        no_dataimageview.frame = CGRectMake(self.view.frame.width/2, self.view.frame.height/2, 100, 100)
+        if(DBmethod().DBRecordCount(ShiftImportHistoryDB) == 0){
+            no_dataimageview.alpha = 1.0
+        }else{
+            no_dataimageview.alpha = 0.0
+        }
         
         // CollectionViewのレイアウトを生成.
         let layout = UICollectionViewFlowLayout()
@@ -41,10 +50,19 @@ class ShiftGallery: UIViewController,UICollectionViewDelegate, UICollectionViewD
         
         myCollectionView.backgroundColor = UIColor.blackColor()
         self.view.addSubview(myCollectionView)
+        self.view.addSubview(no_dataimageview)
     }
     
     override func viewDidAppear(animated: Bool) {
         self.myCollectionView.reloadData()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        if(DBmethod().DBRecordCount(ShiftImportHistoryDB) == 0){
+            no_dataimageview.alpha = 1.0
+        }else{
+            no_dataimageview.alpha = 0.0
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -52,11 +70,11 @@ class ShiftGallery: UIViewController,UICollectionViewDelegate, UICollectionViewD
     }
     
     //Cellが選択された際に呼び出される
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        
-        print("Num: \(indexPath.row)")
-        
-    }
+//    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+//        
+//        print("Num: \(indexPath.row)")
+//        
+//    }
     
     //Cellの総数を返す
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
