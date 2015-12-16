@@ -1,0 +1,39 @@
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "4IL-L2-8ra"; */
+"4IL-L2-8ra.text" = "Label";
+
+/* Class = "UILabel"; text = "〜"; ObjectID = "AS8-cn-VhB"; */
+"AS8-cn-VhB.text" = "〜";
+
+/* Class = "UILabel"; text = "file copy"; ObjectID = "MXg-3e-JGg"; */
+"MXg-3e-JGg.text" = "file copy";
+
+/* Class = "UILabel"; text = "円"; ObjectID = "OTS-WR-BYe"; */
+"OTS-WR-BYe.text" = "円";
+
+/* Class = "UILabel"; text = "の月給は……"; ObjectID = "aAo-Em-INE"; */
+"aAo-Em-INE.text" = "の月給は……";
+
+/* Class = "UIBarButtonItem"; title = "取り込む"; ObjectID = "dOw-E5-E9o"; */
+"dOw-E5-E9o.title" = "取り込む";
+
+/* Class = "UILabel"; text = "〜"; ObjectID = "hXm-ec-T7f"; */
+"hXm-ec-T7f.text" = "〜";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "m1M-hQ-nbk"; */
+"m1M-hQ-nbk.text" = "Label";
+
+/* Class = "UILabel"; text = "円"; ObjectID = "nfq-hy-qlp"; */
+"nfq-hy-qlp.text" = "円";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "p7y-qP-TLL"; */
+"p7y-qP-TLL.text" = "Label";
+
+/* Class = "UINavigationItem"; title = "シフト取り込み"; ObjectID = "ryy-dr-qF6"; */
+"ryy-dr-qF6.title" = "シフト取り込み";
+
+/* Class = "UILabel"; text = "円"; ObjectID = "u86-4h-TUk"; */
+"u86-4h-TUk.text" = "円";
+
+/* Class = "UIBarButtonItem"; title = "キャンセル"; ObjectID = "vkC-RF-0mK"; */
+"vkC-RF-0mK.title" = "キャンセル";

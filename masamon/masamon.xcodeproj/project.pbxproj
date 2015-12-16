@@ -9,22 +9,29 @@
 /* Begin PBXBuildFile section */
 		370ACDFB1BDF486700AB73EB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370ACDFA1BDF486700AB73EB /* AppDelegate.swift */; };
 		370ACDFD1BDF486700AB73EB /* MonthlySalaryShow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370ACDFC1BDF486700AB73EB /* MonthlySalaryShow.swift */; };
-		370ACE001BDF486700AB73EB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 370ACDFE1BDF486700AB73EB /* Main.storyboard */; };
 		370ACE021BDF486700AB73EB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 370ACE011BDF486700AB73EB /* Assets.xcassets */; };
 		370ACE051BDF486700AB73EB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 370ACE031BDF486700AB73EB /* LaunchScreen.storyboard */; };
 		370ACE101BDF486700AB73EB /* masamonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370ACE0F1BDF486700AB73EB /* masamonTests.swift */; };
 		370ACE1B1BDF486700AB73EB /* masamonUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370ACE1A1BDF486700AB73EB /* masamonUITests.swift */; };
 		370ACE291BDF4B7700AB73EB /* images in Resources */ = {isa = PBXBuildFile; fileRef = 370ACE281BDF4B7700AB73EB /* images */; };
-		370ACE3E1BDF572600AB73EB /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 370ACE3C1BDF572600AB73EB /* Realm.framework */; };
-		370ACE3F1BDF572600AB73EB /* Realm.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 370ACE3C1BDF572600AB73EB /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		370ACE401BDF572600AB73EB /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 370ACE3D1BDF572600AB73EB /* RealmSwift.framework */; };
-		370ACE411BDF572600AB73EB /* RealmSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 370ACE3D1BDF572600AB73EB /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		370ACE441BDF573500AB73EB /* DB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370ACE431BDF573500AB73EB /* DB.swift */; };
 		370ACE4A1BDF9C8A00AB73EB /* DBmethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370ACE491BDF9C8A00AB73EB /* DBmethod.swift */; };
 		371432A81BE98F060088CDCC /* ShiftImport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371432A71BE98F060088CDCC /* ShiftImport.swift */; };
+		3724CDCD1C14317500D73528 /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3724CDCB1C14317500D73528 /* Realm.framework */; };
+		3724CDCE1C14317500D73528 /* Realm.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3724CDCB1C14317500D73528 /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		3724CDCF1C14317500D73528 /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3724CDCC1C14317500D73528 /* RealmSwift.framework */; };
+		3724CDD01C14317500D73528 /* RealmSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3724CDCC1C14317500D73528 /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		3742AF561C12D8D1003AB33B /* libz.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3742AF551C12D8D1003AB33B /* libz.1.dylib */; };
+		3742AF6E1C12FEE8003AB33B /* bbb.xlsx in Resources */ = {isa = PBXBuildFile; fileRef = 3742AF6D1C12FEE8003AB33B /* bbb.xlsx */; };
+		3742AF901C130391003AB33B /* libXlsxReaderWriter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3742AF8B1C130360003AB33B /* libXlsxReaderWriter.a */; };
 		376C92D61BE695D000D45FC2 /* extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376C92D51BE695D000D45FC2 /* extentions.swift */; };
-		37D4B3101BE0F59900F06759 /* HourlyPaySetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D4B30F1BE0F59900F06759 /* HourlyPaySetting.swift */; };
-		37D4B34C1BE2691400F06759 /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D4B34B1BE2691400F06759 /* Menu.swift */; };
+		379955951C14431F00BAAD9E /* Shiftmethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379955941C14431F00BAAD9E /* Shiftmethod.swift */; };
+		379A2DBE1C1E5F9900751425 /* no_data.png in Resources */ = {isa = PBXBuildFile; fileRef = 379A2DBD1C1E5F9900751425 /* no_data.png */; };
+		379A2DC41C1F2CC300751425 /* ShiftGallery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379A2DC31C1F2CC300751425 /* ShiftGallery.swift */; };
+		379A2E051C1FDFFC00751425 /* CustomUICollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379A2E041C1FDFFC00751425 /* CustomUICollectionViewCell.swift */; };
+		37D4B3101BE0F59900F06759 /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D4B30F1BE0F59900F06759 /* Setting.swift */; };
+		37DD8EF51C1C0135007C0E6C /* SwipeBetweenViewControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DD8EF41C1C0135007C0E6C /* SwipeBetweenViewControllers.swift */; };
+		37DD8EFF1C1C29FF007C0E6C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 370ACDFE1BDF486700AB73EB /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,19 +49,50 @@
 			remoteGlobalIDString = 370ACDF61BDF486600AB73EB;
 			remoteInfo = masamon;
 		};
+		3742AF8A1C130360003AB33B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3742AF831C130360003AB33B /* XlsxReaderWriter.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 45B6E23A1A148F7500288A78;
+			remoteInfo = XlsxReaderWriter;
+		};
+		3742AF8C1C130360003AB33B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3742AF831C130360003AB33B /* XlsxReaderWriter.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 45B6E2451A148F7500288A78;
+			remoteInfo = XlsxReaderWriterTests;
+		};
+		3742AF911C130494003AB33B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3742AF831C130360003AB33B /* XlsxReaderWriter.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 45B6E2391A148F7500288A78;
+			remoteInfo = XlsxReaderWriter;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		370ACE421BDF572600AB73EB /* Embed Frameworks */ = {
+		3724CDD11C14317500D73528 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				370ACE411BDF572600AB73EB /* RealmSwift.framework in Embed Frameworks */,
-				370ACE3F1BDF572600AB73EB /* Realm.framework in Embed Frameworks */,
+				3724CDD01C14317500D73528 /* RealmSwift.framework in Embed Frameworks */,
+				3724CDCE1C14317500D73528 /* Realm.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		37F1E2A21BF21126000A22B0 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+			);
+			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -79,9 +117,20 @@
 		370ACE431BDF573500AB73EB /* DB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DB.swift; sourceTree = "<group>"; };
 		370ACE491BDF9C8A00AB73EB /* DBmethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBmethod.swift; sourceTree = "<group>"; };
 		371432A71BE98F060088CDCC /* ShiftImport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShiftImport.swift; sourceTree = "<group>"; };
+		3724CDCB1C14317500D73528 /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Realm.framework; sourceTree = "<group>"; };
+		3724CDCC1C14317500D73528 /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RealmSwift.framework; sourceTree = "<group>"; };
+		3742AF551C12D8D1003AB33B /* libz.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.dylib; path = ../../../../../../usr/lib/libz.1.dylib; sourceTree = "<group>"; };
+		3742AF6D1C12FEE8003AB33B /* bbb.xlsx */ = {isa = PBXFileReference; lastKnownFileType = file; path = bbb.xlsx; sourceTree = "<group>"; };
+		3742AF831C130360003AB33B /* XlsxReaderWriter.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = XlsxReaderWriter.xcodeproj; path = "XlsxReaderWriter-master/XlsxReaderWriter.xcodeproj"; sourceTree = "<group>"; };
 		376C92D51BE695D000D45FC2 /* extentions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = extentions.swift; sourceTree = "<group>"; };
-		37D4B30F1BE0F59900F06759 /* HourlyPaySetting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HourlyPaySetting.swift; sourceTree = "<group>"; };
-		37D4B34B1BE2691400F06759 /* Menu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
+		379955941C14431F00BAAD9E /* Shiftmethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shiftmethod.swift; sourceTree = "<group>"; };
+		379A2DBD1C1E5F9900751425 /* no_data.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = no_data.png; sourceTree = "<group>"; };
+		379A2DC31C1F2CC300751425 /* ShiftGallery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShiftGallery.swift; sourceTree = "<group>"; };
+		379A2E041C1FDFFC00751425 /* CustomUICollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomUICollectionViewCell.swift; sourceTree = "<group>"; };
+		37D4B30F1BE0F59900F06759 /* Setting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
+		37D8F4241C0CB1A000D5336A /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
+		37D8F4251C0CB1A000D5336A /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		37DD8EF41C1C0135007C0E6C /* SwipeBetweenViewControllers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipeBetweenViewControllers.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,8 +138,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				370ACE401BDF572600AB73EB /* RealmSwift.framework in Frameworks */,
-				370ACE3E1BDF572600AB73EB /* Realm.framework in Frameworks */,
+				3724CDCD1C14317500D73528 /* Realm.framework in Frameworks */,
+				3742AF901C130391003AB33B /* libXlsxReaderWriter.a in Frameworks */,
+				3724CDCF1C14317500D73528 /* RealmSwift.framework in Frameworks */,
+				3742AF561C12D8D1003AB33B /* libz.1.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -114,6 +165,12 @@
 		370ACDEE1BDF486600AB73EB = {
 			isa = PBXGroup;
 			children = (
+				379A2DBD1C1E5F9900751425 /* no_data.png */,
+				3724CDCB1C14317500D73528 /* Realm.framework */,
+				3724CDCC1C14317500D73528 /* RealmSwift.framework */,
+				3742AF831C130360003AB33B /* XlsxReaderWriter.xcodeproj */,
+				3742AF6D1C12FEE8003AB33B /* bbb.xlsx */,
+				3742AF551C12D8D1003AB33B /* libz.1.dylib */,
 				370ACE3C1BDF572600AB73EB /* Realm.framework */,
 				370ACE3D1BDF572600AB73EB /* RealmSwift.framework */,
 				370ACE281BDF4B7700AB73EB /* images */,
@@ -138,14 +195,17 @@
 			isa = PBXGroup;
 			children = (
 				370ACDFA1BDF486700AB73EB /* AppDelegate.swift */,
+				37DD8EF41C1C0135007C0E6C /* SwipeBetweenViewControllers.swift */,
 				370ACDFC1BDF486700AB73EB /* MonthlySalaryShow.swift */,
-				37D4B34B1BE2691400F06759 /* Menu.swift */,
 				376C92D51BE695D000D45FC2 /* extentions.swift */,
 				370ACE431BDF573500AB73EB /* DB.swift */,
 				370ACE491BDF9C8A00AB73EB /* DBmethod.swift */,
 				370ACDFE1BDF486700AB73EB /* Main.storyboard */,
+				379A2DC31C1F2CC300751425 /* ShiftGallery.swift */,
+				379A2E041C1FDFFC00751425 /* CustomUICollectionViewCell.swift */,
+				379955941C14431F00BAAD9E /* Shiftmethod.swift */,
 				371432A71BE98F060088CDCC /* ShiftImport.swift */,
-				37D4B30F1BE0F59900F06759 /* HourlyPaySetting.swift */,
+				37D4B30F1BE0F59900F06759 /* Setting.swift */,
 				370ACE011BDF486700AB73EB /* Assets.xcassets */,
 				370ACE031BDF486700AB73EB /* LaunchScreen.storyboard */,
 				370ACE061BDF486700AB73EB /* Info.plist */,
@@ -171,6 +231,15 @@
 			path = masamonUITests;
 			sourceTree = "<group>";
 		};
+		3742AF841C130360003AB33B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3742AF8B1C130360003AB33B /* libXlsxReaderWriter.a */,
+				3742AF8D1C130360003AB33B /* XlsxReaderWriterTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -181,11 +250,13 @@
 				370ACDF31BDF486600AB73EB /* Sources */,
 				370ACDF41BDF486600AB73EB /* Frameworks */,
 				370ACDF51BDF486600AB73EB /* Resources */,
-				370ACE421BDF572600AB73EB /* Embed Frameworks */,
+				37F1E2A21BF21126000A22B0 /* Embed App Extensions */,
+				3724CDD11C14317500D73528 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				3742AF921C130494003AB33B /* PBXTargetDependency */,
 			);
 			name = masamon;
 			productName = masamon;
@@ -265,6 +336,12 @@
 			mainGroup = 370ACDEE1BDF486600AB73EB;
 			productRefGroup = 370ACDF81BDF486600AB73EB /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 3742AF841C130360003AB33B /* Products */;
+					ProjectRef = 3742AF831C130360003AB33B /* XlsxReaderWriter.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				370ACDF61BDF486600AB73EB /* masamon */,
@@ -274,15 +351,34 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXReferenceProxy section */
+		3742AF8B1C130360003AB33B /* libXlsxReaderWriter.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libXlsxReaderWriter.a;
+			remoteRef = 3742AF8A1C130360003AB33B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		3742AF8D1C130360003AB33B /* XlsxReaderWriterTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = XlsxReaderWriterTests.xctest;
+			remoteRef = 3742AF8C1C130360003AB33B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
 /* Begin PBXResourcesBuildPhase section */
 		370ACDF51BDF486600AB73EB /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				379A2DBE1C1E5F9900751425 /* no_data.png in Resources */,
 				370ACE291BDF4B7700AB73EB /* images in Resources */,
 				370ACE051BDF486700AB73EB /* LaunchScreen.storyboard in Resources */,
+				37DD8EFF1C1C29FF007C0E6C /* Main.storyboard in Resources */,
 				370ACE021BDF486700AB73EB /* Assets.xcassets in Resources */,
-				370ACE001BDF486700AB73EB /* Main.storyboard in Resources */,
+				3742AF6E1C12FEE8003AB33B /* bbb.xlsx in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -307,13 +403,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				37D4B34C1BE2691400F06759 /* Menu.swift in Sources */,
+				37DD8EF51C1C0135007C0E6C /* SwipeBetweenViewControllers.swift in Sources */,
+				379955951C14431F00BAAD9E /* Shiftmethod.swift in Sources */,
 				370ACE4A1BDF9C8A00AB73EB /* DBmethod.swift in Sources */,
+				379A2DC41C1F2CC300751425 /* ShiftGallery.swift in Sources */,
 				370ACDFD1BDF486700AB73EB /* MonthlySalaryShow.swift in Sources */,
 				376C92D61BE695D000D45FC2 /* extentions.swift in Sources */,
 				370ACE441BDF573500AB73EB /* DB.swift in Sources */,
+				379A2E051C1FDFFC00751425 /* CustomUICollectionViewCell.swift in Sources */,
 				371432A81BE98F060088CDCC /* ShiftImport.swift in Sources */,
-				37D4B3101BE0F59900F06759 /* HourlyPaySetting.swift in Sources */,
+				37D4B3101BE0F59900F06759 /* Setting.swift in Sources */,
 				370ACDFB1BDF486700AB73EB /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -347,6 +446,11 @@
 			target = 370ACDF61BDF486600AB73EB /* masamon */;
 			targetProxy = 370ACE171BDF486700AB73EB /* PBXContainerItemProxy */;
 		};
+		3742AF921C130494003AB33B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = XlsxReaderWriter;
+			targetProxy = 3742AF911C130494003AB33B /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -354,6 +458,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				370ACDFF1BDF486700AB73EB /* Base */,
+				37D8F4241C0CB1A000D5336A /* ja */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -362,6 +467,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				370ACE041BDF486700AB73EB /* Base */,
+				37D8F4251C0CB1A000D5336A /* ja */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -388,7 +494,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -405,11 +511,13 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/Kenta/Documents/swift_workspace/まさもん/masamon/XlsxReaderWriter-master/XlsxReaderWriterTests/XlsxReaderWriterTests-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				USER_HEADER_SEARCH_PATHS = "\"/Users/Kenta/Documents/swift_workspace/まさもん/masamon/XlsxReaderWriter-master\"/**";
 			};
 			name = Debug;
 		};
@@ -443,9 +551,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/Kenta/Documents/swift_workspace/まさもん/masamon/XlsxReaderWriter-master/XlsxReaderWriterTests/XlsxReaderWriterTests-Bridging-Header.h";
+				USER_HEADER_SEARCH_PATHS = "\"/Users/Kenta/Documents/swift_workspace/まさもん/masamon/XlsxReaderWriter-master\"/**";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -454,14 +564,19 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = masamon/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Kenta.masamon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/Kenta/Documents/swift_workspace/まさもん/masamon/XlsxReaderWriter-master/XlsxReaderWriterTests/XlsxReaderWriterTests-Bridging-Header.h";
+				USER_HEADER_SEARCH_PATHS = "\"/Users/Kenta/Documents/swift_workspace/まさもん/masamon/XlsxReaderWriter-master\"/**";
 			};
 			name = Debug;
 		};
@@ -469,14 +584,19 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = masamon/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Kenta.masamon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/Kenta/Documents/swift_workspace/まさもん/masamon/XlsxReaderWriter-master/XlsxReaderWriterTests/XlsxReaderWriterTests-Bridging-Header.h";
+				USER_HEADER_SEARCH_PATHS = "\"/Users/Kenta/Documents/swift_workspace/まさもん/masamon/XlsxReaderWriter-master\"/**";
 			};
 			name = Release;
 		};

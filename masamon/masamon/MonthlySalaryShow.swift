@@ -10,33 +10,44 @@
 //TODO: シフトが誰と一緒なのかを表示
 //TODO: 今日のシフトは何番なのかを表示
 //TODO: ShiftDetailDBにサンプルデータを入れる
-//T0DO: Coreanimation？を使ってメニューボタンの演出を行う
 
 import UIKit
 import RealmSwift
 
-class MonthlySalaryShow: Menu,UIPickerViewDelegate, UIPickerViewDataSource{
+class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewDataSource{
     
+    @IBOutlet weak var testlabel: UILabel!
     let shiftdb = ShiftDB()
     let shiftdetaildb = ShiftDetailDB()
     let shiftlist: NSMutableArray = []
     var myUIPicker: UIPickerView = UIPickerView()
-    
     @IBOutlet weak var SaralyLabel: UILabel!
     
+    let notificationCenter = NSNotificationCenter.defaultCenter()
+    let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得
+    let alertview = UIImageView()
+    
     override func viewDidLoad() {
-        super.viewDidLoad()
+        super.viewDidLoad()        
         
+        NSTimer.scheduledTimerWithTimeInterval(1.0,target:self,selector:Selector("FileSaveSuccessfulAlertShow"),
+            userInfo: nil, repeats: true);
+        
+        //アプリがアクティブになったとき
+        notificationCenter.addObserver(self,selector: "MonthlySalaryShowViewActived",name:UIApplicationDidBecomeActiveNotification,object: nil)
+        
+        //print("fileURL=>" + appDelegate.fileURL)
+        
+        //        DBmethod().ShowDBpass()
         self.view.backgroundColor = UIColor.whiteColor()
         shiftdb.id = 1
-        shiftdb.name = "2015年8月シフト"
-        shiftdb.imagepath = "8月path"
-        shiftdb.saraly = 100000
+        shiftdb.shiftimportname = "2015年8月シフト"
+        shiftdb.shiftimportpath = "8月path"
+        shiftdb.salaly = 100000
         
         shiftdetaildb.id = 1
-        shiftdetaildb.date = "11"
+        shiftdetaildb.date = 11
         shiftdetaildb.staff = "A1,B1,C1"
-        shiftdetaildb.user = 1
         //DBmethod().add(shiftdb)
         //DBmethod().add(shiftdetaildb)
         
@@ -47,14 +58,14 @@ class MonthlySalaryShow: Menu,UIPickerViewDelegate, UIPickerViewDataSource{
         self.view.addSubview(myUIPicker)
         
         //NSArrayへの追加
-        let newNSArray = shiftlist
-        if(DBmethod().ShiftDBSize() != 0){
-            for(var i = DBmethod().ShiftDBSize()-1; i >= 0; i--){
-                newNSArray.addObject(DBmethod().ShiftDBNameGet(i+1))
+       // let newNSArray = shiftlist
+        if(DBmethod().DBRecordCount(ShiftDB) != 0){
+            for(var i = DBmethod().DBRecordCount(ShiftDB)-1; i >= 0; i--){
+//                newNSArray.addObject(DBmethod().ShiftDBNameGet(i+1))
             }
             
             //pickerviewのデフォルト表示
-            SaralyLabel.text = String(DBmethod().ShiftDBSaralyGet(DBmethod().ShiftDBSize()))
+          //  SaralyLabel.text = String(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB)))
         }
     }
     
@@ -81,7 +92,65 @@ class MonthlySalaryShow: Menu,UIPickerViewDelegate, UIPickerViewDataSource{
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         //        print("列: \(row)")
         //        print("値: \(shiftlist[row])")
-        SaralyLabel.text = String(DBmethod().ShiftDBSaralyGet(DBmethod().ShiftDBSize()-row))
+        SaralyLabel.text = String(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB)-row))
+    }
+    
+    //月給表示画面が表示(アプリがアクティブ)されたら呼ばれる
+    func MonthlySalaryShowViewActived(){
+        
+        //ファイル数のカウント
+        let filemanager:NSFileManager = NSFileManager()
+        let files = filemanager.enumeratorAtPath(NSHomeDirectory() + "/Documents/Inbox")
+        var filecount = 0
+        while let _ = files?.nextObject() {
+            filecount++
+        }
+        
+        if(DBmethod().InboxFileCountsGet() < filecount){   //ファイル数が増えていたら(新規でダウンロードしていたら)
+            //ファイルの数をデータベースへ記録
+            let InboxFileCountRecord = InboxFileCountDB()
+            InboxFileCountRecord.id = 0
+            InboxFileCountRecord.counts = filecount
+            DBmethod().AddandUpdate(InboxFileCountRecord,update: true)
+            
+            let targetViewController = self.storyboard!.instantiateViewControllerWithIdentifier("ShiftImport")
+            self.presentViewController( targetViewController, animated: true, completion: nil)
+        }else{
+            
+        }
+    }
+    
+    //チェックマークを表示するアニメーション
+    func CheckMarkAnimation(){
+        let image = UIImage(named: "../images/check.png")
+        alertview.image = image
+        let alertwidth = 140.0
+        let alertheight = 140.0
+        alertview.frame = CGRectMake(self.view.frame.width/2-CGFloat(alertwidth)/2, self.view.frame.height/2-CGFloat(alertheight)/2, CGFloat(alertwidth), CGFloat(alertheight))
+        alertview.alpha = 0.0
+        
+        view.addSubview(alertview)
+        
+        //表示アニメーション
+        UIView.animateWithDuration(0.4, animations: { () -> Void in
+            self.alertview.frame = CGRectMake(self.view.frame.width/2-CGFloat(alertwidth)/2, self.view.frame.height/2-CGFloat(alertheight)/2, CGFloat(alertwidth), CGFloat(alertheight))
+            self.alertview.alpha = 1.0
+        })
+        
+        //消すアニメーション
+        UIView.animateWithDuration(1.0, animations: { () -> Void in
+            self.alertview.alpha = 0.0
+        })
+
+    }
+    
+    
+    func FileSaveSuccessfulAlertShow(){
+        //ファイルの保存が成功していたら
+        if(appDelegate.filesavealert){
+            self.CheckMarkAnimation()
+            appDelegate.filesavealert = false
+        }
     }
 }
 
