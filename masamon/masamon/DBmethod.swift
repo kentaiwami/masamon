@@ -103,14 +103,20 @@ class DBmethod: UIViewController {
         return path
     }
     
-    //TODO: インポート履歴の最後のレコードを返す
-    func ShiftImportHistoryDBGet() -> ShiftImportHistoryDB{
+    //インポート履歴の最後を返す(最新の取り込み)
+    func ShiftImportHistoryDBLastGet() -> ShiftImportHistoryDB{
         var shiftimporthistorylast = ShiftImportHistoryDB()
         
         let realm = try! Realm()
         shiftimporthistorylast = (realm.objects(ShiftImportHistoryDB).last)!
         
         return shiftimporthistorylast
+    }
+    
+    //インポート履歴を配列で返す
+    func ShiftImportHistoryDBGet() -> Results<ShiftImportHistoryDB>{
+        let realm = try! Realm()
+        return realm.objects(ShiftImportHistoryDB)
     }
     
     //登録したユーザ名を返す

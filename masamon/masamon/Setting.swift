@@ -35,7 +35,7 @@ class Setting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource,UI
     let savebutton   = UIButton()
     
     let catimagepath: [String] = ["../images/cat1.png","../images/cat2.png"]
-    let catinfo: [[Int]] = [[70,540,80],[300,470,80]]
+    let catinfo: [[Int]] = [[70,540,80],[326,470,80]]
     
     let frameborder: [Int] = [25,195,370]
     
@@ -49,7 +49,7 @@ class Setting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource,UI
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        DBmethod().ShowDBpass()
+      //  DBmethod().ShowDBpass()
         
         self.HPSView.backgroundColor = UIColor.blackColor()
         
@@ -91,14 +91,6 @@ class Setting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource,UI
             self.HPSView.addSubview(usericon)
 
         }
-        
-        
-        
-        
-        
-        
-        
-        
         
         //猫の追加
         for(var i = 0; i < catimagepath.count; i++){
@@ -444,10 +436,20 @@ class Setting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource,UI
     }
     
     func SetText(){
-        //時給がすでに登録されていたら登録内容を表示する
-        if(DBmethod().HourlyPayRecordGet().isEmpty){
-            print("HourlyPayRecord is nil")
+        //既に登録されていたら登録内容を表示する
+        if(DBmethod().DBRecordCount(UserName) == 0){
+            usernametextfield.text = "シフト表上での名前を入力"
+            staffnumbertextfield.text = "スタッフの人数を入力"
+            TimeFrom1.text = "no data"
+            TimeFrom2.text = "no data"
+            TimeTo1.text = "no data"
+            TimeTo2.text = "no data"
+            SalalyLabel1.text = "no data"
+            SalalyLabel2.text = "no data"
         }else{
+            usernametextfield.text = DBmethod().UserNameGet()
+            staffnumbertextfield.text = String(DBmethod().StaffNumberGet())
+            
             let hourlypayarray = DBmethod().HourlyPayRecordGet()
             
             TimeFrom1.text = time[Int(hourlypayarray[0].timefrom * 2)]
@@ -456,19 +458,6 @@ class Setting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource,UI
             TimeTo2.text = time[Int(hourlypayarray[1].timeto * 2)]
             SalalyLabel1.text = String(hourlypayarray[0].pay)
             SalalyLabel2.text = String(hourlypayarray[1].pay)
-        }
-        
-        //既に登録されていたら登録内容を表示する
-        if(DBmethod().DBRecordCount(UserName) == 0){
-            usernametextfield.text = "月給を表示するシフト表上での名前を入力"
-        }else{
-            usernametextfield.text = DBmethod().UserNameGet()
-        }
-        
-        if(DBmethod().DBRecordCount(StaffNumber) == 0){
-            staffnumbertextfield.text = "シフト表に記載されているスタッフの人数を入力"
-        }else{
-            staffnumbertextfield.text = String(DBmethod().StaffNumberGet())
         }
     }
 }

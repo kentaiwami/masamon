@@ -54,6 +54,25 @@
             </objects>
             <point key="canvasLocation" x="254.49999999999997" y="353.49999999999994"/>
         </scene>
+        <!--Shift Gallery-->
+        <scene sceneID="d8v-Tz-inF">
+            <objects>
+                <viewController storyboardIdentifier="ShiftGallery" useStoryboardIdentifierAsRestorationIdentifier="YES" id="MwN-S4-MNK" customClass="ShiftGallery" customModule="masamon" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="KYk-oH-vK2"/>
+                        <viewControllerLayoutGuide type="bottom" id="8qJ-wy-WN3"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Biz-pi-neJ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="l8G-Ss-ZGO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="671.5" y="352.5"/>
+        </scene>
         <!--Setting-->
         <scene sceneID="V1x-uh-v1g">
             <objects>
@@ -141,12 +160,12 @@
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="U9q-ef-La6">
-                                                <rect key="frame" x="93" y="453" width="97" height="30"/>
+                                                <rect key="frame" x="93" y="453" width="183" height="30"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0qy-ZU-SZE">
-                                                <rect key="frame" x="93" y="400" width="97" height="30"/>
+                                                <rect key="frame" x="93" y="400" width="183" height="30"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
@@ -196,7 +215,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ObL-QC-7fR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="685.5" y="352.5"/>
+            <point key="canvasLocation" x="1085.5" y="352.5"/>
         </scene>
         <!--Shift Import-->
         <scene sceneID="med-hJ-Wbj">
@@ -257,7 +276,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="O39-ht-nAe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1111.5" y="352.5"/>
+            <point key="canvasLocation" x="253.5" y="1093.5"/>
         </scene>
     </scenes>
 </document>
