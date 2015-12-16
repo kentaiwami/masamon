@@ -33,7 +33,6 @@ class ShiftGallery: UIViewController,UICollectionViewDelegate, UICollectionViewD
         
         // Cellのマージン.
         layout.sectionInset = UIEdgeInsetsMake(0, 0, 30, 0)
-//        layout.minimumInteritemSpacing = 130.0
         layout.minimumLineSpacing = 100.0
         
         // セクション毎のヘッダーサイズ.
@@ -68,13 +67,6 @@ class ShiftGallery: UIViewController,UICollectionViewDelegate, UICollectionViewD
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-    
-    //Cellが選択された際に呼び出される
-//    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-//        
-//        print("Num: \(indexPath.row)")
-//        
-//    }
     
     //Cellの総数を返す
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

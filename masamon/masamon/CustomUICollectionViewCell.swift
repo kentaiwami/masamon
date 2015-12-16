@@ -21,15 +21,12 @@ class CustomUICollectionViewCell: UICollectionViewCell{
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        
-        
         // UILabelを生成.
         textLabel = UILabel(frame: CGRectMake(0, 0, frame.width, 30))
         textLabel?.text = "nil"
         textLabel?.backgroundColor = UIColor.clearColor()
         textLabel?.textColor = UIColor.whiteColor()
         textLabel?.textAlignment = NSTextAlignment.Center
-        
         
         //QLpreviewを表示させる
         ql.view.frame = CGRectMake(0,30,frame.width,frame.height-10)
