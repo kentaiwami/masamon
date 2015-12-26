@@ -32,7 +32,7 @@ class ShiftGallery: UIViewController,UICollectionViewDelegate, UICollectionViewD
         layout.itemSize = CGSizeMake(self.view.frame.width, 270)
         
         // Cellのマージン.
-        layout.sectionInset = UIEdgeInsetsMake(0, 0, 30, 0)
+        layout.sectionInset = UIEdgeInsetsMake(0, 0, 90, 0)
         layout.minimumLineSpacing = 100.0
         
         // セクション毎のヘッダーサイズ.
