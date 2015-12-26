@@ -6,11 +6,6 @@
 //  Copyright © 2015年 Kenta. All rights reserved.
 //
 
-//TODO: pickerviewのUIを再検討
-//TODO: シフトが誰と一緒なのかを表示
-//TODO: 今日のシフトは何番なのかを表示
-//TODO: ShiftDetailDBにサンプルデータを入れる
-
 import UIKit
 import RealmSwift
 
@@ -19,7 +14,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     @IBOutlet weak var testlabel: UILabel!
     let shiftdb = ShiftDB()
     let shiftdetaildb = ShiftDetailDB()
-    let shiftlist: NSMutableArray = []
+    var shiftlist: NSMutableArray = []
     var myUIPicker: UIPickerView = UIPickerView()
     @IBOutlet weak var SaralyLabel: UILabel!
     
@@ -39,17 +34,6 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         //print("fileURL=>" + appDelegate.fileURL)
         
         //        DBmethod().ShowDBpass()
-        self.view.backgroundColor = UIColor.whiteColor()
-        shiftdb.id = 1
-        shiftdb.shiftimportname = "2015年8月シフト"
-        shiftdb.shiftimportpath = "8月path"
-        shiftdb.salaly = 100000
-        
-        shiftdetaildb.id = 1
-        shiftdetaildb.date = 11
-        shiftdetaildb.staff = "A1,B1,C1"
-        //DBmethod().add(shiftdb)
-        //DBmethod().add(shiftdetaildb)
         
         //PickerViewの追加
         myUIPicker.frame = CGRectMake(0,0,self.view.bounds.width/2+20, 400.0)
@@ -58,14 +42,14 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         self.view.addSubview(myUIPicker)
         
         //NSArrayへの追加
-       // let newNSArray = shiftlist
+//        shiftlist = DBmethod().ShiftDBGet()
         if(DBmethod().DBRecordCount(ShiftDB) != 0){
             for(var i = DBmethod().DBRecordCount(ShiftDB)-1; i >= 0; i--){
-//                newNSArray.addObject(DBmethod().ShiftDBNameGet(i+1))
+                shiftlist.addObject(DBmethod().ShiftDBGet(i))
             }
             
             //pickerviewのデフォルト表示
-          //  SaralyLabel.text = String(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB)))
+//            SaralyLabel.text = String(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB)))
         }
     }
     
@@ -92,7 +76,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         //        print("列: \(row)")
         //        print("値: \(shiftlist[row])")
-        SaralyLabel.text = String(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB)-row))
+       // SaralyLabel.text = String(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB)-row))
     }
     
     //月給表示画面が表示(アプリがアクティブ)されたら呼ばれる

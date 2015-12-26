@@ -49,14 +49,14 @@ class DBmethod: UIViewController {
     }
     
     //レコードのIDを受け取って名前を返す
-    func a(id: Int) ->String{
-        var name = ""
+    func ShiftDBGet(id: Int) -> String{
+        var shiftimportname = ""
         
-        let realm = try!  Realm()
-        name = realm.objects(ShiftDB).filter("id = %@", id)[0].shiftimportname
-        
-        return name
+        let realm = try! Realm()
+        shiftimportname = realm.objects(ShiftDB).filter("id = %@",id)[0].shiftimportname
+        return shiftimportname
     }
+    
     
     //レコードのIDを受け取って月給を返す
     func ShiftDBSaralyGet(id: Int) ->Int{
