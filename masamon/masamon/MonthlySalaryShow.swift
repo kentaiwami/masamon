@@ -11,7 +11,6 @@ import RealmSwift
 
 class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewDataSource{
     
-    @IBOutlet weak var testlabel: UILabel!
     let shiftdb = ShiftDB()
     let shiftdetaildb = ShiftDetailDB()
     var shiftlist: NSMutableArray = []
@@ -21,10 +20,24 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     let notificationCenter = NSNotificationCenter.defaultCenter()
     let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得
     let alertview = UIImageView()
+    let iconnamearray = ["../images/work.png","../images/salaly.png"]
+    let iconpositionarray = [[20,42],[202,42]]
     
     override func viewDidLoad() {
-        super.viewDidLoad()        
+        super.viewDidLoad()
         
+        //アイコンの設置
+        for(var i = 0; i < 2; i++){
+            let imageview = UIImageView()
+            imageview.image = UIImage(named: iconnamearray[i])
+            imageview.frame = CGRectMake(CGFloat(iconpositionarray[i][0]), CGFloat(iconpositionarray[i][1]), 42, 40)
+            self.view.addSubview(imageview)
+        }
+        
+        
+        
+        
+        SaralyLabel.text = "180000"
         NSTimer.scheduledTimerWithTimeInterval(1.0,target:self,selector:Selector("FileSaveSuccessfulAlertShow"),
             userInfo: nil, repeats: true);
         
@@ -36,7 +49,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         //        DBmethod().ShowDBpass()
         
         //PickerViewの追加
-        myUIPicker.frame = CGRectMake(0,0,self.view.bounds.width/2+20, 150.0)
+        myUIPicker.frame = CGRectMake(-20,40,self.view.bounds.width/2+20, 150.0)
         myUIPicker.delegate = self
         myUIPicker.dataSource = self
         self.view.addSubview(myUIPicker)
