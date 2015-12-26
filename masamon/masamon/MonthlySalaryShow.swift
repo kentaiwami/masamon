@@ -36,7 +36,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         //        DBmethod().ShowDBpass()
         
         //PickerViewの追加
-        myUIPicker.frame = CGRectMake(0,0,self.view.bounds.width/2+20, 400.0)
+        myUIPicker.frame = CGRectMake(0,0,self.view.bounds.width/2+20, 150.0)
         myUIPicker.delegate = self
         myUIPicker.dataSource = self
         self.view.addSubview(myUIPicker)
@@ -57,6 +57,12 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         super.didReceiveMemoryWarning()
     }
     
+    //pickerviewの属性表示に関する関数
+    func pickerView(pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+        let attributedString = NSAttributedString(string: shiftlist[row] as! String, attributes: [NSForegroundColorAttributeName : UIColor.whiteColor()])
+        return attributedString
+    }
+    
     //表示列
     func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
         return 1
@@ -67,10 +73,10 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         return shiftlist.count
     }
     
-    //表示内容
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return shiftlist[row] as? String
-    }
+//    //表示内容
+//    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+//        return shiftlist[row] as? String
+//    }
     
     //選択時
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {

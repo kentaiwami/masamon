@@ -42,11 +42,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Override point for customization after application launch.
         let demo1:UIViewController = monthlysalaryshow
-        let demo2:UIViewController = shiftgallery
+        let shiftgalleryview:UIViewController = shiftgallery
         let settingview:UIViewController = setting
         let demo4:UIViewController = UIViewController()
         
-        demo1.view.backgroundColor = UIColor.brownColor()
+        demo1.view.backgroundColor = UIColor.blackColor()
 //        demo1.view.backgroundColor = UIColor(patternImage: UIImage(named: "../images/aaa.png")!)
         
 //        demo1.view.backgroundColor = UIColor.redColor()
@@ -54,7 +54,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        demo3.view.backgroundColor = UIColor.blackColor()
         demo4.view.backgroundColor = UIColor.brownColor()
         
-        navigationController.viewControllerArray = [demo1,demo2,settingview,demo4]
+        navigationController.viewControllerArray = [demo1,shiftgalleryview,settingview,demo4]
         
         self.window?.rootViewController = navigationController
         self.window?.makeKeyAndVisible()
