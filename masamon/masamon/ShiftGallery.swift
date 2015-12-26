@@ -18,7 +18,7 @@ class ShiftGallery: UIViewController,UICollectionViewDelegate, UICollectionViewD
         super.viewDidLoad()
         
         no_dataimageview.image = UIImage(named: "../no_data.png")
-        no_dataimageview.frame = CGRectMake(self.view.frame.width/2, self.view.frame.height/2, 100, 100)
+        no_dataimageview.frame = CGRectMake(self.view.frame.width/2-250, self.view.frame.height/2-250, 500, 500)
         if(DBmethod().DBRecordCount(ShiftImportHistoryDB) == 0){
             no_dataimageview.alpha = 1.0
         }else{
