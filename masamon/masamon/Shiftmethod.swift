@@ -17,10 +17,12 @@ class Shiftmethod: UIViewController {
     let staffnumber = DBmethod().StaffNumberGet()
     let mark = "F"
     var number = 6
-
+    
     //ワンクール分のシフトをShiftDetailDBとShiftDBへ記録する
     func ShiftDBOneCoursRegist(importname: String, importpath: String, update: Bool){
-        JudgeMonth()
+        print(JudgeYearAndMonth().year)
+        print(JudgeYearAndMonth().startcoursmonth)
+        print(JudgeYearAndMonth().endcoursmonth)
         
         let documentPath: String = NSBundle.mainBundle().pathForResource("bbb", ofType: "xlsx")!
         let spreadsheet: BRAOfficeDocumentPackage = BRAOfficeDocumentPackage.open(documentPath)
@@ -40,7 +42,7 @@ class Shiftmethod: UIViewController {
                 shiftdb.id = DBmethod().SearchShiftDB(importname).id        //取り込みが上書きの場合は使われているidをそのまま使う
                 let existshiftdb = DBmethod().SearchShiftDB(importname)
                 let newshiftdetaildb = ShiftDetailDB()
-
+                
                 newshiftdetaildb.id = existshiftdb.shiftdetail[i].id
                 newshiftdetaildb.day = existshiftdb.shiftdetail[i].day
                 newshiftdetaildb.staff = TheDayStaffAttendance(i, staffcellpositionarray: staffcellposition, worksheet: worksheet)
@@ -213,27 +215,45 @@ class Shiftmethod: UIViewController {
         return staffstring
     }
     
-    //
-    func JudgeMonth(){
-      //  let month = 0
+    //返り値は
+    //年、11日〜月末までの月、1日〜10日までの月
+    func JudgeYearAndMonth() -> (year: Int, startcoursmonth: Int, endcoursmonth: Int){
         
         let documentPath: String = NSBundle.mainBundle().pathForResource("bbb", ofType: "xlsx")!
         let spreadsheet: BRAOfficeDocumentPackage = BRAOfficeDocumentPackage.open(documentPath)
         let worksheet: BRAWorksheet = spreadsheet.workbook.worksheets[0] as! BRAWorksheet
         let P1String: String = worksheet.cellForCellReference("P1").stringValue()
         let P1NSString = P1String as NSString
-        let position = P1NSString.rangeOfString("月度").location                          //"月度"が出る場所を記録
-        let monthfirstcharacter = P1String[P1String.startIndex.advancedBy(position-1)]   //月の最初の文字
+        let year = P1NSString.substringWithRange(NSRange(location: 2, length: 2))                    //平成何年かを取得
+        let positionmonth = P1NSString.rangeOfString("月度").location                          //"月度"が出る場所を記録
+        let monthsecondcharacter = String(P1String[P1String.startIndex.advancedBy(positionmonth-1)])   //月の最初の文字
+        let monthfirstcharacter = String(P1String[P1String.startIndex.advancedBy(positionmonth-2)])
         
-        if(monthfirstcharacter >= "3" && monthfirstcharacter <= "9"){       //3月度〜9月度ならば
+        if(monthsecondcharacter >= "3" && monthsecondcharacter <= "9"){       //3月度〜9月度ならば
+            return (Int(year)!,Int(monthsecondcharacter)!-1,Int(monthsecondcharacter)!)
+        }else{                                                              //0,1,2が1の位に来ている場合
+            switch(monthsecondcharacter){
+            case "0":
+                return (Int(year)!,9,10)            //10月で確定
+                
+            case "1":
+                if(monthfirstcharacter == "1"){
+                    return (Int(year)!,10,11)       //11月で確定
+                }else{
+                    return (Int(year)!,12,1)        //1月で確定
+                }
+                
+            case "2":
+                if(monthfirstcharacter == "1"){
+                    return (Int(year)!,11,12)       //12月で確定
+                }
+                
+            default:
+                break
+            }
             
-        }else{
-            
+         return (Int(year)!,1,2)        //2月で確定
         }
-        
-        print(P1String[P1String.startIndex.advancedBy(position)])
-        
-      //  return month
     }
 }
 
