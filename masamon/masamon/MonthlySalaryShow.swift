@@ -11,7 +11,12 @@ import RealmSwift
 
 class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewDataSource{
     
-    @IBOutlet weak var testlabel: UILabel!
+    @IBOutlet weak var EarlyShiftText: UITextView!
+    @IBOutlet weak var Center1ShiftText: UITextView!
+    @IBOutlet weak var Center2ShiftText: UITextView!
+    @IBOutlet weak var Center3ShiftText: UITextView!
+    @IBOutlet weak var LateShiftText: UITextView!
+    
     let shiftdb = ShiftDB()
     let shiftdetaildb = ShiftDetailDB()
     var shiftlist: NSMutableArray = []
@@ -21,9 +26,28 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     let notificationCenter = NSNotificationCenter.defaultCenter()
     let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得
     let alertview = UIImageView()
+    let iconnamearray = ["../images/work.png","../images/salaly.png"]
+    let iconpositionarray = [15,200]
+    let calenderbuttonposition = [15,315]
+    let calenderbuttonnamearray = ["../images/backday.png","../images/nextday.png"]
     
     override func viewDidLoad() {
-        super.viewDidLoad()        
+        super.viewDidLoad()
+        
+        //アイコンとボタンの設置
+        for(var i = 0; i < 2; i++){
+            let imageview = UIImageView()
+            imageview.image = UIImage(named: iconnamearray[i])
+            imageview.frame = CGRectMake(CGFloat(iconpositionarray[i]), 20, 42, 40)
+            self.view.addSubview(imageview)
+            
+            let calenderbutton = UIButton()
+            calenderbutton.setImage(UIImage(named: calenderbuttonnamearray[i]), forState: .Normal)
+            calenderbutton.frame = CGRectMake(CGFloat(calenderbuttonposition[i]), 555, 42, 40)
+            calenderbutton.addTarget(self, action: "TapCalenderButton:", forControlEvents: .TouchUpInside)
+            calenderbutton.tag = i
+            self.view.addSubview(calenderbutton)
+        }
         
         NSTimer.scheduledTimerWithTimeInterval(1.0,target:self,selector:Selector("FileSaveSuccessfulAlertShow"),
             userInfo: nil, repeats: true);
@@ -31,25 +55,20 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         //アプリがアクティブになったとき
         notificationCenter.addObserver(self,selector: "MonthlySalaryShowViewActived",name:UIApplicationDidBecomeActiveNotification,object: nil)
         
-        //print("fileURL=>" + appDelegate.fileURL)
-        
-        //        DBmethod().ShowDBpass()
-        
         //PickerViewの追加
-        myUIPicker.frame = CGRectMake(0,0,self.view.bounds.width/2+20, 150.0)
+        myUIPicker.frame = CGRectMake(-20,10,self.view.bounds.width/2+20, 150.0)
         myUIPicker.delegate = self
         myUIPicker.dataSource = self
         self.view.addSubview(myUIPicker)
         
         //NSArrayへの追加
-//        shiftlist = DBmethod().ShiftDBGet()
         if(DBmethod().DBRecordCount(ShiftDB) != 0){
             for(var i = DBmethod().DBRecordCount(ShiftDB)-1; i >= 0; i--){
                 shiftlist.addObject(DBmethod().ShiftDBGet(i))
             }
             
             //pickerviewのデフォルト表示
-//            SaralyLabel.text = String(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB)))
+            SaralyLabel.text = String(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB)-1))
         }
     }
     
@@ -73,16 +92,10 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         return shiftlist.count
     }
     
-//    //表示内容
-//    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-//        return shiftlist[row] as? String
-//    }
-    
     //選択時
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        //        print("列: \(row)")
-        //        print("値: \(shiftlist[row])")
-       // SaralyLabel.text = String(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB)-row))
+       
+        SaralyLabel.text = String(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB)-1-row))
     }
     
     //月給表示画面が表示(アプリがアクティブ)されたら呼ばれる
@@ -134,13 +147,26 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
 
     }
     
-    
     func FileSaveSuccessfulAlertShow(){
         //ファイルの保存が成功していたら
         if(appDelegate.filesavealert){
             self.CheckMarkAnimation()
             appDelegate.filesavealert = false
         }
+    }
+    
+    func TapCalenderButton(sender: UIButton){
+        switch(sender.tag){
+        case 0:
+            print("back")
+        case 1:
+            print("next")
+        default:
+            break
+        }
+    }
+    @IBAction func TapTodayButton(sender: AnyObject) {
+        print("today")
     }
 }
 
