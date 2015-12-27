@@ -40,7 +40,7 @@ class Shiftmethod: UIViewController {
                 let newshiftdetaildb = ShiftDetailDB()
 
                 newshiftdetaildb.id = existshiftdb.shiftdetail[i].id
-                newshiftdetaildb.date = existshiftdb.shiftdetail[i].date
+                newshiftdetaildb.day = existshiftdb.shiftdetail[i].day
                 newshiftdetaildb.staff = TheDayStaffAttendance(i, staffcellpositionarray: staffcellposition, worksheet: worksheet)
                 newshiftdetaildb.shiftDBrelationship = DBmethod().SearchShiftDB(importname)
                 
@@ -53,7 +53,7 @@ class Shiftmethod: UIViewController {
                 
                 shiftdetaildb.id = shiftdetailrecordcount
                 shiftdetailrecordcount++
-                shiftdetaildb.date = date
+                shiftdetaildb.day = date
                 shiftdetaildb.shiftDBrelationship = shiftdb
                 shiftdetaildb.staff = TheDayStaffAttendance(i, staffcellpositionarray: staffcellposition, worksheet: worksheet)
                 
