@@ -28,7 +28,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //アイコンの設置
+        //アイコンとボタンの設置
         for(var i = 0; i < 2; i++){
             let imageview = UIImageView()
             imageview.image = UIImage(named: iconnamearray[i])
@@ -38,6 +38,8 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             let calenderbutton = UIButton()
             calenderbutton.setImage(UIImage(named: calenderbuttonnamearray[i]), forState: .Normal)
             calenderbutton.frame = CGRectMake(CGFloat(calenderbuttonposition[i]), 555, 42, 40)
+            calenderbutton.addTarget(self, action: "TapCalenderButton:", forControlEvents: .TouchUpInside)
+            calenderbutton.tag = i
             self.view.addSubview(calenderbutton)
         }
         
@@ -145,6 +147,20 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             self.CheckMarkAnimation()
             appDelegate.filesavealert = false
         }
+    }
+    
+    func TapCalenderButton(sender: UIButton){
+        switch(sender.tag){
+        case 0:
+            print("back")
+        case 1:
+            print("next")
+        default:
+            break
+        }
+    }
+    @IBAction func TapTodayButton(sender: AnyObject) {
+        print("today")
     }
 }
 

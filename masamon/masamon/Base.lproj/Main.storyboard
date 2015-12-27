@@ -82,6 +82,9 @@
                                         <rect key="frame" x="166" y="410" width="43" height="33"/>
                                         <color key="tintColor" red="0.80000001190000003" green="1" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" title="今日"/>
+                                        <connections>
+                                            <action selector="TapTodayButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="UFo-3l-Tib"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
