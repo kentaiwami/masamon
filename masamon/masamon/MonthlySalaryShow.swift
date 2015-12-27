@@ -8,55 +8,8 @@
 
 import UIKit
 import RealmSwift
-//CALayerクラスのインポート
-import QuartzCore
 
-class MonthlySalaryShow: CalenderViewController,UIPickerViewDelegate, UIPickerViewDataSource{
-    
-//    //メンバ変数の設定（配列格納用）
-//    var count: Int!
-//    var mArray: NSMutableArray!
-//    
-//    //メンバ変数の設定（カレンダー用）
-//    var now: NSDate!
-//    var year: Int!
-//    var month: Int!
-//    var day: Int!
-//    var maxDay: Int!
-//    var dayOfWeek: Int!
-//    
-//    //メンバ変数の設定（カレンダー関数から取得したものを渡す）
-//    var comps: NSDateComponents!
-//    
-//    //メンバ変数の設定（カレンダーの背景色）
-//    var calendarBackGroundColor: UIColor!
-//    
-//    //プロパティを指定
-//    //    @IBOutlet var calendarBar: UILabel!
-//    //
-//    //    @IBOutlet var prevMonthButton: UIButton!
-//    //    @IBOutlet var nextMonthButton: UIButton!
-//    var calendarBar = UILabel()
-//    var prevMonthButton = UIButton()
-//    var nextMonthButton = UIButton()
-//    
-//    //カレンダーの位置決め用メンバ変数
-//    var calendarLabelIntervalX: Int!
-//    var calendarLabelX: Int!
-//    var calendarLabelY: Int!
-//    var calendarLabelWidth: Int!
-//    var calendarLabelHeight: Int!
-//    var calendarLableFontSize: Int!
-//    
-//    var buttonRadius: Float!
-//    
-//    var calendarIntervalX: Int!
-//    var calendarX: Int!
-//    var calendarIntervalY: Int!
-//    var calendarY: Int!
-//    var calendarSize: Int!
-//    var calendarFontSize: Int!
-    
+class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewDataSource{
     
     let shiftdb = ShiftDB()
     let shiftdetaildb = ShiftDetailDB()
@@ -72,9 +25,6 @@ class MonthlySalaryShow: CalenderViewController,UIPickerViewDelegate, UIPickerVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        //カレンダーの初期化
-        CalenderViewDidLoad()
         
         //アイコンの設置
         for(var i = 0; i < 2; i++){

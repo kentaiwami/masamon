@@ -81,13 +81,13 @@ class CalenderViewController: UIViewController {
         
         calendarIntervalX      = 15;
         calendarX              = 50;
-        calendarIntervalY      = 125;
+        calendarIntervalY      = 175;
         calendarY              = 50;
         calendarSize           = 45;
         calendarFontSize       = 19;
         
-        self.prevMonthButton.frame = CGRectMake(15, 438, CGFloat(calendarSize), CGFloat(calendarSize));
-        self.nextMonthButton.frame = CGRectMake(314, 438, CGFloat(calendarSize), CGFloat(calendarSize));
+        self.prevMonthButton.frame = CGRectMake(15, 488, CGFloat(calendarSize), CGFloat(calendarSize));
+        self.nextMonthButton.frame = CGRectMake(314, 488, CGFloat(calendarSize), CGFloat(calendarSize));
         
         //ボタンを角丸にする
         prevMonthButton.layer.cornerRadius = CGFloat(buttonRadius)

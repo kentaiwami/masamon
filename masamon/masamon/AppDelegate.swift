@@ -41,20 +41,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let navigationController:SwipeBetweenViewControllers = SwipeBetweenViewControllers(rootViewController: pageController)
         
         // Override point for customization after application launch.
-        let demo1:UIViewController = monthlysalaryshow
+        let monthlysalaryshowview:UIViewController = monthlysalaryshow
+        let demo:UIViewController = UIViewController()
         let shiftgalleryview:UIViewController = shiftgallery
         let settingview:UIViewController = setting
-        let demo4:UIViewController = UIViewController()
         
-        demo1.view.backgroundColor = UIColor.blackColor()
-//        demo1.view.backgroundColor = UIColor(patternImage: UIImage(named: "../images/aaa.png")!)
+        monthlysalaryshowview.view.backgroundColor = UIColor.blackColor()
+        demo.view.backgroundColor = UIColor.brownColor()
         
-//        demo1.view.backgroundColor = UIColor.redColor()
-//        demo2.view.backgroundColor = UIColor.whiteColor()
-//        demo3.view.backgroundColor = UIColor.blackColor()
-        demo4.view.backgroundColor = UIColor.brownColor()
-        
-        navigationController.viewControllerArray = [demo1,shiftgalleryview,settingview,demo4]
+        navigationController.viewControllerArray = [monthlysalaryshowview,demo,shiftgalleryview,settingview]
         
         self.window?.rootViewController = navigationController
         self.window?.makeKeyAndVisible()
