@@ -21,7 +21,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得
     let alertview = UIImageView()
     let iconnamearray = ["../images/work.png","../images/salaly.png"]
-    let iconpositionarray = [[20,42],[202,42]]
+    let iconpositionarray = [15,200]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,7 +30,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         for(var i = 0; i < 2; i++){
             let imageview = UIImageView()
             imageview.image = UIImage(named: iconnamearray[i])
-            imageview.frame = CGRectMake(CGFloat(iconpositionarray[i][0]), CGFloat(iconpositionarray[i][1]), 42, 40)
+            imageview.frame = CGRectMake(CGFloat(iconpositionarray[i]), 20, 42, 40)
             self.view.addSubview(imageview)
         }
         
@@ -45,7 +45,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         //        DBmethod().ShowDBpass()
         
         //PickerViewの追加
-        myUIPicker.frame = CGRectMake(-20,40,self.view.bounds.width/2+20, 150.0)
+        myUIPicker.frame = CGRectMake(-20,10,self.view.bounds.width/2+20, 150.0)
         myUIPicker.delegate = self
         myUIPicker.dataSource = self
         self.view.addSubview(myUIPicker)
