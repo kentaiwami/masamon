@@ -11,6 +11,12 @@ import RealmSwift
 
 class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewDataSource{
     
+    @IBOutlet weak var EarlyShiftText: UITextView!
+    @IBOutlet weak var Center1ShiftText: UITextView!
+    @IBOutlet weak var Center2ShiftText: UITextView!
+    @IBOutlet weak var Center3ShiftText: UITextView!
+    @IBOutlet weak var LateShiftText: UITextView!
+    
     let shiftdb = ShiftDB()
     let shiftdetaildb = ShiftDetailDB()
     var shiftlist: NSMutableArray = []

@@ -94,6 +94,11 @@
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
+                        <outlet property="Center1ShiftText" destination="fVD-hn-WuX" id="DIX-Ua-abs"/>
+                        <outlet property="Center2ShiftText" destination="6ca-ut-rU4" id="Knt-j3-EIu"/>
+                        <outlet property="Center3ShiftText" destination="5vh-L8-JtH" id="joH-H3-MFa"/>
+                        <outlet property="EarlyShiftText" destination="FVc-BZ-itc" id="hg7-P3-L3s"/>
+                        <outlet property="LateShiftText" destination="PJB-qO-i9h" id="VAu-9C-H5T"/>
                         <outlet property="SaralyLabel" destination="4IL-L2-8ra" id="WXj-3r-Hnu"/>
                     </connections>
                 </viewController>
