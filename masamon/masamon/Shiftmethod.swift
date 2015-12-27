@@ -12,14 +12,16 @@ import RealmSwift
 class Shiftmethod: UIViewController {
     
     //cellの列(日付が記載されている範囲)
-    let cellrow = ["G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","AA","AB","AC","AD","AE","AF","AG","AH","AI","AJ"]
+    let cellrow = ["G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","AA","AB","AC","AD","AE","AF","AG","AH","AI","AJ","AK"]
     let holiday = ["公","夏","有"]     //表に記載される休暇日
     let staffnumber = DBmethod().StaffNumberGet()
     let mark = "F"
     var number = 6
 
-    //
+    //ワンクール分のシフトをShiftDetailDBとShiftDBへ記録する
     func ShiftDBOneCoursRegist(importname: String, importpath: String, update: Bool){
+        JudgeMonth()
+        
         let documentPath: String = NSBundle.mainBundle().pathForResource("bbb", ofType: "xlsx")!
         let spreadsheet: BRAOfficeDocumentPackage = BRAOfficeDocumentPackage.open(documentPath)
         let worksheet: BRAWorksheet = spreadsheet.workbook.worksheets[0] as! BRAWorksheet
@@ -79,8 +81,6 @@ class Shiftmethod: UIViewController {
             }
         }
     }
-    
-    //
     
     //表中にあるスタッフ名の場所を返す
     func StaffCellPositionGet() -> Array<String>{
@@ -211,6 +211,29 @@ class Shiftmethod: UIViewController {
         }
         
         return staffstring
+    }
+    
+    //
+    func JudgeMonth(){
+      //  let month = 0
+        
+        let documentPath: String = NSBundle.mainBundle().pathForResource("bbb", ofType: "xlsx")!
+        let spreadsheet: BRAOfficeDocumentPackage = BRAOfficeDocumentPackage.open(documentPath)
+        let worksheet: BRAWorksheet = spreadsheet.workbook.worksheets[0] as! BRAWorksheet
+        let P1String: String = worksheet.cellForCellReference("P1").stringValue()
+        let P1NSString = P1String as NSString
+        let position = P1NSString.rangeOfString("月度").location                          //"月度"が出る場所を記録
+        let monthfirstcharacter = P1String[P1String.startIndex.advancedBy(position-1)]   //月の最初の文字
+        
+        if(monthfirstcharacter >= "3" && monthfirstcharacter <= "9"){       //3月度〜9月度ならば
+            
+        }else{
+            
+        }
+        
+        print(P1String[P1String.startIndex.advancedBy(position)])
+        
+      //  return month
     }
 }
 
