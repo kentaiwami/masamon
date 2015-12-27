@@ -22,6 +22,8 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     let alertview = UIImageView()
     let iconnamearray = ["../images/work.png","../images/salaly.png"]
     let iconpositionarray = [15,200]
+    let calenderbuttonposition = [15,315]
+    let calenderbuttonnamearray = ["../images/backday.png","../images/nextday.png"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +34,11 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             imageview.image = UIImage(named: iconnamearray[i])
             imageview.frame = CGRectMake(CGFloat(iconpositionarray[i]), 20, 42, 40)
             self.view.addSubview(imageview)
+            
+            let calenderbutton = UIButton()
+            calenderbutton.setImage(UIImage(named: calenderbuttonnamearray[i]), forState: .Normal)
+            calenderbutton.frame = CGRectMake(CGFloat(calenderbuttonposition[i]), 555, 42, 40)
+            self.view.addSubview(calenderbutton)
         }
         
         NSTimer.scheduledTimerWithTimeInterval(1.0,target:self,selector:Selector("FileSaveSuccessfulAlertShow"),
