@@ -28,11 +28,6 @@ class CalenderViewController: UIViewController {
     //メンバ変数の設定（カレンダーの背景色）
     var calendarBackGroundColor: UIColor!
     
-    //プロパティを指定
-    //    @IBOutlet var calendarBar: UILabel!
-    //
-    //    @IBOutlet var prevMonthButton: UIButton!
-    //    @IBOutlet var nextMonthButton: UIButton!
     var calendarBar = UILabel()
     var prevMonthButton = UIButton()
     var nextMonthButton = UIButton()
@@ -65,15 +60,16 @@ class CalenderViewController: UIViewController {
         prevMonthButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         nextMonthButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         
+        prevMonthButton.addTarget(self, action: "getPrevMonthData:", forControlEvents: .TouchUpInside)
+        nextMonthButton.addTarget(self, action: "getNextMonthData:", forControlEvents: .TouchUpInside)
+        
+        calendarBar.frame = CGRectMake(0, 200, self.view.frame.width, 25)
+        
         self.view.addSubview(calendarBar)
         self.view.addSubview(prevMonthButton)
         self.view.addSubview(nextMonthButton)
-        self.view.bringSubviewToFront(calendarBar)
-        self.view.bringSubviewToFront(prevMonthButton)
-        self.view.bringSubviewToFront(nextMonthButton)
         
         //iPhone6
-        
         calendarLabelIntervalX = 15;
         calendarLabelX         = 50;
         calendarLabelY         = 95;
