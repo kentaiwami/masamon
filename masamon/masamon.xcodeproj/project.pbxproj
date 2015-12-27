@@ -23,7 +23,6 @@
 		3724CDD01C14317500D73528 /* RealmSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3724CDCC1C14317500D73528 /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3726B3941C2FF7F400F22F34 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3726B3931C2FF7F400F22F34 /* QuartzCore.framework */; };
 		3726B3961C2FF82800F22F34 /* DeviseSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3726B3951C2FF82800F22F34 /* DeviseSize.swift */; };
-		3726B3981C2FF92800F22F34 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3726B3971C2FF92700F22F34 /* ViewController.swift */; };
 		3742AF561C12D8D1003AB33B /* libz.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3742AF551C12D8D1003AB33B /* libz.1.dylib */; };
 		3742AF6E1C12FEE8003AB33B /* bbb.xlsx in Resources */ = {isa = PBXBuildFile; fileRef = 3742AF6D1C12FEE8003AB33B /* bbb.xlsx */; };
 		3742AF901C130391003AB33B /* libXlsxReaderWriter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3742AF8B1C130360003AB33B /* libXlsxReaderWriter.a */; };
@@ -122,7 +121,6 @@
 		3724CDCC1C14317500D73528 /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RealmSwift.framework; sourceTree = "<group>"; };
 		3726B3931C2FF7F400F22F34 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		3726B3951C2FF82800F22F34 /* DeviseSize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviseSize.swift; sourceTree = "<group>"; };
-		3726B3971C2FF92700F22F34 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		3742AF551C12D8D1003AB33B /* libz.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.dylib; path = ../../../../../../usr/lib/libz.1.dylib; sourceTree = "<group>"; };
 		3742AF6D1C12FEE8003AB33B /* bbb.xlsx */ = {isa = PBXFileReference; lastKnownFileType = file; path = bbb.xlsx; sourceTree = "<group>"; };
 		3742AF831C130360003AB33B /* XlsxReaderWriter.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = XlsxReaderWriter.xcodeproj; path = "XlsxReaderWriter-master/XlsxReaderWriter.xcodeproj"; sourceTree = "<group>"; };
@@ -199,7 +197,6 @@
 			isa = PBXGroup;
 			children = (
 				3726B3951C2FF82800F22F34 /* DeviseSize.swift */,
-				3726B3971C2FF92700F22F34 /* ViewController.swift */,
 				370ACDFA1BDF486700AB73EB /* AppDelegate.swift */,
 				37DD8EF41C1C0135007C0E6C /* SwipeBetweenViewControllers.swift */,
 				370ACDFC1BDF486700AB73EB /* MonthlySalaryShow.swift */,
@@ -417,7 +414,6 @@
 				370ACDFD1BDF486700AB73EB /* MonthlySalaryShow.swift in Sources */,
 				376C92D61BE695D000D45FC2 /* extentions.swift in Sources */,
 				370ACE441BDF573500AB73EB /* DB.swift in Sources */,
-				3726B3981C2FF92800F22F34 /* ViewController.swift in Sources */,
 				379A2E051C1FDFFC00751425 /* CustomUICollectionViewCell.swift in Sources */,
 				371432A81BE98F060088CDCC /* ShiftImport.swift in Sources */,
 				37D4B3101BE0F59900F06759 /* Setting.swift in Sources */,
