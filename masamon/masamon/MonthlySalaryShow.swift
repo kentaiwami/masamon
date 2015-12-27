@@ -73,7 +73,8 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.AAA()
+        //カレンダーの初期化
+        self.CalenderViewDidLoad()
         
         //アイコンの設置
         for(var i = 0; i < 2; i++){
@@ -195,102 +196,42 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         }
     }
     
-    func AAA(){
+    func CalenderViewDidLoad(){
         calendarBar.backgroundColor = UIColor.hex("FF8E92", alpha: 1.0)
         prevMonthButton.backgroundColor = UIColor.hex("FF8E92", alpha: 1.0)
         nextMonthButton.backgroundColor = UIColor.hex("FF8E92", alpha: 1.0)
         
+        prevMonthButton.setTitle("前月", forState: .Normal)
+        nextMonthButton.setTitle("前月", forState: .Normal)
         
+        prevMonthButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        nextMonthButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         
+        self.view.addSubview(calendarBar)
+        self.view.addSubview(prevMonthButton)
+        self.view.addSubview(nextMonthButton)
         
+        //iPhone6
         
-        //現在起動中のデバイスを取得（スクリーンの幅・高さ）
-        let screenWidth  = DeviseSize.screenWidth()
-        let screenHeight = DeviseSize.screenHeight()
+        calendarLabelIntervalX = 15;
+        calendarLabelX         = 50;
+        calendarLabelY         = 95;
+        calendarLabelWidth     = 45;
+        calendarLabelHeight    = 25;
+        calendarLableFontSize  = 16;
         
-        //iPhone4s
-        if(screenWidth == 320 && screenHeight == 480){
-            
-            calendarLabelIntervalX = 5;
-            calendarLabelX         = 45;
-            calendarLabelY         = 93;
-            calendarLabelWidth     = 40;
-            calendarLabelHeight    = 25;
-            calendarLableFontSize  = 14;
-            
-            buttonRadius           = 20.0;
-            
-            calendarIntervalX      = 5;
-            calendarX              = 45;
-            calendarIntervalY      = 120;
-            calendarY              = 45;
-            calendarSize           = 40;
-            calendarFontSize       = 17;
-            
-            //iPhone5またはiPhone5s
-        }else if (screenWidth == 320 && screenHeight == 568){
-            
-            calendarLabelIntervalX = 5;
-            calendarLabelX         = 45;
-            calendarLabelY         = 93;
-            calendarLabelWidth     = 40;
-            calendarLabelHeight    = 25;
-            calendarLableFontSize  = 14;
-            
-            buttonRadius           = 20.0;
-            
-            calendarIntervalX      = 5;
-            calendarX              = 45;
-            calendarIntervalY      = 120;
-            calendarY              = 45;
-            calendarSize           = 40;
-            calendarFontSize       = 17;
-            
-            //iPhone6
-        }else if (screenWidth == 375 && screenHeight == 667){
-            
-            calendarLabelIntervalX = 15;
-            calendarLabelX         = 50;
-            calendarLabelY         = 95;
-            calendarLabelWidth     = 45;
-            calendarLabelHeight    = 25;
-            calendarLableFontSize  = 16;
-            
-            buttonRadius           = 22.5;
-            
-            calendarIntervalX      = 15;
-            calendarX              = 50;
-            calendarIntervalY      = 125;
-            calendarY              = 50;
-            calendarSize           = 45;
-            calendarFontSize       = 19;
-            
-            self.prevMonthButton.frame = CGRectMake(15, 438, CGFloat(calendarSize), CGFloat(calendarSize));
-            self.nextMonthButton.frame = CGRectMake(314, 438, CGFloat(calendarSize), CGFloat(calendarSize));
-            
-            //iPhone6 plus
-        }else if (screenWidth == 414 && screenHeight == 736){
-            
-            calendarLabelIntervalX = 15;
-            calendarLabelX         = 55;
-            calendarLabelY         = 95;
-            calendarLabelWidth     = 55;
-            calendarLabelHeight    = 25;
-            calendarLableFontSize  = 18;
-            
-            buttonRadius           = 25;
-            
-            calendarIntervalX      = 18;
-            calendarX              = 55;
-            calendarIntervalY      = 125;
-            calendarY              = 55;
-            calendarSize           = 50;
-            calendarFontSize       = 21;
-            
-            self.prevMonthButton.frame = CGRectMake(18, 468, CGFloat(calendarSize), CGFloat(calendarSize));
-            self.nextMonthButton.frame = CGRectMake(348, 468, CGFloat(calendarSize), CGFloat(calendarSize));
-        }
+        buttonRadius           = 22.5;
         
+        calendarIntervalX      = 15;
+        calendarX              = 50;
+        calendarIntervalY      = 125;
+        calendarY              = 50;
+        calendarSize           = 45;
+        calendarFontSize       = 19;
+        
+        self.prevMonthButton.frame = CGRectMake(15, 438, CGFloat(calendarSize), CGFloat(calendarSize));
+        self.nextMonthButton.frame = CGRectMake(314, 438, CGFloat(calendarSize), CGFloat(calendarSize));
+    
         //ボタンを角丸にする
         prevMonthButton.layer.cornerRadius = CGFloat(buttonRadius)
         nextMonthButton.layer.cornerRadius = CGFloat(buttonRadius)
