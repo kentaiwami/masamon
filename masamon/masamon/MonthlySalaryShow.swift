@@ -147,6 +147,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
 
     }
     
+    
     func FileSaveSuccessfulAlertShow(){
         //ファイルの保存が成功していたら
         if(appDelegate.filesavealert){
@@ -155,6 +156,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         }
     }
     
+    //画面したのカレンダー操作のボタンをタップした際に動作
     func TapCalenderButton(sender: UIButton){
         switch(sender.tag){
         case 0:
@@ -165,6 +167,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             break
         }
     }
+    //"今日"をタップした時の動作
     @IBAction func TapTodayButton(sender: AnyObject) {
         print("today")
     }
