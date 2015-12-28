@@ -32,6 +32,7 @@ class Shiftmethod: UIViewController {
         let staffcellposition = self.StaffCellPositionGet()     //スタッフの名前が記載されているセル場所 ex.)F8,F9
         var shiftdetailarray = List<ShiftDetailDB>()
         var shiftdetailrecordcount = DBmethod().DBRecordCount(ShiftDetailDB)
+        var flag = 0
         
         //30日分繰り返すループ
         for(var i = 0; i < 30; i++){
@@ -66,22 +67,34 @@ class Shiftmethod: UIViewController {
                 shiftdetailrecordcount++
                 shiftdetaildb.day = date
                 shiftdetaildb.year = JudgeYearAndMonth().year
-                if(date < 30){
+
+                switch(flag){
+                case 0:         //11日〜30日までの場合
                     shiftdetaildb.month = JudgeYearAndMonth().startcoursmonth
                     date++
-                }else{
+                    
+                    if(date > 30){
+                        date = 1
+                        flag = 1
+                    }
+                    
+                case 1:         //1日〜10日までの場合
                     shiftdetaildb.month = JudgeYearAndMonth().endcoursmonth
-
+                    date++
+                    
+                default:
+                    break
                 }
+                
                 shiftdetaildb.shiftDBrelationship = shiftdb
                 shiftdetaildb.staff = TheDayStaffAttendance(i, staffcellpositionarray: staffcellposition, worksheet: worksheet)
                 
                 //シフトが11日〜来月10日のため日付のリセットを行うか判断
-                if(date < 30){
-                    date++
-                }else{
-                    date = 1
-                }
+//                if(date < 30){
+//                    date++
+//                }else{
+//                    date = 1
+//                }
                 
                 //すでに記録してあるListを取得して後ろに現在の記録を追加する
                 for(var i = 0; i < shiftdetailarray.count; i++){
