@@ -94,6 +94,7 @@
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
+                        <outlet property="CalenderLabel" destination="Uyq-dO-S21" id="9Zz-r1-sYl"/>
                         <outlet property="Center1ShiftText" destination="fVD-hn-WuX" id="DIX-Ua-abs"/>
                         <outlet property="Center2ShiftText" destination="6ca-ut-rU4" id="Knt-j3-EIu"/>
                         <outlet property="Center3ShiftText" destination="5vh-L8-JtH" id="joH-H3-MFa"/>

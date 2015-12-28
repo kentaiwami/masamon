@@ -11,6 +11,7 @@ import RealmSwift
 
 class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewDataSource{
     
+    @IBOutlet weak var CalenderLabel: UILabel!
     @IBOutlet weak var EarlyShiftText: UITextView!
     @IBOutlet weak var Center1ShiftText: UITextView!
     @IBOutlet weak var Center2ShiftText: UITextView!
@@ -33,6 +34,9 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //今日の日付を表示
+        self.NowDateShow()
         
         //アイコンとボタンの設置
         for(var i = 0; i < 2; i++){
@@ -169,7 +173,17 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     }
     //"今日"をタップした時の動作
     @IBAction func TapTodayButton(sender: AnyObject) {
-        print("today")
+        self.NowDateShow()
+    }
+    
+    func NowDateShow(){
+        let now = NSDate() // 現在日時の取得
+        
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.locale = NSLocale(localeIdentifier: "ja_JP") // ロケールの設定
+        dateFormatter.timeStyle = .NoStyle // 時刻だけ表示させない
+        dateFormatter.dateStyle = .FullStyle
+        CalenderLabel.text = dateFormatter.stringFromDate(now)
     }
 }
 
