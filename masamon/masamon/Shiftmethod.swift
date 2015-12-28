@@ -50,10 +50,26 @@ class Shiftmethod: UIViewController {
                 newshiftdetaildb.id = existshiftdb.shiftdetail[i].id
                 newshiftdetaildb.day = existshiftdb.shiftdetail[i].day
                 newshiftdetaildb.year = JudgeYearAndMonth().year
+                switch(flag){
+                case 0:         //11日〜30日までの場合
+                    newshiftdetaildb.month = JudgeYearAndMonth().startcoursmonth
+                    date++
+                    
+                    if(date > 30){
+                        date = 1
+                        flag = 1
+                    }
+                    
+                case 1:         //1日〜10日までの場合
+                    newshiftdetaildb.month = JudgeYearAndMonth().endcoursmonth
+                    date++
+                    
+                default:
+                    break
+                }
                 newshiftdetaildb.staff = TheDayStaffAttendance(i, staffcellpositionarray: staffcellposition, worksheet: worksheet)
                 newshiftdetaildb.shiftDBrelationship = DBmethod().SearchShiftDB(importname)
                 
-//                DBmethod().AddandUpdate(shiftdb, update: true)
                 DBmethod().AddandUpdate(newshiftdetaildb, update: true)
             }else{
                 shiftdb.id = DBmethod().DBRecordCount(ShiftDetailDB)/30     //新規の場合はレコードの数を割ったidを使う
