@@ -48,6 +48,7 @@ class Shiftmethod: UIViewController {
 
                 newshiftdetaildb.id = existshiftdb.shiftdetail[i].id
                 newshiftdetaildb.day = existshiftdb.shiftdetail[i].day
+                newshiftdetaildb.year = JudgeYearAndMonth().year
                 newshiftdetaildb.staff = TheDayStaffAttendance(i, staffcellpositionarray: staffcellposition, worksheet: worksheet)
                 newshiftdetaildb.shiftDBrelationship = DBmethod().SearchShiftDB(importname)
                 
