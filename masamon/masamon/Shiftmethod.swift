@@ -18,7 +18,7 @@ class Shiftmethod: UIViewController {
     let mark = "F"
     var number = 6
     
-    let TEST = "aaa"
+    let TEST = "bbb"
     
     
     //ワンクール分のシフトをShiftDetailDBとShiftDBへ記録する
@@ -51,7 +51,7 @@ class Shiftmethod: UIViewController {
                 newshiftdetaildb.staff = TheDayStaffAttendance(i, staffcellpositionarray: staffcellposition, worksheet: worksheet)
                 newshiftdetaildb.shiftDBrelationship = DBmethod().SearchShiftDB(importname)
                 
-                DBmethod().AddandUpdate(shiftdb, update: true)
+//                DBmethod().AddandUpdate(shiftdb, update: true)
                 DBmethod().AddandUpdate(newshiftdetaildb, update: true)
             }else{
                 shiftdb.id = DBmethod().DBRecordCount(ShiftDetailDB)/30     //新規の場合はレコードの数を割ったidを使う
@@ -64,6 +64,14 @@ class Shiftmethod: UIViewController {
                 shiftdetaildb.id = shiftdetailrecordcount
                 shiftdetailrecordcount++
                 shiftdetaildb.day = date
+                shiftdetaildb.year = JudgeYearAndMonth().year
+                if(date < 30){
+                    shiftdetaildb.month = JudgeYearAndMonth().startcoursmonth
+                    date++
+                }else{
+                    shiftdetaildb.month = JudgeYearAndMonth().endcoursmonth
+
+                }
                 shiftdetaildb.shiftDBrelationship = shiftdb
                 shiftdetaildb.staff = TheDayStaffAttendance(i, staffcellpositionarray: staffcellposition, worksheet: worksheet)
                 
