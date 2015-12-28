@@ -12,6 +12,8 @@ import Foundation
 //月単位でのシフトを保存
 class ShiftDB: Object {
     dynamic var id = 0
+    dynamic var year = 0
+    dynamic var month = 0
     dynamic var shiftimportname = ""       //ユーザが入力した名前を記録
     dynamic var shiftimportpath = ""  //取り込んだイメージの保存パスを記録
     dynamic var salaly = 0      //取り込んだシフトの月給を記録
@@ -24,6 +26,7 @@ class ShiftDB: Object {
 //1日単位でのシフトを保存
 class ShiftDetailDB: Object {
     dynamic var id = 0
+    dynamic var year = 0        //年
     dynamic var month = 0       //月
     dynamic var day = 0         //日
     dynamic var staff = ""      //例えば、Aさんが早番、Bさんが遅番、Cさんが公休、Dさんが早番の場合は"A:早,B:遅,D:早"となる予定
