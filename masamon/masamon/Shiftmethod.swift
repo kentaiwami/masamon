@@ -12,15 +12,19 @@ import RealmSwift
 class Shiftmethod: UIViewController {
     
     //cellの列(日付が記載されている範囲)
-    let cellrow = ["G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","AA","AB","AC","AD","AE","AF","AG","AH","AI","AJ"]
+    let cellrow = ["G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","AA","AB","AC","AD","AE","AF","AG","AH","AI","AJ","AK"]
     let holiday = ["公","夏","有"]     //表に記載される休暇日
     let staffnumber = DBmethod().StaffNumberGet()
     let mark = "F"
     var number = 6
-
-    //
+    
+    let TEST = "bbb"
+    
+    
+    //ワンクール分のシフトをShiftDetailDBとShiftDBへ記録する
     func ShiftDBOneCoursRegist(importname: String, importpath: String, update: Bool){
-        let documentPath: String = NSBundle.mainBundle().pathForResource("bbb", ofType: "xlsx")!
+        
+        let documentPath: String = NSBundle.mainBundle().pathForResource(TEST, ofType: "xlsx")!
         let spreadsheet: BRAOfficeDocumentPackage = BRAOfficeDocumentPackage.open(documentPath)
         let worksheet: BRAWorksheet = spreadsheet.workbook.worksheets[0] as! BRAWorksheet
         
@@ -28,6 +32,7 @@ class Shiftmethod: UIViewController {
         let staffcellposition = self.StaffCellPositionGet()     //スタッフの名前が記載されているセル場所 ex.)F8,F9
         var shiftdetailarray = List<ShiftDetailDB>()
         var shiftdetailrecordcount = DBmethod().DBRecordCount(ShiftDetailDB)
+        var flag = 0
         
         //30日分繰り返すループ
         for(var i = 0; i < 30; i++){
@@ -35,12 +40,33 @@ class Shiftmethod: UIViewController {
             let shiftdetaildb = ShiftDetailDB()
             
             if(update){
-                shiftdb.id = DBmethod().SearchShiftDB(importname).id        //取り込みが上書きの場合は使われているidをそのまま使う
                 let existshiftdb = DBmethod().SearchShiftDB(importname)
                 let newshiftdetaildb = ShiftDetailDB()
+                
+                shiftdb.id = existshiftdb.id        //取り込みが上書きの場合は使われているidをそのまま使う
+                shiftdb.year = 0
+                shiftdb.month = 0
 
                 newshiftdetaildb.id = existshiftdb.shiftdetail[i].id
-                newshiftdetaildb.date = existshiftdb.shiftdetail[i].date
+                newshiftdetaildb.day = existshiftdb.shiftdetail[i].day
+                newshiftdetaildb.year = JudgeYearAndMonth().year
+                switch(flag){
+                case 0:         //11日〜30日までの場合
+                    newshiftdetaildb.month = JudgeYearAndMonth().startcoursmonth
+                    date++
+                    
+                    if(date > 30){
+                        date = 1
+                        flag = 1
+                    }
+                    
+                case 1:         //1日〜10日までの場合
+                    newshiftdetaildb.month = JudgeYearAndMonth().endcoursmonth
+                    date++
+                    
+                default:
+                    break
+                }
                 newshiftdetaildb.staff = TheDayStaffAttendance(i, staffcellpositionarray: staffcellposition, worksheet: worksheet)
                 newshiftdetaildb.shiftDBrelationship = DBmethod().SearchShiftDB(importname)
                 
@@ -50,19 +76,41 @@ class Shiftmethod: UIViewController {
                 shiftdb.shiftimportname = importname
                 shiftdb.shiftimportpath = importpath
                 shiftdb.salaly = 0
+                shiftdb.year = 0
+                shiftdb.month = 0
                 
                 shiftdetaildb.id = shiftdetailrecordcount
                 shiftdetailrecordcount++
-                shiftdetaildb.date = date
+                shiftdetaildb.day = date
+                shiftdetaildb.year = JudgeYearAndMonth().year
+
+                switch(flag){
+                case 0:         //11日〜30日までの場合
+                    shiftdetaildb.month = JudgeYearAndMonth().startcoursmonth
+                    date++
+                    
+                    if(date > 30){
+                        date = 1
+                        flag = 1
+                    }
+                    
+                case 1:         //1日〜10日までの場合
+                    shiftdetaildb.month = JudgeYearAndMonth().endcoursmonth
+                    date++
+                    
+                default:
+                    break
+                }
+                
                 shiftdetaildb.shiftDBrelationship = shiftdb
                 shiftdetaildb.staff = TheDayStaffAttendance(i, staffcellpositionarray: staffcellposition, worksheet: worksheet)
                 
                 //シフトが11日〜来月10日のため日付のリセットを行うか判断
-                if(date < 30){
-                    date++
-                }else{
-                    date = 1
-                }
+//                if(date < 30){
+//                    date++
+//                }else{
+//                    date = 1
+//                }
                 
                 //すでに記録してあるListを取得して後ろに現在の記録を追加する
                 for(var i = 0; i < shiftdetailarray.count; i++){
@@ -80,11 +128,9 @@ class Shiftmethod: UIViewController {
         }
     }
     
-    //
-    
     //表中にあるスタッフ名の場所を返す
     func StaffCellPositionGet() -> Array<String>{
-        let documentPath: String = NSBundle.mainBundle().pathForResource("bbb", ofType: "xlsx")!
+        let documentPath: String = NSBundle.mainBundle().pathForResource(TEST, ofType: "xlsx")!
         let spreadsheet: BRAOfficeDocumentPackage = BRAOfficeDocumentPackage.open(documentPath)
         let worksheet: BRAWorksheet = spreadsheet.workbook.worksheets[0] as! BRAWorksheet
         
@@ -119,14 +165,14 @@ class Shiftmethod: UIViewController {
         
     }
     
-    //入力したユーザ名の月給を計算して結果を返す
+    //入力したユーザ名の月給を計算して結果をDBへ記録する
     func UserMonthlySalaryRegist(importname: String){
         var usershift:[String] = []
         
         let username = DBmethod().UserNameGet()
         let staffcellposition = self.StaffCellPositionGet()
         
-        let documentPath: String = NSBundle.mainBundle().pathForResource("bbb", ofType: "xlsx")!
+        let documentPath: String = NSBundle.mainBundle().pathForResource(TEST, ofType: "xlsx")!
         let spreadsheet: BRAOfficeDocumentPackage = BRAOfficeDocumentPackage.open(documentPath)
         let worksheet: BRAWorksheet = spreadsheet.workbook.worksheets[0] as! BRAWorksheet
         
@@ -184,6 +230,9 @@ class Shiftmethod: UIViewController {
         newshiftdbsalalyadd.shiftimportname = oldshiftdbsalalynone.shiftimportname
         newshiftdbsalalyadd.shiftimportpath = oldshiftdbsalalynone.shiftimportpath
         newshiftdbsalalyadd.salaly = Int(monthlysalary)
+        newshiftdbsalalyadd.year = JudgeYearAndMonth().year
+        newshiftdbsalalyadd.month = JudgeYearAndMonth().endcoursmonth
+        
         DBmethod().AddandUpdate(newshiftdbsalalyadd, update: true)
     }
     
@@ -211,6 +260,47 @@ class Shiftmethod: UIViewController {
         }
         
         return staffstring
+    }
+    
+    //返り値は
+    //年、11日〜月末までの月、1日〜10日までの月
+    func JudgeYearAndMonth() -> (year: Int, startcoursmonth: Int, endcoursmonth: Int){
+        
+        let documentPath: String = NSBundle.mainBundle().pathForResource(TEST, ofType: "xlsx")!
+        let spreadsheet: BRAOfficeDocumentPackage = BRAOfficeDocumentPackage.open(documentPath)
+        let worksheet: BRAWorksheet = spreadsheet.workbook.worksheets[0] as! BRAWorksheet
+        let P1String: String = worksheet.cellForCellReference("P1").stringValue()
+        let P1NSString = P1String as NSString
+        let year = P1NSString.substringWithRange(NSRange(location: 2, length: 2))                    //平成何年かを取得
+        let positionmonth = P1NSString.rangeOfString("月度").location                          //"月度"が出る場所を記録
+        let monthsecondcharacter = String(P1String[P1String.startIndex.advancedBy(positionmonth-1)])   //月の最初の文字
+        let monthfirstcharacter = String(P1String[P1String.startIndex.advancedBy(positionmonth-2)])
+        
+        if(monthsecondcharacter >= "3" && monthsecondcharacter <= "9"){       //3月度〜9月度ならば
+            return (Int(year)!,Int(monthsecondcharacter)!-1,Int(monthsecondcharacter)!)
+        }else{                                                              //0,1,2が1の位に来ている場合
+            switch(monthsecondcharacter){
+            case "0":
+                return (Int(year)!,9,10)            //10月で確定
+                
+            case "1":
+                if(monthfirstcharacter == "1"){
+                    return (Int(year)!,10,11)       //11月で確定
+                }else{
+                    return (Int(year)!,12,1)        //1月で確定
+                }
+                
+            case "2":
+                if(monthfirstcharacter == "1"){
+                    return (Int(year)!,11,12)       //12月で確定
+                }
+                
+            default:
+                break
+            }
+            
+         return (Int(year)!,1,2)        //2月で確定
+        }
     }
 }
 

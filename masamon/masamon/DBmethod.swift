@@ -6,9 +6,6 @@
 //  Copyright © 2015年 Kenta. All rights reserved.
 //
 
-//TODO: 取り込みを行った後に落ちる
-//TODO: 上書きに対応する
-
 import Foundation
 import RealmSwift
 
