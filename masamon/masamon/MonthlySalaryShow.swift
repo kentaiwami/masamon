@@ -38,6 +38,12 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         //今日の日付を表示
         self.NowDateShow()
         
+        if(DBmethod().TheDayStaffGet(27, month: 9, date: 27) == nil){
+            print("ない")
+        }else{
+            print("ある")
+        }
+       // print(DBmethod().TheDayStaffGet(27, month: 9, date: 1))
         //アイコンとボタンの設置
         for(var i = 0; i < 2; i++){
             let imageview = UIImageView()

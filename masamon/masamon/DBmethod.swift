@@ -154,4 +154,17 @@ class DBmethod: UIViewController {
         
         return number
     }
+    
+    //year,month,dateを受け取ってその日のレコードを返す
+    func TheDayStaffGet(year: Int, month: Int, date: Int) -> Results<ShiftDetailDB>?{
+        
+        let realm = try! Realm()
+        let stafflist = realm.objects(ShiftDetailDB).filter("year = %@ AND month = %@ AND day = %@",year,month,date)
+        
+        if(stafflist.count == 0){
+            return nil
+        }else{
+            return stafflist
+        }
+    }
 }
