@@ -18,13 +18,13 @@ class Shiftmethod: UIViewController {
     let mark = "F"
     var number = 6
     
+    let TEST = "aaa"
+    
+    
     //ワンクール分のシフトをShiftDetailDBとShiftDBへ記録する
     func ShiftDBOneCoursRegist(importname: String, importpath: String, update: Bool){
-        print(JudgeYearAndMonth().year)
-        print(JudgeYearAndMonth().startcoursmonth)
-        print(JudgeYearAndMonth().endcoursmonth)
         
-        let documentPath: String = NSBundle.mainBundle().pathForResource("bbb", ofType: "xlsx")!
+        let documentPath: String = NSBundle.mainBundle().pathForResource(TEST, ofType: "xlsx")!
         let spreadsheet: BRAOfficeDocumentPackage = BRAOfficeDocumentPackage.open(documentPath)
         let worksheet: BRAWorksheet = spreadsheet.workbook.worksheets[0] as! BRAWorksheet
         
@@ -39,21 +39,27 @@ class Shiftmethod: UIViewController {
             let shiftdetaildb = ShiftDetailDB()
             
             if(update){
-                shiftdb.id = DBmethod().SearchShiftDB(importname).id        //取り込みが上書きの場合は使われているidをそのまま使う
                 let existshiftdb = DBmethod().SearchShiftDB(importname)
                 let newshiftdetaildb = ShiftDetailDB()
                 
+                shiftdb.id = existshiftdb.id        //取り込みが上書きの場合は使われているidをそのまま使う
+                shiftdb.year = 0
+                shiftdb.month = 0
+
                 newshiftdetaildb.id = existshiftdb.shiftdetail[i].id
                 newshiftdetaildb.day = existshiftdb.shiftdetail[i].day
                 newshiftdetaildb.staff = TheDayStaffAttendance(i, staffcellpositionarray: staffcellposition, worksheet: worksheet)
                 newshiftdetaildb.shiftDBrelationship = DBmethod().SearchShiftDB(importname)
                 
+                DBmethod().AddandUpdate(shiftdb, update: true)
                 DBmethod().AddandUpdate(newshiftdetaildb, update: true)
             }else{
                 shiftdb.id = DBmethod().DBRecordCount(ShiftDetailDB)/30     //新規の場合はレコードの数を割ったidを使う
                 shiftdb.shiftimportname = importname
                 shiftdb.shiftimportpath = importpath
                 shiftdb.salaly = 0
+                shiftdb.year = 0
+                shiftdb.month = 0
                 
                 shiftdetaildb.id = shiftdetailrecordcount
                 shiftdetailrecordcount++
@@ -86,7 +92,7 @@ class Shiftmethod: UIViewController {
     
     //表中にあるスタッフ名の場所を返す
     func StaffCellPositionGet() -> Array<String>{
-        let documentPath: String = NSBundle.mainBundle().pathForResource("bbb", ofType: "xlsx")!
+        let documentPath: String = NSBundle.mainBundle().pathForResource(TEST, ofType: "xlsx")!
         let spreadsheet: BRAOfficeDocumentPackage = BRAOfficeDocumentPackage.open(documentPath)
         let worksheet: BRAWorksheet = spreadsheet.workbook.worksheets[0] as! BRAWorksheet
         
@@ -121,14 +127,14 @@ class Shiftmethod: UIViewController {
         
     }
     
-    //入力したユーザ名の月給を計算して結果を返す
+    //入力したユーザ名の月給を計算して結果をDBへ記録する
     func UserMonthlySalaryRegist(importname: String){
         var usershift:[String] = []
         
         let username = DBmethod().UserNameGet()
         let staffcellposition = self.StaffCellPositionGet()
         
-        let documentPath: String = NSBundle.mainBundle().pathForResource("bbb", ofType: "xlsx")!
+        let documentPath: String = NSBundle.mainBundle().pathForResource(TEST, ofType: "xlsx")!
         let spreadsheet: BRAOfficeDocumentPackage = BRAOfficeDocumentPackage.open(documentPath)
         let worksheet: BRAWorksheet = spreadsheet.workbook.worksheets[0] as! BRAWorksheet
         
@@ -186,6 +192,9 @@ class Shiftmethod: UIViewController {
         newshiftdbsalalyadd.shiftimportname = oldshiftdbsalalynone.shiftimportname
         newshiftdbsalalyadd.shiftimportpath = oldshiftdbsalalynone.shiftimportpath
         newshiftdbsalalyadd.salaly = Int(monthlysalary)
+        newshiftdbsalalyadd.year = JudgeYearAndMonth().year
+        newshiftdbsalalyadd.month = JudgeYearAndMonth().endcoursmonth
+        
         DBmethod().AddandUpdate(newshiftdbsalalyadd, update: true)
     }
     
@@ -219,7 +228,7 @@ class Shiftmethod: UIViewController {
     //年、11日〜月末までの月、1日〜10日までの月
     func JudgeYearAndMonth() -> (year: Int, startcoursmonth: Int, endcoursmonth: Int){
         
-        let documentPath: String = NSBundle.mainBundle().pathForResource("bbb", ofType: "xlsx")!
+        let documentPath: String = NSBundle.mainBundle().pathForResource(TEST, ofType: "xlsx")!
         let spreadsheet: BRAOfficeDocumentPackage = BRAOfficeDocumentPackage.open(documentPath)
         let worksheet: BRAWorksheet = spreadsheet.workbook.worksheets[0] as! BRAWorksheet
         let P1String: String = worksheet.cellForCellReference("P1").stringValue()
