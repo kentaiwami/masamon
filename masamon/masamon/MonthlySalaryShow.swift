@@ -45,12 +45,14 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             Center3ShiftText.text = "中3：データなし"
             LateShiftText.text = "遅番：データなし"
         }else{
-            let AAA = DBmethod().TheDayStaffGet(27, month: 12, date: 10)
-            EarlyShiftText.text = AAA![0].staff
-            Center1ShiftText.text = "中1：データなし"
-            Center2ShiftText.text = "中2：データなし"
-            Center3ShiftText.text = "中3：データなし"
-            LateShiftText.text = "遅番：データなし"
+            let shiftdetaidb = DBmethod().TheDayStaffGet(27, month: 12, date: 10)
+            var splitedstaffarray = self.SplitStaffShift(shiftdetaidb![0].staff)
+            
+//            EarlyShiftText.text = splitedstaffarray[0]
+//            Center1ShiftText.text = splitedstaffarray[1]
+//            Center2ShiftText.text = splitedstaffarray[2]
+//            Center3ShiftText.text = splitedstaffarray[3]
+//            LateShiftText.text = splitedstaffarray[4]
         }
 
         //アイコンとボタンの設置
@@ -199,6 +201,20 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         dateFormatter.timeStyle = .NoStyle // 時刻だけ表示させない
         dateFormatter.dateStyle = .FullStyle
         CalenderLabel.text = dateFormatter.stringFromDate(now)
+    }
+    
+    //受け取った文字列をシフト体制に分別して返す
+    func SplitStaffShift(staff: String) -> Array<String>{
+        var staffshiftarray: [String] = ["","","","","",""]
+
+        let endindex = staff.endIndex
+        var nextIndex = staff.startIndex
+        
+        while(nextIndex != endindex){
+            nextIndex = nextIndex.successor()
+        }
+
+        return staffshiftarray
     }
 }
 
