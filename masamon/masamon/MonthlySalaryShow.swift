@@ -33,31 +33,18 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     let calenderbuttonposition = [15,315]
     let calenderbuttonnamearray = ["../images/backday.png","../images/nextday.png"]
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        print(year(NSDate()))
         //今日の日付を表示
-        self.NowDateShow()
+       // self.NowDateShow()
         
-        if(DBmethod().TheDayStaffGet(27, month: 9, date: 14) == nil){
-            EarlyShiftText.text = "早番：データなし"
-            Center1ShiftText.text = "中1：データなし"
-            Center2ShiftText.text = "中2：データなし"
-            Center3ShiftText.text = "中3：データなし"
-            LateShiftText.text = "遅番：データなし"
-            OtherShiftText.text = "その他：データなし"
-        }else{
-            let shiftdetaidb = DBmethod().TheDayStaffGet(27, month: 9, date: 14)
-            var splitedstaffarray = self.SplitStaffShift(shiftdetaidb![0].staff)
-            
-            EarlyShiftText.text = "早番：" + splitedstaffarray[0]
-            Center1ShiftText.text = "中1：" + splitedstaffarray[1]
-            Center2ShiftText.text = "中2：" + splitedstaffarray[2]
-            Center3ShiftText.text = "中3：" + splitedstaffarray[3]
-            LateShiftText.text = "遅番：" + splitedstaffarray[4]
-            OtherShiftText.text = "その他：" + splitedstaffarray[5]
-        }
-
+        //日付を指定してテキスト表示を行う
+//        self.AAA()
+        
         //アイコンとボタンの設置
         for(var i = 0; i < 2; i++){
             let imageview = UIImageView()
@@ -180,30 +167,23 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         }
     }
     
-    //画面したのカレンダー操作のボタンをタップした際に動作
+    //画面下のカレンダー操作のボタンをタップした際に動作
     func TapCalenderButton(sender: UIButton){
         switch(sender.tag){
         case 0:
             print("back")
+            //TODO: 日付をマイナスしてメソッドを呼び出す
         case 1:
             print("next")
+            //TODO: 日付をプラスしてメソッドを呼び出す
         default:
             break
         }
     }
     //"今日"をタップした時の動作
     @IBAction func TapTodayButton(sender: AnyObject) {
-        self.NowDateShow()
-    }
-    
-    func NowDateShow(){
-        let now = NSDate() // 現在日時の取得
-        
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.locale = NSLocale(localeIdentifier: "ja_JP") // ロケールの設定
-        dateFormatter.timeStyle = .NoStyle // 時刻だけ表示させない
-        dateFormatter.dateStyle = .FullStyle
-        CalenderLabel.text = dateFormatter.stringFromDate(now)
+        //TODO: 今日の日付を入手
+        //TODO: 西暦を和暦に、月、日、をメソッドへ渡す
     }
     
     //受け取った文字列をシフト体制に分別して返す
@@ -260,6 +240,39 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         }
         
         return staffshiftarray
+    }
+    
+    func year(date : NSDate) -> Int {
+        let calendar = NSCalendar.currentCalendar()
+        let comp : NSDateComponents = calendar.components(
+            [.Year,.Month,.Day,.Weekday], fromDate: date)
+        return comp.weekday
+    }
+    
+    //受け取った日付のデータ表示を行う
+    func ShowAllData(y: Int, m: Int, d: Int){
+
+        CalenderLabel.text = "yyyy年mm月dd日 (w)"      //TODO: こんな感じで表示する
+        //TODO: ここでは西暦に変換する必要があり
+        
+        if(DBmethod().TheDayStaffGet(y, month: m, date: d) == nil){
+            EarlyShiftText.text = "早番：データなし"
+            Center1ShiftText.text = "中1：データなし"
+            Center2ShiftText.text = "中2：データなし"
+            Center3ShiftText.text = "中3：データなし"
+            LateShiftText.text = "遅番：データなし"
+            OtherShiftText.text = "その他：データなし"
+        }else{
+            let shiftdetaidb = DBmethod().TheDayStaffGet(y, month: m, date: d)
+            var splitedstaffarray = self.SplitStaffShift(shiftdetaidb![0].staff)
+            
+            EarlyShiftText.text = "早番：" + splitedstaffarray[0]
+            Center1ShiftText.text = "中1：" + splitedstaffarray[1]
+            Center2ShiftText.text = "中2：" + splitedstaffarray[2]
+            Center3ShiftText.text = "中3：" + splitedstaffarray[3]
+            LateShiftText.text = "遅番：" + splitedstaffarray[4]
+            OtherShiftText.text = "その他：" + splitedstaffarray[5]
+        }
     }
 }
 
