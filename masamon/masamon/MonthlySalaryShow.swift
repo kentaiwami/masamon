@@ -38,14 +38,14 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         //今日の日付を表示
         self.NowDateShow()
         
-        if(DBmethod().TheDayStaffGet(27, month: 12, date: 10) == nil){
+        if(DBmethod().TheDayStaffGet(27, month: 9, date: 14) == nil){
             EarlyShiftText.text = "早番：データなし"
             Center1ShiftText.text = "中1：データなし"
             Center2ShiftText.text = "中2：データなし"
             Center3ShiftText.text = "中3：データなし"
             LateShiftText.text = "遅番：データなし"
         }else{
-            let shiftdetaidb = DBmethod().TheDayStaffGet(27, month: 12, date: 10)
+            let shiftdetaidb = DBmethod().TheDayStaffGet(27, month: 9, date: 14)
             var splitedstaffarray = self.SplitStaffShift(shiftdetaidb![0].staff)
             
 //            EarlyShiftText.text = splitedstaffarray[0]
@@ -213,7 +213,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             var staffname = ""
             var staffshift = ""
 
-            while(staff[nowindex] != ":"){      //スタッフ名を抽出するループ
+            while(staff[nowindex] != ":"){                            //スタッフ名を抽出するループ
                 staffname = staffname + String(staff[nowindex])
                 nowindex = nowindex.successor()
             }
@@ -225,14 +225,14 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                 nowindex = nowindex.successor()
             }
             
-            //TODO: シフトを判断して、スタッフとシフトをstaffshiftarrayに振り分ける
-            //staffshiftをデータベースで問い合わせる
+            if(DBmethod().SearchShiftSystem(staffshift) == nil){     //シフト体制になかったらその他に分類
+                staffshiftarray[5] = staffshiftarray[5] + staffname + "(\(staffshift))" + "\n"
+            }
             
             nowindex = nowindex.successor()
-            print(staffname)
-            print(staffshift)
+//            print(staffname)
+//            print(staffshift)
         }
-
         return staffshiftarray
     }
 }
