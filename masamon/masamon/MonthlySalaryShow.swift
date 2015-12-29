@@ -17,6 +17,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     @IBOutlet weak var Center2ShiftText: UITextView!
     @IBOutlet weak var Center3ShiftText: UITextView!
     @IBOutlet weak var LateShiftText: UITextView!
+    @IBOutlet weak var OtherShiftText: UITextView!
     
     let shiftdb = ShiftDB()
     let shiftdetaildb = ShiftDetailDB()
@@ -44,6 +45,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             Center2ShiftText.text = "中2：データなし"
             Center3ShiftText.text = "中3：データなし"
             LateShiftText.text = "遅番：データなし"
+            OtherShiftText.text = "その他：データなし"
         }else{
             let shiftdetaidb = DBmethod().TheDayStaffGet(27, month: 9, date: 14)
             var splitedstaffarray = self.SplitStaffShift(shiftdetaidb![0].staff)
@@ -53,7 +55,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             Center2ShiftText.text = "中2：" + splitedstaffarray[2]
             Center3ShiftText.text = "中3：" + splitedstaffarray[3]
             LateShiftText.text = "遅番：" + splitedstaffarray[4]
-            print(splitedstaffarray[5])
+            OtherShiftText.text = "その他：" + splitedstaffarray[5]
         }
 
         //アイコンとボタンの設置
@@ -227,7 +229,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             }
             
             if(DBmethod().SearchShiftSystem(staffshift) == nil){     //シフト体制になかったらその他に分類
-                staffshiftarray[5] = staffshiftarray[5] + staffname + "(\(staffshift))" + "\n"
+                staffshiftarray[5] = staffshiftarray[5] + staffname + "(\(staffshift))" + "、"
             }else{
                 let shiftsystemresult = DBmethod().SearchShiftSystem(staffshift)
                 switch(shiftsystemresult![0].id){

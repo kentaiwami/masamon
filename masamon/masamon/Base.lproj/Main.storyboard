@@ -43,36 +43,36 @@
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="早番：近江谷、長谷川、岩見、佐藤、一藤" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="FVc-BZ-itc">
-                                        <rect key="frame" x="8" y="51" width="359" height="95"/>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="FVc-BZ-itc">
+                                        <rect key="frame" x="8" y="51" width="359" height="63"/>
                                         <color key="backgroundColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="遅番：近江谷、長谷川、岩見、佐藤、一藤" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="PJB-qO-i9h">
-                                        <rect key="frame" x="8" y="305" width="359" height="95"/>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="PJB-qO-i9h">
+                                        <rect key="frame" x="8" y="256" width="359" height="63"/>
                                         <color key="backgroundColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="中1：近江谷、長谷川、岩見" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="fVD-hn-WuX">
-                                        <rect key="frame" x="8" y="154" width="359" height="35"/>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="fVD-hn-WuX">
+                                        <rect key="frame" x="8" y="122" width="359" height="35"/>
                                         <color key="backgroundColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="中2：近江谷、長谷川、岩見" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="6ca-ut-rU4">
-                                        <rect key="frame" x="8" y="202" width="359" height="37"/>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="6ca-ut-rU4">
+                                        <rect key="frame" x="8" y="165" width="359" height="37"/>
                                         <color key="backgroundColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="中3：近江谷、長谷川、岩見" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="5vh-L8-JtH">
-                                        <rect key="frame" x="8" y="252" width="359" height="38"/>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="5vh-L8-JtH">
+                                        <rect key="frame" x="8" y="210" width="359" height="38"/>
                                         <color key="backgroundColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -86,6 +86,13 @@
                                             <action selector="TapTodayButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="UFo-3l-Tib"/>
                                         </connections>
                                     </button>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="xTo-za-uMd">
+                                        <rect key="frame" x="8" y="327" width="359" height="63"/>
+                                        <color key="backgroundColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
@@ -100,6 +107,7 @@
                         <outlet property="Center3ShiftText" destination="5vh-L8-JtH" id="joH-H3-MFa"/>
                         <outlet property="EarlyShiftText" destination="FVc-BZ-itc" id="hg7-P3-L3s"/>
                         <outlet property="LateShiftText" destination="PJB-qO-i9h" id="VAu-9C-H5T"/>
+                        <outlet property="OtherShiftText" destination="xTo-za-uMd" id="24J-Z9-Tbc"/>
                         <outlet property="SaralyLabel" destination="4IL-L2-8ra" id="WXj-3r-Hnu"/>
                     </connections>
                 </viewController>
