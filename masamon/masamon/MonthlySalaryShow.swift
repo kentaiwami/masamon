@@ -48,11 +48,12 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             let shiftdetaidb = DBmethod().TheDayStaffGet(27, month: 9, date: 14)
             var splitedstaffarray = self.SplitStaffShift(shiftdetaidb![0].staff)
             
-//            EarlyShiftText.text = splitedstaffarray[0]
-//            Center1ShiftText.text = splitedstaffarray[1]
-//            Center2ShiftText.text = splitedstaffarray[2]
-//            Center3ShiftText.text = splitedstaffarray[3]
-//            LateShiftText.text = splitedstaffarray[4]
+            EarlyShiftText.text = "早番：" + splitedstaffarray[0]
+            Center1ShiftText.text = "中1：" + splitedstaffarray[1]
+            Center2ShiftText.text = "中2：" + splitedstaffarray[2]
+            Center3ShiftText.text = "中3：" + splitedstaffarray[3]
+            LateShiftText.text = "遅番：" + splitedstaffarray[4]
+            print(splitedstaffarray[5])
         }
 
         //アイコンとボタンの設置
@@ -227,12 +228,35 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             
             if(DBmethod().SearchShiftSystem(staffshift) == nil){     //シフト体制になかったらその他に分類
                 staffshiftarray[5] = staffshiftarray[5] + staffname + "(\(staffshift))" + "\n"
+            }else{
+                let shiftsystemresult = DBmethod().SearchShiftSystem(staffshift)
+                switch(shiftsystemresult![0].id){
+                case 0,1,2,3:
+                    staffshiftarray[0] = staffshiftarray[0] + staffname + "、"
+                case 4:
+                    staffshiftarray[1] = staffshiftarray[1] + staffname + "、"
+                case 5:
+                    staffshiftarray[2] = staffshiftarray[2] + staffname + "、"
+                case 6:
+                    staffshiftarray[3] = staffshiftarray[3] + staffname + "、"
+                case 7,8,9:
+                    staffshiftarray[4] = staffshiftarray[4] + staffname + "、"
+                default:
+                    break
+                }
             }
             
             nowindex = nowindex.successor()
-//            print(staffname)
-//            print(staffshift)
         }
+        
+        //最後の文字を削除するための処理
+        for(var i = 0; i < staffshiftarray.count-1; i++){
+            var str = staffshiftarray[i]
+            let endPoint = str.characters.count - 1
+            str = str.substringToIndex(str.startIndex.advancedBy(endPoint))
+            staffshiftarray[i] = str
+        }
+        
         return staffshiftarray
     }
 }
