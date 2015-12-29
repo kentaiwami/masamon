@@ -205,13 +205,32 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     
     //受け取った文字列をシフト体制に分別して返す
     func SplitStaffShift(staff: String) -> Array<String>{
-        var staffshiftarray: [String] = ["","","","","",""]
-
-        let endindex = staff.endIndex
-        var nextIndex = staff.startIndex
+        var staffshiftarray: [String] = ["","","","","",""]         //早番,中1,中2,中3,遅,その他
+        let endindex = staff.endIndex       //文字列の最後の場所
+        var nowindex = staff.startIndex     //文字列の現在地
         
-        while(nextIndex != endindex){
-            nextIndex = nextIndex.successor()
+        while(nowindex != endindex){
+            var staffname = ""
+            var staffshift = ""
+
+            while(staff[nowindex] != ":"){      //スタッフ名を抽出するループ
+                staffname = staffname + String(staff[nowindex])
+                nowindex = nowindex.successor()
+            }
+            
+            nowindex = nowindex.successor()
+            
+            while(staff[nowindex] != ","){                            //シフトを抽出するループ
+                staffshift = staffshift + String(staff[nowindex])
+                nowindex = nowindex.successor()
+            }
+            
+            //TODO: シフトを判断して、スタッフとシフトをstaffshiftarrayに振り分ける
+            //staffshiftをデータベースで問い合わせる
+            
+            nowindex = nowindex.successor()
+            print(staffname)
+            print(staffshift)
         }
 
         return staffshiftarray

@@ -127,12 +127,16 @@ class DBmethod: UIViewController {
     }
     
     //受け取った文字列をShiftSystemから検索し、該当するレコードを返す
-    func SearchShiftSystem(shift: String) -> ShiftSystem{
-        var shiftsystem = ShiftSystem()
+    func SearchShiftSystem(shift: String) -> Results<ShiftSystem>?{
         
         let realm = try! Realm()
-        shiftsystem = realm.objects(ShiftSystem).filter("name = %@",shift)[0]
-        return shiftsystem
+        let shiftsystem = realm.objects(ShiftSystem).filter("name = %@",shift)
+        
+        if(shiftsystem.count == 0){
+            return nil
+        }else{
+            return shiftsystem
+        }
     }
 
     //受け取った文字列をShiftDBから検索し、該当するレコードを返す
