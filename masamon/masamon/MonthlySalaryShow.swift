@@ -38,6 +38,8 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        currentnsdate = NSDate()
+        
         //テキストビューの編集をできないようにする
         EarlyShiftText.editable = false
         Center1ShiftText.editable = false
@@ -177,17 +179,18 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     func TapCalenderButton(sender: UIButton){
         switch(sender.tag){
         case 0:
-            print("back")
             let nsdatesplit = self.ReturnYearMonthDayWeekday(currentnsdate)
             let newnsdate = self.DateSerial(nsdatesplit.year, month: nsdatesplit.month, day: nsdatesplit.day-1)
             currentnsdate = newnsdate
-            
             self.ShowAllData(self.Changecalendar(nsdatesplit.year, calender: "A.D"), m: nsdatesplit.month, d: nsdatesplit.day)
             CalenderLabel.text = "\(nsdatesplit.year)年\(nsdatesplit.month)月\(nsdatesplit.day)日 (\(self.ReturnWeekday(nsdatesplit.weekday)))"
             
         case 1:
-            print("next")
-            //TODO: 日付をプラスしてメソッドを呼び出す
+            let nsdatesplit = self.ReturnYearMonthDayWeekday(currentnsdate)
+            let newnsdate = self.DateSerial(nsdatesplit.year, month: nsdatesplit.month, day: nsdatesplit.day+1)
+            currentnsdate = newnsdate
+            self.ShowAllData(self.Changecalendar(nsdatesplit.year, calender: "A.D"), m: nsdatesplit.month, d: nsdatesplit.day)
+            CalenderLabel.text = "\(nsdatesplit.year)年\(nsdatesplit.month)月\(nsdatesplit.day)日 (\(self.ReturnWeekday(nsdatesplit.weekday)))"
         default:
             break
         }
