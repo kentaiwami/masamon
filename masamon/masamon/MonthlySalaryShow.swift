@@ -113,7 +113,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     
     //選択時
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-       
+        
         SaralyLabel.text = String(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB)-1-row))
     }
     
@@ -163,7 +163,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         UIView.animateWithDuration(1.0, animations: { () -> Void in
             self.alertview.alpha = 0.0
         })
-
+        
     }
     
     
@@ -182,15 +182,19 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             let nsdatesplit = self.ReturnYearMonthDayWeekday(currentnsdate)
             let newnsdate = self.DateSerial(nsdatesplit.year, month: nsdatesplit.month, day: nsdatesplit.day-1)
             currentnsdate = newnsdate
-            self.ShowAllData(self.Changecalendar(nsdatesplit.year, calender: "A.D"), m: nsdatesplit.month, d: nsdatesplit.day)
-            CalenderLabel.text = "\(nsdatesplit.year)年\(nsdatesplit.month)月\(nsdatesplit.day)日 (\(self.ReturnWeekday(nsdatesplit.weekday)))"
+            
+            let currentnsdatesplit = self.ReturnYearMonthDayWeekday(currentnsdate)
+            self.ShowAllData(self.Changecalendar(currentnsdatesplit.year, calender: "A.D"), m: currentnsdatesplit.month, d: currentnsdatesplit.day)
+            CalenderLabel.text = "\(currentnsdatesplit.year)年\(currentnsdatesplit.month)月\(currentnsdatesplit.day)日 (\(self.ReturnWeekday(currentnsdatesplit.weekday)))"
             
         case 1:
             let nsdatesplit = self.ReturnYearMonthDayWeekday(currentnsdate)
             let newnsdate = self.DateSerial(nsdatesplit.year, month: nsdatesplit.month, day: nsdatesplit.day+1)
             currentnsdate = newnsdate
-            self.ShowAllData(self.Changecalendar(nsdatesplit.year, calender: "A.D"), m: nsdatesplit.month, d: nsdatesplit.day)
-            CalenderLabel.text = "\(nsdatesplit.year)年\(nsdatesplit.month)月\(nsdatesplit.day)日 (\(self.ReturnWeekday(nsdatesplit.weekday)))"
+            
+            let currentnsdatesplit = self.ReturnYearMonthDayWeekday(currentnsdate)
+            self.ShowAllData(self.Changecalendar(currentnsdatesplit.year, calender: "A.D"), m: currentnsdatesplit.month, d: currentnsdatesplit.day)
+            CalenderLabel.text = "\(currentnsdatesplit.year)年\(currentnsdatesplit.month)月\(currentnsdatesplit.day)日 (\(self.ReturnWeekday(currentnsdatesplit.weekday)))"
         default:
             break
         }
@@ -215,7 +219,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         while(nowindex != endindex){
             var staffname = ""
             var staffshift = ""
-
+            
             while(staff[nowindex] != ":"){                            //スタッフ名を抽出するループ
                 staffname = staffname + String(staff[nowindex])
                 nowindex = nowindex.successor()
@@ -253,10 +257,12 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         
         //最後の文字を削除するための処理
         for(var i = 0; i < staffshiftarray.count-1; i++){
-            var str = staffshiftarray[i]
-            let endPoint = str.characters.count - 1
-            str = str.substringToIndex(str.startIndex.advancedBy(endPoint))
-            staffshiftarray[i] = str
+            if(staffshiftarray[i] != ""){
+                var str = staffshiftarray[i]
+                let endPoint = str.characters.count - 1
+                str = str.substringToIndex(str.startIndex.advancedBy(endPoint))
+                staffshiftarray[i] = str
+            }
         }
         
         return staffshiftarray
@@ -342,6 +348,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         comp.day = day
         let cal = NSCalendar.currentCalendar()
         let date = cal.dateFromComponents(comp)
+        
         return date!
     }
 }
