@@ -105,13 +105,6 @@ class Shiftmethod: UIViewController {
                 shiftdetaildb.shiftDBrelationship = shiftdb
                 shiftdetaildb.staff = TheDayStaffAttendance(i, staffcellpositionarray: staffcellposition, worksheet: worksheet)
                 
-                //シフトが11日〜来月10日のため日付のリセットを行うか判断
-//                if(date < 30){
-//                    date++
-//                }else{
-//                    date = 1
-//                }
-                
                 //すでに記録してあるListを取得して後ろに現在の記録を追加する
                 for(var i = 0; i < shiftdetailarray.count; i++){
                     shiftdb.shiftdetail.append(shiftdetailarray[i])

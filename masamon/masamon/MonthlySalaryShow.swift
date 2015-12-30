@@ -256,7 +256,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         }
         
         //最後の文字を削除するための処理
-        for(var i = 0; i <= staffshiftarray.count-1; i++){
+        for(var i = 0; i < staffshiftarray.count; i++){
             if(staffshiftarray[i] != ""){
                 var str = staffshiftarray[i]
                 let endPoint = str.characters.count - 1
@@ -297,7 +297,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             let shiftdetaidb = DBmethod().TheDayStaffGet(y, month: m, date: d)
             var splitedstaffarray = self.SplitStaffShift(shiftdetaidb![0].staff)
             
-            for(var i = 0; i <= splitedstaffarray.count-1; i++){
+            for(var i = 0; i < splitedstaffarray.count; i++){
                 if(splitedstaffarray[i] == ""){
                     splitedstaffarray[i] = "該当スタッフなし"
                 }
