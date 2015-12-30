@@ -285,9 +285,15 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     */
     //受け取った日付のデータ表示を行う
     func ShowAllData(y: Int, m: Int, d: Int){
+        let myAttribute = [ NSFontAttributeName: UIFont(name: "Chalkduster", size: 18.0)! ]
+        let myString = NSMutableAttributedString(string: "あいうえお", attributes: myAttribute )
+        let myRange = NSRange(location: 0, length: 2) // range starting at location 17 with a lenth of 7: "Strings"
+        myString.addAttribute(NSForegroundColorAttributeName, value: UIColor.redColor(), range: myRange)
         
         if(DBmethod().TheDayStaffGet(y, month: m, date: d) == nil){
             EarlyShiftText.text = "早番：データなし"
+//            EarlyShiftText.attributedText = myString
+            
             Center1ShiftText.text = "中1：データなし"
             Center2ShiftText.text = "中2：データなし"
             Center3ShiftText.text = "中3：データなし"
@@ -297,14 +303,18 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             let shiftdetaidb = DBmethod().TheDayStaffGet(y, month: m, date: d)
             var splitedstaffarray = self.SplitStaffShift(shiftdetaidb![0].staff)
             
+            
+            
+            //ユーザ名が含まれていたら置換するループ
             for(var i = 0; i < splitedstaffarray.count; i++){
                 if((splitedstaffarray[i].rangeOfString(DBmethod().UserNameGet())) != nil){
-                    let AAA = splitedstaffarray[i]
-                    splitedstaffarray[i] = AAA.stringByReplacingOccurrencesOfString(DBmethod().UserNameGet(), withString: "AAA")
+                    let staffarrytemp = splitedstaffarray[i]
+                    splitedstaffarray[i] = staffarrytemp.stringByReplacingOccurrencesOfString(DBmethod().UserNameGet(), withString: "AAA")
                     break
                 }
             }
             
+            //スタッフ名がない場合にメッセージを代入するためのループ
             for(var i = 0; i < splitedstaffarray.count; i++){
                 if(splitedstaffarray[i] == ""){
                     splitedstaffarray[i] = "該当スタッフなし"
