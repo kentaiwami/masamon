@@ -33,10 +33,20 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     let calenderbuttonposition = [15,315]
     let calenderbuttonnamearray = ["../images/backday.png","../images/nextday.png"]
     
-    
+    var currentnsdate = NSDate()        //MonthlySalaryShowがデータ表示している日付を管理
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //テキストビューの編集をできないようにする
+        EarlyShiftText.editable = false
+        Center1ShiftText.editable = false
+        Center2ShiftText.editable = false
+        Center3ShiftText.editable = false
+        LateShiftText.editable = false
+        OtherShiftText.editable = false
+        
+        print(self.dateSerial(2015, month: 9, day: 2))
         
         let today = NSDate()
         let date = ReturnYearMonthDayWeekday(today)         //日付を西暦,月,日,曜日に分けて取得
@@ -185,6 +195,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         self.ShowAllData(self.Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day)           //データ表示へ分けた日付を渡す
         CalenderLabel.text = "\(date.year)年\(date.month)月\(date.day)日 \(self.ReturnWeekday(date.weekday))曜日"
         
+        currentnsdate = today
     }
     
     //受け取った文字列をシフト体制に分別して返す
@@ -314,6 +325,16 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         default:
             return ""
         }
+    }
+    
+    func dateSerial(year : Int, month : Int, day : Int) -> NSDate {
+        let comp = NSDateComponents()
+        comp.year = year
+        comp.month = month
+        comp.day = day
+        let cal = NSCalendar.currentCalendar()
+        let date = cal.dateFromComponents(comp)
+        return date!
     }
 }
 
