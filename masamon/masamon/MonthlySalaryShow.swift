@@ -256,7 +256,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         }
         
         //最後の文字を削除するための処理
-        for(var i = 0; i < staffshiftarray.count-1; i++){
+        for(var i = 0; i <= staffshiftarray.count-1; i++){
             if(staffshiftarray[i] != ""){
                 var str = staffshiftarray[i]
                 let endPoint = str.characters.count - 1
