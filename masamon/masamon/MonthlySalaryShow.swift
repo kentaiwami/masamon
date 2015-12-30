@@ -46,12 +46,10 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         LateShiftText.editable = false
         OtherShiftText.editable = false
         
-        print(self.dateSerial(2015, month: 9, day: 2))
-        
         let today = NSDate()
         let date = ReturnYearMonthDayWeekday(today)         //日付を西暦,月,日,曜日に分けて取得
         self.ShowAllData(self.Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day)           //データ表示へ分けた日付を渡す
-        CalenderLabel.text = "\(date.year)年\(date.month)月\(date.day)日 \(self.ReturnWeekday(date.weekday))曜日"
+        CalenderLabel.text = "\(date.year)年\(date.month)月\(date.day)日 (\(self.ReturnWeekday(date.weekday)))"
         
         //アイコンとボタンの設置
         for(var i = 0; i < 2; i++){
@@ -180,7 +178,13 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         switch(sender.tag){
         case 0:
             print("back")
-            //TODO: 日付をマイナスしてメソッドを呼び出す
+            let nsdatesplit = self.ReturnYearMonthDayWeekday(currentnsdate)
+            let newnsdate = self.DateSerial(nsdatesplit.year, month: nsdatesplit.month, day: nsdatesplit.day-1)
+            currentnsdate = newnsdate
+            
+            self.ShowAllData(self.Changecalendar(nsdatesplit.year, calender: "A.D"), m: nsdatesplit.month, d: nsdatesplit.day)
+            CalenderLabel.text = "\(nsdatesplit.year)年\(nsdatesplit.month)月\(nsdatesplit.day)日 (\(self.ReturnWeekday(nsdatesplit.weekday)))"
+            
         case 1:
             print("next")
             //TODO: 日付をプラスしてメソッドを呼び出す
@@ -188,12 +192,13 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             break
         }
     }
+    
     //"今日"をタップした時の動作
     @IBAction func TapTodayButton(sender: AnyObject) {
         let today = NSDate()
         let date = ReturnYearMonthDayWeekday(today)         //日付を西暦,月,日,曜日に分けて取得
         self.ShowAllData(self.Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day)           //データ表示へ分けた日付を渡す
-        CalenderLabel.text = "\(date.year)年\(date.month)月\(date.day)日 \(self.ReturnWeekday(date.weekday))曜日"
+        CalenderLabel.text = "\(date.year)年\(date.month)月\(date.day)日 (\(self.ReturnWeekday(date.weekday)))"
         
         currentnsdate = today
     }
@@ -327,7 +332,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         }
     }
     
-    func dateSerial(year : Int, month : Int, day : Int) -> NSDate {
+    func DateSerial(year : Int, month : Int, day : Int) -> NSDate {
         let comp = NSDateComponents()
         comp.year = year
         comp.month = month
