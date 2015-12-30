@@ -298,6 +298,14 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             var splitedstaffarray = self.SplitStaffShift(shiftdetaidb![0].staff)
             
             for(var i = 0; i < splitedstaffarray.count; i++){
+                if((splitedstaffarray[i].rangeOfString(DBmethod().UserNameGet())) != nil){
+                    let AAA = splitedstaffarray[i]
+                    splitedstaffarray[i] = AAA.stringByReplacingOccurrencesOfString(DBmethod().UserNameGet(), withString: "AAA")
+                    break
+                }
+            }
+            
+            for(var i = 0; i < splitedstaffarray.count; i++){
                 if(splitedstaffarray[i] == ""){
                     splitedstaffarray[i] = "該当スタッフなし"
                 }
