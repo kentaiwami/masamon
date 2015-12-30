@@ -38,12 +38,10 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print(self.Changecalendar(27,calender: "JP"))
-        //今日の日付を表示
-       // self.NowDateShow()
-        
-        //日付を指定してテキスト表示を行う
-//        self.AAA()
+        let today = NSDate()
+        let date = ReturnYearMonthDayWeekday(today)         //日付を西暦,月,日,曜日に分けて取得
+        self.ShowAllData(self.Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day)           //データ表示へ分けた日付を渡す
+        CalenderLabel.text = "\(date.year)年\(date.month)月\(date.day)日 \(self.ReturnWeekday(date.weekday))曜日"
         
         //アイコンとボタンの設置
         for(var i = 0; i < 2; i++){
@@ -182,12 +180,10 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     }
     //"今日"をタップした時の動作
     @IBAction func TapTodayButton(sender: AnyObject) {
-        //TODO: 今日の日付を入手
         let today = NSDate()
-        
-        //TODO: 西暦を和暦に、月、日、をメソッドへ渡す
-        let date = ReturnYearMonthDayWeekday(today)
-        self.ShowAllData(date.year, m: date.month, d: date.day)
+        let date = ReturnYearMonthDayWeekday(today)         //日付を西暦,月,日,曜日に分けて取得
+        self.ShowAllData(self.Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day)           //データ表示へ分けた日付を渡す
+        CalenderLabel.text = "\(date.year)年\(date.month)月\(date.day)日 \(self.ReturnWeekday(date.weekday))曜日"
         
     }
     
@@ -264,9 +260,6 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     */
     //受け取った日付のデータ表示を行う
     func ShowAllData(y: Int, m: Int, d: Int){
-
-        CalenderLabel.text = "yyyy年mm月dd日 (w)"      //TODO: こんな感じで表示する
-        //TODO: ここでは西暦に変換する必要があり
         
         if(DBmethod().TheDayStaffGet(y, month: m, date: d) == nil){
             EarlyShiftText.text = "早番：データなし"
@@ -299,7 +292,28 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             let lastcharacterminus = String(yeartemp[yeartemp.endIndex.predecessor().predecessor()])     //最後から1つ前の桁
             return Int(lastcharacterminus+lastcharacter)!
         }
-        
+    }
+    
+    //受け取った曜日の数字を実際の曜日に変換する
+    func ReturnWeekday(weekday: Int) ->String{
+        switch(weekday){
+        case 1:
+            return "日"
+        case 2:
+            return "月"
+        case 3:
+            return "火"
+        case 4:
+            return "水"
+        case 5:
+            return "木"
+        case 6:
+            return "金"
+        case 7:
+            return "土"
+        default:
+            return ""
+        }
     }
 }
 
