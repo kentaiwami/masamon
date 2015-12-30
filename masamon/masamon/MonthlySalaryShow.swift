@@ -297,6 +297,12 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             let shiftdetaidb = DBmethod().TheDayStaffGet(y, month: m, date: d)
             var splitedstaffarray = self.SplitStaffShift(shiftdetaidb![0].staff)
             
+            for(var i = 0; i <= splitedstaffarray.count-1; i++){
+                if(splitedstaffarray[i] == ""){
+                    splitedstaffarray[i] = "該当スタッフなし"
+                }
+            }
+
             EarlyShiftText.text = "早番：" + splitedstaffarray[0]
             Center1ShiftText.text = "中1：" + splitedstaffarray[1]
             Center2ShiftText.text = "中2：" + splitedstaffarray[2]
