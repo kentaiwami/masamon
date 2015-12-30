@@ -38,7 +38,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print(year(NSDate()))
+        print(self.Changecalendar(27,calender: "JP"))
         //今日の日付を表示
        // self.NowDateShow()
         
@@ -183,7 +183,12 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     //"今日"をタップした時の動作
     @IBAction func TapTodayButton(sender: AnyObject) {
         //TODO: 今日の日付を入手
+        let today = NSDate()
+        
         //TODO: 西暦を和暦に、月、日、をメソッドへ渡す
+        let date = ReturnYearMonthDayWeekday(today)
+        self.ShowAllData(date.year, m: date.month, d: date.day)
+        
     }
     
     //受け取った文字列をシフト体制に分別して返す
@@ -242,13 +247,21 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         return staffshiftarray
     }
     
-    func year(date : NSDate) -> Int {
+    //受け取ったNSDateを年(西暦),月,日,曜日に分けて返す
+    func ReturnYearMonthDayWeekday(date : NSDate) -> (year: Int, month: Int, day: Int, weekday: Int) {
         let calendar = NSCalendar.currentCalendar()
         let comp : NSDateComponents = calendar.components(
             [.Year,.Month,.Day,.Weekday], fromDate: date)
-        return comp.weekday
+        return (comp.year,comp.month,comp.day,comp.weekday)
     }
     
+    
+    /*
+    引数の説明
+    y: 和暦
+    m: 月
+    d: 日
+    */
     //受け取った日付のデータ表示を行う
     func ShowAllData(y: Int, m: Int, d: Int){
 
@@ -273,6 +286,20 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             LateShiftText.text = "遅番：" + splitedstaffarray[4]
             OtherShiftText.text = "その他：" + splitedstaffarray[5]
         }
+    }
+    
+    //西暦を和暦に、和暦を西暦に変換して返す関数
+    func Changecalendar(year: Int, calender: String) -> Int{
+        if(calender == "JP"){   //和暦から西暦
+            let yeartemp = String(year - 12)
+            return Int("20"+yeartemp)!
+        }else{                  //西暦から和暦
+            let yeartemp = String(year + 12)
+            let lastcharacter = String(yeartemp[yeartemp.endIndex.predecessor()])                   //最後の桁
+            let lastcharacterminus = String(yeartemp[yeartemp.endIndex.predecessor().predecessor()])     //最後から1つ前の桁
+            return Int(lastcharacterminus+lastcharacter)!
+        }
+        
     }
 }
 
