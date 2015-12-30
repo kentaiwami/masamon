@@ -62,7 +62,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             
             let calenderbutton = UIButton()
             calenderbutton.setImage(UIImage(named: calenderbuttonnamearray[i]), forState: .Normal)
-            calenderbutton.frame = CGRectMake(CGFloat(calenderbuttonposition[i]), 555, 42, 40)
+            calenderbutton.frame = CGRectMake(CGFloat(calenderbuttonposition[i]), 548, 50, 48)
             calenderbutton.addTarget(self, action: "TapCalenderButton:", forControlEvents: .TouchUpInside)
             calenderbutton.tag = i
             self.view.addSubview(calenderbutton)
