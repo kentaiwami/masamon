@@ -317,14 +317,26 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                 var myString = NSMutableAttributedString()
                 if((splitedstaffarray[i].rangeOfString(DBmethod().UserNameGet())) != nil){
                     
-                    let AAA = splitedstaffarray[i] as NSString
-                    let usernamelocation = AAA.rangeOfString(DBmethod().UserNameGet()).location
-                    let usernamelength = AAA.rangeOfString(DBmethod().UserNameGet()).length
+                    let textviewnsstring = (shiftarray[i] + splitedstaffarray[i]) as NSString
+                    let usernamelocation = textviewnsstring.rangeOfString(DBmethod().UserNameGet()).location
+                    let usernamelength = textviewnsstring.rangeOfString(DBmethod().UserNameGet()).length
                     let myAttribute = [ NSFontAttributeName: UIFont.systemFontOfSize(UIFont.smallSystemFontSize()) ]
+                    let anotherAttribute = [ NSForegroundColorAttributeName: UIColor.whiteColor() ]
                     
                     myString = NSMutableAttributedString(string: shiftarray[i] + splitedstaffarray[i], attributes: myAttribute )
-                    let myRange = NSRange(location: usernamelocation, length: usernamelength)
-                    myString.addAttribute(NSForegroundColorAttributeName, value: UIColor.redColor(), range: myRange)
+                    
+                    let myRange = NSRange(location: usernamelocation, length: usernamelength)                                       //ユーザ名のRange
+                    let myRange2 = NSRange(location: 0, length: usernamelocation)                                                   //シフト体制のRange
+                    
+                    //ユーザ名が文字列の最後でない場合
+                    if(textviewnsstring.length != (usernamelocation+usernamelength)){
+                        let AAA = usernamelocation+usernamelength
+                        let myRange3 = NSRange(location: (usernamelocation+usernamelength), length: (textviewnsstring.length-AAA))  //ユーザ名より後ろのRange
+                        myString.addAttributes(anotherAttribute, range: myRange3)
+                    }
+
+                    myString.addAttributes(anotherAttribute, range: myRange2)
+                    myString.addAttribute(NSForegroundColorAttributeName, value: UIColor.redColor(), range: myRange)                //ユーザ名強調表示
                     
                     switch(i){
                     case 0:
