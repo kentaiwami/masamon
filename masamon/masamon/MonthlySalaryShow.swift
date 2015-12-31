@@ -288,10 +288,11 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     //受け取った日付のデータ表示を行う
     func ShowAllData(y: Int, m: Int, d: Int){
         
-        let whiteAttribute = [ NSForegroundColorAttributeName: UIColor.whiteColor() ]
+        let fontsize:CGFloat = 14
         
         if(DBmethod().TheDayStaffGet(y, month: m, date: d) == nil){
-            
+            let whiteAttribute = [ NSForegroundColorAttributeName: UIColor.hex("BEBEBE", alpha: 1.0),NSFontAttributeName: UIFont.systemFontOfSize(fontsize)]
+
             EarlyShiftText.attributedText = NSMutableAttributedString(string: "早番：データなし", attributes: whiteAttribute)
             Center1ShiftText.attributedText = NSMutableAttributedString(string: "中1：データなし", attributes: whiteAttribute)
             Center2ShiftText.attributedText = NSMutableAttributedString(string: "中2：データなし", attributes: whiteAttribute)
@@ -309,7 +310,6 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                 }
             }
             
-            
             let shiftarray = ["早番：","中1：","中2：","中3：","遅番：","その他："]
             //テキストビューにスタッフ名を羅列するためのループ
             for(var i = 0; i < splitedstaffarray.count; i++){
@@ -319,9 +319,9 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                     let textviewnsstring = (shiftarray[i] + splitedstaffarray[i]) as NSString
                     let usernamelocation = textviewnsstring.rangeOfString(DBmethod().UserNameGet()).location
                     let usernamelength = textviewnsstring.rangeOfString(DBmethod().UserNameGet()).length
-                    let myAttribute = [ NSFontAttributeName: UIFont.systemFontOfSize(UIFont.smallSystemFontSize()) ]
-                   // let anotherAttribute = [ NSForegroundColorAttributeName: UIColor.whiteColor() ]
-                    
+                    let myAttribute = [ NSFontAttributeName: UIFont.systemFontOfSize(fontsize+3) ]
+                    let whiteAttribute = [ NSForegroundColorAttributeName: UIColor.whiteColor()]
+
                     myString = NSMutableAttributedString(string: shiftarray[i] + splitedstaffarray[i], attributes: myAttribute )
                     
                     let myRange = NSRange(location: usernamelocation, length: usernamelength)                                       //ユーザ名のRange
@@ -353,12 +353,12 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                     default:
                         break
                     }
-                }else{
-                    let myAttribute = [ NSFontAttributeName: UIFont.systemFontOfSize(UIFont.smallSystemFontSize()) ]
+                }else{      //ユーザ名が含まれていない場合の表示
+                    let myAttribute = [ NSFontAttributeName: UIFont.systemFontOfSize(fontsize) ]
                     let myRange = NSRange(location: 0, length: (shiftarray[i] + splitedstaffarray[i]).characters.count)
                     
                     myString = NSMutableAttributedString(string: shiftarray[i] + splitedstaffarray[i], attributes: myAttribute )
-                    myString.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor(), range: myRange)
+                    myString.addAttribute(NSForegroundColorAttributeName, value: UIColor.hex("BEBEBE", alpha: 1.0), range: myRange)
                     switch(i){
                     case 0:
                         EarlyShiftText.attributedText = myString
