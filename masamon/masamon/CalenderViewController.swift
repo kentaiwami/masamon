@@ -82,12 +82,16 @@ class CalenderViewController: UIViewController {
         calendarBar.frame = CGRectMake(0, 140, self.view.frame.width, 40)
         
         //凡例の背景色を設定
-        earlyshiftlegend.backgroundColor = UIColor.blueColor()
-        center1shiftlegend.backgroundColor = UIColor.yellowColor()
+        earlyshiftlegend.backgroundColor = UIColor(
+            red: CGFloat(0.400), green: CGFloat(0.471), blue: CGFloat(0.980), alpha: CGFloat(1.0)
+        )
+        center1shiftlegend.backgroundColor = UIColor.hex("ffcc00", alpha: 0.9)
         center2shiftlegend.backgroundColor = UIColor.brownColor()
         center3shiftlegend.backgroundColor = UIColor.brownColor()
         latershiftlegend.backgroundColor = UIColor.blackColor()
-        breaktimelegend.backgroundColor = UIColor.redColor()
+        breaktimelegend.backgroundColor = UIColor(
+            red: CGFloat(0.831), green: CGFloat(0.349), blue: CGFloat(0.224), alpha: CGFloat(1.0)
+        )
         
         //凡例に表示するテキストを設定
         earlyshiftlegend.text = "早番"
@@ -98,12 +102,12 @@ class CalenderViewController: UIViewController {
         breaktimelegend.text = "休み"
         
         //凡例に表示するテキストの文字色を設定
-        earlyshiftlegend.textColor = UIColor.grayColor()
-        center1shiftlegend.textColor = UIColor.grayColor()
-        center2shiftlegend.textColor = UIColor.grayColor()
-        center3shiftlegend.textColor = UIColor.grayColor()
-        latershiftlegend.textColor = UIColor.grayColor()
-        breaktimelegend.textColor = UIColor.grayColor()
+        earlyshiftlegend.textColor = UIColor.whiteColor()
+        center1shiftlegend.textColor = UIColor.whiteColor()
+        center2shiftlegend.textColor = UIColor.whiteColor()
+        center3shiftlegend.textColor = UIColor.whiteColor()
+        latershiftlegend.textColor = UIColor.whiteColor()
+        breaktimelegend.textColor = UIColor.whiteColor()
         
         //凡例に表示するテキストを中央寄せに設定
         earlyshiftlegend.textAlignment = NSTextAlignment.Center
