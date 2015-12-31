@@ -591,7 +591,7 @@ class CalenderViewController: UIViewController {
             OKButton.addTarget(self, action: "TapOK:", forControlEvents: .TouchUpInside)
             
             lineview.frame = CGRectMake(self.view.frame.width/2-350/2, self.view.frame.height/2-250/2+220, 350, 1)
-            lineview.backgroundColor = UIColor.blackColor()
+            lineview.backgroundColor = UIColor.hex("000000", alpha: 0.2)
             
             
             if(flag){
