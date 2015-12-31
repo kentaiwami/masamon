@@ -313,17 +313,53 @@ class CalenderViewController: UIViewController {
             
             //ボタンの配色の設定
             //@remark:このサンプルでは正円のボタンを作っていますが、背景画像の設定等も可能です。
-            if(i % 7 == 0){
-                calendarBackGroundColor = UIColor(
-                    red: CGFloat(0.831), green: CGFloat(0.349), blue: CGFloat(0.224), alpha: CGFloat(1.0)
-                )
-            }else if(i % 7 == 6){
-                calendarBackGroundColor = UIColor(
-                    red: CGFloat(0.400), green: CGFloat(0.471), blue: CGFloat(0.980), alpha: CGFloat(1.0)
-                )
-            }else{
+            
+            if(DBmethod().TheDayStaffGet(MonthlySalaryShow().Changecalendar(self.year, calender: "A.D"), month: self.month, date: button.tag) == nil){
                 calendarBackGroundColor = UIColor.lightGrayColor()
+            }else{
+                let usershift = self.ReturnUserShift(DBmethod().TheDayStaffGet(MonthlySalaryShow().Changecalendar(self.year, calender: "A.D"), month: self.month, date: button.tag)![0].staff)
+                
+                switch(usershift){
+                case "早","早カ":
+                    calendarBackGroundColor = UIColor(
+                        red: CGFloat(0.400), green: CGFloat(0.471), blue: CGFloat(0.980), alpha: CGFloat(1.0)
+                    )
+                    
+                case "中":
+                    calendarBackGroundColor = UIColor.hex("ffcc00", alpha: 0.9)
+                    
+                case "中2":
+                    calendarBackGroundColor = UIColor.hex("ff9900", alpha: 1.0)
+                    
+                case "中3":
+                    calendarBackGroundColor = UIColor.hex("ff9966", alpha: 1.0)
+                    
+                case "遅","遅カ":
+                    calendarBackGroundColor = UIColor.blackColor()
+                    
+                case "breaktime":
+                    calendarBackGroundColor = UIColor(
+                        red: CGFloat(0.831), green: CGFloat(0.349), blue: CGFloat(0.224), alpha: CGFloat(1.0)
+                    )
+                    
+                default:
+                    calendarBackGroundColor = UIColor.lightGrayColor()
+                }
+
             }
+            
+            
+//            if(i % 7 == 0){
+//                calendarBackGroundColor = UIColor(
+//                    red: CGFloat(0.831), green: CGFloat(0.349), blue: CGFloat(0.224), alpha: CGFloat(1.0)
+//                )
+//            }else if(i % 7 == 6){
+//                calendarBackGroundColor = UIColor(
+//                    red: CGFloat(0.400), green: CGFloat(0.471), blue: CGFloat(0.980), alpha: CGFloat(1.0)
+//                )
+//            }else{
+//                calendarBackGroundColor = UIColor.lightGrayColor()
+//            }
             
             //ボタンのデザインを決定する
             button.backgroundColor = calendarBackGroundColor
@@ -339,6 +375,13 @@ class CalenderViewController: UIViewController {
             mArray.addObject(button)
         }
         
+    }
+    
+    //受け取った文字列の中からユーザのシフトを返す関数
+    func ReturnUserShift(staff: String) -> String{
+        var BBB = "aaa"
+        
+        return BBB
     }
     
     //タイトル表記を設定する関数
