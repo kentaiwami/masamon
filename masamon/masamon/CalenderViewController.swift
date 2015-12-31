@@ -9,7 +9,7 @@
 import UIKit
 
 class CalenderViewController: UIViewController {
-
+    
     //メンバ変数の設定（配列格納用）
     var count: Int!
     var mArray: NSMutableArray!
@@ -31,6 +31,14 @@ class CalenderViewController: UIViewController {
     var calendarBar = UILabel()
     var prevMonthButton = UIButton()
     var nextMonthButton = UIButton()
+    var nowMonthButton = UIButton()
+    
+    var earlyshiftlegend = UILabel()
+    var center1shiftlegend = UILabel()
+    var center2shiftlegend = UILabel()
+    var center3shiftlegend = UILabel()
+    var latershiftlegend = UILabel()
+    var breaktimelegend = UILabel()
     
     //カレンダーの位置決め用メンバ変数
     var calendarLabelIntervalX: Int!
@@ -49,30 +57,113 @@ class CalenderViewController: UIViewController {
     var calendarSize: Int!
     var calendarFontSize: Int!
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        CalenderViewDidLoad()
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+    }
+    
     func CalenderViewDidLoad(){
         calendarBar.backgroundColor = UIColor.hex("FF8E92", alpha: 1.0)
         prevMonthButton.backgroundColor = UIColor.hex("FF8E92", alpha: 1.0)
         nextMonthButton.backgroundColor = UIColor.hex("FF8E92", alpha: 1.0)
+        nowMonthButton.backgroundColor = UIColor.hex("FF8E92", alpha: 1.0)
         
         prevMonthButton.setTitle("前月", forState: .Normal)
         nextMonthButton.setTitle("前月", forState: .Normal)
+        nowMonthButton.setTitle("今月", forState: .Normal)
         
         prevMonthButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         nextMonthButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        nowMonthButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         
         prevMonthButton.addTarget(self, action: "getPrevMonthData:", forControlEvents: .TouchUpInside)
         nextMonthButton.addTarget(self, action: "getNextMonthData:", forControlEvents: .TouchUpInside)
+        nowMonthButton.addTarget(self, action: "getNowMonthData:", forControlEvents: .TouchUpInside)
         
-        calendarBar.frame = CGRectMake(0, 200, self.view.frame.width, 25)
+        calendarBar.frame = CGRectMake(0, 140, self.view.frame.width, 40)
+        
+        //凡例の背景色を設定
+        earlyshiftlegend.backgroundColor = UIColor(
+            red: CGFloat(0.400), green: CGFloat(0.471), blue: CGFloat(0.980), alpha: CGFloat(1.0)
+        )
+        center1shiftlegend.backgroundColor = UIColor.hex("ffcc00", alpha: 0.9)
+        center2shiftlegend.backgroundColor = UIColor.hex("ff9900", alpha: 1.0)
+        center3shiftlegend.backgroundColor = UIColor.hex("ff9966", alpha: 1.0)
+        latershiftlegend.backgroundColor = UIColor.blackColor()
+        breaktimelegend.backgroundColor = UIColor(
+            red: CGFloat(0.831), green: CGFloat(0.349), blue: CGFloat(0.224), alpha: CGFloat(1.0)
+        )
+        
+        //凡例に表示するテキストを設定
+        earlyshiftlegend.text = "早番"
+        center1shiftlegend.text = "中1"
+        center2shiftlegend.text = "中2"
+        center3shiftlegend.text = "中3"
+        latershiftlegend.text = "遅番"
+        breaktimelegend.text = "休み"
+        
+        //凡例に表示するテキストの文字色を設定
+        earlyshiftlegend.textColor = UIColor.whiteColor()
+        center1shiftlegend.textColor = UIColor.whiteColor()
+        center2shiftlegend.textColor = UIColor.whiteColor()
+        center3shiftlegend.textColor = UIColor.whiteColor()
+        latershiftlegend.textColor = UIColor.whiteColor()
+        breaktimelegend.textColor = UIColor.whiteColor()
+        
+        //凡例に表示するテキストを中央寄せに設定
+        earlyshiftlegend.textAlignment = NSTextAlignment.Center
+        center1shiftlegend.textAlignment = NSTextAlignment.Center
+        center2shiftlegend.textAlignment = NSTextAlignment.Center
+        center3shiftlegend.textAlignment = NSTextAlignment.Center
+        latershiftlegend.textAlignment = NSTextAlignment.Center
+        breaktimelegend.textAlignment = NSTextAlignment.Center
+        
+        //凡例を表示する場所と大きさを設定
+        earlyshiftlegend.frame = CGRectMake(40, 20, 45, 45)
+        center1shiftlegend.frame = CGRectMake(40, 80, 45, 45)
+        center2shiftlegend.frame = CGRectMake(self.view.frame.width/2-22.5, 20, 45, 45)
+        center3shiftlegend.frame = CGRectMake(self.view.frame.width/2-22.5, 80, 45, 45)
+        latershiftlegend.frame = CGRectMake(self.view.frame.width-80, 20, 45, 45)
+        breaktimelegend.frame = CGRectMake(self.view.frame.width-80, 80, 45, 45)
+        
+        //凡例のマスクを有効に設定
+        earlyshiftlegend.layer.masksToBounds = true
+        center1shiftlegend.layer.masksToBounds = true
+        center2shiftlegend.layer.masksToBounds = true
+        center3shiftlegend.layer.masksToBounds = true
+        latershiftlegend.layer.masksToBounds = true
+        breaktimelegend.layer.masksToBounds = true
+        
+        //凡例を角丸に設定
+        earlyshiftlegend.layer.cornerRadius = 22.5
+        center1shiftlegend.layer.cornerRadius = 22.5
+        center2shiftlegend.layer.cornerRadius = 22.5
+        center3shiftlegend.layer.cornerRadius = 22.5
+        latershiftlegend.layer.cornerRadius = 22.5
+        breaktimelegend.layer.cornerRadius = 22.5
+        
+        //凡例をviewに追加
+        self.view.addSubview(earlyshiftlegend)
+        self.view.addSubview(center1shiftlegend)
+        self.view.addSubview(center2shiftlegend)
+        self.view.addSubview(center3shiftlegend)
+        self.view.addSubview(latershiftlegend)
+        self.view.addSubview(breaktimelegend)
+        
         
         self.view.addSubview(calendarBar)
         self.view.addSubview(prevMonthButton)
         self.view.addSubview(nextMonthButton)
+        self.view.addSubview(nowMonthButton)
         
         //iPhone6
         calendarLabelIntervalX = 15;
         calendarLabelX         = 50;
-        calendarLabelY         = 95;
+        calendarLabelY         = 190;
         calendarLabelWidth     = 45;
         calendarLabelHeight    = 25;
         calendarLableFontSize  = 16;
@@ -81,17 +172,18 @@ class CalenderViewController: UIViewController {
         
         calendarIntervalX      = 15;
         calendarX              = 50;
-        calendarIntervalY      = 175;
+        calendarIntervalY      = 230;
         calendarY              = 50;
         calendarSize           = 45;
         calendarFontSize       = 19;
         
-        self.prevMonthButton.frame = CGRectMake(15, 488, CGFloat(calendarSize), CGFloat(calendarSize));
-        self.nextMonthButton.frame = CGRectMake(314, 488, CGFloat(calendarSize), CGFloat(calendarSize));
-        
+        self.prevMonthButton.frame = CGRectMake(15, 550, CGFloat(calendarSize), CGFloat(calendarSize));
+        self.nextMonthButton.frame = CGRectMake(314, 550, CGFloat(calendarSize), CGFloat(calendarSize));
+        self.nowMonthButton.frame = CGRectMake(self.view.frame.width/2-CGFloat(calendarSize/2), 550, CGFloat(calendarSize), CGFloat(calendarSize))
         //ボタンを角丸にする
         prevMonthButton.layer.cornerRadius = CGFloat(buttonRadius)
         nextMonthButton.layer.cornerRadius = CGFloat(buttonRadius)
+        nowMonthButton.layer.cornerRadius = CGFloat(buttonRadius)
         
         //現在の日付を取得する
         now = NSDate()
@@ -120,7 +212,7 @@ class CalenderViewController: UIViewController {
         mArray = NSMutableArray()
         
         //曜日ラベル初期定義
-        let monthName:[String] = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]
+        let monthName:[String] = ["日","月","火","水","木","金","土"]
         
         //曜日ラベルを動的に配置
         setupCalendarLabel(monthName)
@@ -228,16 +320,39 @@ class CalenderViewController: UIViewController {
             
             //ボタンの配色の設定
             //@remark:このサンプルでは正円のボタンを作っていますが、背景画像の設定等も可能です。
-            if(i % 7 == 0){
-                calendarBackGroundColor = UIColor(
-                    red: CGFloat(0.831), green: CGFloat(0.349), blue: CGFloat(0.224), alpha: CGFloat(1.0)
-                )
-            }else if(i % 7 == 6){
-                calendarBackGroundColor = UIColor(
-                    red: CGFloat(0.400), green: CGFloat(0.471), blue: CGFloat(0.980), alpha: CGFloat(1.0)
-                )
-            }else{
+            
+            if(DBmethod().TheDayStaffGet(MonthlySalaryShow().Changecalendar(self.year, calender: "A.D"), month: self.month, date: button.tag) == nil){
                 calendarBackGroundColor = UIColor.lightGrayColor()
+            }else{
+                let usershift = self.ReturnUserShift(DBmethod().TheDayStaffGet(MonthlySalaryShow().Changecalendar(self.year, calender: "A.D"), month: self.month, date: button.tag)![0].staff)
+                
+                switch(usershift){
+                case "早","早カ":
+                    calendarBackGroundColor = UIColor(
+                        red: CGFloat(0.400), green: CGFloat(0.471), blue: CGFloat(0.980), alpha: CGFloat(1.0)
+                    )
+                    
+                case "中":
+                    calendarBackGroundColor = UIColor.hex("ffcc00", alpha: 0.9)
+                    
+                case "中2":
+                    calendarBackGroundColor = UIColor.hex("ff9900", alpha: 1.0)
+                    
+                case "中3":
+                    calendarBackGroundColor = UIColor.hex("ff9966", alpha: 1.0)
+                    
+                case "遅","遅カ":
+                    calendarBackGroundColor = UIColor.blackColor()
+                    
+                case "breaktime":
+                    calendarBackGroundColor = UIColor(
+                        red: CGFloat(0.831), green: CGFloat(0.349), blue: CGFloat(0.224), alpha: CGFloat(1.0)
+                    )
+                    
+                default:
+                    calendarBackGroundColor = UIColor.lightGrayColor()
+                }
+                
             }
             
             //ボタンのデザインを決定する
@@ -256,9 +371,40 @@ class CalenderViewController: UIViewController {
         
     }
     
+    //受け取った文字列の中からユーザのシフトを返す関数
+    func ReturnUserShift(staff: String) -> String{
+        
+        if(staff.rangeOfString(DBmethod().UserNameGet()) == nil){
+            return "breaktime"
+        }else{
+            let staffNSString: NSString = staff as NSString
+            let usernamelocation = staffNSString.rangeOfString(DBmethod().UserNameGet()).location
+            let shiftstartposition = usernamelocation + DBmethod().UserNameGet().characters.count+1
+            var nowindex = staff.startIndex
+            
+            //ユーザのシフトが出る場所までindexを進めるループ
+            for(var i = 0; i < shiftstartposition; i++){
+                nowindex = nowindex.successor()
+            }
+            
+            var usershift = ""
+            
+            //ユーザのシフトを抽出するループ
+            while(staff[nowindex] != ","){
+                usershift = usershift + String(staff[nowindex])
+                nowindex = nowindex.successor()
+            }
+            
+            return usershift
+        }
+    }
+    
     //タイトル表記を設定する関数
     func setupCalendarTitleLabel() {
-        calendarBar.text = String("\(year)年\(month)月のカレンダー")
+        calendarBar.text = String("\(year)年\(month)月")
+        calendarBar.textAlignment = NSTextAlignment.Center
+        calendarBar.textColor = UIColor.whiteColor()
+        
     }
     
     //現在（初期表示時）の年月に該当するデータを取得する関数
@@ -272,6 +418,22 @@ class CalenderViewController: UIViewController {
          *************/
         let currentCalendar: NSCalendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
         let currentComps: NSDateComponents = NSDateComponents()
+        
+        //現在の日付を取得する
+        now = NSDate()
+        
+        //inUnit:で指定した単位（月）の中で、rangeOfUnit:で指定した単位（日）が取り得る範囲
+        let calendar: NSCalendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
+        
+        //最初にメンバ変数に格納するための現在日付の情報を取得する
+        comps = calendar.components([NSCalendarUnit.Year, NSCalendarUnit.Month, NSCalendarUnit.Day, NSCalendarUnit.Weekday],fromDate:now)
+        
+        //年月日と最後の日付と曜日を取得(NSIntegerをintへのキャスト不要)
+        let orgYear: NSInteger      = comps.year
+        let orgMonth: NSInteger     = comps.month
+        
+        year      = orgYear
+        month     = orgMonth
         
         currentComps.year  = year
         currentComps.month = month
@@ -369,13 +531,92 @@ class CalenderViewController: UIViewController {
         setupCalendarTitleLabel()
     }
     
+    let alertview = UIView()
+    let titlelabel = UILabel()
+    let textview = UITextView()
+    let OKButton = UIButton()
+    let lineview = UIView()
+
+    var flag = false
+    
     //カレンダーボタンをタップした時のアクション
     func buttonTapped(button: UIButton){
-        
-        //@todo:画面遷移等の処理を書くことができます。
-        
-        //コンソール表示
-        print("\(year)年\(month)月\(button.tag)日が選択されました！")
+        print("a")
+        if(DBmethod().TheDayStaffGet(MonthlySalaryShow().Changecalendar(year, calender: "A.D"), month: month, date: button.tag) == nil){
+            let alertController = UIAlertController(title: "\(year)年\(month)月\(button.tag)日", message: "データなし", preferredStyle: .Alert)
+            let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+            alertController.addAction(defaultAction)
+            
+            presentViewController(alertController, animated: true, completion: nil)
+        }else{
+            let AAA = DBmethod().TheDayStaffGet(MonthlySalaryShow().Changecalendar(year, calender: "A.D"),month: month,date: button.tag)![0].staff
+            let BBB = MonthlySalaryShow().SplitStaffShift(AAA)
+            
+            let C0 = "\(year)年\(month)月\(button.tag)日"
+            let C1 = "　早番："+BBB[0]+"\n\n"
+            let C2 = "　中1："+BBB[1]+"\n\n"
+            let C3 = "　中2："+BBB[2]+"\n\n"
+            let C4 = "　中3："+BBB[3]+"\n\n"
+            let C5 = "　遅番："+BBB[4]+"\n\n"
+            let C6 = "　その他："+BBB[5]+"\n"
+            let C7 = "\n\n\n"
+            let CCC = C7+C1+C2+C3+C4+C5+C6
+            
+            
+            alertview.frame = CGRectMake(0,0,self.view.frame.width,self.view.frame.height)
+            alertview.backgroundColor = UIColor.hex("000000", alpha: 0.3)
+            
+            
+            
+            titlelabel.frame = CGRectMake(self.view.frame.width/2-350/2,self.view.frame.height/2-320/2,350,50)
+            titlelabel.text = C0
+            titlelabel.textAlignment = NSTextAlignment.Center
+            titlelabel.textColor = UIColor.blackColor()
+            titlelabel.font = UIFont.boldSystemFontOfSize(UIFont.labelFontSize())
+            
+            textview.frame = CGRectMake(self.view.frame.width/2-350/2, self.view.frame.height/2-320/2, 350, 320)
+            textview.layer.masksToBounds = true
+            textview.layer.cornerRadius = 25
+            textview.backgroundColor = UIColor.hex("FFFFFF", alpha: 1.0)
+            textview.editable = false
+            
+            textview.text = CCC
+            textview.textColor = UIColor.blackColor()
+            
+            OKButton.backgroundColor = UIColor.clearColor()
+            OKButton.frame = CGRectMake(self.view.frame.width/2-350/2,self.view.frame.height/2-250/2+230,350,50)
+            OKButton.setTitle("OK", forState: .Normal)
+            OKButton.setTitleColor(UIColor.hex("0099ff", alpha: 1.0), forState: .Normal)
+            OKButton.layer.cornerRadius = 25
+            OKButton.addTarget(self, action: "TapOK:", forControlEvents: .TouchUpInside)
+            
+            lineview.frame = CGRectMake(self.view.frame.width/2-350/2, self.view.frame.height/2-250/2+220, 350, 1)
+            lineview.backgroundColor = UIColor.blackColor()
+            
+            
+            if(flag){
+                UIView.animateWithDuration(0.3, animations: { () -> Void in
+                    self.alertview.alpha = 1.0
+                })
+            }else{
+                self.view.addSubview(self.alertview)
+                self.alertview.addSubview(self.textview)
+                self.alertview.addSubview(self.OKButton)
+                self.alertview.addSubview(self.lineview)
+                self.alertview.addSubview(self.titlelabel)
+                self.alertview.alpha = 0.0
+                UIView.animateWithDuration(0.3, animations: { () -> Void in
+                    self.alertview.alpha = 1.0
+                })
+            }
+        }
+    }
+    
+    func TapOK(sender: UIButton){
+        flag = true
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            self.alertview.alpha = 0.0
+        })
     }
     
     //前の月のボタンを押した際のアクション
@@ -388,15 +629,10 @@ class CalenderViewController: UIViewController {
         nextCalendarSettings()
     }
     
-    //左スワイプで前月を表示
-    //    @IBAction func swipePrevCalendar(sender: UISwipeGestureRecognizer) {
-    //        prevCalendarSettings()
-    //    }
-    //
-    //    //右スワイプで次月を表示
-    //    @IBAction func swipeNextCalendar(sender: UISwipeGestureRecognizer) {
-    //        nextCalendarSettings()
-    //    }
+    //今月ボタンを押した際のアクション
+    func getNowMonthData(sender: UIButton){
+        NowCalendarSettings()
+    }
     
     //前月を表示するメソッド
     func prevCalendarSettings() {
@@ -413,5 +649,13 @@ class CalenderViewController: UIViewController {
         generateCalendar()
         setupCalendarTitleLabel()
     }
-
+    
+    //今月を表示するメソッド
+    func NowCalendarSettings(){
+        removeCalendarButtonObject()
+        setupCurrentCalendarData()
+        generateCalendar()
+        setupCalendarTitleLabel()
+    }
+    
 }
