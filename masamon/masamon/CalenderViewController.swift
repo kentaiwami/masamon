@@ -114,12 +114,12 @@ class CalenderViewController: UIViewController {
         breaktimelegend.textAlignment = NSTextAlignment.Center
         
         //凡例を表示する場所と大きさを設定
-        earlyshiftlegend.frame = CGRectMake(25, 20, 45, 45)
-        center1shiftlegend.frame = CGRectMake(25, 80, 45, 45)
+        earlyshiftlegend.frame = CGRectMake(40, 20, 45, 45)
+        center1shiftlegend.frame = CGRectMake(40, 80, 45, 45)
         center2shiftlegend.frame = CGRectMake(self.view.frame.width/2-22.5, 20, 45, 45)
         center3shiftlegend.frame = CGRectMake(self.view.frame.width/2-22.5, 80, 45, 45)
-        latershiftlegend.frame = CGRectMake(self.view.frame.width-70, 20, 45, 45)
-        breaktimelegend.frame = CGRectMake(self.view.frame.width-70, 80, 45, 45)
+        latershiftlegend.frame = CGRectMake(self.view.frame.width-80, 20, 45, 45)
+        breaktimelegend.frame = CGRectMake(self.view.frame.width-80, 80, 45, 45)
         
         //凡例のマスクを有効に設定
         earlyshiftlegend.layer.masksToBounds = true
