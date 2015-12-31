@@ -593,14 +593,21 @@ class CalenderViewController: UIViewController {
             lineview.frame = CGRectMake(self.view.frame.width/2-350/2, self.view.frame.height/2-250/2+220, 350, 1)
             lineview.backgroundColor = UIColor.blackColor()
             
+            
             if(flag){
-                alertview.alpha = 1.0
+                UIView.animateWithDuration(0.3, animations: { () -> Void in
+                    self.alertview.alpha = 1.0
+                })
             }else{
-                self.view.addSubview(alertview)
-                alertview.addSubview(textview)
-                alertview.addSubview(OKButton)
-                alertview.addSubview(lineview)
-                alertview.addSubview(titlelabel)
+                self.view.addSubview(self.alertview)
+                self.alertview.addSubview(self.textview)
+                self.alertview.addSubview(self.OKButton)
+                self.alertview.addSubview(self.lineview)
+                self.alertview.addSubview(self.titlelabel)
+                self.alertview.alpha = 0.0
+                UIView.animateWithDuration(0.3, animations: { () -> Void in
+                    self.alertview.alpha = 1.0
+                })
             }
         }
     }
