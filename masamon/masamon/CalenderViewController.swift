@@ -9,7 +9,7 @@
 import UIKit
 
 class CalenderViewController: UIViewController {
-
+    
     //メンバ変数の設定（配列格納用）
     var count: Int!
     var mArray: NSMutableArray!
@@ -352,7 +352,7 @@ class CalenderViewController: UIViewController {
                 default:
                     calendarBackGroundColor = UIColor.lightGrayColor()
                 }
-
+                
             }
             
             //ボタンのデザインを決定する
@@ -531,9 +531,17 @@ class CalenderViewController: UIViewController {
         setupCalendarTitleLabel()
     }
     
+    let alertview = UIView()
+    let titlelabel = UILabel()
+    let textview = UITextView()
+    let OKButton = UIButton()
+    let lineview = UIView()
+
+    var flag = false
+    
     //カレンダーボタンをタップした時のアクション
     func buttonTapped(button: UIButton){
-        
+        print("a")
         if(DBmethod().TheDayStaffGet(MonthlySalaryShow().Changecalendar(year, calender: "A.D"), month: month, date: button.tag) == nil){
             let alertController = UIAlertController(title: "\(year)年\(month)月\(button.tag)日", message: "データなし", preferredStyle: .Alert)
             let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
@@ -544,20 +552,64 @@ class CalenderViewController: UIViewController {
             let AAA = DBmethod().TheDayStaffGet(MonthlySalaryShow().Changecalendar(year, calender: "A.D"),month: month,date: button.tag)![0].staff
             let BBB = MonthlySalaryShow().SplitStaffShift(AAA)
             
-            let C1 = "早番："+BBB[0]+"\n"
-            let C2 = "中1："+BBB[1]+"\n"
-            let C3 = "中2："+BBB[2]+"\n"
-            let C4 = "中3："+BBB[3]+"\n"
-            let C5 = "遅番："+BBB[4]+"\n"
-            let C6 = "その他："+BBB[5]+"\n"
-            let CCC = C1+C2+C3+C4+C5+C6
+            let C0 = "\(year)年\(month)月\(button.tag)日"
+            let C1 = "　早番："+BBB[0]+"\n\n"
+            let C2 = "　中1："+BBB[1]+"\n\n"
+            let C3 = "　中2："+BBB[2]+"\n\n"
+            let C4 = "　中3："+BBB[3]+"\n\n"
+            let C5 = "　遅番："+BBB[4]+"\n\n"
+            let C6 = "　その他："+BBB[5]+"\n"
+            let C7 = "\n\n\n"
+            let CCC = C7+C1+C2+C3+C4+C5+C6
             
-            let alertController = UIAlertController(title: "\(year)年\(month)月\(button.tag)日", message: CCC, preferredStyle: .Alert)
-            let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
-            alertController.addAction(defaultAction)
-           
-            presentViewController(alertController, animated: true, completion: nil)
+            
+            alertview.frame = CGRectMake(0,0,self.view.frame.width,self.view.frame.height)
+            alertview.backgroundColor = UIColor.hex("000000", alpha: 0.3)
+            
+            
+            
+            titlelabel.frame = CGRectMake(self.view.frame.width/2-350/2,self.view.frame.height/2-320/2,350,50)
+            titlelabel.text = C0
+            titlelabel.textAlignment = NSTextAlignment.Center
+            titlelabel.textColor = UIColor.blackColor()
+            titlelabel.font = UIFont.boldSystemFontOfSize(UIFont.labelFontSize())
+            
+            textview.frame = CGRectMake(self.view.frame.width/2-350/2, self.view.frame.height/2-320/2, 350, 320)
+            textview.layer.masksToBounds = true
+            textview.layer.cornerRadius = 25
+            textview.backgroundColor = UIColor.hex("FFFFFF", alpha: 1.0)
+            textview.editable = false
+            
+            textview.text = CCC
+            textview.textColor = UIColor.blackColor()
+            
+            OKButton.backgroundColor = UIColor.clearColor()
+            OKButton.frame = CGRectMake(self.view.frame.width/2-350/2,self.view.frame.height/2-250/2+230,350,50)
+            OKButton.setTitle("OK", forState: .Normal)
+            OKButton.setTitleColor(UIColor.hex("0099ff", alpha: 1.0), forState: .Normal)
+            OKButton.layer.cornerRadius = 25
+            OKButton.addTarget(self, action: "TapOK:", forControlEvents: .TouchUpInside)
+            
+            lineview.frame = CGRectMake(self.view.frame.width/2-350/2, self.view.frame.height/2-250/2+220, 350, 1)
+            lineview.backgroundColor = UIColor.blackColor()
+            
+            if(flag){
+                alertview.alpha = 1.0
+            }else{
+                self.view.addSubview(alertview)
+                alertview.addSubview(textview)
+                alertview.addSubview(OKButton)
+                alertview.addSubview(lineview)
+                alertview.addSubview(titlelabel)
+            }
         }
+    }
+    
+    func TapOK(sender: UIButton){
+        flag = true
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            self.alertview.alpha = 0.0
+        })
     }
     
     //前の月のボタンを押した際のアクション
@@ -598,5 +650,5 @@ class CalenderViewController: UIViewController {
         generateCalendar()
         setupCalendarTitleLabel()
     }
-
+    
 }
