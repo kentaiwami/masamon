@@ -38,7 +38,9 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        currentnsdate = NSDate()
+        
+        //        currentnsdate = NSDate()
+        currentnsdate = self.DateSerial(2015, month: 10, day: 11)
         
         //テキストビューの編集をできないようにする
         EarlyShiftText.editable = false
@@ -285,34 +287,20 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     */
     //受け取った日付のデータ表示を行う
     func ShowAllData(y: Int, m: Int, d: Int){
-        let myAttribute = [ NSFontAttributeName: UIFont(name: "Chalkduster", size: 18.0)! ]
-        let myString = NSMutableAttributedString(string: "あいうえお", attributes: myAttribute )
-        let myRange = NSRange(location: 0, length: 2) // range starting at location 17 with a lenth of 7: "Strings"
-        myString.addAttribute(NSForegroundColorAttributeName, value: UIColor.redColor(), range: myRange)
+        
+        let whiteAttribute = [ NSForegroundColorAttributeName: UIColor.whiteColor() ]
         
         if(DBmethod().TheDayStaffGet(y, month: m, date: d) == nil){
-            EarlyShiftText.text = "早番：データなし"
-//            EarlyShiftText.attributedText = myString
             
-            Center1ShiftText.text = "中1：データなし"
-            Center2ShiftText.text = "中2：データなし"
-            Center3ShiftText.text = "中3：データなし"
-            LateShiftText.text = "遅番：データなし"
-            OtherShiftText.text = "その他：データなし"
+            EarlyShiftText.attributedText = NSMutableAttributedString(string: "早番：データなし", attributes: whiteAttribute)
+            Center1ShiftText.attributedText = NSMutableAttributedString(string: "中1：データなし", attributes: whiteAttribute)
+            Center2ShiftText.attributedText = NSMutableAttributedString(string: "中2：データなし", attributes: whiteAttribute)
+            Center3ShiftText.attributedText = NSMutableAttributedString(string: "中3：データなし", attributes: whiteAttribute)
+            LateShiftText.attributedText = NSMutableAttributedString(string: "遅番：データなし", attributes: whiteAttribute)
+            OtherShiftText.attributedText = NSMutableAttributedString(string: "その他：データなし", attributes: whiteAttribute)
         }else{
             let shiftdetaidb = DBmethod().TheDayStaffGet(y, month: m, date: d)
             var splitedstaffarray = self.SplitStaffShift(shiftdetaidb![0].staff)
-            
-            
-            
-            //ユーザ名が含まれていたら置換するループ
-            for(var i = 0; i < splitedstaffarray.count; i++){
-                if((splitedstaffarray[i].rangeOfString(DBmethod().UserNameGet())) != nil){
-                    let staffarrytemp = splitedstaffarray[i]
-                    splitedstaffarray[i] = staffarrytemp.stringByReplacingOccurrencesOfString(DBmethod().UserNameGet(), withString: "AAA")
-                    break
-                }
-            }
             
             //スタッフ名がない場合にメッセージを代入するためのループ
             for(var i = 0; i < splitedstaffarray.count; i++){
@@ -320,13 +308,75 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                     splitedstaffarray[i] = "該当スタッフなし"
                 }
             }
+            
+            
+            let shiftarray = ["早番：","中1：","中2：","中3：","遅番：","その他："]
+            //テキストビューにスタッフ名を羅列するためのループ
+            for(var i = 0; i < splitedstaffarray.count; i++){
+                var myString = NSMutableAttributedString()
+                if((splitedstaffarray[i].rangeOfString(DBmethod().UserNameGet())) != nil){
+                    
+                    let textviewnsstring = (shiftarray[i] + splitedstaffarray[i]) as NSString
+                    let usernamelocation = textviewnsstring.rangeOfString(DBmethod().UserNameGet()).location
+                    let usernamelength = textviewnsstring.rangeOfString(DBmethod().UserNameGet()).length
+                    let myAttribute = [ NSFontAttributeName: UIFont.systemFontOfSize(UIFont.smallSystemFontSize()) ]
+                   // let anotherAttribute = [ NSForegroundColorAttributeName: UIColor.whiteColor() ]
+                    
+                    myString = NSMutableAttributedString(string: shiftarray[i] + splitedstaffarray[i], attributes: myAttribute )
+                    
+                    let myRange = NSRange(location: usernamelocation, length: usernamelength)                                       //ユーザ名のRange
+                    let myRange2 = NSRange(location: 0, length: usernamelocation)                                                   //シフト体制のRange
+                    
+                    //ユーザ名が文字列の最後でない場合
+                    if(textviewnsstring.length != (usernamelocation+usernamelength)){
+                        let AAA = usernamelocation+usernamelength
+                        let myRange3 = NSRange(location: (usernamelocation+usernamelength), length: (textviewnsstring.length-AAA))  //ユーザ名より後ろのRange
+                        myString.addAttributes(whiteAttribute, range: myRange3)
+                    }
 
-            EarlyShiftText.text = "早番：" + splitedstaffarray[0]
-            Center1ShiftText.text = "中1：" + splitedstaffarray[1]
-            Center2ShiftText.text = "中2：" + splitedstaffarray[2]
-            Center3ShiftText.text = "中3：" + splitedstaffarray[3]
-            LateShiftText.text = "遅番：" + splitedstaffarray[4]
-            OtherShiftText.text = "その他：" + splitedstaffarray[5]
+                    myString.addAttributes(whiteAttribute, range: myRange2)
+                    myString.addAttribute(NSForegroundColorAttributeName, value: UIColor.hex("66FF66", alpha: 1.0), range: myRange)                //ユーザ名強調表示
+                    
+                    switch(i){
+                    case 0:
+                        EarlyShiftText.attributedText = myString
+                    case 1:
+                        Center1ShiftText.attributedText = myString
+                    case 2:
+                        Center2ShiftText.attributedText = myString
+                    case 3:
+                        Center3ShiftText.attributedText = myString
+                    case 4:
+                        LateShiftText.attributedText = myString
+                    case 5:
+                        OtherShiftText.attributedText = myString
+                    default:
+                        break
+                    }
+                }else{
+                    let myAttribute = [ NSFontAttributeName: UIFont.systemFontOfSize(UIFont.smallSystemFontSize()) ]
+                    let myRange = NSRange(location: 0, length: (shiftarray[i] + splitedstaffarray[i]).characters.count)
+                    
+                    myString = NSMutableAttributedString(string: shiftarray[i] + splitedstaffarray[i], attributes: myAttribute )
+                    myString.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor(), range: myRange)
+                    switch(i){
+                    case 0:
+                        EarlyShiftText.attributedText = myString
+                    case 1:
+                        Center1ShiftText.attributedText = myString
+                    case 2:
+                        Center2ShiftText.attributedText = myString
+                    case 3:
+                        Center3ShiftText.attributedText = myString
+                    case 4:
+                        LateShiftText.attributedText = myString
+                    case 5:
+                        OtherShiftText.attributedText = myString
+                    default:
+                        break
+                    }
+                }
+            }
         }
     }
     
