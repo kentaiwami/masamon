@@ -379,9 +379,30 @@ class CalenderViewController: UIViewController {
     
     //受け取った文字列の中からユーザのシフトを返す関数
     func ReturnUserShift(staff: String) -> String{
-        var BBB = "aaa"
         
-        return BBB
+        if(staff.rangeOfString(DBmethod().UserNameGet()) == nil){
+            return "breaktime"
+        }else{
+            let staffNSString: NSString = staff as NSString
+            let usernamelocation = staffNSString.rangeOfString(DBmethod().UserNameGet()).location
+            let shiftstartposition = usernamelocation + DBmethod().UserNameGet().characters.count+1
+            var nowindex = staff.startIndex
+            
+            //ユーザのシフトが出る場所までindexを進めるループ
+            for(var i = 0; i < shiftstartposition; i++){
+                nowindex = nowindex.successor()
+            }
+            
+            var usershift = ""
+            
+            //ユーザのシフトを抽出するループ
+            while(staff[nowindex] != ","){
+                usershift = usershift + String(staff[nowindex])
+                nowindex = nowindex.successor()
+            }
+            
+            return usershift
+        }
     }
     
     //タイトル表記を設定する関数
