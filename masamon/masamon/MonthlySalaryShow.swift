@@ -329,8 +329,8 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                     
                     //ユーザ名が文字列の最後でない場合
                     if(textviewnsstring.length != (usernamelocation+usernamelength)){
-                        let AAA = usernamelocation+usernamelength
-                        let myRange3 = NSRange(location: (usernamelocation+usernamelength), length: (textviewnsstring.length-AAA))  //ユーザ名より後ろのRange
+                        let userposition = usernamelocation+usernamelength
+                        let myRange3 = NSRange(location: (usernamelocation+usernamelength), length: (textviewnsstring.length-userposition))  //ユーザ名より後ろのRange
                         myString.addAttributes(whiteAttribute, range: myRange3)
                     }
 
