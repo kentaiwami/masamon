@@ -32,6 +32,13 @@ class CalenderViewController: UIViewController {
     var prevMonthButton = UIButton()
     var nextMonthButton = UIButton()
     
+    var earlyshiftlegend = UILabel()
+    var center1shiftlegend = UILabel()
+    var center2shiftlegend = UILabel()
+    var center3shiftlegend = UILabel()
+    var latershiftlegend = UILabel()
+    var breaktimelegend = UILabel()
+    
     //カレンダーの位置決め用メンバ変数
     var calendarLabelIntervalX: Int!
     var calendarLabelX: Int!
@@ -72,7 +79,64 @@ class CalenderViewController: UIViewController {
         prevMonthButton.addTarget(self, action: "getPrevMonthData:", forControlEvents: .TouchUpInside)
         nextMonthButton.addTarget(self, action: "getNextMonthData:", forControlEvents: .TouchUpInside)
         
-        calendarBar.frame = CGRectMake(0, 200, self.view.frame.width, 25)
+        calendarBar.frame = CGRectMake(0, 140, self.view.frame.width, 40)
+        
+        earlyshiftlegend.backgroundColor = UIColor.blueColor()
+        center1shiftlegend.backgroundColor = UIColor.yellowColor()
+        center2shiftlegend.backgroundColor = UIColor.brownColor()
+        center3shiftlegend.backgroundColor = UIColor.brownColor()
+        latershiftlegend.backgroundColor = UIColor.blackColor()
+        breaktimelegend.backgroundColor = UIColor.redColor()
+        
+        earlyshiftlegend.text = "早番"
+        center1shiftlegend.text = "中1"
+        center2shiftlegend.text = "中2"
+        center3shiftlegend.text = "中3"
+        latershiftlegend.text = "遅番"
+        breaktimelegend.text = "休み"
+        
+        earlyshiftlegend.textColor = UIColor.grayColor()
+        center1shiftlegend.textColor = UIColor.grayColor()
+        center2shiftlegend.textColor = UIColor.grayColor()
+        center3shiftlegend.textColor = UIColor.grayColor()
+        latershiftlegend.textColor = UIColor.grayColor()
+        breaktimelegend.textColor = UIColor.grayColor()
+        
+        earlyshiftlegend.textAlignment = NSTextAlignment.Center
+        center1shiftlegend.textAlignment = NSTextAlignment.Center
+        center2shiftlegend.textAlignment = NSTextAlignment.Center
+        center3shiftlegend.textAlignment = NSTextAlignment.Center
+        latershiftlegend.textAlignment = NSTextAlignment.Center
+        breaktimelegend.textAlignment = NSTextAlignment.Center
+        
+        earlyshiftlegend.frame = CGRectMake(25, 20, 45, 45)
+        center1shiftlegend.frame = CGRectMake(25, 80, 45, 45)
+        center2shiftlegend.frame = CGRectMake(self.view.frame.width/2-22.5, 20, 45, 45)
+        center3shiftlegend.frame = CGRectMake(self.view.frame.width/2-22.5, 80, 45, 45)
+        latershiftlegend.frame = CGRectMake(self.view.frame.width-70, 20, 45, 45)
+        breaktimelegend.frame = CGRectMake(self.view.frame.width-70, 80, 45, 45)
+        
+        earlyshiftlegend.layer.masksToBounds = true
+        center1shiftlegend.layer.masksToBounds = true
+        center2shiftlegend.layer.masksToBounds = true
+        center3shiftlegend.layer.masksToBounds = true
+        latershiftlegend.layer.masksToBounds = true
+        breaktimelegend.layer.masksToBounds = true
+        
+        earlyshiftlegend.layer.cornerRadius = 22.5
+        center1shiftlegend.layer.cornerRadius = 22.5
+        center2shiftlegend.layer.cornerRadius = 22.5
+        center3shiftlegend.layer.cornerRadius = 22.5
+        latershiftlegend.layer.cornerRadius = 22.5
+        breaktimelegend.layer.cornerRadius = 22.5
+        
+        self.view.addSubview(earlyshiftlegend)
+        self.view.addSubview(center1shiftlegend)
+        self.view.addSubview(center2shiftlegend)
+        self.view.addSubview(center3shiftlegend)
+        self.view.addSubview(latershiftlegend)
+        self.view.addSubview(breaktimelegend)
+        
         
         self.view.addSubview(calendarBar)
         self.view.addSubview(prevMonthButton)
@@ -81,7 +145,7 @@ class CalenderViewController: UIViewController {
         //iPhone6
         calendarLabelIntervalX = 15;
         calendarLabelX         = 50;
-        calendarLabelY         = 30;
+        calendarLabelY         = 190;
         calendarLabelWidth     = 45;
         calendarLabelHeight    = 25;
         calendarLableFontSize  = 16;
@@ -90,13 +154,13 @@ class CalenderViewController: UIViewController {
         
         calendarIntervalX      = 15;
         calendarX              = 50;
-        calendarIntervalY      = 175;
+        calendarIntervalY      = 230;
         calendarY              = 50;
         calendarSize           = 45;
         calendarFontSize       = 19;
         
-        self.prevMonthButton.frame = CGRectMake(15, 488, CGFloat(calendarSize), CGFloat(calendarSize));
-        self.nextMonthButton.frame = CGRectMake(314, 488, CGFloat(calendarSize), CGFloat(calendarSize));
+        self.prevMonthButton.frame = CGRectMake(15, 550, CGFloat(calendarSize), CGFloat(calendarSize));
+        self.nextMonthButton.frame = CGRectMake(314, 550, CGFloat(calendarSize), CGFloat(calendarSize));
         
         //ボタンを角丸にする
         prevMonthButton.layer.cornerRadius = CGFloat(buttonRadius)
@@ -268,6 +332,8 @@ class CalenderViewController: UIViewController {
     //タイトル表記を設定する関数
     func setupCalendarTitleLabel() {
         calendarBar.text = String("\(year)年\(month)月のカレンダー")
+        calendarBar.textAlignment = NSTextAlignment.Center
+        
     }
     
     //現在（初期表示時）の年月に該当するデータを取得する関数
