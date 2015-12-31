@@ -82,6 +82,7 @@ class CalenderViewController: UIViewController {
         
         prevMonthButton.addTarget(self, action: "getPrevMonthData:", forControlEvents: .TouchUpInside)
         nextMonthButton.addTarget(self, action: "getNextMonthData:", forControlEvents: .TouchUpInside)
+        nowMonthButton.addTarget(self, action: "getNowMonthData:", forControlEvents: .TouchUpInside)
         
         calendarBar.frame = CGRectMake(0, 140, self.view.frame.width, 40)
         
@@ -354,19 +355,6 @@ class CalenderViewController: UIViewController {
 
             }
             
-            
-//            if(i % 7 == 0){
-//                calendarBackGroundColor = UIColor(
-//                    red: CGFloat(0.831), green: CGFloat(0.349), blue: CGFloat(0.224), alpha: CGFloat(1.0)
-//                )
-//            }else if(i % 7 == 6){
-//                calendarBackGroundColor = UIColor(
-//                    red: CGFloat(0.400), green: CGFloat(0.471), blue: CGFloat(0.980), alpha: CGFloat(1.0)
-//                )
-//            }else{
-//                calendarBackGroundColor = UIColor.lightGrayColor()
-//            }
-            
             //ボタンのデザインを決定する
             button.backgroundColor = calendarBackGroundColor
             button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
@@ -430,6 +418,22 @@ class CalenderViewController: UIViewController {
          *************/
         let currentCalendar: NSCalendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
         let currentComps: NSDateComponents = NSDateComponents()
+        
+        //現在の日付を取得する
+        now = NSDate()
+        
+        //inUnit:で指定した単位（月）の中で、rangeOfUnit:で指定した単位（日）が取り得る範囲
+        let calendar: NSCalendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
+        
+        //最初にメンバ変数に格納するための現在日付の情報を取得する
+        comps = calendar.components([NSCalendarUnit.Year, NSCalendarUnit.Month, NSCalendarUnit.Day, NSCalendarUnit.Weekday],fromDate:now)
+        
+        //年月日と最後の日付と曜日を取得(NSIntegerをintへのキャスト不要)
+        let orgYear: NSInteger      = comps.year
+        let orgMonth: NSInteger     = comps.month
+        
+        year      = orgYear
+        month     = orgMonth
         
         currentComps.year  = year
         currentComps.month = month
@@ -546,6 +550,11 @@ class CalenderViewController: UIViewController {
         nextCalendarSettings()
     }
     
+    //今月ボタンを押した際のアクション
+    func getNowMonthData(sender: UIButton){
+        NowCalendarSettings()
+    }
+    
     //前月を表示するメソッド
     func prevCalendarSettings() {
         removeCalendarButtonObject()
@@ -558,6 +567,14 @@ class CalenderViewController: UIViewController {
     func nextCalendarSettings() {
         removeCalendarButtonObject()
         setupNextCalendarData()
+        generateCalendar()
+        setupCalendarTitleLabel()
+    }
+    
+    //今月を表示するメソッド
+    func NowCalendarSettings(){
+        removeCalendarButtonObject()
+        setupCurrentCalendarData()
         generateCalendar()
         setupCalendarTitleLabel()
     }
