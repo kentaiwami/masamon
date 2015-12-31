@@ -335,7 +335,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                     }
 
                     myString.addAttributes(whiteAttribute, range: myRange2)
-                    myString.addAttribute(NSForegroundColorAttributeName, value: UIColor.redColor(), range: myRange)                //ユーザ名強調表示
+                    myString.addAttribute(NSForegroundColorAttributeName, value: UIColor.hex("66FF66", alpha: 1.0), range: myRange)                //ユーザ名強調表示
                     
                     switch(i){
                     case 0:
