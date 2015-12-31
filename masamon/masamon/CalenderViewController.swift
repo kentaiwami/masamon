@@ -31,6 +31,7 @@ class CalenderViewController: UIViewController {
     var calendarBar = UILabel()
     var prevMonthButton = UIButton()
     var nextMonthButton = UIButton()
+    var nowMonthButton = UIButton()
     
     var earlyshiftlegend = UILabel()
     var center1shiftlegend = UILabel()
@@ -69,12 +70,15 @@ class CalenderViewController: UIViewController {
         calendarBar.backgroundColor = UIColor.hex("FF8E92", alpha: 1.0)
         prevMonthButton.backgroundColor = UIColor.hex("FF8E92", alpha: 1.0)
         nextMonthButton.backgroundColor = UIColor.hex("FF8E92", alpha: 1.0)
+        nowMonthButton.backgroundColor = UIColor.hex("FF8E92", alpha: 1.0)
         
         prevMonthButton.setTitle("前月", forState: .Normal)
         nextMonthButton.setTitle("前月", forState: .Normal)
+        nowMonthButton.setTitle("今月", forState: .Normal)
         
         prevMonthButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         nextMonthButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        nowMonthButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         
         prevMonthButton.addTarget(self, action: "getPrevMonthData:", forControlEvents: .TouchUpInside)
         nextMonthButton.addTarget(self, action: "getNextMonthData:", forControlEvents: .TouchUpInside)
@@ -153,6 +157,7 @@ class CalenderViewController: UIViewController {
         self.view.addSubview(calendarBar)
         self.view.addSubview(prevMonthButton)
         self.view.addSubview(nextMonthButton)
+        self.view.addSubview(nowMonthButton)
         
         //iPhone6
         calendarLabelIntervalX = 15;
@@ -173,10 +178,11 @@ class CalenderViewController: UIViewController {
         
         self.prevMonthButton.frame = CGRectMake(15, 550, CGFloat(calendarSize), CGFloat(calendarSize));
         self.nextMonthButton.frame = CGRectMake(314, 550, CGFloat(calendarSize), CGFloat(calendarSize));
-        
+        self.nowMonthButton.frame = CGRectMake(self.view.frame.width/2-CGFloat(calendarSize/2), 550, CGFloat(calendarSize), CGFloat(calendarSize))
         //ボタンを角丸にする
         prevMonthButton.layer.cornerRadius = CGFloat(buttonRadius)
         nextMonthButton.layer.cornerRadius = CGFloat(buttonRadius)
+        nowMonthButton.layer.cornerRadius = CGFloat(buttonRadius)
         
         //現在の日付を取得する
         now = NSDate()
@@ -407,8 +413,9 @@ class CalenderViewController: UIViewController {
     
     //タイトル表記を設定する関数
     func setupCalendarTitleLabel() {
-        calendarBar.text = String("\(year)年\(month)月のカレンダー")
+        calendarBar.text = String("\(year)年\(month)月")
         calendarBar.textAlignment = NSTextAlignment.Center
+        calendarBar.textColor = UIColor.whiteColor()
         
     }
     
