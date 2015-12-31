@@ -534,10 +534,30 @@ class CalenderViewController: UIViewController {
     //カレンダーボタンをタップした時のアクション
     func buttonTapped(button: UIButton){
         
-        //@todo:画面遷移等の処理を書くことができます。
-        
-        //コンソール表示
-        print("\(year)年\(month)月\(button.tag)日が選択されました！")
+        if(DBmethod().TheDayStaffGet(MonthlySalaryShow().Changecalendar(year, calender: "A.D"), month: month, date: button.tag) == nil){
+            let alertController = UIAlertController(title: "\(year)年\(month)月\(button.tag)日", message: "データなし", preferredStyle: .Alert)
+            let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+            alertController.addAction(defaultAction)
+            
+            presentViewController(alertController, animated: true, completion: nil)
+        }else{
+            let AAA = DBmethod().TheDayStaffGet(MonthlySalaryShow().Changecalendar(year, calender: "A.D"),month: month,date: button.tag)![0].staff
+            let BBB = MonthlySalaryShow().SplitStaffShift(AAA)
+            
+            let C1 = "早番："+BBB[0]+"\n"
+            let C2 = "中1："+BBB[1]+"\n"
+            let C3 = "中2："+BBB[2]+"\n"
+            let C4 = "中3："+BBB[3]+"\n"
+            let C5 = "遅番："+BBB[4]+"\n"
+            let C6 = "その他："+BBB[5]+"\n"
+            let CCC = C1+C2+C3+C4+C5+C6
+            
+            let alertController = UIAlertController(title: "\(year)年\(month)月\(button.tag)日", message: CCC, preferredStyle: .Alert)
+            let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+            alertController.addAction(defaultAction)
+           
+            presentViewController(alertController, animated: true, completion: nil)
+        }
     }
     
     //前の月のボタンを押した際のアクション
