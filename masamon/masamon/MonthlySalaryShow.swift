@@ -38,7 +38,9 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        currentnsdate = NSDate()
+        
+        //        currentnsdate = NSDate()
+        currentnsdate = self.DateSerial(2015, month: 10, day: 11)
         
         //テキストビューの編集をできないようにする
         EarlyShiftText.editable = false
@@ -285,10 +287,10 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     */
     //受け取った日付のデータ表示を行う
     func ShowAllData(y: Int, m: Int, d: Int){
-//        let myAttribute = [ NSFontAttributeName: UIFont(name: "Chalkduster", size: 18.0)! ]
-//        let myString = NSMutableAttributedString(string: "あいうえお", attributes: myAttribute )
-//        let myRange = NSRange(location: 0, length: 2) // range starting at location 17 with a lenth of 7: "Strings"
-//        myString.addAttribute(NSForegroundColorAttributeName, value: UIColor.redColor(), range: myRange)
+        //        let myAttribute = [ NSFontAttributeName: UIFont(name: "Chalkduster", size: 18.0)! ]
+        //        let myString = NSMutableAttributedString(string: "あいうえお", attributes: myAttribute )
+        //        let myRange = NSRange(location: 0, length: 2) // range starting at location 17 with a lenth of 7: "Strings"
+        //        myString.addAttribute(NSForegroundColorAttributeName, value: UIColor.redColor(), range: myRange)
         
         if(DBmethod().TheDayStaffGet(y, month: m, date: d) == nil){
             EarlyShiftText.text = "早番：データなし"
@@ -308,76 +310,60 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                 }
             }
             
-            //ユーザ名を探して範囲を取得するためのループ
+            
+            let shiftarray = ["早番：","中1：","中2：","中3：","遅番：","その他："]
+            //テキストビューにスタッフ名を羅列するためのループ
             for(var i = 0; i < splitedstaffarray.count; i++){
+                var myString = NSMutableAttributedString()
                 if((splitedstaffarray[i].rangeOfString(DBmethod().UserNameGet())) != nil){
+                    
                     let AAA = splitedstaffarray[i] as NSString
                     let usernamelocation = AAA.rangeOfString(DBmethod().UserNameGet()).location
                     let usernamelength = AAA.rangeOfString(DBmethod().UserNameGet()).length
-
                     let myAttribute = [ NSFontAttributeName: UIFont.systemFontOfSize(UIFont.smallSystemFontSize()) ]
+                    
+                    myString = NSMutableAttributedString(string: shiftarray[i] + splitedstaffarray[i], attributes: myAttribute )
                     let myRange = NSRange(location: usernamelocation, length: usernamelength)
+                    myString.addAttribute(NSForegroundColorAttributeName, value: UIColor.redColor(), range: myRange)
                     
                     switch(i){
-                    case 0:                                                     //早番にユーザ名
-                        let myString = NSMutableAttributedString(string: "早番：" + splitedstaffarray[i], attributes: myAttribute )
-                        myString.addAttribute(NSForegroundColorAttributeName, value: UIColor.redColor(), range: myRange)
+                    case 0:
                         EarlyShiftText.attributedText = myString
-                        Center1ShiftText.text = "中1：" + splitedstaffarray[1]
-                        Center2ShiftText.text = "中2：" + splitedstaffarray[2]
-                        Center3ShiftText.text = "中3：" + splitedstaffarray[3]
-                        LateShiftText.text = "遅番：" + splitedstaffarray[4]
-                        OtherShiftText.text = "その他：" + splitedstaffarray[5]
-                    case 1:                                                     //中1にユーザ名
-                        let myString = NSMutableAttributedString(string: "中1：" + splitedstaffarray[i], attributes: myAttribute )
-                        myString.addAttribute(NSForegroundColorAttributeName, value: UIColor.redColor(), range: myRange)
-                        EarlyShiftText.text = "早番：" + splitedstaffarray[0]
+                    case 1:
                         Center1ShiftText.attributedText = myString
-                        Center2ShiftText.text = "中2：" + splitedstaffarray[2]
-                        Center3ShiftText.text = "中3：" + splitedstaffarray[3]
-                        LateShiftText.text = "遅番：" + splitedstaffarray[4]
-                        OtherShiftText.text = "その他：" + splitedstaffarray[5]
-                    case 2:                                                     //中2にユーザ名
-                        let myString = NSMutableAttributedString(string: "中2：" + splitedstaffarray[i], attributes: myAttribute )
-                        myString.addAttribute(NSForegroundColorAttributeName, value: UIColor.redColor(), range: myRange)
-                        EarlyShiftText.text = "早番：" + splitedstaffarray[0]
-                        Center1ShiftText.text = "中1：" + splitedstaffarray[1]
+                    case 2:
                         Center2ShiftText.attributedText = myString
-                        Center3ShiftText.text = "中3：" + splitedstaffarray[3]
-                        LateShiftText.text = "遅番：" + splitedstaffarray[4]
-                        OtherShiftText.text = "その他：" + splitedstaffarray[5]
-                    case 3:                                                     //中3にユーザ名
-                        let myString = NSMutableAttributedString(string: "中3：" + splitedstaffarray[i], attributes: myAttribute )
-                        myString.addAttribute(NSForegroundColorAttributeName, value: UIColor.redColor(), range: myRange)
-                        EarlyShiftText.text = "早番：" + splitedstaffarray[0]
-                        Center1ShiftText.text = "中1：" + splitedstaffarray[1]
-                        Center2ShiftText.text = "中2：" + splitedstaffarray[2]
+                    case 3:
                         Center3ShiftText.attributedText = myString
-                        LateShiftText.text = "遅番：" + splitedstaffarray[4]
-                        OtherShiftText.text = "その他：" + splitedstaffarray[5]
-                    case 4:                                                     //遅番にユーザ名
-                        let myString = NSMutableAttributedString(string: "遅番：" + splitedstaffarray[i], attributes: myAttribute )
-                        myString.addAttribute(NSForegroundColorAttributeName, value: UIColor.redColor(), range: myRange)
-                        EarlyShiftText.text = "早番：" + splitedstaffarray[0]
-                        Center1ShiftText.text = "中1：" + splitedstaffarray[1]
-                        Center2ShiftText.text = "中2：" + splitedstaffarray[2]
-                        Center3ShiftText.text = "中3：" + splitedstaffarray[3]
+                    case 4:
                         LateShiftText.attributedText = myString
-                        OtherShiftText.text = "その他：" + splitedstaffarray[5]
-                    case 5:                                                     //その他にユーザ名
-                        let myString = NSMutableAttributedString(string: "その他：" + splitedstaffarray[i], attributes: myAttribute )
-                        myString.addAttribute(NSForegroundColorAttributeName, value: UIColor.redColor(), range: myRange)
-                        EarlyShiftText.text = "早番：" + splitedstaffarray[0]
-                        Center1ShiftText.text = "中1：" + splitedstaffarray[1]
-                        Center2ShiftText.text = "中2：" + splitedstaffarray[2]
-                        Center3ShiftText.text = "中3：" + splitedstaffarray[3]
-                        LateShiftText.text = "遅番：" + splitedstaffarray[4]
+                    case 5:
                         OtherShiftText.attributedText = myString
                     default:
                         break
                     }
+                }else{
+                    let myAttribute = [ NSFontAttributeName: UIFont.systemFontOfSize(UIFont.smallSystemFontSize()) ]
+                    let myRange = NSRange(location: 0, length: (shiftarray[i] + splitedstaffarray[i]).characters.count)
                     
-                    break
+                    myString = NSMutableAttributedString(string: shiftarray[i] + splitedstaffarray[i], attributes: myAttribute )
+                    myString.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor(), range: myRange)
+                    switch(i){
+                    case 0:
+                        EarlyShiftText.attributedText = myString
+                    case 1:
+                        Center1ShiftText.attributedText = myString
+                    case 2:
+                        Center2ShiftText.attributedText = myString
+                    case 3:
+                        Center3ShiftText.attributedText = myString
+                    case 4:
+                        LateShiftText.attributedText = myString
+                    case 5:
+                        OtherShiftText.attributedText = myString
+                    default:
+                        break
+                    }
                 }
             }
         }
