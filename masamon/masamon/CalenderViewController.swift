@@ -409,6 +409,7 @@ class CalenderViewController: UIViewController {
     func setupCalendarTitleLabel() {
         calendarBar.text = String("\(year)年\(month)月のカレンダー")
         calendarBar.textAlignment = NSTextAlignment.Center
+        calendarBar.textColor = UIColor.whiteColor()
         
     }
     
