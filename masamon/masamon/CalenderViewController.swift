@@ -81,6 +81,7 @@ class CalenderViewController: UIViewController {
         
         calendarBar.frame = CGRectMake(0, 140, self.view.frame.width, 40)
         
+        //凡例の背景色を設定
         earlyshiftlegend.backgroundColor = UIColor.blueColor()
         center1shiftlegend.backgroundColor = UIColor.yellowColor()
         center2shiftlegend.backgroundColor = UIColor.brownColor()
@@ -88,6 +89,7 @@ class CalenderViewController: UIViewController {
         latershiftlegend.backgroundColor = UIColor.blackColor()
         breaktimelegend.backgroundColor = UIColor.redColor()
         
+        //凡例に表示するテキストを設定
         earlyshiftlegend.text = "早番"
         center1shiftlegend.text = "中1"
         center2shiftlegend.text = "中2"
@@ -95,6 +97,7 @@ class CalenderViewController: UIViewController {
         latershiftlegend.text = "遅番"
         breaktimelegend.text = "休み"
         
+        //凡例に表示するテキストの文字色を設定
         earlyshiftlegend.textColor = UIColor.grayColor()
         center1shiftlegend.textColor = UIColor.grayColor()
         center2shiftlegend.textColor = UIColor.grayColor()
@@ -102,6 +105,7 @@ class CalenderViewController: UIViewController {
         latershiftlegend.textColor = UIColor.grayColor()
         breaktimelegend.textColor = UIColor.grayColor()
         
+        //凡例に表示するテキストを中央寄せに設定
         earlyshiftlegend.textAlignment = NSTextAlignment.Center
         center1shiftlegend.textAlignment = NSTextAlignment.Center
         center2shiftlegend.textAlignment = NSTextAlignment.Center
@@ -109,6 +113,7 @@ class CalenderViewController: UIViewController {
         latershiftlegend.textAlignment = NSTextAlignment.Center
         breaktimelegend.textAlignment = NSTextAlignment.Center
         
+        //凡例を表示する場所と大きさを設定
         earlyshiftlegend.frame = CGRectMake(25, 20, 45, 45)
         center1shiftlegend.frame = CGRectMake(25, 80, 45, 45)
         center2shiftlegend.frame = CGRectMake(self.view.frame.width/2-22.5, 20, 45, 45)
@@ -116,6 +121,7 @@ class CalenderViewController: UIViewController {
         latershiftlegend.frame = CGRectMake(self.view.frame.width-70, 20, 45, 45)
         breaktimelegend.frame = CGRectMake(self.view.frame.width-70, 80, 45, 45)
         
+        //凡例のマスクを有効に設定
         earlyshiftlegend.layer.masksToBounds = true
         center1shiftlegend.layer.masksToBounds = true
         center2shiftlegend.layer.masksToBounds = true
@@ -123,6 +129,7 @@ class CalenderViewController: UIViewController {
         latershiftlegend.layer.masksToBounds = true
         breaktimelegend.layer.masksToBounds = true
         
+        //凡例を角丸に設定
         earlyshiftlegend.layer.cornerRadius = 22.5
         center1shiftlegend.layer.cornerRadius = 22.5
         center2shiftlegend.layer.cornerRadius = 22.5
@@ -130,6 +137,7 @@ class CalenderViewController: UIViewController {
         latershiftlegend.layer.cornerRadius = 22.5
         breaktimelegend.layer.cornerRadius = 22.5
         
+        //凡例をviewに追加
         self.view.addSubview(earlyshiftlegend)
         self.view.addSubview(center1shiftlegend)
         self.view.addSubview(center2shiftlegend)
