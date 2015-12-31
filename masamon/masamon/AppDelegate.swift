@@ -47,7 +47,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let settingview:UIViewController = setting
         
         monthlysalaryshowview.view.backgroundColor = UIColor.blackColor()
-        demo.view.backgroundColor = UIColor.brownColor()
+        demo.view.backgroundColor = UIColor.blackColor()
         
         navigationController.viewControllerArray = [monthlysalaryshowview,demo,shiftgalleryview,settingview]
         
