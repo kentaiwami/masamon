@@ -49,6 +49,15 @@ class CalenderViewController: UIViewController {
     var calendarSize: Int!
     var calendarFontSize: Int!
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        CalenderViewDidLoad()
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+    }
+    
     func CalenderViewDidLoad(){
         calendarBar.backgroundColor = UIColor.hex("FF8E92", alpha: 1.0)
         prevMonthButton.backgroundColor = UIColor.hex("FF8E92", alpha: 1.0)
@@ -72,7 +81,7 @@ class CalenderViewController: UIViewController {
         //iPhone6
         calendarLabelIntervalX = 15;
         calendarLabelX         = 50;
-        calendarLabelY         = 95;
+        calendarLabelY         = 30;
         calendarLabelWidth     = 45;
         calendarLabelHeight    = 25;
         calendarLableFontSize  = 16;
@@ -120,7 +129,7 @@ class CalenderViewController: UIViewController {
         mArray = NSMutableArray()
         
         //曜日ラベル初期定義
-        let monthName:[String] = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]
+        let monthName:[String] = ["日","月","火","水","木","金","土"]
         
         //曜日ラベルを動的に配置
         setupCalendarLabel(monthName)
@@ -387,16 +396,6 @@ class CalenderViewController: UIViewController {
     func getNextMonthData(sender: UIButton) {
         nextCalendarSettings()
     }
-    
-    //左スワイプで前月を表示
-    //    @IBAction func swipePrevCalendar(sender: UISwipeGestureRecognizer) {
-    //        prevCalendarSettings()
-    //    }
-    //
-    //    //右スワイプで次月を表示
-    //    @IBAction func swipeNextCalendar(sender: UISwipeGestureRecognizer) {
-    //        nextCalendarSettings()
-    //    }
     
     //前月を表示するメソッド
     func prevCalendarSettings() {

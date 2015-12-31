@@ -33,6 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let monthlysalaryshow = storyboard.instantiateViewControllerWithIdentifier("MonthlySalaryShow") as! MonthlySalaryShow
         let setting = storyboard.instantiateViewControllerWithIdentifier("Setting") as! Setting
         let shiftgallery = storyboard.instantiateViewControllerWithIdentifier("ShiftGallery") as! ShiftGallery
+        let calender = storyboard.instantiateViewControllerWithIdentifier("CalenderViewController") as! CalenderViewController
         
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
         
@@ -42,14 +43,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Override point for customization after application launch.
         let monthlysalaryshowview:UIViewController = monthlysalaryshow
-        let demo:UIViewController = UIViewController()
+        let calenderview:UIViewController = calender
         let shiftgalleryview:UIViewController = shiftgallery
         let settingview:UIViewController = setting
         
         monthlysalaryshowview.view.backgroundColor = UIColor.blackColor()
-        demo.view.backgroundColor = UIColor.blackColor()
+        calenderview.view.backgroundColor = UIColor.blackColor()
         
-        navigationController.viewControllerArray = [monthlysalaryshowview,demo,shiftgalleryview,settingview]
+        navigationController.viewControllerArray = [monthlysalaryshowview,calenderview,shiftgalleryview,settingview]
         
         self.window?.rootViewController = navigationController
         self.window?.makeKeyAndVisible()
