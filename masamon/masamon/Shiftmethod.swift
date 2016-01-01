@@ -19,7 +19,6 @@ class Shiftmethod: UIViewController {
     var number = 6
     
     let TEST = "aaa"
-    var monthdaycounts = 0
     
     //ワンクール分のシフトをShiftDetailDBとShiftDBへ記録する
     func ShiftDBOneCoursRegist(importname: String, importpath: String, update: Bool){
@@ -27,7 +26,6 @@ class Shiftmethod: UIViewController {
         let shiftnsdate = MonthlySalaryShow().DateSerial(MonthlySalaryShow().Changecalendar(shiftyearandmonth.year, calender: "JP"), month: shiftyearandmonth.startcoursmonth, day: 1)
         let c = NSCalendar.currentCalendar()
         let monthrange = c.rangeOfUnit([NSCalendarUnit.Day],  inUnit: [NSCalendarUnit.Month], forDate: shiftnsdate)
-        monthdaycounts = monthrange.length
         
         let documentPath: String = NSBundle.mainBundle().pathForResource(TEST, ofType: "xlsx")!
         let spreadsheet: BRAOfficeDocumentPackage = BRAOfficeDocumentPackage.open(documentPath)
@@ -177,6 +175,11 @@ class Shiftmethod: UIViewController {
         
         var userposition = ""
         
+        let shiftyearandmonth = self.JudgeYearAndMonth()
+        let shiftnsdate = MonthlySalaryShow().DateSerial(MonthlySalaryShow().Changecalendar(shiftyearandmonth.year, calender: "JP"), month: shiftyearandmonth.startcoursmonth, day: 1)
+        let c = NSCalendar.currentCalendar()
+        let monthrange = c.rangeOfUnit([NSCalendarUnit.Day],  inUnit: [NSCalendarUnit.Month], forDate: shiftnsdate)
+        
         //F列からユーザ名と合致する箇所を探す
         for(var i = 0; i < staffnumber; i++){
             let nowcell: String = worksheet.cellForCellReference(staffcellposition[i]).stringValue()
@@ -188,7 +191,7 @@ class Shiftmethod: UIViewController {
         }
         
         //1クール分行う
-        for(var i = 0; i < monthdaycounts; i++){
+        for(var i = 0; i < monthrange.length; i++){
             let replaceday = userposition.stringByReplacingOccurrencesOfString("F", withString: cellrow[i])
             let dayshift: String = worksheet.cellForCellReference(replaceday).stringValue()
             
