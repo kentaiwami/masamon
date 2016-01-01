@@ -92,10 +92,24 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         }
     }
     
+    override func viewDidAppear(animated: Bool) {
+        shiftlist.removeAllObjects()
+        if(DBmethod().DBRecordCount(ShiftDB) != 0){
+            for(var i = DBmethod().DBRecordCount(ShiftDB)-1; i >= 0; i--){
+                shiftlist.addObject(DBmethod().ShiftDBGet(i))
+            }
+            
+            //pickerviewのデフォルト表示
+            SaralyLabel.text = String(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB)-1))
+        }
+        
+        myUIPicker.reloadAllComponents()
+    }
+    
     //バックグラウンドで保存しながらプログレスを表示する
     let progress = GradientCircularProgress()
     let Libralypath = NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0] as String
-    func onTest() {
+    func savedata() {
 
         progress.show(message: "取り込み中...", style: BlueDarkStyle())
         
@@ -105,8 +119,19 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
 
             self.dispatch_async_main { // ここからメインスレッド
                 self.progress.dismiss({ () -> Void in
-                    let progress = GradientCircularProgress()
+                    self.shiftlist.removeAllObjects()
+                    if(DBmethod().DBRecordCount(ShiftDB) != 0){
+                        for(var i = DBmethod().DBRecordCount(ShiftDB)-1; i >= 0; i--){
+                            self.shiftlist.addObject(DBmethod().ShiftDBGet(i))
+                        }
+                        
+                        //pickerviewのデフォルト表示
+                        self.SaralyLabel.text = String(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB)-1))
+                    }
                     
+                    self.myUIPicker.reloadAllComponents()
+                    
+                    let progress = GradientCircularProgress()
                     progress.show(message: "完了", style: BlueDarkStyle())
                     progress.dismiss()
                 })
@@ -175,35 +200,10 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         }
     }
     
-    //チェックマークを表示するアニメーション
-    func CheckMarkAnimation(){
-        let image = UIImage(named: "../images/check.png")
-        alertview.image = image
-        let alertwidth = 140.0
-        let alertheight = 140.0
-        alertview.frame = CGRectMake(self.view.frame.width/2-CGFloat(alertwidth)/2, self.view.frame.height/2-CGFloat(alertheight)/2, CGFloat(alertwidth), CGFloat(alertheight))
-        alertview.alpha = 0.0
-        
-        view.addSubview(alertview)
-        
-        //表示アニメーション
-        UIView.animateWithDuration(0.4, animations: { () -> Void in
-            self.alertview.frame = CGRectMake(self.view.frame.width/2-CGFloat(alertwidth)/2, self.view.frame.height/2-CGFloat(alertheight)/2, CGFloat(alertwidth), CGFloat(alertheight))
-            self.alertview.alpha = 1.0
-        })
-        
-        //消すアニメーション
-        UIView.animateWithDuration(1.0, animations: { () -> Void in
-            self.alertview.alpha = 0.0
-        })
-        
-    }
-    
     func FileSaveSuccessfulAlertShow(){
-        //ファイルの保存が成功していたら
+        //ファイルの保存が行われていたら
         if(appDelegate.filesavealert){
-            self.onTest()
-            //self.CheckMarkAnimation()
+            self.savedata()
             appDelegate.filesavealert = false
         }
     }
