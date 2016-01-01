@@ -39,20 +39,6 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-//        let progress = GradientCircularProgress()
-//        
-//        let MAX = 10000000
-//        
-//        for(var i = 0; i < MAX; i++){
-//            let ratio: CGFloat = CGFloat(i) / CGFloat(MAX)
-//            progress.showAtRatio(style: BlueDarkStyle())
-//            progress.updateRatio(ratio)
-//        }
-//        
-//       
-//        progress.dismiss()
-        
         currentnsdate = NSDate()
         
         //テキストビューの編集をできないようにする
@@ -105,25 +91,48 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             SaralyLabel.text = String(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB)-1))
         }
     }
-    
+    let progress = GradientCircularProgress()
     override func viewDidAppear(animated: Bool) {
-        let progress = GradientCircularProgress()
         
-        progress.show(message: "Loading...", style: BlueDarkStyle())
-        progress.dismiss()
         
-//        let MAX = 1000000000000000
-//        
-//        
-//        for(var i = 0; i < MAX; i++){
-//            let ratio: CGFloat = CGFloat(i) / CGFloat(MAX)
-//            progress.updateRatio(ratio)
-//            progress.showAtRatio(style: BlueDarkStyle())
-//        }
-//        
-//        
-//        progress.dismiss()
+//        progress.show(message: "Loading...", style: BlueDarkStyle())
+        
+        self.onTest()
+        
+        
+        
 
+        
+    }
+    
+    func onTest() {
+        progress.show(message: "Loading...", style: BlueDarkStyle())
+        // HUDとか出す
+        // showHUD()
+        
+        dispatch_async_global { // ここからバックグラウンドスレッド
+            // なんか重い処理
+            for(var i = 0; i < 1000000; i++) {
+                print(i)
+            }
+            
+            self.dispatch_async_main { // ここからメインスレッド
+                self.progress.dismiss()
+                // HUD消したり
+                // hideHUD()
+                
+                // 結果をUIへ表示したり
+//                self.label.text = "res=\(res)"
+            }
+        }
+    }
+    
+    func dispatch_async_main(block: () -> ()) {
+        dispatch_async(dispatch_get_main_queue(), block)
+    }
+    
+    func dispatch_async_global(block: () -> ()) {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), block)
     }
     
     override func didReceiveMemoryWarning() {
