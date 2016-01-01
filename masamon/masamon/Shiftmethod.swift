@@ -19,10 +19,15 @@ class Shiftmethod: UIViewController {
     var number = 6
     
     let TEST = "aaa"
-    
+    var monthdaycounts = 0
     
     //ワンクール分のシフトをShiftDetailDBとShiftDBへ記録する
     func ShiftDBOneCoursRegist(importname: String, importpath: String, update: Bool){
+        let shiftyearandmonth = self.JudgeYearAndMonth()
+        let shiftnsdate = MonthlySalaryShow().DateSerial(MonthlySalaryShow().Changecalendar(shiftyearandmonth.year, calender: "JP"), month: shiftyearandmonth.startcoursmonth, day: 1)
+        let c = NSCalendar.currentCalendar()
+        let monthrange = c.rangeOfUnit([NSCalendarUnit.Day],  inUnit: [NSCalendarUnit.Month], forDate: shiftnsdate)
+        monthdaycounts = monthrange.length
         
         let documentPath: String = NSBundle.mainBundle().pathForResource(TEST, ofType: "xlsx")!
         let spreadsheet: BRAOfficeDocumentPackage = BRAOfficeDocumentPackage.open(documentPath)
@@ -35,7 +40,8 @@ class Shiftmethod: UIViewController {
         var flag = 0
         
         //30日分繰り返すループ
-        for(var i = 0; i < 30; i++){
+        for(var i = 0; i < monthrange.length; i++){
+            print(i)
             let shiftdb = ShiftDB()
             let shiftdetaildb = ShiftDetailDB()
             
@@ -55,7 +61,7 @@ class Shiftmethod: UIViewController {
                     newshiftdetaildb.month = JudgeYearAndMonth().startcoursmonth
                     date++
                     
-                    if(date > 30){
+                    if(date > monthrange.length){
                         date = 1
                         flag = 1
                     }
@@ -72,7 +78,7 @@ class Shiftmethod: UIViewController {
                 
                 DBmethod().AddandUpdate(newshiftdetaildb, update: true)
             }else{
-                shiftdb.id = DBmethod().DBRecordCount(ShiftDetailDB)/30     //新規の場合はレコードの数を割ったidを使う
+                shiftdb.id = DBmethod().DBRecordCount(ShiftDetailDB)/monthrange.length     //新規の場合はレコードの数を割ったidを使う
                 shiftdb.shiftimportname = importname
                 shiftdb.shiftimportpath = importpath
                 shiftdb.salaly = 0
@@ -89,7 +95,7 @@ class Shiftmethod: UIViewController {
                     shiftdetaildb.month = JudgeYearAndMonth().startcoursmonth
                     date++
                     
-                    if(date > 30){
+                    if(date > monthrange.length){
                         date = 1
                         flag = 1
                     }
@@ -182,7 +188,7 @@ class Shiftmethod: UIViewController {
         }
         
         //1クール分行う
-        for(var i = 0; i < 30; i++){
+        for(var i = 0; i < monthdaycounts; i++){
             let replaceday = userposition.stringByReplacingOccurrencesOfString("F", withString: cellrow[i])
             let dayshift: String = worksheet.cellForCellReference(replaceday).stringValue()
             
@@ -256,7 +262,7 @@ class Shiftmethod: UIViewController {
     }
     
     //返り値は
-    //年、11日〜月末までの月、1日〜10日までの月
+    //年(和暦)、11日〜月末までの月、1日〜10日までの月
     func JudgeYearAndMonth() -> (year: Int, startcoursmonth: Int, endcoursmonth: Int){
         
         let documentPath: String = NSBundle.mainBundle().pathForResource(TEST, ofType: "xlsx")!
