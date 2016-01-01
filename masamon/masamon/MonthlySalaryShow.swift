@@ -92,6 +92,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         }
     }
     
+    //pickerview,label,シフトの表示を更新する
     override func viewDidAppear(animated: Bool) {
         shiftlist.removeAllObjects()
         if(DBmethod().DBRecordCount(ShiftDB) != 0){
@@ -124,21 +125,21 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
 
             self.dispatch_async_main { // ここからメインスレッド
                 self.progress.dismiss({ () -> Void in
+                    
+                    /*pickerview,label,シフトの表示を更新する*/
                     self.shiftlist.removeAllObjects()
                     if(DBmethod().DBRecordCount(ShiftDB) != 0){
                         for(var i = DBmethod().DBRecordCount(ShiftDB)-1; i >= 0; i--){
                             self.shiftlist.addObject(DBmethod().ShiftDBGet(i))
                         }
-                        
-                        //pickerviewのデフォルト表示
                         self.SaralyLabel.text = String(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB)-1))
                     }
                     
                     self.myUIPicker.reloadAllComponents()
                     
                     let today = self.currentnsdate
-                    let date = self.ReturnYearMonthDayWeekday(today)         //日付を西暦,月,日,曜日に分けて取得
-                    self.ShowAllData(self.Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day)           //データ表示へ分けた日付を渡す
+                    let date = self.ReturnYearMonthDayWeekday(today)
+                    self.ShowAllData(self.Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day)
                     self.CalenderLabel.text = "\(date.year)年\(date.month)月\(date.day)日 (\(self.ReturnWeekday(date.weekday)))"
                     
                     let progress = GradientCircularProgress()
