@@ -39,8 +39,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         super.viewDidLoad()
         
         
-        //        currentnsdate = NSDate()
-        currentnsdate = self.DateSerial(2015, month: 10, day: 11)
+        currentnsdate = NSDate()
         
         //テキストビューの編集をできないようにする
         EarlyShiftText.editable = false
