@@ -1,701 +1,1767 @@
-// !$*UTF8*$!
-{
-	archiveVersion = 1;
-	classes = {
-	};
-	objectVersion = 46;
-	objects = {
-
-/* Begin PBXBuildFile section */
-		370ACDFB1BDF486700AB73EB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370ACDFA1BDF486700AB73EB /* AppDelegate.swift */; };
-		370ACDFD1BDF486700AB73EB /* MonthlySalaryShow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370ACDFC1BDF486700AB73EB /* MonthlySalaryShow.swift */; };
-		370ACE021BDF486700AB73EB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 370ACE011BDF486700AB73EB /* Assets.xcassets */; };
-		370ACE051BDF486700AB73EB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 370ACE031BDF486700AB73EB /* LaunchScreen.storyboard */; };
-		370ACE101BDF486700AB73EB /* masamonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370ACE0F1BDF486700AB73EB /* masamonTests.swift */; };
-		370ACE1B1BDF486700AB73EB /* masamonUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370ACE1A1BDF486700AB73EB /* masamonUITests.swift */; };
-		370ACE291BDF4B7700AB73EB /* images in Resources */ = {isa = PBXBuildFile; fileRef = 370ACE281BDF4B7700AB73EB /* images */; };
-		370ACE441BDF573500AB73EB /* DB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370ACE431BDF573500AB73EB /* DB.swift */; };
-		370ACE4A1BDF9C8A00AB73EB /* DBmethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370ACE491BDF9C8A00AB73EB /* DBmethod.swift */; };
-		371432A81BE98F060088CDCC /* ShiftImport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371432A71BE98F060088CDCC /* ShiftImport.swift */; };
-		3724CDCD1C14317500D73528 /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3724CDCB1C14317500D73528 /* Realm.framework */; };
-		3724CDCE1C14317500D73528 /* Realm.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3724CDCB1C14317500D73528 /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		3724CDCF1C14317500D73528 /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3724CDCC1C14317500D73528 /* RealmSwift.framework */; };
-		3724CDD01C14317500D73528 /* RealmSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3724CDCC1C14317500D73528 /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		3726B3941C2FF7F400F22F34 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3726B3931C2FF7F400F22F34 /* QuartzCore.framework */; };
-		3726B39A1C30009700F22F34 /* CalenderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3726B3991C30009700F22F34 /* CalenderViewController.swift */; };
-		3726B3A61C311B7600F22F34 /* aaa.xlsx in Resources */ = {isa = PBXBuildFile; fileRef = 3726B3A51C311B7600F22F34 /* aaa.xlsx */; };
-		3742AF561C12D8D1003AB33B /* libz.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3742AF551C12D8D1003AB33B /* libz.1.dylib */; };
-		3742AF6E1C12FEE8003AB33B /* bbb.xlsx in Resources */ = {isa = PBXBuildFile; fileRef = 3742AF6D1C12FEE8003AB33B /* bbb.xlsx */; };
-		3742AF901C130391003AB33B /* libXlsxReaderWriter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3742AF8B1C130360003AB33B /* libXlsxReaderWriter.a */; };
-		376C92D61BE695D000D45FC2 /* extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376C92D51BE695D000D45FC2 /* extentions.swift */; };
-		379955951C14431F00BAAD9E /* Shiftmethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379955941C14431F00BAAD9E /* Shiftmethod.swift */; };
-		379A2DBE1C1E5F9900751425 /* no_data.png in Resources */ = {isa = PBXBuildFile; fileRef = 379A2DBD1C1E5F9900751425 /* no_data.png */; };
-		379A2DC41C1F2CC300751425 /* ShiftGallery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379A2DC31C1F2CC300751425 /* ShiftGallery.swift */; };
-		379A2E051C1FDFFC00751425 /* CustomUICollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379A2E041C1FDFFC00751425 /* CustomUICollectionViewCell.swift */; };
-		37D4B3101BE0F59900F06759 /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D4B30F1BE0F59900F06759 /* Setting.swift */; };
-		37DD8EF51C1C0135007C0E6C /* SwipeBetweenViewControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DD8EF41C1C0135007C0E6C /* SwipeBetweenViewControllers.swift */; };
-		37DD8EFF1C1C29FF007C0E6C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 370ACDFE1BDF486700AB73EB /* Main.storyboard */; };
-/* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		370ACE0C1BDF486700AB73EB /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 370ACDEF1BDF486600AB73EB /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 370ACDF61BDF486600AB73EB;
-			remoteInfo = masamon;
-		};
-		370ACE171BDF486700AB73EB /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 370ACDEF1BDF486600AB73EB /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 370ACDF61BDF486600AB73EB;
-			remoteInfo = masamon;
-		};
-		3742AF8A1C130360003AB33B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3742AF831C130360003AB33B /* XlsxReaderWriter.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 45B6E23A1A148F7500288A78;
-			remoteInfo = XlsxReaderWriter;
-		};
-		3742AF8C1C130360003AB33B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3742AF831C130360003AB33B /* XlsxReaderWriter.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 45B6E2451A148F7500288A78;
-			remoteInfo = XlsxReaderWriterTests;
-		};
-		3742AF911C130494003AB33B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3742AF831C130360003AB33B /* XlsxReaderWriter.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 45B6E2391A148F7500288A78;
-			remoteInfo = XlsxReaderWriter;
-		};
-/* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		3724CDD11C14317500D73528 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				3724CDD01C14317500D73528 /* RealmSwift.framework in Embed Frameworks */,
-				3724CDCE1C14317500D73528 /* Realm.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		37F1E2A21BF21126000A22B0 /* Embed App Extensions */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 13;
-			files = (
-			);
-			name = "Embed App Extensions";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
-/* Begin PBXFileReference section */
-		370ACDF71BDF486600AB73EB /* masamon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = masamon.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		370ACDFA1BDF486700AB73EB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		370ACDFC1BDF486700AB73EB /* MonthlySalaryShow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlySalaryShow.swift; sourceTree = "<group>"; };
-		370ACDFF1BDF486700AB73EB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		370ACE011BDF486700AB73EB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		370ACE041BDF486700AB73EB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		370ACE061BDF486700AB73EB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		370ACE0B1BDF486700AB73EB /* masamonTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = masamonTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		370ACE0F1BDF486700AB73EB /* masamonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = masamonTests.swift; sourceTree = "<group>"; };
-		370ACE111BDF486700AB73EB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		370ACE161BDF486700AB73EB /* masamonUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = masamonUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		370ACE1A1BDF486700AB73EB /* masamonUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = masamonUITests.swift; sourceTree = "<group>"; };
-		370ACE1C1BDF486700AB73EB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		370ACE281BDF4B7700AB73EB /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = images; sourceTree = "<group>"; };
-		370ACE431BDF573500AB73EB /* DB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DB.swift; sourceTree = "<group>"; };
-		370ACE491BDF9C8A00AB73EB /* DBmethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBmethod.swift; sourceTree = "<group>"; };
-		371432A71BE98F060088CDCC /* ShiftImport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShiftImport.swift; sourceTree = "<group>"; };
-		3724CDCB1C14317500D73528 /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Realm.framework; sourceTree = "<group>"; };
-		3724CDCC1C14317500D73528 /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RealmSwift.framework; sourceTree = "<group>"; };
-		3726B3931C2FF7F400F22F34 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		3726B3991C30009700F22F34 /* CalenderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalenderViewController.swift; sourceTree = "<group>"; };
-		3726B3A51C311B7600F22F34 /* aaa.xlsx */ = {isa = PBXFileReference; lastKnownFileType = file; path = aaa.xlsx; sourceTree = "<group>"; };
-		3742AF551C12D8D1003AB33B /* libz.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.dylib; path = ../../../../../../usr/lib/libz.1.dylib; sourceTree = "<group>"; };
-		3742AF6D1C12FEE8003AB33B /* bbb.xlsx */ = {isa = PBXFileReference; lastKnownFileType = file; path = bbb.xlsx; sourceTree = "<group>"; };
-		3742AF831C130360003AB33B /* XlsxReaderWriter.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = XlsxReaderWriter.xcodeproj; path = "XlsxReaderWriter-master/XlsxReaderWriter.xcodeproj"; sourceTree = "<group>"; };
-		376C92D51BE695D000D45FC2 /* extentions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = extentions.swift; sourceTree = "<group>"; };
-		379955941C14431F00BAAD9E /* Shiftmethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shiftmethod.swift; sourceTree = "<group>"; };
-		379A2DBD1C1E5F9900751425 /* no_data.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = no_data.png; sourceTree = "<group>"; };
-		379A2DC31C1F2CC300751425 /* ShiftGallery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShiftGallery.swift; sourceTree = "<group>"; };
-		379A2E041C1FDFFC00751425 /* CustomUICollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomUICollectionViewCell.swift; sourceTree = "<group>"; };
-		37D4B30F1BE0F59900F06759 /* Setting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
-		37D8F4241C0CB1A000D5336A /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
-		37D8F4251C0CB1A000D5336A /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
-		37DD8EF41C1C0135007C0E6C /* SwipeBetweenViewControllers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipeBetweenViewControllers.swift; sourceTree = "<group>"; };
-/* End PBXFileReference section */
-
-/* Begin PBXFrameworksBuildPhase section */
-		370ACDF41BDF486600AB73EB /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				3726B3941C2FF7F400F22F34 /* QuartzCore.framework in Frameworks */,
-				3724CDCD1C14317500D73528 /* Realm.framework in Frameworks */,
-				3742AF901C130391003AB33B /* libXlsxReaderWriter.a in Frameworks */,
-				3724CDCF1C14317500D73528 /* RealmSwift.framework in Frameworks */,
-				3742AF561C12D8D1003AB33B /* libz.1.dylib in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		370ACE081BDF486700AB73EB /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		370ACE131BDF486700AB73EB /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXFrameworksBuildPhase section */
-
-/* Begin PBXGroup section */
-		370ACDEE1BDF486600AB73EB = {
-			isa = PBXGroup;
-			children = (
-				3726B3931C2FF7F400F22F34 /* QuartzCore.framework */,
-				379A2DBD1C1E5F9900751425 /* no_data.png */,
-				3724CDCB1C14317500D73528 /* Realm.framework */,
-				3724CDCC1C14317500D73528 /* RealmSwift.framework */,
-				3742AF831C130360003AB33B /* XlsxReaderWriter.xcodeproj */,
-				3742AF6D1C12FEE8003AB33B /* bbb.xlsx */,
-				3726B3A51C311B7600F22F34 /* aaa.xlsx */,
-				3742AF551C12D8D1003AB33B /* libz.1.dylib */,
-				370ACE281BDF4B7700AB73EB /* images */,
-				370ACDF91BDF486600AB73EB /* masamon */,
-				370ACE0E1BDF486700AB73EB /* masamonTests */,
-				370ACE191BDF486700AB73EB /* masamonUITests */,
-				370ACDF81BDF486600AB73EB /* Products */,
-			);
-			sourceTree = "<group>";
-		};
-		370ACDF81BDF486600AB73EB /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				370ACDF71BDF486600AB73EB /* masamon.app */,
-				370ACE0B1BDF486700AB73EB /* masamonTests.xctest */,
-				370ACE161BDF486700AB73EB /* masamonUITests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		370ACDF91BDF486600AB73EB /* masamon */ = {
-			isa = PBXGroup;
-			children = (
-				370ACDFA1BDF486700AB73EB /* AppDelegate.swift */,
-				37DD8EF41C1C0135007C0E6C /* SwipeBetweenViewControllers.swift */,
-				370ACDFC1BDF486700AB73EB /* MonthlySalaryShow.swift */,
-				3726B3991C30009700F22F34 /* CalenderViewController.swift */,
-				376C92D51BE695D000D45FC2 /* extentions.swift */,
-				370ACE431BDF573500AB73EB /* DB.swift */,
-				370ACE491BDF9C8A00AB73EB /* DBmethod.swift */,
-				370ACDFE1BDF486700AB73EB /* Main.storyboard */,
-				379A2DC31C1F2CC300751425 /* ShiftGallery.swift */,
-				379A2E041C1FDFFC00751425 /* CustomUICollectionViewCell.swift */,
-				379955941C14431F00BAAD9E /* Shiftmethod.swift */,
-				371432A71BE98F060088CDCC /* ShiftImport.swift */,
-				37D4B30F1BE0F59900F06759 /* Setting.swift */,
-				370ACE011BDF486700AB73EB /* Assets.xcassets */,
-				370ACE031BDF486700AB73EB /* LaunchScreen.storyboard */,
-				370ACE061BDF486700AB73EB /* Info.plist */,
-			);
-			path = masamon;
-			sourceTree = "<group>";
-		};
-		370ACE0E1BDF486700AB73EB /* masamonTests */ = {
-			isa = PBXGroup;
-			children = (
-				370ACE0F1BDF486700AB73EB /* masamonTests.swift */,
-				370ACE111BDF486700AB73EB /* Info.plist */,
-			);
-			path = masamonTests;
-			sourceTree = "<group>";
-		};
-		370ACE191BDF486700AB73EB /* masamonUITests */ = {
-			isa = PBXGroup;
-			children = (
-				370ACE1A1BDF486700AB73EB /* masamonUITests.swift */,
-				370ACE1C1BDF486700AB73EB /* Info.plist */,
-			);
-			path = masamonUITests;
-			sourceTree = "<group>";
-		};
-		3742AF841C130360003AB33B /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				3742AF8B1C130360003AB33B /* libXlsxReaderWriter.a */,
-				3742AF8D1C130360003AB33B /* XlsxReaderWriterTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-/* End PBXGroup section */
-
-/* Begin PBXNativeTarget section */
-		370ACDF61BDF486600AB73EB /* masamon */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 370ACE1F1BDF486700AB73EB /* Build configuration list for PBXNativeTarget "masamon" */;
-			buildPhases = (
-				370ACDF31BDF486600AB73EB /* Sources */,
-				370ACDF41BDF486600AB73EB /* Frameworks */,
-				370ACDF51BDF486600AB73EB /* Resources */,
-				37F1E2A21BF21126000A22B0 /* Embed App Extensions */,
-				3724CDD11C14317500D73528 /* Embed Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				3742AF921C130494003AB33B /* PBXTargetDependency */,
-			);
-			name = masamon;
-			productName = masamon;
-			productReference = 370ACDF71BDF486600AB73EB /* masamon.app */;
-			productType = "com.apple.product-type.application";
-		};
-		370ACE0A1BDF486700AB73EB /* masamonTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 370ACE221BDF486700AB73EB /* Build configuration list for PBXNativeTarget "masamonTests" */;
-			buildPhases = (
-				370ACE071BDF486700AB73EB /* Sources */,
-				370ACE081BDF486700AB73EB /* Frameworks */,
-				370ACE091BDF486700AB73EB /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				370ACE0D1BDF486700AB73EB /* PBXTargetDependency */,
-			);
-			name = masamonTests;
-			productName = masamonTests;
-			productReference = 370ACE0B1BDF486700AB73EB /* masamonTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		370ACE151BDF486700AB73EB /* masamonUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 370ACE251BDF486700AB73EB /* Build configuration list for PBXNativeTarget "masamonUITests" */;
-			buildPhases = (
-				370ACE121BDF486700AB73EB /* Sources */,
-				370ACE131BDF486700AB73EB /* Frameworks */,
-				370ACE141BDF486700AB73EB /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				370ACE181BDF486700AB73EB /* PBXTargetDependency */,
-			);
-			name = masamonUITests;
-			productName = masamonUITests;
-			productReference = 370ACE161BDF486700AB73EB /* masamonUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
-/* End PBXNativeTarget section */
-
-/* Begin PBXProject section */
-		370ACDEF1BDF486600AB73EB /* Project object */ = {
-			isa = PBXProject;
-			attributes = {
-				LastSwiftUpdateCheck = 0710;
-				LastUpgradeCheck = 0710;
-				ORGANIZATIONNAME = Kenta;
-				TargetAttributes = {
-					370ACDF61BDF486600AB73EB = {
-						CreatedOnToolsVersion = 7.1;
-						DevelopmentTeam = TLVYAZUQZL;
-					};
-					370ACE0A1BDF486700AB73EB = {
-						CreatedOnToolsVersion = 7.1;
-						DevelopmentTeam = TLVYAZUQZL;
-						TestTargetID = 370ACDF61BDF486600AB73EB;
-					};
-					370ACE151BDF486700AB73EB = {
-						CreatedOnToolsVersion = 7.1;
-						DevelopmentTeam = TLVYAZUQZL;
-						TestTargetID = 370ACDF61BDF486600AB73EB;
-					};
-				};
-			};
-			buildConfigurationList = 370ACDF21BDF486600AB73EB /* Build configuration list for PBXProject "masamon" */;
-			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
-			hasScannedForEncodings = 0;
-			knownRegions = (
-				en,
-				Base,
-			);
-			mainGroup = 370ACDEE1BDF486600AB73EB;
-			productRefGroup = 370ACDF81BDF486600AB73EB /* Products */;
-			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 3742AF841C130360003AB33B /* Products */;
-					ProjectRef = 3742AF831C130360003AB33B /* XlsxReaderWriter.xcodeproj */;
-				},
-			);
-			projectRoot = "";
-			targets = (
-				370ACDF61BDF486600AB73EB /* masamon */,
-				370ACE0A1BDF486700AB73EB /* masamonTests */,
-				370ACE151BDF486700AB73EB /* masamonUITests */,
-			);
-		};
-/* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		3742AF8B1C130360003AB33B /* libXlsxReaderWriter.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libXlsxReaderWriter.a;
-			remoteRef = 3742AF8A1C130360003AB33B /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		3742AF8D1C130360003AB33B /* XlsxReaderWriterTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = XlsxReaderWriterTests.xctest;
-			remoteRef = 3742AF8C1C130360003AB33B /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
-
-/* Begin PBXResourcesBuildPhase section */
-		370ACDF51BDF486600AB73EB /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				379A2DBE1C1E5F9900751425 /* no_data.png in Resources */,
-				370ACE291BDF4B7700AB73EB /* images in Resources */,
-				3726B3A61C311B7600F22F34 /* aaa.xlsx in Resources */,
-				370ACE051BDF486700AB73EB /* LaunchScreen.storyboard in Resources */,
-				37DD8EFF1C1C29FF007C0E6C /* Main.storyboard in Resources */,
-				370ACE021BDF486700AB73EB /* Assets.xcassets in Resources */,
-				3742AF6E1C12FEE8003AB33B /* bbb.xlsx in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		370ACE091BDF486700AB73EB /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		370ACE141BDF486700AB73EB /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXResourcesBuildPhase section */
-
-/* Begin PBXSourcesBuildPhase section */
-		370ACDF31BDF486600AB73EB /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				3726B39A1C30009700F22F34 /* CalenderViewController.swift in Sources */,
-				37DD8EF51C1C0135007C0E6C /* SwipeBetweenViewControllers.swift in Sources */,
-				379955951C14431F00BAAD9E /* Shiftmethod.swift in Sources */,
-				370ACE4A1BDF9C8A00AB73EB /* DBmethod.swift in Sources */,
-				379A2DC41C1F2CC300751425 /* ShiftGallery.swift in Sources */,
-				370ACDFD1BDF486700AB73EB /* MonthlySalaryShow.swift in Sources */,
-				376C92D61BE695D000D45FC2 /* extentions.swift in Sources */,
-				370ACE441BDF573500AB73EB /* DB.swift in Sources */,
-				379A2E051C1FDFFC00751425 /* CustomUICollectionViewCell.swift in Sources */,
-				371432A81BE98F060088CDCC /* ShiftImport.swift in Sources */,
-				37D4B3101BE0F59900F06759 /* Setting.swift in Sources */,
-				370ACDFB1BDF486700AB73EB /* AppDelegate.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		370ACE071BDF486700AB73EB /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				370ACE101BDF486700AB73EB /* masamonTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		370ACE121BDF486700AB73EB /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				370ACE1B1BDF486700AB73EB /* masamonUITests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		370ACE0D1BDF486700AB73EB /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 370ACDF61BDF486600AB73EB /* masamon */;
-			targetProxy = 370ACE0C1BDF486700AB73EB /* PBXContainerItemProxy */;
-		};
-		370ACE181BDF486700AB73EB /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 370ACDF61BDF486600AB73EB /* masamon */;
-			targetProxy = 370ACE171BDF486700AB73EB /* PBXContainerItemProxy */;
-		};
-		3742AF921C130494003AB33B /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = XlsxReaderWriter;
-			targetProxy = 3742AF911C130494003AB33B /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		370ACDFE1BDF486700AB73EB /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				370ACDFF1BDF486700AB73EB /* Base */,
-				37D8F4241C0CB1A000D5336A /* ja */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		370ACE031BDF486700AB73EB /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				370ACE041BDF486700AB73EB /* Base */,
-				37D8F4251C0CB1A000D5336A /* ja */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
-
-/* Begin XCBuildConfiguration section */
-		370ACE1D1BDF486700AB73EB /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_TESTABILITY = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
-				MTL_ENABLE_DEBUG_INFO = YES;
-				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = iphoneos;
-				SWIFT_OBJC_BRIDGING_HEADER = "/Users/Kenta/Documents/swift_workspace/まさもん/masamon/XlsxReaderWriter-master/XlsxReaderWriterTests/XlsxReaderWriterTests-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				USER_HEADER_SEARCH_PATHS = "\"/Users/Kenta/Documents/swift_workspace/まさもん/masamon/XlsxReaderWriter-master\"/**";
-			};
-			name = Debug;
-		};
-		370ACE1E1BDF486700AB73EB /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				SDKROOT = iphoneos;
-				SWIFT_OBJC_BRIDGING_HEADER = "/Users/Kenta/Documents/swift_workspace/まさもん/masamon/XlsxReaderWriter-master/XlsxReaderWriterTests/XlsxReaderWriterTests-Bridging-Header.h";
-				USER_HEADER_SEARCH_PATHS = "\"/Users/Kenta/Documents/swift_workspace/まさもん/masamon/XlsxReaderWriter-master\"/**";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
-		370ACE201BDF486700AB73EB /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)",
-				);
-				INFOPLIST_FILE = masamon/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_LDFLAGS = "-all_load";
-				PRODUCT_BUNDLE_IDENTIFIER = com.Kenta.masamon;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "/Users/Kenta/Documents/swift_workspace/まさもん/masamon/XlsxReaderWriter-master/XlsxReaderWriterTests/XlsxReaderWriterTests-Bridging-Header.h";
-				USER_HEADER_SEARCH_PATHS = "\"/Users/Kenta/Documents/swift_workspace/まさもん/masamon/XlsxReaderWriter-master\"/**";
-			};
-			name = Debug;
-		};
-		370ACE211BDF486700AB73EB /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)",
-				);
-				INFOPLIST_FILE = masamon/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_LDFLAGS = "-all_load";
-				PRODUCT_BUNDLE_IDENTIFIER = com.Kenta.masamon;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "/Users/Kenta/Documents/swift_workspace/まさもん/masamon/XlsxReaderWriter-master/XlsxReaderWriterTests/XlsxReaderWriterTests-Bridging-Header.h";
-				USER_HEADER_SEARCH_PATHS = "\"/Users/Kenta/Documents/swift_workspace/まさもん/masamon/XlsxReaderWriter-master\"/**";
-			};
-			name = Release;
-		};
-		370ACE231BDF486700AB73EB /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				INFOPLIST_FILE = masamonTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.Kenta.masamonTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/masamon.app/masamon";
-			};
-			name = Debug;
-		};
-		370ACE241BDF486700AB73EB /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				INFOPLIST_FILE = masamonTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.Kenta.masamonTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/masamon.app/masamon";
-			};
-			name = Release;
-		};
-		370ACE261BDF486700AB73EB /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = masamonUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.Kenta.masamonUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_TARGET_NAME = masamon;
-				USES_XCTRUNNER = YES;
-			};
-			name = Debug;
-		};
-		370ACE271BDF486700AB73EB /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = masamonUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.Kenta.masamonUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_TARGET_NAME = masamon;
-				USES_XCTRUNNER = YES;
-			};
-			name = Release;
-		};
-/* End XCBuildConfiguration section */
-
-/* Begin XCConfigurationList section */
-		370ACDF21BDF486600AB73EB /* Build configuration list for PBXProject "masamon" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				370ACE1D1BDF486700AB73EB /* Debug */,
-				370ACE1E1BDF486700AB73EB /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		370ACE1F1BDF486700AB73EB /* Build configuration list for PBXNativeTarget "masamon" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				370ACE201BDF486700AB73EB /* Debug */,
-				370ACE211BDF486700AB73EB /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		370ACE221BDF486700AB73EB /* Build configuration list for PBXNativeTarget "masamonTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				370ACE231BDF486700AB73EB /* Debug */,
-				370ACE241BDF486700AB73EB /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		370ACE251BDF486700AB73EB /* Build configuration list for PBXNativeTarget "masamonUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				370ACE261BDF486700AB73EB /* Debug */,
-				370ACE271BDF486700AB73EB /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-/* End XCConfigurationList section */
-	};
-	rootObject = 370ACDEF1BDF486600AB73EB /* Project object */;
-}
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>archiveVersion</key>
+	<string>1</string>
+	<key>classes</key>
+	<dict/>
+	<key>objectVersion</key>
+	<string>46</string>
+	<key>objects</key>
+	<dict>
+		<key>1B7B2B25D5EE69B36B550A20</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>name</key>
+			<string>Pods-masamon.release.xcconfig</string>
+			<key>path</key>
+			<string>Pods/Target Support Files/Pods-masamon/Pods-masamon.release.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>273B5D0506CACB8F3F46583C</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>DB9C07197D395EF38199A0C7</string>
+				<string>1B7B2B25D5EE69B36B550A20</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Pods</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>370ACDEE1BDF486600AB73EB</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>3726B3931C2FF7F400F22F34</string>
+				<string>379A2DBD1C1E5F9900751425</string>
+				<string>3724CDCB1C14317500D73528</string>
+				<string>3724CDCC1C14317500D73528</string>
+				<string>3742AF831C130360003AB33B</string>
+				<string>3742AF6D1C12FEE8003AB33B</string>
+				<string>3726B3A51C311B7600F22F34</string>
+				<string>3742AF551C12D8D1003AB33B</string>
+				<string>370ACE281BDF4B7700AB73EB</string>
+				<string>370ACDF91BDF486600AB73EB</string>
+				<string>370ACE0E1BDF486700AB73EB</string>
+				<string>370ACE191BDF486700AB73EB</string>
+				<string>370ACDF81BDF486600AB73EB</string>
+				<string>273B5D0506CACB8F3F46583C</string>
+				<string>7423B7CBCF975D0B30BA5249</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>370ACDEF1BDF486600AB73EB</key>
+		<dict>
+			<key>attributes</key>
+			<dict>
+				<key>LastSwiftUpdateCheck</key>
+				<string>0710</string>
+				<key>LastUpgradeCheck</key>
+				<string>0710</string>
+				<key>ORGANIZATIONNAME</key>
+				<string>Kenta</string>
+				<key>TargetAttributes</key>
+				<dict>
+					<key>370ACDF61BDF486600AB73EB</key>
+					<dict>
+						<key>CreatedOnToolsVersion</key>
+						<string>7.1</string>
+						<key>DevelopmentTeam</key>
+						<string>TLVYAZUQZL</string>
+					</dict>
+					<key>370ACE0A1BDF486700AB73EB</key>
+					<dict>
+						<key>CreatedOnToolsVersion</key>
+						<string>7.1</string>
+						<key>DevelopmentTeam</key>
+						<string>TLVYAZUQZL</string>
+						<key>TestTargetID</key>
+						<string>370ACDF61BDF486600AB73EB</string>
+					</dict>
+					<key>370ACE151BDF486700AB73EB</key>
+					<dict>
+						<key>CreatedOnToolsVersion</key>
+						<string>7.1</string>
+						<key>DevelopmentTeam</key>
+						<string>TLVYAZUQZL</string>
+						<key>TestTargetID</key>
+						<string>370ACDF61BDF486600AB73EB</string>
+					</dict>
+				</dict>
+			</dict>
+			<key>buildConfigurationList</key>
+			<string>370ACDF21BDF486600AB73EB</string>
+			<key>compatibilityVersion</key>
+			<string>Xcode 3.2</string>
+			<key>developmentRegion</key>
+			<string>English</string>
+			<key>hasScannedForEncodings</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXProject</string>
+			<key>knownRegions</key>
+			<array>
+				<string>en</string>
+				<string>Base</string>
+			</array>
+			<key>mainGroup</key>
+			<string>370ACDEE1BDF486600AB73EB</string>
+			<key>productRefGroup</key>
+			<string>370ACDF81BDF486600AB73EB</string>
+			<key>projectDirPath</key>
+			<string></string>
+			<key>projectReferences</key>
+			<array>
+				<dict>
+					<key>ProductGroup</key>
+					<string>3742AF841C130360003AB33B</string>
+					<key>ProjectRef</key>
+					<string>3742AF831C130360003AB33B</string>
+				</dict>
+			</array>
+			<key>projectRoot</key>
+			<string></string>
+			<key>targets</key>
+			<array>
+				<string>370ACDF61BDF486600AB73EB</string>
+				<string>370ACE0A1BDF486700AB73EB</string>
+				<string>370ACE151BDF486700AB73EB</string>
+			</array>
+		</dict>
+		<key>370ACDF21BDF486600AB73EB</key>
+		<dict>
+			<key>buildConfigurations</key>
+			<array>
+				<string>370ACE1D1BDF486700AB73EB</string>
+				<string>370ACE1E1BDF486700AB73EB</string>
+			</array>
+			<key>defaultConfigurationIsVisible</key>
+			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
+			<key>isa</key>
+			<string>XCConfigurationList</string>
+		</dict>
+		<key>370ACDF31BDF486600AB73EB</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>3726B39A1C30009700F22F34</string>
+				<string>37DD8EF51C1C0135007C0E6C</string>
+				<string>379955951C14431F00BAAD9E</string>
+				<string>370ACE4A1BDF9C8A00AB73EB</string>
+				<string>379A2DC41C1F2CC300751425</string>
+				<string>370ACDFD1BDF486700AB73EB</string>
+				<string>376C92D61BE695D000D45FC2</string>
+				<string>370ACE441BDF573500AB73EB</string>
+				<string>379A2E051C1FDFFC00751425</string>
+				<string>371432A81BE98F060088CDCC</string>
+				<string>37D4B3101BE0F59900F06759</string>
+				<string>370ACDFB1BDF486700AB73EB</string>
+			</array>
+			<key>isa</key>
+			<string>PBXSourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>370ACDF41BDF486600AB73EB</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>3726B3941C2FF7F400F22F34</string>
+				<string>3724CDCD1C14317500D73528</string>
+				<string>3742AF901C130391003AB33B</string>
+				<string>3724CDCF1C14317500D73528</string>
+				<string>3742AF561C12D8D1003AB33B</string>
+				<string>D9C8B4DC9FDEB1B892F9B0DD</string>
+			</array>
+			<key>isa</key>
+			<string>PBXFrameworksBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>370ACDF51BDF486600AB73EB</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>379A2DBE1C1E5F9900751425</string>
+				<string>370ACE291BDF4B7700AB73EB</string>
+				<string>3726B3A61C311B7600F22F34</string>
+				<string>370ACE051BDF486700AB73EB</string>
+				<string>37DD8EFF1C1C29FF007C0E6C</string>
+				<string>370ACE021BDF486700AB73EB</string>
+				<string>3742AF6E1C12FEE8003AB33B</string>
+			</array>
+			<key>isa</key>
+			<string>PBXResourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>370ACDF61BDF486600AB73EB</key>
+		<dict>
+			<key>buildConfigurationList</key>
+			<string>370ACE1F1BDF486700AB73EB</string>
+			<key>buildPhases</key>
+			<array>
+				<string>CBB0530458E4D93A5A6FCB3D</string>
+				<string>370ACDF31BDF486600AB73EB</string>
+				<string>370ACDF41BDF486600AB73EB</string>
+				<string>370ACDF51BDF486600AB73EB</string>
+				<string>37F1E2A21BF21126000A22B0</string>
+				<string>3724CDD11C14317500D73528</string>
+				<string>B7F09A19EA7135B641CC0EC0</string>
+				<string>8C229A283138099E606A0D3F</string>
+			</array>
+			<key>buildRules</key>
+			<array/>
+			<key>dependencies</key>
+			<array>
+				<string>3742AF921C130494003AB33B</string>
+			</array>
+			<key>isa</key>
+			<string>PBXNativeTarget</string>
+			<key>name</key>
+			<string>masamon</string>
+			<key>productName</key>
+			<string>masamon</string>
+			<key>productReference</key>
+			<string>370ACDF71BDF486600AB73EB</string>
+			<key>productType</key>
+			<string>com.apple.product-type.application</string>
+		</dict>
+		<key>370ACDF71BDF486600AB73EB</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>wrapper.application</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>masamon.app</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>370ACDF81BDF486600AB73EB</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>370ACDF71BDF486600AB73EB</string>
+				<string>370ACE0B1BDF486700AB73EB</string>
+				<string>370ACE161BDF486700AB73EB</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Products</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>370ACDF91BDF486600AB73EB</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>370ACDFA1BDF486700AB73EB</string>
+				<string>37DD8EF41C1C0135007C0E6C</string>
+				<string>370ACDFC1BDF486700AB73EB</string>
+				<string>3726B3991C30009700F22F34</string>
+				<string>376C92D51BE695D000D45FC2</string>
+				<string>370ACE431BDF573500AB73EB</string>
+				<string>370ACE491BDF9C8A00AB73EB</string>
+				<string>370ACDFE1BDF486700AB73EB</string>
+				<string>379A2DC31C1F2CC300751425</string>
+				<string>379A2E041C1FDFFC00751425</string>
+				<string>379955941C14431F00BAAD9E</string>
+				<string>371432A71BE98F060088CDCC</string>
+				<string>37D4B30F1BE0F59900F06759</string>
+				<string>370ACE011BDF486700AB73EB</string>
+				<string>370ACE031BDF486700AB73EB</string>
+				<string>370ACE061BDF486700AB73EB</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>path</key>
+			<string>masamon</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>370ACDFA1BDF486700AB73EB</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>AppDelegate.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>370ACDFB1BDF486700AB73EB</key>
+		<dict>
+			<key>fileRef</key>
+			<string>370ACDFA1BDF486700AB73EB</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>370ACDFC1BDF486700AB73EB</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>MonthlySalaryShow.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>370ACDFD1BDF486700AB73EB</key>
+		<dict>
+			<key>fileRef</key>
+			<string>370ACDFC1BDF486700AB73EB</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>370ACDFE1BDF486700AB73EB</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>370ACDFF1BDF486700AB73EB</string>
+				<string>37D8F4241C0CB1A000D5336A</string>
+			</array>
+			<key>isa</key>
+			<string>PBXVariantGroup</string>
+			<key>name</key>
+			<string>Main.storyboard</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>370ACDFF1BDF486700AB73EB</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>file.storyboard</string>
+			<key>name</key>
+			<string>Base</string>
+			<key>path</key>
+			<string>Base.lproj/Main.storyboard</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>370ACE011BDF486700AB73EB</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>folder.assetcatalog</string>
+			<key>path</key>
+			<string>Assets.xcassets</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>370ACE021BDF486700AB73EB</key>
+		<dict>
+			<key>fileRef</key>
+			<string>370ACE011BDF486700AB73EB</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>370ACE031BDF486700AB73EB</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>370ACE041BDF486700AB73EB</string>
+				<string>37D8F4251C0CB1A000D5336A</string>
+			</array>
+			<key>isa</key>
+			<string>PBXVariantGroup</string>
+			<key>name</key>
+			<string>LaunchScreen.storyboard</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>370ACE041BDF486700AB73EB</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>file.storyboard</string>
+			<key>name</key>
+			<string>Base</string>
+			<key>path</key>
+			<string>Base.lproj/LaunchScreen.storyboard</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>370ACE051BDF486700AB73EB</key>
+		<dict>
+			<key>fileRef</key>
+			<string>370ACE031BDF486700AB73EB</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>370ACE061BDF486700AB73EB</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.plist.xml</string>
+			<key>path</key>
+			<string>Info.plist</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>370ACE071BDF486700AB73EB</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>370ACE101BDF486700AB73EB</string>
+			</array>
+			<key>isa</key>
+			<string>PBXSourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>370ACE081BDF486700AB73EB</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXFrameworksBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>370ACE091BDF486700AB73EB</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXResourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>370ACE0A1BDF486700AB73EB</key>
+		<dict>
+			<key>buildConfigurationList</key>
+			<string>370ACE221BDF486700AB73EB</string>
+			<key>buildPhases</key>
+			<array>
+				<string>370ACE071BDF486700AB73EB</string>
+				<string>370ACE081BDF486700AB73EB</string>
+				<string>370ACE091BDF486700AB73EB</string>
+			</array>
+			<key>buildRules</key>
+			<array/>
+			<key>dependencies</key>
+			<array>
+				<string>370ACE0D1BDF486700AB73EB</string>
+			</array>
+			<key>isa</key>
+			<string>PBXNativeTarget</string>
+			<key>name</key>
+			<string>masamonTests</string>
+			<key>productName</key>
+			<string>masamonTests</string>
+			<key>productReference</key>
+			<string>370ACE0B1BDF486700AB73EB</string>
+			<key>productType</key>
+			<string>com.apple.product-type.bundle.unit-test</string>
+		</dict>
+		<key>370ACE0B1BDF486700AB73EB</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>wrapper.cfbundle</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>masamonTests.xctest</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>370ACE0C1BDF486700AB73EB</key>
+		<dict>
+			<key>containerPortal</key>
+			<string>370ACDEF1BDF486600AB73EB</string>
+			<key>isa</key>
+			<string>PBXContainerItemProxy</string>
+			<key>proxyType</key>
+			<string>1</string>
+			<key>remoteGlobalIDString</key>
+			<string>370ACDF61BDF486600AB73EB</string>
+			<key>remoteInfo</key>
+			<string>masamon</string>
+		</dict>
+		<key>370ACE0D1BDF486700AB73EB</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXTargetDependency</string>
+			<key>target</key>
+			<string>370ACDF61BDF486600AB73EB</string>
+			<key>targetProxy</key>
+			<string>370ACE0C1BDF486700AB73EB</string>
+		</dict>
+		<key>370ACE0E1BDF486700AB73EB</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>370ACE0F1BDF486700AB73EB</string>
+				<string>370ACE111BDF486700AB73EB</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>path</key>
+			<string>masamonTests</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>370ACE0F1BDF486700AB73EB</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>masamonTests.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>370ACE101BDF486700AB73EB</key>
+		<dict>
+			<key>fileRef</key>
+			<string>370ACE0F1BDF486700AB73EB</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>370ACE111BDF486700AB73EB</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.plist.xml</string>
+			<key>path</key>
+			<string>Info.plist</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>370ACE121BDF486700AB73EB</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>370ACE1B1BDF486700AB73EB</string>
+			</array>
+			<key>isa</key>
+			<string>PBXSourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>370ACE131BDF486700AB73EB</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXFrameworksBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>370ACE141BDF486700AB73EB</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXResourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>370ACE151BDF486700AB73EB</key>
+		<dict>
+			<key>buildConfigurationList</key>
+			<string>370ACE251BDF486700AB73EB</string>
+			<key>buildPhases</key>
+			<array>
+				<string>370ACE121BDF486700AB73EB</string>
+				<string>370ACE131BDF486700AB73EB</string>
+				<string>370ACE141BDF486700AB73EB</string>
+			</array>
+			<key>buildRules</key>
+			<array/>
+			<key>dependencies</key>
+			<array>
+				<string>370ACE181BDF486700AB73EB</string>
+			</array>
+			<key>isa</key>
+			<string>PBXNativeTarget</string>
+			<key>name</key>
+			<string>masamonUITests</string>
+			<key>productName</key>
+			<string>masamonUITests</string>
+			<key>productReference</key>
+			<string>370ACE161BDF486700AB73EB</string>
+			<key>productType</key>
+			<string>com.apple.product-type.bundle.ui-testing</string>
+		</dict>
+		<key>370ACE161BDF486700AB73EB</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>wrapper.cfbundle</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>masamonUITests.xctest</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>370ACE171BDF486700AB73EB</key>
+		<dict>
+			<key>containerPortal</key>
+			<string>370ACDEF1BDF486600AB73EB</string>
+			<key>isa</key>
+			<string>PBXContainerItemProxy</string>
+			<key>proxyType</key>
+			<string>1</string>
+			<key>remoteGlobalIDString</key>
+			<string>370ACDF61BDF486600AB73EB</string>
+			<key>remoteInfo</key>
+			<string>masamon</string>
+		</dict>
+		<key>370ACE181BDF486700AB73EB</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXTargetDependency</string>
+			<key>target</key>
+			<string>370ACDF61BDF486600AB73EB</string>
+			<key>targetProxy</key>
+			<string>370ACE171BDF486700AB73EB</string>
+		</dict>
+		<key>370ACE191BDF486700AB73EB</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>370ACE1A1BDF486700AB73EB</string>
+				<string>370ACE1C1BDF486700AB73EB</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>path</key>
+			<string>masamonUITests</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>370ACE1A1BDF486700AB73EB</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>masamonUITests.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>370ACE1B1BDF486700AB73EB</key>
+		<dict>
+			<key>fileRef</key>
+			<string>370ACE1A1BDF486700AB73EB</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>370ACE1C1BDF486700AB73EB</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.plist.xml</string>
+			<key>path</key>
+			<string>Info.plist</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>370ACE1D1BDF486700AB73EB</key>
+		<dict>
+			<key>buildSettings</key>
+			<dict>
+				<key>ALWAYS_SEARCH_USER_PATHS</key>
+				<string>NO</string>
+				<key>CLANG_CXX_LANGUAGE_STANDARD</key>
+				<string>gnu++0x</string>
+				<key>CLANG_CXX_LIBRARY</key>
+				<string>libc++</string>
+				<key>CLANG_ENABLE_MODULES</key>
+				<string>YES</string>
+				<key>CLANG_ENABLE_OBJC_ARC</key>
+				<string>YES</string>
+				<key>CLANG_WARN_BOOL_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_CONSTANT_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_DIRECT_OBJC_ISA_USAGE</key>
+				<string>YES_ERROR</string>
+				<key>CLANG_WARN_EMPTY_BODY</key>
+				<string>YES</string>
+				<key>CLANG_WARN_ENUM_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_INT_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_OBJC_ROOT_CLASS</key>
+				<string>YES_ERROR</string>
+				<key>CLANG_WARN_UNREACHABLE_CODE</key>
+				<string>YES</string>
+				<key>CLANG_WARN__DUPLICATE_METHOD_MATCH</key>
+				<string>YES</string>
+				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
+				<string>iPhone Developer</string>
+				<key>COPY_PHASE_STRIP</key>
+				<string>NO</string>
+				<key>DEBUG_INFORMATION_FORMAT</key>
+				<string>dwarf</string>
+				<key>ENABLE_STRICT_OBJC_MSGSEND</key>
+				<string>YES</string>
+				<key>ENABLE_TESTABILITY</key>
+				<string>YES</string>
+				<key>GCC_C_LANGUAGE_STANDARD</key>
+				<string>gnu99</string>
+				<key>GCC_DYNAMIC_NO_PIC</key>
+				<string>NO</string>
+				<key>GCC_NO_COMMON_BLOCKS</key>
+				<string>YES</string>
+				<key>GCC_OPTIMIZATION_LEVEL</key>
+				<string>0</string>
+				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
+				<array>
+					<string>DEBUG=1</string>
+					<string>$(inherited)</string>
+				</array>
+				<key>GCC_WARN_64_TO_32_BIT_CONVERSION</key>
+				<string>YES</string>
+				<key>GCC_WARN_ABOUT_RETURN_TYPE</key>
+				<string>YES_ERROR</string>
+				<key>GCC_WARN_UNDECLARED_SELECTOR</key>
+				<string>YES</string>
+				<key>GCC_WARN_UNINITIALIZED_AUTOS</key>
+				<string>YES_AGGRESSIVE</string>
+				<key>GCC_WARN_UNUSED_FUNCTION</key>
+				<string>YES</string>
+				<key>GCC_WARN_UNUSED_VARIABLE</key>
+				<string>YES</string>
+				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
+				<string>9.2</string>
+				<key>MTL_ENABLE_DEBUG_INFO</key>
+				<string>YES</string>
+				<key>ONLY_ACTIVE_ARCH</key>
+				<string>YES</string>
+				<key>SDKROOT</key>
+				<string>iphoneos</string>
+				<key>SWIFT_OBJC_BRIDGING_HEADER</key>
+				<string>/Users/Kenta/Documents/swift_workspace/&#12414;&#12373;&#12418;&#12435;/masamon/XlsxReaderWriter-master/XlsxReaderWriterTests/XlsxReaderWriterTests-Bridging-Header.h</string>
+				<key>SWIFT_OPTIMIZATION_LEVEL</key>
+				<string>-Onone</string>
+				<key>USER_HEADER_SEARCH_PATHS</key>
+				<string>"/Users/Kenta/Documents/swift_workspace/&#12414;&#12373;&#12418;&#12435;/masamon/XlsxReaderWriter-master"/**</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Debug</string>
+		</dict>
+		<key>370ACE1E1BDF486700AB73EB</key>
+		<dict>
+			<key>buildSettings</key>
+			<dict>
+				<key>ALWAYS_SEARCH_USER_PATHS</key>
+				<string>NO</string>
+				<key>CLANG_CXX_LANGUAGE_STANDARD</key>
+				<string>gnu++0x</string>
+				<key>CLANG_CXX_LIBRARY</key>
+				<string>libc++</string>
+				<key>CLANG_ENABLE_MODULES</key>
+				<string>YES</string>
+				<key>CLANG_ENABLE_OBJC_ARC</key>
+				<string>YES</string>
+				<key>CLANG_WARN_BOOL_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_CONSTANT_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_DIRECT_OBJC_ISA_USAGE</key>
+				<string>YES_ERROR</string>
+				<key>CLANG_WARN_EMPTY_BODY</key>
+				<string>YES</string>
+				<key>CLANG_WARN_ENUM_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_INT_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_OBJC_ROOT_CLASS</key>
+				<string>YES_ERROR</string>
+				<key>CLANG_WARN_UNREACHABLE_CODE</key>
+				<string>YES</string>
+				<key>CLANG_WARN__DUPLICATE_METHOD_MATCH</key>
+				<string>YES</string>
+				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
+				<string>iPhone Developer</string>
+				<key>COPY_PHASE_STRIP</key>
+				<string>NO</string>
+				<key>DEBUG_INFORMATION_FORMAT</key>
+				<string>dwarf</string>
+				<key>ENABLE_NS_ASSERTIONS</key>
+				<string>NO</string>
+				<key>ENABLE_STRICT_OBJC_MSGSEND</key>
+				<string>YES</string>
+				<key>GCC_C_LANGUAGE_STANDARD</key>
+				<string>gnu99</string>
+				<key>GCC_NO_COMMON_BLOCKS</key>
+				<string>YES</string>
+				<key>GCC_WARN_64_TO_32_BIT_CONVERSION</key>
+				<string>YES</string>
+				<key>GCC_WARN_ABOUT_RETURN_TYPE</key>
+				<string>YES_ERROR</string>
+				<key>GCC_WARN_UNDECLARED_SELECTOR</key>
+				<string>YES</string>
+				<key>GCC_WARN_UNINITIALIZED_AUTOS</key>
+				<string>YES_AGGRESSIVE</string>
+				<key>GCC_WARN_UNUSED_FUNCTION</key>
+				<string>YES</string>
+				<key>GCC_WARN_UNUSED_VARIABLE</key>
+				<string>YES</string>
+				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
+				<string>9.2</string>
+				<key>MTL_ENABLE_DEBUG_INFO</key>
+				<string>NO</string>
+				<key>SDKROOT</key>
+				<string>iphoneos</string>
+				<key>SWIFT_OBJC_BRIDGING_HEADER</key>
+				<string>/Users/Kenta/Documents/swift_workspace/&#12414;&#12373;&#12418;&#12435;/masamon/XlsxReaderWriter-master/XlsxReaderWriterTests/XlsxReaderWriterTests-Bridging-Header.h</string>
+				<key>USER_HEADER_SEARCH_PATHS</key>
+				<string>"/Users/Kenta/Documents/swift_workspace/&#12414;&#12373;&#12418;&#12435;/masamon/XlsxReaderWriter-master"/**</string>
+				<key>VALIDATE_PRODUCT</key>
+				<string>YES</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Release</string>
+		</dict>
+		<key>370ACE1F1BDF486700AB73EB</key>
+		<dict>
+			<key>buildConfigurations</key>
+			<array>
+				<string>370ACE201BDF486700AB73EB</string>
+				<string>370ACE211BDF486700AB73EB</string>
+			</array>
+			<key>defaultConfigurationIsVisible</key>
+			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
+			<key>isa</key>
+			<string>XCConfigurationList</string>
+		</dict>
+		<key>370ACE201BDF486700AB73EB</key>
+		<dict>
+			<key>baseConfigurationReference</key>
+			<string>DB9C07197D395EF38199A0C7</string>
+			<key>buildSettings</key>
+			<dict>
+				<key>ASSETCATALOG_COMPILER_APPICON_NAME</key>
+				<string>AppIcon</string>
+				<key>CODE_SIGN_IDENTITY</key>
+				<string>iPhone Developer</string>
+				<key>FRAMEWORK_SEARCH_PATHS</key>
+				<array>
+					<string>$(inherited)</string>
+					<string>$(PROJECT_DIR)</string>
+				</array>
+				<key>INFOPLIST_FILE</key>
+				<string>masamon/Info.plist</string>
+				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
+				<string>9.2</string>
+				<key>LD_RUNPATH_SEARCH_PATHS</key>
+				<string>$(inherited) @executable_path/Frameworks</string>
+				<key>OTHER_LDFLAGS</key>
+				<string>-all_load</string>
+				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
+				<string>com.Kenta.masamon</string>
+				<key>PRODUCT_NAME</key>
+				<string>$(TARGET_NAME)</string>
+				<key>SWIFT_OBJC_BRIDGING_HEADER</key>
+				<string>/Users/Kenta/Documents/swift_workspace/&#12414;&#12373;&#12418;&#12435;/masamon/XlsxReaderWriter-master/XlsxReaderWriterTests/XlsxReaderWriterTests-Bridging-Header.h</string>
+				<key>USER_HEADER_SEARCH_PATHS</key>
+				<string>"/Users/Kenta/Documents/swift_workspace/&#12414;&#12373;&#12418;&#12435;/masamon/XlsxReaderWriter-master"/**</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Debug</string>
+		</dict>
+		<key>370ACE211BDF486700AB73EB</key>
+		<dict>
+			<key>baseConfigurationReference</key>
+			<string>1B7B2B25D5EE69B36B550A20</string>
+			<key>buildSettings</key>
+			<dict>
+				<key>ASSETCATALOG_COMPILER_APPICON_NAME</key>
+				<string>AppIcon</string>
+				<key>CODE_SIGN_IDENTITY</key>
+				<string>iPhone Developer</string>
+				<key>FRAMEWORK_SEARCH_PATHS</key>
+				<array>
+					<string>$(inherited)</string>
+					<string>$(PROJECT_DIR)</string>
+				</array>
+				<key>INFOPLIST_FILE</key>
+				<string>masamon/Info.plist</string>
+				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
+				<string>9.2</string>
+				<key>LD_RUNPATH_SEARCH_PATHS</key>
+				<string>$(inherited) @executable_path/Frameworks</string>
+				<key>OTHER_LDFLAGS</key>
+				<string>-all_load</string>
+				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
+				<string>com.Kenta.masamon</string>
+				<key>PRODUCT_NAME</key>
+				<string>$(TARGET_NAME)</string>
+				<key>SWIFT_OBJC_BRIDGING_HEADER</key>
+				<string>/Users/Kenta/Documents/swift_workspace/&#12414;&#12373;&#12418;&#12435;/masamon/XlsxReaderWriter-master/XlsxReaderWriterTests/XlsxReaderWriterTests-Bridging-Header.h</string>
+				<key>USER_HEADER_SEARCH_PATHS</key>
+				<string>"/Users/Kenta/Documents/swift_workspace/&#12414;&#12373;&#12418;&#12435;/masamon/XlsxReaderWriter-master"/**</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Release</string>
+		</dict>
+		<key>370ACE221BDF486700AB73EB</key>
+		<dict>
+			<key>buildConfigurations</key>
+			<array>
+				<string>370ACE231BDF486700AB73EB</string>
+				<string>370ACE241BDF486700AB73EB</string>
+			</array>
+			<key>defaultConfigurationIsVisible</key>
+			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
+			<key>isa</key>
+			<string>XCConfigurationList</string>
+		</dict>
+		<key>370ACE231BDF486700AB73EB</key>
+		<dict>
+			<key>buildSettings</key>
+			<dict>
+				<key>BUNDLE_LOADER</key>
+				<string>$(TEST_HOST)</string>
+				<key>INFOPLIST_FILE</key>
+				<string>masamonTests/Info.plist</string>
+				<key>LD_RUNPATH_SEARCH_PATHS</key>
+				<string>$(inherited) @executable_path/Frameworks @loader_path/Frameworks</string>
+				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
+				<string>com.Kenta.masamonTests</string>
+				<key>PRODUCT_NAME</key>
+				<string>$(TARGET_NAME)</string>
+				<key>TEST_HOST</key>
+				<string>$(BUILT_PRODUCTS_DIR)/masamon.app/masamon</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Debug</string>
+		</dict>
+		<key>370ACE241BDF486700AB73EB</key>
+		<dict>
+			<key>buildSettings</key>
+			<dict>
+				<key>BUNDLE_LOADER</key>
+				<string>$(TEST_HOST)</string>
+				<key>INFOPLIST_FILE</key>
+				<string>masamonTests/Info.plist</string>
+				<key>LD_RUNPATH_SEARCH_PATHS</key>
+				<string>$(inherited) @executable_path/Frameworks @loader_path/Frameworks</string>
+				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
+				<string>com.Kenta.masamonTests</string>
+				<key>PRODUCT_NAME</key>
+				<string>$(TARGET_NAME)</string>
+				<key>TEST_HOST</key>
+				<string>$(BUILT_PRODUCTS_DIR)/masamon.app/masamon</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Release</string>
+		</dict>
+		<key>370ACE251BDF486700AB73EB</key>
+		<dict>
+			<key>buildConfigurations</key>
+			<array>
+				<string>370ACE261BDF486700AB73EB</string>
+				<string>370ACE271BDF486700AB73EB</string>
+			</array>
+			<key>defaultConfigurationIsVisible</key>
+			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
+			<key>isa</key>
+			<string>XCConfigurationList</string>
+		</dict>
+		<key>370ACE261BDF486700AB73EB</key>
+		<dict>
+			<key>buildSettings</key>
+			<dict>
+				<key>INFOPLIST_FILE</key>
+				<string>masamonUITests/Info.plist</string>
+				<key>LD_RUNPATH_SEARCH_PATHS</key>
+				<string>$(inherited) @executable_path/Frameworks @loader_path/Frameworks</string>
+				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
+				<string>com.Kenta.masamonUITests</string>
+				<key>PRODUCT_NAME</key>
+				<string>$(TARGET_NAME)</string>
+				<key>TEST_TARGET_NAME</key>
+				<string>masamon</string>
+				<key>USES_XCTRUNNER</key>
+				<string>YES</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Debug</string>
+		</dict>
+		<key>370ACE271BDF486700AB73EB</key>
+		<dict>
+			<key>buildSettings</key>
+			<dict>
+				<key>INFOPLIST_FILE</key>
+				<string>masamonUITests/Info.plist</string>
+				<key>LD_RUNPATH_SEARCH_PATHS</key>
+				<string>$(inherited) @executable_path/Frameworks @loader_path/Frameworks</string>
+				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
+				<string>com.Kenta.masamonUITests</string>
+				<key>PRODUCT_NAME</key>
+				<string>$(TARGET_NAME)</string>
+				<key>TEST_TARGET_NAME</key>
+				<string>masamon</string>
+				<key>USES_XCTRUNNER</key>
+				<string>YES</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Release</string>
+		</dict>
+		<key>370ACE281BDF4B7700AB73EB</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>folder</string>
+			<key>path</key>
+			<string>images</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>370ACE291BDF4B7700AB73EB</key>
+		<dict>
+			<key>fileRef</key>
+			<string>370ACE281BDF4B7700AB73EB</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>370ACE431BDF573500AB73EB</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>DB.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>370ACE441BDF573500AB73EB</key>
+		<dict>
+			<key>fileRef</key>
+			<string>370ACE431BDF573500AB73EB</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>370ACE491BDF9C8A00AB73EB</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>DBmethod.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>370ACE4A1BDF9C8A00AB73EB</key>
+		<dict>
+			<key>fileRef</key>
+			<string>370ACE491BDF9C8A00AB73EB</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>371432A71BE98F060088CDCC</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>ShiftImport.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>371432A81BE98F060088CDCC</key>
+		<dict>
+			<key>fileRef</key>
+			<string>371432A71BE98F060088CDCC</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>3724CDCB1C14317500D73528</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>wrapper.framework</string>
+			<key>path</key>
+			<string>Realm.framework</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>3724CDCC1C14317500D73528</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>wrapper.framework</string>
+			<key>path</key>
+			<string>RealmSwift.framework</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>3724CDCD1C14317500D73528</key>
+		<dict>
+			<key>fileRef</key>
+			<string>3724CDCB1C14317500D73528</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>3724CDCE1C14317500D73528</key>
+		<dict>
+			<key>fileRef</key>
+			<string>3724CDCB1C14317500D73528</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>settings</key>
+			<dict>
+				<key>ATTRIBUTES</key>
+				<array>
+					<string>CodeSignOnCopy</string>
+					<string>RemoveHeadersOnCopy</string>
+				</array>
+			</dict>
+		</dict>
+		<key>3724CDCF1C14317500D73528</key>
+		<dict>
+			<key>fileRef</key>
+			<string>3724CDCC1C14317500D73528</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>3724CDD01C14317500D73528</key>
+		<dict>
+			<key>fileRef</key>
+			<string>3724CDCC1C14317500D73528</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>settings</key>
+			<dict>
+				<key>ATTRIBUTES</key>
+				<array>
+					<string>CodeSignOnCopy</string>
+					<string>RemoveHeadersOnCopy</string>
+				</array>
+			</dict>
+		</dict>
+		<key>3724CDD11C14317500D73528</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>dstPath</key>
+			<string></string>
+			<key>dstSubfolderSpec</key>
+			<string>10</string>
+			<key>files</key>
+			<array>
+				<string>3724CDD01C14317500D73528</string>
+				<string>3724CDCE1C14317500D73528</string>
+			</array>
+			<key>isa</key>
+			<string>PBXCopyFilesBuildPhase</string>
+			<key>name</key>
+			<string>Embed Frameworks</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>3726B3931C2FF7F400F22F34</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>wrapper.framework</string>
+			<key>name</key>
+			<string>QuartzCore.framework</string>
+			<key>path</key>
+			<string>System/Library/Frameworks/QuartzCore.framework</string>
+			<key>sourceTree</key>
+			<string>SDKROOT</string>
+		</dict>
+		<key>3726B3941C2FF7F400F22F34</key>
+		<dict>
+			<key>fileRef</key>
+			<string>3726B3931C2FF7F400F22F34</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>3726B3991C30009700F22F34</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>CalenderViewController.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>3726B39A1C30009700F22F34</key>
+		<dict>
+			<key>fileRef</key>
+			<string>3726B3991C30009700F22F34</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>3726B3A51C311B7600F22F34</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>file</string>
+			<key>path</key>
+			<string>aaa.xlsx</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>3726B3A61C311B7600F22F34</key>
+		<dict>
+			<key>fileRef</key>
+			<string>3726B3A51C311B7600F22F34</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>3742AF551C12D8D1003AB33B</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>compiled.mach-o.dylib</string>
+			<key>name</key>
+			<string>libz.1.dylib</string>
+			<key>path</key>
+			<string>../../../../../../usr/lib/libz.1.dylib</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>3742AF561C12D8D1003AB33B</key>
+		<dict>
+			<key>fileRef</key>
+			<string>3742AF551C12D8D1003AB33B</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>3742AF6D1C12FEE8003AB33B</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>file</string>
+			<key>path</key>
+			<string>bbb.xlsx</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>3742AF6E1C12FEE8003AB33B</key>
+		<dict>
+			<key>fileRef</key>
+			<string>3742AF6D1C12FEE8003AB33B</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>3742AF831C130360003AB33B</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>wrapper.pb-project</string>
+			<key>name</key>
+			<string>XlsxReaderWriter.xcodeproj</string>
+			<key>path</key>
+			<string>XlsxReaderWriter-master/XlsxReaderWriter.xcodeproj</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>3742AF841C130360003AB33B</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>3742AF8B1C130360003AB33B</string>
+				<string>3742AF8D1C130360003AB33B</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Products</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>3742AF8A1C130360003AB33B</key>
+		<dict>
+			<key>containerPortal</key>
+			<string>3742AF831C130360003AB33B</string>
+			<key>isa</key>
+			<string>PBXContainerItemProxy</string>
+			<key>proxyType</key>
+			<string>2</string>
+			<key>remoteGlobalIDString</key>
+			<string>45B6E23A1A148F7500288A78</string>
+			<key>remoteInfo</key>
+			<string>XlsxReaderWriter</string>
+		</dict>
+		<key>3742AF8B1C130360003AB33B</key>
+		<dict>
+			<key>fileType</key>
+			<string>archive.ar</string>
+			<key>isa</key>
+			<string>PBXReferenceProxy</string>
+			<key>path</key>
+			<string>libXlsxReaderWriter.a</string>
+			<key>remoteRef</key>
+			<string>3742AF8A1C130360003AB33B</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>3742AF8C1C130360003AB33B</key>
+		<dict>
+			<key>containerPortal</key>
+			<string>3742AF831C130360003AB33B</string>
+			<key>isa</key>
+			<string>PBXContainerItemProxy</string>
+			<key>proxyType</key>
+			<string>2</string>
+			<key>remoteGlobalIDString</key>
+			<string>45B6E2451A148F7500288A78</string>
+			<key>remoteInfo</key>
+			<string>XlsxReaderWriterTests</string>
+		</dict>
+		<key>3742AF8D1C130360003AB33B</key>
+		<dict>
+			<key>fileType</key>
+			<string>wrapper.cfbundle</string>
+			<key>isa</key>
+			<string>PBXReferenceProxy</string>
+			<key>path</key>
+			<string>XlsxReaderWriterTests.xctest</string>
+			<key>remoteRef</key>
+			<string>3742AF8C1C130360003AB33B</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>3742AF901C130391003AB33B</key>
+		<dict>
+			<key>fileRef</key>
+			<string>3742AF8B1C130360003AB33B</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>3742AF911C130494003AB33B</key>
+		<dict>
+			<key>containerPortal</key>
+			<string>3742AF831C130360003AB33B</string>
+			<key>isa</key>
+			<string>PBXContainerItemProxy</string>
+			<key>proxyType</key>
+			<string>1</string>
+			<key>remoteGlobalIDString</key>
+			<string>45B6E2391A148F7500288A78</string>
+			<key>remoteInfo</key>
+			<string>XlsxReaderWriter</string>
+		</dict>
+		<key>3742AF921C130494003AB33B</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXTargetDependency</string>
+			<key>name</key>
+			<string>XlsxReaderWriter</string>
+			<key>targetProxy</key>
+			<string>3742AF911C130494003AB33B</string>
+		</dict>
+		<key>376C92D51BE695D000D45FC2</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>extentions.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>376C92D61BE695D000D45FC2</key>
+		<dict>
+			<key>fileRef</key>
+			<string>376C92D51BE695D000D45FC2</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>379955941C14431F00BAAD9E</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>Shiftmethod.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>379955951C14431F00BAAD9E</key>
+		<dict>
+			<key>fileRef</key>
+			<string>379955941C14431F00BAAD9E</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>379A2DBD1C1E5F9900751425</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>image.png</string>
+			<key>path</key>
+			<string>no_data.png</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>379A2DBE1C1E5F9900751425</key>
+		<dict>
+			<key>fileRef</key>
+			<string>379A2DBD1C1E5F9900751425</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>379A2DC31C1F2CC300751425</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>ShiftGallery.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>379A2DC41C1F2CC300751425</key>
+		<dict>
+			<key>fileRef</key>
+			<string>379A2DC31C1F2CC300751425</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>379A2E041C1FDFFC00751425</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>CustomUICollectionViewCell.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>379A2E051C1FDFFC00751425</key>
+		<dict>
+			<key>fileRef</key>
+			<string>379A2E041C1FDFFC00751425</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>37D4B30F1BE0F59900F06759</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>Setting.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>37D4B3101BE0F59900F06759</key>
+		<dict>
+			<key>fileRef</key>
+			<string>37D4B30F1BE0F59900F06759</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>37D8F4241C0CB1A000D5336A</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.plist.strings</string>
+			<key>name</key>
+			<string>ja</string>
+			<key>path</key>
+			<string>ja.lproj/Main.strings</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>37D8F4251C0CB1A000D5336A</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.plist.strings</string>
+			<key>name</key>
+			<string>ja</string>
+			<key>path</key>
+			<string>ja.lproj/LaunchScreen.strings</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>37DD8EF41C1C0135007C0E6C</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+			<key>path</key>
+			<string>SwipeBetweenViewControllers.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>37DD8EF51C1C0135007C0E6C</key>
+		<dict>
+			<key>fileRef</key>
+			<string>37DD8EF41C1C0135007C0E6C</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>37DD8EFF1C1C29FF007C0E6C</key>
+		<dict>
+			<key>fileRef</key>
+			<string>370ACDFE1BDF486700AB73EB</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>37F1E2A21BF21126000A22B0</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>dstPath</key>
+			<string></string>
+			<key>dstSubfolderSpec</key>
+			<string>13</string>
+			<key>files</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXCopyFilesBuildPhase</string>
+			<key>name</key>
+			<string>Embed App Extensions</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>7423B7CBCF975D0B30BA5249</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>FAD231E854685D75C3F03501</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Frameworks</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>8C229A283138099E606A0D3F</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>inputPaths</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXShellScriptBuildPhase</string>
+			<key>name</key>
+			<string>Copy Pods Resources</string>
+			<key>outputPaths</key>
+			<array/>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+			<key>shellPath</key>
+			<string>/bin/sh</string>
+			<key>shellScript</key>
+			<string>"${SRCROOT}/Pods/Target Support Files/Pods-masamon/Pods-masamon-resources.sh"
+</string>
+			<key>showEnvVarsInLog</key>
+			<string>0</string>
+		</dict>
+		<key>B7F09A19EA7135B641CC0EC0</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>inputPaths</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXShellScriptBuildPhase</string>
+			<key>name</key>
+			<string>Embed Pods Frameworks</string>
+			<key>outputPaths</key>
+			<array/>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+			<key>shellPath</key>
+			<string>/bin/sh</string>
+			<key>shellScript</key>
+			<string>"${SRCROOT}/Pods/Target Support Files/Pods-masamon/Pods-masamon-frameworks.sh"
+</string>
+			<key>showEnvVarsInLog</key>
+			<string>0</string>
+		</dict>
+		<key>CBB0530458E4D93A5A6FCB3D</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>inputPaths</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXShellScriptBuildPhase</string>
+			<key>name</key>
+			<string>Check Pods Manifest.lock</string>
+			<key>outputPaths</key>
+			<array/>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+			<key>shellPath</key>
+			<string>/bin/sh</string>
+			<key>shellScript</key>
+			<string>diff "${PODS_ROOT}/../Podfile.lock" "${PODS_ROOT}/Manifest.lock" &gt; /dev/null
+if [[ $? != 0 ]] ; then
+    cat &lt;&lt; EOM
+error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.
+EOM
+    exit 1
+fi
+</string>
+			<key>showEnvVarsInLog</key>
+			<string>0</string>
+		</dict>
+		<key>D9C8B4DC9FDEB1B892F9B0DD</key>
+		<dict>
+			<key>fileRef</key>
+			<string>FAD231E854685D75C3F03501</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>DB9C07197D395EF38199A0C7</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>name</key>
+			<string>Pods-masamon.debug.xcconfig</string>
+			<key>path</key>
+			<string>Pods/Target Support Files/Pods-masamon/Pods-masamon.debug.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>FAD231E854685D75C3F03501</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>wrapper.framework</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>Pods_masamon.framework</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+	</dict>
+	<key>rootObject</key>
+	<string>370ACDEF1BDF486600AB73EB</string>
+</dict>
+</plist>
