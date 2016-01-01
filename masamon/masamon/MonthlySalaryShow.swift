@@ -92,31 +92,29 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         }
     }
     
-    override func viewDidAppear(animated: Bool) {
-        progress.show(message: "Loading...", style: BlueDarkStyle())
-        progress.dismiss()
-    }
-    
     //バックグラウンドで保存しながらプログレスを表示する
     let progress = GradientCircularProgress()
     let Libralypath = NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0] as String
     func onTest() {
-        for(var i = 0; i < 1000000; i++){
-            let ratio: CGFloat = CGFloat(i) / CGFloat(1000000)
-            progress.showAtRatio(style: BlueDarkStyle())
-            progress.updateRatio(ratio)
-            progress.dismiss()
 
-        }
-
-        //progress.show(message: "Loading...", style: BlueDarkStyle())
+        progress.show(message: "Loading...", style: BlueDarkStyle())
         
         dispatch_async_global { // ここからバックグラウンドスレッド
                 Shiftmethod().ShiftDBOneCoursRegist(self.appDelegate.filename, importpath: self.Libralypath+"/"+self.appDelegate.filename, update: self.appDelegate.update)
                 Shiftmethod().UserMonthlySalaryRegist(self.appDelegate.filename)
 
             self.dispatch_async_main { // ここからメインスレッド
-                self.progress.dismiss()
+                self.progress.dismiss({ () -> Void in
+                    let progress = GradientCircularProgress()
+                    let ratio: CGFloat = CGFloat(1) / CGFloat(1)
+                    
+                    progress.showAtRatio(style: BlueDarkStyle())
+                    progress.updateRatio(ratio)
+                    progress.dismiss()
+                })
+                
+                
+                
             }
         }
     }
@@ -210,7 +208,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         //ファイルの保存が成功していたら
         if(appDelegate.filesavealert){
             self.onTest()
-            self.CheckMarkAnimation()
+            //self.CheckMarkAnimation()
             appDelegate.filesavealert = false
         }
     }
