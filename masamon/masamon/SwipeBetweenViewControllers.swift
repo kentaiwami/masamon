@@ -112,7 +112,7 @@ class SwipeBetweenViewControllers: UINavigationController,UIPageViewControllerDe
     //%%% sets up the selection bar under the buttons on the navigation bar
     func setupSelector() {
         selectionBar = UIView(frame: CGRectMake(X_BUFFER-X_OFFSET, SELECTOR_Y_BUFFER,(self.view.frame.size.width-2*X_BUFFER)/CGFloat(viewControllerArray.count), SELECTOR_HEIGHT))
-        selectionBar.backgroundColor = UIColor.greenColor() //%%% sbcolor
+        selectionBar.backgroundColor = UIColor.hex("07E665", alpha: 1.0) //%%% sbcolor
         selectionBar.alpha = 0.8; //%%% sbalpha
         navigationView.addSubview(selectionBar)
     }
