@@ -367,6 +367,7 @@ class CalenderViewController: UIViewController {
             //ボタンを配置する
             self.view.addSubview(button)
             mArray.addObject(button)
+            self.view.bringSubviewToFront(alertview)
         }
         
     }
@@ -541,7 +542,6 @@ class CalenderViewController: UIViewController {
     
     //カレンダーボタンをタップした時のアクション
     func buttonTapped(button: UIButton){
-        print("a")
         if(DBmethod().TheDayStaffGet(MonthlySalaryShow().Changecalendar(year, calender: "A.D"), month: month, date: button.tag) == nil){
             let alertController = UIAlertController(title: "\(year)年\(month)月\(button.tag)日", message: "データなし", preferredStyle: .Alert)
             let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
