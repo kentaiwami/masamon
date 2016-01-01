@@ -24,5 +24,6 @@
 * XlsxReaderWriter
 * SwipeBetweenViewControllers
 * handMadeCalendarOfSwift
+* Gradient Circular Progress
 
 
