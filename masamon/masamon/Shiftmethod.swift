@@ -18,7 +18,7 @@ class Shiftmethod: UIViewController {
     let mark = "F"
     var number = 6
     
-    let TEST = "bbb"
+    let TEST = "aaa"
     
     
     //ワンクール分のシフトをShiftDetailDBとShiftDBへ記録する

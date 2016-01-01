@@ -91,46 +91,29 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             SaralyLabel.text = String(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB)-1))
         }
     }
-    let progress = GradientCircularProgress()
-    override func viewDidAppear(animated: Bool) {
-        
-        
-//        progress.show(message: "Loading...", style: BlueDarkStyle())
-        
-        self.onTest()
-        
-        
-        
-
-        
-    }
     
+    //バックグラウンドで保存しながらプログレスを表示する
+    let progress = GradientCircularProgress()
+    let Libralypath = NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0] as String
     func onTest() {
         progress.show(message: "Loading...", style: BlueDarkStyle())
-        // HUDとか出す
-        // showHUD()
         
         dispatch_async_global { // ここからバックグラウンドスレッド
-            // なんか重い処理
-            for(var i = 0; i < 1000000; i++) {
-                print(i)
-            }
-            
+                Shiftmethod().ShiftDBOneCoursRegist(self.appDelegate.filename, importpath: self.Libralypath+"/"+self.appDelegate.filename, update: self.appDelegate.update)
+                Shiftmethod().UserMonthlySalaryRegist(self.appDelegate.filename)
+
             self.dispatch_async_main { // ここからメインスレッド
                 self.progress.dismiss()
-                // HUD消したり
-                // hideHUD()
-                
-                // 結果をUIへ表示したり
-//                self.label.text = "res=\(res)"
             }
         }
     }
     
+    //並行処理で使用
     func dispatch_async_main(block: () -> ()) {
         dispatch_async(dispatch_get_main_queue(), block)
     }
     
+    //並行処理で使用
     func dispatch_async_global(block: () -> ()) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), block)
     }
@@ -210,10 +193,10 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         
     }
     
-    
     func FileSaveSuccessfulAlertShow(){
         //ファイルの保存が成功していたら
         if(appDelegate.filesavealert){
+            self.onTest()
             self.CheckMarkAnimation()
             appDelegate.filesavealert = false
         }
