@@ -8,6 +8,7 @@
 
 import UIKit
 import RealmSwift
+import GradientCircularProgress
 
 class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewDataSource{
     
@@ -38,6 +39,19 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+//        let progress = GradientCircularProgress()
+//        
+//        let MAX = 10000000
+//        
+//        for(var i = 0; i < MAX; i++){
+//            let ratio: CGFloat = CGFloat(i) / CGFloat(MAX)
+//            progress.showAtRatio(style: BlueDarkStyle())
+//            progress.updateRatio(ratio)
+//        }
+//        
+//       
+//        progress.dismiss()
         
         currentnsdate = NSDate()
         
@@ -90,6 +104,26 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             //pickerviewのデフォルト表示
             SaralyLabel.text = String(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB)-1))
         }
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        let progress = GradientCircularProgress()
+        
+        progress.show(message: "Loading...", style: BlueDarkStyle())
+        progress.dismiss()
+        
+//        let MAX = 1000000000000000
+//        
+//        
+//        for(var i = 0; i < MAX; i++){
+//            let ratio: CGFloat = CGFloat(i) / CGFloat(MAX)
+//            progress.updateRatio(ratio)
+//            progress.showAtRatio(style: BlueDarkStyle())
+//        }
+//        
+//        
+//        progress.dismiss()
+
     }
     
     override func didReceiveMemoryWarning() {
