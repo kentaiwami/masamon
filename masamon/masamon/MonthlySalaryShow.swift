@@ -8,6 +8,7 @@
 
 import UIKit
 import RealmSwift
+import GradientCircularProgress
 
 class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewDataSource{
     
@@ -37,7 +38,6 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         
         currentnsdate = NSDate()
         
@@ -90,6 +90,38 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             //pickerviewのデフォルト表示
             SaralyLabel.text = String(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB)-1))
         }
+    }
+    
+    //バックグラウンドで保存しながらプログレスを表示する
+    let progress = GradientCircularProgress()
+    let Libralypath = NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0] as String
+    func onTest() {
+
+        progress.show(message: "取り込み中...", style: BlueDarkStyle())
+        
+        dispatch_async_global { // ここからバックグラウンドスレッド
+                Shiftmethod().ShiftDBOneCoursRegist(self.appDelegate.filename, importpath: self.Libralypath+"/"+self.appDelegate.filename, update: self.appDelegate.update)
+                Shiftmethod().UserMonthlySalaryRegist(self.appDelegate.filename)
+
+            self.dispatch_async_main { // ここからメインスレッド
+                self.progress.dismiss({ () -> Void in
+                    let progress = GradientCircularProgress()
+                    
+                    progress.show(message: "完了", style: BlueDarkStyle())
+                    progress.dismiss()
+                })
+            }
+        }
+    }
+    
+    //並行処理で使用
+    func dispatch_async_main(block: () -> ()) {
+        dispatch_async(dispatch_get_main_queue(), block)
+    }
+    
+    //並行処理で使用
+    func dispatch_async_global(block: () -> ()) {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), block)
     }
     
     override func didReceiveMemoryWarning() {
@@ -167,11 +199,11 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         
     }
     
-    
     func FileSaveSuccessfulAlertShow(){
         //ファイルの保存が成功していたら
         if(appDelegate.filesavealert){
-            self.CheckMarkAnimation()
+            self.onTest()
+            //self.CheckMarkAnimation()
             appDelegate.filesavealert = false
         }
     }

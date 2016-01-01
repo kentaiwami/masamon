@@ -28,6 +28,7 @@
 		3742AF6E1C12FEE8003AB33B /* bbb.xlsx in Resources */ = {isa = PBXBuildFile; fileRef = 3742AF6D1C12FEE8003AB33B /* bbb.xlsx */; };
 		3742AF901C130391003AB33B /* libXlsxReaderWriter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3742AF8B1C130360003AB33B /* libXlsxReaderWriter.a */; };
 		376C92D61BE695D000D45FC2 /* extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376C92D51BE695D000D45FC2 /* extentions.swift */; };
+		377D2DAE1C36C08B009CC388 /* BlueDarkStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377D2DAD1C36C08B009CC388 /* BlueDarkStyle.swift */; };
 		379955951C14431F00BAAD9E /* Shiftmethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379955941C14431F00BAAD9E /* Shiftmethod.swift */; };
 		379A2DBE1C1E5F9900751425 /* no_data.png in Resources */ = {isa = PBXBuildFile; fileRef = 379A2DBD1C1E5F9900751425 /* no_data.png */; };
 		379A2DC41C1F2CC300751425 /* ShiftGallery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379A2DC31C1F2CC300751425 /* ShiftGallery.swift */; };
@@ -35,6 +36,7 @@
 		37D4B3101BE0F59900F06759 /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D4B30F1BE0F59900F06759 /* Setting.swift */; };
 		37DD8EF51C1C0135007C0E6C /* SwipeBetweenViewControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DD8EF41C1C0135007C0E6C /* SwipeBetweenViewControllers.swift */; };
 		37DD8EFF1C1C29FF007C0E6C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 370ACDFE1BDF486700AB73EB /* Main.storyboard */; };
+		D9C8B4DC9FDEB1B892F9B0DD /* Pods_masamon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAD231E854685D75C3F03501 /* Pods_masamon.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -101,6 +103,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1B7B2B25D5EE69B36B550A20 /* Pods-masamon.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-masamon.release.xcconfig"; path = "Pods/Target Support Files/Pods-masamon/Pods-masamon.release.xcconfig"; sourceTree = "<group>"; };
 		370ACDF71BDF486600AB73EB /* masamon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = masamon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		370ACDFA1BDF486700AB73EB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		370ACDFC1BDF486700AB73EB /* MonthlySalaryShow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlySalaryShow.swift; sourceTree = "<group>"; };
@@ -127,6 +130,9 @@
 		3742AF6D1C12FEE8003AB33B /* bbb.xlsx */ = {isa = PBXFileReference; lastKnownFileType = file; path = bbb.xlsx; sourceTree = "<group>"; };
 		3742AF831C130360003AB33B /* XlsxReaderWriter.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = XlsxReaderWriter.xcodeproj; path = "XlsxReaderWriter-master/XlsxReaderWriter.xcodeproj"; sourceTree = "<group>"; };
 		376C92D51BE695D000D45FC2 /* extentions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = extentions.swift; sourceTree = "<group>"; };
+		377D2DAA1C36BFD2009CC388 /* GradientCircularProgress.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GradientCircularProgress.framework; path = "Pods/../build/Debug-iphoneos/GradientCircularProgress.framework"; sourceTree = "<group>"; };
+		377D2DAD1C36C08B009CC388 /* BlueDarkStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlueDarkStyle.swift; sourceTree = "<group>"; };
+		377D2DAF1C36C14A009CC388 /* GradientCircularProgress.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GradientCircularProgress.framework; path = "Pods/../build/Debug-iphoneos/GradientCircularProgress.framework"; sourceTree = "<group>"; };
 		379955941C14431F00BAAD9E /* Shiftmethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shiftmethod.swift; sourceTree = "<group>"; };
 		379A2DBD1C1E5F9900751425 /* no_data.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = no_data.png; sourceTree = "<group>"; };
 		379A2DC31C1F2CC300751425 /* ShiftGallery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShiftGallery.swift; sourceTree = "<group>"; };
@@ -135,6 +141,8 @@
 		37D8F4241C0CB1A000D5336A /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
 		37D8F4251C0CB1A000D5336A /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		37DD8EF41C1C0135007C0E6C /* SwipeBetweenViewControllers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipeBetweenViewControllers.swift; sourceTree = "<group>"; };
+		DB9C07197D395EF38199A0C7 /* Pods-masamon.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-masamon.debug.xcconfig"; path = "Pods/Target Support Files/Pods-masamon/Pods-masamon.debug.xcconfig"; sourceTree = "<group>"; };
+		FAD231E854685D75C3F03501 /* Pods_masamon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_masamon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,6 +155,7 @@
 				3742AF901C130391003AB33B /* libXlsxReaderWriter.a in Frameworks */,
 				3724CDCF1C14317500D73528 /* RealmSwift.framework in Frameworks */,
 				3742AF561C12D8D1003AB33B /* libz.1.dylib in Frameworks */,
+				D9C8B4DC9FDEB1B892F9B0DD /* Pods_masamon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -167,9 +176,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		273B5D0506CACB8F3F46583C /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				DB9C07197D395EF38199A0C7 /* Pods-masamon.debug.xcconfig */,
+				1B7B2B25D5EE69B36B550A20 /* Pods-masamon.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		370ACDEE1BDF486600AB73EB = {
 			isa = PBXGroup;
 			children = (
+				377D2DAD1C36C08B009CC388 /* BlueDarkStyle.swift */,
 				3726B3931C2FF7F400F22F34 /* QuartzCore.framework */,
 				379A2DBD1C1E5F9900751425 /* no_data.png */,
 				3724CDCB1C14317500D73528 /* Realm.framework */,
@@ -183,6 +202,8 @@
 				370ACE0E1BDF486700AB73EB /* masamonTests */,
 				370ACE191BDF486700AB73EB /* masamonUITests */,
 				370ACDF81BDF486600AB73EB /* Products */,
+				273B5D0506CACB8F3F46583C /* Pods */,
+				7423B7CBCF975D0B30BA5249 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -246,6 +267,16 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		7423B7CBCF975D0B30BA5249 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				377D2DAF1C36C14A009CC388 /* GradientCircularProgress.framework */,
+				377D2DAA1C36BFD2009CC388 /* GradientCircularProgress.framework */,
+				FAD231E854685D75C3F03501 /* Pods_masamon.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -253,11 +284,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 370ACE1F1BDF486700AB73EB /* Build configuration list for PBXNativeTarget "masamon" */;
 			buildPhases = (
+				CBB0530458E4D93A5A6FCB3D /* Check Pods Manifest.lock */,
 				370ACDF31BDF486600AB73EB /* Sources */,
 				370ACDF41BDF486600AB73EB /* Frameworks */,
 				370ACDF51BDF486600AB73EB /* Resources */,
 				37F1E2A21BF21126000A22B0 /* Embed App Extensions */,
 				3724CDD11C14317500D73528 /* Embed Frameworks */,
+				B7F09A19EA7135B641CC0EC0 /* Embed Pods Frameworks */,
+				8C229A283138099E606A0D3F /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -405,6 +439,54 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		8C229A283138099E606A0D3F /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-masamon/Pods-masamon-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B7F09A19EA7135B641CC0EC0 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-masamon/Pods-masamon-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CBB0530458E4D93A5A6FCB3D /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		370ACDF31BDF486600AB73EB /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -416,6 +498,7 @@
 				370ACE4A1BDF9C8A00AB73EB /* DBmethod.swift in Sources */,
 				379A2DC41C1F2CC300751425 /* ShiftGallery.swift in Sources */,
 				370ACDFD1BDF486700AB73EB /* MonthlySalaryShow.swift in Sources */,
+				377D2DAE1C36C08B009CC388 /* BlueDarkStyle.swift in Sources */,
 				376C92D61BE695D000D45FC2 /* extentions.swift in Sources */,
 				370ACE441BDF573500AB73EB /* DB.swift in Sources */,
 				379A2E051C1FDFFC00751425 /* CustomUICollectionViewCell.swift in Sources */,
@@ -502,7 +585,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -548,7 +631,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -570,12 +653,14 @@
 		};
 		370ACE201BDF486700AB73EB /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DB9C07197D395EF38199A0C7 /* Pods-masamon.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
 				);
 				INFOPLIST_FILE = masamon/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
@@ -590,12 +675,14 @@
 		};
 		370ACE211BDF486700AB73EB /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1B7B2B25D5EE69B36B550A20 /* Pods-masamon.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
 				);
 				INFOPLIST_FILE = masamon/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;

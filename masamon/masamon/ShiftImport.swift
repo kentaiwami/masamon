@@ -68,16 +68,19 @@ class ShiftImport: UIViewController,UITextFieldDelegate,QLPreviewControllerDataS
                     style: UIAlertActionStyle.Default,
                     handler:{
                         (action:UIAlertAction!) -> Void in
+                        self.appDelegate.filesavealert = true
+                        self.dismissViewControllerAnimated(true, completion: nil)
                         do{
                             try filemanager.removeItemAtPath(self.Libralypath+"/"+self.filenamefield.text!)
                             try filemanager.moveItemAtPath(Inboxpath+self.filename, toPath: self.Libralypath+"/"+self.filenamefield.text!)
                             self.InboxFileCountsDBMinusOne()
-                            self.dismissViewControllerAnimated(true, completion: nil)
+                            
                             self.appDelegate.filesavealert = true
                             self.ShiftImportHistoryDBadd(NSDate(), importname: self.filenamefield.text!)
+                            self.appDelegate.filename = self.filenamefield.text!
+                            self.appDelegate.update = true
+                            self.dismissViewControllerAnimated(true, completion: nil)
                             
-                            Shiftmethod().ShiftDBOneCoursRegist(self.filenamefield.text!, importpath: self.Libralypath+"/"+self.filenamefield.text!, update: true)
-                            Shiftmethod().UserMonthlySalaryRegist(self.filenamefield.text!)
                         }catch{
                             print(error)
                         }
@@ -92,10 +95,9 @@ class ShiftImport: UIViewController,UITextFieldDelegate,QLPreviewControllerDataS
                     self.InboxFileCountsDBMinusOne()
                     self.dismissViewControllerAnimated(true, completion: nil)
                     appDelegate.filesavealert = true
+                    appDelegate.filename = self.filenamefield.text!
+                    appDelegate.update = false
                     ShiftImportHistoryDBadd(NSDate(), importname: filenamefield.text!)
-                    
-                    Shiftmethod().ShiftDBOneCoursRegist(filenamefield.text!, importpath: Libralypath+"/"+filenamefield.text!, update: false)
-                    Shiftmethod().UserMonthlySalaryRegist(filenamefield.text!)
                 }catch{
                     print(error)
                 }
