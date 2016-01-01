@@ -549,40 +549,41 @@ class CalenderViewController: UIViewController {
             
             presentViewController(alertController, animated: true, completion: nil)
         }else{
-            let AAA = DBmethod().TheDayStaffGet(MonthlySalaryShow().Changecalendar(year, calender: "A.D"),month: month,date: button.tag)![0].staff
-            let BBB = MonthlySalaryShow().SplitStaffShift(AAA)
+            let staffstring = DBmethod().TheDayStaffGet(MonthlySalaryShow().Changecalendar(year, calender: "A.D"),month: month,date: button.tag)![0].staff
+            let splitedstaffarray = MonthlySalaryShow().SplitStaffShift(staffstring)
             
-            let C0 = "\(year)年\(month)月\(button.tag)日"
-            let C1 = "　早番："+BBB[0]+"\n\n"
-            let C2 = "　中1："+BBB[1]+"\n\n"
-            let C3 = "　中2："+BBB[2]+"\n\n"
-            let C4 = "　中3："+BBB[3]+"\n\n"
-            let C5 = "　遅番："+BBB[4]+"\n\n"
-            let C6 = "　その他："+BBB[5]+"\n"
-            let C7 = "\n\n\n"
-            let CCC = C7+C1+C2+C3+C4+C5+C6
+            let alertviewtitle = "\(year)年\(month)月\(button.tag)日"
+            let earlystaff = "　早番："+splitedstaffarray[0]+"\n\n"
+            let center1staff = "　中1："+splitedstaffarray[1]+"\n\n"
+            let center2staff = "　中2："+splitedstaffarray[2]+"\n\n"
+            let center3staff = "　中3："+splitedstaffarray[3]+"\n\n"
+            let laterstaff = "　遅番："+splitedstaffarray[4]+"\n\n"
+            let otherstaff = "　その他："+splitedstaffarray[5]+"\n"
+            let linebreak = "\n\n\n"
+            let alertviewtext = linebreak+earlystaff+center1staff+center2staff+center3staff+laterstaff+otherstaff
             
-            
+            //擬似アラートの設定
             alertview.frame = CGRectMake(0,0,self.view.frame.width,self.view.frame.height)
             alertview.backgroundColor = UIColor.hex("000000", alpha: 0.3)
             
             
-            
+            //アラートのタイトル設定
             titlelabel.frame = CGRectMake(self.view.frame.width/2-350/2,self.view.frame.height/2-320/2,350,50)
-            titlelabel.text = C0
+            titlelabel.text = alertviewtitle
             titlelabel.textAlignment = NSTextAlignment.Center
             titlelabel.textColor = UIColor.blackColor()
             titlelabel.font = UIFont.boldSystemFontOfSize(UIFont.labelFontSize())
             
+            //アラートに表示するテキストの設定
             textview.frame = CGRectMake(self.view.frame.width/2-350/2, self.view.frame.height/2-320/2, 350, 320)
             textview.layer.masksToBounds = true
             textview.layer.cornerRadius = 25
             textview.backgroundColor = UIColor.hex("FFFFFF", alpha: 1.0)
             textview.editable = false
-            
-            textview.text = CCC
+            textview.text = alertviewtext
             textview.textColor = UIColor.blackColor()
             
+            //アラートに表示するOKボタンの設定
             OKButton.backgroundColor = UIColor.clearColor()
             OKButton.frame = CGRectMake(self.view.frame.width/2-350/2,self.view.frame.height/2-250/2+230,350,50)
             OKButton.setTitle("OK", forState: .Normal)
@@ -590,10 +591,11 @@ class CalenderViewController: UIViewController {
             OKButton.layer.cornerRadius = 25
             OKButton.addTarget(self, action: "TapOK:", forControlEvents: .TouchUpInside)
             
+            //アラートのテキストとボタンの境界線を表示する設定
             lineview.frame = CGRectMake(self.view.frame.width/2-350/2, self.view.frame.height/2-250/2+220, 350, 1)
             lineview.backgroundColor = UIColor.hex("000000", alpha: 0.2)
             
-            
+            //viewを無限に追加しないためにflagを使用する
             if(flag){
                 UIView.animateWithDuration(0.3, animations: { () -> Void in
                     self.alertview.alpha = 1.0
@@ -612,6 +614,7 @@ class CalenderViewController: UIViewController {
         }
     }
     
+    //アラートに表示するOKボタンを押した際に呼ばれる関数
     func TapOK(sender: UIButton){
         flag = true
         UIView.animateWithDuration(0.3, animations: { () -> Void in
