@@ -92,11 +92,24 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         }
     }
     
+    override func viewDidAppear(animated: Bool) {
+        progress.show(message: "Loading...", style: BlueDarkStyle())
+        progress.dismiss()
+    }
+    
     //バックグラウンドで保存しながらプログレスを表示する
     let progress = GradientCircularProgress()
     let Libralypath = NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0] as String
     func onTest() {
-        progress.show(message: "Loading...", style: BlueDarkStyle())
+        for(var i = 0; i < 1000000; i++){
+            let ratio: CGFloat = CGFloat(i) / CGFloat(1000000)
+            progress.showAtRatio(style: BlueDarkStyle())
+            progress.updateRatio(ratio)
+            progress.dismiss()
+
+        }
+
+        //progress.show(message: "Loading...", style: BlueDarkStyle())
         
         dispatch_async_global { // ここからバックグラウンドスレッド
                 Shiftmethod().ShiftDBOneCoursRegist(self.appDelegate.filename, importpath: self.Libralypath+"/"+self.appDelegate.filename, update: self.appDelegate.update)
