@@ -90,7 +90,7 @@ class CalenderViewController: UIViewController {
         earlyshiftlegend.backgroundColor = UIColor(
             red: CGFloat(0.400), green: CGFloat(0.471), blue: CGFloat(0.980), alpha: CGFloat(1.0)
         )
-        center1shiftlegend.backgroundColor = UIColor.hex("ffcc00", alpha: 0.9)
+        center1shiftlegend.backgroundColor = UIColor.hex("00EE76", alpha: 1.0)
         center2shiftlegend.backgroundColor = UIColor.hex("ff9900", alpha: 1.0)
         center3shiftlegend.backgroundColor = UIColor.hex("ff9966", alpha: 1.0)
         latershiftlegend.backgroundColor = UIColor.blackColor()
@@ -333,7 +333,7 @@ class CalenderViewController: UIViewController {
                     )
                     
                 case "中":
-                    calendarBackGroundColor = UIColor.hex("ffcc00", alpha: 0.9)
+                    calendarBackGroundColor = UIColor.hex("00EE76", alpha: 0.9)
                     
                 case "中2":
                     calendarBackGroundColor = UIColor.hex("ff9900", alpha: 1.0)
