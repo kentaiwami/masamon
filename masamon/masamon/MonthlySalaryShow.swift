@@ -104,6 +104,11 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         }
         
         myUIPicker.reloadAllComponents()
+        
+        let today = self.currentnsdate
+        let date = ReturnYearMonthDayWeekday(today)         //日付を西暦,月,日,曜日に分けて取得
+        self.ShowAllData(self.Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day)           //データ表示へ分けた日付を渡す
+        CalenderLabel.text = "\(date.year)年\(date.month)月\(date.day)日 (\(self.ReturnWeekday(date.weekday)))"
     }
     
     //バックグラウンドで保存しながらプログレスを表示する
@@ -130,6 +135,11 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                     }
                     
                     self.myUIPicker.reloadAllComponents()
+                    
+                    let today = self.currentnsdate
+                    let date = self.ReturnYearMonthDayWeekday(today)         //日付を西暦,月,日,曜日に分けて取得
+                    self.ShowAllData(self.Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day)           //データ表示へ分けた日付を渡す
+                    self.CalenderLabel.text = "\(date.year)年\(date.month)月\(date.day)日 (\(self.ReturnWeekday(date.weekday)))"
                     
                     let progress = GradientCircularProgress()
                     progress.show(message: "完了", style: BlueDarkStyle())
