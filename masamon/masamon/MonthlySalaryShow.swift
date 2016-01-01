@@ -97,7 +97,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     let Libralypath = NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0] as String
     func onTest() {
 
-        progress.show(message: "Loading...", style: BlueDarkStyle())
+        progress.show(message: "取り込み中...", style: BlueDarkStyle())
         
         dispatch_async_global { // ここからバックグラウンドスレッド
                 Shiftmethod().ShiftDBOneCoursRegist(self.appDelegate.filename, importpath: self.Libralypath+"/"+self.appDelegate.filename, update: self.appDelegate.update)
@@ -106,15 +106,10 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             self.dispatch_async_main { // ここからメインスレッド
                 self.progress.dismiss({ () -> Void in
                     let progress = GradientCircularProgress()
-                    let ratio: CGFloat = CGFloat(1) / CGFloat(1)
                     
-                    progress.showAtRatio(style: BlueDarkStyle())
-                    progress.updateRatio(ratio)
+                    progress.show(message: "完了", style: BlueDarkStyle())
                     progress.dismiss()
                 })
-                
-                
-                
             }
         }
     }
