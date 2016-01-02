@@ -18,6 +18,8 @@ class ShiftGallery: UIViewController,UICollectionViewDelegate, UICollectionViewD
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得
+        print(appDelegate.selectedcell)
         
         ButtomView.alpha = 0.9
         

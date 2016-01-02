@@ -36,14 +36,20 @@ class ShiftGalleryTable: UIViewController, UITableViewDataSource, UITableViewDel
                 selectedCells.append(false)
             }
         }
-        
     }
 
+    override func viewWillDisappear(animated: Bool) {
+        
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
 
+    //表示ボタンを押した時に呼ばれる関数
     @IBAction func TapShowButton(sender: AnyObject) {
+        let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得
+        appDelegate.selectedcell = self.selectedCells
         let targetViewController = self.storyboard!.instantiateViewControllerWithIdentifier("ShiftGallery")
         self.presentViewController( targetViewController, animated: true, completion: nil)
     }
