@@ -13,9 +13,14 @@ class ShiftGallery: UIViewController,UICollectionViewDelegate, UICollectionViewD
     
     var myCollectionView : UICollectionView!
     let no_dataimageview = UIImageView()
+    let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得
 
+    @IBOutlet weak var ButtomView: UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        ButtomView.alpha = 0.9
         
         no_dataimageview.image = UIImage(named: "../no_data.png")
         no_dataimageview.frame = CGRectMake(self.view.frame.width/2-250, self.view.frame.height/2-250, 500, 500)
@@ -50,6 +55,8 @@ class ShiftGallery: UIViewController,UICollectionViewDelegate, UICollectionViewD
         myCollectionView.backgroundColor = UIColor.blackColor()
         self.view.addSubview(myCollectionView)
         self.view.addSubview(no_dataimageview)
+        
+        self.view.sendSubviewToBack(myCollectionView)
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -70,16 +77,35 @@ class ShiftGallery: UIViewController,UICollectionViewDelegate, UICollectionViewD
     
     //Cellの総数を返す
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return DBmethod().DBRecordCount(ShiftImportHistoryDB)
+        var count = 0
+        
+        for(var i = 0; i < appDelegate.selectedcell.count; i++){
+            if(appDelegate.selectedcell[i] == true){
+                count++
+            }
+        }
+        return count
     }
     
     //Cellに値を設定する
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
-        let shiftimportdbarray = DBmethod().ShiftImportHistoryDBGet()
+        var shiftlist: [String] = []
+        let count = DBmethod().DBRecordCount(ShiftImportHistoryDB)-1
+        
+        if(DBmethod().DBRecordCount(ShiftImportHistoryDB) != 0){
+            for(var i = 0; i <= count; i++){
+                if(appDelegate.selectedcell[i]){
+                    let historydate = DBmethod().ShiftImportHistoryDBGet()[count-i].date
+                    let historyname = DBmethod().ShiftImportHistoryDBGet()[count-i].name
+                    shiftlist.append(historydate + "     " + historyname)
+                }
+            }
+        }
         
         let cell : CustomUICollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("MyCell", forIndexPath: indexPath) as! CustomUICollectionViewCell
-        cell.textLabel?.text = shiftimportdbarray[(shiftimportdbarray.count-1) - indexPath.row].date  + "     " + shiftimportdbarray[(shiftimportdbarray.count-1) - indexPath.row].name
+        
+        cell.textLabel?.text = shiftlist[indexPath.row]
         cell.ql.dataSource = self
         cell.ql.currentPreviewItemIndex = indexPath.row
 
@@ -88,19 +114,33 @@ class ShiftGallery: UIViewController,UICollectionViewDelegate, UICollectionViewD
     
     //プレビューでの表示数
     func numberOfPreviewItemsInPreviewController(controller: QLPreviewController) -> Int{
-        return DBmethod().DBRecordCount(ShiftImportHistoryDB)
+        return 1
     }
     
     //プレビューで表示するファイルの設定
     func previewController(controller: QLPreviewController, previewItemAtIndex index: Int) -> QLPreviewItem{
-//        let shiftimportdbarray = DBmethod().ShiftImportHistoryDBGet()
-//        
-//        let Libralypath = NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0] as String
-//        let url = Libralypath + "/" + shiftimportdbarray[index].name
+        var shiftlist: [String] = []
+        let count = DBmethod().DBRecordCount(ShiftImportHistoryDB)-1
         
-        let documentPath: String = NSBundle.mainBundle().pathForResource("aaa", ofType: "xlsx")!
-        let doc = NSURL(fileURLWithPath: documentPath)
+        if(DBmethod().DBRecordCount(ShiftImportHistoryDB) != 0){
+            for(var i = 0; i <= count; i++){
+                if(appDelegate.selectedcell[i]){
+                    let historyname = DBmethod().ShiftImportHistoryDBGet()[count-i].name
+                    shiftlist.append(historyname)
+                }
+            }
+        }
+        
+        let Libralypath = NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0] as String
+        let url = Libralypath + "/" + shiftlist[index]
+        
+//        let documentPath: String = NSBundle.mainBundle().pathForResource("aaa", ofType: "xlsx")!
+        let doc = NSURL(fileURLWithPath: url)
         return doc
     }
     
+    //閉じるボタンを押した時に動作する
+    @IBAction func TapCloseButton(sender: AnyObject) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
 }

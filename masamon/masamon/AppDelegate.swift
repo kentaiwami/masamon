@@ -16,6 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var filesavealert = false
     var filename = ""
     var update = true
+    var selectedcell: [Bool] = []
     
     func application(app: UIApplication, openURL url: NSURL, options: [String : AnyObject]) -> Bool {
         fileURL = ""
@@ -34,7 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let monthlysalaryshow = storyboard.instantiateViewControllerWithIdentifier("MonthlySalaryShow") as! MonthlySalaryShow
         let setting = storyboard.instantiateViewControllerWithIdentifier("Setting") as! Setting
-        let shiftgallery = storyboard.instantiateViewControllerWithIdentifier("ShiftGallery") as! ShiftGallery
+        let shiftgallerytable = storyboard.instantiateViewControllerWithIdentifier("ShiftGalleryTable") as! ShiftGalleryTable
         let calender = storyboard.instantiateViewControllerWithIdentifier("CalenderViewController") as! CalenderViewController
         
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
@@ -46,13 +47,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         let monthlysalaryshowview:UIViewController = monthlysalaryshow
         let calenderview:UIViewController = calender
-        let shiftgalleryview:UIViewController = shiftgallery
+        let shiftgallerytableview:UIViewController = shiftgallerytable
         let settingview:UIViewController = setting
         
         monthlysalaryshowview.view.backgroundColor = UIColor.blackColor()
         calenderview.view.backgroundColor = UIColor.hex("696969", alpha: 0.5)
         
-        navigationController.viewControllerArray = [monthlysalaryshowview,calenderview,shiftgalleryview,settingview]
+        navigationController.viewControllerArray = [monthlysalaryshowview,calenderview,shiftgallerytableview,settingview]
         
         self.window?.rootViewController = navigationController
         self.window?.makeKeyAndVisible()

@@ -117,7 +117,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     let Libralypath = NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0] as String
     func savedata() {
 
-        progress.show(message: "取り込み中...", style: BlueDarkStyle())
+        progress.show(message: "Importing...", style: BlueDarkStyle())
         
         dispatch_async_global { // ここからバックグラウンドスレッド
                 Shiftmethod().ShiftDBOneCoursRegist(self.appDelegate.filename, importpath: self.Libralypath+"/"+self.appDelegate.filename, update: self.appDelegate.update)
@@ -143,7 +143,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                     self.CalenderLabel.text = "\(date.year)年\(date.month)月\(date.day)日 (\(self.ReturnWeekday(date.weekday)))"
                     
                     let progress = GradientCircularProgress()
-                    progress.show(message: "完了", style: BlueDarkStyle())
+                    progress.show(message: "Finished", style: BlueDarkStyle())
                     progress.dismiss()
                 })
             }

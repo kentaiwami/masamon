@@ -19,6 +19,26 @@ class Shiftmethod: UIViewController {
     var number = 6
     
     let TEST = "aaa"
+    var flag = true
+    
+    var documentPath: String = ""
+    var spreadsheet = BRAOfficeDocumentPackage()
+    var worksheet = BRAWorksheet()
+    
+    //XLSXファイルのインスタンスをセットするメソッド
+    func SetXLSX() -> BRAWorksheet{
+        
+        if(flag){
+            documentPath = NSBundle.mainBundle().pathForResource(TEST, ofType: "xlsx")!
+            spreadsheet = BRAOfficeDocumentPackage.open(documentPath)
+            worksheet = spreadsheet.workbook.worksheets[0] as! BRAWorksheet
+            flag = false
+            return (worksheet)
+        }else{
+            return (worksheet)
+        }
+    
+    }
     
     //ワンクール分のシフトをShiftDetailDBとShiftDBへ記録する
     func ShiftDBOneCoursRegist(importname: String, importpath: String, update: Bool){
@@ -26,10 +46,7 @@ class Shiftmethod: UIViewController {
         let shiftnsdate = MonthlySalaryShow().DateSerial(MonthlySalaryShow().Changecalendar(shiftyearandmonth.year, calender: "JP"), month: shiftyearandmonth.startcoursmonth, day: 1)
         let c = NSCalendar.currentCalendar()
         let monthrange = c.rangeOfUnit([NSCalendarUnit.Day],  inUnit: [NSCalendarUnit.Month], forDate: shiftnsdate)
-        
-        let documentPath: String = NSBundle.mainBundle().pathForResource(TEST, ofType: "xlsx")!
-        let spreadsheet: BRAOfficeDocumentPackage = BRAOfficeDocumentPackage.open(documentPath)
-        let worksheet: BRAWorksheet = spreadsheet.workbook.worksheets[0] as! BRAWorksheet
+        let worksheet = self.SetXLSX()
         
         var date = 11
         let staffcellposition = self.StaffCellPositionGet()     //スタッフの名前が記載されているセル場所 ex.)F8,F9
@@ -39,8 +56,10 @@ class Shiftmethod: UIViewController {
         
         //30日分繰り返すループ
         for(var i = 0; i < monthrange.length; i++){
+            
             let AAA = CGFloat(i) / CGFloat(monthrange.length)
             print(String(round(AAA*100))+"%")
+            
             let shiftdb = ShiftDB()
             let shiftdetaildb = ShiftDetailDB()
             
@@ -139,13 +158,9 @@ class Shiftmethod: UIViewController {
     
     //表中にあるスタッフ名の場所を返す
     func StaffCellPositionGet() -> Array<String>{
-        let documentPath: String = NSBundle.mainBundle().pathForResource(TEST, ofType: "xlsx")!
-        let spreadsheet: BRAOfficeDocumentPackage = BRAOfficeDocumentPackage.open(documentPath)
-        let worksheet: BRAWorksheet = spreadsheet.workbook.worksheets[0] as! BRAWorksheet
         
-        
+        let worksheet = self.SetXLSX()
         var array:[String] = []
-        
         
         while(true){
             let Fcell: String = worksheet.cellForCellReference(mark+String(number)).stringValue()
@@ -181,9 +196,7 @@ class Shiftmethod: UIViewController {
         let username = DBmethod().UserNameGet()
         let staffcellposition = self.StaffCellPositionGet()
         
-        let documentPath: String = NSBundle.mainBundle().pathForResource(TEST, ofType: "xlsx")!
-        let spreadsheet: BRAOfficeDocumentPackage = BRAOfficeDocumentPackage.open(documentPath)
-        let worksheet: BRAWorksheet = spreadsheet.workbook.worksheets[0] as! BRAWorksheet
+        let worksheet = self.SetXLSX()
         
         var userposition = ""
         
@@ -279,10 +292,9 @@ class Shiftmethod: UIViewController {
     //返り値は
     //年(和暦)、11日〜月末までの月、1日〜10日までの月
     func JudgeYearAndMonth() -> (year: Int, startcoursmonth: Int, endcoursmonth: Int){
-        
-        let documentPath: String = NSBundle.mainBundle().pathForResource(TEST, ofType: "xlsx")!
-        let spreadsheet: BRAOfficeDocumentPackage = BRAOfficeDocumentPackage.open(documentPath)
-        let worksheet: BRAWorksheet = spreadsheet.workbook.worksheets[0] as! BRAWorksheet
+   
+        let worksheet = self.SetXLSX()
+
         let P1String: String = worksheet.cellForCellReference("P1").stringValue()
         let P1NSString = P1String as NSString
         let year = P1NSString.substringWithRange(NSRange(location: 2, length: 2))                                 //平成何年かを取得
