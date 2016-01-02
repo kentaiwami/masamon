@@ -39,6 +39,12 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     override func viewDidLoad() {
         super.viewDidLoad()
         
+//        for(var i = 0; i < 31; i++){
+//            let documentPath: String = NSBundle.mainBundle().pathForResource("aaa", ofType: "xlsx")!
+//            let spreadsheet: BRAOfficeDocumentPackage = BRAOfficeDocumentPackage.open(documentPath)
+//            let worksheet: BRAWorksheet = spreadsheet.workbook.worksheets[0] as! BRAWorksheet
+//
+//        }
         currentnsdate = NSDate()
         
         //テキストビューの編集をできないようにする
