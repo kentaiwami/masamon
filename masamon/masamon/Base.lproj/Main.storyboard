@@ -393,6 +393,9 @@
                                         <rect key="frame" x="151" y="18" width="74" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                         <state key="normal" title="表示"/>
+                                        <connections>
+                                            <action selector="TapShowButton:" destination="FTR-Tl-LZ9" eventType="touchUpInside" id="VSA-QX-Hta"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>

@@ -21,4 +21,8 @@ class ShiftGalleryTable: UIViewController {
         super.didReceiveMemoryWarning()
     }
 
+    @IBAction func TapShowButton(sender: AnyObject) {
+        let targetViewController = self.storyboard!.instantiateViewControllerWithIdentifier("ShiftGallery")
+        self.presentViewController( targetViewController, animated: true, completion: nil)
+    }
 }
