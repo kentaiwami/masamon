@@ -39,12 +39,6 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        for(var i = 0; i < 31; i++){
-//            let documentPath: String = NSBundle.mainBundle().pathForResource("aaa", ofType: "xlsx")!
-//            let spreadsheet: BRAOfficeDocumentPackage = BRAOfficeDocumentPackage.open(documentPath)
-//            let worksheet: BRAWorksheet = spreadsheet.workbook.worksheets[0] as! BRAWorksheet
-//
-//        }
         currentnsdate = NSDate()
         
         //テキストビューの編集をできないようにする
@@ -123,7 +117,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     let Libralypath = NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0] as String
     func savedata() {
 
-        progress.show(message: "取り込み中...", style: BlueDarkStyle())
+        progress.show(message: "Importing...", style: BlueDarkStyle())
         
         dispatch_async_global { // ここからバックグラウンドスレッド
                 Shiftmethod().ShiftDBOneCoursRegist(self.appDelegate.filename, importpath: self.Libralypath+"/"+self.appDelegate.filename, update: self.appDelegate.update)
@@ -149,7 +143,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                     self.CalenderLabel.text = "\(date.year)年\(date.month)月\(date.day)日 (\(self.ReturnWeekday(date.weekday)))"
                     
                     let progress = GradientCircularProgress()
-                    progress.show(message: "完了", style: BlueDarkStyle())
+                    progress.show(message: "Finished", style: BlueDarkStyle())
                     progress.dismiss()
                 })
             }
