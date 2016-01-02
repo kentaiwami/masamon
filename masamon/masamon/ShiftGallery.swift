@@ -90,10 +90,22 @@ class ShiftGallery: UIViewController,UICollectionViewDelegate, UICollectionViewD
     //Cellに値を設定する
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
-        let shiftimportdbarray = DBmethod().ShiftImportHistoryDBGet()
+        var shiftlist: [String] = []
+        let count = DBmethod().DBRecordCount(ShiftImportHistoryDB)-1
+        
+        if(DBmethod().DBRecordCount(ShiftImportHistoryDB) != 0){
+            for(var i = 0; i <= count; i++){
+                if(appDelegate.selectedcell[i]){
+                    let historydate = DBmethod().ShiftImportHistoryDBGet()[count-i].date
+                    let historyname = DBmethod().ShiftImportHistoryDBGet()[count-i].name
+                    shiftlist.append(historydate + "     " + historyname)
+                }
+            }
+        }
         
         let cell : CustomUICollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("MyCell", forIndexPath: indexPath) as! CustomUICollectionViewCell
-        cell.textLabel?.text = shiftimportdbarray[(shiftimportdbarray.count-1) - indexPath.row].date  + "     " + shiftimportdbarray[(shiftimportdbarray.count-1) - indexPath.row].name
+        
+        cell.textLabel?.text = shiftlist[indexPath.row]
         cell.ql.dataSource = self
         cell.ql.currentPreviewItemIndex = indexPath.row
 
