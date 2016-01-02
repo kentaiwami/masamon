@@ -13,6 +13,9 @@ class ShiftGalleryTable: UIViewController, UITableViewDataSource, UITableViewDel
     @IBOutlet weak var tableview: UITableView!
     @IBOutlet weak var ButtomView: UIView!
     
+    //  チェックされたセルの位置を保存しておく辞書をプロパティに宣言
+    var selectedCells:[Bool]=[Bool]()
+    
     // セルに表示するテキスト
     var shiftlist: [String] = []
     
@@ -30,6 +33,7 @@ class ShiftGalleryTable: UIViewController, UITableViewDataSource, UITableViewDel
                 let historydate = DBmethod().ShiftImportHistoryDBGet()[i].date
                 let historyname = DBmethod().ShiftImportHistoryDBGet()[i].name
                 shiftlist.append(historydate + "   " + historyname)
+                selectedCells.append(false)
             }
         }
         
@@ -55,6 +59,11 @@ class ShiftGalleryTable: UIViewController, UITableViewDataSource, UITableViewDel
         
         cell.textLabel?.text = shiftlist[indexPath.row]
         
+        if(selectedCells[indexPath.row]){
+            cell.accessoryType = UITableViewCellAccessoryType.Checkmark
+        }else{
+            cell.accessoryType = UITableViewCellAccessoryType.None
+        }
         return cell
     }
     
@@ -62,11 +71,15 @@ class ShiftGalleryTable: UIViewController, UITableViewDataSource, UITableViewDel
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let cell = tableview.cellForRowAtIndexPath(indexPath)
         cell?.accessoryType = UITableViewCellAccessoryType.Checkmark
+        
+        selectedCells[indexPath.row] = true
     }
     
     //セルの選択が解除された時に呼ばれる
     func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
         let cell = tableview.cellForRowAtIndexPath(indexPath)
         cell?.accessoryType = UITableViewCellAccessoryType.None
+        
+        selectedCells[indexPath.row] = false
     }
 }
