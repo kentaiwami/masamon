@@ -55,9 +55,9 @@ class Shiftmethod: UIViewController {
                 newshiftdetaildb.day = existshiftdb.shiftdetail[i].day
                 
                 if(JudgeYearAndMonth().startcoursmonth == 12 && flag == 0){                     //開始月が12月の場合は昨年の12月で記録されるようにする
-                    shiftdetaildb.year = JudgeYearAndMonth().year-1
+                    newshiftdetaildb.year = JudgeYearAndMonth().year-1
                 }else{
-                    shiftdetaildb.year = JudgeYearAndMonth().year
+                    newshiftdetaildb.year = JudgeYearAndMonth().year
                 }
 
                 switch(flag){
