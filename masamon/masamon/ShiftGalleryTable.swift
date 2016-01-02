@@ -55,9 +55,9 @@ class ShiftGalleryTable: UIViewController, UITableViewDataSource, UITableViewDel
             }
         }
 
-        
         self.tableview.reloadData()
     }
+    
     //表示ボタンを押した時に呼ばれる関数
     @IBAction func TapShowButton(sender: AnyObject) {
         let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得

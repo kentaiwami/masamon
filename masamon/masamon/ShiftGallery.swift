@@ -84,7 +84,6 @@ class ShiftGallery: UIViewController,UICollectionViewDelegate, UICollectionViewD
                 count++
             }
         }
-        
         return count
     }
     
@@ -108,10 +107,20 @@ class ShiftGallery: UIViewController,UICollectionViewDelegate, UICollectionViewD
     
     //プレビューで表示するファイルの設定
     func previewController(controller: QLPreviewController, previewItemAtIndex index: Int) -> QLPreviewItem{
-        let shiftimportdbarray = DBmethod().ShiftImportHistoryDBGet()
+        var shiftlist: [String] = []
+        let count = DBmethod().DBRecordCount(ShiftImportHistoryDB)-1
+        
+        if(DBmethod().DBRecordCount(ShiftImportHistoryDB) != 0){
+            for(var i = count; i >= 0; i--){
+                if(appDelegate.selectedcell[i]){
+                    let historyname = DBmethod().ShiftImportHistoryDBGet()[count-i].name
+                    shiftlist.append(historyname)
+                }
+            }
+        }
         
         let Libralypath = NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0] as String
-        let url = Libralypath + "/" + shiftimportdbarray[index].name
+        let url = Libralypath + "/" + shiftlist[index]
         
 //        let documentPath: String = NSBundle.mainBundle().pathForResource("aaa", ofType: "xlsx")!
         let doc = NSURL(fileURLWithPath: url)
