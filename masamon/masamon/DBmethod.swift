@@ -6,9 +6,6 @@
 //  Copyright © 2015年 Kenta. All rights reserved.
 //
 
-//TODO: 取り込みを行った後に落ちる
-//TODO: 上書きに対応する
-
 import Foundation
 import RealmSwift
 
@@ -49,14 +46,14 @@ class DBmethod: UIViewController {
     }
     
     //レコードのIDを受け取って名前を返す
-    func a(id: Int) ->String{
-        var name = ""
+    func ShiftDBGet(id: Int) -> String{
+        var shiftimportname = ""
         
-        let realm = try!  Realm()
-        name = realm.objects(ShiftDB).filter("id = %@", id)[0].shiftimportname
-        
-        return name
+        let realm = try! Realm()
+        shiftimportname = realm.objects(ShiftDB).filter("id = %@",id)[0].shiftimportname
+        return shiftimportname
     }
+    
     
     //レコードのIDを受け取って月給を返す
     func ShiftDBSaralyGet(id: Int) ->Int{
@@ -130,12 +127,16 @@ class DBmethod: UIViewController {
     }
     
     //受け取った文字列をShiftSystemから検索し、該当するレコードを返す
-    func SearchShiftSystem(shift: String) -> ShiftSystem{
-        var shiftsystem = ShiftSystem()
+    func SearchShiftSystem(shift: String) -> Results<ShiftSystem>?{
         
         let realm = try! Realm()
-        shiftsystem = realm.objects(ShiftSystem).filter("name = %@",shift)[0]
-        return shiftsystem
+        let shiftsystem = realm.objects(ShiftSystem).filter("name = %@",shift)
+        
+        if(shiftsystem.count == 0){
+            return nil
+        }else{
+            return shiftsystem
+        }
     }
 
     //受け取った文字列をShiftDBから検索し、該当するレコードを返す
@@ -156,5 +157,18 @@ class DBmethod: UIViewController {
         number = realm.objects(StaffNumber).filter("id = %@",0)[0].number
         
         return number
+    }
+    
+    //year,month,dateを受け取ってその日のレコードを返す
+    func TheDayStaffGet(year: Int, month: Int, date: Int) -> Results<ShiftDetailDB>?{
+        
+        let realm = try! Realm()
+        let stafflist = realm.objects(ShiftDetailDB).filter("year = %@ AND month = %@ AND day = %@",year,month,date)
+        
+        if(stafflist.count == 0){
+            return nil
+        }else{
+            return stafflist
+        }
     }
 }

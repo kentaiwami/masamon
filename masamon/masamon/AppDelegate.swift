@@ -14,6 +14,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var fileURL = ""
     var filesavealert = false
+    var filename = ""
+    var update = true
+    var selectedcell: [Bool] = []
     
     func application(app: UIApplication, openURL url: NSURL, options: [String : AnyObject]) -> Bool {
         fileURL = ""
@@ -32,7 +35,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let monthlysalaryshow = storyboard.instantiateViewControllerWithIdentifier("MonthlySalaryShow") as! MonthlySalaryShow
         let setting = storyboard.instantiateViewControllerWithIdentifier("Setting") as! Setting
-        let shiftgallery = storyboard.instantiateViewControllerWithIdentifier("ShiftGallery") as! ShiftGallery
+        let shiftgallerytable = storyboard.instantiateViewControllerWithIdentifier("ShiftGalleryTable") as! ShiftGalleryTable
+        let calender = storyboard.instantiateViewControllerWithIdentifier("CalenderViewController") as! CalenderViewController
         
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
         
@@ -41,20 +45,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let navigationController:SwipeBetweenViewControllers = SwipeBetweenViewControllers(rootViewController: pageController)
         
         // Override point for customization after application launch.
-        let demo1:UIViewController = monthlysalaryshow
-        let demo2:UIViewController = shiftgallery
+        let monthlysalaryshowview:UIViewController = monthlysalaryshow
+        let calenderview:UIViewController = calender
+        let shiftgallerytableview:UIViewController = shiftgallerytable
         let settingview:UIViewController = setting
-        let demo4:UIViewController = UIViewController()
         
-        demo1.view.backgroundColor = UIColor.brownColor()
-//        demo1.view.backgroundColor = UIColor(patternImage: UIImage(named: "../images/aaa.png")!)
+        monthlysalaryshowview.view.backgroundColor = UIColor.blackColor()
+        calenderview.view.backgroundColor = UIColor.hex("696969", alpha: 0.5)
         
-//        demo1.view.backgroundColor = UIColor.redColor()
-//        demo2.view.backgroundColor = UIColor.whiteColor()
-//        demo3.view.backgroundColor = UIColor.blackColor()
-        demo4.view.backgroundColor = UIColor.brownColor()
-        
-        navigationController.viewControllerArray = [demo1,demo2,settingview,demo4]
+        navigationController.viewControllerArray = [monthlysalaryshowview,calenderview,shiftgallerytableview,settingview]
         
         self.window?.rootViewController = navigationController
         self.window?.makeKeyAndVisible()
@@ -77,7 +76,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         //シフト体制データ
-        let shiftnamepattern = ["早","早M","早カ","はや","中","中2","中3","遅","遅M","遅カ"]
+        let shiftnamepattern = ["早","早Ｍ","早カ","はや","中","中2","中3","遅","遅Ｍ","遅カ"]
         let shiftstartpattern = [8.0,8.0,8.0,8.0,12.0,13.5,14.5,16.0,16.0,16.0]
         let shiftendpattern = [16.5,16.5,16.5,16.5,20.5,22.0,23.0,24.5,24.5,24.5]
 
