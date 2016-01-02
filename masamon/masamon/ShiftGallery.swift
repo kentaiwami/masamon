@@ -111,7 +111,7 @@ class ShiftGallery: UIViewController,UICollectionViewDelegate, UICollectionViewD
         let count = DBmethod().DBRecordCount(ShiftImportHistoryDB)-1
         
         if(DBmethod().DBRecordCount(ShiftImportHistoryDB) != 0){
-            for(var i = count; i >= 0; i--){
+            for(var i = 0; i <= count; i++){
                 if(appDelegate.selectedcell[i]){
                     let historyname = DBmethod().ShiftImportHistoryDBGet()[count-i].name
                     shiftlist.append(historyname)
