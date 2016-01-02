@@ -53,7 +53,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         monthlysalaryshowview.view.backgroundColor = UIColor.blackColor()
         calenderview.view.backgroundColor = UIColor.hex("696969", alpha: 0.5)
         
-        navigationController.viewControllerArray = [monthlysalaryshowview,calenderview,shiftgallerytableview,settingview]
+        navigationController.viewControllerArray = [monthlysalaryshowview,calenderview,settingview,shiftgallerytableview]
         
         self.window?.rootViewController = navigationController
         self.window?.makeKeyAndVisible()
