@@ -25,16 +25,17 @@ class Shiftmethod: UIViewController {
     var spreadsheet = BRAOfficeDocumentPackage()
     var worksheet = BRAWorksheet()
     
-    func AAA() ->(A: String, B: BRAOfficeDocumentPackage, C: BRAWorksheet){
+    //XLSXファイルのインスタンスをセットするメソッド
+    func SetXLSX() -> BRAWorksheet{
         
         if(flag){
             documentPath = NSBundle.mainBundle().pathForResource(TEST, ofType: "xlsx")!
             spreadsheet = BRAOfficeDocumentPackage.open(documentPath)
             worksheet = spreadsheet.workbook.worksheets[0] as! BRAWorksheet
             flag = false
-            return (documentPath,spreadsheet,worksheet)
+            return (worksheet)
         }else{
-            return (documentPath,spreadsheet,worksheet)
+            return (worksheet)
         }
     
     }
@@ -45,14 +46,7 @@ class Shiftmethod: UIViewController {
         let shiftnsdate = MonthlySalaryShow().DateSerial(MonthlySalaryShow().Changecalendar(shiftyearandmonth.year, calender: "JP"), month: shiftyearandmonth.startcoursmonth, day: 1)
         let c = NSCalendar.currentCalendar()
         let monthrange = c.rangeOfUnit([NSCalendarUnit.Day],  inUnit: [NSCalendarUnit.Month], forDate: shiftnsdate)
-        
-        let XLSX = self.AAA()
-        
-//        let documentPath = XLSX.A
-//        let spreadsheet = XLSX.B
-        let worksheet = XLSX.C
-        
-        
+        let worksheet = self.SetXLSX()
         
         var date = 11
         let staffcellposition = self.StaffCellPositionGet()     //スタッフの名前が記載されているセル場所 ex.)F8,F9
@@ -165,16 +159,8 @@ class Shiftmethod: UIViewController {
     //表中にあるスタッフ名の場所を返す
     func StaffCellPositionGet() -> Array<String>{
         
-        let XLSX = self.AAA()
-        let worksheet = XLSX.C
-        
-//        let documentPath: String = NSBundle.mainBundle().pathForResource(TEST, ofType: "xlsx")!
-//        let spreadsheet: BRAOfficeDocumentPackage = BRAOfficeDocumentPackage.open(documentPath)
-//        let worksheet: BRAWorksheet = spreadsheet.workbook.worksheets[0] as! BRAWorksheet
-        
-        
+        let worksheet = self.SetXLSX()
         var array:[String] = []
-        
         
         while(true){
             let Fcell: String = worksheet.cellForCellReference(mark+String(number)).stringValue()
@@ -210,11 +196,7 @@ class Shiftmethod: UIViewController {
         let username = DBmethod().UserNameGet()
         let staffcellposition = self.StaffCellPositionGet()
         
-        let XLSX = self.AAA()
-        
-        //        let documentPath = XLSX.A
-        //        let spreadsheet = XLSX.B
-        let worksheet = XLSX.C
+        let worksheet = self.SetXLSX()
         
         var userposition = ""
         
@@ -310,12 +292,8 @@ class Shiftmethod: UIViewController {
     //返り値は
     //年(和暦)、11日〜月末までの月、1日〜10日までの月
     func JudgeYearAndMonth() -> (year: Int, startcoursmonth: Int, endcoursmonth: Int){
-        
-        let XLSX = self.AAA()
-        
-        //        let documentPath = XLSX.A
-        //        let spreadsheet = XLSX.B
-        let worksheet = XLSX.C
+   
+        let worksheet = self.SetXLSX()
 
         let P1String: String = worksheet.cellForCellReference("P1").stringValue()
         let P1NSString = P1String as NSString
