@@ -62,6 +62,10 @@ class CalenderViewController: UIViewController {
         CalenderViewDidLoad()
     }
     
+    override func viewDidAppear(animated: Bool) {
+        NowCalendarSettings()
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }

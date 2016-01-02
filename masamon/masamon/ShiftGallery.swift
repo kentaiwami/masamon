@@ -93,11 +93,13 @@ class ShiftGallery: UIViewController,UICollectionViewDelegate, UICollectionViewD
     
     //プレビューで表示するファイルの設定
     func previewController(controller: QLPreviewController, previewItemAtIndex index: Int) -> QLPreviewItem{
-        let shiftimportdbarray = DBmethod().ShiftImportHistoryDBGet()
+//        let shiftimportdbarray = DBmethod().ShiftImportHistoryDBGet()
+//        
+//        let Libralypath = NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0] as String
+//        let url = Libralypath + "/" + shiftimportdbarray[index].name
         
-        let Libralypath = NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0] as String
-        let url = Libralypath + "/" + shiftimportdbarray[index].name
-        let doc = NSURL(fileURLWithPath: url)
+        let documentPath: String = NSBundle.mainBundle().pathForResource("aaa", ofType: "xlsx")!
+        let doc = NSURL(fileURLWithPath: documentPath)
         return doc
     }
     
