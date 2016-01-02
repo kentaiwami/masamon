@@ -15,12 +15,10 @@ class ShiftGallery: UIViewController,UICollectionViewDelegate, UICollectionViewD
     let no_dataimageview = UIImageView()
     let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得
 
-    @IBOutlet weak var ButtomView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        ButtomView.alpha = 0.9
         
         no_dataimageview.image = UIImage(named: "../no_data.png")
         no_dataimageview.frame = CGRectMake(self.view.frame.width/2-250, self.view.frame.height/2-250, 500, 500)
@@ -140,7 +138,5 @@ class ShiftGallery: UIViewController,UICollectionViewDelegate, UICollectionViewD
     }
     
     //閉じるボタンを押した時に動作する
-    @IBAction func TapCloseButton(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: nil)
-    }
+
 }

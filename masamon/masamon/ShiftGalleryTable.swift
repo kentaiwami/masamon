@@ -62,8 +62,6 @@ class ShiftGalleryTable: UIViewController, UITableViewDataSource, UITableViewDel
     @IBAction func TapShowButton(sender: AnyObject) {
         let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得
         appDelegate.selectedcell = self.selectedCells
-        let targetViewController = self.storyboard!.instantiateViewControllerWithIdentifier("ShiftGallery")
-        self.presentViewController( targetViewController, animated: true, completion: nil)
     }
     
     // セルの行数
