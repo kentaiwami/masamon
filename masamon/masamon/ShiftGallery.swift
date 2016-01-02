@@ -13,13 +13,12 @@ class ShiftGallery: UIViewController,UICollectionViewDelegate, UICollectionViewD
     
     var myCollectionView : UICollectionView!
     let no_dataimageview = UIImageView()
+    let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得
 
     @IBOutlet weak var ButtomView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得
-        print(appDelegate.selectedcell)
         
         ButtomView.alpha = 0.9
         
@@ -78,7 +77,16 @@ class ShiftGallery: UIViewController,UICollectionViewDelegate, UICollectionViewD
     
     //Cellの総数を返す
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return DBmethod().DBRecordCount(ShiftImportHistoryDB)
+        var count = 0
+        
+        for(var i = 0; i < appDelegate.selectedcell.count; i++){
+            if(appDelegate.selectedcell[i] == true){
+                count++
+            }
+        }
+        
+        return count
+        //TODO: trueの数を求めて返す
     }
     
     //Cellに値を設定する
@@ -96,18 +104,18 @@ class ShiftGallery: UIViewController,UICollectionViewDelegate, UICollectionViewD
     
     //プレビューでの表示数
     func numberOfPreviewItemsInPreviewController(controller: QLPreviewController) -> Int{
-        return DBmethod().DBRecordCount(ShiftImportHistoryDB)
+        return 1
     }
     
     //プレビューで表示するファイルの設定
     func previewController(controller: QLPreviewController, previewItemAtIndex index: Int) -> QLPreviewItem{
-//        let shiftimportdbarray = DBmethod().ShiftImportHistoryDBGet()
-//        
-//        let Libralypath = NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0] as String
-//        let url = Libralypath + "/" + shiftimportdbarray[index].name
+        let shiftimportdbarray = DBmethod().ShiftImportHistoryDBGet()
         
-        let documentPath: String = NSBundle.mainBundle().pathForResource("aaa", ofType: "xlsx")!
-        let doc = NSURL(fileURLWithPath: documentPath)
+        let Libralypath = NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0] as String
+        let url = Libralypath + "/" + shiftimportdbarray[index].name
+        
+//        let documentPath: String = NSBundle.mainBundle().pathForResource("aaa", ofType: "xlsx")!
+        let doc = NSURL(fileURLWithPath: url)
         return doc
     }
     
