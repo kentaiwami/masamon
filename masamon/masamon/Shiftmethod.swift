@@ -39,7 +39,8 @@ class Shiftmethod: UIViewController {
         
         //30日分繰り返すループ
         for(var i = 0; i < monthrange.length; i++){
-            print(i)
+            let AAA = CGFloat(i) / CGFloat(monthrange.length)
+            print(String(round(AAA*100))+"%")
             let shiftdb = ShiftDB()
             let shiftdetaildb = ShiftDetailDB()
             
@@ -50,7 +51,7 @@ class Shiftmethod: UIViewController {
                 shiftdb.id = existshiftdb.id        //取り込みが上書きの場合は使われているidをそのまま使う
                 shiftdb.year = 0
                 shiftdb.month = 0
-
+                
                 newshiftdetaildb.id = existshiftdb.shiftdetail[i].id
                 newshiftdetaildb.day = existshiftdb.shiftdetail[i].day
                 
