@@ -425,6 +425,7 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="ButtomView" destination="5OY-FG-mzQ" id="57r-cW-5hc"/>
+                        <outlet property="tableview" destination="rDp-Pp-js4" id="1i7-lo-FcR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cV5-Fo-dKS" userLabel="First Responder" sceneMemberID="firstResponder"/>
