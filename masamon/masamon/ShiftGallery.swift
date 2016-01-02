@@ -14,8 +14,12 @@ class ShiftGallery: UIViewController,UICollectionViewDelegate, UICollectionViewD
     var myCollectionView : UICollectionView!
     let no_dataimageview = UIImageView()
 
+    @IBOutlet weak var ButtomView: UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        ButtomView.alpha = 0.9
         
         no_dataimageview.image = UIImage(named: "../no_data.png")
         no_dataimageview.frame = CGRectMake(self.view.frame.width/2-250, self.view.frame.height/2-250, 500, 500)
@@ -50,6 +54,8 @@ class ShiftGallery: UIViewController,UICollectionViewDelegate, UICollectionViewD
         myCollectionView.backgroundColor = UIColor.blackColor()
         self.view.addSubview(myCollectionView)
         self.view.addSubview(no_dataimageview)
+        
+        self.view.sendSubviewToBack(myCollectionView)
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -103,4 +109,7 @@ class ShiftGallery: UIViewController,UICollectionViewDelegate, UICollectionViewD
         return doc
     }
     
+    @IBAction func TapCloseButton(sender: AnyObject) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
 }

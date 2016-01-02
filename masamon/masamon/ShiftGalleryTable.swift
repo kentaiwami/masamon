@@ -10,10 +10,11 @@ import UIKit
 
 class ShiftGalleryTable: UIViewController {
 
+    @IBOutlet weak var ButtomView: UIView!
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        ButtomView.alpha = 0.8
 
     }
 
