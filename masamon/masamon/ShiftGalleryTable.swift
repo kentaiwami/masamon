@@ -37,15 +37,27 @@ class ShiftGalleryTable: UIViewController, UITableViewDataSource, UITableViewDel
             }
         }
     }
-
-    override func viewWillDisappear(animated: Bool) {
-        
-    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
 
+    override func viewWillAppear(animated: Bool) {
+        shiftlist.removeAll()
+        selectedCells.removeAll()
+        
+        if(DBmethod().DBRecordCount(ShiftImportHistoryDB) != 0){
+            for(var i = DBmethod().DBRecordCount(ShiftImportHistoryDB)-1; i >= 0; i--){
+                let historydate = DBmethod().ShiftImportHistoryDBGet()[i].date
+                let historyname = DBmethod().ShiftImportHistoryDBGet()[i].name
+                shiftlist.append(historydate + "   " + historyname)
+                selectedCells.append(false)
+            }
+        }
+
+        
+        self.tableview.reloadData()
+    }
     //表示ボタンを押した時に呼ばれる関数
     @IBAction func TapShowButton(sender: AnyObject) {
         let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得

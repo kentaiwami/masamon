@@ -86,7 +86,6 @@ class ShiftGallery: UIViewController,UICollectionViewDelegate, UICollectionViewD
         }
         
         return count
-        //TODO: trueの数を求めて返す
     }
     
     //Cellに値を設定する
@@ -119,6 +118,7 @@ class ShiftGallery: UIViewController,UICollectionViewDelegate, UICollectionViewD
         return doc
     }
     
+    //閉じるボタンを押した時に動作する
     @IBAction func TapCloseButton(sender: AnyObject) {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
