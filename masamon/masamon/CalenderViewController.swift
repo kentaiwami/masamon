@@ -57,6 +57,8 @@ class CalenderViewController: UIViewController {
     var calendarSize: Int!
     var calendarFontSize: Int!
     
+    let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得
+
     override func viewDidLoad() {
         super.viewDidLoad()
         CalenderViewDidLoad()
@@ -68,6 +70,10 @@ class CalenderViewController: UIViewController {
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        appDelegate.storyboradid = self.restorationIdentifier!
     }
     
     func CalenderViewDidLoad(){
