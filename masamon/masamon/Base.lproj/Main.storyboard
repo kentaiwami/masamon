@@ -371,7 +371,7 @@
                                 <rect key="frame" x="0.0" y="542" width="377" height="125"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JNH-RI-VOR">
-                                        <rect key="frame" x="151" y="18" width="74" height="30"/>
+                                        <rect key="frame" x="152" y="13" width="74" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                         <state key="normal" title="表示"/>
                                         <connections>
@@ -392,7 +392,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cV5-Fo-dKS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1498.5" y="352.5"/>
+            <point key="canvasLocation" x="1502.5" y="352.5"/>
         </scene>
     </scenes>
 </document>

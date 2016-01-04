@@ -25,7 +25,7 @@ class ShiftGalleryTable: UIViewController, UITableViewDataSource, UITableViewDel
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.AAA()
+        self.SetUpCollectionView()
         
         ButtomView.alpha = 0.8
 
@@ -122,7 +122,7 @@ class ShiftGalleryTable: UIViewController, UITableViewDataSource, UITableViewDel
     var myCollectionView: UICollectionView!
     let no_dataimageview = UIImageView()
     
-    func AAA(){
+    func SetUpCollectionView(){
         no_dataimageview.image = UIImage(named: "../no_data.png")
         no_dataimageview.frame = CGRectMake(self.view.frame.width/2-250, self.view.frame.height/2-250, 500, 500)
         if(DBmethod().DBRecordCount(ShiftImportHistoryDB) == 0){
@@ -157,13 +157,24 @@ class ShiftGalleryTable: UIViewController, UITableViewDataSource, UITableViewDel
         myCollectionView.alpha = 0.0
         
         let closeview = UIView()
-        closeview.frame = CGRectMake(0, no_dataimageview.frame.height-50, no_dataimageview.frame.width, 70)
+        closeview.frame = CGRectMake(0, myCollectionView.frame.height-130, myCollectionView.frame.width, 70)
         closeview.backgroundColor = UIColor.hex("E6E6E6", alpha: 0.8)
         
-        no_dataimageview.addSubview(closeview)
+        let closebutton = UIButton()
+        closebutton.frame = CGRectMake(closeview.frame.width/2-37, 550, 74, 30)
+        closebutton.setTitle("閉じる", forState: .Normal)
+        closebutton.addTarget(self, action: "TapCloseButton:", forControlEvents: .TouchUpInside)
+        closebutton.setTitleColor(UIColor(red: 0, green: 122/255, blue: 1, alpha: 1.0), forState: .Normal)
+        
         myCollectionView.addSubview(no_dataimageview)
+        myCollectionView.addSubview(closeview)
+        myCollectionView.addSubview(closebutton)
         
         self.view.addSubview(myCollectionView)
+    }
+    
+    func TapCloseButton(sender: UIButton){
+        print("closetap")
     }
     
     //Cellの総数を返す
