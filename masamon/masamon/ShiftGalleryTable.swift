@@ -79,9 +79,11 @@ class ShiftGalleryTable: UIViewController, UITableViewDataSource, UITableViewDel
         let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得
         appDelegate.selectedcell = self.selectedCells
         
-        myCollectionView.alpha = 1.0
-        self.view.bringSubviewToFront(myCollectionView)
-        self.myCollectionView.reloadData()
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            self.myCollectionView.alpha = 1.0
+            self.view.bringSubviewToFront(self.myCollectionView)
+            self.myCollectionView.reloadData()
+        })
     }
     
     // セルの行数
@@ -174,7 +176,10 @@ class ShiftGalleryTable: UIViewController, UITableViewDataSource, UITableViewDel
     }
     
     func TapCloseButton(sender: UIButton){
-        myCollectionView.alpha = 0.0
+        
+        UIView.animateWithDuration(0.2, animations: { () -> Void in
+            self.myCollectionView.alpha = 0.0
+        })
     }
     
     //Cellの総数を返す
