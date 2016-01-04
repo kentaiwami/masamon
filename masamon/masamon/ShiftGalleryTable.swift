@@ -174,7 +174,7 @@ class ShiftGalleryTable: UIViewController, UITableViewDataSource, UITableViewDel
     }
     
     func TapCloseButton(sender: UIButton){
-        print("closetap")
+        myCollectionView.alpha = 0.0
     }
     
     //Cellの総数を返す
