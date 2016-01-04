@@ -14,6 +14,9 @@ class ShiftGalleryTable: UIViewController, UITableViewDataSource, UITableViewDel
     @IBOutlet weak var tableview: UITableView!
     @IBOutlet weak var ButtomView: UIView!
     
+    let closeview = UIView()
+    let closebutton = UIButton()
+    
     let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得
     
     //  チェックされたセルの位置を保存しておく辞書をプロパティに宣言
@@ -74,10 +77,9 @@ class ShiftGalleryTable: UIViewController, UITableViewDataSource, UITableViewDel
         self.myCollectionView.reloadData()
     }
     
+    var flag = false
     //表示ボタンを押した時に呼ばれる関数
     @IBAction func TapShowButton(sender: AnyObject) {
-        
-        var flag = false
         
         for(var i = 0; i < selectedCells.count; i++){
             if(selectedCells[i] == true){
@@ -179,11 +181,9 @@ class ShiftGalleryTable: UIViewController, UITableViewDataSource, UITableViewDel
         myCollectionView.backgroundColor = UIColor.blackColor()
         myCollectionView.alpha = 0.0
         
-        let closeview = UIView()
         closeview.frame = CGRectMake(0, myCollectionView.frame.height-130, myCollectionView.frame.width, 70)
         closeview.backgroundColor = UIColor.hex("E6E6E6", alpha: 0.8)
         
-        let closebutton = UIButton()
         closebutton.frame = CGRectMake(closeview.frame.width/2-37, 550, 74, 30)
         closebutton.setTitle("閉じる", forState: .Normal)
         closebutton.addTarget(self, action: "TapCloseButton:", forControlEvents: .TouchUpInside)
@@ -265,5 +265,25 @@ class ShiftGalleryTable: UIViewController, UITableViewDataSource, UITableViewDel
         //        let documentPath: String = NSBundle.mainBundle().pathForResource("aaa", ofType: "xlsx")!
         let doc = NSURL(fileURLWithPath: url)
         return doc
+    }
+    
+    //スクロールした際に動作する関数
+    var scrollBeginingPoint: CGPoint!
+    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+        scrollBeginingPoint = scrollView.contentOffset;
+    }
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        let currentPoint = scrollView.contentOffset;
+        
+        //表示ボタンを押してviewを表示した時だけ移動するようにする
+        if(flag){
+            closeview.center.y = currentPoint.y + self.view.frame.height-30
+            closebutton.center.y = currentPoint.y + self.view.frame.height-30
+        }else{
+            closeview.center.y = closeview.center.y
+            closebutton.center.y = closebutton.center.y
+
+        }
     }
 }
