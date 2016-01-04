@@ -115,19 +115,26 @@ class ShiftGalleryTable: UIViewController, UITableViewDataSource, UITableViewDel
         let cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "Cell")
         
         cell.textLabel?.text = shiftlist[indexPath.row]
+        cell.textLabel?.textColor = UIColor.whiteColor()
         
         if(selectedCells[indexPath.row]){
             cell.accessoryType = UITableViewCellAccessoryType.Checkmark
+            cell.backgroundColor = UIColor.hex("4C4C4C", alpha: 1.0)
         }else{
             cell.accessoryType = UITableViewCellAccessoryType.None
+            cell.backgroundColor = UIColor.hex("4C4C4C", alpha: 0.7)
         }
+ 
+        cell.selectionStyle = UITableViewCellSelectionStyle.None
+        
         return cell
     }
     
     //セルが選択された時に呼ばれる
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let cell = tableview.cellForRowAtIndexPath(indexPath)
-        cell?.accessoryType = UITableViewCellAccessoryType.Checkmark
+        cell?.accessoryType = UITableViewCellAccessoryType.Checkmark    //チェックマークをつける
+        cell?.backgroundColor = UIColor.hex("4C4C4C", alpha: 1.0)
         
         selectedCells[indexPath.row] = true
     }
@@ -135,8 +142,9 @@ class ShiftGalleryTable: UIViewController, UITableViewDataSource, UITableViewDel
     //セルの選択が解除された時に呼ばれる
     func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
         let cell = tableview.cellForRowAtIndexPath(indexPath)
-        cell?.accessoryType = UITableViewCellAccessoryType.None
-        
+        cell?.accessoryType = UITableViewCellAccessoryType.None         //チェックマークをはずす
+        cell?.backgroundColor = UIColor.hex("4C4C4C", alpha: 0.7)
+
         selectedCells[indexPath.row] = false
     }
     
@@ -223,7 +231,7 @@ class ShiftGalleryTable: UIViewController, UITableViewDataSource, UITableViewDel
         cell.textLabel?.text = shiftlist[indexPath.row]
         cell.ql.dataSource = self
         cell.ql.currentPreviewItemIndex = indexPath.row
-        
+
         return cell
     }
     
