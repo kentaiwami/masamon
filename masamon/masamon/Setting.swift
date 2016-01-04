@@ -20,7 +20,8 @@ class Setting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource,UI
     @IBOutlet weak var usernametextfield: UITextField!
     @IBOutlet weak var staffnumbertextfield: UITextField!
     
-    
+    let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得
+
     var myUIPicker1: UIPickerView = UIPickerView()
     var myUIPicker2: UIPickerView = UIPickerView()
     
@@ -414,6 +415,9 @@ class Setting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource,UI
     }
     
     override func viewWillAppear(animated: Bool) {
+        
+        appDelegate.storyboradid = self.restorationIdentifier!
+        
         super.viewWillAppear(animated)
         
         let notificationCenter = NSNotificationCenter.defaultCenter()

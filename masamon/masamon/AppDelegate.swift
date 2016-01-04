@@ -17,6 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var filename = ""                       //ユーザが取り込み時に入力したファイル名を記録
     var update = true                       //シフトの取り込みが上書きかを記録
     var selectedcell: [Bool] = []           //ShiftGalleryTableで選択をしたセルを記録
+    var storyboradid = ""
     
     func application(app: UIApplication, openURL url: NSURL, options: [String : AnyObject]) -> Bool {
         fileURL = ""
@@ -105,6 +106,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationWillEnterForeground(application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//        let monthlysalaryshow = storyboard.instantiateViewControllerWithIdentifier("MonthlySalaryShow") as! MonthlySalaryShow
+//        let setting = storyboard.instantiateViewControllerWithIdentifier("Setting") as! Setting
+//        let shiftgallerytable = storyboard.instantiateViewControllerWithIdentifier("ShiftGalleryTable") as! ShiftGalleryTable
+//        let calender = storyboard.instantiateViewControllerWithIdentifier("CalenderViewController") as! CalenderViewController
+//
+//        let monthlysalaryshowview:UIViewController = monthlysalaryshow
+//        let calenderview:UIViewController = calender
+//        let shiftgallerytableview:UIViewController = shiftgallerytable
+//        let settingview:UIViewController = setting
+//        
+//        let pageController:UIPageViewController = UIPageViewController(transitionStyle: UIPageViewControllerTransitionStyle.Scroll, navigationOrientation: UIPageViewControllerNavigationOrientation.Horizontal, options: nil)
+//        let navigationController:SwipeBetweenViewControllers = SwipeBetweenViewControllers(rootViewController: pageController)
+//        navigationController.viewControllerArray = [monthlysalaryshowview,calenderview,settingview,shiftgallerytableview]
+//        
+//        print(self.storyboradid)
+////        self.window?.rootViewController = navigationController
+////        self.window?.makeKeyAndVisible()
+//        
+//        SwipeBetweenViewControllers().
         
     }
     
