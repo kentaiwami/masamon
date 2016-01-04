@@ -149,7 +149,7 @@ class ShiftGalleryTable: UIViewController, UITableViewDataSource, UITableViewDel
         layout.itemSize = CGSizeMake(self.view.frame.width, 270)
         
         // Cellのマージン.
-        layout.sectionInset = UIEdgeInsetsMake(0, 0, 90, 0)
+        layout.sectionInset = UIEdgeInsetsMake(0, 0, 160, 0)
         layout.minimumLineSpacing = 100.0
         
         // セクション毎のヘッダーサイズ.
