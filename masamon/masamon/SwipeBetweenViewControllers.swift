@@ -140,7 +140,7 @@ class SwipeBetweenViewControllers: UINavigationController,UIPageViewControllerDe
         pageController = self.topViewController as! UIPageViewController
         pageController.delegate = self
         pageController.dataSource = self
-        pageController.setViewControllers([viewControllerArray[1]], direction: UIPageViewControllerNavigationDirection.Forward, animated: true, completion: nil)
+        pageController.setViewControllers([viewControllerArray[0]], direction: UIPageViewControllerNavigationDirection.Forward, animated: true, completion: nil)
         self.syncScrollView()
     }
 
