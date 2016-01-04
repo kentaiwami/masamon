@@ -12,11 +12,12 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
-    var fileURL = ""
-    var filesavealert = false
-    var filename = ""
-    var update = true
-    var selectedcell: [Bool] = []
+    var fileURL = ""                        //ファイルをInboxに保存した時のURLを記録
+    var filesavealert = false               //ファイルの保存が行われたかを記録
+    var filename = ""                       //ユーザが取り込み時に入力したファイル名を記録
+    var update = true                       //シフトの取り込みが上書きかを記録
+    var selectedcell: [Bool] = []           //ShiftGalleryTableで選択をしたセルを記録
+    var storyboradid = ""
     
     func application(app: UIApplication, openURL url: NSURL, options: [String : AnyObject]) -> Bool {
         fileURL = ""
@@ -105,7 +106,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationWillEnterForeground(application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-        
     }
     
     func applicationDidBecomeActive(application: UIApplication) {

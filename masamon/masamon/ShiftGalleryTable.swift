@@ -10,12 +10,15 @@ import UIKit
 import QuickLook
 
 class ShiftGalleryTable: UIViewController, UITableViewDataSource, UITableViewDelegate,UICollectionViewDelegate, UICollectionViewDataSource,QLPreviewControllerDataSource{
-
+    
     @IBOutlet weak var tableview: UITableView!
     @IBOutlet weak var ButtomView: UIView!
     
+    let closeview = UIView()
+    let closebutton = UIButton()
+    
     let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得
-
+    
     //  チェックされたセルの位置を保存しておく辞書をプロパティに宣言
     var selectedCells:[Bool]=[Bool]()
     
@@ -28,11 +31,11 @@ class ShiftGalleryTable: UIViewController, UITableViewDataSource, UITableViewDel
         self.SetUpCollectionView()
         
         ButtomView.alpha = 0.8
-
+        
         tableview.delegate = self
         tableview.dataSource = self
         tableview.allowsMultipleSelection = true
-
+        
         if(DBmethod().DBRecordCount(ShiftImportHistoryDB) != 0){
             for(var i = DBmethod().DBRecordCount(ShiftImportHistoryDB)-1; i >= 0; i--){
                 let historydate = DBmethod().ShiftImportHistoryDBGet()[i].date
@@ -46,14 +49,10 @@ class ShiftGalleryTable: UIViewController, UITableViewDataSource, UITableViewDel
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-
+    
     override func viewWillAppear(animated: Bool) {
         
-        if(DBmethod().DBRecordCount(ShiftImportHistoryDB) == 0){
-            no_dataimageview.alpha = 1.0
-        }else{
-            no_dataimageview.alpha = 0.0
-        }
+        appDelegate.storyboradid = self.restorationIdentifier!
         
         shiftlist.removeAll()
         selectedCells.removeAll()
@@ -66,7 +65,7 @@ class ShiftGalleryTable: UIViewController, UITableViewDataSource, UITableViewDel
                 selectedCells.append(false)
             }
         }
-
+        
         self.tableview.reloadData()
     }
     
@@ -74,16 +73,36 @@ class ShiftGalleryTable: UIViewController, UITableViewDataSource, UITableViewDel
         self.myCollectionView.reloadData()
     }
     
+    var flag = false
     //表示ボタンを押した時に呼ばれる関数
     @IBAction func TapShowButton(sender: AnyObject) {
-        let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得
-        appDelegate.selectedcell = self.selectedCells
         
-        UIView.animateWithDuration(0.3, animations: { () -> Void in
-            self.myCollectionView.alpha = 1.0
-            self.view.bringSubviewToFront(self.myCollectionView)
-            self.myCollectionView.reloadData()
-        })
+        for(var i = 0; i < selectedCells.count; i++){
+            if(selectedCells[i] == true){
+                flag = true
+                break
+            }
+        }
+        
+        //1つでも選択されていたらtrue
+        if(flag){
+            let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得
+            appDelegate.selectedcell = self.selectedCells
+            
+            UIView.animateWithDuration(0.3, animations: { () -> Void in
+                self.myCollectionView.alpha = 1.0
+                self.view.bringSubviewToFront(self.myCollectionView)
+                self.myCollectionView.reloadData()
+            })
+            
+        }else{          //1つも選択されていない場合
+            let alertController = UIAlertController(title: "履歴表示エラー", message: "シフトが1つも選択されていません", preferredStyle: .Alert)
+            let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+            alertController.addAction(defaultAction)
+            
+            presentViewController(alertController, animated: true, completion: nil)
+
+        }
     }
     
     // セルの行数
@@ -96,19 +115,26 @@ class ShiftGalleryTable: UIViewController, UITableViewDataSource, UITableViewDel
         let cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "Cell")
         
         cell.textLabel?.text = shiftlist[indexPath.row]
+        cell.textLabel?.textColor = UIColor.whiteColor()
         
         if(selectedCells[indexPath.row]){
             cell.accessoryType = UITableViewCellAccessoryType.Checkmark
+            cell.backgroundColor = UIColor.hex("4C4C4C", alpha: 1.0)
         }else{
             cell.accessoryType = UITableViewCellAccessoryType.None
+            cell.backgroundColor = UIColor.hex("4C4C4C", alpha: 0.7)
         }
+ 
+        cell.selectionStyle = UITableViewCellSelectionStyle.None
+        
         return cell
     }
     
     //セルが選択された時に呼ばれる
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let cell = tableview.cellForRowAtIndexPath(indexPath)
-        cell?.accessoryType = UITableViewCellAccessoryType.Checkmark
+        cell?.accessoryType = UITableViewCellAccessoryType.Checkmark    //チェックマークをつける
+        cell?.backgroundColor = UIColor.hex("4C4C4C", alpha: 1.0)
         
         selectedCells[indexPath.row] = true
     }
@@ -116,22 +142,15 @@ class ShiftGalleryTable: UIViewController, UITableViewDataSource, UITableViewDel
     //セルの選択が解除された時に呼ばれる
     func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
         let cell = tableview.cellForRowAtIndexPath(indexPath)
-        cell?.accessoryType = UITableViewCellAccessoryType.None
-        
+        cell?.accessoryType = UITableViewCellAccessoryType.None         //チェックマークをはずす
+        cell?.backgroundColor = UIColor.hex("4C4C4C", alpha: 0.7)
+
         selectedCells[indexPath.row] = false
     }
     
     var myCollectionView: UICollectionView!
-    let no_dataimageview = UIImageView()
     
     func SetUpCollectionView(){
-        no_dataimageview.image = UIImage(named: "../no_data.png")
-        no_dataimageview.frame = CGRectMake(self.view.frame.width/2-250, self.view.frame.height/2-250, 500, 500)
-        if(DBmethod().DBRecordCount(ShiftImportHistoryDB) == 0){
-            no_dataimageview.alpha = 1.0
-        }else{
-            no_dataimageview.alpha = 0.0
-        }
         
         // CollectionViewのレイアウトを生成.
         let layout = UICollectionViewFlowLayout()
@@ -140,7 +159,7 @@ class ShiftGalleryTable: UIViewController, UITableViewDataSource, UITableViewDel
         layout.itemSize = CGSizeMake(self.view.frame.width, 270)
         
         // Cellのマージン.
-        layout.sectionInset = UIEdgeInsetsMake(0, 0, 90, 0)
+        layout.sectionInset = UIEdgeInsetsMake(0, 0, 160, 0)
         layout.minimumLineSpacing = 100.0
         
         // セクション毎のヘッダーサイズ.
@@ -158,17 +177,14 @@ class ShiftGalleryTable: UIViewController, UITableViewDataSource, UITableViewDel
         myCollectionView.backgroundColor = UIColor.blackColor()
         myCollectionView.alpha = 0.0
         
-        let closeview = UIView()
         closeview.frame = CGRectMake(0, myCollectionView.frame.height-130, myCollectionView.frame.width, 70)
         closeview.backgroundColor = UIColor.hex("E6E6E6", alpha: 0.8)
         
-        let closebutton = UIButton()
         closebutton.frame = CGRectMake(closeview.frame.width/2-37, 550, 74, 30)
         closebutton.setTitle("閉じる", forState: .Normal)
         closebutton.addTarget(self, action: "TapCloseButton:", forControlEvents: .TouchUpInside)
         closebutton.setTitleColor(UIColor(red: 0, green: 122/255, blue: 1, alpha: 1.0), forState: .Normal)
         
-        myCollectionView.addSubview(no_dataimageview)
         myCollectionView.addSubview(closeview)
         myCollectionView.addSubview(closebutton)
         
@@ -215,7 +231,7 @@ class ShiftGalleryTable: UIViewController, UITableViewDataSource, UITableViewDel
         cell.textLabel?.text = shiftlist[indexPath.row]
         cell.ql.dataSource = self
         cell.ql.currentPreviewItemIndex = indexPath.row
-        
+
         return cell
     }
     
@@ -244,5 +260,25 @@ class ShiftGalleryTable: UIViewController, UITableViewDataSource, UITableViewDel
         //        let documentPath: String = NSBundle.mainBundle().pathForResource("aaa", ofType: "xlsx")!
         let doc = NSURL(fileURLWithPath: url)
         return doc
+    }
+    
+    //スクロールした際に動作する関数
+    var scrollBeginingPoint: CGPoint!
+    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+        scrollBeginingPoint = scrollView.contentOffset;
+    }
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        let currentPoint = scrollView.contentOffset;
+        
+        //表示ボタンを押してviewを表示した時だけ移動するようにする
+        if(flag){
+            closeview.center.y = currentPoint.y + self.view.frame.height-30
+            closebutton.center.y = currentPoint.y + self.view.frame.height-30
+        }else{
+            closeview.center.y = closeview.center.y
+            closebutton.center.y = closebutton.center.y
+
+        }
     }
 }

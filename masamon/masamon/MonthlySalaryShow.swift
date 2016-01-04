@@ -92,6 +92,10 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         }
     }
     
+    override func viewWillAppear(animated: Bool) {
+        appDelegate.storyboradid = self.restorationIdentifier!
+    }
+    
     //pickerview,label,シフトの表示を更新する
     override func viewDidAppear(animated: Bool) {
         shiftlist.removeAllObjects()
@@ -188,7 +192,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     
     //月給表示画面が表示(アプリがアクティブ)されたら呼ばれる
     func MonthlySalaryShowViewActived(){
-        
+
         //ファイル数のカウント
         let filemanager:NSFileManager = NSFileManager()
         let files = filemanager.enumeratorAtPath(NSHomeDirectory() + "/Documents/Inbox")
