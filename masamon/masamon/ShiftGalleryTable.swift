@@ -10,12 +10,12 @@ import UIKit
 import QuickLook
 
 class ShiftGalleryTable: UIViewController, UITableViewDataSource, UITableViewDelegate,UICollectionViewDelegate, UICollectionViewDataSource,QLPreviewControllerDataSource{
-
+    
     @IBOutlet weak var tableview: UITableView!
     @IBOutlet weak var ButtomView: UIView!
     
     let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得
-
+    
     //  チェックされたセルの位置を保存しておく辞書をプロパティに宣言
     var selectedCells:[Bool]=[Bool]()
     
@@ -28,11 +28,11 @@ class ShiftGalleryTable: UIViewController, UITableViewDataSource, UITableViewDel
         self.SetUpCollectionView()
         
         ButtomView.alpha = 0.8
-
+        
         tableview.delegate = self
         tableview.dataSource = self
         tableview.allowsMultipleSelection = true
-
+        
         if(DBmethod().DBRecordCount(ShiftImportHistoryDB) != 0){
             for(var i = DBmethod().DBRecordCount(ShiftImportHistoryDB)-1; i >= 0; i--){
                 let historydate = DBmethod().ShiftImportHistoryDBGet()[i].date
@@ -46,7 +46,7 @@ class ShiftGalleryTable: UIViewController, UITableViewDataSource, UITableViewDel
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-
+    
     override func viewWillAppear(animated: Bool) {
         
         if(DBmethod().DBRecordCount(ShiftImportHistoryDB) == 0){
@@ -66,7 +66,7 @@ class ShiftGalleryTable: UIViewController, UITableViewDataSource, UITableViewDel
                 selectedCells.append(false)
             }
         }
-
+        
         self.tableview.reloadData()
     }
     
@@ -76,14 +76,35 @@ class ShiftGalleryTable: UIViewController, UITableViewDataSource, UITableViewDel
     
     //表示ボタンを押した時に呼ばれる関数
     @IBAction func TapShowButton(sender: AnyObject) {
-        let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得
-        appDelegate.selectedcell = self.selectedCells
         
-        UIView.animateWithDuration(0.3, animations: { () -> Void in
-            self.myCollectionView.alpha = 1.0
-            self.view.bringSubviewToFront(self.myCollectionView)
-            self.myCollectionView.reloadData()
-        })
+        var flag = false
+        
+        for(var i = 0; i < selectedCells.count; i++){
+            if(selectedCells[i] == true){
+                flag = true
+                break
+            }
+        }
+        
+        //1つでも選択されていたらtrue
+        if(flag){
+            let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得
+            appDelegate.selectedcell = self.selectedCells
+            
+            UIView.animateWithDuration(0.3, animations: { () -> Void in
+                self.myCollectionView.alpha = 1.0
+                self.view.bringSubviewToFront(self.myCollectionView)
+                self.myCollectionView.reloadData()
+            })
+            
+        }else{          //1つも選択されていない場合
+            let alertController = UIAlertController(title: "履歴表示エラー", message: "シフトが1つも選択されていません", preferredStyle: .Alert)
+            let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+            alertController.addAction(defaultAction)
+            
+            presentViewController(alertController, animated: true, completion: nil)
+
+        }
     }
     
     // セルの行数
