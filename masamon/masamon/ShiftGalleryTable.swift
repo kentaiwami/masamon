@@ -52,12 +52,6 @@ class ShiftGalleryTable: UIViewController, UITableViewDataSource, UITableViewDel
     
     override func viewWillAppear(animated: Bool) {
         
-        if(DBmethod().DBRecordCount(ShiftImportHistoryDB) == 0){
-            no_dataimageview.alpha = 1.0
-        }else{
-            no_dataimageview.alpha = 0.0
-        }
-        
         shiftlist.removeAll()
         selectedCells.removeAll()
         
@@ -145,16 +139,8 @@ class ShiftGalleryTable: UIViewController, UITableViewDataSource, UITableViewDel
     }
     
     var myCollectionView: UICollectionView!
-    let no_dataimageview = UIImageView()
     
     func SetUpCollectionView(){
-        no_dataimageview.image = UIImage(named: "../no_data.png")
-        no_dataimageview.frame = CGRectMake(self.view.frame.width/2-250, self.view.frame.height/2-250, 500, 500)
-        if(DBmethod().DBRecordCount(ShiftImportHistoryDB) == 0){
-            no_dataimageview.alpha = 1.0
-        }else{
-            no_dataimageview.alpha = 0.0
-        }
         
         // CollectionViewのレイアウトを生成.
         let layout = UICollectionViewFlowLayout()
@@ -189,7 +175,6 @@ class ShiftGalleryTable: UIViewController, UITableViewDataSource, UITableViewDel
         closebutton.addTarget(self, action: "TapCloseButton:", forControlEvents: .TouchUpInside)
         closebutton.setTitleColor(UIColor(red: 0, green: 122/255, blue: 1, alpha: 1.0), forState: .Normal)
         
-        myCollectionView.addSubview(no_dataimageview)
         myCollectionView.addSubview(closeview)
         myCollectionView.addSubview(closebutton)
         
