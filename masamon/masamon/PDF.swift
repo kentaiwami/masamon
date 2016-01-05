@@ -26,3 +26,8 @@ class PDF: UIViewController {
         super.didReceiveMemoryWarning()
     }
 }
+
+class PDFView: UIView {
+    var page = CGPDFPageRef.self
+    
+}
