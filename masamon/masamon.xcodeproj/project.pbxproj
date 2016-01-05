@@ -16,6 +16,7 @@
 		370ACE291BDF4B7700AB73EB /* images in Resources */ = {isa = PBXBuildFile; fileRef = 370ACE281BDF4B7700AB73EB /* images */; };
 		370ACE441BDF573500AB73EB /* DB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370ACE431BDF573500AB73EB /* DB.swift */; };
 		370ACE4A1BDF9C8A00AB73EB /* DBmethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370ACE491BDF9C8A00AB73EB /* DBmethod.swift */; };
+		3710BF5A1C3BC07C00A260B7 /* 10月シフト変更.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 3710BF591C3BC07C00A260B7 /* 10月シフト変更.pdf */; };
 		371432A81BE98F060088CDCC /* ShiftImport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371432A71BE98F060088CDCC /* ShiftImport.swift */; };
 		3724CDCD1C14317500D73528 /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3724CDCB1C14317500D73528 /* Realm.framework */; };
 		3724CDCE1C14317500D73528 /* Realm.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3724CDCB1C14317500D73528 /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -120,6 +121,7 @@
 		370ACE281BDF4B7700AB73EB /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = images; sourceTree = "<group>"; };
 		370ACE431BDF573500AB73EB /* DB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DB.swift; sourceTree = "<group>"; };
 		370ACE491BDF9C8A00AB73EB /* DBmethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBmethod.swift; sourceTree = "<group>"; };
+		3710BF591C3BC07C00A260B7 /* 10月シフト変更.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "10月シフト変更.pdf"; sourceTree = "<group>"; };
 		371432A71BE98F060088CDCC /* ShiftImport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShiftImport.swift; sourceTree = "<group>"; };
 		3724CDCB1C14317500D73528 /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Realm.framework; sourceTree = "<group>"; };
 		3724CDCC1C14317500D73528 /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RealmSwift.framework; sourceTree = "<group>"; };
@@ -188,6 +190,7 @@
 		370ACDEE1BDF486600AB73EB = {
 			isa = PBXGroup;
 			children = (
+				3710BF591C3BC07C00A260B7 /* 10月シフト変更.pdf */,
 				377D2DAD1C36C08B009CC388 /* BlueDarkStyle.swift */,
 				3726B3931C2FF7F400F22F34 /* QuartzCore.framework */,
 				379A2DBD1C1E5F9900751425 /* no_data.png */,
@@ -419,6 +422,7 @@
 				370ACE051BDF486700AB73EB /* LaunchScreen.storyboard in Resources */,
 				37DD8EFF1C1C29FF007C0E6C /* Main.storyboard in Resources */,
 				370ACE021BDF486700AB73EB /* Assets.xcassets in Resources */,
+				3710BF5A1C3BC07C00A260B7 /* 10月シフト変更.pdf in Resources */,
 				3742AF6E1C12FEE8003AB33B /* bbb.xlsx in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
