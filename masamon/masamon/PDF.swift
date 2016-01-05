@@ -10,6 +10,7 @@ import UIKit
 
 class PDF: UIViewController {
 
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -25,9 +26,5 @@ class PDF: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-}
-
-class PDFView: UIView {
-    var page = CGPDFPageRef.self
     
 }
