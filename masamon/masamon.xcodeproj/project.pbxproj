@@ -77,6 +77,13 @@
 			remoteGlobalIDString = 45B6E2391A148F7500288A78;
 			remoteInfo = XlsxReaderWriter;
 		};
+		37F75CB11C3F19CE0075F9FD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 37F75CAD1C3F19CE0075F9FD /* TET.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 25FA7E0E14D9B92A001598C6;
+			remoteInfo = TET;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -145,6 +152,7 @@
 		37D8F4251C0CB1A000D5336A /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		37DD8EF41C1C0135007C0E6C /* SwipeBetweenViewControllers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipeBetweenViewControllers.swift; sourceTree = "<group>"; };
 		37F75CAA1C3F18C30075F9FD /* PDFmethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PDFmethod.swift; sourceTree = "<group>"; };
+		37F75CAD1C3F19CE0075F9FD /* TET.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = TET.xcodeproj; path = TET/sample_app/TET.xcodeproj; sourceTree = "<group>"; };
 		DB9C07197D395EF38199A0C7 /* Pods-masamon.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-masamon.debug.xcconfig"; path = "Pods/Target Support Files/Pods-masamon/Pods-masamon.debug.xcconfig"; sourceTree = "<group>"; };
 		FAD231E854685D75C3F03501 /* Pods_masamon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_masamon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -192,6 +200,7 @@
 		370ACDEE1BDF486600AB73EB = {
 			isa = PBXGroup;
 			children = (
+				37F75CAD1C3F19CE0075F9FD /* TET.xcodeproj */,
 				3710BF591C3BC07C00A260B7 /* sample.pdf */,
 				3742AF6D1C12FEE8003AB33B /* bbb.xlsx */,
 				3726B3A51C311B7600F22F34 /* aaa.xlsx */,
@@ -269,6 +278,14 @@
 			children = (
 				3742AF8B1C130360003AB33B /* libXlsxReaderWriter.a */,
 				3742AF8D1C130360003AB33B /* XlsxReaderWriterTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		37F75CAE1C3F19CE0075F9FD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				37F75CB21C3F19CE0075F9FD /* TET.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -384,6 +401,10 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
+					ProductGroup = 37F75CAE1C3F19CE0075F9FD /* Products */;
+					ProjectRef = 37F75CAD1C3F19CE0075F9FD /* TET.xcodeproj */;
+				},
+				{
 					ProductGroup = 3742AF841C130360003AB33B /* Products */;
 					ProjectRef = 3742AF831C130360003AB33B /* XlsxReaderWriter.xcodeproj */;
 				},
@@ -410,6 +431,13 @@
 			fileType = wrapper.cfbundle;
 			path = XlsxReaderWriterTests.xctest;
 			remoteRef = 3742AF8C1C130360003AB33B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		37F75CB21C3F19CE0075F9FD /* TET.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = TET.app;
+			remoteRef = 37F75CB11C3F19CE0075F9FD /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
