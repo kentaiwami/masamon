@@ -38,6 +38,7 @@
 		37DD8EF51C1C0135007C0E6C /* SwipeBetweenViewControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DD8EF41C1C0135007C0E6C /* SwipeBetweenViewControllers.swift */; };
 		37DD8EFF1C1C29FF007C0E6C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 370ACDFE1BDF486700AB73EB /* Main.storyboard */; };
 		37F75CAB1C3F18C30075F9FD /* PDFmethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F75CAA1C3F18C30075F9FD /* PDFmethod.swift */; };
+		37F75CB41C3F1A7D0075F9FD /* libstdc++.6.0.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 37F75CB31C3F1A7D0075F9FD /* libstdc++.6.0.9.dylib */; };
 		D9C8B4DC9FDEB1B892F9B0DD /* Pods_masamon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAD231E854685D75C3F03501 /* Pods_masamon.framework */; };
 /* End PBXBuildFile section */
 
@@ -153,6 +154,7 @@
 		37DD8EF41C1C0135007C0E6C /* SwipeBetweenViewControllers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipeBetweenViewControllers.swift; sourceTree = "<group>"; };
 		37F75CAA1C3F18C30075F9FD /* PDFmethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PDFmethod.swift; sourceTree = "<group>"; };
 		37F75CAD1C3F19CE0075F9FD /* TET.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = TET.xcodeproj; path = TET/sample_app/TET.xcodeproj; sourceTree = "<group>"; };
+		37F75CB31C3F1A7D0075F9FD /* libstdc++.6.0.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.0.9.dylib"; path = "../../../../../../usr/lib/libstdc++.6.0.9.dylib"; sourceTree = "<group>"; };
 		DB9C07197D395EF38199A0C7 /* Pods-masamon.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-masamon.debug.xcconfig"; path = "Pods/Target Support Files/Pods-masamon/Pods-masamon.debug.xcconfig"; sourceTree = "<group>"; };
 		FAD231E854685D75C3F03501 /* Pods_masamon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_masamon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -162,6 +164,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				37F75CB41C3F1A7D0075F9FD /* libstdc++.6.0.9.dylib in Frameworks */,
 				3726B3941C2FF7F400F22F34 /* QuartzCore.framework in Frameworks */,
 				3724CDCD1C14317500D73528 /* Realm.framework in Frameworks */,
 				3742AF901C130391003AB33B /* libXlsxReaderWriter.a in Frameworks */,
@@ -293,6 +296,7 @@
 		7423B7CBCF975D0B30BA5249 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				37F75CB31C3F1A7D0075F9FD /* libstdc++.6.0.9.dylib */,
 				377D2DAF1C36C14A009CC388 /* GradientCircularProgress.framework */,
 				377D2DAA1C36BFD2009CC388 /* GradientCircularProgress.framework */,
 				FAD231E854685D75C3F03501 /* Pods_masamon.framework */,
