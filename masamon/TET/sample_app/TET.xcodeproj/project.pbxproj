@@ -29,7 +29,6 @@
 		25FA7F0F14DB0E03001598C6 /* TETGlyphInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25FA7F0D14DB0E03001598C6 /* TETGlyphInfoViewController.xib */; };
 		25FA7F1314DB26BF001598C6 /* TETDumperViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FA7F1114DB26BE001598C6 /* TETDumperViewController.m */; };
 		25FA7F1414DB26BF001598C6 /* TETDumperViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25FA7F1214DB26BE001598C6 /* TETDumperViewController.xib */; };
-		37CE25191C3EC8120027206C /* sample.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 37CE25181C3EC8120027206C /* sample.pdf */; };
 		37F75CBC1C3F1BD80075F9FD /* libstdc++.6.0.9.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 37F75CBB1C3F1BD80075F9FD /* libstdc++.6.0.9.tbd */; };
 		780461C71BC7EB9400D77AB3 /* Adobe-CNS1-6 in Resources */ = {isa = PBXBuildFile; fileRef = 780461C31BC7EB9400D77AB3 /* Adobe-CNS1-6 */; };
 		780461C81BC7EB9400D77AB3 /* Adobe-GB1-5 in Resources */ = {isa = PBXBuildFile; fileRef = 780461C41BC7EB9400D77AB3 /* Adobe-GB1-5 */; };
@@ -159,7 +158,6 @@
 		25FA7F1014DB26BE001598C6 /* TETDumperViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TETDumperViewController.h; sourceTree = "<group>"; };
 		25FA7F1114DB26BE001598C6 /* TETDumperViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TETDumperViewController.m; sourceTree = "<group>"; };
 		25FA7F1214DB26BE001598C6 /* TETDumperViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TETDumperViewController.xib; sourceTree = "<group>"; };
-		37CE25181C3EC8120027206C /* sample.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = sample.pdf; sourceTree = "<group>"; };
 		37F75CBB1C3F1BD80075F9FD /* libstdc++.6.0.9.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.6.0.9.tbd"; path = "usr/lib/libstdc++.6.0.9.tbd"; sourceTree = SDKROOT; };
 		780461C31BC7EB9400D77AB3 /* Adobe-CNS1-6 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Adobe-CNS1-6"; sourceTree = "<group>"; };
 		780461C41BC7EB9400D77AB3 /* Adobe-GB1-5 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Adobe-GB1-5"; sourceTree = "<group>"; };
@@ -279,7 +277,6 @@
 				78B30D241754B05C0079E5AC /* Whitepaper-Technical-Introduction-to-PDFA.pdf */,
 				78B30D251754B05C0079E5AC /* Whitepaper-XMP-metadata-in-PDFlib-products.pdf */,
 				7855B7FE14F064EA00DEA809 /* TET-datasheet.pdf */,
-				37CE25181C3EC8120027206C /* sample.pdf */,
 			);
 			name = sampleDocs;
 			sourceTree = "<group>";
@@ -578,7 +575,6 @@
 				7855BA8F14F066A000DEA809 /* Ext-RKSJ-V in Resources */,
 				7855BA9014F066A000DEA809 /* GB-EUC-H in Resources */,
 				7855BA9114F066A000DEA809 /* GB-EUC-V in Resources */,
-				37CE25191C3EC8120027206C /* sample.pdf in Resources */,
 				7855BA9214F066A000DEA809 /* GBK-EUC-H in Resources */,
 				7855BA9314F066A000DEA809 /* GBK-EUC-UCS2 in Resources */,
 				7855BA9414F066A000DEA809 /* GBK-EUC-V in Resources */,
