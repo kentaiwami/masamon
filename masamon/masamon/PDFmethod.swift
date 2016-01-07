@@ -9,5 +9,5 @@
 import UIKit
 
 class PDFmethod: UIViewController {
-
+    let AAA = TET()
 }

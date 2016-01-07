@@ -30,7 +30,7 @@
 		25FA7F1314DB26BF001598C6 /* TETDumperViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FA7F1114DB26BE001598C6 /* TETDumperViewController.m */; };
 		25FA7F1414DB26BF001598C6 /* TETDumperViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25FA7F1214DB26BE001598C6 /* TETDumperViewController.xib */; };
 		37CE25191C3EC8120027206C /* sample.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 37CE25181C3EC8120027206C /* sample.pdf */; };
-		37CE251B1C3EC9CC0027206C /* libstdc++.6.0.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 37CE251A1C3EC9CC0027206C /* libstdc++.6.0.9.dylib */; };
+		37F75CBC1C3F1BD80075F9FD /* libstdc++.6.0.9.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 37F75CBB1C3F1BD80075F9FD /* libstdc++.6.0.9.tbd */; };
 		780461C71BC7EB9400D77AB3 /* Adobe-CNS1-6 in Resources */ = {isa = PBXBuildFile; fileRef = 780461C31BC7EB9400D77AB3 /* Adobe-CNS1-6 */; };
 		780461C81BC7EB9400D77AB3 /* Adobe-GB1-5 in Resources */ = {isa = PBXBuildFile; fileRef = 780461C41BC7EB9400D77AB3 /* Adobe-GB1-5 */; };
 		780461C91BC7EB9400D77AB3 /* Adobe-Japan1-6 in Resources */ = {isa = PBXBuildFile; fileRef = 780461C51BC7EB9400D77AB3 /* Adobe-Japan1-6 */; };
@@ -160,7 +160,7 @@
 		25FA7F1114DB26BE001598C6 /* TETDumperViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TETDumperViewController.m; sourceTree = "<group>"; };
 		25FA7F1214DB26BE001598C6 /* TETDumperViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TETDumperViewController.xib; sourceTree = "<group>"; };
 		37CE25181C3EC8120027206C /* sample.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = sample.pdf; sourceTree = "<group>"; };
-		37CE251A1C3EC9CC0027206C /* libstdc++.6.0.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.0.9.dylib"; path = "../../../../../usr/lib/libstdc++.6.0.9.dylib"; sourceTree = "<group>"; };
+		37F75CBB1C3F1BD80075F9FD /* libstdc++.6.0.9.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.6.0.9.tbd"; path = "usr/lib/libstdc++.6.0.9.tbd"; sourceTree = SDKROOT; };
 		780461C31BC7EB9400D77AB3 /* Adobe-CNS1-6 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Adobe-CNS1-6"; sourceTree = "<group>"; };
 		780461C41BC7EB9400D77AB3 /* Adobe-GB1-5 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Adobe-GB1-5"; sourceTree = "<group>"; };
 		780461C51BC7EB9400D77AB3 /* Adobe-Japan1-6 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Adobe-Japan1-6"; sourceTree = "<group>"; };
@@ -261,7 +261,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				37CE251B1C3EC9CC0027206C /* libstdc++.6.0.9.dylib in Frameworks */,
+				37F75CBC1C3F1BD80075F9FD /* libstdc++.6.0.9.tbd in Frameworks */,
 				25FA7E1314D9B92A001598C6 /* UIKit.framework in Frameworks */,
 				25FA7E1514D9B92A001598C6 /* Foundation.framework in Frameworks */,
 				25FA7E1714D9B92A001598C6 /* CoreGraphics.framework in Frameworks */,
@@ -305,7 +305,7 @@
 		25FA7E1114D9B92A001598C6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				37CE251A1C3EC9CC0027206C /* libstdc++.6.0.9.dylib */,
+				37F75CBB1C3F1BD80075F9FD /* libstdc++.6.0.9.tbd */,
 				7855B7FB14F064C200DEA809 /* TET_ios.framework */,
 				25FA7E1214D9B92A001598C6 /* UIKit.framework */,
 				25FA7E1414D9B92A001598C6 /* Foundation.framework */,

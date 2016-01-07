@@ -38,7 +38,8 @@
 		37DD8EF51C1C0135007C0E6C /* SwipeBetweenViewControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DD8EF41C1C0135007C0E6C /* SwipeBetweenViewControllers.swift */; };
 		37DD8EFF1C1C29FF007C0E6C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 370ACDFE1BDF486700AB73EB /* Main.storyboard */; };
 		37F75CAB1C3F18C30075F9FD /* PDFmethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F75CAA1C3F18C30075F9FD /* PDFmethod.swift */; };
-		37F75CB41C3F1A7D0075F9FD /* libstdc++.6.0.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 37F75CB31C3F1A7D0075F9FD /* libstdc++.6.0.9.dylib */; };
+		37F75CBF1C3F1E4C0075F9FD /* TET_ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37F75CB61C3F1B610075F9FD /* TET_ios.framework */; };
+		37F75CC01C3F1E650075F9FD /* libstdc++.6.0.9.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 37F75CBD1C3F1C270075F9FD /* libstdc++.6.0.9.tbd */; };
 		D9C8B4DC9FDEB1B892F9B0DD /* Pods_masamon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAD231E854685D75C3F03501 /* Pods_masamon.framework */; };
 /* End PBXBuildFile section */
 
@@ -155,6 +156,9 @@
 		37F75CAA1C3F18C30075F9FD /* PDFmethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PDFmethod.swift; sourceTree = "<group>"; };
 		37F75CAD1C3F19CE0075F9FD /* TET.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = TET.xcodeproj; path = TET/sample_app/TET.xcodeproj; sourceTree = "<group>"; };
 		37F75CB31C3F1A7D0075F9FD /* libstdc++.6.0.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.0.9.dylib"; path = "../../../../../../usr/lib/libstdc++.6.0.9.dylib"; sourceTree = "<group>"; };
+		37F75CB51C3F1AEE0075F9FD /* masamon-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "masamon-Bridging-Header.h"; sourceTree = "<group>"; };
+		37F75CB61C3F1B610075F9FD /* TET_ios.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TET_ios.framework; path = TET/TET_ios/TET_ios.framework; sourceTree = "<group>"; };
+		37F75CBD1C3F1C270075F9FD /* libstdc++.6.0.9.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.6.0.9.tbd"; path = "usr/lib/libstdc++.6.0.9.tbd"; sourceTree = SDKROOT; };
 		DB9C07197D395EF38199A0C7 /* Pods-masamon.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-masamon.debug.xcconfig"; path = "Pods/Target Support Files/Pods-masamon/Pods-masamon.debug.xcconfig"; sourceTree = "<group>"; };
 		FAD231E854685D75C3F03501 /* Pods_masamon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_masamon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -164,9 +168,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				37F75CB41C3F1A7D0075F9FD /* libstdc++.6.0.9.dylib in Frameworks */,
+				37F75CC01C3F1E650075F9FD /* libstdc++.6.0.9.tbd in Frameworks */,
 				3726B3941C2FF7F400F22F34 /* QuartzCore.framework in Frameworks */,
 				3724CDCD1C14317500D73528 /* Realm.framework in Frameworks */,
+				37F75CBF1C3F1E4C0075F9FD /* TET_ios.framework in Frameworks */,
 				3742AF901C130391003AB33B /* libXlsxReaderWriter.a in Frameworks */,
 				3724CDCF1C14317500D73528 /* RealmSwift.framework in Frameworks */,
 				3742AF561C12D8D1003AB33B /* libz.1.dylib in Frameworks */,
@@ -203,6 +208,7 @@
 		370ACDEE1BDF486600AB73EB = {
 			isa = PBXGroup;
 			children = (
+				37F75CB51C3F1AEE0075F9FD /* masamon-Bridging-Header.h */,
 				37F75CAD1C3F19CE0075F9FD /* TET.xcodeproj */,
 				3710BF591C3BC07C00A260B7 /* sample.pdf */,
 				3742AF6D1C12FEE8003AB33B /* bbb.xlsx */,
@@ -296,6 +302,8 @@
 		7423B7CBCF975D0B30BA5249 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				37F75CBD1C3F1C270075F9FD /* libstdc++.6.0.9.tbd */,
+				37F75CB61C3F1B610075F9FD /* TET_ios.framework */,
 				37F75CB31C3F1A7D0075F9FD /* libstdc++.6.0.9.dylib */,
 				377D2DAF1C36C14A009CC388 /* GradientCircularProgress.framework */,
 				377D2DAA1C36BFD2009CC388 /* GradientCircularProgress.framework */,
@@ -625,7 +633,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -646,7 +654,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
-				SWIFT_OBJC_BRIDGING_HEADER = "/Users/Kenta/Documents/swift_workspace/まさもん/masamon/XlsxReaderWriter-master/XlsxReaderWriterTests/XlsxReaderWriterTests-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/Kenta/Documents/swift_workspace/まさもん/masamon/masamon-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				USER_HEADER_SEARCH_PATHS = "\"/Users/Kenta/Documents/swift_workspace/まさもん/masamon/XlsxReaderWriter-master\"/**";
 			};
@@ -671,7 +679,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -685,7 +693,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_OBJC_BRIDGING_HEADER = "/Users/Kenta/Documents/swift_workspace/まさもん/masamon/XlsxReaderWriter-master/XlsxReaderWriterTests/XlsxReaderWriterTests-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/Kenta/Documents/swift_workspace/まさもん/masamon/masamon-Bridging-Header.h";
 				USER_HEADER_SEARCH_PATHS = "\"/Users/Kenta/Documents/swift_workspace/まさもん/masamon/XlsxReaderWriter-master\"/**";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -697,14 +705,18 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/";
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SRCROOT)/",
+					"$(PROJECT_DIR)/TET/TET_ios",
+				);
 				INFOPLIST_FILE = masamon/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Kenta.masamon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "/Users/Kenta/Documents/swift_workspace/まさもん/masamon/XlsxReaderWriter-master/XlsxReaderWriterTests/XlsxReaderWriterTests-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/Kenta/Documents/swift_workspace/まさもん/masamon/masamon-Bridging-Header.h";
 				USER_HEADER_SEARCH_PATHS = "\"/Users/Kenta/Documents/swift_workspace/まさもん/masamon/XlsxReaderWriter-master\"/**";
 			};
 			name = Debug;
@@ -715,14 +727,18 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/";
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SRCROOT)/",
+					"$(PROJECT_DIR)/TET/TET_ios",
+				);
 				INFOPLIST_FILE = masamon/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Kenta.masamon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "/Users/Kenta/Documents/swift_workspace/まさもん/masamon/XlsxReaderWriter-master/XlsxReaderWriterTests/XlsxReaderWriterTests-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/Kenta/Documents/swift_workspace/まさもん/masamon/masamon-Bridging-Header.h";
 				USER_HEADER_SEARCH_PATHS = "\"/Users/Kenta/Documents/swift_workspace/まさもん/masamon/XlsxReaderWriter-master\"/**";
 			};
 			name = Release;
