@@ -10,28 +10,25 @@ import UIKit
 
 class PDFmethod: UIViewController {
     
-    func AllTextGet(){
+    func AllTextGet() -> String{
         
         var pdftextarray: [String] = []
+        var lineIndex = 1
         
+        let documentsDir = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
         let path: NSString
-        path = NSBundle.mainBundle().pathForResource("sample2", ofType: "pdf")!
+        path = NSBundle.mainBundle().pathForResource("sample", ofType: "pdf")!
+        let globaloptlist: String = String(format: "searchpath={{%@} {%@/extractor_ios.app} {%@/extractor_ios.app/resource/cmap}}", arguments: [documentsDir,NSHomeDirectory(),NSHomeDirectory()])
         
         let tet = TET()
+        tet.set_option(globaloptlist)
+        
         let document = tet.open_document(path as String, optlist: "")
-        
-        // print("BBB=>" + String(BBB))
-        
-        
         let page = tet.open_page(document, pagenumber: 1, optlist: "granularity=page")
-        
-        //  print("CCC=>" + String(CCC))
-        
-        
         let pdftext = tet.get_text(page)
-        //  print(DDD)
         
-        var lineIndex = 1
+        tet.close_page(page)
+        tet.close_document(document)
         
         //"平成"が出るまで1行ずつ読み飛ばしをする
         pdftext.enumerateLines{
@@ -75,7 +72,7 @@ class PDFmethod: UIViewController {
             line, stop in
             
             // if(staffcount <= DBmethod().StaffNumberGet()){
-            if(staffcount <= TEST){
+//            if(staffcount <= TEST){
                 if(nowIndex < lineIndex){      //店長を見つけた行まで進める
                     nowIndex += 1
                 }else{
@@ -86,17 +83,20 @@ class PDFmethod: UIViewController {
                         staffcount += 1
                     }
                 }
-            }else{
-                stop = true
-            }
         }
+//            }else{
+//                stop = true
+//            }
+        
         
         for(var i = 0; i < pdftextarray.count; i++){
-//            print(pdftextarray[i]+"\n")
+           // print(pdftextarray[i]+"\n")
         }
         
-        print(Shiftmethod().JudgeYearAndMonth(pdftextarray[0]).year)
-        print(Shiftmethod().JudgeYearAndMonth(pdftextarray[0]).startcoursmonth)
-        print(Shiftmethod().JudgeYearAndMonth(pdftextarray[0]).endcoursmonth)
+//        print(Shiftmethod().JudgeYearAndMonth(pdftextarray[0]).year)
+//        print(Shiftmethod().JudgeYearAndMonth(pdftextarray[0]).startcoursmonth)
+//        print(Shiftmethod().JudgeYearAndMonth(pdftextarray[0]).endcoursmonth)
+        
+        return pdftext
     }
 }

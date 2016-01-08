@@ -158,6 +158,8 @@
 		25FA7F1014DB26BE001598C6 /* TETDumperViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TETDumperViewController.h; sourceTree = "<group>"; };
 		25FA7F1114DB26BE001598C6 /* TETDumperViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TETDumperViewController.m; sourceTree = "<group>"; };
 		25FA7F1214DB26BE001598C6 /* TETDumperViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TETDumperViewController.xib; sourceTree = "<group>"; };
+		37CB97001C40569400171B76 /* ja */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ja; path = ja.lproj/TETViewController_iPhone.xib; sourceTree = "<group>"; };
+		37CB97011C40569400171B76 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		37F75CBB1C3F1BD80075F9FD /* libstdc++.6.0.9.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.6.0.9.tbd"; path = "usr/lib/libstdc++.6.0.9.tbd"; sourceTree = SDKROOT; };
 		780461C31BC7EB9400D77AB3 /* Adobe-CNS1-6 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Adobe-CNS1-6"; sourceTree = "<group>"; };
 		780461C41BC7EB9400D77AB3 /* Adobe-GB1-5 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Adobe-GB1-5"; sourceTree = "<group>"; };
@@ -507,6 +509,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				ja,
 			);
 			mainGroup = 25FA7E0314D9B92A001598C6;
 			productRefGroup = 25FA7E0F14D9B92A001598C6 /* Products */;
@@ -654,6 +657,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				25FA7E1C14D9B92A001598C6 /* en */,
+				37CB97011C40569400171B76 /* ja */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -662,6 +666,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				25FA7E2814D9B92A001598C6 /* en */,
+				37CB97001C40569400171B76 /* ja */,
 			);
 			name = TETViewController_iPhone.xib;
 			sourceTree = "<group>";
@@ -741,6 +746,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -763,6 +769,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",

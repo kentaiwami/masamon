@@ -150,9 +150,9 @@
 		379955941C14431F00BAAD9E /* Shiftmethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shiftmethod.swift; sourceTree = "<group>"; };
 		379A2DBD1C1E5F9900751425 /* no_data.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = no_data.png; sourceTree = "<group>"; };
 		379A2E041C1FDFFC00751425 /* CustomUICollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomUICollectionViewCell.swift; sourceTree = "<group>"; };
+		37CB96FE1C40569400171B76 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
+		37CB96FF1C40569400171B76 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		37D4B30F1BE0F59900F06759 /* Setting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
-		37D8F4241C0CB1A000D5336A /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
-		37D8F4251C0CB1A000D5336A /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		37DD8EF41C1C0135007C0E6C /* SwipeBetweenViewControllers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipeBetweenViewControllers.swift; sourceTree = "<group>"; };
 		37F75CAA1C3F18C30075F9FD /* PDFmethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PDFmethod.swift; sourceTree = "<group>"; };
 		37F75CAD1C3F19CE0075F9FD /* TET.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = TET.xcodeproj; path = TET/sample_app/TET.xcodeproj; sourceTree = "<group>"; };
@@ -601,7 +601,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				370ACDFF1BDF486700AB73EB /* Base */,
-				37D8F4241C0CB1A000D5336A /* ja */,
+				37CB96FE1C40569400171B76 /* ja */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -610,7 +610,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				370ACE041BDF486700AB73EB /* Base */,
-				37D8F4251C0CB1A000D5336A /* ja */,
+				37CB96FF1C40569400171B76 /* ja */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
