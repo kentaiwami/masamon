@@ -15,7 +15,7 @@ class PDFmethod: UIViewController {
         var pdftextarray: [String] = []
         
         let path: NSString
-        path = NSBundle.mainBundle().pathForResource("sample", ofType: "pdf")!
+        path = NSBundle.mainBundle().pathForResource("sample2", ofType: "pdf")!
         
         let tet = TET()
         let document = tet.open_document(path as String, optlist: "")
@@ -92,7 +92,7 @@ class PDFmethod: UIViewController {
         }
         
         for(var i = 0; i < pdftextarray.count; i++){
-            //print(pdftextarray[i]+"\n")
+//            print(pdftextarray[i]+"\n")
         }
         
         print(Shiftmethod().JudgeYearAndMonth(pdftextarray[0]).year)

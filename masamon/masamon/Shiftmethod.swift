@@ -293,15 +293,17 @@ class Shiftmethod: UIViewController {
     
     //返り値は
     //年(和暦)、11日〜月末までの月、1日〜10日までの月
-    func JudgeYearAndMonth(P1: String) -> (year: Int, startcoursmonth: Int, endcoursmonth: Int){
+    func JudgeYearAndMonth(var P1: String) -> (year: Int, startcoursmonth: Int, endcoursmonth: Int){
    
-        //let P1String: String = worksheet.cellForCellReference("P1").stringValue()
+        P1 = P1.stringByReplacingOccurrencesOfString(" ", withString: "")                   //スペースがあった場合は削除
+        
         let P1NSString = P1 as NSString
         let year = P1NSString.substringWithRange(NSRange(location: 2, length: 2))                                 //平成何年かを取得
+        
         let positionmonth = P1NSString.rangeOfString("月度").location                                             //"月度"が出る場所を記録
         
-        let monthsecondcharacter = String(P1String[P1String.startIndex.advancedBy(positionmonth-1)])             //月の最初の文字
-        let monthfirstcharacter = String(P1String[P1String.startIndex.advancedBy(positionmonth-2)])
+        let monthsecondcharacter = String(P1[P1.startIndex.advancedBy(positionmonth-1)])             //月の最初の文字
+        let monthfirstcharacter = String(P1[P1.startIndex.advancedBy(positionmonth-2)])
         
         if(monthsecondcharacter >= "3" && monthsecondcharacter <= "9"){                     //3月度〜9月度ならば
             return (Int(year)!,Int(monthsecondcharacter)!-1,Int(monthsecondcharacter)!)
