@@ -40,6 +40,7 @@
 		37F75CAB1C3F18C30075F9FD /* PDFmethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F75CAA1C3F18C30075F9FD /* PDFmethod.swift */; };
 		37F75CBF1C3F1E4C0075F9FD /* TET_ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37F75CB61C3F1B610075F9FD /* TET_ios.framework */; };
 		37F75CC01C3F1E650075F9FD /* libstdc++.6.0.9.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 37F75CBD1C3F1C270075F9FD /* libstdc++.6.0.9.tbd */; };
+		37F75CC21C3F491E0075F9FD /* sample2.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 37F75CC11C3F491E0075F9FD /* sample2.pdf */; };
 		D9C8B4DC9FDEB1B892F9B0DD /* Pods_masamon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAD231E854685D75C3F03501 /* Pods_masamon.framework */; };
 /* End PBXBuildFile section */
 
@@ -159,6 +160,7 @@
 		37F75CB51C3F1AEE0075F9FD /* masamon-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "masamon-Bridging-Header.h"; sourceTree = "<group>"; };
 		37F75CB61C3F1B610075F9FD /* TET_ios.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TET_ios.framework; path = TET/TET_ios/TET_ios.framework; sourceTree = "<group>"; };
 		37F75CBD1C3F1C270075F9FD /* libstdc++.6.0.9.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.6.0.9.tbd"; path = "usr/lib/libstdc++.6.0.9.tbd"; sourceTree = SDKROOT; };
+		37F75CC11C3F491E0075F9FD /* sample2.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = sample2.pdf; sourceTree = "<group>"; };
 		DB9C07197D395EF38199A0C7 /* Pods-masamon.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-masamon.debug.xcconfig"; path = "Pods/Target Support Files/Pods-masamon/Pods-masamon.debug.xcconfig"; sourceTree = "<group>"; };
 		FAD231E854685D75C3F03501 /* Pods_masamon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_masamon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -211,6 +213,7 @@
 				37F75CB51C3F1AEE0075F9FD /* masamon-Bridging-Header.h */,
 				37F75CAD1C3F19CE0075F9FD /* TET.xcodeproj */,
 				3710BF591C3BC07C00A260B7 /* sample.pdf */,
+				37F75CC11C3F491E0075F9FD /* sample2.pdf */,
 				3742AF6D1C12FEE8003AB33B /* bbb.xlsx */,
 				3726B3A51C311B7600F22F34 /* aaa.xlsx */,
 				377D2DAD1C36C08B009CC388 /* BlueDarkStyle.swift */,
@@ -467,6 +470,7 @@
 				370ACE021BDF486700AB73EB /* Assets.xcassets in Resources */,
 				3710BF5A1C3BC07C00A260B7 /* sample.pdf in Resources */,
 				3742AF6E1C12FEE8003AB33B /* bbb.xlsx in Resources */,
+				37F75CC21C3F491E0075F9FD /* sample2.pdf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
