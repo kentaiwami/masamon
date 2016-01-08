@@ -31,7 +31,7 @@ class PDFmethod: UIViewController {
         
         var lineIndex = 1
         
-        let skiplineIndexArray = [5,6,7,8,9,10,12,13,14,42,43,44,45,46,47,48]
+     //   let skiplineIndexArray = [5,6,7,8,9,10,12,13,14,42,43,44,45,46,47,48]
         
         var judgeheiseifalg = true      //平成を見つけるまでtrue
         
@@ -39,21 +39,23 @@ class PDFmethod: UIViewController {
         pdftext.enumerateLines{
             line, stop in
             
-            //TODO: "平成"が出るまで行読み飛ばしをする
+            //"平成"が出るまで行読み飛ばしをする
             if(judgeheiseifalg){
-                
                 let judgeheisei = line.substringToIndex(line.startIndex.successor().successor())
                 
                 if(judgeheisei == "平成"){
                     judgeheiseifalg = false
+                    print("\(lineIndex) : \(line)")
                 }
-                
             }
             
+            //"平成"を見つけていたら"店長"が出るまで行読みとばしをする
             if(judgeheiseifalg == false){
-                print("\(lineIndex) : \(line)")
+                if((line.rangeOfString("店長")) != nil){
+                    print("\(lineIndex) : \(line)")
+                }
             }
-            
+//            print("\(lineIndex) : \(line)")
             
             lineIndex += 1
         }
