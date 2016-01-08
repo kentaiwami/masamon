@@ -12,8 +12,10 @@ class PDFmethod: UIViewController {
     
     func AllTextGet(){
         
+        var pdftextarray: [String] = []
+        
         let path: NSString
-        path = NSBundle.mainBundle().pathForResource("sample2", ofType: "pdf")!
+        path = NSBundle.mainBundle().pathForResource("sample", ofType: "pdf")!
         
         let tet = TET()
         let document = tet.open_document(path as String, optlist: "")
@@ -38,7 +40,7 @@ class PDFmethod: UIViewController {
             let judgeheisei = line.substringToIndex(line.startIndex.successor().successor())
             
             if(judgeheisei == "平成"){
-                print(line)
+                pdftextarray.append(line)
                 stop = true
             }
             
@@ -55,7 +57,7 @@ class PDFmethod: UIViewController {
                 nowIndex += 1
             }else{
                 if((line.rangeOfString("店長")) != nil){
-                    print(line)
+                    pdftextarray.append(line)
                     lineIndex = nowIndex
                     stop = true
                 }else{
@@ -80,7 +82,7 @@ class PDFmethod: UIViewController {
                     let judgehtopcharacter = line.substringToIndex(line.startIndex.successor())
                     
                     if(Int(judgehtopcharacter) != nil){         //先頭文字が数値の場合のみ
-                        print(line)
+                        pdftextarray.append(line)
                         staffcount += 1
                     }
                 }
@@ -88,5 +90,13 @@ class PDFmethod: UIViewController {
                 stop = true
             }
         }
+        
+        for(var i = 0; i < pdftextarray.count; i++){
+            //print(pdftextarray[i]+"\n")
+        }
+        
+        print(Shiftmethod().JudgeYearAndMonth(pdftextarray[0]).year)
+        print(Shiftmethod().JudgeYearAndMonth(pdftextarray[0]).startcoursmonth)
+        print(Shiftmethod().JudgeYearAndMonth(pdftextarray[0]).endcoursmonth)
     }
 }

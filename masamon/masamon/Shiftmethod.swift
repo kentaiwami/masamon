@@ -24,29 +24,31 @@ class Shiftmethod: UIViewController {
     var documentPath: String = ""
     var spreadsheet = BRAOfficeDocumentPackage()
     var worksheet = BRAWorksheet()
+    var P1String: String = ""
     
     //XLSXファイルのインスタンスをセットするメソッド
-    func SetXLSX() -> BRAWorksheet{
+    func SetXLSX() -> (sheet: BRAWorksheet, P1:String){
         
         if(flag){
             documentPath = NSBundle.mainBundle().pathForResource(TEST, ofType: "xlsx")!
             spreadsheet = BRAOfficeDocumentPackage.open(documentPath)
             worksheet = spreadsheet.workbook.worksheets[0] as! BRAWorksheet
+            P1String = worksheet.cellForCellReference("P1").stringValue()
             flag = false
-            return (worksheet)
+            return (worksheet,P1String)
         }else{
-            return (worksheet)
+            return (worksheet,P1String)
         }
     
     }
     
     //ワンクール分のシフトをShiftDetailDBとShiftDBへ記録する
     func ShiftDBOneCoursRegist(importname: String, importpath: String, update: Bool){
-        let shiftyearandmonth = self.JudgeYearAndMonth()
+        let worksheet = self.SetXLSX()
+        let shiftyearandmonth = self.JudgeYearAndMonth(worksheet.P1)
         let shiftnsdate = MonthlySalaryShow().DateSerial(MonthlySalaryShow().Changecalendar(shiftyearandmonth.year, calender: "JP"), month: shiftyearandmonth.startcoursmonth, day: 1)
         let c = NSCalendar.currentCalendar()
         let monthrange = c.rangeOfUnit([NSCalendarUnit.Day],  inUnit: [NSCalendarUnit.Month], forDate: shiftnsdate)
-        let worksheet = self.SetXLSX()
         
         var date = 11
         let staffcellposition = self.StaffCellPositionGet()     //スタッフの名前が記載されているセル場所 ex.)F8,F9
@@ -74,15 +76,15 @@ class Shiftmethod: UIViewController {
                 newshiftdetaildb.id = existshiftdb.shiftdetail[i].id
                 newshiftdetaildb.day = existshiftdb.shiftdetail[i].day
                 
-                if(JudgeYearAndMonth().startcoursmonth == 12 && flag == 0){                     //開始月が12月の場合は昨年の12月で記録されるようにする
-                    newshiftdetaildb.year = JudgeYearAndMonth().year-1
+                if(JudgeYearAndMonth(worksheet.P1).startcoursmonth == 12 && flag == 0){                     //開始月が12月の場合は昨年の12月で記録されるようにする
+                    newshiftdetaildb.year = JudgeYearAndMonth(worksheet.P1).year-1
                 }else{
-                    newshiftdetaildb.year = JudgeYearAndMonth().year
+                    newshiftdetaildb.year = JudgeYearAndMonth(worksheet.P1).year
                 }
 
                 switch(flag){
                 case 0:         //11日〜30日までの場合
-                    newshiftdetaildb.month = JudgeYearAndMonth().startcoursmonth
+                    newshiftdetaildb.month = JudgeYearAndMonth(worksheet.P1).startcoursmonth
                     date++
                     
                     if(date > monthrange.length){
@@ -91,13 +93,13 @@ class Shiftmethod: UIViewController {
                     }
                     
                 case 1:         //1日〜10日までの場合
-                    newshiftdetaildb.month = JudgeYearAndMonth().endcoursmonth
+                    newshiftdetaildb.month = JudgeYearAndMonth(worksheet.P1).endcoursmonth
                     date++
                     
                 default:
                     break
                 }
-                newshiftdetaildb.staff = TheDayStaffAttendance(i, staffcellpositionarray: staffcellposition, worksheet: worksheet)
+                newshiftdetaildb.staff = TheDayStaffAttendance(i, staffcellpositionarray: staffcellposition, worksheet: worksheet.sheet)
                 newshiftdetaildb.shiftDBrelationship = DBmethod().SearchShiftDB(importname)
                 
                 DBmethod().AddandUpdate(newshiftdetaildb, update: true)
@@ -113,15 +115,15 @@ class Shiftmethod: UIViewController {
                 shiftdetailrecordcount++
                 shiftdetaildb.day = date
                 
-                if(JudgeYearAndMonth().startcoursmonth == 12 && flag == 0){                     //開始月が12月の場合は昨年の12月で記録されるようにする
-                    shiftdetaildb.year = JudgeYearAndMonth().year-1
+                if(JudgeYearAndMonth(worksheet.P1).startcoursmonth == 12 && flag == 0){                     //開始月が12月の場合は昨年の12月で記録されるようにする
+                    shiftdetaildb.year = JudgeYearAndMonth(worksheet.P1).year-1
                 }else{
-                    shiftdetaildb.year = JudgeYearAndMonth().year
+                    shiftdetaildb.year = JudgeYearAndMonth(worksheet.P1).year
                 }
 
                 switch(flag){
                 case 0:         //11日〜30日までの場合
-                    shiftdetaildb.month = JudgeYearAndMonth().startcoursmonth
+                    shiftdetaildb.month = JudgeYearAndMonth(worksheet.P1).startcoursmonth
                     date++
                     
                     if(date > monthrange.length){
@@ -130,7 +132,7 @@ class Shiftmethod: UIViewController {
                     }
                     
                 case 1:         //1日〜10日までの場合
-                    shiftdetaildb.month = JudgeYearAndMonth().endcoursmonth
+                    shiftdetaildb.month = JudgeYearAndMonth(worksheet.P1).endcoursmonth
                     date++
                     
                 default:
@@ -138,7 +140,7 @@ class Shiftmethod: UIViewController {
                 }
                 
                 shiftdetaildb.shiftDBrelationship = shiftdb
-                shiftdetaildb.staff = TheDayStaffAttendance(i, staffcellpositionarray: staffcellposition, worksheet: worksheet)
+                shiftdetaildb.staff = TheDayStaffAttendance(i, staffcellpositionarray: staffcellposition, worksheet: worksheet.sheet)
                 
                 //すでに記録してあるListを取得して後ろに現在の記録を追加する
                 for(var i = 0; i < shiftdetailarray.count; i++){
@@ -163,7 +165,7 @@ class Shiftmethod: UIViewController {
         var array:[String] = []
         
         while(true){
-            let Fcell: String = worksheet.cellForCellReference(mark+String(number)).stringValue()
+            let Fcell: String = worksheet.sheet.cellForCellReference(mark+String(number)).stringValue()
             if(Fcell.isEmpty){       //セルが空なら進めるだけ
                 number++
             }else{
@@ -200,14 +202,14 @@ class Shiftmethod: UIViewController {
         
         var userposition = ""
         
-        let shiftyearandmonth = self.JudgeYearAndMonth()
+        let shiftyearandmonth = self.JudgeYearAndMonth(worksheet.P1)
         let shiftnsdate = MonthlySalaryShow().DateSerial(MonthlySalaryShow().Changecalendar(shiftyearandmonth.year, calender: "JP"), month: shiftyearandmonth.startcoursmonth, day: 1)
         let c = NSCalendar.currentCalendar()
         let monthrange = c.rangeOfUnit([NSCalendarUnit.Day],  inUnit: [NSCalendarUnit.Month], forDate: shiftnsdate)
         
         //F列からユーザ名と合致する箇所を探す
         for(var i = 0; i < staffnumber; i++){
-            let nowcell: String = worksheet.cellForCellReference(staffcellposition[i]).stringValue()
+            let nowcell: String = worksheet.sheet.cellForCellReference(staffcellposition[i]).stringValue()
             
             if(nowcell == username){
                 userposition = staffcellposition[i]
@@ -218,7 +220,7 @@ class Shiftmethod: UIViewController {
         //1クール分行う
         for(var i = 0; i < monthrange.length; i++){
             let replaceday = userposition.stringByReplacingOccurrencesOfString("F", withString: cellrow[i])
-            let dayshift: String = worksheet.cellForCellReference(replaceday).stringValue()
+            let dayshift: String = worksheet.sheet.cellForCellReference(replaceday).stringValue()
             
             if(holiday.contains(dayshift) == false){      //holiday以外なら
                 usershift.append(dayshift)
@@ -257,8 +259,8 @@ class Shiftmethod: UIViewController {
         newshiftdbsalalyadd.shiftimportname = oldshiftdbsalalynone.shiftimportname
         newshiftdbsalalyadd.shiftimportpath = oldshiftdbsalalynone.shiftimportpath
         newshiftdbsalalyadd.salaly = Int(monthlysalary)
-        newshiftdbsalalyadd.year = JudgeYearAndMonth().year
-        newshiftdbsalalyadd.month = JudgeYearAndMonth().endcoursmonth
+        newshiftdbsalalyadd.year = JudgeYearAndMonth(worksheet.P1).year
+        newshiftdbsalalyadd.month = JudgeYearAndMonth(worksheet.P1).endcoursmonth
         
         DBmethod().AddandUpdate(newshiftdbsalalyadd, update: true)
     }
@@ -291,14 +293,13 @@ class Shiftmethod: UIViewController {
     
     //返り値は
     //年(和暦)、11日〜月末までの月、1日〜10日までの月
-    func JudgeYearAndMonth() -> (year: Int, startcoursmonth: Int, endcoursmonth: Int){
+    func JudgeYearAndMonth(P1: String) -> (year: Int, startcoursmonth: Int, endcoursmonth: Int){
    
-        let worksheet = self.SetXLSX()
-
-        let P1String: String = worksheet.cellForCellReference("P1").stringValue()
-        let P1NSString = P1String as NSString
+        //let P1String: String = worksheet.cellForCellReference("P1").stringValue()
+        let P1NSString = P1 as NSString
         let year = P1NSString.substringWithRange(NSRange(location: 2, length: 2))                                 //平成何年かを取得
         let positionmonth = P1NSString.rangeOfString("月度").location                                             //"月度"が出る場所を記録
+        
         let monthsecondcharacter = String(P1String[P1String.startIndex.advancedBy(positionmonth-1)])             //月の最初の文字
         let monthfirstcharacter = String(P1String[P1String.startIndex.advancedBy(positionmonth-2)])
         
