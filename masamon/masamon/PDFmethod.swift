@@ -17,7 +17,7 @@ class PDFmethod: UIViewController {
         
         let documentsDir = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
         let path: NSString
-        path = NSBundle.mainBundle().pathForResource("sample", ofType: "pdf")!
+        path = NSBundle.mainBundle().pathForResource("sample2", ofType: "pdf")!
         let globaloptlist: String = String(format: "searchpath={{%@} {%@/extractor_ios.app} {%@/extractor_ios.app/resource/cmap}}", arguments: [documentsDir,NSHomeDirectory(),NSHomeDirectory()])
         
         let tet = TET()
@@ -66,36 +66,30 @@ class PDFmethod: UIViewController {
         //スタッフの行を読み取る
         nowIndex = 0
         var staffcount = 0
-        let TEST = 29           //スタッフ人数テスト用変数
         
         pdftext.enumerateLines{
             line, stop in
             
-            // if(staffcount <= DBmethod().StaffNumberGet()){
-//            if(staffcount <= TEST){
-                if(nowIndex < lineIndex){      //店長を見つけた行まで進める
-                    nowIndex += 1
-                }else{
-                    let judgehtopcharacter = line.substringToIndex(line.startIndex.successor())
-                    
-                    if(Int(judgehtopcharacter) != nil){         //先頭文字が数値の場合のみ
-                        pdftextarray.append(line)
-                        staffcount += 1
-                    }
+            if(nowIndex < lineIndex){      //店長を見つけた行まで進める
+                nowIndex += 1
+            }else{
+                let judgehtopcharacter = line.substringToIndex(line.startIndex.successor())
+                
+                if(Int(judgehtopcharacter) != nil){         //先頭文字が数値の場合のみ
+                    pdftextarray.append(line)
+                    staffcount += 1
                 }
+            }
         }
-//            }else{
-//                stop = true
-//            }
         
         
         for(var i = 0; i < pdftextarray.count; i++){
-           // print(pdftextarray[i]+"\n")
+            print(pdftextarray[i])
         }
         
-//        print(Shiftmethod().JudgeYearAndMonth(pdftextarray[0]).year)
-//        print(Shiftmethod().JudgeYearAndMonth(pdftextarray[0]).startcoursmonth)
-//        print(Shiftmethod().JudgeYearAndMonth(pdftextarray[0]).endcoursmonth)
+        //        print(Shiftmethod().JudgeYearAndMonth(pdftextarray[0]).year)
+        //        print(Shiftmethod().JudgeYearAndMonth(pdftextarray[0]).startcoursmonth)
+        //        print(Shiftmethod().JudgeYearAndMonth(pdftextarray[0]).endcoursmonth)
         
         return pdftext
     }

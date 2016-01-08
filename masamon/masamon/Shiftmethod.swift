@@ -296,7 +296,7 @@ class Shiftmethod: UIViewController {
     func JudgeYearAndMonth(var P1: String) -> (year: Int, startcoursmonth: Int, endcoursmonth: Int){
    
         P1 = P1.stringByReplacingOccurrencesOfString(" ", withString: "")                   //スペースがあった場合は削除
-        
+
         let P1NSString = P1 as NSString
         let year = P1NSString.substringWithRange(NSRange(location: 2, length: 2))                                 //平成何年かを取得
         
