@@ -13,7 +13,7 @@ class PDFmethod: UIViewController {
     func AllTextGet(){
         
         let path: NSString
-        path = NSBundle.mainBundle().pathForResource("sample", ofType: "pdf")!
+        path = NSBundle.mainBundle().pathForResource("sample2", ofType: "pdf")!
         
         let tet = TET()
         let document = tet.open_document(path as String, optlist: "")
@@ -31,34 +31,63 @@ class PDFmethod: UIViewController {
         
         var lineIndex = 1
         
-     //   let skiplineIndexArray = [5,6,7,8,9,10,12,13,14,42,43,44,45,46,47,48]
+        //   let skiplineIndexArray = [5,6,7,8,9,10,12,13,14,42,43,44,45,46,47,48]
         
-        var judgeheiseifalg = true      //平成を見つけるまでtrue
         
-        //１行ごとに文字列を抜き出す
+        //"平成"が出るまで1行ずつ読み飛ばしをする
         pdftext.enumerateLines{
             line, stop in
             
-            //"平成"が出るまで行読み飛ばしをする
-            if(judgeheiseifalg){
-                let judgeheisei = line.substringToIndex(line.startIndex.successor().successor())
-                
-                if(judgeheisei == "平成"){
-                    judgeheiseifalg = false
-                    print("\(lineIndex) : \(line)")
-                }
-            }
+            let judgeheisei = line.substringToIndex(line.startIndex.successor().successor())
             
-            //"平成"を見つけていたら"店長"が出るまで行読みとばしをする
-            if(judgeheiseifalg == false){
-                if((line.rangeOfString("店長")) != nil){
-                    print("\(lineIndex) : \(line)")
-                }
+            if(judgeheisei == "平成"){
+                print("\(lineIndex) : \(line)")
+                stop = true
             }
-//            print("\(lineIndex) : \(line)")
             
             lineIndex += 1
         }
+        
+        //"店長"が出るまで1行ずつ読み飛ばしをする
+        var nowIndex = 1
+        
+        pdftext.enumerateLines{
+            line, stop in
+
+            if(nowIndex < lineIndex){      //平成を見つけた行まで進める
+                nowIndex += 1
+            }else{
+                if((line.rangeOfString("店長")) != nil){
+                    print("\(lineIndex) : \(line)")
+                    lineIndex = nowIndex
+                    stop = true
+                }else{
+                    nowIndex += 1
+                }
+            }
+        }
+
+        //"2"が出るまで1行ずつ読みとばしをする(店長の次に現れるスタッフは先頭文字が2のため)
+        nowIndex = 0
+        
+        pdftext.enumerateLines{
+            line, stop in
+            
+            if(nowIndex < lineIndex){      //店長を見つけた行まで進める
+                nowIndex += 1
+            }else{
+                let judgehtopcharacter = line.substringToIndex(line.startIndex.successor())
+                
+                if(judgehtopcharacter == "2"){
+                    print("\(lineIndex) : \(line)")
+                    stop = true
+                }else{
+                    nowIndex += 1
+                }
+            }
+        }
+        
+        //"2"が出た後はスタッフの数だけ行数を取り込む
         
     }
 }
