@@ -31,9 +31,6 @@ class PDFmethod: UIViewController {
         
         var lineIndex = 1
         
-        //   let skiplineIndexArray = [5,6,7,8,9,10,12,13,14,42,43,44,45,46,47,48]
-        
-        
         //"平成"が出るまで1行ずつ読み飛ばしをする
         pdftext.enumerateLines{
             line, stop in
@@ -41,7 +38,7 @@ class PDFmethod: UIViewController {
             let judgeheisei = line.substringToIndex(line.startIndex.successor().successor())
             
             if(judgeheisei == "平成"){
-                print("\(lineIndex) : \(line)")
+                print(line)
                 stop = true
             }
             
@@ -58,7 +55,7 @@ class PDFmethod: UIViewController {
                 nowIndex += 1
             }else{
                 if((line.rangeOfString("店長")) != nil){
-                    print("\(lineIndex) : \(line)")
+                    print(line)
                     lineIndex = nowIndex
                     stop = true
                 }else{
@@ -67,7 +64,7 @@ class PDFmethod: UIViewController {
             }
         }
 
-        //"2"が出るまで1行ずつ読みとばしをする(店長の次に現れるスタッフは先頭文字が2のため)
+        //スタッフの行を読み取る
         nowIndex = 0
         
         pdftext.enumerateLines{
@@ -78,16 +75,10 @@ class PDFmethod: UIViewController {
             }else{
                 let judgehtopcharacter = line.substringToIndex(line.startIndex.successor())
                 
-                if(judgehtopcharacter == "2"){
-                    print("\(lineIndex) : \(line)")
-                    stop = true
-                }else{
-                    nowIndex += 1
+                if(Int(judgehtopcharacter) != nil){         //先頭文字が数値の場合のみ
+                    print(line)
                 }
             }
         }
-        
-        //"2"が出た後はスタッフの数だけ行数を取り込む
-        
     }
 }
