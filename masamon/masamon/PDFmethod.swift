@@ -33,7 +33,7 @@ class PDFmethod: UIViewController {
         
         var lineIndex = 1
         
-        let skiplineIndexArray = [1,2,3]
+        let skiplineIndexArray = [1,2,3,5,6,7,8,9,10,12,13,14,42,43,44,45,46,47,48]
         
         //１行ごとに文字列を抜き出す
         pdftext.enumerateLines{
