@@ -121,12 +121,36 @@ class PDFmethod: UIViewController {
         return staffname
     }
     
+    //休みの場所を検出して配列として返す関数
+    func AAA(staffarraysstring: NSString) -> Array<Int>{
+        let holiday = ["公","夏","有"]           //表に記載される休暇日
+        var holidaylocation: [Int] = []
+        
+        //休みの場所を抽出するループ
+        var searchrange = NSMakeRange(0, staffarraysstring.length)
+        for(var i = 0; i < holiday.count; i++){
+            var searchresult = staffarraysstring.rangeOfString(holiday[i], options: NSStringCompareOptions.CaseInsensitiveSearch, range: searchrange)
+            
+            while(searchresult.location != NSNotFound){
+                if(searchresult.location != NSNotFound){
+                    
+                    holidaylocation.append(searchresult.location)
+                    
+                    searchrange = NSMakeRange(searchresult.location + searchresult.length, staffarraysstring.length-(searchresult.location + searchresult.length))
+                    
+                    searchresult = staffarraysstring.rangeOfString(holiday[i], options: NSStringCompareOptions.CaseInsensitiveSearch, range: searchrange)
+                }
+            }
+        }
+        
+        return holidaylocation
+    }
+    
     
     //スタッフのシフトを日にちごとに分けたArrayを返す
     func SplitDayShiftGet(var staffarray: Array<String>) -> Array<String>{
         
         var dayshiftarray: [String] = []        //1日ごとのシフトを記録
-        let holiday = ["公","夏","有"]           //表に記載される休暇日
         var errorstaff: [String] = []           //スタッフ名の抽出がうまくいかなかったスタッフのシフトを記録
         
         //1クールが全部で何日間あるかを判断するため
@@ -209,25 +233,10 @@ class PDFmethod: UIViewController {
                     searchrange = NSMakeRange(0, staffarraytmpnsstring.length)
                 }
                 
-                //休みの場所を抽出するループ
-                searchrange = NSMakeRange(0, staffarraytmpnsstring.length)
-                for(var i = 0; i < holiday.count; i++){
-                    var searchresult = staffarraytmpnsstring.rangeOfString(holiday[i], options: NSStringCompareOptions.CaseInsensitiveSearch, range: searchrange)
-
-                    while(searchresult.location != NSNotFound){
-                        if(searchresult.location != NSNotFound){
-                            
-                            holidayshiftlocationarray.append(searchresult.location)
-                            
-                            searchrange = NSMakeRange(searchresult.location + searchresult.length, staffarraytmpnsstring.length-(searchresult.location + searchresult.length))
-                            
-                            searchresult = staffarraytmpnsstring.rangeOfString(holiday[i], options: NSStringCompareOptions.CaseInsensitiveSearch, range: searchrange)
-                        }
-                    }
-                }
+                //休みを検出して場所を配列へ代入
+                holidayshiftlocationarray = self.AAA(staffarraytmpnsstring)
             }
             
-            print(holidayshiftlocationarray)
 //            print(lateshiftlocationarray)
 //            for(var i = 0; i < lateshiftlocationarray.count; i++){
 //                print(String(staffarraytmp[staffarraytmp.startIndex.advancedBy(lateshiftlocationarray[i])]) + String(staffarraytmp[staffarraytmp.startIndex.advancedBy(lateshiftlocationarray[i]+1)]))
