@@ -91,11 +91,43 @@ class PDFmethod: UIViewController {
         return pdftextarray
     }
     
+    /*スタッフ1人分のテキストを受け取ってスタッフ名のみを返す関数
+    stafftext => スタッフ名とシフトが記述されているテキスト
+    i         => ループの回数(stafftextの先頭についている数値)
+    */
+    func GetStaffName(stafftext: String, i: Int) -> String{
+        var staffname = ""
+        var position = 0
+        let othershiftsystem: [String] = ["公","研","出"]
+
+        //スタッフ名の読み込みを開始する場所を決定
+        if(i <= 9){
+            position = 1
+        }else{
+            position = 2
+        }
+        
+        //スタッフ名の抽出(シフト体制に含まれる文字が出るまで)
+        var getcharacterstaffname = stafftext[stafftext.startIndex.advancedBy(position)]
+        while(DBmethod().SearchShiftSystem(String(getcharacterstaffname)) == nil){
+            
+            if(othershiftsystem.contains(String(getcharacterstaffname))){         //ShiftSystemにない細かいのも検出するため
+                break
+            }
+            staffname = staffname + String(getcharacterstaffname)
+            position += 1
+            getcharacterstaffname = stafftext[stafftext.startIndex.advancedBy(position)]
+        }
+        return staffname
+    }
+    
+    
+    
     //スタッフのシフトを日にちごとに分けたArrayを返す
     func SplitDayShiftGet(var staffarray: Array<String>) -> Array<String>{
         
         var dayshiftarray: [String] = []        //1日ごとのシフトを記録
-        let othershiftsystem: [String] = ["公","研","出"]
+//        let othershiftsystem: [String] = ["公","研","出"]
         let holiday = ["公","夏","有"]           //表に記載される休暇日
         var errorstaff: [String] = []           //スタッフ名の抽出がうまくいかなかったスタッフのシフトを記録
         
@@ -112,48 +144,31 @@ class PDFmethod: UIViewController {
             dayshiftarray.append("")
         }
         
-        var position = 0            //先頭から何文字の場所から読み取るかを管理
-        
         //スタッフの人数分(配列の最後まで)繰り返す
-        for(var i = 1; i < 2; i++){
+        for(var i = 1; i < staffarray.count; i++){
             
             var daycounter = 0
             var staffnametmp = ""
             var staffarraytmp = ""
             
-            
-            
+            var earlyshiftlocationarray: [Int] = []
+            var center1shiftlocationarray: [Int] = []
+            var center2shiftlocationarray: [Int] = []
+            var center3shiftlocationarray: [Int] = []
+            var lateshiftlocationarray: [Int] = []
+            var othershiftlocationarray: [Int] = []
             
             
             staffarray[i] = staffarray[i].stringByReplacingOccurrencesOfString(" ", withString: "")
             staffarray[i] = staffarray[i].stringByReplacingOccurrencesOfString("　", withString: "")
             
-            //スタッフ名の読み込みを開始する場所を決定
-            staffarraytmp = staffarray[i]
-            if(i <= 9){
-                position = 1
-            }else{
-                position = 2
-            }
-            
-            //スタッフ名の抽出(シフト体制に含まれる文字が出るまで)
-            var getcharacterstaffname = staffarraytmp[staffarraytmp.startIndex.advancedBy(position)]
-            while(DBmethod().SearchShiftSystem(String(getcharacterstaffname)) == nil){
-                
-                if(othershiftsystem.contains(String(getcharacterstaffname))){         //ShiftSystemにない細かいのも検出するため
-                    break
-                }
-                staffnametmp = staffnametmp + String(getcharacterstaffname)
-                position += 1
-                getcharacterstaffname = staffarraytmp[staffarraytmp.startIndex.advancedBy(position)]
-            }
-            
-            
-            //抽出したスタッフ名(マネージャーのMは除く)が1文字以下or4文字以上ならエラーとして記録
-            //            staffnametmp = staffnametmp.stringByReplacingOccurrencesOfString("M", withString: "")
-            //            staffnametmp = staffnametmp.stringByReplacingOccurrencesOfString("Ｍ", withString: "")
+            //スタッフ名の抽出
+            staffnametmp = self.GetStaffName(staffarray[i], i: i)
+
+            /*抽出したスタッフ名(マネージャーのMは除く)が1文字以下or4文字以上ならエラーとして記録
+            　エラーでなければシフトの出現場所を配列に格納していく
+            */
             let removem = staffnametmp.stringByReplacingOccurrencesOfString("M", withString: "")
-            
             if(removem.characters.count <= 1 || removem.characters.count >= 4){
                 errorstaff.append(staffarraytmp)
             }else{
