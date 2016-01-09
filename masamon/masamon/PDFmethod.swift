@@ -18,7 +18,7 @@ class PDFmethod: UIViewController {
         
 //        let documentsDir = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
         let path: NSString
-        path = NSBundle.mainBundle().pathForResource("sample2", ofType: "pdf")!
+        path = NSBundle.mainBundle().pathForResource("sample", ofType: "pdf")!
 //        let globaloptlist: String = String(format: "searchpath={{%@} {%@/extractor_ios.app} {%@/extractor_ios.app/resource/cmap}}", arguments: [documentsDir,NSHomeDirectory(),NSHomeDirectory()])
         
         let tet = TET()
@@ -95,7 +95,8 @@ class PDFmethod: UIViewController {
     func SplitDayShiftGet(var staffarray: Array<String>) -> Array<String>{
         
         var dayshiftarray: [String] = []        //1日ごとのシフトを記録
-
+        let othershiftsystem: [String] = ["公","研","出"]
+        
         //1クールが全部で何日間あるかを判断するため
         let shiftyearandmonth = Shiftmethod().JudgeYearAndMonth(staffarray[0])
 
@@ -115,7 +116,7 @@ class PDFmethod: UIViewController {
         for(var i = 1; i < staffarray.count; i++){
             
 //            var daycounter = 0
-//            var staffnametmp = ""
+            var staffnametmp = ""
             var staffarraytmp = ""
             
             staffarray[i] = staffarray[i].stringByReplacingOccurrencesOfString(" ", withString: "")
@@ -123,13 +124,33 @@ class PDFmethod: UIViewController {
             
             //TODO: 2番目から読み取り開始
             staffarraytmp = staffarray[i]
-            if(i < 9){
+            if(i <= 9){
                 position = 1
             }else{
                 position = 2
             }
-            print(staffarraytmp[staffarraytmp.startIndex.advancedBy(position)])
-            //TODO: シフト体制の文字でない限りtmpへの連結を行う
+            
+            //シフト体制に含まれていない文字の場合(スタッフ名の抽出)
+            var AAA = staffarraytmp[staffarraytmp.startIndex.advancedBy(position)]
+            while(DBmethod().SearchShiftSystem(String(AAA)) == nil){
+                if(othershiftsystem.contains(String(AAA))){         //ShiftSystemにない細かいのも検出するため
+                    break
+                }
+                staffnametmp = staffnametmp + String(AAA)
+                position += 1
+                AAA = staffarraytmp[staffarraytmp.startIndex.advancedBy(position)]
+            }
+            
+            //抽出したスタッフ名(マネージャーのMは除く)が1文字以下or4文字以上ならエラーとして記録
+            staffnametmp = staffnametmp.stringByReplacingOccurrencesOfString("M", withString: "")
+            if(staffnametmp.characters.count <= 1 || staffnametmp.characters.count >= 4){
+                print(staffnametmp)
+            }
+            
+            
+            
+            
+            
             //TODO: 上記ループを抜けたらシフト体制(holiday)以外であればdayshiftarrayへ記録
             //TODO: 記録したらdaycounterを1アップ
             //TODO: holydayにあった場合は記録をせずdaycounterを上げる
