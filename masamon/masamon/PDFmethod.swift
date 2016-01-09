@@ -161,7 +161,8 @@ class PDFmethod: UIViewController {
             
             //スタッフ名の抽出
             staffname = self.GetStaffName(staffarray[i], i: i)
-
+            
+            staffarraytmp = staffarray[i]
             /*抽出したスタッフ名(マネージャーのMは除く)が1文字以下or4文字以上ならエラーとして記録
             　エラーでなければシフトの出現場所を配列に格納していく
             */
@@ -173,26 +174,47 @@ class PDFmethod: UIViewController {
 
                 //シフト体制の分だけループを回し、各ループでスタッフ1人分のシフト出現場所を記録する
                 for(var i = 0; i < DBmethod().DBRecordCount(ShiftSystem); i++){
-                    print(DBmethod().ShiftSystemNameGet(i))
+                    let AAA = DBmethod().ShiftSystemNameGet(i)
                     let staffarraytmpnsstring = staffarraytmp as NSString
                     var searchrange = NSMakeRange(0, staffarraytmpnsstring.length)
-                    var searchresult = staffarraytmpnsstring.rangeOfString("出勤", options: NSStringCompareOptions.CaseInsensitiveSearch, range: searchrange)
-                    
+                    var searchresult = staffarraytmpnsstring.rangeOfString(AAA, options: NSStringCompareOptions.CaseInsensitiveSearch, range: searchrange)
+
                     while(searchresult.location != NSNotFound){
-                        
                         if(searchresult.location != NSNotFound){
-                            
-                            //TODO: 出現場所を記録する
-                            
+                            //何番かによって記録先を分ける
+                            switch(i){
+                            case 0...3:
+                                earlyshiftlocationarray.append(searchresult.location)
+                                
+                            case 4:
+                                center1shiftlocationarray.append(searchresult.location)
+                                
+                            case 5:
+                                center2shiftlocationarray.append(searchresult.location)
+                                
+                            case 6:
+                                center3shiftlocationarray.append(searchresult.location)
+                                
+                            case 7...9:
+                                lateshiftlocationarray.append(searchresult.location)
+                                
+                            default:
+                                break
+                            }
                             
                             searchrange = NSMakeRange(searchresult.location + searchresult.length, staffarraytmpnsstring.length-(searchresult.location + searchresult.length))
                             
-                            searchresult = staffarraytmpnsstring.rangeOfString("出勤", options: NSStringCompareOptions.CaseInsensitiveSearch, range: searchrange)
+                            searchresult = staffarraytmpnsstring.rangeOfString(AAA, options: NSStringCompareOptions.CaseInsensitiveSearch, range: searchrange)
                             count++
                         }
                     }
                 }
             }
+            print(lateshiftlocationarray)
+            for(var i = 0; i < lateshiftlocationarray.count; i++){
+                print(String(staffarraytmp[staffarraytmp.startIndex.advancedBy(lateshiftlocationarray[i])]) + String(staffarraytmp[staffarraytmp.startIndex.advancedBy(lateshiftlocationarray[i]+1)]))
+            }
+
             //TODO: シフト体制(holiday)以外であればdayshiftarrayへ記録
             //TODO: 記録したらdaycounterを1アップ
             //TODO: holydayにあった場合は記録をせずdaycounterを上げる
