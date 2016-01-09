@@ -121,29 +121,25 @@ class PDFmethod: UIViewController {
         return staffname
     }
     
-    //休みの場所を検出して配列として返す関数
-    func AAA(staffarraysstring: NSString) -> Array<Int>{
-        let holiday = ["公","夏","有"]           //表に記載される休暇日
-        var holidaylocation: [Int] = []
-        
-        //休みの場所を抽出するループ
+    //受け取ったシフト体制の場所を配列にして返す関数
+    func GetShiftPositionArray(staffarraysstring: NSString, shiftname: String) -> Array<Int>{
+        var shiftnamelocation: [Int] = []
         var searchrange = NSMakeRange(0, staffarraysstring.length)
-        for(var i = 0; i < holiday.count; i++){
-            var searchresult = staffarraysstring.rangeOfString(holiday[i], options: NSStringCompareOptions.CaseInsensitiveSearch, range: searchrange)
-            
-            while(searchresult.location != NSNotFound){
-                if(searchresult.location != NSNotFound){
-                    
-                    holidaylocation.append(searchresult.location)
-                    
-                    searchrange = NSMakeRange(searchresult.location + searchresult.length, staffarraysstring.length-(searchresult.location + searchresult.length))
-                    
-                    searchresult = staffarraysstring.rangeOfString(holiday[i], options: NSStringCompareOptions.CaseInsensitiveSearch, range: searchrange)
-                }
+        var searchresult = staffarraysstring.rangeOfString(shiftname, options: NSStringCompareOptions.CaseInsensitiveSearch, range: searchrange)
+
+        while(searchresult.location != NSNotFound){
+            if(searchresult.location != NSNotFound){
+                
+                shiftnamelocation.append(searchresult.location)
+                
+                searchrange = NSMakeRange(searchresult.location + searchresult.length, staffarraysstring.length-(searchresult.location + searchresult.length))
+                
+                searchresult = staffarraysstring.rangeOfString(shiftname, options: NSStringCompareOptions.CaseInsensitiveSearch, range: searchrange)
             }
+            searchrange = NSMakeRange(0, staffarraysstring.length)
         }
         
-        return holidaylocation
+        return shiftnamelocation
     }
     
     
@@ -195,57 +191,40 @@ class PDFmethod: UIViewController {
                 errorstaff.append(staffarraytmp)
             }else{
                 let staffarraytmpnsstring = staffarraytmp as NSString
-                var searchrange = NSMakeRange(0, staffarraytmpnsstring.length)
 
                 //シフト体制の分だけループを回し、各ループでスタッフ1人分のシフト出現場所を記録する
                 for(var i = 0; i < DBmethod().DBRecordCount(ShiftSystem); i++){
                     let shiftname = DBmethod().ShiftSystemNameGet(i)
-                    var searchresult = staffarraytmpnsstring.rangeOfString(shiftname, options: NSStringCompareOptions.CaseInsensitiveSearch, range: searchrange)
-
-                    while(searchresult.location != NSNotFound){
-                        if(searchresult.location != NSNotFound){
-                            //何番かによって記録先を分ける
-                            switch(i){
-                            case 0...3:
-                                earlyshiftlocationarray.append(searchresult.location)
-                                
-                            case 4:
-                                center1shiftlocationarray.append(searchresult.location)
-                                
-                            case 5:
-                                center2shiftlocationarray.append(searchresult.location)
-                                
-                            case 6:
-                                center3shiftlocationarray.append(searchresult.location)
-                                
-                            case 7...9:
-                                lateshiftlocationarray.append(searchresult.location)
-                                
-                            default:
-                                break
-                            }
-                            
-                            searchrange = NSMakeRange(searchresult.location + searchresult.length, staffarraytmpnsstring.length-(searchresult.location + searchresult.length))
-                            
-                            searchresult = staffarraytmpnsstring.rangeOfString(shiftname, options: NSStringCompareOptions.CaseInsensitiveSearch, range: searchrange)
-                        }
+                    switch(i){
+                    case 0...3:
+                        earlyshiftlocationarray += self.GetShiftPositionArray(staffarraytmpnsstring, shiftname: shiftname)
+                        
+                    case 4:
+                        center1shiftlocationarray += self.GetShiftPositionArray(staffarraytmpnsstring, shiftname: shiftname)
+                        
+                    case 5:
+                        center2shiftlocationarray += self.GetShiftPositionArray(staffarraytmpnsstring, shiftname: shiftname)
+                        
+                    case 6:
+                        center3shiftlocationarray += self.GetShiftPositionArray(staffarraytmpnsstring, shiftname: shiftname)
+                        
+                    case 7...9:
+                        lateshiftlocationarray += self.GetShiftPositionArray(staffarraytmpnsstring, shiftname: shiftname)
+                        
+                    default:
+                        break
                     }
-                    searchrange = NSMakeRange(0, staffarraytmpnsstring.length)
                 }
                 
                 //休みを検出して場所を配列へ代入
-                holidayshiftlocationarray = self.AAA(staffarraytmpnsstring)
+                let holiday = ["公","夏","有"]
+                for(var i = 0; i < holiday.count; i++){
+                    holidayshiftlocationarray += self.GetShiftPositionArray(staffarraytmpnsstring, shiftname: holiday[i])
+                }
             }
             
-//            print(lateshiftlocationarray)
-//            for(var i = 0; i < lateshiftlocationarray.count; i++){
-//                print(String(staffarraytmp[staffarraytmp.startIndex.advancedBy(lateshiftlocationarray[i])]) + String(staffarraytmp[staffarraytmp.startIndex.advancedBy(lateshiftlocationarray[i]+1)]))
-//            }
-            
-            //TODO: シフト体制(holiday)以外であればdayshiftarrayへ記録
-            //TODO: 記録したらdaycounterを1アップ
-            //TODO: holydayにあった場合は記録をせずdaycounterを上げる
-            //            print(staffarray[i])
+            print(holidayshiftlocationarray)
+
         }
         return dayshiftarray
     }
