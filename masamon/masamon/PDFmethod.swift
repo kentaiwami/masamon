@@ -122,12 +122,10 @@ class PDFmethod: UIViewController {
     }
     
     
-    
     //スタッフのシフトを日にちごとに分けたArrayを返す
     func SplitDayShiftGet(var staffarray: Array<String>) -> Array<String>{
         
         var dayshiftarray: [String] = []        //1日ごとのシフトを記録
-//        let othershiftsystem: [String] = ["公","研","出"]
         let holiday = ["公","夏","有"]           //表に記載される休暇日
         var errorstaff: [String] = []           //スタッフ名の抽出がうまくいかなかったスタッフのシフトを記録
         
@@ -145,10 +143,10 @@ class PDFmethod: UIViewController {
         }
         
         //スタッフの人数分(配列の最後まで)繰り返す
-        for(var i = 1; i < staffarray.count; i++){
+        for(var i = 2; i < 3; i++){
             
             var daycounter = 0
-            var staffnametmp = ""
+            var staffname = ""
             var staffarraytmp = ""
             
             var earlyshiftlocationarray: [Int] = []
@@ -158,70 +156,48 @@ class PDFmethod: UIViewController {
             var lateshiftlocationarray: [Int] = []
             var othershiftlocationarray: [Int] = []
             
-            
             staffarray[i] = staffarray[i].stringByReplacingOccurrencesOfString(" ", withString: "")
             staffarray[i] = staffarray[i].stringByReplacingOccurrencesOfString("　", withString: "")
             
             //スタッフ名の抽出
-            staffnametmp = self.GetStaffName(staffarray[i], i: i)
+            staffname = self.GetStaffName(staffarray[i], i: i)
 
             /*抽出したスタッフ名(マネージャーのMは除く)が1文字以下or4文字以上ならエラーとして記録
             　エラーでなければシフトの出現場所を配列に格納していく
             */
-            let removem = staffnametmp.stringByReplacingOccurrencesOfString("M", withString: "")
+            let removem = staffname.stringByReplacingOccurrencesOfString("M", withString: "")
             if(removem.characters.count <= 1 || removem.characters.count >= 4){
                 errorstaff.append(staffarraytmp)
             }else{
                 var count = 0
-                //シフトの抽出&記録を1クール分行う
-                let staffarraytmpnsstring = staffarraytmp as NSString
-                var ARange = NSMakeRange(0, staffarraytmpnsstring.length)
-                var AAA = staffarraytmpnsstring.rangeOfString("出勤", options: NSStringCompareOptions.CaseInsensitiveSearch, range: ARange)
-                
-                while(AAA.location != NSNotFound){
+
+                //シフト体制の分だけループを回し、各ループでスタッフ1人分のシフト出現場所を記録する
+                for(var i = 0; i < DBmethod().DBRecordCount(ShiftSystem); i++){
+                    print(DBmethod().ShiftSystemNameGet(i))
+                    let staffarraytmpnsstring = staffarraytmp as NSString
+                    var searchrange = NSMakeRange(0, staffarraytmpnsstring.length)
+                    var searchresult = staffarraytmpnsstring.rangeOfString("出勤", options: NSStringCompareOptions.CaseInsensitiveSearch, range: searchrange)
                     
-                    if(AAA.location != NSNotFound){
-                        ARange = NSMakeRange(AAA.location + AAA.length, staffarraytmpnsstring.length-(AAA.location + AAA.length))
+                    while(searchresult.location != NSNotFound){
                         
-                        AAA = staffarraytmpnsstring.rangeOfString("出勤", options: NSStringCompareOptions.CaseInsensitiveSearch, range: ARange)
-                        count++
+                        if(searchresult.location != NSNotFound){
+                            
+                            //TODO: 出現場所を記録する
+                            
+                            
+                            searchrange = NSMakeRange(searchresult.location + searchresult.length, staffarraytmpnsstring.length-(searchresult.location + searchresult.length))
+                            
+                            searchresult = staffarraytmpnsstring.rangeOfString("出勤", options: NSStringCompareOptions.CaseInsensitiveSearch, range: searchrange)
+                            count++
+                        }
                     }
                 }
             }
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            //TODO: シフトを抽出
             //TODO: シフト体制(holiday)以外であればdayshiftarrayへ記録
             //TODO: 記録したらdaycounterを1アップ
             //TODO: holydayにあった場合は記録をせずdaycounterを上げる
             //            print(staffarray[i])
         }
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
         return dayshiftarray
     }
 }
