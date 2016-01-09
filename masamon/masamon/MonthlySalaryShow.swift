@@ -38,7 +38,9 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        PDFmethod().AllTextGet()
+        
+        let AAA = PDFmethod().AllTextGet()
+        let BBB = PDFmethod().SplitDayShiftGet(AAA)
         currentnsdate = NSDate()
         
         //テキストビューの編集をできないようにする

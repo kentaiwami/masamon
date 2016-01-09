@@ -14,7 +14,6 @@ class Shiftmethod: UIViewController {
     //cellの列(日付が記載されている範囲)
     let cellrow = ["G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","AA","AB","AC","AD","AE","AF","AG","AH","AI","AJ","AK"]
     let holiday = ["公","夏","有"]     //表に記載される休暇日
-    let staffnumber = DBmethod().StaffNumberGet()
     let mark = "F"
     var number = 6
     
@@ -173,7 +172,7 @@ class Shiftmethod: UIViewController {
                 number++
             }
             
-            if(staffnumber == array.count){       //設定したスタッフ人数と取り込み数が一致したら
+            if(DBmethod().StaffNumberGet() == array.count){       //設定したスタッフ人数と取り込み数が一致したら
                 break
             }
         }
@@ -208,7 +207,7 @@ class Shiftmethod: UIViewController {
         let monthrange = c.rangeOfUnit([NSCalendarUnit.Day],  inUnit: [NSCalendarUnit.Month], forDate: shiftnsdate)
         
         //F列からユーザ名と合致する箇所を探す
-        for(var i = 0; i < staffnumber; i++){
+        for(var i = 0; i < DBmethod().StaffNumberGet(); i++){
             let nowcell: String = worksheet.sheet.cellForCellReference(staffcellposition[i]).stringValue()
             
             if(nowcell == username){
@@ -276,7 +275,7 @@ class Shiftmethod: UIViewController {
         
         var staffstring = ""
         
-        for(var i = 0; i < staffnumber; i++){
+        for(var i = 0; i < DBmethod().StaffNumberGet(); i++){
             let nowstaff = staffcellpositionarray[i]
             let replaceday = nowstaff.stringByReplacingOccurrencesOfString("F", withString: cellrow[day])
             
@@ -294,9 +293,9 @@ class Shiftmethod: UIViewController {
     //返り値は
     //年(和暦)、11日〜月末までの月、1日〜10日までの月
     func JudgeYearAndMonth(var P1: String) -> (year: Int, startcoursmonth: Int, endcoursmonth: Int){
-   
-        P1 = P1.stringByReplacingOccurrencesOfString(" ", withString: "")                   //スペースがあった場合は削除
 
+        P1 = P1.stringByReplacingOccurrencesOfString(" ", withString: "")                   //スペースがあった場合は削除
+        
         let P1NSString = P1 as NSString
         let year = P1NSString.substringWithRange(NSRange(location: 2, length: 2))                                 //平成何年かを取得
         
