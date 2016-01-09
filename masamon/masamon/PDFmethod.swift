@@ -136,7 +136,6 @@ class PDFmethod: UIViewController {
         let c = NSCalendar.currentCalendar()
         let monthrange = c.rangeOfUnit([NSCalendarUnit.Day],  inUnit: [NSCalendarUnit.Month], forDate: shiftnsdate)
         
-        
         //先に空要素を1クール分追加しておく
         for(var i = 0; i < monthrange.length; i++){
             dayshiftarray.append("")
@@ -145,7 +144,6 @@ class PDFmethod: UIViewController {
         //スタッフの人数分(配列の最後まで)繰り返す
         for(var i = 2; i < 3; i++){
             
-            var daycounter = 0
             var staffname = ""
             var staffarraytmp = ""
             
@@ -154,8 +152,9 @@ class PDFmethod: UIViewController {
             var center2shiftlocationarray: [Int] = []
             var center3shiftlocationarray: [Int] = []
             var lateshiftlocationarray: [Int] = []
-            var othershiftlocationarray: [Int] = []
-            
+            var holidayshiftlocationarray: [Int] = []       //公,夏,有の場所を記録
+            var othershiftlocationarray: [Int] = []         //上記以外のシフトの場所を記録
+
             staffarray[i] = staffarray[i].stringByReplacingOccurrencesOfString(" ", withString: "")
             staffarray[i] = staffarray[i].stringByReplacingOccurrencesOfString("　", withString: "")
             
@@ -163,6 +162,7 @@ class PDFmethod: UIViewController {
             staffname = self.GetStaffName(staffarray[i], i: i)
             
             staffarraytmp = staffarray[i]
+            
             /*抽出したスタッフ名(マネージャーのMは除く)が1文字以下or4文字以上ならエラーとして記録
             　エラーでなければシフトの出現場所を配列に格納していく
             */
@@ -170,14 +170,13 @@ class PDFmethod: UIViewController {
             if(removem.characters.count <= 1 || removem.characters.count >= 4){
                 errorstaff.append(staffarraytmp)
             }else{
-                var count = 0
+                let staffarraytmpnsstring = staffarraytmp as NSString
+                var searchrange = NSMakeRange(0, staffarraytmpnsstring.length)
 
                 //シフト体制の分だけループを回し、各ループでスタッフ1人分のシフト出現場所を記録する
                 for(var i = 0; i < DBmethod().DBRecordCount(ShiftSystem); i++){
-                    let AAA = DBmethod().ShiftSystemNameGet(i)
-                    let staffarraytmpnsstring = staffarraytmp as NSString
-                    var searchrange = NSMakeRange(0, staffarraytmpnsstring.length)
-                    var searchresult = staffarraytmpnsstring.rangeOfString(AAA, options: NSStringCompareOptions.CaseInsensitiveSearch, range: searchrange)
+                    let shiftname = DBmethod().ShiftSystemNameGet(i)
+                    var searchresult = staffarraytmpnsstring.rangeOfString(shiftname, options: NSStringCompareOptions.CaseInsensitiveSearch, range: searchrange)
 
                     while(searchresult.location != NSNotFound){
                         if(searchresult.location != NSNotFound){
@@ -204,17 +203,36 @@ class PDFmethod: UIViewController {
                             
                             searchrange = NSMakeRange(searchresult.location + searchresult.length, staffarraytmpnsstring.length-(searchresult.location + searchresult.length))
                             
-                            searchresult = staffarraytmpnsstring.rangeOfString(AAA, options: NSStringCompareOptions.CaseInsensitiveSearch, range: searchrange)
-                            count++
+                            searchresult = staffarraytmpnsstring.rangeOfString(shiftname, options: NSStringCompareOptions.CaseInsensitiveSearch, range: searchrange)
+                        }
+                    }
+                    searchrange = NSMakeRange(0, staffarraytmpnsstring.length)
+                }
+                
+                //休みの場所を抽出するループ
+                searchrange = NSMakeRange(0, staffarraytmpnsstring.length)
+                for(var i = 0; i < holiday.count; i++){
+                    var searchresult = staffarraytmpnsstring.rangeOfString(holiday[i], options: NSStringCompareOptions.CaseInsensitiveSearch, range: searchrange)
+
+                    while(searchresult.location != NSNotFound){
+                        if(searchresult.location != NSNotFound){
+                            
+                            holidayshiftlocationarray.append(searchresult.location)
+                            
+                            searchrange = NSMakeRange(searchresult.location + searchresult.length, staffarraytmpnsstring.length-(searchresult.location + searchresult.length))
+                            
+                            searchresult = staffarraytmpnsstring.rangeOfString(holiday[i], options: NSStringCompareOptions.CaseInsensitiveSearch, range: searchrange)
                         }
                     }
                 }
             }
-            print(lateshiftlocationarray)
-            for(var i = 0; i < lateshiftlocationarray.count; i++){
-                print(String(staffarraytmp[staffarraytmp.startIndex.advancedBy(lateshiftlocationarray[i])]) + String(staffarraytmp[staffarraytmp.startIndex.advancedBy(lateshiftlocationarray[i]+1)]))
-            }
-
+            
+            print(holidayshiftlocationarray)
+//            print(lateshiftlocationarray)
+//            for(var i = 0; i < lateshiftlocationarray.count; i++){
+//                print(String(staffarraytmp[staffarraytmp.startIndex.advancedBy(lateshiftlocationarray[i])]) + String(staffarraytmp[staffarraytmp.startIndex.advancedBy(lateshiftlocationarray[i]+1)]))
+//            }
+            
             //TODO: シフト体制(holiday)以外であればdayshiftarrayへ記録
             //TODO: 記録したらdaycounterを1アップ
             //TODO: holydayにあった場合は記録をせずdaycounterを上げる
