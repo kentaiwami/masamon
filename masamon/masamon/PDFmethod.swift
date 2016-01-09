@@ -16,13 +16,13 @@ class PDFmethod: UIViewController {
         var pdftextarray: [String] = []
         var lineIndex = 1
         
-//        let documentsDir = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
+        //        let documentsDir = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
         let path: NSString
         path = NSBundle.mainBundle().pathForResource("sample2", ofType: "pdf")!
-//        let globaloptlist: String = String(format: "searchpath={{%@} {%@/extractor_ios.app} {%@/extractor_ios.app/resource/cmap}}", arguments: [documentsDir,NSHomeDirectory(),NSHomeDirectory()])
+        //        let globaloptlist: String = String(format: "searchpath={{%@} {%@/extractor_ios.app} {%@/extractor_ios.app/resource/cmap}}", arguments: [documentsDir,NSHomeDirectory(),NSHomeDirectory()])
         
         let tet = TET()
-      //  tet.set_option(globaloptlist)
+        //  tet.set_option(globaloptlist)
         
         let document = tet.open_document(path as String, optlist: "")
         let page = tet.open_page(document, pagenumber: 1, optlist: "granularity=page")
@@ -84,9 +84,9 @@ class PDFmethod: UIViewController {
         }
         
         
-//        for(var i = 0; i < pdftextarray.count; i++){
-//            print(pdftextarray[i])
-//        }
+        //        for(var i = 0; i < pdftextarray.count; i++){
+        //            print(pdftextarray[i])
+        //        }
         
         return pdftextarray
     }
@@ -101,7 +101,7 @@ class PDFmethod: UIViewController {
         
         //1クールが全部で何日間あるかを判断するため
         let shiftyearandmonth = Shiftmethod().JudgeYearAndMonth(staffarray[0])
-
+        
         let shiftnsdate = MonthlySalaryShow().DateSerial(MonthlySalaryShow().Changecalendar(shiftyearandmonth.year, calender: "JP"), month: shiftyearandmonth.startcoursmonth, day: 1)
         let c = NSCalendar.currentCalendar()
         let monthrange = c.rangeOfUnit([NSCalendarUnit.Day],  inUnit: [NSCalendarUnit.Month], forDate: shiftnsdate)
@@ -115,11 +115,15 @@ class PDFmethod: UIViewController {
         var position = 0            //先頭から何文字の場所から読み取るかを管理
         
         //スタッフの人数分(配列の最後まで)繰り返す
-        for(var i = 1; i < staffarray.count; i++){
+        for(var i = 1; i < 2; i++){
             
             var daycounter = 0
             var staffnametmp = ""
             var staffarraytmp = ""
+            
+            
+            
+            
             
             staffarray[i] = staffarray[i].stringByReplacingOccurrencesOfString(" ", withString: "")
             staffarray[i] = staffarray[i].stringByReplacingOccurrencesOfString("　", withString: "")
@@ -135,7 +139,7 @@ class PDFmethod: UIViewController {
             //スタッフ名の抽出(シフト体制に含まれる文字が出るまで)
             var getcharacterstaffname = staffarraytmp[staffarraytmp.startIndex.advancedBy(position)]
             while(DBmethod().SearchShiftSystem(String(getcharacterstaffname)) == nil){
-                                
+                
                 if(othershiftsystem.contains(String(getcharacterstaffname))){         //ShiftSystemにない細かいのも検出するため
                     break
                 }
@@ -146,26 +150,26 @@ class PDFmethod: UIViewController {
             
             
             //抽出したスタッフ名(マネージャーのMは除く)が1文字以下or4文字以上ならエラーとして記録
-//            staffnametmp = staffnametmp.stringByReplacingOccurrencesOfString("M", withString: "")
-//            staffnametmp = staffnametmp.stringByReplacingOccurrencesOfString("Ｍ", withString: "")
+            //            staffnametmp = staffnametmp.stringByReplacingOccurrencesOfString("M", withString: "")
+            //            staffnametmp = staffnametmp.stringByReplacingOccurrencesOfString("Ｍ", withString: "")
             let removem = staffnametmp.stringByReplacingOccurrencesOfString("M", withString: "")
             
             if(removem.characters.count <= 1 || removem.characters.count >= 4){
                 errorstaff.append(staffarraytmp)
             }else{
+                var count = 0
                 //シフトの抽出&記録を1クール分行う
-                let startindex = staffarraytmp.startIndex.advancedBy(position)
-                print(staffnametmp+"   "+String(staffarraytmp[startindex]) + "  " + String(startindex))
+                let staffarraytmpnsstring = staffarraytmp as NSString
+                var ARange = NSMakeRange(0, staffarraytmpnsstring.length)
+                var AAA = staffarraytmpnsstring.rangeOfString("出勤", options: NSStringCompareOptions.CaseInsensitiveSearch, range: ARange)
                 
-                while(daycounter < monthrange.length){
-                    var getcharactershift = ""
+                while(AAA.location != NSNotFound){
                     
-                    
-                    if(holiday.contains(getcharactershift) == false){
-                        dayshiftarray[daycounter] = "hogehoge"
-                        daycounter += 1
-                    }else{
-                        daycounter += 1
+                    if(AAA.location != NSNotFound){
+                        ARange = NSMakeRange(AAA.location + AAA.length, staffarraytmpnsstring.length-(AAA.location + AAA.length))
+                        
+                        AAA = staffarraytmpnsstring.rangeOfString("出勤", options: NSStringCompareOptions.CaseInsensitiveSearch, range: ARange)
+                        count++
                     }
                 }
             }
@@ -184,7 +188,7 @@ class PDFmethod: UIViewController {
             //TODO: シフト体制(holiday)以外であればdayshiftarrayへ記録
             //TODO: 記録したらdaycounterを1アップ
             //TODO: holydayにあった場合は記録をせずdaycounterを上げる
-//            print(staffarray[i])
+            //            print(staffarray[i])
         }
         
         
