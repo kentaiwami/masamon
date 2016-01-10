@@ -169,6 +169,14 @@ class PDFmethod: UIViewController {
         return shiftname
     }
     
+    //受け取った配列の重複要素を削除した配列を返す
+    func GETRemoveOverlapElementArray(array: Array<Int>) -> Array<Int>{
+        let set = NSOrderedSet(array: array)
+        let result = set.array as! [Int]
+        
+        return result
+    }
+    
     
     //スタッフのシフトを日にちごとに分けたArrayを返す
     func SplitDayShiftGet(var staffarray: Array<String>) -> Array<String>{
@@ -189,7 +197,7 @@ class PDFmethod: UIViewController {
         }
         
         //スタッフの人数分(配列の最後まで)繰り返す
-        for(var i = 2; i < 3; i++){
+        for(var i = 9; i < 10; i++){
             
             var staffname = ""
             var staffarraytmp = ""
@@ -250,6 +258,14 @@ class PDFmethod: UIViewController {
                 }
             }
             
+            //重複した要素を削除する
+            earlyshiftlocationarray = GETRemoveOverlapElementArray(earlyshiftlocationarray)
+            center1shiftlocationarray = GETRemoveOverlapElementArray(center1shiftlocationarray)
+            center2shiftlocationarray = GETRemoveOverlapElementArray(center2shiftlocationarray)
+            center3shiftlocationarray = GETRemoveOverlapElementArray(center3shiftlocationarray)
+            lateshiftlocationarray = GETRemoveOverlapElementArray(lateshiftlocationarray)
+            holidayshiftlocationarray = GETRemoveOverlapElementArray(holidayshiftlocationarray)
+            
             
             //要素数を比較して正しくシフト体制を認識できているかチェックする
             var count = 0
@@ -301,9 +317,10 @@ class PDFmethod: UIViewController {
                     }
                 }
             }else{
-                //                print(count)
+                print(count)
             }
         }
+        print(dayshiftarray)
         return dayshiftarray
     }
 }
