@@ -96,6 +96,10 @@ class ShiftSystem: Object{
 class HolidayDB: Object {
     dynamic var id = 0
     dynamic var name = ""
+    
+    override class func primaryKey() -> String {
+        return "id"
+    }
 }
 
 //入力したユーザ名を保存
