@@ -81,9 +81,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let shiftstartpattern = [8.0,8.0,8.0,8.0,12.0,13.5,14.5,16.0,16.0,16.0]
         let shiftendpattern = [16.5,16.5,16.5,16.5,20.5,22.0,23.0,24.5,24.5,24.5]
 
-        if(DBmethod().DBRecordCount(ShiftSystem) == 0){
+        if(DBmethod().DBRecordCount(ShiftSystemDB) == 0){
             for(var i = 0; i < shiftnamepattern.count; i++){
-                let ShiftSystemRecord = ShiftSystem()
+                let ShiftSystemRecord = ShiftSystemDB()
                 ShiftSystemRecord.id = i
                 ShiftSystemRecord.name = shiftnamepattern[i]
                 ShiftSystemRecord.starttime = shiftstartpattern[i]

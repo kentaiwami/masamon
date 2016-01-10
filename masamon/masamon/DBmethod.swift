@@ -122,16 +122,16 @@ class DBmethod: UIViewController {
         var name = ""
         
         let realm = try! Realm()
-        name = realm.objects(UserName).filter("id = %@",0)[0].name
+        name = realm.objects(UserNameDB).filter("id = %@",0)[0].name
         
         return name
     }
     
     //受け取った文字列をShiftSystemから検索し、該当するレコードを返す
-    func SearchShiftSystem(shift: String) -> Results<ShiftSystem>?{
+    func SearchShiftSystem(shift: String) -> Results<ShiftSystemDB>?{
         
         let realm = try! Realm()
-        let shiftsystem = realm.objects(ShiftSystem).filter("name = %@",shift)
+        let shiftsystem = realm.objects(ShiftSystemDB).filter("name = %@",shift)
         
         if(shiftsystem.count == 0){
             return nil
@@ -144,7 +144,7 @@ class DBmethod: UIViewController {
     func ShiftSystemNameGet(id: Int) -> String{
         
         let realm = try! Realm()
-        let name = realm.objects(ShiftSystem).filter("id = %@",id)[0].name
+        let name = realm.objects(ShiftSystemDB).filter("id = %@",id)[0].name
         
         return name
     }
@@ -164,7 +164,7 @@ class DBmethod: UIViewController {
         var number = 0
         
         let realm = try! Realm()
-        number = realm.objects(StaffNumber).filter("id = %@",0)[0].number
+        number = realm.objects(StaffNumberDB).filter("id = %@",0)[0].number
         
         return number
     }

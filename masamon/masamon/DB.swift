@@ -81,7 +81,7 @@ class ShiftImportHistoryDB: Object {
 }
 
 //シフト体制を保存
-class ShiftSystem: Object{
+class ShiftSystemDB: Object{
     dynamic var id = 0
     dynamic var name = ""           //何番か記録
     dynamic var starttime = 0.0     //勤務開始時間
@@ -103,7 +103,7 @@ class HolidayDB: Object {
 }
 
 //入力したユーザ名を保存
-class UserName: Object {
+class UserNameDB: Object {
     dynamic var id = 0
     dynamic var name = ""
     
@@ -114,7 +114,7 @@ class UserName: Object {
 }
 
 //入力したスタッフの人数を保存
-class StaffNumber: Object{
+class StaffNumberDB: Object{
     dynamic var id = 0
     dynamic var number = 0
     

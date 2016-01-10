@@ -206,7 +206,7 @@ class PDFmethod: UIViewController {
                 let staffarraytmpnsstring = staffarraytmp as NSString
 
                 //シフト体制の分だけループを回し、各ループでスタッフ1人分のシフト出現場所を記録する
-                for(var i = 0; i < DBmethod().DBRecordCount(ShiftSystem); i++){
+                for(var i = 0; i < DBmethod().DBRecordCount(ShiftSystemDB); i++){
                     let shiftname = DBmethod().ShiftSystemNameGet(i)
                     switch(i){
                     case 0...3:

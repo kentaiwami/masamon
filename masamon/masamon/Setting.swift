@@ -361,10 +361,10 @@ class Setting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource,UI
             hourlypayrecord2.timeto = Double(time.indexOf(TimeTo2.text!)!)-(Double(time.indexOf(TimeTo2.text!)!)*0.5)
             hourlypayrecord2.pay = Int(SalalyLabel2.text!)!
             
-            let staffnumberrecord = StaffNumber()
+            let staffnumberrecord = StaffNumberDB()
             staffnumberrecord.id = 0
             staffnumberrecord.number = Int(staffnumbertextfield.text!)!
-            let usernamerecord = UserName()
+            let usernamerecord = UserNameDB()
             usernamerecord.id = 0
             usernamerecord.name = usernametextfield.text!
             
@@ -441,7 +441,7 @@ class Setting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource,UI
     
     func SetText(){
         //既に登録されていたら登録内容を表示する
-        if(DBmethod().DBRecordCount(UserName) == 0){
+        if(DBmethod().DBRecordCount(UserNameDB) == 0){
             usernametextfield.text = "シフト表上での名前を入力"
             staffnumbertextfield.text = "スタッフの人数を入力"
             TimeFrom1.text = "no data"
