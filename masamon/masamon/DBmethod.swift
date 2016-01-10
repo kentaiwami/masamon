@@ -8,6 +8,7 @@
 
 import Foundation
 import RealmSwift
+import UIKit
 
 class DBmethod: UIViewController {
 
@@ -137,6 +138,15 @@ class DBmethod: UIViewController {
         }else{
             return shiftsystem
         }
+    }
+    
+    //受け取ったIDをShiftSystemから検索し、該当するShiftSystemのnameを返す
+    func ShiftSystemNameGet(id: Int) -> String{
+        
+        let realm = try! Realm()
+        let name = realm.objects(ShiftSystem).filter("id = %@",id)[0].name
+        
+        return name
     }
 
     //受け取った文字列をShiftDBから検索し、該当するレコードを返す
