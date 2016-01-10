@@ -142,6 +142,19 @@ class PDFmethod: UIViewController {
         return shiftnamelocation
     }
     
+    //指定したシフト体制を削除した文字列を返す関数
+    func AAA(staffarraysstring: NSString, shiftname: String) -> String{
+        var removedshiftstring = ""
+        
+        removedshiftstring = staffarraysstring.stringByReplacingOccurrencesOfString(shiftname, withString: "")
+        
+        
+        
+        
+        
+        
+        return removedshiftstring
+    }
     
     //スタッフのシフトを日にちごとに分けたArrayを返す
     func SplitDayShiftGet(var staffarray: Array<String>) -> Array<String>{
@@ -160,9 +173,9 @@ class PDFmethod: UIViewController {
         for(var i = 0; i < monthrange.length; i++){
             dayshiftarray.append("")
         }
-        
+      
         //スタッフの人数分(配列の最後まで)繰り返す
-        for(var i = 2; i < 3; i++){
+        for(var i = 1; i < 2; i++){
             
             var staffname = ""
             var staffarraytmp = ""
@@ -180,7 +193,7 @@ class PDFmethod: UIViewController {
             
             //スタッフ名の抽出
             staffname = self.GetStaffName(staffarray[i], i: i)
-            
+            print(staffname)
             staffarraytmp = staffarray[i]
             
             /*抽出したスタッフ名(マネージャーのMは除く)が1文字以下or4文字以上ならエラーとして記録
@@ -221,9 +234,19 @@ class PDFmethod: UIViewController {
                 for(var i = 0; i < holiday.count; i++){
                     holidayshiftlocationarray += self.GetShiftPositionArray(staffarraytmpnsstring, shiftname: holiday[i])
                 }
+                
+                //print(self.AAA(staffarraytmpnsstring, shiftname: "公"))
+
             }
             
-            print(holidayshiftlocationarray)
+            
+            
+//            print(earlyshiftlocationarray)
+//            print(center1shiftlocationarray)
+//            print(center2shiftlocationarray)
+//            print(center3shiftlocationarray)
+//            print(lateshiftlocationarray)
+//            print(holidayshiftlocationarray)
 
         }
         return dayshiftarray
