@@ -92,6 +92,13 @@ class ShiftSystem: Object{
     }
 }
 
+//シフトの休みを示す名前を保存
+class HolidayDB: Object {
+    dynamic var id = 0
+    dynamic var name = ""
+}
+
+//入力したユーザ名を保存
 class UserName: Object {
     dynamic var id = 0
     dynamic var name = ""
@@ -102,6 +109,7 @@ class UserName: Object {
 
 }
 
+//入力したスタッフの人数を保存
 class StaffNumber: Object{
     dynamic var id = 0
     dynamic var number = 0
