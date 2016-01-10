@@ -99,7 +99,7 @@ class PDFmethod: UIViewController {
         var staffname = ""
         var position = 0
         let othershiftsystem: [String] = ["公","研","出"]
-
+        
         //スタッフ名の読み込みを開始する場所を決定
         if(i <= 9){
             position = 1
@@ -126,7 +126,7 @@ class PDFmethod: UIViewController {
         var shiftnamelocation: [Int] = []
         var searchrange = NSMakeRange(0, staffarraysstring.length)
         var searchresult = staffarraysstring.rangeOfString(shiftname, options: NSStringCompareOptions.CaseInsensitiveSearch, range: searchrange)
-
+        
         while(searchresult.location != NSNotFound){
             if(searchresult.location != NSNotFound){
                 
@@ -152,8 +152,21 @@ class PDFmethod: UIViewController {
     }
     
     //受け取った数値の中で一番小さい値のシフト体制を返す関数
-    func AAA(){
+    func GetMinShiftPosition(early: Int, center1: Int, center2: Int, center3: Int, late: Int, holiday: Int) -> String{
+        var shiftname = ""
+        let dict: [String:Int] = ["早":early, "中1":center1, "中2":center2, "中3":center3, "遅": late, "休":holiday]
         
+        var values : Array = Array(dict.values)
+        values = values.sort()
+        
+        for (key, value) in dict {
+            if(values[0] == value){
+                shiftname = key
+                break
+            }
+        }
+        
+        return shiftname
     }
     
     
@@ -174,7 +187,7 @@ class PDFmethod: UIViewController {
         for(var i = 0; i < monthrange.length; i++){
             dayshiftarray.append("")
         }
-      
+        
         //スタッフの人数分(配列の最後まで)繰り返す
         for(var i = 2; i < 3; i++){
             
@@ -188,7 +201,7 @@ class PDFmethod: UIViewController {
             var lateshiftlocationarray: [Int] = []
             var holidayshiftlocationarray: [Int] = []       //公,夏,有の場所を記録
             var othershiftlocationarray: [Int] = []         //上記以外のシフトの場所を記録
-
+            
             staffarray[i] = staffarray[i].stringByReplacingOccurrencesOfString(" ", withString: "")
             staffarray[i] = staffarray[i].stringByReplacingOccurrencesOfString("　", withString: "")
             
@@ -205,7 +218,7 @@ class PDFmethod: UIViewController {
                 errorstaff.append(staffarraytmp)
             }else{
                 let staffarraytmpnsstring = staffarraytmp as NSString
-
+                
                 //シフト体制の分だけループを回し、各ループでスタッフ1人分のシフト出現場所を記録する
                 for(var i = 0; i < DBmethod().DBRecordCount(ShiftSystemDB); i++){
                     let shiftname = DBmethod().ShiftSystemNameGet(i)
@@ -250,27 +263,48 @@ class PDFmethod: UIViewController {
                 lateshiftlocationarray = lateshiftlocationarray.sort()
                 holidayshiftlocationarray = holidayshiftlocationarray.sort()
                 
+                //各配列に識別子を追加する
+                earlyshiftlocationarray.append(99999)
+                center1shiftlocationarray.append(99999)
+                center2shiftlocationarray.append(99999)
+                center3shiftlocationarray.append(99999)
+                lateshiftlocationarray.append(99999)
+                holidayshiftlocationarray.append(99999)
                 
                 //日付分のループを開始
-                //TODO: 各配列の[0]を関数へ渡す
-                //TODO: 一番小さい数値を関数側で判断し、シフト体制の文字が返ってくる
-                //TODO: 返ってきた文字をdayshiftarrayにstaffname + ":" + dayshift + ","と同様に保存する。
-                //TODO: 保存する際は日付分のループの変数を要素の参照に使用する
-                //日付分のループを終了
+                for(var i = 0; i < monthrange.length; i++){
+                    let dayshift = self.GetMinShiftPosition(earlyshiftlocationarray[0], center1: center1shiftlocationarray[0], center2: center2shiftlocationarray[0], center3: center3shiftlocationarray[0], late: lateshiftlocationarray[0], holiday: holidayshiftlocationarray[0])
+                    
+                    dayshiftarray[i] += staffname + ":" + dayshift + ","
+                    
+                    switch(dayshift){
+                    case "早":
+                        earlyshiftlocationarray.removeAtIndex(0)
+                        
+                    case "中1":
+                        center1shiftlocationarray.removeAtIndex(0)
+                        
+                    case "中2":
+                        center2shiftlocationarray.removeAtIndex(0)
+                        
+                    case "中3":
+                        center3shiftlocationarray.removeAtIndex(0)
+                        
+                    case "遅":
+                        lateshiftlocationarray.removeAtIndex(0)
+                        
+                    case "休":
+                        holidayshiftlocationarray.removeAtIndex(0)
+                        
+                    default:
+                        break
+                    }
+                }
             }else{
-                print(count)
+                //                print(count)
             }
-            
-            
-            
-            print(earlyshiftlocationarray)
-            print(center1shiftlocationarray)
-            print(center2shiftlocationarray)
-            print(center3shiftlocationarray)
-            print(lateshiftlocationarray)
-            print(holidayshiftlocationarray)
-
         }
         return dayshiftarray
     }
 }
+
