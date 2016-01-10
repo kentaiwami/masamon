@@ -83,6 +83,7 @@ class ShiftImportHistoryDB: Object {
 //シフト体制を保存
 class ShiftSystemDB: Object{
     dynamic var id = 0
+    dynamic var groupid = 0         //シフト体制のグループを識別するid
     dynamic var name = ""           //何番か記録
     dynamic var starttime = 0.0     //勤務開始時間
     dynamic var endtime = 0.0       //勤務終了時間
