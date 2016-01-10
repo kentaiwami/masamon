@@ -81,16 +81,51 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let shiftstartpattern = [8.0,8.0,8.0,8.0,12.0,13.5,14.5,16.0,16.0,16.0]
         let shiftendpattern = [16.5,16.5,16.5,16.5,20.5,22.0,23.0,24.5,24.5,24.5]
 
-        if(DBmethod().DBRecordCount(ShiftSystem) == 0){
+        if(DBmethod().DBRecordCount(ShiftSystemDB) == 0){
             for(var i = 0; i < shiftnamepattern.count; i++){
-                let ShiftSystemRecord = ShiftSystem()
+                var gid = 0
+                
+                switch(i){
+                case 0...3:
+                    gid = 0
+                    
+                case 4:
+                    gid = 1
+                    
+                case 5:
+                    gid = 2
+                    
+                case 6:
+                    gid = 3
+                    
+                case 7...9:
+                    gid = 4
+                    
+                default:
+                    break
+                }
+                
+                let ShiftSystemRecord = ShiftSystemDB()
                 ShiftSystemRecord.id = i
+                ShiftSystemRecord.groupid = gid
                 ShiftSystemRecord.name = shiftnamepattern[i]
                 ShiftSystemRecord.starttime = shiftstartpattern[i]
                 ShiftSystemRecord.endtime = shiftendpattern[i]
                 DBmethod().AddandUpdate(ShiftSystemRecord, update: true)
             }
         }
+        
+        //シフト体制(休暇)データ
+        let holidaynamepattern = ["公","夏","有"]
+        if(DBmethod().DBRecordCount(HolidayDB) == 0){
+            for(var i = 0; i < holidaynamepattern.count; i++){
+                let Record = HolidayDB()
+                Record.id = i
+                Record.name = holidaynamepattern[i]
+                DBmethod().AddandUpdate(Record, update: true)
+            }
+        }
+        
         return true
     }
     
