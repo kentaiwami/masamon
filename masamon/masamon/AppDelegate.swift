@@ -83,8 +83,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         if(DBmethod().DBRecordCount(ShiftSystemDB) == 0){
             for(var i = 0; i < shiftnamepattern.count; i++){
+                var gid = 0
+                
+                switch(i){
+                case 0...3:
+                    gid = 0
+                    
+                case 4:
+                    gid = 1
+                    
+                case 5:
+                    gid = 2
+                    
+                case 6:
+                    gid = 3
+                    
+                case 7...9:
+                    gid = 4
+                    
+                default:
+                    break
+                }
+                
                 let ShiftSystemRecord = ShiftSystemDB()
                 ShiftSystemRecord.id = i
+                ShiftSystemRecord.groupid = gid
                 ShiftSystemRecord.name = shiftnamepattern[i]
                 ShiftSystemRecord.starttime = shiftstartpattern[i]
                 ShiftSystemRecord.endtime = shiftendpattern[i]
