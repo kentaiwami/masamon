@@ -230,7 +230,7 @@ class PDFmethod: UIViewController {
                 }
                 
                 //休みを検出して場所を配列へ代入
-                let holiday = ["公","夏","有"]
+                let holiday = DBmethod().HolidayNameArrayGet()      //休暇のシフト体制を取得
                 for(var i = 0; i < holiday.count; i++){
                     holidayshiftlocationarray += self.GetShiftPositionArray(staffarraytmpnsstring, shiftname: holiday[i])
                 }
@@ -246,7 +246,7 @@ class PDFmethod: UIViewController {
 //            print(center2shiftlocationarray)
 //            print(center3shiftlocationarray)
 //            print(lateshiftlocationarray)
-//            print(holidayshiftlocationarray)
+            print(holidayshiftlocationarray)
 
         }
         return dayshiftarray
