@@ -143,18 +143,19 @@ class PDFmethod: UIViewController {
     }
     
     //指定したシフト体制を削除した文字列を返す関数
-    func AAA(staffarraysstring: NSString, shiftname: String) -> String{
+    func GetRemoveSetShiftName(staffarraysstring: NSString, shiftname: String) -> String{
         var removedshiftstring = ""
         
         removedshiftstring = staffarraysstring.stringByReplacingOccurrencesOfString(shiftname, withString: "")
         
-        
-        
-        
-        
-        
         return removedshiftstring
     }
+    
+    //受け取った数値の中で一番小さい値のシフト体制を返す関数
+    func AAA(){
+        
+    }
+    
     
     //スタッフのシフトを日にちごとに分けたArrayを返す
     func SplitDayShiftGet(var staffarray: Array<String>) -> Array<String>{
@@ -175,7 +176,7 @@ class PDFmethod: UIViewController {
         }
       
         //スタッフの人数分(配列の最後まで)繰り返す
-        for(var i = 1; i < 2; i++){
+        for(var i = 2; i < 3; i++){
             
             var staffname = ""
             var staffarraytmp = ""
@@ -234,18 +235,39 @@ class PDFmethod: UIViewController {
                 for(var i = 0; i < holiday.count; i++){
                     holidayshiftlocationarray += self.GetShiftPositionArray(staffarraytmpnsstring, shiftname: holiday[i])
                 }
+            }
+            
+            
+            //要素数を比較して正しくシフト体制を認識できているかチェックする
+            var count = 0
+            count = earlyshiftlocationarray.count + center1shiftlocationarray.count + center2shiftlocationarray.count + center3shiftlocationarray.count + lateshiftlocationarray.count + holidayshiftlocationarray.count
+            
+            if(count == monthrange.length){
+                earlyshiftlocationarray = earlyshiftlocationarray.sort()
+                center1shiftlocationarray = center1shiftlocationarray.sort()
+                center2shiftlocationarray = center2shiftlocationarray.sort()
+                center3shiftlocationarray = center3shiftlocationarray.sort()
+                lateshiftlocationarray = lateshiftlocationarray.sort()
+                holidayshiftlocationarray = holidayshiftlocationarray.sort()
                 
-                //print(self.AAA(staffarraytmpnsstring, shiftname: "公"))
-
+                
+                //日付分のループを開始
+                //TODO: 各配列の[0]を関数へ渡す
+                //TODO: 一番小さい数値を関数側で判断し、シフト体制の文字が返ってくる
+                //TODO: 返ってきた文字をdayshiftarrayにstaffname + ":" + dayshift + ","と同様に保存する。
+                //TODO: 保存する際は日付分のループの変数を要素の参照に使用する
+                //日付分のループを終了
+            }else{
+                print(count)
             }
             
             
             
-//            print(earlyshiftlocationarray)
-//            print(center1shiftlocationarray)
-//            print(center2shiftlocationarray)
-//            print(center3shiftlocationarray)
-//            print(lateshiftlocationarray)
+            print(earlyshiftlocationarray)
+            print(center1shiftlocationarray)
+            print(center2shiftlocationarray)
+            print(center3shiftlocationarray)
+            print(lateshiftlocationarray)
             print(holidayshiftlocationarray)
 
         }
