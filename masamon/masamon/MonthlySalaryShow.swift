@@ -161,18 +161,22 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             let BBB = PDFmethod().SplitDayShiftGet(AAA,controller: self)
             
             if(appDelegate.errorshiftname.count != 0){  //シフト認識エラーがある場合
-                let index = appDelegate.errorshiftname.startIndex.advancedBy(0)
-                let keys = appDelegate.errorshiftname.keys[index]
-                let values = appDelegate.errorshiftname.values[index]
-                
-                self.AlertShow(keys, text: values)
+                self.AlertShow()
             }
         }
     }
     
-    func AlertShow(name: String, text: String){
-        let alert:UIAlertController = UIAlertController(title:name+"さんのシフトが取り込めません",
-            message: text + "\n\n" + "<シフトの名前> \n 例) 出勤 \n\n" + "<シフトのグループ> \n 例) 早番 or 中1 or 中2 or 中3 or 遅番 or その他 \n\n" + "<シフトの時間> \n 例) 開始時間が9時,終了時間が17時の場合は、9:00 17:00 \n シフトグループがその他の場合は、なし",
+    func AlertShow(){
+        
+        let index = self.appDelegate.errorshiftname.startIndex.advancedBy(0)
+        let keys = self.appDelegate.errorshiftname.keys[index]
+        let values = self.appDelegate.errorshiftname.values[index]
+
+        
+        
+        
+        let alert:UIAlertController = UIAlertController(title:keys+"さんのシフトが取り込めません",
+            message: values + "\n\n" + "<シフトの名前> \n 例) 出勤 \n\n" + "<シフトのグループ> \n 例) 早番 or 中1 or 中2 or 中3 or 遅番 or その他 \n\n" + "<シフトの時間> \n 例) 開始時間が9時,終了時間が17時の場合は、9:00 17:00 \n シフトグループがその他の場合は、なし",
             preferredStyle: UIAlertControllerStyle.Alert)
         
         let addAction:UIAlertAction = UIAlertAction(title: "追加",
@@ -186,14 +190,10 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
 //                        print(textField.text)
                     }
                     
-                    let index = self.appDelegate.errorshiftname.startIndex.advancedBy(0)
-                    let keys = self.appDelegate.errorshiftname.keys[index]
-                    let values = self.appDelegate.errorshiftname.values[index]
-                    
                     self.appDelegate.errorshiftname.removeValueForKey(keys)
 
                     if(self.appDelegate.errorshiftname.count != 0){
-                        self.AlertShow(keys, text: values)
+                        self.AlertShow()
                     }
                 }
         })
