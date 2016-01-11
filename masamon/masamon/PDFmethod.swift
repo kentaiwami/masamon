@@ -321,22 +321,38 @@ class PDFmethod: UIViewController {
                     message: "hogehoge",
                     preferredStyle: UIAlertControllerStyle.Alert)
                
-                let defaultAction:UIAlertAction = UIAlertAction(title: "追加",
+                let addAction:UIAlertAction = UIAlertAction(title: "追加",
                     style: UIAlertActionStyle.Default,
                     handler:{
                         (action:UIAlertAction!) -> Void in
-                        i = i - 1
+                        let textFields:Array<UITextField>? =  alert.textFields as Array<UITextField>?
+                        if textFields != nil {
+                            for textField:UITextField in textFields! {
+                                //各textにアクセス
+                                
+                            }
+                        }
                 })
 
-                alert.addAction(defaultAction)
+                alert.addAction(addAction)
                 
-                //textfiledの追加
+                //シフト名入力用のtextfieldを追加
                 alert.addTextFieldWithConfigurationHandler({(text:UITextField!) -> Void in
+                    text.placeholder = "シフトの名前を入力 例) 出勤"
                 })
-                //実行した分textfiledを追加される。
-                alert.addTextFieldWithConfigurationHandler({(text:UITextField!) -> Void in
+                
+                //シフト体制グループ用のtextfieldを追加
+                alert.addTextFieldWithConfigurationHandler({ (text:UITextField!) -> Void in
+                    text.placeholder = "シフトのグループを入力 例) 早"
                 })
-//                controller.presentViewController(alert, animated: true, completion: nil)
+                
+                //シフトの時間入力用のtextfieldを追加
+                alert.addTextFieldWithConfigurationHandler({ (text:UITextField!) -> Void in
+                    text.placeholder = "シフトの時間を入力 例) 8:30 17:00"
+                })
+                
+
+                controller.presentViewController(alert, animated: true, completion: nil)
             }
         }
 //        print(dayshiftarray)
