@@ -148,6 +148,15 @@ class DBmethod: UIViewController {
         
         return name
     }
+    
+    //受け取ったgroupidをShiftSystemから検索し、該当するShiftSystemのnameを配列で返す
+    func ShiftSystemNameArrayGet(groupid: Int) -> Results<ShiftSystemDB>{
+        
+        let realm = try! Realm()
+        let name = realm.objects(ShiftSystemDB).filter("groupid = %@",groupid)
+
+        return name
+    }
 
     //受け取った文字列をShiftDBから検索し、該当するレコードを返す
     func SearchShiftDB(importname: String) -> ShiftDB{

@@ -170,11 +170,62 @@ class PDFmethod: UIViewController {
     }
     
     //受け取った配列の重複要素を削除した配列を返す
-    func GETRemoveOverlapElementArray(array: Array<Int>) -> Array<Int>{
+    func GetRemoveOverlapElementArray(array: Array<Int>) -> Array<Int>{
         let set = NSOrderedSet(array: array)
         let result = set.array as! [Int]
         
         return result
+    }
+    
+    //各配列の要素数を受け取り、要素数が1以上のシフトグループのシフト文字を配列にして返す
+    func GetWillRemoveShiftName(early: Int, center1: Int, center2: Int, center3: Int, late: Int, holiday: Int) -> Array<String>{
+        var array: [String] = []
+        var arraytmp: [String] = []
+        
+        if(early != 0){
+            let earlyshiftarray = DBmethod().ShiftSystemNameArrayGet(0)
+            for(var i = 0; i < earlyshiftarray.count; i++){
+                array.append(earlyshiftarray[i].name)
+            }
+        }
+        
+        if(center1 != 0){
+            let center1shiftarray = DBmethod().ShiftSystemNameArrayGet(1)
+            for(var i = 0; i < center1shiftarray.count; i++){
+                array.append(center1shiftarray[i].name)
+            }
+        }
+        
+        if(center2 != 0){
+            let center2shiftarray = DBmethod().ShiftSystemNameArrayGet(2)
+            for(var i = 0; i < center2shiftarray.count; i++){
+                array.append(center2shiftarray[i].name)
+            }
+        }
+        
+        if(center3 != 0){
+            let center3shiftarray = DBmethod().ShiftSystemNameArrayGet(3)
+            for(var i = 0; i < center3shiftarray.count; i++){
+                array.append(center3shiftarray[i].name)
+            }
+        }
+        
+        if(late != 0){
+            let lateshiftarray = DBmethod().ShiftSystemNameArrayGet(4)
+            for(var i = 0; i < lateshiftarray.count; i++){
+                array.append(lateshiftarray[i].name)
+            }
+        }
+        
+        //休暇を示す文字を追加
+        if(holiday != 0){
+            arraytmp = DBmethod().HolidayNameArrayGet()
+            for(var i = 0; i < arraytmp.count; i++){
+                array.append(arraytmp[i])
+            }
+        }
+        
+        return array
     }
     
     
@@ -197,7 +248,9 @@ class PDFmethod: UIViewController {
         }
         
         //スタッフの人数分(配列の最後まで)繰り返す
-        for(var i = 1; i < staffarray.count; i++){
+        for(var i = 1; i < 2; i++){
+
+//        for(var i = 1; i < staffarray.count; i++){
             
             var staffname = ""
             var staffarraytmp = ""
@@ -215,7 +268,7 @@ class PDFmethod: UIViewController {
             
             //スタッフ名の抽出
             staffname = self.GetStaffName(staffarray[i], i: i)
-//            print(staffname)
+            print(staffname)
             staffarraytmp = staffarray[i]
             
             /*抽出したスタッフ名(マネージャーのMは除く)が1文字以下or4文字以上ならエラーとして記録
@@ -259,12 +312,12 @@ class PDFmethod: UIViewController {
             }
             
             //重複した要素を削除する
-            earlyshiftlocationarray = GETRemoveOverlapElementArray(earlyshiftlocationarray)
-            center1shiftlocationarray = GETRemoveOverlapElementArray(center1shiftlocationarray)
-            center2shiftlocationarray = GETRemoveOverlapElementArray(center2shiftlocationarray)
-            center3shiftlocationarray = GETRemoveOverlapElementArray(center3shiftlocationarray)
-            lateshiftlocationarray = GETRemoveOverlapElementArray(lateshiftlocationarray)
-            holidayshiftlocationarray = GETRemoveOverlapElementArray(holidayshiftlocationarray)
+            earlyshiftlocationarray = GetRemoveOverlapElementArray(earlyshiftlocationarray)
+            center1shiftlocationarray = GetRemoveOverlapElementArray(center1shiftlocationarray)
+            center2shiftlocationarray = GetRemoveOverlapElementArray(center2shiftlocationarray)
+            center3shiftlocationarray = GetRemoveOverlapElementArray(center3shiftlocationarray)
+            lateshiftlocationarray = GetRemoveOverlapElementArray(lateshiftlocationarray)
+            holidayshiftlocationarray = GetRemoveOverlapElementArray(holidayshiftlocationarray)
             
             
             //要素数を比較して正しくシフト体制を認識できているかチェックする
@@ -317,8 +370,17 @@ class PDFmethod: UIViewController {
                     }
                 }
             }else{
+                
+                let AAA = self.GetWillRemoveShiftName(earlyshiftlocationarray.count, center1: center1shiftlocationarray.count, center2: center2shiftlocationarray.count, center3: center3shiftlocationarray.count, late: lateshiftlocationarray.count, holiday: holidayshiftlocationarray.count)
+                
+                var BBB = staffarraytmp
+                
+                for(var i = 0; i < AAA.count; i++){
+                    BBB = self.GetRemoveSetShiftName(BBB, shiftname: AAA[i])
+                }
+                
                 let alert:UIAlertController = UIAlertController(title:staffname+"さんのシフトが取り込めません",
-                    message: "hogehoge",
+                    message: BBB,
                     preferredStyle: UIAlertControllerStyle.Alert)
                
                 let addAction:UIAlertAction = UIAlertAction(title: "追加",
