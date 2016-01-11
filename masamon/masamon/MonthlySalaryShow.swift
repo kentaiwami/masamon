@@ -119,8 +119,8 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         
         let popTime = dispatch_time(DISPATCH_TIME_NOW, Int64(1 * NSEC_PER_SEC))
         dispatch_after(popTime, dispatch_get_main_queue()) { () -> Void in
-            let AAA = PDFmethod().AllTextGet()
-            let BBB = PDFmethod().SplitDayShiftGet(AAA,controller: self)
+//            let AAA = PDFmethod().AllTextGet()
+//            let BBB = PDFmethod().SplitDayShiftGet(AAA,controller: self)
         }
     
         
@@ -134,8 +134,13 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         progress.show(message: "Importing...", style: BlueDarkStyle())
         
         dispatch_async_global { // ここからバックグラウンドスレッド
+            if(self.appDelegate.filename.containsString(".xlsx")){
                 Shiftmethod().ShiftDBOneCoursRegist(self.appDelegate.filename, importpath: self.Libralypath+"/"+self.appDelegate.filename, update: self.appDelegate.update)
                 Shiftmethod().UserMonthlySalaryRegist(self.appDelegate.filename)
+            }else{
+                let AAA = PDFmethod().AllTextGet()
+                let BBB = PDFmethod().SplitDayShiftGet(AAA,controller: self)
+            }
 
             self.dispatch_async_main { // ここからメインスレッド
                 self.progress.dismiss({ () -> Void in
