@@ -98,7 +98,6 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     
     //pickerview,label,シフトの表示を更新する
     override func viewDidAppear(animated: Bool) {
-        
 
         shiftlist.removeAllObjects()
         if(DBmethod().DBRecordCount(ShiftDB) != 0){
@@ -116,14 +115,6 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         let date = ReturnYearMonthDayWeekday(today)         //日付を西暦,月,日,曜日に分けて取得
         self.ShowAllData(self.Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day)           //データ表示へ分けた日付を渡す
         CalenderLabel.text = "\(date.year)年\(date.month)月\(date.day)日 (\(self.ReturnWeekday(date.weekday)))"
-        
-        let popTime = dispatch_time(DISPATCH_TIME_NOW, Int64(1 * NSEC_PER_SEC))
-        dispatch_after(popTime, dispatch_get_main_queue()) { () -> Void in
-//            let AAA = PDFmethod().AllTextGet()
-//            let BBB = PDFmethod().SplitDayShiftGet(AAA,controller: self)
-        }
-    
-        
     }
     
     //バックグラウンドで保存しながらプログレスを表示する
@@ -131,42 +122,104 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     let Libralypath = NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0] as String
     func savedata() {
 
-        progress.show(message: "Importing...", style: BlueDarkStyle())
-        
-        dispatch_async_global { // ここからバックグラウンドスレッド
-            if(self.appDelegate.filename.containsString(".xlsx")){
+        if(self.appDelegate.filename.containsString(".xlsx")){
+            progress.show(message: "Importing...", style: BlueDarkStyle())
+            
+            dispatch_async_global { // ここからバックグラウンドスレッド
+
                 Shiftmethod().ShiftDBOneCoursRegist(self.appDelegate.filename, importpath: self.Libralypath+"/"+self.appDelegate.filename, update: self.appDelegate.update)
                 Shiftmethod().UserMonthlySalaryRegist(self.appDelegate.filename)
-            }else{
-                let AAA = PDFmethod().AllTextGet()
-                let BBB = PDFmethod().SplitDayShiftGet(AAA,controller: self)
-            }
-
-            self.dispatch_async_main { // ここからメインスレッド
-                self.progress.dismiss({ () -> Void in
-                    
-                    /*pickerview,label,シフトの表示を更新する*/
-                    self.shiftlist.removeAllObjects()
-                    if(DBmethod().DBRecordCount(ShiftDB) != 0){
-                        for(var i = DBmethod().DBRecordCount(ShiftDB)-1; i >= 0; i--){
-                            self.shiftlist.addObject(DBmethod().ShiftDBGet(i))
+                
+                self.dispatch_async_main { // ここからメインスレッド
+                    self.progress.dismiss({ () -> Void in
+                        
+                        /*pickerview,label,シフトの表示を更新する*/
+                        self.shiftlist.removeAllObjects()
+                        if(DBmethod().DBRecordCount(ShiftDB) != 0){
+                            for(var i = DBmethod().DBRecordCount(ShiftDB)-1; i >= 0; i--){
+                                self.shiftlist.addObject(DBmethod().ShiftDBGet(i))
+                            }
+                            self.SaralyLabel.text = String(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB)-1))
                         }
-                        self.SaralyLabel.text = String(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB)-1))
+                        
+                        self.myUIPicker.reloadAllComponents()
+                        
+                        let today = self.currentnsdate
+                        let date = self.ReturnYearMonthDayWeekday(today)
+                        self.ShowAllData(self.Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day)
+                        self.CalenderLabel.text = "\(date.year)年\(date.month)月\(date.day)日 (\(self.ReturnWeekday(date.weekday)))"
+                        
+                        let progress = GradientCircularProgress()
+                        progress.show(message: "Finished", style: BlueDarkStyle())
+                        progress.dismiss()
+                    })
+                }
+            }
+        //取り込みがPDFの場合
+        }else{
+            let AAA = PDFmethod().AllTextGet()
+            let BBB = PDFmethod().SplitDayShiftGet(AAA,controller: self)
+            
+            if(appDelegate.errorshiftname.count != 0){  //シフト認識エラーがある場合
+                let index = appDelegate.errorshiftname.startIndex.advancedBy(0)
+                let keys = appDelegate.errorshiftname.keys[index]
+                let values = appDelegate.errorshiftname.values[index]
+                
+                self.AlertShow(keys, text: values)
+            }
+        }        
+    }
+    
+    func AlertShow(name: String, text: String){
+        let alert:UIAlertController = UIAlertController(title:name+"さんのシフトが取り込めません",
+            message: text + "\n\n" + "<シフトの名前> \n 例) 出勤 \n\n" + "<シフトのグループ> \n 例) 早番 or 中1 or 中2 or 中3 or 遅番 or その他 \n\n" + "<シフトの時間> \n 例) 開始時間が9時,終了時間が17時の場合は、9:00 17:00 \n シフトグループがその他の場合は、なし",
+            preferredStyle: UIAlertControllerStyle.Alert)
+        
+        let addAction:UIAlertAction = UIAlertAction(title: "追加",
+            style: UIAlertActionStyle.Default,
+            handler:{
+                (action:UIAlertAction!) -> Void in
+                let textFields:Array<UITextField>? =  alert.textFields as Array<UITextField>?
+                if textFields != nil {
+                    for textField:UITextField in textFields! {
+                        //各textにアクセス
+//                        print(textField.text)
                     }
                     
-                    self.myUIPicker.reloadAllComponents()
+                    let index = self.appDelegate.errorshiftname.startIndex.advancedBy(0)
+                    let keys = self.appDelegate.errorshiftname.keys[index]
+                    let values = self.appDelegate.errorshiftname.values[index]
                     
-                    let today = self.currentnsdate
-                    let date = self.ReturnYearMonthDayWeekday(today)
-                    self.ShowAllData(self.Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day)
-                    self.CalenderLabel.text = "\(date.year)年\(date.month)月\(date.day)日 (\(self.ReturnWeekday(date.weekday)))"
-                    
-                    let progress = GradientCircularProgress()
-                    progress.show(message: "Finished", style: BlueDarkStyle())
-                    progress.dismiss()
-                })
-            }
-        }
+                    self.appDelegate.errorshiftname.removeValueForKey(keys)
+
+                    if(self.appDelegate.errorshiftname.count != 0){
+                        self.AlertShow(keys, text: values)
+                    }
+                }
+        })
+        
+        alert.addAction(addAction)
+        
+        //シフト名入力用のtextfieldを追加
+        alert.addTextFieldWithConfigurationHandler({(text:UITextField!) -> Void in
+            text.placeholder = "シフトの名前を入力"
+            text.returnKeyType = .Done
+        })
+        
+        //シフト体制グループ用のtextfieldを追加
+        alert.addTextFieldWithConfigurationHandler({ (text:UITextField!) -> Void in
+            text.placeholder = "シフトのグループを入力"
+            text.returnKeyType = .Done
+        })
+        
+        //シフトの時間入力用のtextfieldを追加
+        alert.addTextFieldWithConfigurationHandler({ (text:UITextField!) -> Void in
+            text.placeholder = "シフトの時間を入力"
+            text.returnKeyType = .Done
+        })
+        
+        
+        self.presentViewController(alert, animated: true, completion: nil)
     }
     
     //並行処理で使用

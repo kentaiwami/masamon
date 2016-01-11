@@ -10,6 +10,8 @@ import UIKit
 
 class PDFmethod: UIViewController {
     
+    let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得
+
     //PDF内にある年月とスタッフのシフトを全て抽出する
     func AllTextGet() -> Array<String>{
         
@@ -248,9 +250,9 @@ class PDFmethod: UIViewController {
         }
         
         //スタッフの人数分(配列の最後まで)繰り返す
-        for(var i = 1; i < 2; i++){
+//        for(var i = 1; i < 2; i++){
 
-//        for(var i = 1; i < staffarray.count; i++){
+        for(var i = 1; i < staffarray.count; i++){
             
             var staffname = ""
             var staffarraytmp = ""
@@ -261,14 +263,13 @@ class PDFmethod: UIViewController {
             var center3shiftlocationarray: [Int] = []
             var lateshiftlocationarray: [Int] = []
             var holidayshiftlocationarray: [Int] = []       //公,夏,有の場所を記録
-            var othershiftlocationarray: [Int] = []         //上記以外のシフトの場所を記録
             
             staffarray[i] = staffarray[i].stringByReplacingOccurrencesOfString(" ", withString: "")
             staffarray[i] = staffarray[i].stringByReplacingOccurrencesOfString("　", withString: "")
             
             //スタッフ名の抽出
             staffname = self.GetStaffName(staffarray[i], i: i)
-            print(staffname)
+//            print(staffname)
             staffarraytmp = staffarray[i]
             
             /*抽出したスタッフ名(マネージャーのMは除く)が1文字以下or4文字以上ならエラーとして記録
@@ -369,6 +370,7 @@ class PDFmethod: UIViewController {
                         break
                     }
                 }
+            //認識できないシフト名があった場合
             }else{
                 
                 let successshiftnamearray = self.GetWillRemoveShiftName(earlyshiftlocationarray.count, center1: center1shiftlocationarray.count, center2: center2shiftlocationarray.count, center3: center3shiftlocationarray.count, late: lateshiftlocationarray.count, holiday: holidayshiftlocationarray.count)
@@ -379,42 +381,7 @@ class PDFmethod: UIViewController {
                     messagetext = self.GetRemoveSetShiftName(messagetext, shiftname: successshiftnamearray[i])
                 }
                 
-                let alert:UIAlertController = UIAlertController(title:staffname+"さんのシフトが取り込めません",
-                    message: messagetext,
-                    preferredStyle: UIAlertControllerStyle.Alert)
-               
-                let addAction:UIAlertAction = UIAlertAction(title: "追加",
-                    style: UIAlertActionStyle.Default,
-                    handler:{
-                        (action:UIAlertAction!) -> Void in
-                        let textFields:Array<UITextField>? =  alert.textFields as Array<UITextField>?
-                        if textFields != nil {
-                            for textField:UITextField in textFields! {
-                                //各textにアクセス
-                                
-                            }
-                        }
-                })
-
-                alert.addAction(addAction)
-                
-                //シフト名入力用のtextfieldを追加
-                alert.addTextFieldWithConfigurationHandler({(text:UITextField!) -> Void in
-                    text.placeholder = "シフトの名前を入力 例) 出勤"
-                })
-                
-                //シフト体制グループ用のtextfieldを追加
-                alert.addTextFieldWithConfigurationHandler({ (text:UITextField!) -> Void in
-                    text.placeholder = "シフトのグループを入力 例) 早"
-                })
-                
-                //シフトの時間入力用のtextfieldを追加
-                alert.addTextFieldWithConfigurationHandler({ (text:UITextField!) -> Void in
-                    text.placeholder = "シフトの時間を入力 例) 8:30 17:00"
-                })
-                
-
-                controller.presentViewController(alert, animated: true, completion: nil)
+                appDelegate.errorshiftname[staffname] = messagetext
             }
         }
 //        print(dayshiftarray)
