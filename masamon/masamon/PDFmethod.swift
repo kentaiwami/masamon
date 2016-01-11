@@ -250,10 +250,10 @@ class PDFmethod: UIViewController {
         }
         
         //スタッフの人数分(配列の最後まで)繰り返す
-//        for(var i = 1; i < 2; i++){
+//        for(var i = 18; i < 19; i++){
 
         for(var i = 1; i < staffarray.count; i++){
-            
+        
             var staffname = ""
             var staffarraytmp = ""
             
@@ -320,11 +320,28 @@ class PDFmethod: UIViewController {
             lateshiftlocationarray = GetRemoveOverlapElementArray(lateshiftlocationarray)
             holidayshiftlocationarray = GetRemoveOverlapElementArray(holidayshiftlocationarray)
             
+            //中番で重なって検索に引っかかってしまった分を差し引きする
+            var removeindexarray: [Int] = []
+            for(var i = 0; i < center1shiftlocationarray.count; i++){
+                
+                if(center2shiftlocationarray.contains(center1shiftlocationarray[i])){
+                    removeindexarray.append(i)
+                }
+                
+                if(center3shiftlocationarray.contains(center1shiftlocationarray[i])){
+                    removeindexarray.append(i)
+                }
+            }
+            
+            for(var i = 0; i < removeindexarray.count; i++){
+                center1shiftlocationarray.removeAtIndex(removeindexarray[i])
+            }
+            
             
             //要素数を比較して正しくシフト体制を認識できているかチェックする
             var count = 0
             count = earlyshiftlocationarray.count + center1shiftlocationarray.count + center2shiftlocationarray.count + center3shiftlocationarray.count + lateshiftlocationarray.count + holidayshiftlocationarray.count
-            
+
             if(count == monthrange.length){
                 earlyshiftlocationarray = earlyshiftlocationarray.sort()
                 center1shiftlocationarray = center1shiftlocationarray.sort()

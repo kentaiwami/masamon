@@ -167,7 +167,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                 
                 self.AlertShow(keys, text: values)
             }
-        }        
+        }
     }
     
     func AlertShow(name: String, text: String){
