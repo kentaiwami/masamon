@@ -179,7 +179,7 @@ class PDFmethod: UIViewController {
     
     
     //スタッフのシフトを日にちごとに分けたArrayを返す
-    func SplitDayShiftGet(var staffarray: Array<String>) -> Array<String>{
+    func SplitDayShiftGet(var staffarray: Array<String>, controller: UIViewController) -> Array<String>{
         
         var dayshiftarray: [String] = []        //1日ごとのシフトを記録
         var errorstaff: [String] = []           //スタッフ名の抽出がうまくいかなかったスタッフのシフトを記録
@@ -197,7 +197,7 @@ class PDFmethod: UIViewController {
         }
         
         //スタッフの人数分(配列の最後まで)繰り返す
-        for(var i = 9; i < 10; i++){
+        for(var i = 1; i < staffarray.count; i++){
             
             var staffname = ""
             var staffarraytmp = ""
@@ -215,7 +215,7 @@ class PDFmethod: UIViewController {
             
             //スタッフ名の抽出
             staffname = self.GetStaffName(staffarray[i], i: i)
-            print(staffname)
+//            print(staffname)
             staffarraytmp = staffarray[i]
             
             /*抽出したスタッフ名(マネージャーのMは除く)が1文字以下or4文字以上ならエラーとして記録
@@ -317,10 +317,29 @@ class PDFmethod: UIViewController {
                     }
                 }
             }else{
-                print(count)
+                let alert:UIAlertController = UIAlertController(title:staffname+"さんのシフトが取り込めません",
+                    message: "hogehoge",
+                    preferredStyle: UIAlertControllerStyle.Alert)
+               
+                let defaultAction:UIAlertAction = UIAlertAction(title: "追加",
+                    style: UIAlertActionStyle.Default,
+                    handler:{
+                        (action:UIAlertAction!) -> Void in
+                        i = i - 1
+                })
+
+                alert.addAction(defaultAction)
+                
+                //textfiledの追加
+                alert.addTextFieldWithConfigurationHandler({(text:UITextField!) -> Void in
+                })
+                //実行した分textfiledを追加される。
+                alert.addTextFieldWithConfigurationHandler({(text:UITextField!) -> Void in
+                })
+                controller.presentViewController(alert, animated: true, completion: nil)
             }
         }
-        print(dayshiftarray)
+//        print(dayshiftarray)
         return dayshiftarray
     }
 }

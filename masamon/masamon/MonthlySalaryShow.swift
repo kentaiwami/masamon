@@ -39,8 +39,6 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let AAA = PDFmethod().AllTextGet()
-        let BBB = PDFmethod().SplitDayShiftGet(AAA)
         currentnsdate = NSDate()
         
         //テキストビューの編集をできないようにする
@@ -100,6 +98,8 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     
     //pickerview,label,シフトの表示を更新する
     override func viewDidAppear(animated: Bool) {
+        
+
         shiftlist.removeAllObjects()
         if(DBmethod().DBRecordCount(ShiftDB) != 0){
             for(var i = DBmethod().DBRecordCount(ShiftDB)-1; i >= 0; i--){
@@ -116,6 +116,14 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         let date = ReturnYearMonthDayWeekday(today)         //日付を西暦,月,日,曜日に分けて取得
         self.ShowAllData(self.Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day)           //データ表示へ分けた日付を渡す
         CalenderLabel.text = "\(date.year)年\(date.month)月\(date.day)日 (\(self.ReturnWeekday(date.weekday)))"
+        
+        let popTime = dispatch_time(DISPATCH_TIME_NOW, Int64(1 * NSEC_PER_SEC))
+        dispatch_after(popTime, dispatch_get_main_queue()) { () -> Void in
+            let AAA = PDFmethod().AllTextGet()
+            let BBB = PDFmethod().SplitDayShiftGet(AAA,controller: self)
+        }
+    
+        
     }
     
     //バックグラウンドで保存しながらプログレスを表示する
