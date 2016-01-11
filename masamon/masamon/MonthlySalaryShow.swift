@@ -35,6 +35,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     let calenderbuttonnamearray = ["../images/backday.png","../images/nextday.png"]
     
     var currentnsdate = NSDate()        //MonthlySalaryShowがデータ表示している日付を管理
+    var AAA: [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -157,8 +158,8 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             }
         //取り込みがPDFの場合
         }else{
-            let AAA = PDFmethod().AllTextGet()
-            let BBB = PDFmethod().SplitDayShiftGet(AAA,controller: self)
+            AAA = PDFmethod().AllTextGet()
+            PDFmethod().SplitDayShiftGet(AAA,controller: self)
             
             if(appDelegate.errorshiftname.count != 0){  //シフト認識エラーがある場合
                 self.AlertShow()
@@ -172,8 +173,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         let keys = self.appDelegate.errorshiftname.keys[index]
         let values = self.appDelegate.errorshiftname.values[index]
 
-        
-        
+        var flag = false
         
         let alert:UIAlertController = UIAlertController(title:keys+"さんのシフトが取り込めません",
             message: values + "\n\n" + "<シフトの名前> \n 例) 出勤 \n\n" + "<シフトのグループ> \n 例) 早番 or 中1 or 中2 or 中3 or 遅番 or その他 \n\n" + "<シフトの時間> \n 例) 開始時間が9時,終了時間が17時の場合は、9:00 17:00 \n シフトグループがその他の場合は、なし",
@@ -188,11 +188,18 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                     for textField:UITextField in textFields! {
                         //各textにアクセス
 //                        print(textField.text)
+                        
+                        if(textField.text == ""){
+                            flag = false
+                        }else{
+                            flag = true
+                        }
                     }
                     
-                    self.appDelegate.errorshiftname.removeValueForKey(keys)
-
-                    if(self.appDelegate.errorshiftname.count != 0){
+                    if(flag){   //テキストフィールドに値が全て入っている場合
+                        self.CreateShiftSystemDBRecord(textFields![0].text!, shiftgroup: textFields![1].text!, shifttime: textFields![2].text!)
+                        self.savedata()
+                    }else{
                         self.AlertShow()
                     }
                 }
@@ -220,6 +227,76 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         
         
         self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    //受け取ったテキストからShiftSystemDBのレコードを生成して返す関数
+    func CreateShiftSystemDBRecord(shiftname: String, shiftgroup: String, shifttime: String) -> ShiftSystemDB{
+        let record = ShiftSystemDB()
+        var gid = 0
+        var start = 0.0
+        var end = 0.0
+        
+        switch(shiftgroup){
+        case "早番":
+            gid = 0
+            
+        case "中1":
+            gid = 1
+            
+        case "中2":
+            gid = 2
+            
+        case "中3":
+            gid = 3
+            
+        case "遅番":
+            gid = 4
+            
+        default:    //その他
+            gid = 5
+        }
+        
+        if(shifttime == "なし"){
+            start = 0.0
+            end = 0.0
+        }else{
+            var AAA = ""
+            var index = shifttime.startIndex
+            var timearray: [Double] = []
+            
+            for(var i = 0; i < 1; i++){
+                while(shifttime[index] != ":"){
+                    AAA += String(shifttime[index])
+                    index = index.successor()
+                }
+                
+                let hour = Double(AAA)
+                index = index.successor()
+                AAA = ""
+
+                while(shifttime[index] != " "){
+                    AAA += String(shifttime[index])
+                    index = index.successor()
+                }
+                
+                let minute = Double(AAA)! / 60.0
+
+                timearray.append(hour! + minute)
+                
+            }
+
+            start = timearray[0]
+//            end = timearray[1]
+        }
+        
+        record.id = DBmethod().DBRecordCount(ShiftSystemDB)
+        record.name = shiftname
+        record.groupid = gid
+        record.starttime = start
+        record.endtime = end
+        
+        print(record)
+        return record
     }
     
     //並行処理で使用
