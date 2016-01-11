@@ -149,6 +149,8 @@ class PDFmethod: UIViewController {
         var removedshiftstring = ""
         
         removedshiftstring = staffarraysstring.stringByReplacingOccurrencesOfString(shiftname, withString: "")
+        removedshiftstring = removedshiftstring.stringByReplacingOccurrencesOfString("M", withString: "")
+        removedshiftstring = removedshiftstring.stringByReplacingOccurrencesOfString("カ", withString: "")
         
         return removedshiftstring
     }
@@ -321,20 +323,20 @@ class PDFmethod: UIViewController {
             holidayshiftlocationarray = GetRemoveOverlapElementArray(holidayshiftlocationarray)
             
             //中番で重なって検索に引っかかってしまった分を差し引きする
-            var removeindexarray: [Int] = []
+            var removevaluearray: [Int] = []
             for(var i = 0; i < center1shiftlocationarray.count; i++){
                 
                 if(center2shiftlocationarray.contains(center1shiftlocationarray[i])){
-                    removeindexarray.append(i)
+                    removevaluearray.append(center1shiftlocationarray[i])
                 }
                 
                 if(center3shiftlocationarray.contains(center1shiftlocationarray[i])){
-                    removeindexarray.append(i)
+                    removevaluearray.append(center1shiftlocationarray[i])
                 }
             }
             
-            for(var i = 0; i < removeindexarray.count; i++){
-                center1shiftlocationarray.removeAtIndex(removeindexarray[i])
+            for(var i = 0; i < removevaluearray.count; i++){
+                center1shiftlocationarray.removeObject(removevaluearray[i])
             }
             
             
