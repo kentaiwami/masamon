@@ -371,16 +371,16 @@ class PDFmethod: UIViewController {
                 }
             }else{
                 
-                let AAA = self.GetWillRemoveShiftName(earlyshiftlocationarray.count, center1: center1shiftlocationarray.count, center2: center2shiftlocationarray.count, center3: center3shiftlocationarray.count, late: lateshiftlocationarray.count, holiday: holidayshiftlocationarray.count)
+                let successshiftnamearray = self.GetWillRemoveShiftName(earlyshiftlocationarray.count, center1: center1shiftlocationarray.count, center2: center2shiftlocationarray.count, center3: center3shiftlocationarray.count, late: lateshiftlocationarray.count, holiday: holidayshiftlocationarray.count)
                 
-                var BBB = staffarraytmp
+                var messagetext = staffarraytmp
                 
-                for(var i = 0; i < AAA.count; i++){
-                    BBB = self.GetRemoveSetShiftName(BBB, shiftname: AAA[i])
+                for(var i = 0; i < successshiftnamearray.count; i++){
+                    messagetext = self.GetRemoveSetShiftName(messagetext, shiftname: successshiftnamearray[i])
                 }
                 
                 let alert:UIAlertController = UIAlertController(title:staffname+"さんのシフトが取り込めません",
-                    message: BBB,
+                    message: messagetext,
                     preferredStyle: UIAlertControllerStyle.Alert)
                
                 let addAction:UIAlertAction = UIAlertAction(title: "追加",
