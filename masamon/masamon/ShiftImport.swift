@@ -49,67 +49,72 @@ class ShiftImport: UIViewController,UITextFieldDelegate,QLPreviewControllerDataS
     
     //取り込むボタンを押したら動作
     @IBAction func xlsximport(sender: AnyObject) {
-        if(filenamefield.text != ""){
-            let Inboxpath = documentspath + "/Inbox/"       //Inboxまでのパス
-            let filemanager = NSFileManager()
-            
-            if(filemanager.fileExistsAtPath(Libralypath+"/"+filenamefield.text!)){       //入力したファイル名が既に存在する場合
-                //アラートを表示して上書きかキャンセルかを選択させる
-                let alert:UIAlertController = UIAlertController(title:"取り込みエラー",
-                    message: "既に同じファイル名が存在します",
-                    preferredStyle: UIAlertControllerStyle.Alert)
+        //ファイル形式がpdfの場合
+        if(filename.containsString("pdf") || filename.containsString("PDF")){
+
+        }else{
+            if(filenamefield.text != ""){
+                let Inboxpath = documentspath + "/Inbox/"       //Inboxまでのパス
+                let filemanager = NSFileManager()
                 
-                let cancelAction:UIAlertAction = UIAlertAction(title: "キャンセル",
-                    style: UIAlertActionStyle.Cancel,
-                    handler:{
-                        (action:UIAlertAction!) -> Void in
-                })
-                let updateAction:UIAlertAction = UIAlertAction(title: "上書き",
-                    style: UIAlertActionStyle.Default,
-                    handler:{
-                        (action:UIAlertAction!) -> Void in
-                        self.appDelegate.filesavealert = true
-                        self.dismissViewControllerAnimated(true, completion: nil)
-                        do{
-                            try filemanager.removeItemAtPath(self.Libralypath+"/"+self.filenamefield.text!)
-                            try filemanager.moveItemAtPath(Inboxpath+self.filename, toPath: self.Libralypath+"/"+self.filenamefield.text!)
-                            self.InboxFileCountsDBMinusOne()
-                            
+                if(filemanager.fileExistsAtPath(Libralypath+"/"+filenamefield.text!)){       //入力したファイル名が既に存在する場合
+                    //アラートを表示して上書きかキャンセルかを選択させる
+                    let alert:UIAlertController = UIAlertController(title:"取り込みエラー",
+                        message: "既に同じファイル名が存在します",
+                        preferredStyle: UIAlertControllerStyle.Alert)
+                    
+                    let cancelAction:UIAlertAction = UIAlertAction(title: "キャンセル",
+                        style: UIAlertActionStyle.Cancel,
+                        handler:{
+                            (action:UIAlertAction!) -> Void in
+                    })
+                    let updateAction:UIAlertAction = UIAlertAction(title: "上書き",
+                        style: UIAlertActionStyle.Default,
+                        handler:{
+                            (action:UIAlertAction!) -> Void in
                             self.appDelegate.filesavealert = true
-                            self.ShiftImportHistoryDBadd(NSDate(), importname: self.filenamefield.text!)
-                            self.appDelegate.filename = self.filenamefield.text!
-                            self.appDelegate.update = true
                             self.dismissViewControllerAnimated(true, completion: nil)
-                            
-                        }catch{
-                            print(error)
-                        }
-                })
-                
-                alert.addAction(cancelAction)
-                alert.addAction(updateAction)
-                presentViewController(alert, animated: true, completion: nil)
-            }else{      //入力したファイル名が被ってない場合
-                do{
-                    try filemanager.moveItemAtPath(Inboxpath+filename, toPath: Libralypath+"/"+filenamefield.text!)
-                    self.InboxFileCountsDBMinusOne()
-                    self.dismissViewControllerAnimated(true, completion: nil)
-                    appDelegate.filesavealert = true
-                    appDelegate.filename = self.filenamefield.text!
-                    appDelegate.update = false
-                    ShiftImportHistoryDBadd(NSDate(), importname: filenamefield.text!)
-                }catch{
-                    print(error)
+                            do{
+                                try filemanager.removeItemAtPath(self.Libralypath+"/"+self.filenamefield.text!)
+                                try filemanager.moveItemAtPath(Inboxpath+self.filename, toPath: self.Libralypath+"/"+self.filenamefield.text!)
+                                self.InboxFileCountsDBMinusOne()
+                                
+                                self.appDelegate.filesavealert = true
+                                self.ShiftImportHistoryDBadd(NSDate(), importname: self.filenamefield.text!)
+                                self.appDelegate.filename = self.filenamefield.text!
+                                self.appDelegate.update = true
+                                self.dismissViewControllerAnimated(true, completion: nil)
+                                
+                            }catch{
+                                print(error)
+                            }
+                    })
+                    
+                    alert.addAction(cancelAction)
+                    alert.addAction(updateAction)
+                    presentViewController(alert, animated: true, completion: nil)
+                }else{      //入力したファイル名が被ってない場合
+                    do{
+                        try filemanager.moveItemAtPath(Inboxpath+filename, toPath: Libralypath+"/"+filenamefield.text!)
+                        self.InboxFileCountsDBMinusOne()
+                        self.dismissViewControllerAnimated(true, completion: nil)
+                        appDelegate.filesavealert = true
+                        appDelegate.filename = self.filenamefield.text!
+                        appDelegate.update = false
+                        ShiftImportHistoryDBadd(NSDate(), importname: filenamefield.text!)
+                    }catch{
+                        print(error)
+                    }
                 }
+                
+            }else{      //テキストフィールドが空の場合
+                let alertController = UIAlertController(title: "取り込みエラー", message: "ファイル名を入力して下さい", preferredStyle: .Alert)
+                
+                let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                alertController.addAction(defaultAction)
+                
+                presentViewController(alertController, animated: true, completion: nil)
             }
-        
-        }else{      //テキストフィールドが空の場合
-            let alertController = UIAlertController(title: "取り込みエラー", message: "ファイル名を入力して下さい", preferredStyle: .Alert)
-            
-            let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
-            alertController.addAction(defaultAction)
-            
-            presentViewController(alertController, animated: true, completion: nil)
         }
     }
     

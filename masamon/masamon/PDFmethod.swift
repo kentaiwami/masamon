@@ -317,26 +317,26 @@ class PDFmethod: UIViewController {
                     }
                 }
             }else{
-                let alert:UIAlertController = UIAlertController(title:staffname+"さんのシフトが取り込めません",
-                    message: "hogehoge",
-                    preferredStyle: UIAlertControllerStyle.Alert)
-               
-                let defaultAction:UIAlertAction = UIAlertAction(title: "追加",
-                    style: UIAlertActionStyle.Default,
-                    handler:{
-                        (action:UIAlertAction!) -> Void in
-                        i = i - 1
-                })
-
-                alert.addAction(defaultAction)
-                
-                //textfiledの追加
-                alert.addTextFieldWithConfigurationHandler({(text:UITextField!) -> Void in
-                })
-                //実行した分textfiledを追加される。
-                alert.addTextFieldWithConfigurationHandler({(text:UITextField!) -> Void in
-                })
-                controller.presentViewController(alert, animated: true, completion: nil)
+//                let alert:UIAlertController = UIAlertController(title:staffname+"さんのシフトが取り込めません",
+//                    message: "hogehoge",
+//                    preferredStyle: UIAlertControllerStyle.Alert)
+//               
+//                let defaultAction:UIAlertAction = UIAlertAction(title: "追加",
+//                    style: UIAlertActionStyle.Default,
+//                    handler:{
+//                        (action:UIAlertAction!) -> Void in
+//                        i = i - 1
+//                })
+//
+//                alert.addAction(defaultAction)
+//                
+//                //textfiledの追加
+//                alert.addTextFieldWithConfigurationHandler({(text:UITextField!) -> Void in
+//                })
+//                //実行した分textfiledを追加される。
+//                alert.addTextFieldWithConfigurationHandler({(text:UITextField!) -> Void in
+//                })
+//                controller.presentViewController(alert, animated: true, completion: nil)
             }
         }
 //        print(dayshiftarray)
