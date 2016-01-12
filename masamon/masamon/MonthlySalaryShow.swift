@@ -41,7 +41,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         super.viewDidLoad()
         
         currentnsdate = NSDate()
-        
+                
         //テキストビューの編集をできないようにする
         EarlyShiftText.editable = false
         Center1ShiftText.editable = false

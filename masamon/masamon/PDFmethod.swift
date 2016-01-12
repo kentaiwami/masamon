@@ -100,8 +100,29 @@ class PDFmethod: UIViewController {
     func GetStaffName(stafftext: String, i: Int) -> String{
         var staffname = ""
         var position = 0
-        let othershiftsystem: [String] = ["公","研","出"]
+        let holidaynamearray: [String] = DBmethod().HolidayNameGet()
+        var holidaynametopcharacter: [String] = []
+        let shiftsystemnamearray: [String] = DBmethod().ShiftSystemNameArrayGet()
+        var shiftsystemnametopcharacter: [String] = []
         
+        //勤務シフト名の先頭文字だけを取り出すループ処理
+        for(var i = 0; i < shiftsystemnamearray.count; i++){
+            let startindex = shiftsystemnamearray[i].startIndex
+            let shiftsystemnametmp = shiftsystemnamearray[i]
+            let topcharactertmp = shiftsystemnametmp[startindex]
+            
+            shiftsystemnametopcharacter.append(String(topcharactertmp))
+        }
+        
+        //休暇のシフト名の先頭文字だけを取り出すループ処理
+        for(var i = 0; i < holidaynamearray.count; i++){
+            let startindex = holidaynamearray[i].startIndex
+            let holidaynametmp = holidaynamearray[i]
+            let topcharactertmp = holidaynametmp[startindex]
+            
+            holidaynametopcharacter.append(String(topcharactertmp))
+        }
+
         //スタッフ名の読み込みを開始する場所を決定
         if(i <= 9){
             position = 1
@@ -111,15 +132,28 @@ class PDFmethod: UIViewController {
         
         //スタッフ名の抽出(シフト体制に含まれる文字が出るまで)
         var getcharacterstaffname = stafftext[stafftext.startIndex.advancedBy(position)]
+
         while(DBmethod().SearchShiftSystem(String(getcharacterstaffname)) == nil){
-            
-            if(othershiftsystem.contains(String(getcharacterstaffname))){         //ShiftSystemにない細かいのも検出するため
-                break
+
+            //勤務シフト体制にある文字が検出されたらループを抜けるパターン
+            for(var i = 0; i < shiftsystemnametopcharacter.count; i++){
+                if(String(getcharacterstaffname).containsString(shiftsystemnametopcharacter[i])){
+                    return staffname
+                }
             }
+            
+            //休暇シフト体制にある文字が検出されたらループを抜けるパターン
+            for(var i = 0; i < holidaynametopcharacter.count; i++){
+                if(String(getcharacterstaffname).containsString(holidaynametopcharacter[i])){
+                    return staffname
+                }
+            }
+            
             staffname = staffname + String(getcharacterstaffname)
             position += 1
             getcharacterstaffname = stafftext[stafftext.startIndex.advancedBy(position)]
         }
+
         return staffname
     }
     
@@ -187,35 +221,35 @@ class PDFmethod: UIViewController {
         var arraytmp: [String] = []
         
         if(early != 0){
-            let earlyshiftarray = DBmethod().ShiftSystemNameArrayGet(0)
+            let earlyshiftarray = DBmethod().ShiftSystemNameArrayGetByGroudid(0)
             for(var i = 0; i < earlyshiftarray.count; i++){
                 array.append(earlyshiftarray[i].name)
             }
         }
         
         if(center1 != 0){
-            let center1shiftarray = DBmethod().ShiftSystemNameArrayGet(1)
+            let center1shiftarray = DBmethod().ShiftSystemNameArrayGetByGroudid(1)
             for(var i = 0; i < center1shiftarray.count; i++){
                 array.append(center1shiftarray[i].name)
             }
         }
         
         if(center2 != 0){
-            let center2shiftarray = DBmethod().ShiftSystemNameArrayGet(2)
+            let center2shiftarray = DBmethod().ShiftSystemNameArrayGetByGroudid(2)
             for(var i = 0; i < center2shiftarray.count; i++){
                 array.append(center2shiftarray[i].name)
             }
         }
         
         if(center3 != 0){
-            let center3shiftarray = DBmethod().ShiftSystemNameArrayGet(3)
+            let center3shiftarray = DBmethod().ShiftSystemNameArrayGetByGroudid(3)
             for(var i = 0; i < center3shiftarray.count; i++){
                 array.append(center3shiftarray[i].name)
             }
         }
         
         if(late != 0){
-            let lateshiftarray = DBmethod().ShiftSystemNameArrayGet(4)
+            let lateshiftarray = DBmethod().ShiftSystemNameArrayGetByGroudid(4)
             for(var i = 0; i < lateshiftarray.count; i++){
                 array.append(lateshiftarray[i].name)
             }
@@ -231,7 +265,7 @@ class PDFmethod: UIViewController {
         
         //その他を示す文字を追加
         if(other != 0){
-            let lateshiftarray = DBmethod().ShiftSystemNameArrayGet(5)
+            let lateshiftarray = DBmethod().ShiftSystemNameArrayGetByGroudid(5)
             for(var i = 0; i < lateshiftarray.count; i++){
                 array.append(lateshiftarray[i].name)
             }
@@ -280,7 +314,7 @@ class PDFmethod: UIViewController {
             
             //スタッフ名の抽出
             staffname = self.GetStaffName(staffarray[i], i: i)
-//            print(staffname)
+            print(staffname)
             staffarraytmp = staffarray[i]
             
             /*抽出したスタッフ名(マネージャーのMは除く)が1文字以下or4文字以上ならエラーとして記録
