@@ -156,9 +156,9 @@ class PDFmethod: UIViewController {
     }
     
     //受け取った数値の中で一番小さい値のシフト体制を返す関数
-    func GetMinShiftPosition(early: Int, center1: Int, center2: Int, center3: Int, late: Int, holiday: Int) -> String{
+    func GetMinShiftPosition(early: Int, center1: Int, center2: Int, center3: Int, late: Int, holiday: Int, other: Int) -> String{
         var shiftname = ""
-        let dict: [String:Int] = ["早":early, "中1":center1, "中2":center2, "中3":center3, "遅": late, "休":holiday]
+        let dict: [String:Int] = ["早":early, "中1":center1, "中2":center2, "中3":center3, "遅": late, "休":holiday, "他":other]
         
         var values : Array = Array(dict.values)
         values = values.sort()
@@ -182,7 +182,7 @@ class PDFmethod: UIViewController {
     }
     
     //各配列の要素数を受け取り、要素数が1以上のシフトグループのシフト文字を配列にして返す
-    func GetWillRemoveShiftName(early: Int, center1: Int, center2: Int, center3: Int, late: Int, holiday: Int) -> Array<String>{
+    func GetWillRemoveShiftName(early: Int, center1: Int, center2: Int, center3: Int, late: Int, holiday: Int, other: Int) -> Array<String>{
         var array: [String] = []
         var arraytmp: [String] = []
         
@@ -229,6 +229,14 @@ class PDFmethod: UIViewController {
             }
         }
         
+        //その他を示す文字を追加
+        if(other != 0){
+            let lateshiftarray = DBmethod().ShiftSystemNameArrayGet(5)
+            for(var i = 0; i < lateshiftarray.count; i++){
+                array.append(lateshiftarray[i].name)
+            }
+        }
+        
         return array
     }
     
@@ -265,6 +273,7 @@ class PDFmethod: UIViewController {
             var center3shiftlocationarray: [Int] = []
             var lateshiftlocationarray: [Int] = []
             var holidayshiftlocationarray: [Int] = []       //公,夏,有の場所を記録
+            var othershiftlocationarray: [Int] = []
             
             staffarray[i] = staffarray[i].stringByReplacingOccurrencesOfString(" ", withString: "")
             staffarray[i] = staffarray[i].stringByReplacingOccurrencesOfString("　", withString: "")
@@ -283,27 +292,28 @@ class PDFmethod: UIViewController {
             }else{
                 let staffarraytmpnsstring = staffarraytmp as NSString
                 
+                
                 //シフト体制の分だけループを回し、各ループでスタッフ1人分のシフト出現場所を記録する
                 for(var i = 0; i < DBmethod().DBRecordCount(ShiftSystemDB); i++){
                     let shiftname = DBmethod().ShiftSystemNameGet(i)
-                    switch(i){
-                    case 0...3:
-                        earlyshiftlocationarray += self.GetShiftPositionArray(staffarraytmpnsstring, shiftname: shiftname)
+                    switch(shiftname.groupid){
+                    case 0:
+                        earlyshiftlocationarray += self.GetShiftPositionArray(staffarraytmpnsstring, shiftname: shiftname.name)
+                        
+                    case 1:
+                        center1shiftlocationarray += self.GetShiftPositionArray(staffarraytmpnsstring, shiftname: shiftname.name)
+                        
+                    case 2:
+                        center2shiftlocationarray += self.GetShiftPositionArray(staffarraytmpnsstring, shiftname: shiftname.name)
+                        
+                    case 3:
+                        center3shiftlocationarray += self.GetShiftPositionArray(staffarraytmpnsstring, shiftname: shiftname.name)
                         
                     case 4:
-                        center1shiftlocationarray += self.GetShiftPositionArray(staffarraytmpnsstring, shiftname: shiftname)
-                        
-                    case 5:
-                        center2shiftlocationarray += self.GetShiftPositionArray(staffarraytmpnsstring, shiftname: shiftname)
-                        
-                    case 6:
-                        center3shiftlocationarray += self.GetShiftPositionArray(staffarraytmpnsstring, shiftname: shiftname)
-                        
-                    case 7...9:
-                        lateshiftlocationarray += self.GetShiftPositionArray(staffarraytmpnsstring, shiftname: shiftname)
+                        lateshiftlocationarray += self.GetShiftPositionArray(staffarraytmpnsstring, shiftname: shiftname.name)
                         
                     default:
-                        break
+                        othershiftlocationarray += self.GetShiftPositionArray(staffarraytmpnsstring, shiftname: shiftname.name)
                     }
                 }
                 
@@ -321,6 +331,7 @@ class PDFmethod: UIViewController {
             center3shiftlocationarray = GetRemoveOverlapElementArray(center3shiftlocationarray)
             lateshiftlocationarray = GetRemoveOverlapElementArray(lateshiftlocationarray)
             holidayshiftlocationarray = GetRemoveOverlapElementArray(holidayshiftlocationarray)
+            othershiftlocationarray = GetRemoveOverlapElementArray(othershiftlocationarray)
             
             //中番で重なって検索に引っかかってしまった分を差し引きする
             var removevaluearray: [Int] = []
@@ -342,7 +353,7 @@ class PDFmethod: UIViewController {
             
             //要素数を比較して正しくシフト体制を認識できているかチェックする
             var count = 0
-            count = earlyshiftlocationarray.count + center1shiftlocationarray.count + center2shiftlocationarray.count + center3shiftlocationarray.count + lateshiftlocationarray.count + holidayshiftlocationarray.count
+            count = earlyshiftlocationarray.count + center1shiftlocationarray.count + center2shiftlocationarray.count + center3shiftlocationarray.count + lateshiftlocationarray.count + holidayshiftlocationarray.count + othershiftlocationarray.count
 
             if(count == monthrange.length){
                 earlyshiftlocationarray = earlyshiftlocationarray.sort()
@@ -351,6 +362,7 @@ class PDFmethod: UIViewController {
                 center3shiftlocationarray = center3shiftlocationarray.sort()
                 lateshiftlocationarray = lateshiftlocationarray.sort()
                 holidayshiftlocationarray = holidayshiftlocationarray.sort()
+                othershiftlocationarray = othershiftlocationarray.sort()
                 
                 //各配列に識別子を追加する
                 earlyshiftlocationarray.append(99999)
@@ -359,10 +371,11 @@ class PDFmethod: UIViewController {
                 center3shiftlocationarray.append(99999)
                 lateshiftlocationarray.append(99999)
                 holidayshiftlocationarray.append(99999)
+                othershiftlocationarray.append(99999)
                 
                 //日付分のループを開始
                 for(var i = 0; i < monthrange.length; i++){
-                    let dayshift = self.GetMinShiftPosition(earlyshiftlocationarray[0], center1: center1shiftlocationarray[0], center2: center2shiftlocationarray[0], center3: center3shiftlocationarray[0], late: lateshiftlocationarray[0], holiday: holidayshiftlocationarray[0])
+                    let dayshift = self.GetMinShiftPosition(earlyshiftlocationarray[0], center1: center1shiftlocationarray[0], center2: center2shiftlocationarray[0], center3: center3shiftlocationarray[0], late: lateshiftlocationarray[0], holiday: holidayshiftlocationarray[0], other: othershiftlocationarray[0])
                     
                     dayshiftarray[i] += staffname + ":" + dayshift + ","
                     
@@ -385,6 +398,9 @@ class PDFmethod: UIViewController {
                     case "休":
                         holidayshiftlocationarray.removeAtIndex(0)
                         
+                    case "他":
+                        othershiftlocationarray.removeAtIndex(0)
+                        
                     default:
                         break
                     }
@@ -392,7 +408,7 @@ class PDFmethod: UIViewController {
             //認識できないシフト名があった場合
             }else{
                 
-                let successshiftnamearray = self.GetWillRemoveShiftName(earlyshiftlocationarray.count, center1: center1shiftlocationarray.count, center2: center2shiftlocationarray.count, center3: center3shiftlocationarray.count, late: lateshiftlocationarray.count, holiday: holidayshiftlocationarray.count)
+                let successshiftnamearray = self.GetWillRemoveShiftName(earlyshiftlocationarray.count, center1: center1shiftlocationarray.count, center2: center2shiftlocationarray.count, center3: center3shiftlocationarray.count, late: lateshiftlocationarray.count, holiday: holidayshiftlocationarray.count, other: othershiftlocationarray.count)
                 
                 var messagetext = staffarraytmp
                 
