@@ -35,12 +35,11 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     let calenderbuttonnamearray = ["../images/backday.png","../images/nextday.png"]
     
     var currentnsdate = NSDate()        //MonthlySalaryShowがデータ表示している日付を管理
+    var pdfalltextarray: [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let AAA = PDFmethod().AllTextGet()
-        let BBB = PDFmethod().SplitDayShiftGet(AAA)
         currentnsdate = NSDate()
         
         //テキストビューの編集をできないようにする
@@ -100,6 +99,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     
     //pickerview,label,シフトの表示を更新する
     override func viewDidAppear(animated: Bool) {
+
         shiftlist.removeAllObjects()
         if(DBmethod().DBRecordCount(ShiftDB) != 0){
             for(var i = DBmethod().DBRecordCount(ShiftDB)-1; i >= 0; i--){
@@ -123,37 +123,207 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     let Libralypath = NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0] as String
     func savedata() {
 
-        progress.show(message: "Importing...", style: BlueDarkStyle())
-        
-        dispatch_async_global { // ここからバックグラウンドスレッド
+        if(self.appDelegate.filename.containsString(".xlsx")){
+            progress.show(message: "Importing...", style: BlueDarkStyle())
+            
+            dispatch_async_global { // ここからバックグラウンドスレッド
+
                 Shiftmethod().ShiftDBOneCoursRegist(self.appDelegate.filename, importpath: self.Libralypath+"/"+self.appDelegate.filename, update: self.appDelegate.update)
                 Shiftmethod().UserMonthlySalaryRegist(self.appDelegate.filename)
-
-            self.dispatch_async_main { // ここからメインスレッド
-                self.progress.dismiss({ () -> Void in
-                    
-                    /*pickerview,label,シフトの表示を更新する*/
-                    self.shiftlist.removeAllObjects()
-                    if(DBmethod().DBRecordCount(ShiftDB) != 0){
-                        for(var i = DBmethod().DBRecordCount(ShiftDB)-1; i >= 0; i--){
-                            self.shiftlist.addObject(DBmethod().ShiftDBGet(i))
+                
+                self.dispatch_async_main { // ここからメインスレッド
+                    self.progress.dismiss({ () -> Void in
+                        
+                        /*pickerview,label,シフトの表示を更新する*/
+                        self.shiftlist.removeAllObjects()
+                        if(DBmethod().DBRecordCount(ShiftDB) != 0){
+                            for(var i = DBmethod().DBRecordCount(ShiftDB)-1; i >= 0; i--){
+                                self.shiftlist.addObject(DBmethod().ShiftDBGet(i))
+                            }
+                            self.SaralyLabel.text = String(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB)-1))
                         }
-                        self.SaralyLabel.text = String(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB)-1))
-                    }
-                    
-                    self.myUIPicker.reloadAllComponents()
-                    
-                    let today = self.currentnsdate
-                    let date = self.ReturnYearMonthDayWeekday(today)
-                    self.ShowAllData(self.Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day)
-                    self.CalenderLabel.text = "\(date.year)年\(date.month)月\(date.day)日 (\(self.ReturnWeekday(date.weekday)))"
-                    
-                    let progress = GradientCircularProgress()
-                    progress.show(message: "Finished", style: BlueDarkStyle())
-                    progress.dismiss()
-                })
+                        
+                        self.myUIPicker.reloadAllComponents()
+                        
+                        let today = self.currentnsdate
+                        let date = self.ReturnYearMonthDayWeekday(today)
+                        self.ShowAllData(self.Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day)
+                        self.CalenderLabel.text = "\(date.year)年\(date.month)月\(date.day)日 (\(self.ReturnWeekday(date.weekday)))"
+                        
+                        let progress = GradientCircularProgress()
+                        progress.show(message: "Finished", style: BlueDarkStyle())
+                        progress.dismiss()
+                    })
+                }
+            }
+        //取り込みがPDFの場合
+        }else{
+            pdfalltextarray = PDFmethod().AllTextGet()
+            PDFmethod().SplitDayShiftGet(pdfalltextarray,controller: self)
+            
+            if(appDelegate.errorshiftname.count != 0){  //シフト認識エラーがある場合
+                self.AlertShow()
             }
         }
+    }
+    
+    func AlertShow(){
+        
+        let index = self.appDelegate.errorshiftname.startIndex.advancedBy(0)
+        let keys = self.appDelegate.errorshiftname.keys[index]
+        let values = self.appDelegate.errorshiftname.values[index]
+
+        var flag = false
+        
+        let alert:UIAlertController = UIAlertController(title:keys+"さんのシフトが取り込めません",
+            message: values + "\n\n" + "<シフトの名前> \n 例) 出勤 \n\n" + "<シフトのグループ> \n 例) 早番 or 中1 or 中2 or 中3 or 遅番 or 休み or その他 \n\n" + "<シフトの時間> \n 例) 開始時間が9時,終了時間が17時の場合は、9:00 17:00 \n シフトグループがその他の場合は、なし",
+            preferredStyle: UIAlertControllerStyle.Alert)
+        
+        let addAction:UIAlertAction = UIAlertAction(title: "追加",
+            style: UIAlertActionStyle.Default,
+            handler:{
+                (action:UIAlertAction!) -> Void in
+                let textFields:Array<UITextField>? =  alert.textFields as Array<UITextField>?
+                if textFields != nil {
+                    for textField:UITextField in textFields! {
+                        //各textにアクセス
+//                        print(textField.text)
+                        
+                        if(textField.text == ""){
+                            flag = false
+                        }else{
+                            flag = true
+                        }
+                    }
+                    
+                    if(flag){   //テキストフィールドに値が全て入っている場合
+                        
+                        if(textFields![1].text! == "休み"){
+                            let holidayrecord = self.CreateHolidayDBRecord(textFields![0].text!)
+                            DBmethod().AddandUpdate(holidayrecord, update: true)
+                            
+                        }else{
+                            let shiftsystemrecord = self.CreateShiftSystemDBRecord(textFields![0].text!, shiftgroup: textFields![1].text!, shifttime: textFields![2].text!)
+                            DBmethod().AddandUpdate(shiftsystemrecord, update: true)
+                        }
+                        
+                        self.savedata()
+                    }else{
+                        self.AlertShow()
+                    }
+                }
+        })
+        
+        alert.addAction(addAction)
+        
+        //シフト名入力用のtextfieldを追加
+        alert.addTextFieldWithConfigurationHandler({(text:UITextField!) -> Void in
+            text.placeholder = "シフトの名前を入力"
+            text.returnKeyType = .Done
+        })
+        
+        //シフト体制グループ用のtextfieldを追加
+        alert.addTextFieldWithConfigurationHandler({ (text:UITextField!) -> Void in
+            text.placeholder = "シフトのグループを入力"
+            text.returnKeyType = .Done
+        })
+        
+        //シフトの時間入力用のtextfieldを追加
+        alert.addTextFieldWithConfigurationHandler({ (text:UITextField!) -> Void in
+            text.placeholder = "シフトの時間を入力"
+            text.returnKeyType = .Done
+        })
+        
+        
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    //受け取ったテキストからHolidayDBのレコードを生成して返す関数
+    func CreateHolidayDBRecord(shiftname: String) -> HolidayDB{
+        let record = HolidayDB()
+        
+        record.id = DBmethod().DBRecordCount(HolidayDB)
+        record.name = shiftname
+        
+        return record
+    }
+    
+    //受け取ったテキストからShiftSystemDBのレコードを生成して返す関数
+    func CreateShiftSystemDBRecord(shiftname: String, shiftgroup: String, shifttime: String) -> ShiftSystemDB{
+        let record = ShiftSystemDB()
+        var gid = 0
+        var start = 0.0
+        var end = 0.0
+        
+        switch(shiftgroup){
+        case "早番":
+            gid = 0
+            
+        case "中1":
+            gid = 1
+            
+        case "中2":
+            gid = 2
+            
+        case "中3":
+            gid = 3
+            
+        case "遅番":
+            gid = 4
+            
+        default:    //その他
+            gid = 5
+        }
+        
+        if(shifttime == "なし"){
+            start = 0.0
+            end = 0.0
+        }else{
+            var index = shifttime.startIndex
+            var timearray: [Double] = []
+            
+            for(var i = 0; i < 2; i++){
+                var charactertmp = ""
+
+                while(shifttime[index] != ":"){
+                    charactertmp += String(shifttime[index])
+                    index = index.successor()
+                }
+                
+                let hour = Double(charactertmp)
+                index = index.successor()
+                charactertmp = ""
+                
+                while(String(shifttime[index]) != " "){
+                    
+                    charactertmp += String(shifttime[index])
+
+                    if(shifttime.endIndex.predecessor() != index){
+                        index = index.successor()
+                    }else{
+                        break
+                    }
+                }
+                
+                let minute = Double(charactertmp)! / 60.0
+
+                timearray.append(hour! + minute)
+                index = index.successor()
+                
+            }
+
+            start = timearray[0]
+            end = timearray[1]
+        }
+        
+        record.id = DBmethod().DBRecordCount(ShiftSystemDB)
+        record.name = shiftname
+        record.groupid = gid
+        record.starttime = start
+        record.endtime = end
+        
+        print(record)
+        return record
     }
     
     //並行処理で使用
