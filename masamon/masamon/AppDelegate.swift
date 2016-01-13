@@ -19,6 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var selectedcell: [Bool] = []               //ShiftGalleryTableで選択をしたセルを記録
     var storyboradid = ""
     var errorshiftname: [String:String] = [:]   //シフトの認識に失敗した場合に、スタッフ名と認識に失敗した文字列を格納する
+    var errorshiftnamefastcount = 0             //シフトの認識に失敗した場合の最初の失敗数を格納しておく変数
     
     func application(app: UIApplication, openURL url: NSURL, options: [String : AnyObject]) -> Bool {
         fileURL = ""
