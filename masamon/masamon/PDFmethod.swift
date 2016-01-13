@@ -391,6 +391,7 @@ class PDFmethod: UIViewController {
 
             if(count == monthrange.length){
                 
+                //正しく取り込めているが、シフト認識エラーとして記録されて残っている要素があれば削除する
                 if let _ = appDelegate.errorshiftname[staffname] {
                     appDelegate.errorshiftname.removeValueForKey(staffname)
                 }
