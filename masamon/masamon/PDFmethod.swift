@@ -314,7 +314,7 @@ class PDFmethod: UIViewController {
             
             //スタッフ名の抽出
             staffname = self.GetStaffName(staffarray[i], i: i)
-            print(staffname)
+//            print(staffname)
             staffarraytmp = staffarray[i]
             
             /*抽出したスタッフ名(マネージャーのMは除く)が1文字以下or4文字以上ならエラーとして記録
@@ -390,6 +390,13 @@ class PDFmethod: UIViewController {
             count = earlyshiftlocationarray.count + center1shiftlocationarray.count + center2shiftlocationarray.count + center3shiftlocationarray.count + lateshiftlocationarray.count + holidayshiftlocationarray.count + othershiftlocationarray.count
 
             if(count == monthrange.length){
+                
+                //正しく取り込めているが、シフト認識エラーとして記録されて残っている要素があれば削除する
+                if let _ = appDelegate.errorshiftname[staffname] {
+                    appDelegate.errorshiftname.removeValueForKey(staffname)
+                }
+                
+                
                 earlyshiftlocationarray = earlyshiftlocationarray.sort()
                 center1shiftlocationarray = center1shiftlocationarray.sort()
                 center2shiftlocationarray = center2shiftlocationarray.sort()
@@ -453,6 +460,7 @@ class PDFmethod: UIViewController {
                 appDelegate.errorshiftname[staffname] = messagetext
             }
         }
+        
 //        print(dayshiftarray)
         return dayshiftarray
     }

@@ -10,7 +10,7 @@ import UIKit
 import RealmSwift
 import GradientCircularProgress
 
-class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewDataSource{
+class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate{
     
     @IBOutlet weak var CalenderLabel: UILabel!
     @IBOutlet weak var EarlyShiftText: UITextView!
@@ -121,6 +121,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     //バックグラウンドで保存しながらプログレスを表示する
     let progress = GradientCircularProgress()
     let Libralypath = NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0] as String
+    var flag = true
     func savedata() {
 
         if(self.appDelegate.filename.containsString(".xlsx")){
@@ -161,7 +162,13 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             pdfalltextarray = PDFmethod().AllTextGet()
             PDFmethod().SplitDayShiftGet(pdfalltextarray,controller: self)
             
+//            let array: Array = Array(self.appDelegate.errorshiftname.keys)
+//            print(array)
             if(appDelegate.errorshiftname.count != 0){  //シフト認識エラーがある場合
+                if(flag){
+                    appDelegate.errorshiftnamefastcount = appDelegate.errorshiftname.count
+                    flag = false
+                }
                 self.AlertShow()
             }
         }
@@ -174,9 +181,10 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         let values = self.appDelegate.errorshiftname.values[index]
 
         var flag = false
-        
-        let alert:UIAlertController = UIAlertController(title:keys+"さんのシフトが取り込めません",
-            message: values + "\n\n" + "<シフトの名前> \n 例) 出勤 \n\n" + "<シフトのグループ> \n 例) 早番 or 中1 or 中2 or 中3 or 遅番 or 休み or その他 \n\n" + "<シフトの時間> \n 例) 開始時間が9時,終了時間が17時の場合は、9:00 17:00 \n シフトグループがその他の場合は、なし",
+        let AAA = appDelegate.errorshiftnamefastcount - appDelegate.errorshiftname.count
+        print(appDelegate.errorshiftname.count)
+        let alert:UIAlertController = UIAlertController(title:"\(AAA+1)/\(appDelegate.errorshiftnamefastcount)人" + "\n" + keys+"さんのシフトが取り込めません",
+            message: values + "\n\n" + "<シフトの名前> \n 例) 出勤 \n\n" + "<シフトのグループ> \n 例) 早番 or 中1 or 中2 or 中3 or 遅番 or 休み or その他 \n\n" + "<シフトの時間> \n 例) 開始時間が9時,終了時間が17時の場合は、9:00 17:00 \n 時間が不明な場合は、なし",
             preferredStyle: UIAlertControllerStyle.Alert)
         
         let addAction:UIAlertAction = UIAlertAction(title: "追加",
@@ -219,23 +227,47 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         //シフト名入力用のtextfieldを追加
         alert.addTextFieldWithConfigurationHandler({(text:UITextField!) -> Void in
             text.placeholder = "シフトの名前を入力"
-            text.returnKeyType = .Done
+            text.returnKeyType = .Next
+            text.tag = 1
+            text.delegate = self
         })
         
         //シフト体制グループ用のtextfieldを追加
         alert.addTextFieldWithConfigurationHandler({ (text:UITextField!) -> Void in
             text.placeholder = "シフトのグループを入力"
-            text.returnKeyType = .Done
+            text.returnKeyType = .Next
+            text.tag = 2
+            text.delegate = self
         })
         
         //シフトの時間入力用のtextfieldを追加
         alert.addTextFieldWithConfigurationHandler({ (text:UITextField!) -> Void in
             text.placeholder = "シフトの時間を入力"
-            text.returnKeyType = .Done
+            text.returnKeyType = .Next
+            text.tag = 3
+            text.delegate = self
         })
         
-        
         self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    //アラートに表示するテキストフィールドのreturnkeyをタップした時に呼ばれるメソッド
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+
+        if((textField.text?.isEmpty) != nil){
+            
+            //シフト名,シフトグループ名の場所にカーソルがある時はボタンを有効にする
+            switch(textField.tag){
+            case 1,2:
+                return true
+            default:
+                return false
+            }
+        }else{
+            return false
+        }
+        
+        
     }
     
     //受け取ったテキストからHolidayDBのレコードを生成して返す関数
@@ -322,7 +354,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         record.starttime = start
         record.endtime = end
         
-        print(record)
+//        print(record)
         return record
     }
     
