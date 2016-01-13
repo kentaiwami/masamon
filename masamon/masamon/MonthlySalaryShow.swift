@@ -10,7 +10,7 @@ import UIKit
 import RealmSwift
 import GradientCircularProgress
 
-class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewDataSource{
+class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate{
     
     @IBOutlet weak var CalenderLabel: UILabel!
     @IBOutlet weak var EarlyShiftText: UITextView!
@@ -161,8 +161,8 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             pdfalltextarray = PDFmethod().AllTextGet()
             PDFmethod().SplitDayShiftGet(pdfalltextarray,controller: self)
             
-            let array: Array = Array(self.appDelegate.errorshiftname.keys)
-            print(array)
+//            let array: Array = Array(self.appDelegate.errorshiftname.keys)
+//            print(array)
             if(appDelegate.errorshiftname.count != 0){  //シフト認識エラーがある場合
                 self.AlertShow()
             }
@@ -221,23 +221,47 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         //シフト名入力用のtextfieldを追加
         alert.addTextFieldWithConfigurationHandler({(text:UITextField!) -> Void in
             text.placeholder = "シフトの名前を入力"
-            text.returnKeyType = .Done
+            text.returnKeyType = .Next
+            text.tag = 1
+            text.delegate = self
         })
         
         //シフト体制グループ用のtextfieldを追加
         alert.addTextFieldWithConfigurationHandler({ (text:UITextField!) -> Void in
             text.placeholder = "シフトのグループを入力"
-            text.returnKeyType = .Done
+            text.returnKeyType = .Next
+            text.tag = 2
+            text.delegate = self
         })
         
         //シフトの時間入力用のtextfieldを追加
         alert.addTextFieldWithConfigurationHandler({ (text:UITextField!) -> Void in
             text.placeholder = "シフトの時間を入力"
-            text.returnKeyType = .Done
+            text.returnKeyType = .Next
+            text.tag = 3
+            text.delegate = self
         })
         
-        
         self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    //アラートに表示するテキストフィールドのreturnkeyをタップした時に呼ばれるメソッド
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+
+        if((textField.text?.isEmpty) != nil){
+            
+            //シフト名,シフトグループ名の場所にカーソルがある時はボタンを有効にする
+            switch(textField.tag){
+            case 1,2:
+                return true
+            default:
+                return false
+            }
+        }else{
+            return false
+        }
+        
+        
     }
     
     //受け取ったテキストからHolidayDBのレコードを生成して返す関数
