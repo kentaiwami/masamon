@@ -164,17 +164,70 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             
 //            let array: Array = Array(self.appDelegate.errorshiftname.keys)
 //            print(array)
+            
+            if(appDelegate.errorstaffname.count != 0){  //スタッフ名認識エラーがある場合
+                self.StaffNameErrorAlertShow()
+            }
+            
             if(appDelegate.errorshiftname.count != 0){  //シフト認識エラーがある場合
                 if(flag){
                     appDelegate.errorshiftnamefastcount = appDelegate.errorshiftname.count
                     flag = false
                 }
-                self.AlertShow()
+                self.StaffShiftErrorAlertShow()
             }
         }
     }
     
-    func AlertShow(){
+    //スタッフ名認識エラーがある場合に表示してデータ入力をさせるためのアラート
+    func StaffNameErrorAlertShow(){
+        let errorstaffnametext = appDelegate.errorstaffname
+        
+        let alert:UIAlertController = UIAlertController(title:"スタッフ名が認識できませんでした",
+            message: errorstaffnametext[0],
+            preferredStyle: UIAlertControllerStyle.Alert)
+        
+        let addAction:UIAlertAction = UIAlertAction(title: "追加",
+            style: UIAlertActionStyle.Default,
+            handler:{
+                (action:UIAlertAction!) -> Void in
+                let textFields:Array<UITextField>? =  alert.textFields as Array<UITextField>?
+                if textFields != nil {
+                    
+                    if(textFields![0].text != ""){   //テキストフィールドに値が入っている場合
+                        
+                        let staffnamerecord = StaffNameDB()
+                        staffnamerecord.id = DBmethod().DBRecordCount(StaffNameDB)
+                        staffnamerecord.name = textFields![0].text!
+                        
+                        DBmethod().AddandUpdate(staffnamerecord, update: true)
+                        
+                        self.savedata()
+                    }else{
+                        self.StaffNameErrorAlertShow()
+                    }
+                }
+        })
+        
+        alert.addAction(addAction)
+        
+        //シフト名入力用のtextfieldを追加
+        alert.addTextFieldWithConfigurationHandler({(text:UITextField!) -> Void in
+            text.placeholder = "スタッフ名の入力"
+            text.returnKeyType = .Next
+            text.tag = 0
+            text.delegate = self
+        })
+        
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    
+    
+    
+    
+    //シフト認識エラーがある場合に表示してデータ入力をさせるためのアラート
+    func StaffShiftErrorAlertShow(){
         
         let index = self.appDelegate.errorshiftname.startIndex.advancedBy(0)
         let keys = self.appDelegate.errorshiftname.keys[index]
@@ -182,7 +235,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
 
         var flag = false
         let AAA = appDelegate.errorshiftnamefastcount - appDelegate.errorshiftname.count
-        print(appDelegate.errorshiftname.count)
+//        print(appDelegate.errorshiftname.count)
         let alert:UIAlertController = UIAlertController(title:"\(AAA+1)/\(appDelegate.errorshiftnamefastcount)人" + "\n" + keys+"さんのシフトが取り込めません",
             message: values + "\n\n" + "<シフトの名前> \n 例) 出勤 \n\n" + "<シフトのグループ> \n 例) 早番 or 中1 or 中2 or 中3 or 遅番 or 休み or その他 \n\n" + "<シフトの時間> \n 例) 開始時間が9時,終了時間が17時の場合は、9:00 17:00 \n 時間が不明な場合は、なし",
             preferredStyle: UIAlertControllerStyle.Alert)
@@ -217,7 +270,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                         
                         self.savedata()
                     }else{
-                        self.AlertShow()
+                        self.StaffShiftErrorAlertShow()
                     }
                 }
         })
@@ -236,7 +289,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         alert.addTextFieldWithConfigurationHandler({ (text:UITextField!) -> Void in
             text.placeholder = "シフトのグループを入力"
             text.returnKeyType = .Next
-            text.tag = 2
+            text.tag = 1
             text.delegate = self
         })
         
@@ -244,7 +297,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         alert.addTextFieldWithConfigurationHandler({ (text:UITextField!) -> Void in
             text.placeholder = "シフトの時間を入力"
             text.returnKeyType = .Next
-            text.tag = 3
+            text.tag = 0
             text.delegate = self
         })
         
@@ -258,7 +311,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             
             //シフト名,シフトグループ名の場所にカーソルがある時はボタンを有効にする
             switch(textField.tag){
-            case 1,2:
+            case 1:
                 return true
             default:
                 return false

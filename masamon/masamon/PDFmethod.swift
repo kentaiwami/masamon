@@ -279,7 +279,6 @@ class PDFmethod: UIViewController {
     func SplitDayShiftGet(var staffarray: Array<String>, controller: UIViewController) -> Array<String>{
         
         var dayshiftarray: [String] = []        //1日ごとのシフトを記録
-        var errorstaff: [String] = []           //スタッフ名の抽出がうまくいかなかったスタッフのシフトを記録
         
         //1クールが全部で何日間あるかを判断するため
         let shiftyearandmonth = Shiftmethod().JudgeYearAndMonth(staffarray[0])
@@ -322,8 +321,18 @@ class PDFmethod: UIViewController {
             */
             let removem = staffname.stringByReplacingOccurrencesOfString("M", withString: "")
             if(removem.characters.count <= 1 || removem.characters.count >= 4){
-                errorstaff.append(staffarraytmp)
+                appDelegate.errorstaffname.append(staffarraytmp)
             }else{
+                //スタッフ名を正しく認識しているがエラーとして記録されている場合は削除する
+                for(var i = 0; i < appDelegate.errorstaffname.count; i++){
+                    let errorstaffnametext = appDelegate.errorstaffname[i]
+                    
+                    if(errorstaffnametext.containsString(staffname)){
+                        appDelegate.errorstaffname.removeAtIndex(i)
+                        break
+                    }
+                }
+                
                 let staffarraytmpnsstring = staffarraytmp as NSString
                 
                 
