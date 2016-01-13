@@ -390,6 +390,12 @@ class PDFmethod: UIViewController {
             count = earlyshiftlocationarray.count + center1shiftlocationarray.count + center2shiftlocationarray.count + center3shiftlocationarray.count + lateshiftlocationarray.count + holidayshiftlocationarray.count + othershiftlocationarray.count
 
             if(count == monthrange.length){
+                
+                if let _ = appDelegate.errorshiftname[staffname] {
+                    appDelegate.errorshiftname.removeValueForKey(staffname)
+                }
+                
+                
                 earlyshiftlocationarray = earlyshiftlocationarray.sort()
                 center1shiftlocationarray = center1shiftlocationarray.sort()
                 center2shiftlocationarray = center2shiftlocationarray.sort()

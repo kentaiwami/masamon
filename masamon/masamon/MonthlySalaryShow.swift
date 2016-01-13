@@ -161,6 +161,8 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             pdfalltextarray = PDFmethod().AllTextGet()
             PDFmethod().SplitDayShiftGet(pdfalltextarray,controller: self)
             
+            let array: Array = Array(self.appDelegate.errorshiftname.keys)
+            print(array)
             if(appDelegate.errorshiftname.count != 0){  //シフト認識エラーがある場合
                 self.AlertShow()
             }
