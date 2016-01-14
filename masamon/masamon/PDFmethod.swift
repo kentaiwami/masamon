@@ -290,6 +290,7 @@ class PDFmethod: UIViewController {
     //スタッフのシフトを日にちごとに分けたArrayを返す
     func SplitDayShiftGet(var staffarray: Array<String>, controller: UIViewController) -> Array<String>{
         
+        //データを削除して初期化する
         appDelegate.errorstaffname.removeAll()
         appDelegate.errorshiftname.removeAll()
         
