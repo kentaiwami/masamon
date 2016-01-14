@@ -121,7 +121,8 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     //バックグラウンドで保存しながらプログレスを表示する
     let progress = GradientCircularProgress()
     let Libralypath = NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0] as String
-    var flag = true
+    var staffshiftcountflag = true
+    var staffnamecountflag = true
     func savedata() {
 
         if(self.appDelegate.filename.containsString(".xlsx")){
@@ -162,17 +163,18 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             pdfalltextarray = PDFmethod().AllTextGet()
             PDFmethod().SplitDayShiftGet(pdfalltextarray,controller: self)
             
-//            let array: Array = Array(self.appDelegate.errorshiftname.keys)
-//            print(array)
-            
             if(appDelegate.errorstaffname.count != 0){  //スタッフ名認識エラーがある場合
+                if(staffnamecountflag){
+                    appDelegate.errorstaffnamefastcount = appDelegate.errorstaffname.count
+                    staffnamecountflag = false
+                }
                 self.StaffNameErrorAlertShow()
             }
             
             if(appDelegate.errorshiftname.count != 0){  //シフト認識エラーがある場合
-                if(flag){
+                if(staffshiftcountflag){
                     appDelegate.errorshiftnamefastcount = appDelegate.errorshiftname.count
-                    flag = false
+                    staffshiftcountflag = false
                 }
                 self.StaffShiftErrorAlertShow()
             }
@@ -182,8 +184,9 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     //スタッフ名認識エラーがある場合に表示してデータ入力をさせるためのアラート
     func StaffNameErrorAlertShow(){
         let errorstaffnametext = appDelegate.errorstaffname
-        print(errorstaffnametext.count)
-        let alert:UIAlertController = UIAlertController(title:"スタッフ名が認識できませんでした",
+        let AAA = appDelegate.errorstaffnamefastcount - appDelegate.errorstaffname.count
+        
+        let alert:UIAlertController = UIAlertController(title:"\(AAA+1)/\(appDelegate.errorstaffnamefastcount)人    スタッフ名が認識できませんでした",
             message: errorstaffnametext[0],
             preferredStyle: UIAlertControllerStyle.Alert)
         
