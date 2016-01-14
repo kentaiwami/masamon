@@ -556,6 +556,23 @@ class PDFmethod: UIViewController {
         }
         
 //        print(dayshiftarray)
+        
+        let file_name = "TEST.txt"
+        let text = dayshiftarray[0]
+        
+        if let dir : NSString = NSSearchPathForDirectoriesInDomains( NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.AllDomainsMask, true ).first {
+            
+            let path_file_name = dir.stringByAppendingPathComponent(file_name)
+            
+            do {
+                
+                try text.writeToFile(path_file_name, atomically: false, encoding: NSUTF8StringEncoding )
+                
+            } catch {
+                //エラー処理
+            }
+        }
+        
         return dayshiftarray
     }
 }
