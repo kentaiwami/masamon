@@ -201,22 +201,103 @@ class PDFmethod: UIViewController {
         return removedshiftstring
     }
     
-    //受け取った数値の中で一番小さい値のシフト体制を返す関数
-    func GetMinShiftPosition(early: Int, center1: Int, center2: Int, center3: Int, late: Int, holiday: Int, other: Int) -> String{
-        var shiftname = ""
+    //受け取った数値の中で一番小さい値とシフト区分を返す関数
+    func GetMinShiftPositionAndGroup(early: Int, center1: Int, center2: Int, center3: Int, late: Int, holiday: Int, other: Int) -> (shiftgroup: String, shiftposition: Int){
+        var sg = ""
+        var sp = 0
+        
         let dict: [String:Int] = ["早":early, "中1":center1, "中2":center2, "中3":center3, "遅": late, "休":holiday, "他":other]
         
         var values : Array = Array(dict.values)
         values = values.sort()
         
         for (key, value) in dict {
+                
             if(values[0] == value){
-                shiftname = key
+                sg = key
+                sp = value
                 break
             }
         }
         
-        return shiftname
+        return (sg, sp)
+    }
+    
+    //受け取ったスタッフ1行分のテキストと位置情報からシフト名を取り出す関数
+    func GetShiftNameFromOneLineText(text: String, sg: String, var sp: Int) -> String{
+        var result = ""
+        var shiftnamearray: [String] = []
+        var character = text[text.startIndex.advancedBy(sp)]
+
+        //シフト区分によって比較対象にする配列の内容を変える処理
+        switch(sg){
+        case "早":
+            let dbarray = DBmethod().ShiftSystemNameArrayGetByGroudid(0)
+            for(var i = 0; i < dbarray.count; i++){
+                shiftnamearray.append(dbarray[i].name)
+            }
+            
+        case "中1":
+            let dbarray = DBmethod().ShiftSystemNameArrayGetByGroudid(1)
+            for(var i = 0; i < dbarray.count; i++){
+                shiftnamearray.append(dbarray[i].name)
+            }
+            
+        case "中2":
+            let dbarray = DBmethod().ShiftSystemNameArrayGetByGroudid(2)
+            for(var i = 0; i < dbarray.count; i++){
+                shiftnamearray.append(dbarray[i].name)
+            }
+            
+        case "中3":
+            let dbarray = DBmethod().ShiftSystemNameArrayGetByGroudid(3)
+            for(var i = 0; i < dbarray.count; i++){
+                shiftnamearray.append(dbarray[i].name)
+            }
+            
+        case "遅":
+            let dbarray = DBmethod().ShiftSystemNameArrayGetByGroudid(4)
+            for(var i = 0; i < dbarray.count; i++){
+                shiftnamearray.append(dbarray[i].name)
+            }
+            
+        case "休":
+            shiftnamearray = DBmethod().HolidayNameArrayGet()
+            
+        case "他":
+            let dbarray = DBmethod().ShiftSystemNameArrayGetByGroudid(5)
+            for(var i = 0; i < dbarray.count; i++){
+                shiftnamearray.append(dbarray[i].name)
+            }
+            
+        default:
+            break
+        }
+
+        for(var i = 0; i < shiftnamearray.count; i++){
+
+            let tmp = shiftnamearray[i]
+            var dbindex = tmp.startIndex
+
+            while(dbindex != shiftnamearray[i].endIndex){
+
+                if(tmp[dbindex] == character){
+                    result += String(tmp[dbindex])
+                    dbindex = dbindex.successor()
+                    sp++
+                    character = text[text.startIndex.advancedBy(sp)]
+                }else{
+                    result = ""
+                    break
+                }
+            }
+            
+            if(result.characters.count == tmp.characters.count){
+                return result
+            }
+        }
+        
+        return result
     }
     
     //受け取った配列の重複要素を削除した配列を返す
@@ -344,7 +425,7 @@ class PDFmethod: UIViewController {
         }
         
         //スタッフの人数分(配列の最後まで)繰り返す
-//        for(var i = 18; i < 19; i++){
+//        for(var i = 1; i < 2; i++){
 
         for(var i = 1; i < staffarray.count; i++){
         
@@ -490,7 +571,7 @@ class PDFmethod: UIViewController {
             //要素数を比較して正しくシフト体制を認識できているかチェックする
             var count = 0
             count = earlyshiftlocationarray.count + center1shiftlocationarray.count + center2shiftlocationarray.count + center3shiftlocationarray.count + lateshiftlocationarray.count + holidayshiftlocationarray.count + othershiftlocationarray.count
-            print(staffname + "  " + String(count))
+//            print(staffname + "  " + String(count))
             if(count == monthrange.length){
                 
                 //正しく取り込めているが、シフト認識エラーとして記録されて残っている要素があれば削除する
@@ -510,11 +591,14 @@ class PDFmethod: UIViewController {
                 
                 //日付分のループを開始
                 for(var i = 0; i < monthrange.length; i++){
-                    let dayshift = self.GetMinShiftPosition(earlyshiftlocationarray[0], center1: center1shiftlocationarray[0], center2: center2shiftlocationarray[0], center3: center3shiftlocationarray[0], late: lateshiftlocationarray[0], holiday: holidayshiftlocationarray[0], other: othershiftlocationarray[0])
                     
-                    dayshiftarray[i] += staffname + ":" + dayshift + ","
+                    //シフトの位置が一番小さい値とそのシフト区分を取得する
+                    let dayshift = self.GetMinShiftPositionAndGroup(earlyshiftlocationarray[0], center1: center1shiftlocationarray[0], center2: center2shiftlocationarray[0], center3: center3shiftlocationarray[0], late: lateshiftlocationarray[0], holiday: holidayshiftlocationarray[0], other: othershiftlocationarray[0])
                     
-                    switch(dayshift){
+                    //シフトの名前をテキストから取得する
+                    let staffshift = self.GetShiftNameFromOneLineText(staffarraytmp, sg: dayshift.shiftgroup, sp: dayshift.shiftposition)
+                    
+                    switch(dayshift.shiftgroup){
                     case "早":
                         earlyshiftlocationarray.removeAtIndex(0)
                         
@@ -539,6 +623,9 @@ class PDFmethod: UIViewController {
                     default:
                         break
                     }
+                    
+                    dayshiftarray[i] += staffname + ":" + staffshift + ","
+                    
                 }
             //認識できないシフト名があった場合
             }else{

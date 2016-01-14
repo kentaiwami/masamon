@@ -215,7 +215,7 @@ class DBmethod: UIViewController {
         return record
     }
     
-    //受け取ったgroupidをShiftSystemから検索し、該当するShiftSystemのnameを配列で返す
+    //受け取ったgroupidをShiftSystemから検索し、該当するShiftSystemのレコードを配列で返す
     func ShiftSystemNameArrayGetByGroudid(groupid: Int) -> Results<ShiftSystemDB>{
         
         let realm = try! Realm()
