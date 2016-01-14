@@ -255,22 +255,6 @@ class DBmethod: UIViewController {
     }
     
     
-    /****************HolidayDB関連メソッド*************/
-    
-    //休暇を示すシフト名を配列で返す関数
-    func HolidayNameGet() -> Array<String>{
-        var array: [String] = []
-        let realm = try! Realm()
-
-        for(var i = 0; i < DBmethod().DBRecordCount(HolidayDB); i++){
-            let name = realm.objects(HolidayDB).filter("id = %@",i)[0].name
-            array.append(name)
-        }
-        
-        return array
-    }
-    
-    
     
     /****************StaffNameDB関連メソッド*************/
     

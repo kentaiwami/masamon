@@ -112,7 +112,7 @@ class PDFmethod: UIViewController {
         
         var staffname = ""
         var position = 0
-        let holidaynamearray: [String] = DBmethod().HolidayNameGet()
+        let holidaynamearray: [String] = DBmethod().HolidayNameArrayGet()
         var holidaynametopcharacter: [String] = []
         let shiftsystemnamearray: [String] = DBmethod().ShiftSystemNameArrayGet()
         var shiftsystemnametopcharacter: [String] = []
@@ -286,6 +286,18 @@ class PDFmethod: UIViewController {
         return array
     }
     
+    //スタッフ名に含まれているシフト体制を検索して結果を返す関数
+    func AAA(staffname: String){
+
+        let shiftarray = DBmethod().ShiftSystemNameArrayGet()
+        let holiday = DBmethod().HolidayNameArrayGet()
+        let shift = shiftarray + holiday
+
+        for(var i = 0; i < shift.count; i++){
+            
+        }
+    }
+    
     
     //スタッフのシフトを日にちごとに分けたArrayを返す
     func SplitDayShiftGet(var staffarray: Array<String>) -> Array<String>{
@@ -392,7 +404,7 @@ class PDFmethod: UIViewController {
             holidayshiftlocationarray = GetRemoveOverlapElementArray(holidayshiftlocationarray)
             othershiftlocationarray = GetRemoveOverlapElementArray(othershiftlocationarray)
             
-            //中番で重なって検索に引っかかってしまった分を差し引きする
+            //中番で重なって検索に引っかかってしまった分の要素を削除する
             var removevaluearray: [Int] = []
             for(var i = 0; i < center1shiftlocationarray.count; i++){
                 
@@ -404,16 +416,26 @@ class PDFmethod: UIViewController {
                     removevaluearray.append(center1shiftlocationarray[i])
                 }
             }
-            
             for(var i = 0; i < removevaluearray.count; i++){
                 center1shiftlocationarray.removeObject(removevaluearray[i])
             }
             
             
+            //スタッフ名にシフト名が含まれている場合に、カウントされてしまうため要素を削除する
+            //TODO: 関数へスタッフ名を渡す
+            
+            //TODO: もし、tmpに配列[i]が含まれていたらtmpから配列[i]を削除
+            //TODO: もし、tmp == ""ならbreak
+            //TODO: ループ抜けたら、配列[i]が何番かを判断する
+            //TODO: 該当する番(早?中1?...休み？)を
+            
+            
+            
+            
             //要素数を比較して正しくシフト体制を認識できているかチェックする
             var count = 0
             count = earlyshiftlocationarray.count + center1shiftlocationarray.count + center2shiftlocationarray.count + center3shiftlocationarray.count + lateshiftlocationarray.count + holidayshiftlocationarray.count + othershiftlocationarray.count
-
+            print(staffname + "  " + String(count))
             if(count == monthrange.length){
                 
                 //正しく取り込めているが、シフト認識エラーとして記録されて残っている要素があれば削除する
