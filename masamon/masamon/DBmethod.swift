@@ -102,6 +102,12 @@ class DBmethod: UIViewController {
     }
 
     
+    
+    
+    
+    
+    /****************HolidayDB関連メソッド*************/
+
     //休暇を示すシフト体制の文字を配列にして返す
     func HolidayNameArrayGet() -> Array<String>{
         var array: [String] = []
@@ -114,6 +120,13 @@ class DBmethod: UIViewController {
         }
         
         return array
+    }
+    
+    //休暇を示すシフト体制のレコードを配列で返す関数
+    func HolidayAllRecordGet() -> Results<HolidayDB>{
+        let realm = try! Realm()
+        
+        return realm.objects(HolidayDB)
     }
     
     
@@ -222,6 +235,12 @@ class DBmethod: UIViewController {
         }
         
         return array
+    }
+    
+    func ShiftSystemAllRecordGet() -> Results<ShiftSystemDB>{
+        let realm = try! Realm()
+        
+        return realm.objects(ShiftSystemDB)
     }
     
 

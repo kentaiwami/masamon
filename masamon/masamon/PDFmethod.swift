@@ -287,15 +287,38 @@ class PDFmethod: UIViewController {
     }
     
     //スタッフ名に含まれているシフト体制を検索して結果を返す関数
-    func AAA(staffname: String){
+    func IncludeShiftNameInStaffName(var staffname: String) -> Array<Int>{
 
-        let shiftarray = DBmethod().ShiftSystemNameArrayGet()
-        let holiday = DBmethod().HolidayNameArrayGet()
-        let shift = shiftarray + holiday
-
-        for(var i = 0; i < shift.count; i++){
+        let shiftarray = DBmethod().ShiftSystemAllRecordGet()
+        let holiday = DBmethod().HolidayAllRecordGet()
+        
+        var groupidarray: [Int] = []
+        
+        //出勤シフトを見つけるループ処理
+        for(var i = 0; i < shiftarray.count; i++){
             
+            if(staffname.characters.count == 0){
+                return groupidarray
+
+            }else if(staffname.containsString(shiftarray[i].name)){
+                staffname = staffname.stringByReplacingOccurrencesOfString(shiftarray[i].name, withString: "")
+                groupidarray.append(shiftarray[i].groupid)
+            }
         }
+        
+        //休暇シフトを見つけるループ処理
+        for(var i = 0; i < holiday.count; i++){
+            
+            if(staffname.characters.count == 0){
+                return groupidarray
+                
+            }else if(staffname.containsString(holiday[i].name)){
+                staffname = staffname.stringByReplacingOccurrencesOfString(holiday[i].name, withString: "")
+                groupidarray.append(999)
+            }
+        }
+        
+        return groupidarray
     }
     
     
@@ -421,13 +444,45 @@ class PDFmethod: UIViewController {
             }
             
             
-            //スタッフ名にシフト名が含まれている場合に、カウントされてしまうため要素を削除する
-            //TODO: 関数へスタッフ名を渡す
+            //要素を昇順でソートする
+            earlyshiftlocationarray = earlyshiftlocationarray.sort()
+            center1shiftlocationarray = center1shiftlocationarray.sort()
+            center2shiftlocationarray = center2shiftlocationarray.sort()
+            center3shiftlocationarray = center3shiftlocationarray.sort()
+            lateshiftlocationarray = lateshiftlocationarray.sort()
+            holidayshiftlocationarray = holidayshiftlocationarray.sort()
+            othershiftlocationarray = othershiftlocationarray.sort()
             
-            //TODO: もし、tmpに配列[i]が含まれていたらtmpから配列[i]を削除
-            //TODO: もし、tmp == ""ならbreak
-            //TODO: ループ抜けたら、配列[i]が何番かを判断する
-            //TODO: 該当する番(早?中1?...休み？)を
+            
+            //スタッフ名にシフト名が含まれている場合に、カウントされてしまうため要素を削除する
+            let includeshiftnamearray = self.IncludeShiftNameInStaffName(staffname)
+            if(includeshiftnamearray.count != 0){
+                
+                for(var i = 0; i < includeshiftnamearray.count; i++){
+                    switch(includeshiftnamearray[i]){
+                    case 0:
+                        earlyshiftlocationarray.removeAtIndex(0)
+                        
+                    case 1:
+                        center1shiftlocationarray.removeAtIndex(0)
+                        
+                    case 2:
+                        center2shiftlocationarray.removeAtIndex(0)
+                        
+                    case 3:
+                        center3shiftlocationarray.removeAtIndex(0)
+                        
+                    case 4:
+                        lateshiftlocationarray.removeAtIndex(0)
+                        
+                    case 999:
+                        holidayshiftlocationarray.removeAtIndex(0)
+                        
+                    default:
+                        othershiftlocationarray.removeAtIndex(0)
+                    }
+                }
+            }
             
             
             
@@ -443,14 +498,6 @@ class PDFmethod: UIViewController {
                     appDelegate.errorshiftname.removeValueForKey(staffname)
                 }
                 
-                
-                earlyshiftlocationarray = earlyshiftlocationarray.sort()
-                center1shiftlocationarray = center1shiftlocationarray.sort()
-                center2shiftlocationarray = center2shiftlocationarray.sort()
-                center3shiftlocationarray = center3shiftlocationarray.sort()
-                lateshiftlocationarray = lateshiftlocationarray.sort()
-                holidayshiftlocationarray = holidayshiftlocationarray.sort()
-                othershiftlocationarray = othershiftlocationarray.sort()
                 
                 //各配列に識別子を追加する
                 earlyshiftlocationarray.append(99999)
