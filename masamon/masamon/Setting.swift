@@ -415,9 +415,7 @@ class Setting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource,UI
     }
     
     override func viewWillAppear(animated: Bool) {
-        
-        appDelegate.storyboradid = self.restorationIdentifier!
-        
+                
         super.viewWillAppear(animated)
         
         let notificationCenter = NSNotificationCenter.defaultCenter()

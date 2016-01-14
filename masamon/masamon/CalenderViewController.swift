@@ -72,10 +72,6 @@ class CalenderViewController: UIViewController {
         super.didReceiveMemoryWarning()
     }
     
-    override func viewWillAppear(animated: Bool) {
-        appDelegate.storyboradid = self.restorationIdentifier!
-    }
-    
     func CalenderViewDidLoad(){
         calendarBar.backgroundColor = UIColor.hex("FF8E92", alpha: 1.0)
         prevMonthButton.backgroundColor = UIColor.hex("FF8E92", alpha: 1.0)
