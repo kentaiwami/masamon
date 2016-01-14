@@ -403,6 +403,47 @@ class PDFmethod: UIViewController {
     }
     
     
+    //配列をまたがって重複している要素を削除する関数
+    func AAA(early: Array<Int>, center1: Array<Int>, center2: Array<Int>, center3: Array<Int>, late: Array<Int>, holiday: Array<Int>, other: Array<Int>) ->
+        (removedearly: Array<Int>, removedcenter1: Array<Int>, removedcenter2: Array<Int>, removedcenter3: Array<Int>, removedlate: Array<Int>, removedholiday: Array<Int>,
+        removedother: Array<Int>){
+            
+            var e: [Int] = []
+            var c1: [Int] = []
+            var c2: [Int] = []
+            var c3: [Int] = []
+            var l: [Int] = []
+            var h: [Int] = []
+            var o: [Int] = []
+            
+            
+            //TODO: ShiftSystemDBからレコードの配列を受け取る
+            let shiftsystemall = DBmethod().ShiftSystemAllRecordGet()
+            
+            //TODO: HolidayDBからレコードの配列を受け取る
+            let holidayall = DBmethod().HolidayAllRecordGet()
+            
+            
+            
+            
+        
+//        var A = [1,2,3]
+//        let B = [2,3]
+//        
+//        //        print(Set(A).intersect(B))
+//        let C = Set(A).intersect(B)
+//        for(var i = 0; i < C.count; i++){
+//            A.removeObject(C[C.startIndex.advancedBy(i)])
+//            print(C[C.startIndex.advancedBy(i)])
+//        }
+//        print(A)
+        
+        
+        
+        return (e,c1,c2,c3,l,h,o)
+    }
+    
+    
     //スタッフのシフトを日にちごとに分けたArrayを返す
     func SplitDayShiftGet(var staffarray: Array<String>) -> Array<String>{
         
@@ -525,6 +566,18 @@ class PDFmethod: UIViewController {
             }
             
             
+            //配列をまたがって重複している要素を削除する
+            let ABC = self.AAA(earlyshiftlocationarray, center1: center1shiftlocationarray, center2: center2shiftlocationarray, center3: center3shiftlocationarray, late: lateshiftlocationarray, holiday: holidayshiftlocationarray, other: othershiftlocationarray)
+            earlyshiftlocationarray = ABC.removedearly
+            center1shiftlocationarray = ABC.removedcenter1
+            center2shiftlocationarray = ABC.removedcenter2
+            center3shiftlocationarray = ABC.removedcenter3
+            lateshiftlocationarray = ABC.removedlate
+            holidayshiftlocationarray = ABC.removedholiday
+            othershiftlocationarray = ABC.removedother
+            
+//            print(Set(center1shiftlocationarray).intersect(center1shiftlocationarray))
+            
             //要素を昇順でソートする
             earlyshiftlocationarray = earlyshiftlocationarray.sort()
             center1shiftlocationarray = center1shiftlocationarray.sort()
@@ -571,7 +624,7 @@ class PDFmethod: UIViewController {
             //要素数を比較して正しくシフト体制を認識できているかチェックする
             var count = 0
             count = earlyshiftlocationarray.count + center1shiftlocationarray.count + center2shiftlocationarray.count + center3shiftlocationarray.count + lateshiftlocationarray.count + holidayshiftlocationarray.count + othershiftlocationarray.count
-//            print(staffname + "  " + String(count))
+            print(staffname + "  " + String(count))
             if(count == monthrange.length){
                 
                 //正しく取り込めているが、シフト認識エラーとして記録されて残っている要素があれば削除する
