@@ -165,18 +165,17 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                     staffnamecountflag = false
                 }
                 self.StaffNameErrorAlertShow()
-            }
-            
-            if(appDelegate.errorshiftname.count != 0){  //シフト認識エラーがある場合
-                if(staffshiftcountflag){
-                    appDelegate.errorshiftnamefastcount = appDelegate.errorshiftname.count
-                    staffshiftcountflag = false
+            }else{
+                if(appDelegate.errorshiftname.count != 0){  //シフト認識エラーがある場合
+                    if(staffshiftcountflag){
+                        appDelegate.errorshiftnamefastcount = appDelegate.errorshiftname.count
+                        staffshiftcountflag = false
+                    }
+                    self.StaffShiftErrorAlertShow()
                 }
-                self.StaffShiftErrorAlertShow()
             }
         }
         
-        print(PDFmethod().SplitDayShiftGet(pdfalltextarray))
     }
     
     //スタッフ名認識エラーがある場合に表示してデータ入力をさせるためのアラート
