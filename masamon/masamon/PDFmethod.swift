@@ -291,6 +291,7 @@ class PDFmethod: UIViewController {
     func SplitDayShiftGet(var staffarray: Array<String>, controller: UIViewController) -> Array<String>{
         
         appDelegate.errorstaffname.removeAll()
+        appDelegate.errorshiftname.removeAll()
         
         var dayshiftarray: [String] = []        //1日ごとのシフトを記録
         
