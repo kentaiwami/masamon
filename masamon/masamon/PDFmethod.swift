@@ -98,6 +98,18 @@ class PDFmethod: UIViewController {
     i         => ループの回数(stafftextの先頭についている数値)
     */
     func GetStaffName(stafftext: String, i: Int) -> String{
+        
+        //もし、データベースに登録しているスタッフ名があった場合はそれを返す
+        if(DBmethod().StaffNameArrayGet() != nil){
+            let staffnamearray = DBmethod().StaffNameArrayGet()
+            for(var i = 0; i < staffnamearray!.count; i++){
+                if(stafftext.containsString(staffnamearray![i])){
+                    return staffnamearray![i]
+                }
+            }
+        }
+        
+        
         var staffname = ""
         var position = 0
         let holidaynamearray: [String] = DBmethod().HolidayNameGet()
@@ -277,6 +289,8 @@ class PDFmethod: UIViewController {
     
     //スタッフのシフトを日にちごとに分けたArrayを返す
     func SplitDayShiftGet(var staffarray: Array<String>, controller: UIViewController) -> Array<String>{
+        
+        appDelegate.errorstaffname.removeAll()
         
         var dayshiftarray: [String] = []        //1日ごとのシフトを記録
         

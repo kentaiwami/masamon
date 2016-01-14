@@ -182,7 +182,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     //スタッフ名認識エラーがある場合に表示してデータ入力をさせるためのアラート
     func StaffNameErrorAlertShow(){
         let errorstaffnametext = appDelegate.errorstaffname
-        
+        print(errorstaffnametext.count)
         let alert:UIAlertController = UIAlertController(title:"スタッフ名が認識できませんでした",
             message: errorstaffnametext[0],
             preferredStyle: UIAlertControllerStyle.Alert)
@@ -319,8 +319,6 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         }else{
             return false
         }
-        
-        
     }
     
     //受け取ったテキストからHolidayDBのレコードを生成して返す関数

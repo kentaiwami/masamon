@@ -269,5 +269,26 @@ class DBmethod: UIViewController {
         
         return array
     }
+    
+    
+    
+    /****************StaffNameDB関連メソッド*************/
+    
+    //StaffNameDBに保存されているスタッフ名を配列で返す関数
+    func StaffNameArrayGet() -> Array<String>?{
+        var array: [String] = []
+        let realm = try! Realm()
+        
+        if(DBmethod().DBRecordCount(StaffNameDB) == 0){
+            return nil
+        }else{
+            for(var i = 0; i < DBmethod().DBRecordCount(StaffNameDB); i++){
+                let name = realm.objects(StaffNameDB).filter("id = %@",i)[0].name
+                array.append(name)
+            }
+            
+            return array
+        }
+    }
 
 }

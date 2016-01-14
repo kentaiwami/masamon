@@ -131,6 +131,6 @@ class StaffNameDB: Object{
     dynamic var name = ""
     
     override class func primaryKey() -> String {
-        return "id"
+        return "name"
     }
 }
