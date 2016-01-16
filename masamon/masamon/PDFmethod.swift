@@ -404,43 +404,54 @@ class PDFmethod: UIViewController {
     
     
     //配列をまたがって重複している要素を削除する関数
-    func AAA(early: Array<Int>, center1: Array<Int>, center2: Array<Int>, center3: Array<Int>, late: Array<Int>, holiday: Array<Int>, other: Array<Int>) ->
-        (removedearly: Array<Int>, removedcenter1: Array<Int>, removedcenter2: Array<Int>, removedcenter3: Array<Int>, removedlate: Array<Int>, removedholiday: Array<Int>,
-        removedother: Array<Int>){
+    func GetRemoveOverlapElementAnotherArray(early: Array<Int>, center1: Array<Int>, center2: Array<Int>, center3: Array<Int>, late: Array<Int>, other: Array<Int>) ->
+        (removedearly: Array<Int>, removedcenter1: Array<Int>, removedcenter2: Array<Int>, removedcenter3: Array<Int>, removedlate: Array<Int>, removedother: Array<Int>){
             
-            var e: [Int] = []
-            var c1: [Int] = []
-            var c2: [Int] = []
-            var c3: [Int] = []
-            var l: [Int] = []
-            var h: [Int] = []
-            var o: [Int] = []
+            var dict: [Int:Array<Int>] = [0:early, 1:center1, 2:center2, 3:center3, 4: late, 5:other]
             
-            
-            //TODO: ShiftSystemDBからレコードの配列を受け取る
-            let shiftsystemall = DBmethod().ShiftSystemAllRecordGet()
-            
-            //TODO: HolidayDBからレコードの配列を受け取る
-            let holidayall = DBmethod().HolidayAllRecordGet()
-            
-            
-            
-            
+            let shiftsystemarray = DBmethod().ShiftSystemAllRecordGet()
+
+            for(var i = 0; i < DBmethod().DBRecordCount(ShiftSystemDB); i++){
+                
+                let Record = DBmethod().ShiftSystemNameGet(i)
+                
+                for(var j = 0; j < shiftsystemarray.count; j++){
+                    
+                    if(shiftsystemarray[j].groupid != Record.groupid){
+                        if(shiftsystemarray[j].name.characters.count > Record.name.characters.count){
+                            if(shiftsystemarray[j].name.containsString(Record.name)){
+                                let result = self.RemoveIntersectArrayToArray(dict[Record.groupid]!, comparisonarray: dict[shiftsystemarray[j].groupid]!)
+                                dict.updateValue(result.removedarray, forKey: Record.groupid)
+                            }
+                        }else{
+                            let result = self.RemoveIntersectArrayToArray(dict[shiftsystemarray[j].groupid]!, comparisonarray: dict[Record.groupid]!)
+                            dict.updateValue(result.removedarray, forKey: shiftsystemarray[j].groupid)
+                        }
+                    }
+                }
+            }
+
+        return (dict[0]!,dict[1]!,dict[2]!,dict[3]!,dict[4]!,dict[5]!)
+    }
+    
+    
+    /*受け取った配列同士の重複を調べて処理後の配列を返す関数
+    removedarray    => 文字数が少なく、要素が削除される側の配列
+    comparisonarray => 文字数が多く、要素の削除のための比較用になる配列
+    */
+    func RemoveIntersectArrayToArray(removedarray: Array<Int>, comparisonarray: Array<Int>) -> (removedarray: Array<Int>, comparisonarray:Array<Int>){
+        //        var A = [1,2,3]
+        //        let B = [2,3]
+        //
+        //        //        print(Set(A).intersect(B))
+        //        let C = Set(A).intersect(B)
+        //        for(var i = 0; i < C.count; i++){
+        //            A.removeObject(C[C.startIndex.advancedBy(i)])
+        //            print(C[C.startIndex.advancedBy(i)])
+        //        }
+        //        print(A)
         
-//        var A = [1,2,3]
-//        let B = [2,3]
-//        
-//        //        print(Set(A).intersect(B))
-//        let C = Set(A).intersect(B)
-//        for(var i = 0; i < C.count; i++){
-//            A.removeObject(C[C.startIndex.advancedBy(i)])
-//            print(C[C.startIndex.advancedBy(i)])
-//        }
-//        print(A)
-        
-        
-        
-        return (e,c1,c2,c3,l,h,o)
+        return (removedarray,comparisonarray)
     }
     
     
@@ -549,6 +560,7 @@ class PDFmethod: UIViewController {
             holidayshiftlocationarray = GetRemoveOverlapElementArray(holidayshiftlocationarray)
             othershiftlocationarray = GetRemoveOverlapElementArray(othershiftlocationarray)
             
+            //TODO: 改善中
             //中番で重なって検索に引っかかってしまった分の要素を削除する
             var removevaluearray: [Int] = []
             for(var i = 0; i < center1shiftlocationarray.count; i++){
@@ -567,13 +579,12 @@ class PDFmethod: UIViewController {
             
             
             //配列をまたがって重複している要素を削除する
-            let ABC = self.AAA(earlyshiftlocationarray, center1: center1shiftlocationarray, center2: center2shiftlocationarray, center3: center3shiftlocationarray, late: lateshiftlocationarray, holiday: holidayshiftlocationarray, other: othershiftlocationarray)
+            let ABC = self.GetRemoveOverlapElementAnotherArray(earlyshiftlocationarray, center1: center1shiftlocationarray, center2: center2shiftlocationarray, center3: center3shiftlocationarray, late: lateshiftlocationarray, other: othershiftlocationarray)
             earlyshiftlocationarray = ABC.removedearly
             center1shiftlocationarray = ABC.removedcenter1
             center2shiftlocationarray = ABC.removedcenter2
             center3shiftlocationarray = ABC.removedcenter3
             lateshiftlocationarray = ABC.removedlate
-            holidayshiftlocationarray = ABC.removedholiday
             othershiftlocationarray = ABC.removedother
             
 //            print(Set(center1shiftlocationarray).intersect(center1shiftlocationarray))
