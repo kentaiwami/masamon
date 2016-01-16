@@ -439,17 +439,13 @@ class PDFmethod: UIViewController {
     removedarray    => 文字数が少なく、要素が削除される側の配列
     comparisonarray => 文字数が多く、要素の削除のための比較用になる配列
     */
-    func RemoveIntersectArrayToArray(removedarray: Array<Int>, comparisonarray: Array<Int>) -> Array<Int>{
-        //        var A = [1,2,3]
-        //        let B = [2,3]
-        //
-        //        //        print(Set(A).intersect(B))
-        //        let C = Set(A).intersect(B)
-        //        for(var i = 0; i < C.count; i++){
-        //            A.removeObject(C[C.startIndex.advancedBy(i)])
-        //            print(C[C.startIndex.advancedBy(i)])
-        //        }
-        //        print(A)
+    func RemoveIntersectArrayToArray(var removedarray: Array<Int>, comparisonarray: Array<Int>) -> Array<Int>{
+        
+        let C = Set(removedarray).intersect(comparisonarray)
+        for(var i = 0; i < C.count; i++){
+            removedarray.removeObject(C[C.startIndex.advancedBy(i)])
+            print(C[C.startIndex.advancedBy(i)])
+        }
         
         return removedarray
     }
