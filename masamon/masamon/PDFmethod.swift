@@ -421,11 +421,11 @@ class PDFmethod: UIViewController {
                         if(shiftsystemarray[j].name.characters.count > Record.name.characters.count){
                             if(shiftsystemarray[j].name.containsString(Record.name)){
                                 let result = self.RemoveIntersectArrayToArray(dict[Record.groupid]!, comparisonarray: dict[shiftsystemarray[j].groupid]!)
-                                dict.updateValue(result.removedarray, forKey: Record.groupid)
+                                dict.updateValue(result, forKey: Record.groupid)
                             }
                         }else{
                             let result = self.RemoveIntersectArrayToArray(dict[shiftsystemarray[j].groupid]!, comparisonarray: dict[Record.groupid]!)
-                            dict.updateValue(result.removedarray, forKey: shiftsystemarray[j].groupid)
+                            dict.updateValue(result, forKey: shiftsystemarray[j].groupid)
                         }
                     }
                 }
@@ -439,7 +439,7 @@ class PDFmethod: UIViewController {
     removedarray    => 文字数が少なく、要素が削除される側の配列
     comparisonarray => 文字数が多く、要素の削除のための比較用になる配列
     */
-    func RemoveIntersectArrayToArray(removedarray: Array<Int>, comparisonarray: Array<Int>) -> (removedarray: Array<Int>, comparisonarray:Array<Int>){
+    func RemoveIntersectArrayToArray(removedarray: Array<Int>, comparisonarray: Array<Int>) -> Array<Int>{
         //        var A = [1,2,3]
         //        let B = [2,3]
         //
@@ -451,7 +451,7 @@ class PDFmethod: UIViewController {
         //        }
         //        print(A)
         
-        return (removedarray,comparisonarray)
+        return removedarray
     }
     
     
