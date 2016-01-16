@@ -558,23 +558,6 @@ class PDFmethod: UIViewController {
             holidayshiftlocationarray = GetRemoveOverlapElementArray(holidayshiftlocationarray)
             othershiftlocationarray = GetRemoveOverlapElementArray(othershiftlocationarray)
             
-            //TODO: 改善中
-            //中番で重なって検索に引っかかってしまった分の要素を削除する
-//            var removevaluearray: [Int] = []
-//            for(var i = 0; i < center1shiftlocationarray.count; i++){
-//                
-//                if(center2shiftlocationarray.contains(center1shiftlocationarray[i])){
-//                    removevaluearray.append(center1shiftlocationarray[i])
-//                }
-//                
-//                if(center3shiftlocationarray.contains(center1shiftlocationarray[i])){
-//                    removevaluearray.append(center1shiftlocationarray[i])
-//                }
-//            }
-//            for(var i = 0; i < removevaluearray.count; i++){
-//                center1shiftlocationarray.removeObject(removevaluearray[i])
-//            }
-            
             
             //配列をまたがって重複している要素を削除する
             let removeresultarray = self.GetRemoveOverlapElementAnotherArray(earlyshiftlocationarray, center1: center1shiftlocationarray, center2: center2shiftlocationarray, center3: center3shiftlocationarray, late: lateshiftlocationarray, other: othershiftlocationarray)
@@ -585,7 +568,6 @@ class PDFmethod: UIViewController {
             lateshiftlocationarray = removeresultarray.removedlate
             othershiftlocationarray = removeresultarray.removedother
             
-//            print(Set(center1shiftlocationarray).intersect(center1shiftlocationarray))
             
             //要素を昇順でソートする
             earlyshiftlocationarray = earlyshiftlocationarray.sort()
@@ -626,8 +608,6 @@ class PDFmethod: UIViewController {
                     }
                 }
             }
-            
-            
             
             
             //要素数を比較して正しくシフト体制を認識できているかチェックする
