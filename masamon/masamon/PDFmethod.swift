@@ -424,8 +424,10 @@ class PDFmethod: UIViewController {
                                 dict.updateValue(result, forKey: Record.groupid)
                             }
                         }else{
-                            let result = self.RemoveIntersectArrayToArray(dict[shiftsystemarray[j].groupid]!, comparisonarray: dict[Record.groupid]!)
-                            dict.updateValue(result, forKey: shiftsystemarray[j].groupid)
+                            if(Record.name.containsString(shiftsystemarray[j].name)){
+                                let result = self.RemoveIntersectArrayToArray(dict[shiftsystemarray[j].groupid]!, comparisonarray: dict[Record.groupid]!)
+                                dict.updateValue(result, forKey: shiftsystemarray[j].groupid)
+                            }
                         }
                     }
                 }
@@ -441,10 +443,10 @@ class PDFmethod: UIViewController {
     */
     func RemoveIntersectArrayToArray(var removedarray: Array<Int>, comparisonarray: Array<Int>) -> Array<Int>{
         
-        let C = Set(removedarray).intersect(comparisonarray)
-        for(var i = 0; i < C.count; i++){
-            removedarray.removeObject(C[C.startIndex.advancedBy(i)])
-            print(C[C.startIndex.advancedBy(i)])
+        let setarray = Set(removedarray).intersect(comparisonarray)
+        
+        for(var i = 0; i < setarray.count; i++){
+            removedarray.removeObject(setarray[setarray.startIndex.advancedBy(i)])
         }
         
         return removedarray
@@ -558,30 +560,30 @@ class PDFmethod: UIViewController {
             
             //TODO: 改善中
             //中番で重なって検索に引っかかってしまった分の要素を削除する
-            var removevaluearray: [Int] = []
-            for(var i = 0; i < center1shiftlocationarray.count; i++){
-                
-                if(center2shiftlocationarray.contains(center1shiftlocationarray[i])){
-                    removevaluearray.append(center1shiftlocationarray[i])
-                }
-                
-                if(center3shiftlocationarray.contains(center1shiftlocationarray[i])){
-                    removevaluearray.append(center1shiftlocationarray[i])
-                }
-            }
-            for(var i = 0; i < removevaluearray.count; i++){
-                center1shiftlocationarray.removeObject(removevaluearray[i])
-            }
+//            var removevaluearray: [Int] = []
+//            for(var i = 0; i < center1shiftlocationarray.count; i++){
+//                
+//                if(center2shiftlocationarray.contains(center1shiftlocationarray[i])){
+//                    removevaluearray.append(center1shiftlocationarray[i])
+//                }
+//                
+//                if(center3shiftlocationarray.contains(center1shiftlocationarray[i])){
+//                    removevaluearray.append(center1shiftlocationarray[i])
+//                }
+//            }
+//            for(var i = 0; i < removevaluearray.count; i++){
+//                center1shiftlocationarray.removeObject(removevaluearray[i])
+//            }
             
             
             //配列をまたがって重複している要素を削除する
-            let ABC = self.GetRemoveOverlapElementAnotherArray(earlyshiftlocationarray, center1: center1shiftlocationarray, center2: center2shiftlocationarray, center3: center3shiftlocationarray, late: lateshiftlocationarray, other: othershiftlocationarray)
-            earlyshiftlocationarray = ABC.removedearly
-            center1shiftlocationarray = ABC.removedcenter1
-            center2shiftlocationarray = ABC.removedcenter2
-            center3shiftlocationarray = ABC.removedcenter3
-            lateshiftlocationarray = ABC.removedlate
-            othershiftlocationarray = ABC.removedother
+            let removeresultarray = self.GetRemoveOverlapElementAnotherArray(earlyshiftlocationarray, center1: center1shiftlocationarray, center2: center2shiftlocationarray, center3: center3shiftlocationarray, late: lateshiftlocationarray, other: othershiftlocationarray)
+            earlyshiftlocationarray = removeresultarray.removedearly
+            center1shiftlocationarray = removeresultarray.removedcenter1
+            center2shiftlocationarray = removeresultarray.removedcenter2
+            center3shiftlocationarray = removeresultarray.removedcenter3
+            lateshiftlocationarray = removeresultarray.removedlate
+            othershiftlocationarray = removeresultarray.removedother
             
 //            print(Set(center1shiftlocationarray).intersect(center1shiftlocationarray))
             
