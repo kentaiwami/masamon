@@ -20,7 +20,7 @@ class PDFmethod: UIViewController {
         
         //        let documentsDir = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
         let path: NSString
-        path = NSBundle.mainBundle().pathForResource("sample2", ofType: "pdf")!
+        path = NSBundle.mainBundle().pathForResource("sample", ofType: "pdf")!
         //        let globaloptlist: String = String(format: "searchpath={{%@} {%@/extractor_ios.app} {%@/extractor_ios.app/resource/cmap}}", arguments: [documentsDir,NSHomeDirectory(),NSHomeDirectory()])
         
         let tet = TET()
@@ -475,9 +475,9 @@ class PDFmethod: UIViewController {
         }
         
         //スタッフの人数分(配列の最後まで)繰り返す
-//        for(var i = 1; i < 2; i++){
+        for(var i = 2; i < 3; i++){
 
-        for(var i = 1; i < staffarray.count; i++){
+//        for(var i = 1; i < staffarray.count; i++){
         
             var staffname = ""
             var staffarraytmp = ""
@@ -600,11 +600,11 @@ class PDFmethod: UIViewController {
                     case 4:
                         lateshiftlocationarray.removeAtIndex(0)
                         
-                    case 999:
-                        holidayshiftlocationarray.removeAtIndex(0)
-                        
-                    default:
+                    case 5:
                         othershiftlocationarray.removeAtIndex(0)
+                        
+                    default: //case 999
+                        holidayshiftlocationarray.removeAtIndex(0)
                     }
                 }
             }
@@ -614,6 +614,10 @@ class PDFmethod: UIViewController {
             var count = 0
             count = earlyshiftlocationarray.count + center1shiftlocationarray.count + center2shiftlocationarray.count + center3shiftlocationarray.count + lateshiftlocationarray.count + holidayshiftlocationarray.count + othershiftlocationarray.count
             print(staffname + "  " + String(count))
+           
+            print(staffarraytmp)
+            print(holidayshiftlocationarray)
+
             if(count == monthrange.length){
                 
                 //正しく取り込めているが、シフト認識エラーとして記録されて残っている要素があれば削除する
