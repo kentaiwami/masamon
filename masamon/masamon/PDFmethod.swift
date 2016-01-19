@@ -452,6 +452,26 @@ class PDFmethod: UIViewController {
         return removedarray
     }
     
+    //受け取ったpivotindexよりも大きいindexの要素は削除する関数
+    func AAA(var array: Array<Int>, pivotindex: String.CharacterView.Index, text: String) -> Array<Int>{
+        
+        let index = text.startIndex
+        var removeelement: [Int] = []
+        
+        for(var i = 0; i < array.count; i++){
+            if(index.advancedBy(array[i]) >= pivotindex){
+               removeelement.append(array[i])
+            }
+        }
+        
+        for(var i = 0; i < removeelement.count; i++){
+            array.removeObject(removeelement[i])
+        }
+        
+        
+        return array
+    }
+    
     
     //スタッフのシフトを日にちごとに分けたArrayを返す
     func SplitDayShiftGet(var staffarray: Array<String>) -> Array<String>{
@@ -475,9 +495,9 @@ class PDFmethod: UIViewController {
         }
         
         //スタッフの人数分(配列の最後まで)繰り返す
-        for(var i = 2; i < 3; i++){
+//        for(var i = 2; i < 3; i++){
 
-//        for(var i = 1; i < staffarray.count; i++){
+        for(var i = 1; i < staffarray.count; i++){
         
             var staffname = ""
             var staffarraytmp = ""
@@ -611,13 +631,36 @@ class PDFmethod: UIViewController {
             
             
             //1クール分のシフト文字以外のシフト名をカウントしてしまうので、範囲外の要素を削除する
-            //TODO: テキストを先頭からみていく
-            //TODO: もし、数値ならカウントを増やす
-            //TODO: もしカウントが5以上になったらループを抜ける&その場所からマイナスカウントの場所を記録
-            //TODO: 記録した場所より大きい数値が配列にあれば要素を削除する
+            var index = staffarraytmp.startIndex
+            var numeralcount = 0
+            var removeflag = false
             
+            while(index != staffarraytmp.endIndex.predecessor()){
+                
+                if(Int(String(staffarraytmp[index])) != nil){
+                    numeralcount++
+                }else{
+                    numeralcount = 0
+                }
+                
+                if(numeralcount >= 5){
+                    index = index.advancedBy(-5)
+                    removeflag = true
+                    break
+                }
+                
+                index = index.successor()
+            }
             
-            
+            if(removeflag){
+                earlyshiftlocationarray = self.AAA(earlyshiftlocationarray, pivotindex: index, text: staffarraytmp)
+                center1shiftlocationarray = self.AAA(center1shiftlocationarray, pivotindex: index, text: staffarraytmp)
+                center2shiftlocationarray = self.AAA(center2shiftlocationarray, pivotindex: index, text: staffarraytmp)
+                center3shiftlocationarray = self.AAA(center3shiftlocationarray, pivotindex: index, text: staffarraytmp)
+                lateshiftlocationarray = self.AAA(lateshiftlocationarray, pivotindex: index, text: staffarraytmp)
+                othershiftlocationarray = self.AAA(othershiftlocationarray, pivotindex: index, text: staffarraytmp)
+                holidayshiftlocationarray = self.AAA(holidayshiftlocationarray, pivotindex: index, text: staffarraytmp)
+            }
             
             
             
@@ -627,8 +670,9 @@ class PDFmethod: UIViewController {
             count = earlyshiftlocationarray.count + center1shiftlocationarray.count + center2shiftlocationarray.count + center3shiftlocationarray.count + lateshiftlocationarray.count + holidayshiftlocationarray.count + othershiftlocationarray.count
             print(staffname + "  " + String(count))
            
-            print(staffarraytmp)
-            print(holidayshiftlocationarray)
+            
+//            print(staffarraytmp)
+//            print(holidayshiftlocationarray)
 
             if(count == monthrange.length){
                 
