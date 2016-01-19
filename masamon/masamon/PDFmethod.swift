@@ -610,6 +610,18 @@ class PDFmethod: UIViewController {
             }
             
             
+            //1クール分のシフト文字以外のシフト名をカウントしてしまうので、範囲外の要素を削除する
+            //TODO: テキストを先頭からみていく
+            //TODO: もし、数値ならカウントを増やす
+            //TODO: もしカウントが5以上になったらループを抜ける&その場所からマイナスカウントの場所を記録
+            //TODO: 記録した場所より大きい数値が配列にあれば要素を削除する
+            
+            
+            
+            
+            
+            
+            
             //要素数を比較して正しくシフト体制を認識できているかチェックする
             var count = 0
             count = earlyshiftlocationarray.count + center1shiftlocationarray.count + center2shiftlocationarray.count + center3shiftlocationarray.count + lateshiftlocationarray.count + holidayshiftlocationarray.count + othershiftlocationarray.count
