@@ -594,12 +594,12 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         if(DBmethod().TheDayStaffGet(y, month: m, date: d) == nil){
             let whiteAttribute = [ NSForegroundColorAttributeName: UIColor.hex("BEBEBE", alpha: 1.0),NSFontAttributeName: UIFont.systemFontOfSize(fontsize)]
 
-            EarlyShiftText.attributedText = NSMutableAttributedString(string: "早番：データなし", attributes: whiteAttribute)
-            Center1ShiftText.attributedText = NSMutableAttributedString(string: "中1：データなし", attributes: whiteAttribute)
-            Center2ShiftText.attributedText = NSMutableAttributedString(string: "中2：データなし", attributes: whiteAttribute)
-            Center3ShiftText.attributedText = NSMutableAttributedString(string: "中3：データなし", attributes: whiteAttribute)
-            LateShiftText.attributedText = NSMutableAttributedString(string: "遅番：データなし", attributes: whiteAttribute)
-            OtherShiftText.attributedText = NSMutableAttributedString(string: "その他：データなし", attributes: whiteAttribute)
+            EarlyShiftText.attributedText = NSMutableAttributedString(string: "早番：No Data", attributes: whiteAttribute)
+            Center1ShiftText.attributedText = NSMutableAttributedString(string: "中1：No Data", attributes: whiteAttribute)
+            Center2ShiftText.attributedText = NSMutableAttributedString(string: "中2：No Data", attributes: whiteAttribute)
+            Center3ShiftText.attributedText = NSMutableAttributedString(string: "中3：No Data", attributes: whiteAttribute)
+            LateShiftText.attributedText = NSMutableAttributedString(string: "遅番：No Data", attributes: whiteAttribute)
+            OtherShiftText.attributedText = NSMutableAttributedString(string: "その他：No Data", attributes: whiteAttribute)
         }else{
             let shiftdetaidb = DBmethod().TheDayStaffGet(y, month: m, date: d)
             var splitedstaffarray = self.SplitStaffShift(shiftdetaidb![0].staff)
