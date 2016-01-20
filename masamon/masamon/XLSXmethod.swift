@@ -365,5 +365,24 @@ class XLSXmethod: UIViewController {
             self.TheDayStaffAttendance(i, staffcellpositionarray: staffcellposition, worksheet: worksheet.sheet)
         }
     }
+    
+    //スタッフ名にシフト名が含まれていたらそのスタッフ名をデータベースへ記録する関数
+    func AAA(){
+        let staffpositionarray = self.StaffCellPositionGet()
+        let worksheet = self.SetXLSX()
+        
+        for(var i = 0; i < staffpositionarray.count; i++){
+            let staffname: String = worksheet.sheet.cellForCellReference(staffpositionarray[i]).stringValue()
+            
+            let AAA = PDFmethod().IncludeShiftNameInStaffName(staffname)
+            
+            if(AAA.count != 0){
+                let record = StaffNameDB()
+                record.id = DBmethod().DBRecordCount(StaffNameDB)
+                record.name = staffname
+                DBmethod().AddandUpdate(record, update: true)
+            }
+        }
+    }
 }
 

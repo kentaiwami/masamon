@@ -129,6 +129,9 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                 //新規シフトがあるか確認する
                 XLSXmethod().CheckShift()
                 
+                //スタッフ名にシフト文字が含まれていたら記録する
+                XLSXmethod().AAA()
+                
                 //新規シフト認識エラーがない場合は月給計算を行う
                 if(self.appDelegate.errorshiftnamexlsx.count == 0){
                     XLSXmethod().ShiftDBOneCoursRegist(self.appDelegate.filename, importpath: self.Libralypath+"/"+self.appDelegate.filename, update: self.appDelegate.update)
