@@ -126,8 +126,14 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             
             dispatch_async_global { // ここからバックグラウンドスレッド
 
-                XLSXmethod().ShiftDBOneCoursRegist(self.appDelegate.filename, importpath: self.Libralypath+"/"+self.appDelegate.filename, update: self.appDelegate.update)
-                XLSXmethod().UserMonthlySalaryRegist(self.appDelegate.filename)
+                //新規シフトがあるか確認する
+                XLSXmethod().CheckShift()
+                
+                //新規シフト認識エラーがない場合は月給計算を行う
+                if(self.appDelegate.errorshiftnamexlsx.count == 0){
+                    XLSXmethod().ShiftDBOneCoursRegist(self.appDelegate.filename, importpath: self.Libralypath+"/"+self.appDelegate.filename, update: self.appDelegate.update)
+                    XLSXmethod().UserMonthlySalaryRegist(self.appDelegate.filename)
+                }
                 
                 
                 self.dispatch_async_main { // ここからメインスレッド
@@ -149,11 +155,11 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                         self.ShowAllData(self.Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day)
                         self.CalenderLabel.text = "\(date.year)年\(date.month)月\(date.day)日 (\(self.ReturnWeekday(date.weekday)))"
                         
-                        let progress = GradientCircularProgress()
-                        progress.show(message: "Finished", style: BlueDarkStyle())
-                        progress.dismiss()
-                        
-                        if(self.appDelegate.errorshiftnamexlsx.count != 0){  //シフト認識エラーがある場合
+//                        let progress = GradientCircularProgress()
+//                        progress.show(message: "Finished", style: BlueDarkStyle())
+//                        progress.dismiss()
+
+                        if(self.appDelegate.errorshiftnamexlsx.count != 0){  //新規シフト名がある場合
                             if(self.staffshiftcountflag){
                                 self.appDelegate.errorshiftnamefastcount = self.appDelegate.errorshiftnamexlsx.count
                                 self.staffshiftcountflag = false
