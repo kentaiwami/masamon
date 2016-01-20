@@ -374,9 +374,9 @@ class XLSXmethod: UIViewController {
         for(var i = 0; i < staffpositionarray.count; i++){
             let staffname: String = worksheet.sheet.cellForCellReference(staffpositionarray[i]).stringValue()
             
-            let AAA = PDFmethod().IncludeShiftNameInStaffName(staffname)
+            let array = PDFmethod().IncludeShiftNameInStaffName(staffname)
             
-            if(AAA.count != 0){
+            if(array.count != 0){
                 let record = StaffNameDB()
                 record.id = DBmethod().DBRecordCount(StaffNameDB)
                 record.name = staffname
