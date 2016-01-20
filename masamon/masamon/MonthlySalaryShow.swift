@@ -539,17 +539,19 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                 staffshiftarray[5] = staffshiftarray[5] + staffname + "(\(staffshift))" + "、"
             }else{
                 let shiftsystemresult = DBmethod().SearchShiftSystem(staffshift)
-                switch(shiftsystemresult![0].id){
-                case 0,1,2,3:
+                switch(shiftsystemresult![0].groupid){
+                case 0:
                     staffshiftarray[0] = staffshiftarray[0] + staffname + "、"
-                case 4:
+                case 1:
                     staffshiftarray[1] = staffshiftarray[1] + staffname + "、"
-                case 5:
+                case 2:
                     staffshiftarray[2] = staffshiftarray[2] + staffname + "、"
-                case 6:
+                case 3:
                     staffshiftarray[3] = staffshiftarray[3] + staffname + "、"
-                case 7,8,9:
+                case 4:
                     staffshiftarray[4] = staffshiftarray[4] + staffname + "、"
+                case 5:
+                    staffshiftarray[5] = staffshiftarray[5] + staffname + "(\(staffshift))" + "、"
                 default:
                     break
                 }
