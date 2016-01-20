@@ -129,6 +129,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                 XLSXmethod().ShiftDBOneCoursRegist(self.appDelegate.filename, importpath: self.Libralypath+"/"+self.appDelegate.filename, update: self.appDelegate.update)
                 XLSXmethod().UserMonthlySalaryRegist(self.appDelegate.filename)
                 
+                
                 self.dispatch_async_main { // ここからメインスレッド
                     self.progress.dismiss({ () -> Void in
                         
@@ -151,6 +152,14 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                         let progress = GradientCircularProgress()
                         progress.show(message: "Finished", style: BlueDarkStyle())
                         progress.dismiss()
+                        
+                        if(self.appDelegate.errorshiftnamexlsx.count != 0){  //シフト認識エラーがある場合
+                            if(self.staffshiftcountflag){
+                                self.appDelegate.errorshiftnamefastcount = self.appDelegate.errorshiftnamexlsx.count
+                                self.staffshiftcountflag = false
+                            }
+                            self.StaffShiftErrorAlertShowXLSX()
+                        }
                     })
                 }
             }
