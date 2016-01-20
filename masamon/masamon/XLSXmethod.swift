@@ -367,7 +367,7 @@ class XLSXmethod: UIViewController {
     }
     
     //スタッフ名にシフト名が含まれていたらそのスタッフ名をデータベースへ記録する関数
-    func AAA(){
+    func CheckStaffName(){
         let staffpositionarray = self.StaffCellPositionGet()
         let worksheet = self.SetXLSX()
         
