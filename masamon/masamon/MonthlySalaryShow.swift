@@ -313,7 +313,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     //XLSXで新規シフト体制名が含まれていた場合に表示するアラート
     func StaffShiftErrorAlertShowXLSX(){
         let errorshiftnamexlsxarray = self.appDelegate.errorshiftnamexlsx
-        
+        print(errorshiftnamexlsxarray)
         var flag = false
         let donecount = appDelegate.errorshiftnamefastcount - appDelegate.errorshiftnamepdf.count
         

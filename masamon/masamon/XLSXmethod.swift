@@ -99,6 +99,7 @@ class XLSXmethod: UIViewController {
                 default:
                     break
                 }
+                appDelegate.errorshiftnamexlsx.removeAll()
                 newshiftdetaildb.staff = TheDayStaffAttendance(i, staffcellpositionarray: staffcellposition, worksheet: worksheet.sheet)
                 newshiftdetaildb.shiftDBrelationship = DBmethod().SearchShiftDB(importname)
                 
@@ -138,7 +139,7 @@ class XLSXmethod: UIViewController {
                 default:
                     break
                 }
-                
+                appDelegate.errorshiftnamexlsx.removeAll()
                 shiftdetaildb.shiftDBrelationship = shiftdb
                 shiftdetaildb.staff = TheDayStaffAttendance(i, staffcellpositionarray: staffcellposition, worksheet: worksheet.sheet)
                 
@@ -288,8 +289,9 @@ class XLSXmethod: UIViewController {
                 staffstring = staffstring + staffname + ":" + dayshift + ","
             }
             
+            
             //新規シフト名だったらエラーとして記録
-            if(DBmethod().SearchShiftSystem(dayshift) == nil){
+            if(DBmethod().SearchShiftSystem(dayshift) == nil && holiday.contains(dayshift) == false){
                 appDelegate.errorshiftnamexlsx.append(dayshift)
             }
         }
