@@ -476,8 +476,8 @@ class PDFmethod: UIViewController {
     func SplitDayShiftGet(var staffarray: Array<String>) -> Array<String>{
         
         //データを削除して初期化する
-        appDelegate.errorstaffname.removeAll()
-        appDelegate.errorshiftname.removeAll()
+        appDelegate.errorstaffnamepdf.removeAll()
+        appDelegate.errorshiftnamepdf.removeAll()
         
         var dayshiftarray: [String] = []        //1日ごとのシフトを記録
         
@@ -522,14 +522,14 @@ class PDFmethod: UIViewController {
             */
             let removem = staffname.stringByReplacingOccurrencesOfString("M", withString: "")
             if(removem.characters.count <= 1 || removem.characters.count >= 4){
-                appDelegate.errorstaffname.append(staffarraytmp)
+                appDelegate.errorstaffnamepdf.append(staffarraytmp)
             }else{
                 //スタッフ名を正しく認識しているがエラーとして記録されている場合は削除する
-                for(var i = 0; i < appDelegate.errorstaffname.count; i++){
-                    let errorstaffnametext = appDelegate.errorstaffname[i]
+                for(var i = 0; i < appDelegate.errorstaffnamepdf.count; i++){
+                    let errorstaffnametext = appDelegate.errorstaffnamepdf[i]
                     
                     if(errorstaffnametext.containsString(staffname)){
-                        appDelegate.errorstaffname.removeAtIndex(i)
+                        appDelegate.errorstaffnamepdf.removeAtIndex(i)
                         break
                     }
                 }
@@ -676,8 +676,8 @@ class PDFmethod: UIViewController {
             if(count == monthrange.length){
                 
                 //正しく取り込めているが、シフト認識エラーとして記録されて残っている要素があれば削除する
-                if let _ = appDelegate.errorshiftname[staffname] {
-                    appDelegate.errorshiftname.removeValueForKey(staffname)
+                if let _ = appDelegate.errorshiftnamepdf[staffname] {
+                    appDelegate.errorshiftnamepdf.removeValueForKey(staffname)
                 }
                 
                 
@@ -739,7 +739,7 @@ class PDFmethod: UIViewController {
                     messagetext = self.GetRemoveSetShiftName(messagetext, shiftname: successshiftnamearray[i])
                 }
                 
-                appDelegate.errorshiftname[staffname] = messagetext
+                appDelegate.errorshiftnamepdf[staffname] = messagetext
             }
         }
 
