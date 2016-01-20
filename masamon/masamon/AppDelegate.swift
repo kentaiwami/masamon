@@ -11,14 +11,26 @@ import UIKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
+    /*AppDelegateで使用*/
     var window: UIWindow?
-    var fileURL = ""                        //ファイルをInboxに保存した時のURLを記録
-    var filesavealert = false               //ファイルの保存が行われたかを記録
-    var filename = ""                       //ユーザが取り込み時に入力したファイル名を記録
-    var update = true                       //シフトの取り込みが上書きかを記録
-    var selectedcell: [Bool] = []           //ShiftGalleryTableで選択をしたセルを記録
-    var storyboradid = ""
+    var fileURL = ""                            //ファイルをInboxに保存した時のURLを記録
     
+    /*ShiftImportとMonthlySalaryShowで使用*/
+    var filesavealert = false                   //ファイルの保存が行われたかを記録
+    var filename = ""                           //ユーザが取り込み時に入力したファイル名を記録
+    var update = true                           //シフトの取り込みが上書きかを記録
+    
+    /*ShiftGalleryTableで使用*/
+    var selectedcell: [Bool] = []               //ShiftGalleryTableで選択をしたセルを記録
+
+    /*MonthlySalaryShowで使用*/
+    var errorshiftnamefastcount = 0             //シフトの認識に失敗した場合の最初の失敗数を格納しておく変数
+    var errorstaffnamefastcount = 0             //スタッフ名の認識に失敗した場合に、最初の失敗数を格納しておく変数
+
+    /*MonthlySalaryShowとPDFmethodで使用*/
+    var errorstaffname: [String] = []           //スタッフ名の認識に失敗した場合に、スタッフ名が書かれた1行を格納する
+    var errorshiftname: [String:String] = [:]   //シフトの認識に失敗した場合に、スタッフ名と認識に失敗した文字列を格納する
+
     func application(app: UIApplication, openURL url: NSURL, options: [String : AnyObject]) -> Bool {
         fileURL = ""
         fileURL = String(url)

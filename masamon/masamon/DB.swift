@@ -122,5 +122,15 @@ class StaffNumberDB: Object{
     override class func primaryKey() -> String {
         return "id"
     }
+}
+
+
+//認識エラーが出てしまうスタッフ名を保存
+class StaffNameDB: Object{
+    dynamic var id = 0
+    dynamic var name = ""
     
+    override class func primaryKey() -> String {
+        return "name"
+    }
 }

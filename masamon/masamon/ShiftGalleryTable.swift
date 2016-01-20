@@ -51,9 +51,7 @@ class ShiftGalleryTable: UIViewController, UITableViewDataSource, UITableViewDel
     }
     
     override func viewWillAppear(animated: Bool) {
-        
-        appDelegate.storyboradid = self.restorationIdentifier!
-        
+                
         shiftlist.removeAll()
         selectedCells.removeAll()
         

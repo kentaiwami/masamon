@@ -415,9 +415,7 @@ class Setting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource,UI
     }
     
     override func viewWillAppear(animated: Bool) {
-        
-        appDelegate.storyboradid = self.restorationIdentifier!
-        
+                
         super.viewWillAppear(animated)
         
         let notificationCenter = NSNotificationCenter.defaultCenter()
@@ -442,14 +440,15 @@ class Setting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource,UI
     func SetText(){
         //既に登録されていたら登録内容を表示する
         if(DBmethod().DBRecordCount(UserNameDB) == 0){
-            usernametextfield.text = "シフト表上での名前を入力"
-            staffnumbertextfield.text = "スタッフの人数を入力"
-            TimeFrom1.text = "no data"
-            TimeFrom2.text = "no data"
-            TimeTo1.text = "no data"
-            TimeTo2.text = "no data"
-            SalalyLabel1.text = "no data"
-            SalalyLabel2.text = "no data"
+            usernametextfield.placeholder = "シフト表上での名前を入力"
+            staffnumbertextfield.placeholder = "スタッフの人数を入力"
+            TimeFrom1.placeholder = "no data"
+            TimeFrom2.placeholder = "no data"
+            TimeTo1.placeholder = "no data"
+            TimeTo2.placeholder = "no data"
+            SalalyLabel1.placeholder = "no data"
+            SalalyLabel2.placeholder = "no data"
+            
         }else{
             usernametextfield.text = DBmethod().UserNameGet()
             staffnumbertextfield.text = String(DBmethod().StaffNumberGet())
