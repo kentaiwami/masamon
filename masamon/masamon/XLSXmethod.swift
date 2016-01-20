@@ -24,7 +24,8 @@ class XLSXmethod: UIViewController {
     var spreadsheet = BRAOfficeDocumentPackage()
     var worksheet = BRAWorksheet()
     var P1String: String = ""
-    
+    let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得
+
     //XLSXファイルのインスタンスをセットするメソッド
     func SetXLSX() -> (sheet: BRAWorksheet, P1:String){
         
@@ -282,8 +283,14 @@ class XLSXmethod: UIViewController {
             let dayshift: String = worksheet.cellForCellReference(replaceday).stringValue()
             let staffname: String = worksheet.cellForCellReference(nowstaff).stringValue()
             
-            if(holiday.contains(dayshift) == false){       //Holiday以外なら記録
+            //Holiday以外なら記録
+            if(holiday.contains(dayshift) == false){
                 staffstring = staffstring + staffname + ":" + dayshift + ","
+            }
+            
+            //新規シフト名だったらエラーとして記録
+            if(DBmethod().SearchShiftSystem(dayshift) == nil){
+                appDelegate.errorshiftnamexlsx.append(dayshift)
             }
         }
         
