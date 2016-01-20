@@ -303,15 +303,15 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     
     //XLSXで新規シフト体制名が含まれていた場合に表示するアラート
     func StaffShiftErrorAlertShowXLSX(){
-        let index = self.appDelegate.errorshiftnamepdf.startIndex.advancedBy(0)
-        let keys = self.appDelegate.errorshiftnamepdf.keys[index]
-        let values = self.appDelegate.errorshiftnamepdf.values[index]
+        let errorshiftnamexlsxarray = self.appDelegate.errorshiftnamexlsx
+//        let keys = self.appDelegate.errorshiftnamepdf.keys[index]
+//        let values = self.appDelegate.errorshiftnamepdf.values[index]
         
         var flag = false
         let donecount = appDelegate.errorshiftnamefastcount - appDelegate.errorshiftnamepdf.count
         
-        let alert:UIAlertController = UIAlertController(title:"\(donecount+1)/\(appDelegate.errorshiftnamefastcount)人" + "\n" + keys+"さんのシフトが取り込めません",
-            message: values + "\n\n" + "<シフトの名前> \n 例) 出勤 \n\n" + "<シフトのグループ> \n 例) 早番 or 中1 or 中2 or 中3 or 遅番 or 休み or その他 \n\n" + "<シフトの時間> \n 例) 開始時間が9時,終了時間が17時の場合は、9:00 17:00 \n 時間が不明な場合は、なし",
+        let alert:UIAlertController = UIAlertController(title:"\(donecount+1)/\(appDelegate.errorshiftnamefastcount)人" + "\n" + errorshiftnamexlsxarray[0]+"のシフトに関する情報を入力して下さい",
+            message: "<シフトの名前> \n 例) 出勤 \n\n" + "<シフトのグループ> \n 例) 早番 or 中1 or 中2 or 中3 or 遅番 or 休み or その他 \n\n" + "<シフトの時間> \n 例) 開始時間が9時,終了時間が17時の場合は、9:00 17:00 \n 時間が不明な場合は、なし",
             preferredStyle: UIAlertControllerStyle.Alert)
         
         let addAction:UIAlertAction = UIAlertAction(title: "追加",
@@ -344,7 +344,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                         
                         self.savedata()
                     }else{
-                        self.StaffShiftErrorAlertShowPDF()
+                        self.StaffShiftErrorAlertShowXLSX()
                     }
                 }
         })
