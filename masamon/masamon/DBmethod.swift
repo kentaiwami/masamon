@@ -61,6 +61,7 @@ class DBmethod: UIViewController {
     
     /****************ShiftDB関連メソッド*************/
 
+     //TODO: ここでエラーが出る
     //レコードのIDを受け取って名前を返す
     func ShiftDBGet(id: Int) -> String{
         var shiftimportname = ""

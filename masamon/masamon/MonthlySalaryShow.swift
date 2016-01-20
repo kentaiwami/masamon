@@ -126,8 +126,18 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             
             dispatch_async_global { // ここからバックグラウンドスレッド
 
-                XLSXmethod().ShiftDBOneCoursRegist(self.appDelegate.filename, importpath: self.Libralypath+"/"+self.appDelegate.filename, update: self.appDelegate.update)
-                XLSXmethod().UserMonthlySalaryRegist(self.appDelegate.filename)
+                //新規シフトがあるか確認する
+                XLSXmethod().CheckShift()
+                
+                //スタッフ名にシフト文字が含まれていたら記録する
+                XLSXmethod().AAA()
+                
+                //新規シフト認識エラーがない場合は月給計算を行う
+                if(self.appDelegate.errorshiftnamexlsx.count == 0){
+                    XLSXmethod().ShiftDBOneCoursRegist(self.appDelegate.filename, importpath: self.Libralypath+"/"+self.appDelegate.filename, update: self.appDelegate.update)
+                    XLSXmethod().UserMonthlySalaryRegist(self.appDelegate.filename)
+                }
+                
                 
                 self.dispatch_async_main { // ここからメインスレッド
                     self.progress.dismiss({ () -> Void in
@@ -148,9 +158,17 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                         self.ShowAllData(self.Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day)
                         self.CalenderLabel.text = "\(date.year)年\(date.month)月\(date.day)日 (\(self.ReturnWeekday(date.weekday)))"
                         
-                        let progress = GradientCircularProgress()
-                        progress.show(message: "Finished", style: BlueDarkStyle())
-                        progress.dismiss()
+//                        let progress = GradientCircularProgress()
+//                        progress.show(message: "Finished", style: BlueDarkStyle())
+//                        progress.dismiss()
+
+                        if(self.appDelegate.errorshiftnamexlsx.count != 0){  //新規シフト名がある場合
+                            if(self.staffshiftcountflag){
+                                self.appDelegate.errorshiftnamefastcount = self.appDelegate.errorshiftnamexlsx.count
+                                self.staffshiftcountflag = false
+                            }
+                            self.StaffShiftErrorAlertShowXLSX()
+                        }
                     })
                 }
             }
@@ -159,29 +177,29 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             pdfalltextarray = PDFmethod().AllTextGet()
             PDFmethod().SplitDayShiftGet(pdfalltextarray)
             
-            if(appDelegate.errorstaffname.count != 0){  //スタッフ名認識エラーがある場合
+            if(appDelegate.errorstaffnamepdf.count != 0){  //スタッフ名認識エラーがある場合
                 if(staffnamecountflag){
-                    appDelegate.errorstaffnamefastcount = appDelegate.errorstaffname.count
+                    appDelegate.errorstaffnamefastcount = appDelegate.errorstaffnamepdf.count
                     staffnamecountflag = false
                 }
-                self.StaffNameErrorAlertShow()
+                self.StaffNameErrorAlertShowPDF()
             }else{
-                if(appDelegate.errorshiftname.count != 0){  //シフト認識エラーがある場合
+                if(appDelegate.errorshiftnamepdf.count != 0){  //シフト認識エラーがある場合
                     if(staffshiftcountflag){
-                        appDelegate.errorshiftnamefastcount = appDelegate.errorshiftname.count
+                        appDelegate.errorshiftnamefastcount = appDelegate.errorshiftnamepdf.count
                         staffshiftcountflag = false
                     }
-                    self.StaffShiftErrorAlertShow()
+                    self.StaffShiftErrorAlertShowPDF()
                 }
             }
         }
         
     }
     
-    //スタッフ名認識エラーがある場合に表示してデータ入力をさせるためのアラート
-    func StaffNameErrorAlertShow(){
-        let errorstaffnametext = appDelegate.errorstaffname
-        let donecount = appDelegate.errorstaffnamefastcount - appDelegate.errorstaffname.count
+    //PDFでスタッフ名認識エラーがある場合に表示してデータ入力をさせるためのアラート
+    func StaffNameErrorAlertShowPDF(){
+        let errorstaffnametext = appDelegate.errorstaffnamepdf
+        let donecount = appDelegate.errorstaffnamefastcount - appDelegate.errorstaffnamepdf.count
         
         let alert:UIAlertController = UIAlertController(title:"\(donecount+1)/\(appDelegate.errorstaffnamefastcount)人    スタッフ名が認識できませんでした",
             message: errorstaffnametext[0],
@@ -204,7 +222,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                         
                         self.savedata()
                     }else{
-                        self.StaffNameErrorAlertShow()
+                        self.StaffNameErrorAlertShowPDF()
                     }
                 }
         })
@@ -222,19 +240,15 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         self.presentViewController(alert, animated: true, completion: nil)
     }
     
-    
-    
-    
-    
-    //シフト認識エラーがある場合に表示してデータ入力をさせるためのアラート
-    func StaffShiftErrorAlertShow(){
+    //PDFでシフト認識エラーがある場合に表示してデータ入力をさせるためのアラート
+    func StaffShiftErrorAlertShowPDF(){
         
-        let index = self.appDelegate.errorshiftname.startIndex.advancedBy(0)
-        let keys = self.appDelegate.errorshiftname.keys[index]
-        let values = self.appDelegate.errorshiftname.values[index]
+        let index = self.appDelegate.errorshiftnamepdf.startIndex.advancedBy(0)
+        let keys = self.appDelegate.errorshiftnamepdf.keys[index]
+        let values = self.appDelegate.errorshiftnamepdf.values[index]
 
         var flag = false
-        let donecount = appDelegate.errorshiftnamefastcount - appDelegate.errorshiftname.count
+        let donecount = appDelegate.errorshiftnamefastcount - appDelegate.errorshiftnamepdf.count
 
         let alert:UIAlertController = UIAlertController(title:"\(donecount+1)/\(appDelegate.errorshiftnamefastcount)人" + "\n" + keys+"さんのシフトが取り込めません",
             message: values + "\n\n" + "<シフトの名前> \n 例) 出勤 \n\n" + "<シフトのグループ> \n 例) 早番 or 中1 or 中2 or 中3 or 遅番 or 休み or その他 \n\n" + "<シフトの時間> \n 例) 開始時間が9時,終了時間が17時の場合は、9:00 17:00 \n 時間が不明な場合は、なし",
@@ -270,7 +284,83 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                         
                         self.savedata()
                     }else{
-                        self.StaffShiftErrorAlertShow()
+                        self.StaffShiftErrorAlertShowPDF()
+                    }
+                }
+        })
+        
+        alert.addAction(addAction)
+        
+        //シフト名入力用のtextfieldを追加
+        alert.addTextFieldWithConfigurationHandler({(text:UITextField!) -> Void in
+            text.placeholder = "シフトの名前を入力"
+            text.returnKeyType = .Next
+            text.tag = 1
+            text.delegate = self
+        })
+        
+        //シフト体制グループ用のtextfieldを追加
+        alert.addTextFieldWithConfigurationHandler({ (text:UITextField!) -> Void in
+            text.placeholder = "シフトのグループを入力"
+            text.returnKeyType = .Next
+            text.tag = 1
+            text.delegate = self
+        })
+        
+        //シフトの時間入力用のtextfieldを追加
+        alert.addTextFieldWithConfigurationHandler({ (text:UITextField!) -> Void in
+            text.placeholder = "シフトの時間を入力"
+            text.returnKeyType = .Next
+            text.tag = 0
+            text.delegate = self
+        })
+        
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    
+    //XLSXで新規シフト体制名が含まれていた場合に表示するアラート
+    func StaffShiftErrorAlertShowXLSX(){
+        let errorshiftnamexlsxarray = self.appDelegate.errorshiftnamexlsx
+        print(errorshiftnamexlsxarray)
+        var flag = false
+        let donecount = appDelegate.errorshiftnamefastcount - appDelegate.errorshiftnamepdf.count
+        
+        let alert:UIAlertController = UIAlertController(title:"\(donecount+1)/\(appDelegate.errorshiftnamefastcount)人" + "\n" + errorshiftnamexlsxarray[0]+"のシフトに関する情報を入力して下さい",
+            message: "<シフトの名前> \n 例) 出勤 \n\n" + "<シフトのグループ> \n 例) 早番 or 中1 or 中2 or 中3 or 遅番 or 休み or その他 \n\n" + "<シフトの時間> \n 例) 開始時間が9時,終了時間が17時の場合は、9:00 17:00 \n 時間が不明な場合は、なし",
+            preferredStyle: UIAlertControllerStyle.Alert)
+        
+        let addAction:UIAlertAction = UIAlertAction(title: "追加",
+            style: UIAlertActionStyle.Default,
+            handler:{
+                (action:UIAlertAction!) -> Void in
+                let textFields:Array<UITextField>? =  alert.textFields as Array<UITextField>?
+                if textFields != nil {
+                    for textField:UITextField in textFields! {
+                        //各textにアクセス
+                        //                        print(textField.text)
+                        
+                        if(textField.text == ""){
+                            flag = false
+                        }else{
+                            flag = true
+                        }
+                    }
+                    
+                    if(flag){   //テキストフィールドに値が全て入っている場合
+                        
+                        if(textFields![1].text! == "休み"){
+                            let holidayrecord = self.CreateHolidayDBRecord(textFields![0].text!)
+                            DBmethod().AddandUpdate(holidayrecord, update: true)
+                            
+                        }else{
+                            let shiftsystemrecord = self.CreateShiftSystemDBRecord(textFields![0].text!, shiftgroup: textFields![1].text!, shifttime: textFields![2].text!)
+                            DBmethod().AddandUpdate(shiftsystemrecord, update: true)
+                        }
+                        
+                        self.savedata()
+                    }else{
+                        self.StaffShiftErrorAlertShowXLSX()
                     }
                 }
         })

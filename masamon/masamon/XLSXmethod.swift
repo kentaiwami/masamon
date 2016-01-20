@@ -24,7 +24,8 @@ class XLSXmethod: UIViewController {
     var spreadsheet = BRAOfficeDocumentPackage()
     var worksheet = BRAWorksheet()
     var P1String: String = ""
-    
+    let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得
+
     //XLSXファイルのインスタンスをセットするメソッド
     func SetXLSX() -> (sheet: BRAWorksheet, P1:String){
         
@@ -55,12 +56,12 @@ class XLSXmethod: UIViewController {
         var shiftdetailrecordcount = DBmethod().DBRecordCount(ShiftDetailDB)
         var flag = 0
         
-        //30日分繰り返すループ
+        //30(31)日分繰り返すループ
         for(var i = 0; i < monthrange.length; i++){
             
-            let AAA = CGFloat(i) / CGFloat(monthrange.length)
-            print(String(round(AAA*100))+"%")
-            
+//            let AAA = CGFloat(i) / CGFloat(monthrange.length)
+//            print(String(round(AAA*100))+"%")
+
             let shiftdb = ShiftDB()
             let shiftdetaildb = ShiftDetailDB()
             
@@ -98,10 +99,15 @@ class XLSXmethod: UIViewController {
                 default:
                     break
                 }
+//                appDelegate.errorshiftnamexlsx.removeAll()
                 newshiftdetaildb.staff = TheDayStaffAttendance(i, staffcellpositionarray: staffcellposition, worksheet: worksheet.sheet)
                 newshiftdetaildb.shiftDBrelationship = DBmethod().SearchShiftDB(importname)
                 
-                DBmethod().AddandUpdate(newshiftdetaildb, update: true)
+                //エラーがない時のみ記録を行う
+                if(appDelegate.errorshiftnamexlsx.count == 0){
+                    DBmethod().AddandUpdate(newshiftdetaildb, update: true)
+                }
+                
             }else{
                 shiftdb.id = DBmethod().DBRecordCount(ShiftDetailDB)/monthrange.length     //新規の場合はレコードの数を割ったidを使う
                 shiftdb.shiftimportname = importname
@@ -137,7 +143,7 @@ class XLSXmethod: UIViewController {
                 default:
                     break
                 }
-                
+//                appDelegate.errorshiftnamexlsx.removeAll()
                 shiftdetaildb.shiftDBrelationship = shiftdb
                 shiftdetaildb.staff = TheDayStaffAttendance(i, staffcellpositionarray: staffcellposition, worksheet: worksheet.sheet)
                 
@@ -149,10 +155,13 @@ class XLSXmethod: UIViewController {
                 
                 let ID = shiftdb.id
                 
-                DBmethod().AddandUpdate(shiftdb, update: true)
-                DBmethod().AddandUpdate(shiftdetaildb, update: true)
+                //エラーがない場合のみ記録を行う
+                if(appDelegate.errorshiftnamexlsx.count == 0){
+                    DBmethod().AddandUpdate(shiftdb, update: true)
+                    DBmethod().AddandUpdate(shiftdetaildb, update: true)
+                    shiftdetailarray = self.ShiftDBRelationArrayGet(ID)
+                }
                 
-                shiftdetailarray = self.ShiftDBRelationArrayGet(ID)
             }
         }
     }
@@ -282,8 +291,20 @@ class XLSXmethod: UIViewController {
             let dayshift: String = worksheet.cellForCellReference(replaceday).stringValue()
             let staffname: String = worksheet.cellForCellReference(nowstaff).stringValue()
             
-            if(holiday.contains(dayshift) == false){       //Holiday以外なら記録
+            //Holiday以外なら記録
+            if(holiday.contains(dayshift) == false){
                 staffstring = staffstring + staffname + ":" + dayshift + ","
+            }
+            
+            //新規シフト名だったらエラーとして記録
+            if(DBmethod().SearchShiftSystem(dayshift) == nil && holiday.contains(dayshift) == false){
+                if(dayshift != "" && appDelegate.errorshiftnamexlsx.contains(dayshift) == false){     //空白と既に配列にある場合は記録しないため
+                    appDelegate.errorshiftnamexlsx.append(dayshift)
+                }
+            }else if(DBmethod().SearchShiftSystem(dayshift) != nil && appDelegate.errorshiftnamexlsx.contains(dayshift) == true){
+                appDelegate.errorshiftnamexlsx.removeObject(dayshift)
+            }else if(holiday.contains(dayshift) == true){
+                appDelegate.errorshiftnamexlsx.removeObject(dayshift)
             }
         }
         
@@ -328,6 +349,39 @@ class XLSXmethod: UIViewController {
             }
             
          return (Int(year)!,1,2)        //2月で確定
+        }
+    }
+    
+    //新規シフト名があるか調べるメソッド
+    func CheckShift(){
+        let worksheet = self.SetXLSX()
+        let shiftyearandmonth = self.JudgeYearAndMonth(worksheet.P1)
+        let shiftnsdate = MonthlySalaryShow().DateSerial(MonthlySalaryShow().Changecalendar(shiftyearandmonth.year, calender: "JP"), month: shiftyearandmonth.startcoursmonth, day: 1)
+        let c = NSCalendar.currentCalendar()
+        let monthrange = c.rangeOfUnit([NSCalendarUnit.Day],  inUnit: [NSCalendarUnit.Month], forDate: shiftnsdate)
+        let staffcellposition = self.StaffCellPositionGet()     //スタッフの名前が記載されているセル場所 ex.)F8,F9
+
+        for(var i = 0; i < monthrange.length; i++){
+            self.TheDayStaffAttendance(i, staffcellpositionarray: staffcellposition, worksheet: worksheet.sheet)
+        }
+    }
+    
+    //スタッフ名にシフト名が含まれていたらそのスタッフ名をデータベースへ記録する関数
+    func AAA(){
+        let staffpositionarray = self.StaffCellPositionGet()
+        let worksheet = self.SetXLSX()
+        
+        for(var i = 0; i < staffpositionarray.count; i++){
+            let staffname: String = worksheet.sheet.cellForCellReference(staffpositionarray[i]).stringValue()
+            
+            let AAA = PDFmethod().IncludeShiftNameInStaffName(staffname)
+            
+            if(AAA.count != 0){
+                let record = StaffNameDB()
+                record.id = DBmethod().DBRecordCount(StaffNameDB)
+                record.name = staffname
+                DBmethod().AddandUpdate(record, update: true)
+            }
         }
     }
 }
