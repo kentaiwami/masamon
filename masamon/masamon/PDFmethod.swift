@@ -453,7 +453,7 @@ class PDFmethod: UIViewController {
     }
     
     //受け取ったpivotindexよりも大きいindexの要素は削除する関数
-    func AAA(var array: Array<Int>, pivotindex: String.CharacterView.Index, text: String) -> Array<Int>{
+    func RemoveElementThanPivotIndex(var array: Array<Int>, pivotindex: String.CharacterView.Index, text: String) -> Array<Int>{
         
         let index = text.startIndex
         var removeelement: [Int] = []
@@ -467,7 +467,6 @@ class PDFmethod: UIViewController {
         for(var i = 0; i < removeelement.count; i++){
             array.removeObject(removeelement[i])
         }
-        
         
         return array
     }
@@ -495,7 +494,7 @@ class PDFmethod: UIViewController {
         }
         
         //スタッフの人数分(配列の最後まで)繰り返す
-//        for(var i = 2; i < 3; i++){
+//        for(var i = 5; i < 6; i++){
 
         for(var i = 1; i < staffarray.count; i++){
         
@@ -643,8 +642,9 @@ class PDFmethod: UIViewController {
                     numeralcount = 0
                 }
                 
+                //数値の連続が5回以上なら数列として判断する
                 if(numeralcount >= 5){
-                    index = index.advancedBy(-5)
+                    index = index.advancedBy(-4)
                     removeflag = true
                     break
                 }
@@ -652,17 +652,16 @@ class PDFmethod: UIViewController {
                 index = index.successor()
             }
             
+            
             if(removeflag){
-                earlyshiftlocationarray = self.AAA(earlyshiftlocationarray, pivotindex: index, text: staffarraytmp)
-                center1shiftlocationarray = self.AAA(center1shiftlocationarray, pivotindex: index, text: staffarraytmp)
-                center2shiftlocationarray = self.AAA(center2shiftlocationarray, pivotindex: index, text: staffarraytmp)
-                center3shiftlocationarray = self.AAA(center3shiftlocationarray, pivotindex: index, text: staffarraytmp)
-                lateshiftlocationarray = self.AAA(lateshiftlocationarray, pivotindex: index, text: staffarraytmp)
-                othershiftlocationarray = self.AAA(othershiftlocationarray, pivotindex: index, text: staffarraytmp)
-                holidayshiftlocationarray = self.AAA(holidayshiftlocationarray, pivotindex: index, text: staffarraytmp)
+                earlyshiftlocationarray = self.RemoveElementThanPivotIndex(earlyshiftlocationarray, pivotindex: index, text: staffarraytmp)
+                center1shiftlocationarray = self.RemoveElementThanPivotIndex(center1shiftlocationarray, pivotindex: index, text: staffarraytmp)
+                center2shiftlocationarray = self.RemoveElementThanPivotIndex(center2shiftlocationarray, pivotindex: index, text: staffarraytmp)
+                center3shiftlocationarray = self.RemoveElementThanPivotIndex(center3shiftlocationarray, pivotindex: index, text: staffarraytmp)
+                lateshiftlocationarray = self.RemoveElementThanPivotIndex(lateshiftlocationarray, pivotindex: index, text: staffarraytmp)
+                othershiftlocationarray = self.RemoveElementThanPivotIndex(othershiftlocationarray, pivotindex: index, text: staffarraytmp)
+                holidayshiftlocationarray = self.RemoveElementThanPivotIndex(holidayshiftlocationarray, pivotindex: index, text: staffarraytmp)
             }
-            
-            
             
             
             //要素数を比較して正しくシフト体制を認識できているかチェックする
@@ -743,9 +742,7 @@ class PDFmethod: UIViewController {
                 appDelegate.errorshiftname[staffname] = messagetext
             }
         }
-        
-//        print(dayshiftarray)
-        
+
         let file_name = "TEST.txt"
         let text = dayshiftarray[0]
         
