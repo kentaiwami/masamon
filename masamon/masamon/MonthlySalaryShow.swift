@@ -164,14 +164,14 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                     appDelegate.errorstaffnamefastcount = appDelegate.errorstaffname.count
                     staffnamecountflag = false
                 }
-                self.StaffNameErrorAlertShow()
+                self.StaffNameErrorAlertShowPDF()
             }else{
                 if(appDelegate.errorshiftname.count != 0){  //シフト認識エラーがある場合
                     if(staffshiftcountflag){
                         appDelegate.errorshiftnamefastcount = appDelegate.errorshiftname.count
                         staffshiftcountflag = false
                     }
-                    self.StaffShiftErrorAlertShow()
+                    self.StaffShiftErrorAlertShowPDF()
                 }
             }
         }
@@ -179,7 +179,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     }
     
     //スタッフ名認識エラーがある場合に表示してデータ入力をさせるためのアラート
-    func StaffNameErrorAlertShow(){
+    func StaffNameErrorAlertShowPDF(){
         let errorstaffnametext = appDelegate.errorstaffname
         let donecount = appDelegate.errorstaffnamefastcount - appDelegate.errorstaffname.count
         
@@ -204,7 +204,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                         
                         self.savedata()
                     }else{
-                        self.StaffNameErrorAlertShow()
+                        self.StaffNameErrorAlertShowPDF()
                     }
                 }
         })
@@ -227,7 +227,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     
     
     //シフト認識エラーがある場合に表示してデータ入力をさせるためのアラート
-    func StaffShiftErrorAlertShow(){
+    func StaffShiftErrorAlertShowPDF(){
         
         let index = self.appDelegate.errorshiftname.startIndex.advancedBy(0)
         let keys = self.appDelegate.errorshiftname.keys[index]
@@ -270,7 +270,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                         
                         self.savedata()
                     }else{
-                        self.StaffShiftErrorAlertShow()
+                        self.StaffShiftErrorAlertShowPDF()
                     }
                 }
         })
