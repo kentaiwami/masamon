@@ -332,25 +332,42 @@ class CalenderViewController: UIViewController {
             }else{
                 let usershift = self.ReturnUserShift(DBmethod().TheDayStaffGet(MonthlySalaryShow().Changecalendar(self.year, calender: "A.D"), month: self.month, date: button.tag)![0].staff)
                 
-                switch(usershift){
-                case "早","早カ":
+                var gid = 999
+
+                if(usershift == "breaktime"){
+                    gid = 5
+                }else{
+                    let resultshift = DBmethod().SearchShiftSystem(usershift)
+                    if(resultshift != nil){
+                        gid = resultshift![0].groupid
+                    }
+                }
+                
+                switch(gid){
+                //早番
+                case 0:
                     calendarBackGroundColor = UIColor(
                         red: CGFloat(0.400), green: CGFloat(0.471), blue: CGFloat(0.980), alpha: CGFloat(1.0)
                     )
-                    
-                case "中":
+                
+                //中1
+                case 1:
                     calendarBackGroundColor = UIColor.hex("00EE76", alpha: 0.9)
                     
-                case "中2":
+                //中2
+                case 2:
                     calendarBackGroundColor = UIColor.hex("ff9900", alpha: 1.0)
                     
-                case "中3":
+                //中3
+                case 3:
                     calendarBackGroundColor = UIColor.hex("ff9966", alpha: 1.0)
-                    
-                case "遅","遅カ":
+                
+                //遅番
+                case 4:
                     calendarBackGroundColor = UIColor.blackColor()
-                    
-                case "breaktime":
+                
+                //休み
+                case 5:
                     calendarBackGroundColor = UIColor(
                         red: CGFloat(0.831), green: CGFloat(0.349), blue: CGFloat(0.224), alpha: CGFloat(1.0)
                     )
