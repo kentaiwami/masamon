@@ -482,7 +482,7 @@ class PDFmethod: UIViewController {
         var dayshiftarray: [String] = []        //1日ごとのシフトを記録
         
         //1クールが全部で何日間あるかを判断するため
-        let shiftyearandmonth = Shiftmethod().JudgeYearAndMonth(staffarray[0])
+        let shiftyearandmonth = XLSXmethod().JudgeYearAndMonth(staffarray[0])
         
         let shiftnsdate = MonthlySalaryShow().DateSerial(MonthlySalaryShow().Changecalendar(shiftyearandmonth.year, calender: "JP"), month: shiftyearandmonth.startcoursmonth, day: 1)
         let c = NSCalendar.currentCalendar()

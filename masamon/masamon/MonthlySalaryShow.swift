@@ -126,8 +126,8 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             
             dispatch_async_global { // ここからバックグラウンドスレッド
 
-                Shiftmethod().ShiftDBOneCoursRegist(self.appDelegate.filename, importpath: self.Libralypath+"/"+self.appDelegate.filename, update: self.appDelegate.update)
-                Shiftmethod().UserMonthlySalaryRegist(self.appDelegate.filename)
+                XLSXmethod().ShiftDBOneCoursRegist(self.appDelegate.filename, importpath: self.Libralypath+"/"+self.appDelegate.filename, update: self.appDelegate.update)
+                XLSXmethod().UserMonthlySalaryRegist(self.appDelegate.filename)
                 
                 self.dispatch_async_main { // ここからメインスレッド
                     self.progress.dismiss({ () -> Void in

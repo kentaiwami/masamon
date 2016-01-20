@@ -9,7 +9,7 @@
 import UIKit
 import RealmSwift
 
-class Shiftmethod: UIViewController {
+class XLSXmethod: UIViewController {
     
     //cellの列(日付が記載されている範囲)
     let cellrow = ["G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","AA","AB","AC","AD","AE","AF","AG","AH","AI","AJ","AK"]
