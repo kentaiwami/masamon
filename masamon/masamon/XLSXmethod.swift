@@ -46,7 +46,7 @@ class XLSXmethod: UIViewController {
     func ShiftDBOneCoursRegist(importname: String, importpath: String, update: Bool){
         let worksheet = self.SetXLSX()
         let shiftyearandmonth = self.JudgeYearAndMonth(worksheet.P1)
-        let shiftnsdate = MonthlySalaryShow().DateSerial(MonthlySalaryShow().Changecalendar(shiftyearandmonth.year, calender: "JP"), month: shiftyearandmonth.startcoursmonth, day: 1)
+        let shiftnsdate = MonthlySalaryShow().DateSerial(CommonMethod().Changecalendar(shiftyearandmonth.year, calender: "JP"), month: shiftyearandmonth.startcoursmonth, day: 1)
         let c = NSCalendar.currentCalendar()
         let monthrange = c.rangeOfUnit([NSCalendarUnit.Day],  inUnit: [NSCalendarUnit.Month], forDate: shiftnsdate)
         
@@ -211,7 +211,7 @@ class XLSXmethod: UIViewController {
         var userposition = ""
         
         let shiftyearandmonth = self.JudgeYearAndMonth(worksheet.P1)
-        let shiftnsdate = MonthlySalaryShow().DateSerial(MonthlySalaryShow().Changecalendar(shiftyearandmonth.year, calender: "JP"), month: shiftyearandmonth.startcoursmonth, day: 1)
+        let shiftnsdate = MonthlySalaryShow().DateSerial(CommonMethod().Changecalendar(shiftyearandmonth.year, calender: "JP"), month: shiftyearandmonth.startcoursmonth, day: 1)
         let c = NSCalendar.currentCalendar()
         let monthrange = c.rangeOfUnit([NSCalendarUnit.Day],  inUnit: [NSCalendarUnit.Month], forDate: shiftnsdate)
         
@@ -356,7 +356,7 @@ class XLSXmethod: UIViewController {
     func CheckShift(){
         let worksheet = self.SetXLSX()
         let shiftyearandmonth = self.JudgeYearAndMonth(worksheet.P1)
-        let shiftnsdate = MonthlySalaryShow().DateSerial(MonthlySalaryShow().Changecalendar(shiftyearandmonth.year, calender: "JP"), month: shiftyearandmonth.startcoursmonth, day: 1)
+        let shiftnsdate = MonthlySalaryShow().DateSerial(CommonMethod().Changecalendar(shiftyearandmonth.year, calender: "JP"), month: shiftyearandmonth.startcoursmonth, day: 1)
         let c = NSCalendar.currentCalendar()
         let monthrange = c.rangeOfUnit([NSCalendarUnit.Day],  inUnit: [NSCalendarUnit.Month], forDate: shiftnsdate)
         let staffcellposition = self.StaffCellPositionGet()     //スタッフの名前が記載されているセル場所 ex.)F8,F9

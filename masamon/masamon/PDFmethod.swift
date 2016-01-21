@@ -485,7 +485,7 @@ class PDFmethod: UIViewController {
         //1クールが全部で何日間あるかを判断するため
         let shiftyearandmonth = XLSXmethod().JudgeYearAndMonth(staffarray[0])
         
-        let shiftnsdate = MonthlySalaryShow().DateSerial(MonthlySalaryShow().Changecalendar(shiftyearandmonth.year, calender: "JP"), month: shiftyearandmonth.startcoursmonth, day: 1)
+        let shiftnsdate = MonthlySalaryShow().DateSerial(CommonMethod().Changecalendar(shiftyearandmonth.year, calender: "JP"), month: shiftyearandmonth.startcoursmonth, day: 1)
         let c = NSCalendar.currentCalendar()
         let monthrange = c.rangeOfUnit([NSCalendarUnit.Day],  inUnit: [NSCalendarUnit.Month], forDate: shiftnsdate)
         
@@ -774,7 +774,7 @@ class PDFmethod: UIViewController {
         var shiftdetailarray = List<ShiftDetailDB>()
 
 //        let shiftyearandmonth = self.JudgeYearAndMonth("")
-        let shiftnsdate = MonthlySalaryShow().DateSerial(MonthlySalaryShow().Changecalendar(shiftcours.y, calender: "JP"), month: shiftcours.sm, day: 1)
+        let shiftnsdate = MonthlySalaryShow().DateSerial(CommonMethod().Changecalendar(shiftcours.y, calender: "JP"), month: shiftcours.sm, day: 1)
         let c = NSCalendar.currentCalendar()
         let monthrange = c.rangeOfUnit([NSCalendarUnit.Day],  inUnit: [NSCalendarUnit.Month], forDate: shiftnsdate)
 

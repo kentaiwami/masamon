@@ -327,10 +327,10 @@ class CalenderViewController: UIViewController {
             //ボタンの配色の設定
             //@remark:このサンプルでは正円のボタンを作っていますが、背景画像の設定等も可能です。
             
-            if(DBmethod().TheDayStaffGet(MonthlySalaryShow().Changecalendar(self.year, calender: "A.D"), month: self.month, date: button.tag) == nil){
+            if(DBmethod().TheDayStaffGet(CommonMethod().Changecalendar(self.year, calender: "A.D"), month: self.month, date: button.tag) == nil){
                 calendarBackGroundColor = UIColor.lightGrayColor()
             }else{
-                let usershift = self.ReturnUserShift(DBmethod().TheDayStaffGet(MonthlySalaryShow().Changecalendar(self.year, calender: "A.D"), month: self.month, date: button.tag)![0].staff)
+                let usershift = self.ReturnUserShift(DBmethod().TheDayStaffGet(CommonMethod().Changecalendar(self.year, calender: "A.D"), month: self.month, date: button.tag)![0].staff)
                 
                 var gid = 999
 
@@ -565,14 +565,14 @@ class CalenderViewController: UIViewController {
     
     //カレンダーボタンをタップした時のアクション
     func buttonTapped(button: UIButton){
-        if(DBmethod().TheDayStaffGet(MonthlySalaryShow().Changecalendar(year, calender: "A.D"), month: month, date: button.tag) == nil){
+        if(DBmethod().TheDayStaffGet(CommonMethod().Changecalendar(year, calender: "A.D"), month: month, date: button.tag) == nil){
             let alertController = UIAlertController(title: "\(year)年\(month)月\(button.tag)日", message: "データなし", preferredStyle: .Alert)
             let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
             alertController.addAction(defaultAction)
             
             presentViewController(alertController, animated: true, completion: nil)
         }else{
-            let staffstring = DBmethod().TheDayStaffGet(MonthlySalaryShow().Changecalendar(year, calender: "A.D"),month: month,date: button.tag)![0].staff
+            let staffstring = DBmethod().TheDayStaffGet(CommonMethod().Changecalendar(year, calender: "A.D"),month: month,date: button.tag)![0].staff
             let splitedstaffarray = MonthlySalaryShow().SplitStaffShift(staffstring)
             
             let alertviewtitle = "\(year)年\(month)月\(button.tag)日"
