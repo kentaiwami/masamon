@@ -764,7 +764,7 @@ class PDFmethod: UIViewController {
     }
     
     //データベースへ記録する関数
-    func RegistDataBase(shiftarray: Array<String>, shiftcours: (y: Int,sm: Int,em: Int)){
+    func RegistDataBase(shiftarray: Array<String>, shiftcours: (y: Int,sm: Int,em: Int), importname: String, importpath: String){
         
         var date = 11
         var flag = 0
@@ -786,8 +786,8 @@ class PDFmethod: UIViewController {
                 
                 shiftdbrecord.year = 0
                 shiftdbrecord.month = 0
-                shiftdbrecord.shiftimportname = ""
-                shiftdbrecord.shiftimportpath = ""
+                shiftdbrecord.shiftimportname = importname
+                shiftdbrecord.shiftimportpath = importpath
                 shiftdbrecord.salaly = 0
                 
                 shiftdetaildbrecord.id = DBmethod().DBRecordCount(ShiftDetailDB) + i
@@ -800,7 +800,6 @@ class PDFmethod: UIViewController {
                 }
                 
                 shiftdetaildbrecord.day = date
-                
                 
                 switch(flag){
                 case 0:         //11日〜30(31)日までの場合
@@ -836,21 +835,76 @@ class PDFmethod: UIViewController {
                     DBmethod().AddandUpdate(shiftdbrecord, update: true)
                     DBmethod().AddandUpdate(shiftdetaildbrecord, update: true)
                     shiftdetailarray = XLSXmethod().ShiftDBRelationArrayGet(ID)
-
-
                 }
-
             }
-            
-            
-            //TODO: ShiftSystemのレコードを生成する
-            //TODO: 生成したレコードを記録する
-            
-            
-            
-            
-            
         }
     }
+    
+    //入力したユーザ名の月給を計算して結果を記録する
+    func UserMonthlySalaryRegist(shiftarray: Array<String>, shiftcours: (y: Int,sm: Int,em: Int), importname: String){
+        var usershift:[String] = []
+        
+        let username = DBmethod().UserNameGet()
+        let holiday = DBmethod().HolidayNameArrayGet()      //休暇のシフト体制を取得
+        
+        //1クール分行う
+        for(var i = 0; i < shiftarray.count; i++){
+            
+            var dayshift = ""
+            
+            let AAA = shiftarray[i] as NSString
+            
+            let BBB = AAA.rangeOfString(username).location
+            
+            var index = shiftarray[i].startIndex.advancedBy(BBB + username.characters.count + 1)
+            
+            while(String(shiftarray[i][index]) != ","){
+                dayshift += String(shiftarray[i][index])
+                index = index.successor()
+            }
+            
+            if(holiday.contains(dayshift) == false){      //holiday以外なら
+                usershift.append(dayshift)
+            }
+        }
+        
+        //月給の計算をする
+        //var shiftsystem = ShiftSystem()
+        var monthlysalary = 0.0
+        let houlypayrecord = DBmethod().HourlyPayRecordGet()
+        
+        for(var i = 0; i < usershift.count; i++){
+            
+            let shiftsystem = DBmethod().SearchShiftSystem(usershift[i])
+            if(shiftsystem![0].endtime <= houlypayrecord[0].timeto){
+                monthlysalary = monthlysalary + (shiftsystem![0].endtime - shiftsystem![0].starttime - 1) * Double(houlypayrecord[0].pay)
+            }else{
+                //22時以降の給与を先に計算
+                let latertime = shiftsystem![0].endtime - houlypayrecord[0].timeto
+                monthlysalary = monthlysalary + latertime * Double(houlypayrecord[1].pay)
+                
+                monthlysalary = monthlysalary + (shiftsystem![0].endtime - latertime - shiftsystem![0].starttime - 1) * Double(houlypayrecord[0].pay)
+            }
+        }
+        
+        //データベースへ記録上書き登録
+        let newshiftdbsalalyadd = ShiftDB()                                 //月給を追加するための新規インスタンス
+        let oldshiftdbsalalynone = DBmethod().SearchShiftDB(importname)     //月給がデフォルト値で登録されているShiftDBオブジェクト
+        
+        newshiftdbsalalyadd.id = oldshiftdbsalalynone.id
+        
+        for(var i = 0; i < oldshiftdbsalalynone.shiftdetail.count; i++){
+            newshiftdbsalalyadd.shiftdetail.append(oldshiftdbsalalynone.shiftdetail[i])
+        }
+        
+        newshiftdbsalalyadd.shiftimportname = oldshiftdbsalalynone.shiftimportname
+        newshiftdbsalalyadd.shiftimportpath = oldshiftdbsalalynone.shiftimportpath
+        newshiftdbsalalyadd.salaly = Int(monthlysalary)
+        newshiftdbsalalyadd.year = shiftcours.y
+        newshiftdbsalalyadd.month = shiftcours.em
+        
+        DBmethod().AddandUpdate(newshiftdbsalalyadd, update: true)
+    }
+    
 }
 
