@@ -17,7 +17,7 @@ class XLSXmethod: UIViewController {
     let mark = "F"
     var number = 6
     
-    let TEST = "aaa"
+    let TEST = "bbb"
     var flag = true
     
     var documentPath: String = ""
@@ -127,7 +127,7 @@ class XLSXmethod: UIViewController {
                 }
 
                 switch(flag){
-                case 0:         //11日〜30日までの場合
+                case 0:         //11日〜30(31)日までの場合
                     shiftdetaildb.month = JudgeYearAndMonth(worksheet.P1).startcoursmonth
                     date++
                     

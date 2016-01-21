@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 class PDFmethod: UIViewController {
     
@@ -473,7 +474,7 @@ class PDFmethod: UIViewController {
     
     
     //スタッフのシフトを日にちごとに分けたArrayを返す
-    func SplitDayShiftGet(var staffarray: Array<String>) -> Array<String>{
+    func SplitDayShiftGet(var staffarray: Array<String>) -> (shiftarray: Array<String>, shiftcours: (Int,Int,Int)){
         
         //データを削除して初期化する
         appDelegate.errorstaffnamepdf.removeAll()
@@ -667,7 +668,7 @@ class PDFmethod: UIViewController {
             //要素数を比較して正しくシフト体制を認識できているかチェックする
             var count = 0
             count = earlyshiftlocationarray.count + center1shiftlocationarray.count + center2shiftlocationarray.count + center3shiftlocationarray.count + lateshiftlocationarray.count + holidayshiftlocationarray.count + othershiftlocationarray.count
-            print(staffname + "  " + String(count))
+//            print(staffname + "  " + String(count))
            
             
 //            print(staffarraytmp)
@@ -743,23 +744,113 @@ class PDFmethod: UIViewController {
             }
         }
 
-        let file_name = "TEST.txt"
-        let text = dayshiftarray[0]
+//        let file_name = "TEST.txt"
+//        let text = dayshiftarray[0]
+//        
+//        if let dir : NSString = NSSearchPathForDirectoriesInDomains( NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.AllDomainsMask, true ).first {
+//            
+//            let path_file_name = dir.stringByAppendingPathComponent(file_name)
+//            
+//            do {
+//                
+//                try text.writeToFile(path_file_name, atomically: false, encoding: NSUTF8StringEncoding )
+//                
+//            } catch {
+//                //エラー処理
+//            }
+//        }
         
-        if let dir : NSString = NSSearchPathForDirectoriesInDomains( NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.AllDomainsMask, true ).first {
-            
-            let path_file_name = dir.stringByAppendingPathComponent(file_name)
-            
-            do {
+        return (dayshiftarray,shiftyearandmonth)
+    }
+    
+    //データベースへ記録する関数
+    func RegistDataBase(shiftarray: Array<String>, shiftcours: (y: Int,sm: Int,em: Int)){
+        
+        var date = 11
+        var flag = 0
+        var shiftdetailarray = List<ShiftDetailDB>()
+
+//        let shiftyearandmonth = self.JudgeYearAndMonth("")
+        let shiftnsdate = MonthlySalaryShow().DateSerial(MonthlySalaryShow().Changecalendar(shiftcours.y, calender: "JP"), month: shiftcours.sm, day: 1)
+        let c = NSCalendar.currentCalendar()
+        let monthrange = c.rangeOfUnit([NSCalendarUnit.Day],  inUnit: [NSCalendarUnit.Month], forDate: shiftnsdate)
+
+        
+        if(appDelegate.errorshiftnamexlsx.count == 0){
+
+            for(var i = 0; i < shiftarray.count; i++){
+                let shiftdbrecord = ShiftDB()
+                let shiftdetaildbrecord = ShiftDetailDB()
                 
-                try text.writeToFile(path_file_name, atomically: false, encoding: NSUTF8StringEncoding )
+                shiftdbrecord.id = DBmethod().DBRecordCount(ShiftDetailDB)/monthrange.length
                 
-            } catch {
-                //エラー処理
+                shiftdbrecord.year = 0
+                shiftdbrecord.month = 0
+                shiftdbrecord.shiftimportname = ""
+                shiftdbrecord.shiftimportpath = ""
+                shiftdbrecord.salaly = 0
+                
+                shiftdetaildbrecord.id = DBmethod().DBRecordCount(ShiftDetailDB) + i
+
+                //開始月が12月の場合は昨年の12月で記録されるようにする
+                if(shiftcours.sm == 12 && flag == 0){
+                    shiftdetaildbrecord.year = shiftcours.y - 1
+                }else{
+                    shiftdetaildbrecord.year = shiftcours.y
+                }
+                
+                shiftdetaildbrecord.day = date
+                
+                
+                switch(flag){
+                case 0:         //11日〜30(31)日までの場合
+                    shiftdetaildbrecord.month = shiftcours.sm
+                    date++
+                    
+                    if(date > monthrange.length){
+                        date = 1
+                        flag = 1
+                    }
+                    
+                case 1:         //1日〜10日までの場合
+                    shiftdetaildbrecord.month = shiftcours.em
+                    date++
+                    
+                default:
+                    break
+                }
+                
+                shiftdetaildbrecord.staff = shiftarray[i]
+                shiftdetaildbrecord.shiftDBrelationship = shiftdbrecord
+                
+                //すでに記録してあるListを取得して後ろに現在の記録を追加する
+                for(var i = 0; i < shiftdetailarray.count; i++){
+                    shiftdbrecord.shiftdetail.append(shiftdetailarray[i])
+                }
+                shiftdbrecord.shiftdetail.append(shiftdetaildbrecord)
+                
+                let ID = shiftdbrecord.id
+                
+                //エラーがない場合のみ記録を行う
+                if(appDelegate.errorstaffnamepdf.count == 0 && appDelegate.errorshiftnamepdf.count == 0){
+                    DBmethod().AddandUpdate(shiftdbrecord, update: true)
+                    DBmethod().AddandUpdate(shiftdetaildbrecord, update: true)
+                    shiftdetailarray = XLSXmethod().ShiftDBRelationArrayGet(ID)
+
+
+                }
+
             }
+            
+            
+            //TODO: ShiftSystemのレコードを生成する
+            //TODO: 生成したレコードを記録する
+            
+            
+            
+            
+            
         }
-        
-        return dayshiftarray
     }
 }
 

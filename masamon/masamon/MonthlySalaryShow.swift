@@ -175,7 +175,12 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         //取り込みがPDFの場合
         }else{
             pdfalltextarray = PDFmethod().AllTextGet()
-            PDFmethod().SplitDayShiftGet(pdfalltextarray)
+            let pdfdata = PDFmethod().SplitDayShiftGet(pdfalltextarray)
+            
+            //エラーがない場合はデータベースへ書き込みを行う
+            if(appDelegate.errorstaffnamepdf.count == 0 && appDelegate.errorshiftnamepdf.count == 0){
+                PDFmethod().RegistDataBase(pdfdata.shiftarray, shiftcours: pdfdata.shiftcours)
+            }
             
             if(appDelegate.errorstaffnamepdf.count != 0){  //スタッフ名認識エラーがある場合
                 if(staffnamecountflag){
