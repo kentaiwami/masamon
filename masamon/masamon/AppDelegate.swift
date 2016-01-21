@@ -11,12 +11,28 @@ import UIKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
+    /*AppDelegateで使用*/
     var window: UIWindow?
-    var fileURL = ""
-    var filesavealert = false
-    var filename = ""
-    var update = true
-    var selectedcell: [Bool] = []
+    var fileURL = ""                            //ファイルをInboxに保存した時のURLを記録
+    
+    /*ShiftImportとMonthlySalaryShowで使用*/
+    var filesavealert = false                   //ファイルの保存が行われたかを記録
+    var filename = ""                           //ユーザが取り込み時に入力したファイル名を記録
+    var update = true                           //シフトの取り込みが上書きかを記録
+    
+    /*ShiftGalleryTableで使用*/
+    var selectedcell: [Bool] = []               //ShiftGalleryTableで選択をしたセルを記録
+
+    /*MonthlySalaryShowで使用*/
+    var errorshiftnamefastcount = 0             //シフトの認識に失敗した場合の最初の失敗数を格納しておく変数
+    var errorstaffnamefastcount = 0             //スタッフ名の認識に失敗した場合に、最初の失敗数を格納しておく変数
+
+    /*MonthlySalaryShowとPDFmethodで使用*/
+    var errorstaffnamepdf: [String] = []           //スタッフ名の認識に失敗した場合に、スタッフ名が書かれた1行を格納する
+    var errorshiftnamepdf: [String:String] = [:]   //シフトの認識に失敗した場合に、スタッフ名と認識に失敗した文字列を格納する
+
+    /*MonthlySalaryShowとXLSXmethodで使用*/
+    var errorshiftnamexlsx: [String] = []       //新規シフト体制名が含まれていた場合に格納する
     
     func application(app: UIApplication, openURL url: NSURL, options: [String : AnyObject]) -> Bool {
         fileURL = ""
@@ -53,7 +69,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         monthlysalaryshowview.view.backgroundColor = UIColor.blackColor()
         calenderview.view.backgroundColor = UIColor.hex("696969", alpha: 0.5)
         
-        navigationController.viewControllerArray = [monthlysalaryshowview,calenderview,shiftgallerytableview,settingview]
+        navigationController.viewControllerArray = [monthlysalaryshowview,calenderview,settingview,shiftgallerytableview]
         
         self.window?.rootViewController = navigationController
         self.window?.makeKeyAndVisible()
@@ -80,16 +96,51 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let shiftstartpattern = [8.0,8.0,8.0,8.0,12.0,13.5,14.5,16.0,16.0,16.0]
         let shiftendpattern = [16.5,16.5,16.5,16.5,20.5,22.0,23.0,24.5,24.5,24.5]
 
-        if(DBmethod().DBRecordCount(ShiftSystem) == 0){
+        if(DBmethod().DBRecordCount(ShiftSystemDB) == 0){
             for(var i = 0; i < shiftnamepattern.count; i++){
-                let ShiftSystemRecord = ShiftSystem()
+                var gid = 0
+                
+                switch(i){
+                case 0...3:
+                    gid = 0
+                    
+                case 4:
+                    gid = 1
+                    
+                case 5:
+                    gid = 2
+                    
+                case 6:
+                    gid = 3
+                    
+                case 7...9:
+                    gid = 4
+                    
+                default:
+                    break
+                }
+                
+                let ShiftSystemRecord = ShiftSystemDB()
                 ShiftSystemRecord.id = i
+                ShiftSystemRecord.groupid = gid
                 ShiftSystemRecord.name = shiftnamepattern[i]
                 ShiftSystemRecord.starttime = shiftstartpattern[i]
                 ShiftSystemRecord.endtime = shiftendpattern[i]
                 DBmethod().AddandUpdate(ShiftSystemRecord, update: true)
             }
         }
+        
+        //シフト体制(休暇)データ
+        let holidaynamepattern = ["公","夏","有"]
+        if(DBmethod().DBRecordCount(HolidayDB) == 0){
+            for(var i = 0; i < holidaynamepattern.count; i++){
+                let Record = HolidayDB()
+                Record.id = i
+                Record.name = holidaynamepattern[i]
+                DBmethod().AddandUpdate(Record, update: true)
+            }
+        }
+        
         return true
     }
     
@@ -105,7 +156,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationWillEnterForeground(application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-        
     }
     
     func applicationDidBecomeActive(application: UIApplication) {

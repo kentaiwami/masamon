@@ -1,0 +1,188 @@
+===========================
+TET 5.0 (November 04, 2015)
+===========================
+
+General
+-------
+- API function TET_get_xml_data() is deprecated, use TET_get_tetml() which
+  has the same interface and semantics.
+
+- The "skipengines" option of TET_open_page() is deprecated;
+  use the "engines" option of TET_open_document().
+
+
+CJK Text Extraction
+---------------
+- The default word splitting behavior for ideographic CJK characters has been
+  changed from "split" to "keep". Therefore the suboption "ideographic" of
+  the "contentanalysis" page option is no longer required, and has been
+  declared as deprecated.
+  
+
+Image Extraction
+----------------
+- TET_write_image_file(): JPEG 2000 images are no longer reported with 
+  return value 30 and suffix .jpx, but the function distinguishes between plain
+  JPEG 2000 (return type 31, suffix .jp2), extended JPEG 2000 (return type
+  32, suffix .jpf), and raw JPEG 2000 code streams (return type 33, suffix
+  .j2k). Client code which checks for the image type must be adjusted
+  accordingly.
+
+- The unsupported option "format" of TET_write_image_file() and
+  TET_get_image_data() is no longer available since the TET kernel needs full
+  control over the choice of image output format.
+
+- "smallimages" suboption of the "imageanalysis" page option: the suboption
+  "maxcount" is deprecated.
+
+
+TETML Schema
+------------
+- New namespace URI: TETML output created by TET 5 adheres to the new TETML
+  schema TET-5.0.xsd. All XSLT applications for processing TETML 5 must apply
+  the following change to switch to the new TETML schema:
+
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+	xmlns:tet="http://www.pdflib.com/XML/TET3/TET-3.0">
+==>
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+	xmlns:tet="http://www.pdflib.com/XML/TET5/TET-5.0">
+
+
+- Additional <Box> elements: The following elements now have an additional
+  <Box> element as child (like <Word> in TET 4):
+  Para, Table
+
+  This requires changes in XSLT stylesheets which select direct parents of one
+  of the affected elements, e.g. Words within Para.
+
+  Example for TET 4 XSLT fragment:
+
+  <xsl:template match="tet:Para">
+      <xsl:for-each select="tet:Word">
+          <!-- do something with tet:Word element -->
+      </xsl:for-each>
+  </xsl:template>
+
+  XSLT code updated for TET 5:
+
+  <xsl:template match="tet:Para">
+      <xsl:for-each select="tet:Box/tet:Word">
+          <!-- do something with tet:Word element -->
+      </xsl:for-each>
+  </xsl:template>
+
+
+
+==========================
+TET 4.4 (January 27, 2015)
+==========================
+
+- Removed the deprecated suboption "version" of the document option "tetml". 
+
+
+======================
+TET 4.3 (May 26, 2014)
+======================
+
+(No compatibility notes)
+
+
+======================
+TET 4.2 (May 10, 2013)
+======================
+
+- Maintenance releases require a suitable license key which is available only
+  for customers with active support.
+
+
+===========================
+TET 4.1 (February 20, 2012)
+===========================
+
+- Perl binding: if an API function returns UTF-8 (which is the default for
+  TET_get_text()) the returned Perl string will now be flagged as UTF-8.
+  As a result, Perl functions (e.g. length()) count the Unicode characters
+  in the string instead of the number of bytes.
+  If you get a warning such as the following when writing to file
+  
+  "Wide character in print at extractor.pl line 76."
+  
+  you must tell Perl that the output file contains UTF-8 as follows:
+  
+  binmode(OUTFP, ":utf8");
+  
+  (see http://perldoc.perl.org/functions/binmode.html for details).
+
+- PHP binding: the name of the TET extension for PHP changed from
+  libtet_php.(so|dll|sl) to php_tet.(so|dll|sl).
+
+- The following functions are deprecated:
+  TET_utf8_to_utf16(), TET_utf16_to_utf8(),
+  TET_utf32_to_utf16(), TET_utf8_to_utf32(),
+  TET_utf32_to_utf8(), TET_utf16_to_utf32()
+  Use TET_convert_to_unicode() instead.
+
+
+=======================
+TET 4.0 (July 27, 2010)
+=======================
+
+- TET_open_page() and TET_process_page(): the following suboptions for the
+  contentanalysis option are deprecated:
+  lineseparator, wordseparator, zoneseparator
+  
+  Use the corresponding option in TET_open_document() instead.
+
+- TET_open_document(): the option "keeppua" is deprecated, use the
+  following instead:
+
+  fold={{[:Private_Use:] preserve}} or
+  fold={{[:Private_Use:] unknownchar}}
+  
+- TET_get_char_info():
+  There is no longer any fixed relationship between glyphs (as represented
+  by the TET_char_info structure and characters in the Unicode text
+  returned by TET_get_text(). Instead, the set of glyphs for a text chunk
+  as a whole is known to generate the sequence of Unicode characters
+  comprising the chunk.
+
+- type member in the TET_char_info structure: type=11 (trailing value of
+  a surrogate pair) is no longer used since there is no longer any 1:1
+  relationship between Unicode values and TET_char_info structures.
+
+- TET_open_document_*():
+  the "version" suboption of the "tetml" option is deprecated.
+
+
+===========================
+TET 3.0 (February 02, 2009)
+===========================
+
+- The "zoneseparator" suboption of the "contentanalysis" option of
+  TET_open_page() is no longer supported.
+
+- TET_open_document_mem() is deprecated; use PVF and TET_open_document().
+
+- TET 2 XML output has been replaced by a more powerful grammar which is
+  described by a suitable schema. The old XML grammar can be enabled with
+  the option "tetml={version=2}" in TET_open_document().
+
+
+==========================
+TET 2.2 (January 24, 2007)
+==========================
+
+- Switched to the new license scheme and keys which has been
+  introduced with PDFlib 7.0.0.
+  
+  
+=============================
+TET 2.1.0 (December 12, 2005)
+=============================
+
+- Option "outputformat" in TET_set_option(): changed the default value on
+  zSeries from "utf8" to "ebcdicutf8" (the default on all other systems
+  remains "utf8").
+  In order to restore the previous behavior issue the following call:
+  TET_set_option(p, "outputformat", "utf8");

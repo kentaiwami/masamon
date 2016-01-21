@@ -118,44 +118,6 @@
             </objects>
             <point key="canvasLocation" x="253.5" y="352.5"/>
         </scene>
-        <!--Shift Gallery-->
-        <scene sceneID="d8v-Tz-inF">
-            <objects>
-                <viewController storyboardIdentifier="ShiftGallery" useStoryboardIdentifierAsRestorationIdentifier="YES" id="MwN-S4-MNK" customClass="ShiftGallery" customModule="masamon" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="KYk-oH-vK2"/>
-                        <viewControllerLayoutGuide type="bottom" id="8qJ-wy-WN3"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Biz-pi-neJ">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="g9E-qZ-TLi">
-                                <rect key="frame" x="-2" y="620" width="377" height="47"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9lm-Kh-hRt">
-                                        <rect key="frame" x="151" y="5" width="74" height="34"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                        <state key="normal" title="閉じる"/>
-                                        <connections>
-                                            <action selector="TapCloseButton:" destination="MwN-S4-MNK" eventType="touchUpInside" id="sBq-Zv-MMy"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
-                            </view>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
-                    <connections>
-                        <outlet property="ButtomView" destination="g9E-qZ-TLi" id="PKh-aS-w4h"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="l8G-Ss-ZGO" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="671.5" y="352.5"/>
-        </scene>
         <!--Setting-->
         <scene sceneID="V1x-uh-v1g">
             <objects>
@@ -387,7 +349,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CMS-Q0-48q" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="671.5" y="1093.5"/>
+            <point key="canvasLocation" x="661.5" y="352.5"/>
         </scene>
         <!--Shift Gallery Table-->
         <scene sceneID="Wco-XA-FuF">
@@ -409,7 +371,7 @@
                                 <rect key="frame" x="0.0" y="542" width="377" height="125"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JNH-RI-VOR">
-                                        <rect key="frame" x="151" y="18" width="74" height="30"/>
+                                        <rect key="frame" x="152" y="13" width="74" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                         <state key="normal" title="表示"/>
                                         <connections>
@@ -430,7 +392,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cV5-Fo-dKS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1085.5" y="1098.5"/>
+            <point key="canvasLocation" x="1502.5" y="352.5"/>
         </scene>
     </scenes>
 </document>

@@ -1,0 +1,2391 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- XML Schema for PDFlib TET
+     (c) PDFlib GmbH 2009-2015     www.pdflib.com
+
+  Known restrictions:
+  - The following conditions are not currently detected by the schema although they are disallowed:
+    - Content mixes Word and Glyph elements
+-->
+<xs:schema targetNamespace="http://www.pdflib.com/XML/TET5/TET-5.0"
+	elementFormDefault="qualified" version="5.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tet="http://www.pdflib.com/XML/TET5/TET-5.0">
+    <xs:annotation>
+    	<xs:documentation>Schema for TET 5.0</xs:documentation></xs:annotation>
+	<xs:element name="ColorSpace">
+		<xs:complexType>
+            <xs:sequence maxOccurs="unbounded" minOccurs="0">
+            	<xs:element name="Colorant" minOccurs="0"
+            		maxOccurs="unbounded">
+            		<xs:annotation>
+            			<xs:documentation></xs:documentation>
+            		</xs:annotation>
+            		<xs:complexType>
+            			<xs:attribute name="name" type="xs:string"
+            				use="required" />
+            			<xs:attribute name="colorspace"
+            				type="tet:colorSpaceId">
+            			</xs:attribute>
+            		</xs:complexType>
+            	</xs:element>
+            	<xs:element ref="tet:Exception" minOccurs="0" />
+            	<xs:element maxOccurs="1" minOccurs="0"
+            		ref="tet:Function">
+            		<xs:annotation>
+            			<xs:documentation>TET 5.0</xs:documentation>
+            		</xs:annotation>
+            	</xs:element>
+            	<xs:element name="WhitePoint" maxOccurs="1"
+            		minOccurs="0">
+            		<xs:annotation>
+            			<xs:documentation>TET 5.0</xs:documentation>
+            		</xs:annotation>
+            		<xs:complexType>
+            			<xs:annotation>
+            				<xs:documentation>TET 5.0</xs:documentation>
+            			</xs:annotation>
+            			<xs:attribute name="x">
+            				<xs:simpleType>
+            					<xs:restriction base="xs:float">
+            						<xs:minExclusive value="0"></xs:minExclusive>
+            					</xs:restriction>
+            				</xs:simpleType>
+            			</xs:attribute>
+            			<xs:attribute name="y">
+            				<xs:simpleType>
+            					<xs:restriction base="xs:float">
+            						<xs:minExclusive value="0"></xs:minExclusive>
+            					</xs:restriction>
+            				</xs:simpleType>
+            			</xs:attribute>
+            			<xs:attribute name="z">
+            				<xs:simpleType>
+            					<xs:restriction base="xs:float">
+            						<xs:minExclusive value="0"></xs:minExclusive>
+            					</xs:restriction>
+            				</xs:simpleType>
+            			</xs:attribute>
+            		</xs:complexType>
+            	</xs:element>
+            	<xs:element name="BlackPoint" maxOccurs="1"
+            		minOccurs="0">
+            		<xs:annotation>
+            			<xs:documentation>TET 5.0</xs:documentation>
+            		</xs:annotation>
+            		<xs:complexType>
+            			<xs:annotation>
+            				<xs:documentation>TET 5.0</xs:documentation>
+            			</xs:annotation>
+            			<xs:attribute name="x">
+            				<xs:simpleType>
+            					<xs:restriction base="xs:float">
+            						<xs:minInclusive value="0"></xs:minInclusive>
+            					</xs:restriction>
+            				</xs:simpleType>
+            			</xs:attribute>
+            			<xs:attribute name="y">
+            				<xs:simpleType>
+            					<xs:restriction base="xs:float">
+            						<xs:minInclusive value="0"></xs:minInclusive>
+            					</xs:restriction>
+            				</xs:simpleType>
+            			</xs:attribute>
+            			<xs:attribute name="z">
+            				<xs:simpleType>
+            					<xs:restriction base="xs:float">
+            						<xs:minInclusive value="0"></xs:minInclusive>
+            					</xs:restriction>
+            				</xs:simpleType>
+            			</xs:attribute>
+            		</xs:complexType>
+            	</xs:element>
+            	<xs:element name="Gamma" maxOccurs="1" minOccurs="0">
+            		<xs:annotation>
+            			<xs:documentation>TET 5.0</xs:documentation>
+            		</xs:annotation>
+            		<xs:complexType>
+            			<xs:annotation>
+            				<xs:documentation>TET 5.0</xs:documentation>
+            			</xs:annotation>
+            			<xs:sequence>
+            				<xs:element name="Value" type="xs:float"
+            					maxOccurs="unbounded" minOccurs="1">
+            				</xs:element>
+            			</xs:sequence>
+            		</xs:complexType>
+            	</xs:element>
+            	<xs:element name="Matrix" maxOccurs="1" minOccurs="0">
+            		<xs:annotation>
+            			<xs:documentation>TET 5.0</xs:documentation>
+            		</xs:annotation>
+            		<xs:complexType>
+            			<xs:annotation>
+            				<xs:documentation>TET 5.0</xs:documentation>
+            			</xs:annotation>
+            			<xs:sequence>
+            				<xs:element name="Value" type="xs:float"
+            					maxOccurs="9" minOccurs="9">
+            				</xs:element>
+            			</xs:sequence>
+            		</xs:complexType>
+            	</xs:element>
+            	<xs:element name="Range" maxOccurs="1" minOccurs="0">
+            		<xs:annotation>
+            			<xs:documentation>TET 5.0</xs:documentation>
+            		</xs:annotation>
+            		<xs:complexType>
+            			<xs:sequence>
+            				<xs:element name="Value" type="xs:float"
+            					minOccurs="2" maxOccurs="8">
+            				</xs:element>
+            			</xs:sequence>
+            		</xs:complexType>
+            	</xs:element>
+            	<xs:element name="Process" maxOccurs="1"
+            		minOccurs="0">
+            		<xs:annotation>
+            			<xs:documentation>TET 5.0</xs:documentation>
+            		</xs:annotation>
+            		<xs:complexType>
+            			<xs:sequence>
+            				<xs:element name="Component"
+            					maxOccurs="unbounded" minOccurs="1">
+            					<xs:complexType>
+            						<xs:attribute name="name"
+            							type="xs:string">
+            						</xs:attribute>
+            					</xs:complexType>
+            				</xs:element>
+            			</xs:sequence>
+            			<xs:attribute name="colorspace"
+            				type="tet:colorSpaceId">
+            			</xs:attribute>
+            		</xs:complexType>
+            	</xs:element>
+                <xs:element name="Lookup" type="xs:hexBinary" maxOccurs="1" minOccurs="0"></xs:element>
+            </xs:sequence>
+            <xs:attribute name="alternate" type="tet:colorSpaceId"
+				use="optional">
+				<xs:annotation>
+					<xs:documentation>Only for name=Separation and DeviceN.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="base" type="tet:colorSpaceId"
+				use="optional" />
+			<xs:attribute name="components" type="xs:positiveInteger"
+				use="optional" />
+            <xs:attribute name="hival">
+                <xs:annotation>
+                	<xs:documentation>TET 5.0</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                	<xs:restriction base="xs:int">
+                		<xs:maxInclusive value="255"></xs:maxInclusive>
+                		<xs:minInclusive value="0"></xs:minInclusive>
+                	</xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>
+            <xs:attribute name="iccprofile" type="tet:ICCId">
+            	<xs:annotation>
+            		<xs:documentation>TET 5.0</xs:documentation>
+            	</xs:annotation></xs:attribute>
+            <xs:attribute name="id" type="tet:colorSpaceId"
+				use="required" />
+			<xs:attribute name="name" use="required">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="CalGray" />
+						<xs:enumeration value="CalRGB" />
+						<xs:enumeration value="DeviceCMYK" />
+						<xs:enumeration value="DeviceGray" />
+						<xs:enumeration value="DeviceN" />
+						<xs:enumeration value="DeviceRGB" />
+						<xs:enumeration value="ICCBased" />
+						<xs:enumeration value="Indexed" />
+						<xs:enumeration value="Lab" />
+						<xs:enumeration value="Separation" />
+						<xs:enumeration value="Pattern"></xs:enumeration>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="pattern" type="tet:patternId"
+				use="optional">
+                <xs:annotation>
+                	<xs:documentation>TET 5.0</xs:documentation>
+                </xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="subtype">
+				<xs:annotation>
+					<xs:documentation>TET 5.0</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="DeviceN"></xs:enumeration>
+						<xs:enumeration value="NChannel"></xs:enumeration>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Content">
+		<xs:complexType mixed="false">
+			<xs:sequence>
+				<xs:element ref="tet:Box"
+					minOccurs="0" maxOccurs="1"/>
+				<xs:sequence>			
+				<xs:group ref="tet:ContentGroup" minOccurs="0"
+					maxOccurs="unbounded" />	
+				</xs:sequence>
+			</xs:sequence>			
+			<xs:attribute name="granularity" use="required">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="glyph" />
+						<xs:enumeration value="line" />
+						<xs:enumeration value="page" />
+						<xs:enumeration value="word" />
+						<xs:enumeration value="wordplus" />
+						<xs:enumeration value="zone" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="dehyphenation" type="xs:boolean"
+				use="optional">
+				<xs:annotation>
+					<xs:documentation>TET 4.0</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="dropcap" type="xs:boolean"
+				use="optional">
+				<xs:annotation>
+					<xs:documentation>TET 4.0</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="font" type="xs:boolean" use="required" />
+			<xs:attribute name="geometry" type="xs:boolean"
+				use="required" />
+			<xs:attribute name="shadow" type="xs:boolean"
+				use="optional">
+				<xs:annotation>
+					<xs:documentation>TET 4.0</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="sub" type="xs:boolean" use="optional">
+				<xs:annotation>
+					<xs:documentation>TET 4.0</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="sup" type="xs:boolean" use="optional">
+				<xs:annotation>
+					<xs:documentation>TET 4.0</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:group name="ContentGroup">
+		<xs:choice>
+			<xs:element maxOccurs="unbounded" ref="tet:Word">
+			</xs:element>
+			<xs:element maxOccurs="unbounded" ref="tet:Line">
+			</xs:element>
+			<xs:element name="Para" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:choice minOccurs="1" maxOccurs="unbounded">
+						<xs:element ref="tet:Box"  maxOccurs="unbounded" minOccurs="1"/>
+						<xs:element ref="tet:Word" maxOccurs="unbounded" minOccurs="1">
+						</xs:element>
+						<xs:element ref="tet:A" maxOccurs="unbounded" minOccurs="0"></xs:element>
+					</xs:choice>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Table" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Row" maxOccurs="unbounded"
+							minOccurs="1">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element maxOccurs="unbounded"
+										name="Cell">
+										<xs:complexType>
+											<xs:group minOccurs="0"
+												maxOccurs="unbounded" ref="tet:ContentGroup">
+											</xs:group>
+											<xs:attribute default="1"
+												name="colSpan" type="xs:positiveInteger">
+											</xs:attribute>
+											<xs:attributeGroup
+												ref="tet:BoxAttr">
+											</xs:attributeGroup>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+					<xs:attributeGroup ref="tet:BoxAttr"></xs:attributeGroup>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="PlacedImage" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:attribute name="alpha" use="optional"
+						default="0">
+						<xs:simpleType>
+							<xs:restriction base="xs:double">
+								<xs:minExclusive value="-180" />
+								<xs:maxInclusive value="180" />
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+					<xs:attribute name="beta" use="optional"
+						default="0">
+						<xs:simpleType>
+							<xs:restriction base="xs:double">
+								<xs:minExclusive value="-180" />
+								<xs:maxInclusive value="180" />
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+					<xs:attribute name="height" use="required">
+						<xs:simpleType>
+							<xs:restriction base="xs:double">
+								<xs:minInclusive value="0" />
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+					<xs:attribute name="image" type="tet:imageId"
+						use="required" />
+					<xs:attribute name="width" use="required">
+						<xs:simpleType>
+							<xs:restriction base="xs:double">
+								<xs:minInclusive value="0" />
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+					<xs:attribute name="x" use="required"
+						type="xs:double">
+					</xs:attribute>
+					<xs:attribute name="y" use="required"
+						type="xs:double">
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="tet:Glyph" maxOccurs="unbounded" />
+			<xs:element maxOccurs="unbounded" minOccurs="1"
+				ref="tet:A">
+				<xs:annotation>
+					<xs:documentation>TET 5.0</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element maxOccurs="unbounded" minOccurs="1"
+				ref="tet:Text">
+			</xs:element>
+		</xs:choice>
+	</xs:group>
+	<xs:element name="Creation">
+		<xs:complexType>
+			<xs:attribute name="platform" use="required">
+				<xs:simpleType>
+					<xs:restriction base="xs:string" />
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="tetVersion" use="required">
+				<xs:simpleType>
+					<xs:restriction base="xs:string" />
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="date" type="xs:dateTime" use="required" />
+		</xs:complexType>
+	</xs:element>
+	<xs:group name="DocInfoGroup">
+		<xs:sequence>
+			<xs:element name="Author" type="xs:string" minOccurs="0" />
+			<xs:element name="CreationDate" type="xs:string"
+				minOccurs="0" />
+			<xs:element name="Creator" type="xs:string" minOccurs="0" />
+			<xs:element name="GTS_PDFXConformance" type="xs:string"
+				minOccurs="0" />
+			<xs:element name="GTS_PDFXVersion" type="xs:string"
+				minOccurs="0" />
+			<xs:element name="GTS_PPMLVDXConformance" type="xs:string"
+				minOccurs="0" />
+			<xs:element name="GTS_PPMLVDXVersion" type="xs:string"
+				minOccurs="0" />
+			<xs:element name="ISO_PDFEVersion" type="xs:string"
+				minOccurs="0" />
+			<xs:element name="Keywords" type="xs:string" minOccurs="0" />
+			<xs:element name="ModDate" type="xs:string" minOccurs="0" />
+			<xs:element name="Producer" type="xs:string" minOccurs="0" />
+			<xs:element name="Subject" type="xs:string" minOccurs="0" />
+			<xs:element name="Title" type="xs:string" minOccurs="0" />
+			<xs:element name="Trapped" type="xs:string" minOccurs="0" />
+			<xs:element name="Custom" minOccurs="0"
+				maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:string">
+							<xs:attribute name="key" use="required">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:minLength value="1" />
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:attribute>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="CustomBinary" minOccurs="0"
+				maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:hexBinary">
+							<xs:attribute name="key" use="required">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:minLength value="1" />
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:attribute>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:group>
+	<xs:element name="Document">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="XFA" maxOccurs="1" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>TET 5.0</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:attribute name="type" type="xs:string"
+							use="required" fixed="static">
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Encryption" minOccurs="0">
+					<xs:complexType>
+						<xs:attribute name="keylength" use="required">
+							<xs:simpleType>
+								<xs:restriction base="xs:integer">
+									<xs:minInclusive value="40" />
+									<xs:maxInclusive value="256" />
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+						<xs:attribute name="algorithm" use="required">
+							<xs:annotation>
+								<xs:documentation>
+									TET 4.1: extended to algorithm 11
+								</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:annotation>
+									<xs:documentation>
+										TET 4.1: added values 8-11
+									</xs:documentation>
+								</xs:annotation>
+								<xs:restriction base="xs:integer">
+									<xs:minInclusive value="-1" />
+									<xs:maxInclusive value="11" />
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+						<xs:attribute name="description"
+							use="required">
+							<xs:annotation>
+								<xs:documentation>
+									TET 4.1: added enumerations for
+									algorithm 8-11
+								</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:annotation>
+									<xs:documentation>
+										TET 4.1: added description for
+										values 8-11
+									</xs:documentation>
+								</xs:annotation>
+								<xs:restriction base="xs:string">
+									<xs:enumeration
+										value="Unknown encryption" />
+									<xs:enumeration
+										value="No encryption" />
+									<xs:enumeration
+										value="40-bit RC4 (Acrobat 2-4)" />
+									<xs:enumeration
+										value="128-bit RC4 (Acrobat 5)" />
+									<xs:enumeration
+										value="128-bit RC4 (Acrobat 6)" />
+									<xs:enumeration
+										value="128-bit AES (Acrobat 7)" />
+									<xs:enumeration
+										value="Public key on top of 128-bit RC4 (Acrobat 5)" />
+									<xs:enumeration
+										value="Public key on top of 128-bit AES (Acrobat 7)" />
+									<xs:enumeration
+										value="Adobe Policy Server (Acrobat 7)" />
+									<xs:enumeration
+										value="Adobe Digital Editions (EBX)" />
+									<xs:enumeration
+										value="256-bit AES (Acrobat 9)" />
+									<xs:enumeration
+										value="Public key on top of 256-bit AES (Acrobat 9)" />
+									<xs:enumeration
+										value="256-bit AES (Acrobat X)" />
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+						<xs:attribute name="masterpassword"
+							type="xs:boolean" use="required" />
+						<xs:attribute name="userpassword"
+							type="xs:boolean" use="required" />
+						<xs:attribute name="attachmentpassword"
+							type="xs:boolean" use="optional">
+							<xs:annotation>
+								<xs:documentation>
+									TET 4.1
+								</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="noprint" type="xs:boolean"
+							default="false" />
+						<xs:attribute name="nomodify" type="xs:boolean"
+							default="false" />
+						<xs:attribute name="nocopy" type="xs:boolean"
+							default="false" />
+						<xs:attribute name="noannots" type="xs:boolean"
+							default="false" />
+						<xs:attribute name="noassemble"
+							type="xs:boolean" default="false" />
+						<xs:attribute name="noforms" type="xs:boolean"
+							default="false" />
+						<xs:attribute name="noaccessible"
+							type="xs:boolean" default="false" />
+						<xs:attribute name="nohiresprint"
+							type="xs:boolean" default="false" />
+						<xs:attribute name="plainmetadata"
+							type="xs:boolean" default="false" />
+
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="SignatureFields" maxOccurs="1"
+					minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>TET 5.0</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="SignatureField"
+								maxOccurs="unbounded" minOccurs="1">
+								<xs:annotation>
+									<xs:documentation>
+										TET 5.0
+									</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="tet:Exception"
+											maxOccurs="1" minOccurs="0">
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="cades"
+										type="xs:boolean" use="required">
+									</xs:attribute>
+									<xs:attribute name="field"
+										type="tet:fieldId" use="required">
+									</xs:attribute>
+									<xs:attribute name="fillablefields"
+										type="xs:boolean" use="optional">
+									</xs:attribute>
+									<xs:attribute name="permissions"
+										use="optional">
+										<xs:simpleType>
+											<xs:restriction
+												base="xs:string">
+												<xs:enumeration
+													value="formfilling">
+												</xs:enumeration>
+												<xs:enumeration
+													value="formsandannotations">
+												</xs:enumeration>
+												<xs:enumeration
+													value="nochanges">
+												</xs:enumeration>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="preventchanges"
+										type="xs:boolean" use="optional">
+									</xs:attribute>
+									<xs:attribute name="sigtype"
+										use="required">
+										<xs:simpleType>
+											<xs:restriction
+												base="xs:string">
+												<xs:enumeration
+													value="approval">
+												</xs:enumeration>
+												<xs:enumeration
+													value="certification">
+												</xs:enumeration>
+												<xs:enumeration
+													value="doctimestamp">
+												</xs:enumeration>
+												<xs:enumeration
+													value="none">
+												</xs:enumeration>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="visible"
+										type="xs:boolean" use="optional" default="true">
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+							<xs:element ref="tet:Exception"
+								maxOccurs="1" minOccurs="0">
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="DocInfo" minOccurs="0">
+					<xs:complexType>
+						<xs:group ref="tet:DocInfoGroup" minOccurs="0" />
+					</xs:complexType>
+					<xs:key name="CustomKey">
+						<xs:annotation>
+							<xs:documentation>
+								All Custom and CustomBinary elements
+								within the DocInfo element must be
+								uniquely identified by their @key
+								element.
+							</xs:documentation>
+						</xs:annotation>
+						<xs:selector
+							xpath="tet:Custom | tet:CustomBinary" />
+						<xs:field xpath="@key" />
+					</xs:key>
+				</xs:element>
+				<xs:element ref="tet:Metadata" minOccurs="0" />
+                <xs:element ref="tet:OutputIntents" maxOccurs="1" minOccurs="0"></xs:element>
+                <xs:element ref="tet:Options" minOccurs="0" />
+				<xs:element ref="tet:Action" maxOccurs="unbounded"
+					minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>TET 5.0</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Bookmarks" maxOccurs="1"
+					minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>TET 5.0</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="tet:Bookmark"
+								maxOccurs="unbounded" minOccurs="1">
+							</xs:element>
+							<xs:element ref="tet:Exception"
+								maxOccurs="1" minOccurs="0">
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element ref="tet:Exception" minOccurs="0" />
+				<xs:element name="Pages" maxOccurs="1" minOccurs="1">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Page"
+								maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="tet:Options"
+											minOccurs="0" />
+										<xs:element ref="tet:Action"
+											maxOccurs="unbounded" minOccurs="0">
+										</xs:element>
+										<xs:element name="Annotations"
+											maxOccurs="1" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>
+													TET 5.0
+												</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element
+														ref="tet:Annotation" maxOccurs="unbounded"
+														minOccurs="1">
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+
+										<xs:element name="Fields"
+											maxOccurs="1" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>
+													TET 5.0
+												</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element
+														ref="tet:Field" maxOccurs="unbounded" minOccurs="1">
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element
+											ref="tet:OutputIntents" maxOccurs="1" minOccurs="0">
+										</xs:element>
+										<xs:element ref="tet:Content"
+											maxOccurs="1" minOccurs="0" />
+										<xs:element ref="tet:Exception"
+											minOccurs="0" />
+									</xs:sequence>
+									<xs:attribute name="number"
+										use="required">
+										<xs:simpleType>
+											<xs:restriction
+												base="xs:string" />
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="height"
+										type="xs:double" use="required" />
+									<xs:attribute name="width"
+										type="xs:double" use="required" />
+									<xs:attribute name="topdown"
+										type="xs:boolean" use="optional" default="false">
+									</xs:attribute>
+									<xs:attribute name="label"
+										type="xs:string">
+										<xs:annotation>
+											<xs:documentation>
+												TET 5.0
+											</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+                                    <xs:attribute name="hasdefaultgray" type="xs:boolean">
+									</xs:attribute>
+                                    <xs:attribute name="hasdefaultrgb"
+										type="xs:boolean">
+									</xs:attribute>
+									<xs:attribute name="hasdefaultcmyk"
+										type="xs:boolean">
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+							<xs:element ref="tet:Resources"
+								minOccurs="0" />
+
+                            <xs:element ref="tet:Graphics" maxOccurs="1" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>
+										TET 5.0
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+                        </xs:sequence>
+					</xs:complexType>
+					<xs:key name="FontKey">
+						<xs:annotation>
+							<xs:documentation>
+								Within the Pages element the Font
+								elements are identified uniquely by
+								their @id attribute.
+							</xs:documentation>
+						</xs:annotation>
+						<xs:selector
+							xpath="tet:Resources/tet:Fonts/tet:Font" />
+						<xs:field xpath="@id" />
+					</xs:key>
+					<xs:keyref name="FontRef" refer="tet:FontKey">
+						<xs:annotation>
+							<xs:documentation>
+								All Glyph elements within the Pages
+								element refer to an existing Font
+								element with their @font attribute.
+							</xs:documentation>
+						</xs:annotation>
+						<xs:selector xpath=".//tet:Glyph" />
+						<xs:field xpath="@font" />
+					</xs:keyref>
+					<xs:key name="ColorSpaceKey">
+						<xs:annotation>
+							<xs:documentation>
+								Within the Pages element the ColorSpace
+								elements are identified uniquely by
+								their @id attribute.
+							</xs:documentation>
+						</xs:annotation>
+						<xs:selector
+							xpath="tet:Resources/tet:ColorSpaces/tet:ColorSpace" />
+						<xs:field xpath="@id" />
+					</xs:key>
+					<xs:keyref name="ColorSpaceRef"
+						refer="tet:ColorSpaceKey">
+						<xs:annotation>
+							<xs:documentation>
+								All Image elements within the Pages
+								element refer to an existing ColorSpace
+								element with their @colorspace
+								attribute.
+							</xs:documentation>
+						</xs:annotation>
+						<xs:selector
+							xpath="tet:Resources/tet:Images/tet:Image" />
+						<xs:field xpath="@colorspace" />
+					</xs:keyref>
+					<xs:keyref name="BaseColorSpaceRef"
+						refer="tet:ColorSpaceKey">
+						<xs:annotation>
+							<xs:documentation>
+								A ColorSpace can refer to an existing
+								base ColorSpace.
+							</xs:documentation>
+						</xs:annotation>
+						<xs:selector
+							xpath="tet:Resources/tet:ColorSpaces/tet:ColorSpace" />
+						<xs:field xpath="@base" />
+					</xs:keyref>
+					<xs:keyref name="AlternateColorSpaceRef"
+						refer="tet:ColorSpaceKey">
+						<xs:annotation>
+							<xs:documentation>
+								A ColorSpace can refer to an existing
+								alternate ColorSpace.
+							</xs:documentation>
+						</xs:annotation>
+						<xs:selector
+							xpath="tet:Resources/tet:ColorSpaces/tet:ColorSpace" />
+						<xs:field xpath="@alternate" />
+					</xs:keyref>
+					<xs:key name="ImageKey">
+						<xs:annotation>
+							<xs:documentation>
+								Within the Pages element the Image
+								elements are identified uniquely by
+								their @id attribute.
+							</xs:documentation>
+						</xs:annotation>
+						<xs:selector
+							xpath="tet:Resources/tet:Images/tet:Image" />
+						<xs:field xpath="@id" />
+					</xs:key>
+					<xs:keyref name="ImageRef" refer="tet:ImageKey">
+						<xs:annotation>
+							<xs:documentation>
+								All PlacedImage elements within the
+								Pages element refer to an existing Image
+								element with their @image attribute.
+							</xs:documentation>
+						</xs:annotation>
+						<xs:selector xpath=".//tet:PlacedImage" />
+						<xs:field xpath="@image" />
+					</xs:keyref>
+					<xs:keyref name="ImageMaskRef"
+						refer="tet:ImageKey">
+						<xs:annotation>
+							<xs:documentation>
+								An Image can refer to another Image by
+								its @mask attribute.
+							</xs:documentation>
+						</xs:annotation>
+						<xs:selector
+							xpath="tet:Resources/tet:Images/tet:Image" />
+						<xs:field xpath="@mask" />
+					</xs:keyref>
+				</xs:element>
+				<xs:element name="Destinations" maxOccurs="1"
+					minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>TET 5.0</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Destination"
+								maxOccurs="unbounded" minOccurs="1">
+								<xs:annotation>
+									<xs:documentation>
+										TET 5.0
+									</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:attribute name="anchor"
+										type="tet:anchorId">
+									</xs:attribute>
+									<xs:attribute name="bottom"
+										type="xs:double">
+									</xs:attribute>
+									<xs:attribute name="id"
+										type="tet:destinationId" use="required">
+									</xs:attribute>
+									<xs:attribute name="left"
+										type="xs:double">
+									</xs:attribute>
+									<xs:attribute name="name"
+										type="xs:string">
+									</xs:attribute>
+									<xs:attribute name="page"
+										type="xs:int">
+									</xs:attribute>
+									<xs:attribute name="right"
+										type="xs:double">
+									</xs:attribute>
+									<xs:attribute name="top"
+										type="xs:double">
+									</xs:attribute>
+									<xs:attribute name="type"
+										use="required">
+										<xs:simpleType>
+											<xs:restriction
+												base="xs:string">
+												<xs:enumeration
+													value="XYZ">
+												</xs:enumeration>
+												<xs:enumeration
+													value="Fit">
+												</xs:enumeration>
+												<xs:enumeration
+													value="FitH">
+												</xs:enumeration>
+												<xs:enumeration
+													value="FitV">
+												</xs:enumeration>
+												<xs:enumeration
+													value="FitR">
+												</xs:enumeration>
+												<xs:enumeration
+													value="FitB">
+												</xs:enumeration>
+												<xs:enumeration
+													value="FitBH">
+												</xs:enumeration>
+												<xs:enumeration
+													value="FitBV">
+												</xs:enumeration>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="zoom"
+										type="xs:double">
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="JavaScripts" maxOccurs="1"
+					minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>TET 5.0</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="JavaScript"
+								maxOccurs="unbounded" minOccurs="1">
+								<xs:annotation>
+									<xs:documentation>
+										TET 5.0
+									</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:simpleContent>
+										<xs:extension
+											base="xs:string">
+											<xs:attribute name="id"
+												type="tet:javaScriptId">
+											</xs:attribute>
+											<xs:attribute name="name"
+												type="xs:string">
+											</xs:attribute>
+										</xs:extension>
+									</xs:simpleContent>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Attachments" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>TET 5.0</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:choice>
+							<xs:element ref="tet:Exception"
+								minOccurs="0" />
+							<xs:sequence minOccurs="0">
+								<xs:element name="Attachment"
+									maxOccurs="unbounded">
+									<xs:complexType>
+										<xs:choice minOccurs="0">
+											<xs:element
+												ref="tet:Exception" minOccurs="0" />
+											<xs:element
+												ref="tet:Document" minOccurs="0" />
+										</xs:choice>
+										<xs:attribute name="name"
+											use="required">
+											<xs:simpleType>
+												<xs:restriction
+													base="xs:string">
+													<xs:minLength
+														value="1" />
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:attribute>
+										<xs:attribute name="level"
+											use="required">
+											<xs:simpleType>
+												<xs:restriction
+													base="xs:string">
+													<xs:enumeration
+														value="document" />
+													<xs:enumeration
+														value="page" />
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:attribute>
+										<xs:attribute name="pagenumber"
+											type="xs:positiveInteger" use="optional" />
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+						</xs:choice>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="destination" type="tet:destinationId" use="optional"></xs:attribute>
+            <xs:attribute name="filename" use="required">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="filesize" type="xs:positiveInteger"
+				use="required" />
+			<xs:attribute name="linearized" use="required" type="xs:boolean">
+			</xs:attribute>
+            <xs:attribute name="pageCount" type="xs:positiveInteger" use="required" />
+            <xs:attribute name="pdfVersion" use="required" type="xs:string">
+			</xs:attribute>
+            <xs:attribute name="pdfa" use="optional" default="none">
+				<xs:annotation>
+					<xs:documentation>
+						TET 4.0: added enumerations for PDF/A-2; TET
+						4.1: added enumerations for PDF/A-3
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="none" />
+						<xs:enumeration value="PDF/A-1a:2005" />
+						<xs:enumeration value="PDF/A-1b:2005" />
+						<xs:enumeration value="PDF/A-2a" />
+						<xs:enumeration value="PDF/A-2b" />
+						<xs:enumeration value="PDF/A-2u" />
+						<xs:enumeration value="PDF/A-3a"></xs:enumeration>
+						<xs:enumeration value="PDF/A-3b"></xs:enumeration>
+						<xs:enumeration value="PDF/A-3u"></xs:enumeration>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="pdfe" use="optional" default="none">
+				<xs:annotation>
+					<xs:documentation>
+						TET 4.0; TET 4.1: added PDF/E-2
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="none" />
+						<xs:enumeration value="PDF/E-1" />
+						<xs:enumeration value="PDF/E-2"></xs:enumeration>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+            <xs:attribute name="pdfua" use="optional" default="none">
+				<xs:annotation>
+					<xs:documentation>TET 4.1</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="none"></xs:enumeration>
+						<xs:enumeration value="PDF/UA-1"></xs:enumeration>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+            <xs:attribute name="pdfvt" use="optional" default="none">
+				<xs:annotation>
+					<xs:documentation>TET 4.1</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="none"></xs:enumeration>
+						<xs:enumeration value="PDF/VT-1"></xs:enumeration>
+						<xs:enumeration value="PDF/VT-2"></xs:enumeration>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+            <xs:attribute name="pdfx" use="optional" default="none">
+				<xs:annotation>
+					<xs:documentation>
+						TET 4.1: added enumeration of known values
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="none"></xs:enumeration>
+						<xs:enumeration value="PDF/X-1:2001"></xs:enumeration>
+						<xs:enumeration value="PDF/X-1a:2001"></xs:enumeration>
+						<xs:enumeration value="PDF/X-1a:2003"></xs:enumeration>
+						<xs:enumeration value="PDF/X-2:2003"></xs:enumeration>
+						<xs:enumeration value="PDF/X-3:2002"></xs:enumeration>
+						<xs:enumeration value="PDF/X-3:2003"></xs:enumeration>
+						<xs:enumeration value="PDF/X-4"></xs:enumeration>
+						<xs:enumeration value="PDF/X-4p"></xs:enumeration>
+						<xs:enumeration value="PDF/X-5g"></xs:enumeration>
+						<xs:enumeration value="PDF/X-5n"></xs:enumeration>
+						<xs:enumeration value="PDF/X-5p"></xs:enumeration>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+            <xs:attribute name="revisions" use="optional" type="xs:int" default="0">
+			</xs:attribute>
+            <xs:attribute name="tagged" type="xs:boolean" use="optional" default="false" />
+            <xs:attribute name="usagerights" type="xs:boolean" use="optional" default="false"></xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Exception">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:string">
+					<xs:attribute name="errnum"
+						type="xs:positiveInteger" use="required" />
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Glyph">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:string">
+					<xs:attribute name="x" type="xs:double"
+						use="required" />
+					<xs:attribute name="y" type="xs:double"
+						use="required" />
+					<xs:attribute name="width" type="xs:double"
+						use="required" />
+					<xs:attribute name="height"
+						type="xs:double" use="optional">
+                        <xs:annotation>
+                        	<xs:documentation>TET 5.0</xs:documentation>
+                        </xs:annotation>
+					</xs:attribute>
+					<xs:attributeGroup ref="tet:TextAttr" />
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Metadata">
+		<xs:complexType>
+			<xs:choice>
+				<xs:any namespace="##other" processContents="skip" />
+				<xs:sequence>
+					<xs:element ref="tet:Exception" />
+					<xs:element name="InvalidMetadata"
+						type="xs:hexBinary" />
+				</xs:sequence>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Graphics">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Colors" maxOccurs="1" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>TET 5.0</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Color"
+								maxOccurs="unbounded" minOccurs="1">
+								<xs:annotation>
+									<xs:documentation>
+										TET 5.0
+									</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Value"
+											type="xs:string" maxOccurs="unbounded" minOccurs="0">
+										</xs:element>
+										<xs:element ref="tet:Exception"
+											maxOccurs="1" minOccurs="0">
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="colorspace"
+										type="tet:colorSpaceId">
+									</xs:attribute>
+									<xs:attribute name="id"
+										type="tet:colorId" use="required">
+									</xs:attribute>
+									<xs:attribute name="svgname"
+										type="xs:string">
+									</xs:attribute>
+									<xs:attribute name="pattern"
+										type="tet:patternId">
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+                <xs:element ref="tet:Layers" maxOccurs="1" minOccurs="0"></xs:element>
+                <xs:element name="ICCProfiles" maxOccurs="1" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="ICCProfile" maxOccurs="unbounded" minOccurs="1">
+								<xs:complexType>
+									<xs:choice>
+										<xs:element ref="tet:Metadata" maxOccurs="1" minOccurs="0">
+										</xs:element>
+										<xs:element ref="tet:Exception" maxOccurs="1" minOccurs="0"></xs:element>
+									</xs:choice>
+									<xs:attribute name="checksum" type="xs:hexBinary">
+									</xs:attribute>
+									<xs:attribute name="components">
+										<xs:simpleType>
+											<xs:restriction base="xs:int">
+												<xs:minInclusive value="1">
+												</xs:minInclusive>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="iccversion" type="xs:string">
+									</xs:attribute>
+									<xs:attribute name="id" type="tet:ICCId">
+									</xs:attribute>
+									<xs:attribute name="deviceclass" type="xs:string">
+									</xs:attribute>
+									<xs:attribute name="embedded" type="xs:boolean">
+									</xs:attribute>
+									<xs:attribute name="fromCIE" type="xs:boolean">
+									</xs:attribute>
+									<xs:attribute name="profilecs" type="xs:string">
+									</xs:attribute>
+									<xs:attribute name="profilename" type="xs:string">
+									</xs:attribute>
+									<xs:attribute name="toCIE" type="xs:boolean">
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+            </xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Resources">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Fonts" minOccurs="0">
+					<xs:complexType>
+						<xs:choice>
+							<xs:element ref="tet:Exception"
+								minOccurs="0" />
+							<xs:sequence minOccurs="0">
+								<xs:element name="Font"
+									maxOccurs="unbounded" minOccurs="0">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element
+												ref="tet:Exception" minOccurs="0" />
+											<xs:element
+												ref="tet:Metadata" minOccurs="0" />
+										</xs:sequence>
+										<xs:attribute name="embedded"
+											type="xs:boolean" use="required" />
+										<xs:attribute name="fullname"
+											use="optional">
+											<xs:annotation>
+												<xs:documentation>
+													TET 4.0
+												</xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction
+													base="xs:string">
+													<xs:minLength
+														value="1" />
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:attribute>
+										<xs:attribute name="id"
+											type="tet:fontId" use="required" />
+										<xs:attribute name="type"
+											use="required">
+											<xs:simpleType>
+												<xs:restriction
+													base="xs:string">
+													<xs:enumeration
+														value="(unknown)" />
+													<xs:enumeration
+														value="Composite" />
+													<xs:enumeration
+														value="Multiple Master" />
+													<xs:enumeration
+														value="OpenType" />
+													<xs:enumeration
+														value="TrueType" />
+													<xs:enumeration
+														value="TrueType (CID)" />
+													<xs:enumeration
+														value="Type 1" />
+													<xs:enumeration
+														value="Type 1 (CID)" />
+													<xs:enumeration
+														value="Type 1 CFF" />
+													<xs:enumeration
+														value="Type 1 CFF (CID)" />
+													<xs:enumeration
+														value="Type 3" />
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:attribute>
+										<xs:attribute name="name"
+											use="required">
+											<xs:simpleType>
+												<xs:restriction
+													base="xs:string">
+													<xs:minLength
+														value="1" />
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:attribute>
+										<xs:attribute name="vertical"
+											type="xs:boolean" use="optional" default="false" />
+										<xs:attribute name="ascender"
+											type="xs:float" use="optional">
+											<xs:annotation>
+												<xs:documentation>
+													TET 4.1
+												</xs:documentation>
+											</xs:annotation>
+										</xs:attribute>
+										<xs:attribute name="capheight"
+											type="xs:float" use="optional">
+											<xs:annotation>
+												<xs:documentation>
+													TET 4.1
+												</xs:documentation>
+											</xs:annotation>
+										</xs:attribute>
+										<xs:attribute name="italicangle"
+											type="xs:float" use="optional">
+											<xs:annotation>
+												<xs:documentation>
+													TET 4.1
+												</xs:documentation>
+											</xs:annotation>
+										</xs:attribute>
+										<xs:attribute name="descender"
+											type="xs:float" use="optional">
+											<xs:annotation>
+												<xs:documentation>
+													TET 4.1
+												</xs:documentation>
+											</xs:annotation>
+										</xs:attribute>
+										<xs:attribute name="weight"
+											use="optional">
+											<xs:annotation>
+												<xs:documentation>
+													TET 4.1
+												</xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction
+													base="xs:float">
+
+													<xs:minInclusive
+														value="0">
+													</xs:minInclusive>
+
+													<xs:maxInclusive
+														value="900">
+													</xs:maxInclusive>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:attribute>
+										<xs:attribute name="xheight"
+											type="xs:float" use="optional">
+											<xs:annotation>
+												<xs:documentation>
+													TET 4.1
+												</xs:documentation>
+											</xs:annotation>
+										</xs:attribute>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+						</xs:choice>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Images" minOccurs="0">
+					<xs:complexType>
+						<xs:choice>
+							<xs:element ref="tet:Exception"
+								minOccurs="0" />
+							<xs:sequence minOccurs="0">
+								<xs:element name="Image"
+									maxOccurs="unbounded" minOccurs="0">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element
+												ref="tet:Exception" minOccurs="0" />
+											<xs:element
+												ref="tet:Metadata" minOccurs="0" />
+										</xs:sequence>
+										<xs:attribute
+											name="bitsPerComponent" use="required">
+											<xs:simpleType>
+												<xs:restriction
+													base="xs:integer">
+													<xs:enumeration
+														value="-1" />
+													<xs:enumeration
+														value="1" />
+													<xs:enumeration
+														value="2" />
+													<xs:enumeration
+														value="4" />
+													<xs:enumeration
+														value="8" />
+													<xs:enumeration
+														value="16" />
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:attribute>
+										<xs:attribute name="colorspace"
+											type="tet:colorSpaceId" use="optional" />
+										<xs:attribute name="extractedAs"
+											use="optional" default="unknown">
+											<xs:annotation>
+												<xs:documentation>
+													TET 4.2: added
+													.jbig2 image type
+												</xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction
+													base="xs:string">
+													<xs:enumeration
+														value=".jbig2" />
+													<xs:enumeration
+														value=".jp2">
+													</xs:enumeration>
+													<xs:enumeration
+														value=".jpf">
+													</xs:enumeration>
+													<xs:enumeration
+														value=".j2k">
+													</xs:enumeration>
+													<xs:enumeration
+														value=".jpg" />
+													<xs:enumeration
+														value=".tif" />
+													<xs:enumeration
+														value=".raw" />
+													<xs:enumeration
+														value="unknown">
+													</xs:enumeration>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:attribute>
+										<xs:attribute name="filename"
+											use="required">
+											<xs:annotation>
+												<xs:documentation>
+													TET 5.0
+												</xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction
+													base="xs:string">
+													<xs:pattern
+														value=".+_I\d+\..+">
+													</xs:pattern>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:attribute>
+										<xs:attribute name="height"
+											type="xs:positiveInteger" use="required" />
+										<xs:attribute name="id"
+											type="tet:imageId" use="required" />
+										<xs:attribute name="maskid"
+											type="tet:imageId" use="optional">
+											<xs:annotation>
+												<xs:documentation>TET 5.0										</xs:documentation>
+											</xs:annotation>
+										</xs:attribute>
+										<xs:attribute name="mergetype"
+											use="optional" default="normal">
+											<xs:simpleType>
+												<xs:restriction
+													base="xs:string">
+													<xs:enumeration
+														value="normal" />
+													<xs:enumeration
+														value="artificial" />
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:attribute>
+										<xs:attribute name="stencilmask"
+											type="xs:boolean" use="optional" default="false">
+											<xs:annotation>
+												<xs:documentation>TET 5.0
+												</xs:documentation>
+											</xs:annotation>
+										</xs:attribute>
+										<xs:attribute name="width"
+											type="xs:positiveInteger" use="required" />
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+						</xs:choice>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="ColorSpaces" minOccurs="0">
+					<xs:complexType>
+						<xs:choice>
+							<xs:element ref="tet:Exception"
+								minOccurs="0" />
+							<xs:sequence minOccurs="0">
+								<xs:element ref="tet:ColorSpace"
+									maxOccurs="unbounded" minOccurs="0"/>
+							</xs:sequence>
+						</xs:choice>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Patterns" maxOccurs="1"
+					minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>TET 5.0</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence maxOccurs="unbounded"
+							minOccurs="1">
+                            <xs:element ref="tet:Exception" maxOccurs="1" minOccurs="0"></xs:element>
+                            <xs:element name="Pattern"
+								maxOccurs="unbounded" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>
+										TET 5.0
+									</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:attribute name="id"
+										type="tet:patternId" use="required">
+									</xs:attribute>
+									<xs:attribute name="patterntype"
+										use="required">
+										<xs:simpleType>
+											<xs:restriction
+												base="xs:string">
+												<xs:enumeration
+													value="tiling">
+												</xs:enumeration>
+												<xs:enumeration
+													value="shading">
+												</xs:enumeration>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="painttype">
+										<xs:simpleType>
+											<xs:restriction
+												base="xs:string">
+												<xs:enumeration
+													value="colored">
+												</xs:enumeration>
+												<xs:enumeration
+													value="uncolored">
+												</xs:enumeration>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="tilingtype">
+										<xs:simpleType>
+											<xs:restriction
+												base="xs:string">
+												<xs:enumeration
+													value="constantspacing">
+												</xs:enumeration>
+												<xs:enumeration
+													value="nodistortion">
+												</xs:enumeration>
+												<xs:enumeration
+													value="fastertiling">
+												</xs:enumeration>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Options" type="xs:string" />
+	<xs:element name="TET">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="tet:Creation" />
+				<xs:element ref="tet:Document" />
+			</xs:sequence>
+			<xs:attribute name="version" use="required">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"></xs:minLength>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="BoxAttr">
+		<xs:attribute name="llx" type="xs:double" use="required" />
+		<xs:attribute name="lly" type="xs:double" use="required" />
+		<xs:attribute name="urx" type="xs:double" use="required" />
+		<xs:attribute name="ury" type="xs:double" use="required" />
+		<xs:attribute name="ulx" type="xs:double" use="optional" />
+		<xs:attribute name="uly" type="xs:double" use="optional" />
+		<xs:attribute name="lrx" type="xs:double" use="optional" />
+		<xs:attribute name="lry" type="xs:double" use="optional" />
+	</xs:attributeGroup>
+	<xs:attributeGroup name="TextAttr">
+		<xs:attribute name="alpha" use="optional" default="0">
+			<xs:simpleType>
+				<xs:restriction base="xs:double">
+					<xs:minExclusive value="-180" />
+					<xs:maxInclusive value="180" />
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="beta" use="optional" default="0">
+			<xs:simpleType>
+				<xs:restriction base="xs:double">
+					<xs:minExclusive value="-180" />
+					<xs:maxInclusive value="180" />
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="shadow" type="xs:boolean" use="optional"
+			default="false">
+			<xs:annotation>
+				<xs:documentation>TET 4.0</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="dropcap" type="xs:boolean" use="optional"
+			default="false">
+			<xs:annotation>
+				<xs:documentation>TET 4.0</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="font" type="tet:fontId" use="required" />
+		<xs:attribute name="size" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:double">
+					<xs:minExclusive value="0" />
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="sub" type="xs:boolean" use="optional"
+			default="false">
+			<xs:annotation>
+				<xs:documentation>TET 4.0</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="sup" type="xs:boolean" use="optional"
+			default="false">
+			<xs:annotation>
+				<xs:documentation>TET 4.0</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="textrendering" use="optional"
+			default="fill">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="fill" />
+					<xs:enumeration value="stroke" />
+					<xs:enumeration value="fillStroke" />
+					<xs:enumeration value="invisible" />
+					<xs:enumeration value="fillClip" />
+					<xs:enumeration value="strokeClip" />
+					<xs:enumeration value="fillStrokeClip" />
+					<xs:enumeration value="clip" />
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="unknown" type="xs:boolean" use="optional"
+			default="false" />
+		<xs:attribute name="dehyphenation" use="optional"
+			default="none">
+			<xs:annotation>
+				<xs:documentation>TET 4.0</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="artifact" />
+					<xs:enumeration value="none" />
+					<xs:enumeration value="pre" />
+					<xs:enumeration value="post" />
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="fill" type="tet:colorId">
+			<xs:annotation>
+				<xs:documentation>TET 5.0</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="stroke" type="tet:colorId">
+			<xs:annotation>
+				<xs:documentation>TET 5.0</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:simpleType name="fontId">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="F\d+" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="imageId">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="I\d+" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ICCId">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="ICC\d+" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="colorSpaceId">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="CS\d+" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="text">
+		<xs:annotation>
+			<xs:documentation>
+				Separate type for Text for further extensions.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string" />
+	</xs:simpleType>
+
+	<xs:simpleType name="anchorId">
+		<xs:annotation>
+			<xs:documentation>TET 5.0</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="(A\d+)"></xs:pattern>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="annotationId">
+		<xs:annotation>
+			<xs:documentation>TET 5.0</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="(ANN\d+)"></xs:pattern>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="colorId">
+		<xs:annotation>
+			<xs:documentation>TET 5.0</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="(C\d+)"></xs:pattern>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="fieldId">
+		<xs:annotation>
+			<xs:documentation>TET 5.0</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="(FF\d+)"></xs:pattern>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="patternId">
+		<xs:annotation>
+			<xs:documentation>TET 5.0</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="(P\d+)"></xs:pattern>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="destinationId">
+		<xs:annotation>
+			<xs:documentation>TET 5.0</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="(D\d+)"></xs:pattern>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:element name="Bookmark">
+		<xs:complexType>
+			<xs:sequence maxOccurs="1" minOccurs="1">
+				<xs:element name="Title" type="xs:string" maxOccurs="1"
+					minOccurs="0">
+				</xs:element>
+				<xs:element ref="tet:Action" maxOccurs="unbounded"
+					minOccurs="0">
+				</xs:element>
+				<xs:element ref="tet:Bookmark" maxOccurs="unbounded"
+					minOccurs="0">
+				</xs:element>
+				<xs:element ref="tet:Exception" maxOccurs="1" minOccurs="0"></xs:element>
+			</xs:sequence>
+			<xs:attribute name="color" type="tet:colorId"></xs:attribute>
+			<xs:attribute name="destination" type="tet:destinationId"></xs:attribute>
+			<xs:attribute name="fontstyle">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="italic"></xs:enumeration>
+						<xs:enumeration value="bold"></xs:enumeration>
+						<xs:enumeration value="bolditalic"></xs:enumeration>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="open" type="xs:boolean"></xs:attribute>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="Action">
+		<xs:complexType>
+			<xs:attribute name="type" type="xs:string"></xs:attribute>
+			<xs:attribute name="name" type="xs:string"></xs:attribute>
+			<xs:attribute name="filename" type="xs:string"></xs:attribute>
+			<xs:attribute name="javascript" type="tet:javaScriptId"></xs:attribute>
+			<xs:attribute name="URI" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>TODO: lowercase</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="trigger" use="required">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="activate"></xs:enumeration>
+						<xs:enumeration value="blur"></xs:enumeration>
+						<xs:enumeration value="calculate"></xs:enumeration>
+						<xs:enumeration value="close"></xs:enumeration>
+						<xs:enumeration value="close"></xs:enumeration>
+						<xs:enumeration value="didprint"></xs:enumeration>
+						<xs:enumeration value="didsave"></xs:enumeration>
+						<xs:enumeration value="down"></xs:enumeration>
+						<xs:enumeration value="exit"></xs:enumeration>
+						<xs:enumeration value="focus"></xs:enumeration>
+						<xs:enumeration value="format"></xs:enumeration>
+						<xs:enumeration value="invisible"></xs:enumeration>
+						<xs:enumeration value="keystroke"></xs:enumeration>
+						<xs:enumeration value="open"></xs:enumeration>
+						<xs:enumeration value="open"></xs:enumeration>
+						<xs:enumeration value="up"></xs:enumeration>
+						<xs:enumeration value="validate"></xs:enumeration>
+						<xs:enumeration value="visible"></xs:enumeration>
+						<xs:enumeration value="willclose"></xs:enumeration>
+						<xs:enumeration value="willprint"></xs:enumeration>
+						<xs:enumeration value="willsave"></xs:enumeration>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element
+		name="Annotation">
+		<xs:annotation>
+			<xs:documentation>TET 5.0</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="tet:Box" maxOccurs="1"
+					minOccurs="1">
+				</xs:element>
+				<xs:element name="Title" type="xs:string" maxOccurs="1"
+					minOccurs="0">
+				</xs:element>
+				<xs:element name="Contents" type="xs:string"
+					maxOccurs="1" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>TODO</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="tet:Action" maxOccurs="unbounded"
+					minOccurs="0">
+				</xs:element>
+				<xs:element ref="tet:Annotation" maxOccurs="1"
+					minOccurs="0">
+				</xs:element>
+				<xs:element ref="tet:Exception" maxOccurs="1" minOccurs="0"></xs:element>
+			</xs:sequence>
+			<xs:attribute name="alignment">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="left"></xs:enumeration>
+						<xs:enumeration value="center"></xs:enumeration>
+						<xs:enumeration value="right"></xs:enumeration>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+            <xs:attribute name="anchor" type="tet:anchorId" use="optional"></xs:attribute>
+            <xs:attribute name="creationdate" type="xs:dateTime">
+			</xs:attribute>
+            <xs:attribute name="color" type="tet:colorId">
+			</xs:attribute>
+            <xs:attribute name="destination" type="tet:destinationId"></xs:attribute>
+            <xs:attribute name="hidden" type="xs:boolean" use="optional" default="false">
+			</xs:attribute>
+            <xs:attribute name="icon" type="xs:string"></xs:attribute>
+            <xs:attribute name="id" type="tet:annotationId"></xs:attribute>
+            <xs:attribute name="intent" type="xs:string"></xs:attribute>
+            <xs:attribute name="interiorcolor" type="tet:colorId">
+			</xs:attribute>
+			<xs:attribute name="moddate" type="xs:dateTime">
+			</xs:attribute>
+            <xs:attribute name="name" type="xs:string"></xs:attribute>
+            <xs:attribute name="onscreen" type="xs:boolean" use="optional" default="true">
+			</xs:attribute>
+            <xs:attribute name="opacity">
+				<xs:simpleType>
+					<xs:restriction base="xs:double">
+						<xs:maxInclusive value="1"></xs:maxInclusive>
+						<xs:minInclusive value="0"></xs:minInclusive>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+            <xs:attribute name="open" type="xs:boolean"></xs:attribute>
+            <xs:attribute name="print" type="xs:boolean" use="optional" default="false"></xs:attribute>
+            <xs:attribute name="readonly" type="xs:boolean" use="optional" default="false">
+			</xs:attribute>
+            <xs:attribute name="rotate">
+				<xs:simpleType>
+					<xs:restriction base="xs:int"></xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+            <xs:attribute name="subject" type="xs:string">
+			</xs:attribute>
+            <xs:attribute name="symbol" type="xs:string"></xs:attribute>
+            <xs:attribute name="type" type="xs:string"></xs:attribute>
+            <xs:attribute name="visible" type="xs:boolean">
+			</xs:attribute>
+        </xs:complexType>
+	</xs:element>
+
+	<xs:element name="Box">
+		<xs:complexType>
+			<xs:group ref="tet:ContentGroup" maxOccurs="unbounded" minOccurs="0"></xs:group>
+			<xs:attributeGroup ref="tet:BoxAttr" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Field">
+		<xs:annotation>
+			<xs:documentation>TET 5.0
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="tet:Box" maxOccurs="1"
+					minOccurs="0">
+				</xs:element>
+				<xs:element name="Contents" type="xs:string"
+					maxOccurs="1" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>TET 5.0</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Tooltip" type="xs:string"
+					maxOccurs="1" minOccurs="0">
+				</xs:element>
+				<xs:element name="DefaultValue" maxOccurs="1"
+					minOccurs="0" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>TET 5.0</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Value" maxOccurs="unbounded"
+					minOccurs="0" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>TET 5.0</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="OptionalValue" maxOccurs="unbounded"
+					minOccurs="0" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>TET 5.0</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="tet:Action" maxOccurs="unbounded"
+					minOccurs="0">
+				</xs:element>
+				<xs:element ref="tet:Field" maxOccurs="unbounded"
+					minOccurs="0">
+				</xs:element>
+				<xs:element ref="tet:Exception" maxOccurs="1" minOccurs="0"></xs:element>
+			</xs:sequence>
+			<xs:attribute name="alignment">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="center"></xs:enumeration>
+						<xs:enumeration value="left"></xs:enumeration>
+						<xs:enumeration value="right"></xs:enumeration>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="anchor" type="tet:anchorId"
+				use="optional">
+			</xs:attribute>
+			<xs:attribute name="backgroundcolor" type="tet:colorId"></xs:attribute>
+			<xs:attribute name="bordercolor" type="tet:colorId">
+			</xs:attribute>
+			<xs:attribute name="caption" type="xs:string">
+			</xs:attribute>
+			<xs:attribute name="captiondown" type="xs:string"></xs:attribute>
+			<xs:attribute name="captionrollover" type="xs:string"></xs:attribute>
+			<xs:attribute name="destination" type="tet:destinationId"></xs:attribute>
+			<xs:attribute name="export" type="xs:boolean"></xs:attribute>
+			<xs:attribute name="exportvalue" type="xs:string" use="optional"></xs:attribute>
+			<xs:attribute name="hidden" type="xs:boolean" use="optional"
+				default="false">
+			</xs:attribute>
+			<xs:attribute name="id" type="tet:fieldId"></xs:attribute>
+			<xs:attribute name="justification" type="xs:string">
+			</xs:attribute>
+			<xs:attribute name="mappingname" type="xs:string">
+			</xs:attribute>
+			<xs:attribute name="name" type="xs:string"></xs:attribute>
+			<xs:attribute name="onscreen" type="xs:boolean"
+				use="optional" default="true">
+			</xs:attribute>
+			<xs:attribute name="print" type="xs:boolean" use="optional"
+				default="false">
+			</xs:attribute>
+			<xs:attribute name="readonly" type="xs:boolean"
+				use="optional" default="false">
+			</xs:attribute>
+			<xs:attribute name="required" type="xs:boolean"></xs:attribute>
+			<xs:attribute name="rotate">
+				<xs:simpleType>
+					<xs:restriction base="xs:int"></xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="sort" type="xs:boolean"></xs:attribute>
+			<xs:attribute name="state" type="xs:string"></xs:attribute>
+			<xs:attribute name="type">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="barcode"></xs:enumeration>
+						<xs:enumeration value="checkbox"></xs:enumeration>
+						<xs:enumeration value="combobox"></xs:enumeration>
+						<xs:enumeration value="container"></xs:enumeration>
+						<xs:enumeration value="listbox"></xs:enumeration>
+						<xs:enumeration value="pushbutton"></xs:enumeration>
+						<xs:enumeration value="radiobutton"></xs:enumeration>
+						<xs:enumeration value="radiogroup"></xs:enumeration>
+						<xs:enumeration value="signature"></xs:enumeration>
+						<xs:enumeration value="textfield"></xs:enumeration>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="visible" type="xs:boolean"
+				use="optional" default="true">
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:simpleType name="javaScriptId">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="(JS\d+)"></xs:pattern>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:element name="OutputIntents">
+        <xs:annotation>
+        	<xs:documentation>TET 5.0</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+			<xs:sequence>
+				<xs:element name="OutputIntent" maxOccurs="unbounded" minOccurs="1">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="OutputCondition"
+								type="xs:string" maxOccurs="1" minOccurs="0">
+							</xs:element>
+							<xs:element name="OutputConditionIdentifier"
+								type="xs:string" maxOccurs="1" minOccurs="0">
+							</xs:element>
+							<xs:element name="RegistryName"
+								type="xs:string" maxOccurs="1" minOccurs="0">
+							</xs:element>
+							<xs:element name="Info"
+								type="xs:string" maxOccurs="1" minOccurs="0">
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="iccprofile"
+							type="tet:ICCId">
+						</xs:attribute>
+						<xs:attribute name="subtype" type="xs:string">
+						</xs:attribute>
+					</xs:complexType></xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="Layers">
+        <xs:annotation>
+        	<xs:documentation>TET 5.0</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+        	<xs:sequence>
+        		<xs:element maxOccurs="unbounded" minOccurs="1"
+        			ref="tet:Layer">
+        		</xs:element>
+        	</xs:sequence>
+        </xs:complexType>
+	</xs:element>
+	<xs:element name="Layer">
+        <xs:annotation>
+        	<xs:documentation>TET 5.0</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+			<xs:sequence>
+				<xs:element ref="tet:Layer" maxOccurs="unbounded"
+					minOccurs="0">
+				</xs:element>
+			</xs:sequence>
+            <xs:attribute name="label" type="xs:boolean"></xs:attribute>
+            <xs:attribute name="locked" type="xs:boolean"></xs:attribute>
+            <xs:attribute name="name" type="xs:string"></xs:attribute>
+            <xs:attribute name="visible" type="xs:boolean"></xs:attribute>
+        </xs:complexType>
+	</xs:element>
+	<xs:element name="Function">
+		<xs:annotation>
+			<xs:documentation>TET 5.0</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+            <xs:annotation>
+            	<xs:documentation></xs:documentation>
+            </xs:annotation>
+            <xs:all>
+                <xs:element name="BitsPerSample" maxOccurs="1" minOccurs="0">
+                    <xs:annotation>
+                    	<xs:documentation>TET 5.0</xs:documentation>
+                    </xs:annotation>
+                    <xs:simpleType>
+						<xs:restriction base="xs:int">
+							<xs:enumeration value="1"></xs:enumeration>
+							<xs:enumeration value="2"></xs:enumeration>
+							<xs:enumeration value="4"></xs:enumeration>
+							<xs:enumeration value="8"></xs:enumeration>
+							<xs:enumeration value="12"></xs:enumeration>
+							<xs:enumeration value="16"></xs:enumeration>
+							<xs:enumeration value="24"></xs:enumeration>
+							<xs:enumeration value="32"></xs:enumeration>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+                <xs:element name="Bounds" maxOccurs="1" minOccurs="0">
+                    <xs:annotation>
+                    	<xs:documentation>TET 5.0</xs:documentation></xs:annotation>
+                    <xs:complexType>
+                    	<xs:sequence>
+                    		<xs:element name="Value"
+                    			type="xs:float" maxOccurs="unbounded" minOccurs="0">
+                    		</xs:element>
+                    	</xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="Calculator" type="xs:string" maxOccurs="1" minOccurs="0">
+                	<xs:annotation>
+                		<xs:documentation>TET 5.0</xs:documentation></xs:annotation></xs:element>
+                <xs:element minOccurs="0" maxOccurs="1" name="C0">
+                    <xs:annotation>
+                    	<xs:documentation>TET 5.0</xs:documentation></xs:annotation>
+                    <xs:complexType>
+						<xs:sequence>
+							<xs:element minOccurs="1"
+								maxOccurs="unbounded" name="Value" type="xs:float">
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element minOccurs="0" maxOccurs="1" name="C1">
+                    <xs:annotation>
+                    	<xs:documentation>TET 5.0</xs:documentation></xs:annotation>
+                    <xs:complexType>
+						<xs:sequence>
+							<xs:element minOccurs="1"
+								maxOccurs="unbounded" name="Value" type="xs:float">
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+                <xs:element name="Decode" maxOccurs="1" minOccurs="0">
+                    <xs:annotation>
+                    	<xs:documentation>TET 5.0</xs:documentation></xs:annotation>
+                    <xs:complexType>
+						<xs:sequence>
+							<xs:element name="Value" type="xs:float" maxOccurs="unbounded" minOccurs="2">
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+                <xs:element minOccurs="1" maxOccurs="1" name="Domain">
+                    <xs:annotation>
+                    	<xs:documentation>TET 5.0</xs:documentation></xs:annotation>
+                    <xs:complexType>
+						<xs:sequence>
+							<xs:element minOccurs="2"
+								maxOccurs="unbounded" name="Value" type="xs:float">
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+                <xs:element name="Encode" maxOccurs="1" minOccurs="0">
+                    <xs:annotation>
+                    	<xs:documentation>TET 5.0</xs:documentation></xs:annotation>
+                    <xs:complexType>
+						<xs:sequence>
+							<xs:element name="Value" type="xs:float" maxOccurs="unbounded" minOccurs="2">
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+                <xs:element name="Functions" maxOccurs="1" minOccurs="0">
+                    <xs:annotation>
+                    	<xs:documentation>TET 5.0</xs:documentation></xs:annotation>
+                    <xs:complexType>
+						<xs:sequence>
+							<xs:element ref="tet:Function" maxOccurs="unbounded" minOccurs="1">
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+                <xs:element name="Exponent" type="xs:float" maxOccurs="1" minOccurs="0">
+                    <xs:annotation>
+                    	<xs:documentation>TET 5.0</xs:documentation></xs:annotation>
+                </xs:element>
+                <xs:element name="Order" maxOccurs="1" minOccurs="0">
+                    <xs:annotation>
+                    	<xs:documentation>TET 5.0</xs:documentation></xs:annotation>
+                    <xs:simpleType>
+						<xs:restriction base="xs:int">
+							<xs:enumeration value="1"></xs:enumeration>
+							<xs:enumeration value="3"></xs:enumeration>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+                <xs:element minOccurs="0" maxOccurs="1" name="Range">
+                    <xs:annotation>
+                    	<xs:documentation>TET 5.0</xs:documentation></xs:annotation>
+                    <xs:complexType>
+						<xs:sequence>
+							<xs:element minOccurs="1"
+								maxOccurs="unbounded" name="Value" type="xs:float">
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+                <xs:element name="Samples" type="xs:hexBinary" maxOccurs="1" minOccurs="0">
+                    <xs:annotation>
+                    	<xs:documentation>TET 5.0</xs:documentation></xs:annotation>
+                </xs:element>
+                <xs:element name="Size" maxOccurs="1" minOccurs="0">
+                    <xs:annotation>
+                    	<xs:documentation>TET 5.0</xs:documentation></xs:annotation>
+                    <xs:complexType>
+						<xs:sequence>
+							<xs:element name="Value" type="xs:int" maxOccurs="unbounded" minOccurs="1">
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+            </xs:all>
+			<xs:attribute name="type">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="interpolate"></xs:enumeration>
+						<xs:enumeration value="PostScript"></xs:enumeration>
+						<xs:enumeration value="sampled"></xs:enumeration>
+						<xs:enumeration value="stitching"></xs:enumeration>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Word">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Text" type="tet:text"></xs:element>
+				<xs:element ref="tet:Box" maxOccurs="unbounded" minOccurs="1"></xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Text" type="xs:string"></xs:element>
+	<xs:element name="Line">
+		<xs:complexType>
+			<xs:annotation></xs:annotation>
+			<xs:choice>
+				<xs:element name="Text" type="tet:text"></xs:element>
+				<xs:element maxOccurs="unbounded" name="Word">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Text" type="tet:text"></xs:element>
+							<xs:element maxOccurs="unbounded"
+								name="Box">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element minOccurs="0"
+											maxOccurs="unbounded" ref="tet:Glyph">
+										</xs:element>
+									</xs:sequence>
+									<xs:attributeGroup
+										ref="tet:BoxAttr">
+									</xs:attributeGroup>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="A">
+		<xs:annotation></xs:annotation>
+		<xs:complexType>
+			<xs:attribute name="id" type="tet:anchorId"></xs:attribute>
+			<xs:attribute name="type">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="start"></xs:enumeration>
+						<xs:enumeration value="stop"></xs:enumeration>
+						<xs:enumeration value="rect"></xs:enumeration>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
