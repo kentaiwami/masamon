@@ -368,41 +368,6 @@ class PDFmethod: UIViewController {
         return array
     }
     
-    //スタッフ名に含まれているシフト体制を検索して結果を返す関数
-    func IncludeShiftNameInStaffName(var staffname: String) -> Array<Int>{
-
-        let shiftarray = DBmethod().ShiftSystemAllRecordGet()
-        let holiday = DBmethod().HolidayAllRecordGet()
-        
-        var groupidarray: [Int] = []
-        
-        //出勤シフトを見つけるループ処理
-        for(var i = 0; i < shiftarray.count; i++){
-            
-            if(staffname.characters.count == 0){
-                return groupidarray
-
-            }else if(staffname.containsString(shiftarray[i].name)){
-                staffname = staffname.stringByReplacingOccurrencesOfString(shiftarray[i].name, withString: "")
-                groupidarray.append(shiftarray[i].groupid)
-            }
-        }
-        
-        //休暇シフトを見つけるループ処理
-        for(var i = 0; i < holiday.count; i++){
-            
-            if(staffname.characters.count == 0){
-                return groupidarray
-                
-            }else if(staffname.containsString(holiday[i].name)){
-                staffname = staffname.stringByReplacingOccurrencesOfString(holiday[i].name, withString: "")
-                groupidarray.append(999)
-            }
-        }
-        
-        return groupidarray
-    }
-    
     
     //配列をまたがって重複している要素を削除する関数
     func GetRemoveOverlapElementAnotherArray(early: Array<Int>, center1: Array<Int>, center2: Array<Int>, center3: Array<Int>, late: Array<Int>, other: Array<Int>) ->
@@ -483,7 +448,7 @@ class PDFmethod: UIViewController {
         var dayshiftarray: [String] = []        //1日ごとのシフトを記録
         
         //1クールが全部で何日間あるかを判断するため
-        let shiftyearandmonth = XLSXmethod().JudgeYearAndMonth(staffarray[0])
+        let shiftyearandmonth = CommonMethod().JudgeYearAndMonth(staffarray[0])
         
         let shiftnsdate = MonthlySalaryShow().DateSerial(CommonMethod().Changecalendar(shiftyearandmonth.year, calender: "JP"), month: shiftyearandmonth.startcoursmonth, day: 1)
         let c = NSCalendar.currentCalendar()
@@ -600,7 +565,7 @@ class PDFmethod: UIViewController {
             
             
             //スタッフ名にシフト名が含まれている場合に、カウントされてしまうため要素を削除する
-            let includeshiftnamearray = self.IncludeShiftNameInStaffName(staffname)
+            let includeshiftnamearray = CommonMethod().IncludeShiftNameInStaffName(staffname)
             if(includeshiftnamearray.count != 0){
                 
                 for(var i = 0; i < includeshiftnamearray.count; i++){
@@ -883,7 +848,7 @@ class PDFmethod: UIViewController {
                     if(appDelegate.errorstaffnamepdf.count == 0 && appDelegate.errorshiftnamepdf.count == 0){
                         DBmethod().AddandUpdate(shiftdbrecord, update: true)
                         DBmethod().AddandUpdate(shiftdetaildbrecord, update: true)
-                        shiftdetailarray = XLSXmethod().ShiftDBRelationArrayGet(ID)
+                        shiftdetailarray = CommonMethod().ShiftDBRelationArrayGet(ID)
                     }
                 }
 
