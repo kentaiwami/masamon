@@ -767,7 +767,7 @@ class PDFmethod: UIViewController {
     }
     
     //データベースへ記録する関数
-    func RegistDataBase(shiftarray: Array<String>, shiftcours: (y: Int,sm: Int,em: Int), importname: String, importpath: String){
+    func RegistDataBase(shiftarray: Array<String>, shiftcours: (y: Int,sm: Int,em: Int), importname: String, importpath: String, update: Bool){
         
         var date = 11
         var flag = 0
@@ -779,66 +779,114 @@ class PDFmethod: UIViewController {
         let monthrange = c.rangeOfUnit([NSCalendarUnit.Day],  inUnit: [NSCalendarUnit.Month], forDate: shiftnsdate)
 
         
-        if(appDelegate.errorshiftnamexlsx.count == 0){
+        if(appDelegate.errorshiftnamepdf.count == 0){
 
             for(var i = 0; i < shiftarray.count; i++){
                 let shiftdbrecord = ShiftDB()
                 let shiftdetaildbrecord = ShiftDetailDB()
                 
-                shiftdbrecord.id = DBmethod().DBRecordCount(ShiftDetailDB)/monthrange.length
-                
-                shiftdbrecord.year = 0
-                shiftdbrecord.month = 0
-                shiftdbrecord.shiftimportname = importname
-                shiftdbrecord.shiftimportpath = importpath
-                shiftdbrecord.salaly = 0
-                
-                shiftdetaildbrecord.id = DBmethod().DBRecordCount(ShiftDetailDB) + i
-
-                //開始月が12月の場合は昨年の12月で記録されるようにする
-                if(shiftcours.sm == 12 && flag == 0){
-                    shiftdetaildbrecord.year = shiftcours.y - 1
-                }else{
-                    shiftdetaildbrecord.year = shiftcours.y
-                }
-                
-                shiftdetaildbrecord.day = date
-                
-                switch(flag){
-                case 0:         //11日〜30(31)日までの場合
-                    shiftdetaildbrecord.month = shiftcours.sm
-                    date++
+                if(update){
+                    let existshiftdb = DBmethod().SearchShiftDB(importname)
+                    let newshiftdetaildb = ShiftDetailDB()
                     
-                    if(date > monthrange.length){
-                        date = 1
-                        flag = 1
+                    shiftdbrecord.id = existshiftdb.id        //取り込みが上書きの場合は使われているidをそのまま使う
+                    shiftdbrecord.year = 0
+                    shiftdbrecord.month = 0
+                    
+                    newshiftdetaildb.id = existshiftdb.shiftdetail[i].id
+                    newshiftdetaildb.day = existshiftdb.shiftdetail[i].day
+
+                    //開始月が12月の場合は昨年の12月で記録されるようにする
+                    if(shiftcours.sm == 12 && flag == 0){
+                        shiftdetaildbrecord.year = shiftcours.y - 1
+                    }else{
+                        shiftdetaildbrecord.year = shiftcours.y
                     }
                     
-                case 1:         //1日〜10日までの場合
-                    shiftdetaildbrecord.month = shiftcours.em
-                    date++
+                    switch(flag){
+                    case 0:         //11日〜30(31)日までの場合
+                        shiftdetaildbrecord.month = shiftcours.sm
+                        date++
+                        
+                        if(date > monthrange.length){
+                            date = 1
+                            flag = 1
+                        }
+                        
+                    case 1:         //1日〜10日までの場合
+                        shiftdetaildbrecord.month = shiftcours.em
+                        date++
+                        
+                    default:
+                        break
+                    }
                     
-                default:
-                    break
+                    newshiftdetaildb.staff = shiftarray[i]
+                    newshiftdetaildb.shiftDBrelationship = DBmethod().SearchShiftDB(importname)
+                    
+                    //エラーがない時のみ記録を行う
+                    if(appDelegate.errorshiftnamepdf.count == 0){
+                        DBmethod().AddandUpdate(newshiftdetaildb, update: true)
+                    }
+                    
+                }else{
+                    
+                    shiftdbrecord.id = DBmethod().DBRecordCount(ShiftDetailDB)/monthrange.length
+                    
+                    shiftdbrecord.year = 0
+                    shiftdbrecord.month = 0
+                    shiftdbrecord.shiftimportname = importname
+                    shiftdbrecord.shiftimportpath = importpath
+                    shiftdbrecord.salaly = 0
+                    
+                    shiftdetaildbrecord.id = DBmethod().DBRecordCount(ShiftDetailDB) + i
+                    
+                    //開始月が12月の場合は昨年の12月で記録されるようにする
+                    if(shiftcours.sm == 12 && flag == 0){
+                        shiftdetaildbrecord.year = shiftcours.y - 1
+                    }else{
+                        shiftdetaildbrecord.year = shiftcours.y
+                    }
+                    
+                    shiftdetaildbrecord.day = date
+                    
+                    switch(flag){
+                    case 0:         //11日〜30(31)日までの場合
+                        shiftdetaildbrecord.month = shiftcours.sm
+                        date++
+                        
+                        if(date > monthrange.length){
+                            date = 1
+                            flag = 1
+                        }
+                        
+                    case 1:         //1日〜10日までの場合
+                        shiftdetaildbrecord.month = shiftcours.em
+                        date++
+                        
+                    default:
+                        break
+                    }
+                    
+                    shiftdetaildbrecord.staff = shiftarray[i]
+                    shiftdetaildbrecord.shiftDBrelationship = shiftdbrecord
+                    
+                    //すでに記録してあるListを取得して後ろに現在の記録を追加する
+                    for(var i = 0; i < shiftdetailarray.count; i++){
+                        shiftdbrecord.shiftdetail.append(shiftdetailarray[i])
+                    }
+                    shiftdbrecord.shiftdetail.append(shiftdetaildbrecord)
+                    
+                    let ID = shiftdbrecord.id
+                    
+                    //エラーがない場合のみ記録を行う
+                    if(appDelegate.errorstaffnamepdf.count == 0 && appDelegate.errorshiftnamepdf.count == 0){
+                        DBmethod().AddandUpdate(shiftdbrecord, update: true)
+                        DBmethod().AddandUpdate(shiftdetaildbrecord, update: true)
+                        shiftdetailarray = XLSXmethod().ShiftDBRelationArrayGet(ID)
+                    }
                 }
-                
-                shiftdetaildbrecord.staff = shiftarray[i]
-                shiftdetaildbrecord.shiftDBrelationship = shiftdbrecord
-                
-                //すでに記録してあるListを取得して後ろに現在の記録を追加する
-                for(var i = 0; i < shiftdetailarray.count; i++){
-                    shiftdbrecord.shiftdetail.append(shiftdetailarray[i])
-                }
-                shiftdbrecord.shiftdetail.append(shiftdetaildbrecord)
-                
-                let ID = shiftdbrecord.id
-                
-                //エラーがない場合のみ記録を行う
-                if(appDelegate.errorstaffnamepdf.count == 0 && appDelegate.errorshiftnamepdf.count == 0){
-                    DBmethod().AddandUpdate(shiftdbrecord, update: true)
-                    DBmethod().AddandUpdate(shiftdetaildbrecord, update: true)
-                    shiftdetailarray = XLSXmethod().ShiftDBRelationArrayGet(ID)
-                }
+
             }
         }
     }
