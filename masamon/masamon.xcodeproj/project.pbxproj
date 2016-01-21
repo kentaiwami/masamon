@@ -18,6 +18,7 @@
 		370ACE4A1BDF9C8A00AB73EB /* DBmethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370ACE491BDF9C8A00AB73EB /* DBmethod.swift */; };
 		3710BF5A1C3BC07C00A260B7 /* sample.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 3710BF591C3BC07C00A260B7 /* sample.pdf */; };
 		371432A81BE98F060088CDCC /* ShiftImport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371432A71BE98F060088CDCC /* ShiftImport.swift */; };
+		3721B1171C51499D0002A373 /* CommonMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3721B1161C51499D0002A373 /* CommonMethod.swift */; };
 		3724CDCD1C14317500D73528 /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3724CDCB1C14317500D73528 /* Realm.framework */; };
 		3724CDCE1C14317500D73528 /* Realm.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3724CDCB1C14317500D73528 /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3724CDCF1C14317500D73528 /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3724CDCC1C14317500D73528 /* RealmSwift.framework */; };
@@ -134,6 +135,7 @@
 		370ACE491BDF9C8A00AB73EB /* DBmethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBmethod.swift; sourceTree = "<group>"; };
 		3710BF591C3BC07C00A260B7 /* sample.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = sample.pdf; sourceTree = "<group>"; };
 		371432A71BE98F060088CDCC /* ShiftImport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShiftImport.swift; sourceTree = "<group>"; };
+		3721B1161C51499D0002A373 /* CommonMethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonMethod.swift; sourceTree = "<group>"; };
 		3724CDCB1C14317500D73528 /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Realm.framework; sourceTree = "<group>"; };
 		3724CDCC1C14317500D73528 /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RealmSwift.framework; sourceTree = "<group>"; };
 		3726B3931C2FF7F400F22F34 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -249,6 +251,7 @@
 				370ACDFA1BDF486700AB73EB /* AppDelegate.swift */,
 				37DD8EF41C1C0135007C0E6C /* SwipeBetweenViewControllers.swift */,
 				370ACDFC1BDF486700AB73EB /* MonthlySalaryShow.swift */,
+				3721B1161C51499D0002A373 /* CommonMethod.swift */,
 				3726B3991C30009700F22F34 /* CalenderViewController.swift */,
 				376C92D51BE695D000D45FC2 /* extentions.swift */,
 				370ACE431BDF573500AB73EB /* DB.swift */,
@@ -555,6 +558,7 @@
 				379A2E051C1FDFFC00751425 /* CustomUICollectionViewCell.swift in Sources */,
 				371432A81BE98F060088CDCC /* ShiftImport.swift in Sources */,
 				37D4B3101BE0F59900F06759 /* Setting.swift in Sources */,
+				3721B1171C51499D0002A373 /* CommonMethod.swift in Sources */,
 				377D2DBB1C37EFE6009CC388 /* ShiftGalleryTable.swift in Sources */,
 				370ACDFB1BDF486700AB73EB /* AppDelegate.swift in Sources */,
 			);
@@ -637,7 +641,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -683,7 +687,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;

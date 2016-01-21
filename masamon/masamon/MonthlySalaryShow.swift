@@ -52,7 +52,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         
         let today = NSDate()
         let date = ReturnYearMonthDayWeekday(today)         //日付を西暦,月,日,曜日に分けて取得
-        self.ShowAllData(self.Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day)           //データ表示へ分けた日付を渡す
+        self.ShowAllData(CommonMethod().Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day)           //データ表示へ分けた日付を渡す
         CalenderLabel.text = "\(date.year)年\(date.month)月\(date.day)日 (\(self.ReturnWeekday(date.weekday)))"
         
         //アイコンとボタンの設置
@@ -110,7 +110,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         
         let today = self.currentnsdate
         let date = ReturnYearMonthDayWeekday(today)         //日付を西暦,月,日,曜日に分けて取得
-        self.ShowAllData(self.Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day)           //データ表示へ分けた日付を渡す
+        self.ShowAllData(CommonMethod().Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day)           //データ表示へ分けた日付を渡す
         CalenderLabel.text = "\(date.year)年\(date.month)月\(date.day)日 (\(self.ReturnWeekday(date.weekday)))"
     }
     
@@ -155,7 +155,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                         
                         let today = self.currentnsdate
                         let date = self.ReturnYearMonthDayWeekday(today)
-                        self.ShowAllData(self.Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day)
+                        self.ShowAllData(CommonMethod().Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day)
                         self.CalenderLabel.text = "\(date.year)年\(date.month)月\(date.day)日 (\(self.ReturnWeekday(date.weekday)))"
                         
 //                        let progress = GradientCircularProgress()
@@ -583,7 +583,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             currentnsdate = newnsdate
             
             let currentnsdatesplit = self.ReturnYearMonthDayWeekday(currentnsdate)
-            self.ShowAllData(self.Changecalendar(currentnsdatesplit.year, calender: "A.D"), m: currentnsdatesplit.month, d: currentnsdatesplit.day)
+            self.ShowAllData(CommonMethod().Changecalendar(currentnsdatesplit.year, calender: "A.D"), m: currentnsdatesplit.month, d: currentnsdatesplit.day)
             CalenderLabel.text = "\(currentnsdatesplit.year)年\(currentnsdatesplit.month)月\(currentnsdatesplit.day)日 (\(self.ReturnWeekday(currentnsdatesplit.weekday)))"
             
         case 1:
@@ -592,7 +592,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             currentnsdate = newnsdate
             
             let currentnsdatesplit = self.ReturnYearMonthDayWeekday(currentnsdate)
-            self.ShowAllData(self.Changecalendar(currentnsdatesplit.year, calender: "A.D"), m: currentnsdatesplit.month, d: currentnsdatesplit.day)
+            self.ShowAllData(CommonMethod().Changecalendar(currentnsdatesplit.year, calender: "A.D"), m: currentnsdatesplit.month, d: currentnsdatesplit.day)
             CalenderLabel.text = "\(currentnsdatesplit.year)年\(currentnsdatesplit.month)月\(currentnsdatesplit.day)日 (\(self.ReturnWeekday(currentnsdatesplit.weekday)))"
         default:
             break
@@ -603,9 +603,9 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     @IBAction func TapTodayButton(sender: AnyObject) {
         let today = NSDate()
         let date = ReturnYearMonthDayWeekday(today)         //日付を西暦,月,日,曜日に分けて取得
-        self.ShowAllData(self.Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day)           //データ表示へ分けた日付を渡す
+        self.ShowAllData(CommonMethod().Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day)           //データ表示へ分けた日付を渡す
         CalenderLabel.text = "\(date.year)年\(date.month)月\(date.day)日 (\(self.ReturnWeekday(date.weekday)))"
-        
+
         currentnsdate = today
     }
     
@@ -776,19 +776,6 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                     }
                 }
             }
-        }
-    }
-    
-    //西暦を和暦に、和暦を西暦に変換して返す関数
-    func Changecalendar(year: Int, calender: String) -> Int{
-        if(calender == "JP"){   //和暦から西暦
-            let yeartemp = String(year - 12)
-            return Int("20"+yeartemp)!
-        }else{                  //西暦から和暦
-            let yeartemp = String(year + 12)
-            let lastcharacter = String(yeartemp[yeartemp.endIndex.predecessor()])                   //最後の桁
-            let lastcharacterminus = String(yeartemp[yeartemp.endIndex.predecessor().predecessor()])     //最後から1つ前の桁
-            return Int(lastcharacterminus+lastcharacter)!
         }
     }
     
