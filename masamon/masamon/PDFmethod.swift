@@ -726,7 +726,10 @@ class PDFmethod: UIViewController {
                         break
                     }
                     
-                    dayshiftarray[i] += staffname + ":" + staffshift + ","
+                    let AAA = DBmethod().HolidayNameArrayGet()
+                    if(AAA.contains(staffshift) == false){
+                        dayshiftarray[i] += staffname + ":" + staffshift + ","
+                    }
                     
                 }
             //認識できないシフト名があった場合
@@ -852,24 +855,25 @@ class PDFmethod: UIViewController {
             
             var dayshift = ""
             
-            let AAA = shiftarray[i] as NSString
+            let nsstring = shiftarray[i] as NSString
             
-            let BBB = AAA.rangeOfString(username).location
-            
-            var index = shiftarray[i].startIndex.advancedBy(BBB + username.characters.count + 1)
-            
-            while(String(shiftarray[i][index]) != ","){
-                dayshift += String(shiftarray[i][index])
-                index = index.successor()
-            }
-            
-            if(holiday.contains(dayshift) == false){      //holiday以外なら
-                usershift.append(dayshift)
-            }
+            if(nsstring.containsString(username)){
+                let userlocation = nsstring.rangeOfString(username).location
+                
+                var index = shiftarray[i].startIndex.advancedBy(userlocation + username.characters.count + 1)
+                
+                while(String(shiftarray[i][index]) != ","){
+                    dayshift += String(shiftarray[i][index])
+                    index = index.successor()
+                }
+                
+                if(holiday.contains(dayshift) == false){      //holiday以外なら
+                    usershift.append(dayshift)
+                }
+            }            
         }
         
         //月給の計算をする
-        //var shiftsystem = ShiftSystem()
         var monthlysalary = 0.0
         let houlypayrecord = DBmethod().HourlyPayRecordGet()
         
