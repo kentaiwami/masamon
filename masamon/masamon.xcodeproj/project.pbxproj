@@ -19,6 +19,8 @@
 		3710BF5A1C3BC07C00A260B7 /* sample.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 3710BF591C3BC07C00A260B7 /* sample.pdf */; };
 		371432A81BE98F060088CDCC /* ShiftImport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371432A71BE98F060088CDCC /* ShiftImport.swift */; };
 		3721B1171C51499D0002A373 /* CommonMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3721B1161C51499D0002A373 /* CommonMethod.swift */; };
+		3721B1351C52A68B0002A373 /* sample3.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 3721B1331C52A68B0002A373 /* sample3.pdf */; };
+		3721B1361C52A68B0002A373 /* sample4.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 3721B1341C52A68B0002A373 /* sample4.pdf */; };
 		3724CDCD1C14317500D73528 /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3724CDCB1C14317500D73528 /* Realm.framework */; };
 		3724CDCE1C14317500D73528 /* Realm.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3724CDCB1C14317500D73528 /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3724CDCF1C14317500D73528 /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3724CDCC1C14317500D73528 /* RealmSwift.framework */; };
@@ -136,6 +138,8 @@
 		3710BF591C3BC07C00A260B7 /* sample.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = sample.pdf; sourceTree = "<group>"; };
 		371432A71BE98F060088CDCC /* ShiftImport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShiftImport.swift; sourceTree = "<group>"; };
 		3721B1161C51499D0002A373 /* CommonMethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonMethod.swift; sourceTree = "<group>"; };
+		3721B1331C52A68B0002A373 /* sample3.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = sample3.pdf; sourceTree = "<group>"; };
+		3721B1341C52A68B0002A373 /* sample4.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = sample4.pdf; sourceTree = "<group>"; };
 		3724CDCB1C14317500D73528 /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Realm.framework; sourceTree = "<group>"; };
 		3724CDCC1C14317500D73528 /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RealmSwift.framework; sourceTree = "<group>"; };
 		3726B3931C2FF7F400F22F34 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -216,6 +220,8 @@
 				37F75CAD1C3F19CE0075F9FD /* TET.xcodeproj */,
 				3710BF591C3BC07C00A260B7 /* sample.pdf */,
 				37F75CC11C3F491E0075F9FD /* sample2.pdf */,
+				3721B1331C52A68B0002A373 /* sample3.pdf */,
+				3721B1341C52A68B0002A373 /* sample4.pdf */,
 				3742AF6D1C12FEE8003AB33B /* bbb.xlsx */,
 				3726B3A51C311B7600F22F34 /* aaa.xlsx */,
 				377D2DAD1C36C08B009CC388 /* BlueDarkStyle.swift */,
@@ -468,10 +474,12 @@
 				379A2DBE1C1E5F9900751425 /* no_data.png in Resources */,
 				370ACE291BDF4B7700AB73EB /* images in Resources */,
 				3726B3A61C311B7600F22F34 /* aaa.xlsx in Resources */,
+				3721B1351C52A68B0002A373 /* sample3.pdf in Resources */,
 				370ACE051BDF486700AB73EB /* LaunchScreen.storyboard in Resources */,
 				37DD8EFF1C1C29FF007C0E6C /* Main.storyboard in Resources */,
 				370ACE021BDF486700AB73EB /* Assets.xcassets in Resources */,
 				3710BF5A1C3BC07C00A260B7 /* sample.pdf in Resources */,
+				3721B1361C52A68B0002A373 /* sample4.pdf in Resources */,
 				3742AF6E1C12FEE8003AB33B /* bbb.xlsx in Resources */,
 				37F75CC21C3F491E0075F9FD /* sample2.pdf in Resources */,
 			);

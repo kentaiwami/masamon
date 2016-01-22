@@ -21,7 +21,7 @@ class PDFmethod: UIViewController {
         
         //        let documentsDir = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
         let path: NSString
-        path = NSBundle.mainBundle().pathForResource("sample", ofType: "pdf")!
+        path = NSBundle.mainBundle().pathForResource("sample4", ofType: "pdf")!
         //        let globaloptlist: String = String(format: "searchpath={{%@} {%@/extractor_ios.app} {%@/extractor_ios.app/resource/cmap}}", arguments: [documentsDir,NSHomeDirectory(),NSHomeDirectory()])
         
         let tet = TET()
@@ -191,6 +191,7 @@ class PDFmethod: UIViewController {
         return shiftnamelocation
     }
     
+    //TODO: 文字数が多い順に動作をしていくようにすれば、Mとかカを手動で消す必要がなくなる？
     //指定したシフト体制を削除した文字列を返す関数
     func GetRemoveSetShiftName(staffarraysstring: NSString, shiftname: String) -> String{
         var removedshiftstring = ""
@@ -460,9 +461,9 @@ class PDFmethod: UIViewController {
         }
         
         //スタッフの人数分(配列の最後まで)繰り返す
-//        for(var i = 5; i < 6; i++){
+        for(var i = 26; i < 27; i++){
 
-        for(var i = 1; i < staffarray.count; i++){
+//        for(var i = 1; i < staffarray.count; i++){
         
             var staffname = ""
             var staffarraytmp = ""
@@ -480,7 +481,7 @@ class PDFmethod: UIViewController {
             
             //スタッフ名の抽出
             staffname = self.GetStaffName(staffarray[i], i: i)
-//            print(staffname)
+            print(staffname)
             staffarraytmp = staffarray[i]
             
             /*抽出したスタッフ名(マネージャーのMは除く)が1文字以下or4文字以上ならエラーとして記録
@@ -636,8 +637,15 @@ class PDFmethod: UIViewController {
 //            print(staffname + "  " + String(count))
            
             
-//            print(staffarraytmp)
-//            print(holidayshiftlocationarray)
+            print(staffarraytmp)
+//            print(earlyshiftlocationarray.count)
+//            print(center1shiftlocationarray.count)
+//            print(center2shiftlocationarray.count)
+//            print(center3shiftlocationarray.count)
+//            print(lateshiftlocationarray.count)
+//            print(holidayshiftlocationarray.count)
+//            print(othershiftlocationarray.count)
+            
 
             if(count == monthrange.length){
                 
