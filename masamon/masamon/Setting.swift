@@ -373,7 +373,7 @@ class Setting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource,UI
             DBmethod().AddandUpdate(hourlypayrecord1,update: true)
             DBmethod().AddandUpdate(hourlypayrecord2,update: true)
             
-            let alertController = UIAlertController(title: "ニャ!!", message: "保存したニャ", preferredStyle: .Alert)
+            let alertController = UIAlertController(title: "保存完了", message: "設定情報の登録に成功しました", preferredStyle: .Alert)
             
             let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
             alertController.addAction(defaultAction)
