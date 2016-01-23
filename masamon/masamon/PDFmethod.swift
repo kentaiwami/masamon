@@ -764,8 +764,8 @@ class PDFmethod: UIViewController {
                     let newshiftdetaildb = ShiftDetailDB()
                     
                     shiftdbrecord.id = existshiftdb.id        //取り込みが上書きの場合は使われているidをそのまま使う
-                    shiftdbrecord.year = 0
-                    shiftdbrecord.month = 0
+                    shiftdbrecord.year = existshiftdb.year
+                    shiftdbrecord.month = existshiftdb.month
                     
                     newshiftdetaildb.id = existshiftdb.shiftdetail[i].id
                     newshiftdetaildb.day = existshiftdb.shiftdetail[i].day
@@ -800,6 +800,7 @@ class PDFmethod: UIViewController {
                     
                     //エラーがない時のみ記録を行う
                     if(appDelegate.errorshiftnamepdf.count == 0){
+                        print(newshiftdetaildb)
                         DBmethod().AddandUpdate(newshiftdetaildb, update: true)
                     }
                     

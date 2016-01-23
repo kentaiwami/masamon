@@ -330,7 +330,13 @@ class XLSXmethod: UIViewController {
                 let record = StaffNameDB()
                 record.id = DBmethod().DBRecordCount(StaffNameDB)
                 record.name = staffname
-                DBmethod().AddandUpdate(record, update: true)
+                
+                if(DBmethod().StaffNameArrayGet() == nil){                                  //まだ1件も登録されていない場合
+                    DBmethod().AddandUpdate(record, update: true)
+                    
+                }else if(DBmethod().StaffNameArrayGet()?.contains(staffname) == false){     //登録が被らない場合
+                    DBmethod().AddandUpdate(record, update: true)
+                }
             }
         }
     }
