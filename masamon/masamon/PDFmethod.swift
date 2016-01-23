@@ -752,6 +752,7 @@ class PDFmethod: UIViewController {
         let c = NSCalendar.currentCalendar()
         let monthrange = c.rangeOfUnit([NSCalendarUnit.Day],  inUnit: [NSCalendarUnit.Month], forDate: shiftnsdate)
 
+        var shiftdetaildbrecordcount = DBmethod().DBRecordCount(ShiftDetailDB)
         
         if(appDelegate.errorshiftnamepdf.count == 0){
 
@@ -761,14 +762,13 @@ class PDFmethod: UIViewController {
                 
                 if(update){
                     let existshiftdb = DBmethod().SearchShiftDB(importname)
-                    let newshiftdetaildb = ShiftDetailDB()
                     
                     shiftdbrecord.id = existshiftdb.id        //取り込みが上書きの場合は使われているidをそのまま使う
                     shiftdbrecord.year = existshiftdb.year
                     shiftdbrecord.month = existshiftdb.month
                     
-                    newshiftdetaildb.id = existshiftdb.shiftdetail[i].id
-                    newshiftdetaildb.day = existshiftdb.shiftdetail[i].day
+                    shiftdetaildbrecord.id = existshiftdb.shiftdetail[i].id
+                    shiftdetaildbrecord.day = existshiftdb.shiftdetail[i].day
 
                     //開始月が12月の場合は昨年の12月で記録されるようにする
                     if(shiftcours.sm == 12 && flag == 0){
@@ -795,13 +795,15 @@ class PDFmethod: UIViewController {
                         break
                     }
                     
-                    newshiftdetaildb.staff = shiftarray[i]
-                    newshiftdetaildb.shiftDBrelationship = DBmethod().SearchShiftDB(importname)
+                    
+                    shiftdetaildbrecord.staff = shiftarray[i]
+                    shiftdetaildbrecord.shiftDBrelationship = DBmethod().SearchShiftDB(importname)
                     
                     //エラーがない時のみ記録を行う
                     if(appDelegate.errorshiftnamepdf.count == 0){
-                        print(newshiftdetaildb)
-                        DBmethod().AddandUpdate(newshiftdetaildb, update: true)
+                        print(String(shiftdetaildbrecord.year) + "  " + String(shiftdetaildbrecord.month))
+                        
+                        DBmethod().AddandUpdate(shiftdetaildbrecord, update: true)
                     }
                     
                 }else{
@@ -814,7 +816,8 @@ class PDFmethod: UIViewController {
                     shiftdbrecord.shiftimportpath = importpath
                     shiftdbrecord.salaly = 0
                     
-                    shiftdetaildbrecord.id = DBmethod().DBRecordCount(ShiftDetailDB) + i
+                    shiftdetaildbrecord.id = shiftdetaildbrecordcount
+                    shiftdetaildbrecordcount++
                     
                     //開始月が12月の場合は昨年の12月で記録されるようにする
                     if(shiftcours.sm == 12 && flag == 0){
