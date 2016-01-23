@@ -295,8 +295,18 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                 }
         })
         
-        alert.addAction(addAction)
+        let skipAction:UIAlertAction = UIAlertAction(title: "スキップ",
+            style: UIAlertActionStyle.Destructive,
+            handler:{
+                (action:UIAlertAction!) -> Void in
+                self.appDelegate.skipstaff.append(keys)
+                
+                self.savedata()
+            })
         
+        alert.addAction(addAction)
+        alert.addAction(skipAction)
+
         //シフト名入力用のtextfieldを追加
         alert.addTextFieldWithConfigurationHandler({(text:UITextField!) -> Void in
             text.placeholder = "シフトの名前を入力"

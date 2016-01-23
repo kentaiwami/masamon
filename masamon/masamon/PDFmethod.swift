@@ -147,7 +147,12 @@ class PDFmethod: UIViewController {
         var getcharacterstaffname = stafftext[stafftext.startIndex.advancedBy(position)]
 
         while(DBmethod().SearchShiftSystem(String(getcharacterstaffname)) == nil){
-
+            let ABC = stafftext.startIndex.advancedBy(position)
+            
+            if(ABC == stafftext.endIndex.predecessor()){
+                break
+            }
+            
             //勤務シフト体制にある文字が検出されたらループを抜けるパターン
             for(var i = 0; i < shiftsystemnametopcharacter.count; i++){
                 if(String(getcharacterstaffname).containsString(shiftsystemnametopcharacter[i])){
@@ -227,6 +232,7 @@ class PDFmethod: UIViewController {
     
     //受け取ったスタッフ1行分のテキストと位置情報からシフト名を取り出す関数
     func GetShiftNameFromOneLineText(text: String, sg: String, var sp: Int) -> String{
+        
         var result = ""
         var shiftnamearray: [String] = []
         var character = text[text.startIndex.advancedBy(sp)]
@@ -461,9 +467,8 @@ class PDFmethod: UIViewController {
         }
         
         //スタッフの人数分(配列の最後まで)繰り返す
-        for(var i = 26; i < 27; i++){
-
-//        for(var i = 1; i < staffarray.count; i++){
+//        for(var i = 26; i < 27; i++){
+        for(var i = 1; i < staffarray.count; i++){
         
             var staffname = ""
             var staffarraytmp = ""
@@ -481,8 +486,14 @@ class PDFmethod: UIViewController {
             
             //スタッフ名の抽出
             staffname = self.GetStaffName(staffarray[i], i: i)
-            print(staffname)
+//            print(staffname)
             staffarraytmp = staffarray[i]
+            
+            //スキップされたスタッフは取り込みを行わない
+            if(appDelegate.skipstaff.contains(staffname)){
+                break
+            }
+            
             
             /*抽出したスタッフ名(マネージャーのMは除く)が1文字以下or4文字以上ならエラーとして記録
             　エラーでなければシフトの出現場所を配列に格納していく
@@ -636,17 +647,6 @@ class PDFmethod: UIViewController {
             count = earlyshiftlocationarray.count + center1shiftlocationarray.count + center2shiftlocationarray.count + center3shiftlocationarray.count + lateshiftlocationarray.count + holidayshiftlocationarray.count + othershiftlocationarray.count
 //            print(staffname + "  " + String(count))
            
-            
-            print(staffarraytmp)
-//            print(earlyshiftlocationarray.count)
-//            print(center1shiftlocationarray.count)
-//            print(center2shiftlocationarray.count)
-//            print(center3shiftlocationarray.count)
-//            print(lateshiftlocationarray.count)
-//            print(holidayshiftlocationarray.count)
-//            print(othershiftlocationarray.count)
-            
-
             if(count == monthrange.length){
                 
                 //正しく取り込めているが、シフト認識エラーとして記録されて残っている要素があれば削除する
@@ -664,9 +664,10 @@ class PDFmethod: UIViewController {
                 holidayshiftlocationarray.append(99999)
                 othershiftlocationarray.append(99999)
                 
+                
                 //日付分のループを開始
                 for(var i = 0; i < monthrange.length; i++){
-                    
+
                     //シフトの位置が一番小さい値とそのシフト区分を取得する
                     let dayshift = self.GetMinShiftPositionAndGroup(earlyshiftlocationarray[0], center1: center1shiftlocationarray[0], center2: center2shiftlocationarray[0], center3: center3shiftlocationarray[0], late: lateshiftlocationarray[0], holiday: holidayshiftlocationarray[0], other: othershiftlocationarray[0])
                     
@@ -699,8 +700,8 @@ class PDFmethod: UIViewController {
                         break
                     }
                     
-                    let AAA = DBmethod().HolidayNameArrayGet()
-                    if(AAA.contains(staffshift) == false){
+                    let holidayarray = DBmethod().HolidayNameArrayGet()
+                    if(holidayarray.contains(staffshift) == false){
                         dayshiftarray[i] += staffname + ":" + staffshift + ","
                     }
                     
