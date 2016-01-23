@@ -122,8 +122,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     func savedata() {
 
         if(self.appDelegate.filename.containsString(".xlsx")){
-            progress.show(message: "Importing...", style: BlueDarkStyle())
-            
+            progress.show(style: OrangeClearStyle())
             dispatch_async_global { // ここからバックグラウンドスレッド
 
                 //新規シフトがあるか確認する
@@ -157,10 +156,6 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                         let date = self.ReturnYearMonthDayWeekday(today)
                         self.ShowAllData(CommonMethod().Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day)
                         self.CalenderLabel.text = "\(date.year)年\(date.month)月\(date.day)日 (\(self.ReturnWeekday(date.weekday)))"
-                        
-//                        let progress = GradientCircularProgress()
-//                        progress.show(message: "Finished", style: BlueDarkStyle())
-//                        progress.dismiss()
 
                         if(self.appDelegate.errorshiftnamexlsx.count != 0){  //新規シフト名がある場合
                             if(self.staffshiftcountflag){
@@ -174,28 +169,54 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             }
         //取り込みがPDFの場合
         }else{
-            pdfalltextarray = PDFmethod().AllTextGet()
-            let pdfdata = PDFmethod().SplitDayShiftGet(pdfalltextarray)
-            
-            //エラーがない場合はデータベースへ書き込みを行う
-            if(appDelegate.errorstaffnamepdf.count == 0 && appDelegate.errorshiftnamepdf.count == 0){
-                PDFmethod().RegistDataBase(pdfdata.shiftarray, shiftcours: pdfdata.shiftcours, importname: self.appDelegate.filename, importpath: self.Libralypath+"/"+self.appDelegate.filename,update: self.appDelegate.update)
-//                PDFmethod().UserMonthlySalaryRegist(pdfdata.shiftarray, shiftcours: pdfdata.shiftcours,importname: self.appDelegate.filename)
-            }
-            
-            if(appDelegate.errorstaffnamepdf.count != 0){  //スタッフ名認識エラーがある場合
-                if(staffnamecountflag){
-                    appDelegate.errorstaffnamefastcount = appDelegate.errorstaffnamepdf.count
-                    staffnamecountflag = false
+            progress.show(style: OrangeClearStyle())
+            dispatch_async_global{
+                
+                self.pdfalltextarray = PDFmethod().AllTextGet()
+                let pdfdata = PDFmethod().SplitDayShiftGet(self.pdfalltextarray)
+                
+                //エラーがない場合はデータベースへ書き込みを行う
+                if(self.appDelegate.errorstaffnamepdf.count == 0 && self.appDelegate.errorshiftnamepdf.count == 0){
+                    PDFmethod().RegistDataBase(pdfdata.shiftarray, shiftcours: pdfdata.shiftcours, importname: self.appDelegate.filename, importpath: self.Libralypath+"/"+self.appDelegate.filename,update: self.appDelegate.update)
+                    PDFmethod().UserMonthlySalaryRegist(pdfdata.shiftarray, shiftcours: pdfdata.shiftcours,importname: self.appDelegate.filename)
                 }
-                self.StaffNameErrorAlertShowPDF()
-            }else{
-                if(appDelegate.errorshiftnamepdf.count != 0){  //シフト認識エラーがある場合
-                    if(staffshiftcountflag){
-                        appDelegate.errorshiftnamefastcount = appDelegate.errorshiftnamepdf.count
-                        staffshiftcountflag = false
-                    }
-                    self.StaffShiftErrorAlertShowPDF()
+                
+                self.dispatch_async_main{
+                    self.progress.dismiss({ () -> Void in
+
+                        if(self.appDelegate.errorstaffnamepdf.count != 0){  //スタッフ名認識エラーがある場合
+                          if(self.staffnamecountflag){
+                                self.appDelegate.errorstaffnamefastcount = self.appDelegate.errorstaffnamepdf.count
+                                self.staffnamecountflag = false
+                            }
+                            self.StaffNameErrorAlertShowPDF()
+                        }else{
+                            if(self.appDelegate.errorshiftnamepdf.count != 0){  //シフト認識エラーがある場合
+                                if(self.staffshiftcountflag){
+                                    self.appDelegate.errorshiftnamefastcount = self.appDelegate.errorshiftnamepdf.count
+                                    self.staffshiftcountflag = false
+                                }
+                                self.StaffShiftErrorAlertShowPDF()
+                            }
+                        }
+                        
+                        /*pickerview,label,シフトの表示を更新する*/
+                        self.shiftlist.removeAllObjects()
+                        if(DBmethod().DBRecordCount(ShiftDB) != 0){
+                            for(var i = DBmethod().DBRecordCount(ShiftDB)-1; i >= 0; i--){
+                                self.shiftlist.addObject(DBmethod().ShiftDBGet(i))
+                            }
+                            self.SaralyLabel.text = String(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB)-1))
+                        }
+                        
+                        self.myUIPicker.reloadAllComponents()
+                        
+                        let today = self.currentnsdate
+                        let date = self.ReturnYearMonthDayWeekday(today)
+                        self.ShowAllData(CommonMethod().Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day)
+                        self.CalenderLabel.text = "\(date.year)年\(date.month)月\(date.day)日 (\(self.ReturnWeekday(date.weekday)))"
+                        
+                    })
                 }
             }
         }
