@@ -81,57 +81,28 @@ class ShiftImport: UIViewController,UITextFieldDelegate,QLPreviewControllerDataS
                             style: UIAlertActionStyle.Default,
                             handler:{
                                 (action:UIAlertAction!) -> Void in
-                                self.appDelegate.filesavealert = true
-                                self.dismissViewControllerAnimated(true, completion: nil)
+
                                 do{
                                     try filemanager.removeItemAtPath(self.Libralypath+"/"+self.filenamefield.text!)
-                                    try filemanager.moveItemAtPath(Inboxpath+self.filename, toPath: self.Libralypath+"/"+self.filenamefield.text!)
-                                    self.InboxFileCountsDBMinusOne()
-                                    
-                                    //DBへパスを記録
-                                    let filepathrecord = FilePathTmpDB()
-                                    filepathrecord.id = 0
-                                    filepathrecord.path = self.Libralypath+"/"+self.filenamefield.text!
-                                    DBmethod().AddandUpdate(filepathrecord,update: true)
-                                    
-                                    self.appDelegate.filesavealert = true
-                                    self.ShiftImportHistoryDBadd(NSDate(), importname: self.filenamefield.text!)
-                                    self.appDelegate.filename = self.filenamefield.text!
-                                    self.appDelegate.update = true
-                                    self.dismissViewControllerAnimated(true, completion: nil)
-                                    
+                                    self.AAA(Inboxpath)
                                 }catch{
                                     print(error)
                                 }
+                                self.dismissViewControllerAnimated(true, completion: nil)
                         })
                         
                         alert.addAction(cancelAction)
                         alert.addAction(updateAction)
                         presentViewController(alert, animated: true, completion: nil)
                     }else{      //入力したファイル名が被ってない場合
-                        do{
-                            try filemanager.moveItemAtPath(Inboxpath+filename, toPath: Libralypath+"/"+filenamefield.text!)
-                            self.InboxFileCountsDBMinusOne()
-                            
-                            //DBへパスを記録
-                            let filepathrecord = FilePathTmpDB()
-                            filepathrecord.id = 0
-                            filepathrecord.path = Libralypath+"/"+filenamefield.text!
-                            DBmethod().AddandUpdate(filepathrecord,update: true)
-                            
-                            self.dismissViewControllerAnimated(true, completion: nil)
-                            appDelegate.filesavealert = true
-                            appDelegate.filename = self.filenamefield.text!
-                            appDelegate.update = false
-                            ShiftImportHistoryDBadd(NSDate(), importname: filenamefield.text!)
-                        }catch{
-                            print(error)
-                        }
+                        self.AAA(Inboxpath)
+                        self.dismissViewControllerAnimated(true, completion: nil)
                     }
                 }
             }else{
                 if(filenamefield.text != ""){
                     let Inboxpath = documentspath + "/Inbox/"       //Inboxまでのパス
+                    
                     let filemanager = NSFileManager()
                     
                     if(filemanager.fileExistsAtPath(Libralypath+"/"+filenamefield.text!)){       //入力したファイル名が既に存在する場合
@@ -149,52 +120,23 @@ class ShiftImport: UIViewController,UITextFieldDelegate,QLPreviewControllerDataS
                             style: UIAlertActionStyle.Default,
                             handler:{
                                 (action:UIAlertAction!) -> Void in
-                                self.appDelegate.filesavealert = true
-                                self.dismissViewControllerAnimated(true, completion: nil)
+
                                 do{
                                     try filemanager.removeItemAtPath(self.Libralypath+"/"+self.filenamefield.text!)
-                                    try filemanager.moveItemAtPath(Inboxpath+self.filename, toPath: self.Libralypath+"/"+self.filenamefield.text!)
-                                    self.InboxFileCountsDBMinusOne()
-                                    
-                                    //DBへパスを記録
-                                    let filepathrecord = FilePathTmpDB()
-                                    filepathrecord.id = 0
-                                    filepathrecord.path = self.Libralypath+"/"+self.filenamefield.text!
-                                    DBmethod().AddandUpdate(filepathrecord,update: true)
-                                    
-                                    self.appDelegate.filesavealert = true
-                                    self.ShiftImportHistoryDBadd(NSDate(), importname: self.filenamefield.text!)
-                                    self.appDelegate.filename = self.filenamefield.text!
-                                    self.appDelegate.update = true
-                                    self.dismissViewControllerAnimated(true, completion: nil)
-                                    
+                                    self.AAA(Inboxpath)
                                 }catch{
                                     print(error)
                                 }
+                                
+                                self.dismissViewControllerAnimated(true, completion: nil)
                         })
                         
                         alert.addAction(cancelAction)
                         alert.addAction(updateAction)
                         presentViewController(alert, animated: true, completion: nil)
                     }else{      //入力したファイル名が被ってない場合
-                        do{
-                            try filemanager.moveItemAtPath(Inboxpath+filename, toPath: Libralypath+"/"+filenamefield.text!)
-                            self.InboxFileCountsDBMinusOne()
-                            
-                            //DBへパスを記録
-                            let filepathrecord = FilePathTmpDB()
-                            filepathrecord.id = 0
-                            filepathrecord.path = self.Libralypath+"/"+self.filenamefield.text!
-                            DBmethod().AddandUpdate(filepathrecord,update: true)
-                            
-                            self.dismissViewControllerAnimated(true, completion: nil)
-                            appDelegate.filesavealert = true
-                            appDelegate.filename = self.filenamefield.text!
-                            appDelegate.update = false
-                            ShiftImportHistoryDBadd(NSDate(), importname: filenamefield.text!)
-                        }catch{
-                            print(error)
-                        }
+                        self.AAA(Inboxpath)
+                        self.dismissViewControllerAnimated(true, completion: nil)
                     }
                     
                 }else{      //テキストフィールドが空の場合
@@ -295,5 +237,29 @@ class ShiftImport: UIViewController,UITextFieldDelegate,QLPreviewControllerDataS
             let doc = NSURL(fileURLWithPath: url)
             return doc
         }
+    }
+    
+    func AAA(Inboxpath: String){
+        do{
+            try filemanager.moveItemAtPath(Inboxpath+self.filename, toPath: self.Libralypath+"/"+self.filenamefield.text!)
+
+        }catch{
+            print(error)
+        }
+        self.appDelegate.filesavealert = true
+        self.appDelegate.filename = self.filenamefield.text!
+        self.appDelegate.update = true
+
+        self.InboxFileCountsDBMinusOne()
+
+        //DBへパスを記録
+        let filepathrecord = FilePathTmpDB()
+        filepathrecord.id = 0
+        filepathrecord.path = self.Libralypath+"/"+self.filenamefield.text!
+        DBmethod().AddandUpdate(filepathrecord,update: true)
+        
+        self.ShiftImportHistoryDBadd(NSDate(), importname: self.filenamefield.text!)
+
+
     }
 }
