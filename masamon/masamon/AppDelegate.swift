@@ -38,7 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(app: UIApplication, openURL url: NSURL, options: [String : AnyObject]) -> Bool {
         fileURL = ""
-        fileURL = String(url)
+        fileURL = String(url.path!)
         
         //DBへパスを記録
         let filepathrecord = FilePathTmpDB()

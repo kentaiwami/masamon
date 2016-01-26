@@ -19,13 +19,11 @@ class PDFmethod: UIViewController {
         var pdftextarray: [String] = []
         var lineIndex = 1
         
-        //        let documentsDir = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
         let path: NSString
-        path = NSBundle.mainBundle().pathForResource("sample4", ofType: "pdf")!
-        //        let globaloptlist: String = String(format: "searchpath={{%@} {%@/extractor_ios.app} {%@/extractor_ios.app/resource/cmap}}", arguments: [documentsDir,NSHomeDirectory(),NSHomeDirectory()])
+//        path = NSBundle.mainBundle().pathForResource("sample4", ofType: "pdf")!
+        path = DBmethod().FilePathTmpGet()
         
         let tet = TET()
-        //  tet.set_option(globaloptlist)
         
         let document = tet.open_document(path as String, optlist: "")
         let page = tet.open_page(document, pagenumber: 1, optlist: "granularity=page")

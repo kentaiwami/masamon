@@ -24,7 +24,7 @@ class ShiftImport: UIViewController,UITextFieldDelegate,QLPreviewControllerDataS
         super.viewDidLoad()
         
         self.view.backgroundColor = UIColor(patternImage: UIImage(named: "../images/SIbackground.png")!)
-        
+
         //蝶々を設置
         setbutterfly()
         
@@ -88,6 +88,12 @@ class ShiftImport: UIViewController,UITextFieldDelegate,QLPreviewControllerDataS
                                     try filemanager.moveItemAtPath(Inboxpath+self.filename, toPath: self.Libralypath+"/"+self.filenamefield.text!)
                                     self.InboxFileCountsDBMinusOne()
                                     
+                                    //DBへパスを記録
+                                    let filepathrecord = FilePathTmpDB()
+                                    filepathrecord.id = 0
+                                    filepathrecord.path = self.Libralypath+"/"+self.filenamefield.text!
+                                    DBmethod().AddandUpdate(filepathrecord,update: true)
+                                    
                                     self.appDelegate.filesavealert = true
                                     self.ShiftImportHistoryDBadd(NSDate(), importname: self.filenamefield.text!)
                                     self.appDelegate.filename = self.filenamefield.text!
@@ -106,6 +112,13 @@ class ShiftImport: UIViewController,UITextFieldDelegate,QLPreviewControllerDataS
                         do{
                             try filemanager.moveItemAtPath(Inboxpath+filename, toPath: Libralypath+"/"+filenamefield.text!)
                             self.InboxFileCountsDBMinusOne()
+                            
+                            //DBへパスを記録
+                            let filepathrecord = FilePathTmpDB()
+                            filepathrecord.id = 0
+                            filepathrecord.path = Libralypath+"/"+filenamefield.text!
+                            DBmethod().AddandUpdate(filepathrecord,update: true)
+                            
                             self.dismissViewControllerAnimated(true, completion: nil)
                             appDelegate.filesavealert = true
                             appDelegate.filename = self.filenamefield.text!
@@ -143,6 +156,12 @@ class ShiftImport: UIViewController,UITextFieldDelegate,QLPreviewControllerDataS
                                     try filemanager.moveItemAtPath(Inboxpath+self.filename, toPath: self.Libralypath+"/"+self.filenamefield.text!)
                                     self.InboxFileCountsDBMinusOne()
                                     
+                                    //DBへパスを記録
+                                    let filepathrecord = FilePathTmpDB()
+                                    filepathrecord.id = 0
+                                    filepathrecord.path = self.Libralypath+"/"+self.filenamefield.text!
+                                    DBmethod().AddandUpdate(filepathrecord,update: true)
+                                    
                                     self.appDelegate.filesavealert = true
                                     self.ShiftImportHistoryDBadd(NSDate(), importname: self.filenamefield.text!)
                                     self.appDelegate.filename = self.filenamefield.text!
@@ -161,6 +180,13 @@ class ShiftImport: UIViewController,UITextFieldDelegate,QLPreviewControllerDataS
                         do{
                             try filemanager.moveItemAtPath(Inboxpath+filename, toPath: Libralypath+"/"+filenamefield.text!)
                             self.InboxFileCountsDBMinusOne()
+                            
+                            //DBへパスを記録
+                            let filepathrecord = FilePathTmpDB()
+                            filepathrecord.id = 0
+                            filepathrecord.path = self.Libralypath+"/"+self.filenamefield.text!
+                            DBmethod().AddandUpdate(filepathrecord,update: true)
+                            
                             self.dismissViewControllerAnimated(true, completion: nil)
                             appDelegate.filesavealert = true
                             appDelegate.filename = self.filenamefield.text!

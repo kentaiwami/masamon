@@ -30,7 +30,8 @@ class XLSXmethod: UIViewController {
     func SetXLSX() -> (sheet: BRAWorksheet, P1:String){
         
         if(flag){
-            documentPath = NSBundle.mainBundle().pathForResource(TEST, ofType: "xlsx")!
+//            documentPath = NSBundle.mainBundle().pathForResource(TEST, ofType: "xlsx")!
+            documentPath = DBmethod().FilePathTmpGet() as String
             spreadsheet = BRAOfficeDocumentPackage.open(documentPath)
             worksheet = spreadsheet.workbook.worksheets[0] as! BRAWorksheet
             P1String = worksheet.cellForCellReference("P1").stringValue()
