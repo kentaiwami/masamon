@@ -330,7 +330,7 @@ class Setting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource,UI
             myUIPicker1.selectRow(44, inComponent: 2, animated: true)
             TimeFrom1.text = time[textfieldrowfrom1]
             TimeTo1.text = time[textfieldrowto1]
-        }else{
+        }else if(textField.tag == 2){
             myUIPicker2.selectRow(44, inComponent: 0, animated: true)
             myUIPicker2.selectRow(10, inComponent: 2, animated: true)
             TimeFrom2.text = time[textfieldrowfrom2]
