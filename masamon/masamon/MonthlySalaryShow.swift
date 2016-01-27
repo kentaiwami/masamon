@@ -361,9 +361,9 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         let errorshiftnamexlsxarray = self.appDelegate.errorshiftnamexlsx
         print(errorshiftnamexlsxarray)
         var flag = false
-        let donecount = appDelegate.errorshiftnamefastcount - appDelegate.errorshiftnamepdf.count
+        let donecount = appDelegate.errorshiftnamefastcount - appDelegate.errorshiftnamexlsx.count
         
-        let alert:UIAlertController = UIAlertController(title:"\(donecount+1)/\(appDelegate.errorshiftnamefastcount)人" + "\n" + errorshiftnamexlsxarray[0]+"のシフトに関する情報を入力して下さい",
+        let alert:UIAlertController = UIAlertController(title:"\(donecount+1)/\(appDelegate.errorshiftnamefastcount)個" + "\n" + errorshiftnamexlsxarray[0]+"のシフトに関する情報を入力して下さい",
             message: "<シフトの名前> \n 例) 出勤 \n\n" + "<シフトのグループ> \n 例) 早番 or 中1 or 中2 or 中3 or 遅番 or 休み or その他 \n\n" + "<シフトの時間> \n 例) 開始時間が9時,終了時間が17時の場合は、9:00 17:00 \n 時間が不明な場合は、なし",
             preferredStyle: UIAlertControllerStyle.Alert)
         
