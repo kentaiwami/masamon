@@ -51,16 +51,23 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //シフト時間を選択して表示するテキストフィールドのデフォルト表示を指定
+        starttime = time[0]
+        endtime = time[0]
+        
+        //シフトグループを選択するpickerview
         shiftgroupnameUIPicker.frame = CGRectMake(0,0,self.view.bounds.width/2+20, 200.0)
         shiftgroupnameUIPicker.delegate = self
         shiftgroupnameUIPicker.dataSource = self
         shiftgroupnameUIPicker.tag = 2
         
+        //シフト時間を選択するpickerview
         shifttimeUIPicker.frame = CGRectMake(0,0,self.view.bounds.width/2+20, 200.0)
         shifttimeUIPicker.delegate = self
         shifttimeUIPicker.dataSource = self
         shifttimeUIPicker.tag = 3
         
+        //pickerviewに表示するツールバー
         pickerviewtoolBar.barStyle = UIBarStyle.Default
         pickerviewtoolBar.translucent = true
         pickerviewtoolBar.tintColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
@@ -364,7 +371,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         alert.addTextFieldWithConfigurationHandler({(text:UITextField!) -> Void in
             text.placeholder = "シフトの名前を入力"
             text.returnKeyType = .Next
-            text.tag = 1
+            text.tag = 0
             text.delegate = self
         })
         
@@ -461,7 +468,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             
             //シフト名,シフトグループ名の場所にカーソルがある時はボタンを有効にする
             switch(textField.tag){
-            case 1:
+            case 0:
                 return true
             default:
                 return false
@@ -632,17 +639,22 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     //選択時
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         
-        if(pickerView.tag == 1){
+        if(pickerView.tag == 1){            //取り込んだシフト
             SaralyLabel.text = String(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB)-1-row))
-        }else if(pickerView.tag == 2){
+            
+        }else if(pickerView.tag == 2){      //シフトグループ選択
             shiftgroupnametextfield.text = shiftgroupname[row]
             pickerdoneButton.tag = 2
-        }else if(pickerView.tag == 3){
+            shiftgroupselectrow = row
+            
+        }else if(pickerView.tag == 3){      //シフト時間選択
             
             if(component == 0){
                 starttime = time[row]
+                shiftstarttimeselectrow = row
             }else if(component == 2){
                 endtime = time[row]
+                shiftendtimeselectrow = row
             }
             pickerdoneButton.tag = 3
             
@@ -948,9 +960,27 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         textField.placeholder = "シフトの時間を入力"
         textField.inputView = self.shifttimeUIPicker
         textField.inputAccessoryView = self.pickerviewtoolBar
-        textField.tag = 0
+        textField.tag = 2
         textField.delegate = self
         shifttimetextfield = textField
+    }
+    
+    //シフトグループ,シフト時間(開始),シフト時間(終了)の選択箇所を記録する変数
+    var shiftgroupselectrow = 0
+    var shiftstarttimeselectrow = 0
+    var shiftendtimeselectrow = 0
+    
+    //textfieldがタップされた時
+    func textFieldDidBeginEditing(textField: UITextField) {
+        if(textField.tag == 1){             //シフトグループ選択
+            shiftgroupnameUIPicker.selectRow(shiftgroupselectrow, inComponent: 0, animated: true)
+            textField.text = shiftgroupname[shiftgroupselectrow]
+            
+        }else if(textField.tag == 2){       //シフト時間選択
+            shifttimeUIPicker.selectRow(shiftstarttimeselectrow, inComponent: 0, animated: true)
+            shifttimeUIPicker.selectRow(shiftendtimeselectrow, inComponent: 2, animated: true)
+            textField.text = time[shiftstarttimeselectrow] + " " + wavyline[0] + " " + time[shiftendtimeselectrow]
+        }
     }
 }
 
