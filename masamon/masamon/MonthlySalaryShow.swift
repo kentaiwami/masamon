@@ -44,6 +44,9 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     var shifttimeUIPicker: UIPickerView = UIPickerView()
     var pickerviewtoolBar = UIToolbar()
 
+    var shiftgroupnametextfield = UITextField()
+    var shifttimetextfield = UITextField()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -62,12 +65,10 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         pickerviewtoolBar.tintColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
         pickerviewtoolBar.sizeToFit()
 
-        let doneButton1 = UIBarButtonItem(title: "完了", style: UIBarButtonItemStyle.Plain, target: self, action: "donePicker:")
-        let cancelButton1 = UIBarButtonItem(title: "キャンセル", style: UIBarButtonItemStyle.Plain, target: self, action: "donePicker:")
+        let pickerdoneButton = UIBarButtonItem(title: "完了", style: UIBarButtonItemStyle.Plain, target: self, action: "donePicker:")
         let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
 
-        
-        pickerviewtoolBar.setItems([cancelButton1,flexSpace,doneButton1], animated: false)
+        pickerviewtoolBar.setItems([flexSpace,pickerdoneButton], animated: false)
         pickerviewtoolBar.userInteractionEnabled = true
         
         
@@ -310,7 +311,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         let donecount = appDelegate.errorshiftnamefastcount - appDelegate.errorshiftnamepdf.count
 
         let alert:UIAlertController = UIAlertController(title:"\(donecount+1)/\(appDelegate.errorshiftnamefastcount)人" + "\n" + keys+"さんのシフトが取り込めません",
-            message: values + "\n\n" + "<シフトの名前> \n 例) 出勤 \n\n" + "<シフトのグループ> \n 例) 早番 or 中1 or 中2 or 中3 or 遅番 or 休み or その他 \n\n" + "<シフトの時間> \n 例) 開始時間が9時,終了時間が17時の場合は、9:00 17:00 \n 時間が不明な場合は、なし",
+            message: values + "\n\n" + "<シフトの名前> \n 例) 出勤 \n",
             preferredStyle: UIAlertControllerStyle.Alert)
         
         let addAction:UIAlertAction = UIAlertAction(title: "追加",
@@ -320,8 +321,6 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                 let textFields:Array<UITextField>? =  alert.textFields as Array<UITextField>?
                 if textFields != nil {
                     for textField:UITextField in textFields! {
-                        //各textにアクセス
-//                        print(textField.text)
                         
                         if(textField.text == ""){
                             flag = false
@@ -359,7 +358,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         
         alert.addAction(addAction)
         alert.addAction(skipAction)
-
+        
         //シフト名入力用のtextfieldを追加
         alert.addTextFieldWithConfigurationHandler({(text:UITextField!) -> Void in
             text.placeholder = "シフトの名前を入力"
@@ -368,25 +367,12 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             text.delegate = self
         })
         
-        //シフト体制グループ用のtextfieldを追加
-        alert.addTextFieldWithConfigurationHandler({ (text:UITextField!) -> Void in
-            text.placeholder = "シフトのグループを入力"
-//            text.returnKeyType = .Next
-            text.inputView = self.shiftgroupnameUIPicker
-            text.inputAccessoryView = self.pickerviewtoolBar
-            text.tag = 1
-            text.delegate = self
-        })
-        
-        //シフトの時間入力用のtextfieldを追加
-        alert.addTextFieldWithConfigurationHandler({ (text:UITextField!) -> Void in
-            text.placeholder = "シフトの時間を入力"
-            text.returnKeyType = .Next
-            text.inputView = self.shifttimeUIPicker
-            text.inputAccessoryView = self.pickerviewtoolBar
-            text.tag = 0
-            text.delegate = self
-        })
+        //シフトグループの選択内容を入れるテキストフィールドを追加
+        alert.addTextFieldWithConfigurationHandler(configurationshiftgroupnameTextField)
+
+        //シフト時間の選択内容を入れるテキストフィールドを追加
+        alert.addTextFieldWithConfigurationHandler(configurationshifttimeTextField)
+
         
         self.presentViewController(alert, animated: true, completion: nil)
     }
@@ -642,6 +628,10 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         
         if(pickerView.tag == 1){
             SaralyLabel.text = String(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB)-1-row))
+        }else if(pickerView.tag == 2){
+            shiftgroupnametextfield.text = shiftgroupname[row]
+        }else if(pickerView.tag == 3){
+            shifttimetextfield.text = time[row]
         }
     }
     
@@ -914,6 +904,33 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         let date = cal.dateFromComponents(comp)
         
         return date!
+    }
+    
+    //ツールバーの完了ボタンを押した時の関数
+    func donePicker(sender:UIButton){
+        shiftgroupnametextfield.resignFirstResponder()
+        shifttimetextfield.resignFirstResponder()
+    }
+
+    
+    //シフトのグループを入れるテキストフィールドの設定をする
+    func configurationshiftgroupnameTextField(textField: UITextField!){
+        textField.placeholder = "シフトのグループを入力"
+        textField.inputView = self.shiftgroupnameUIPicker
+        textField.inputAccessoryView = self.pickerviewtoolBar
+        textField.tag = 1
+        textField.delegate = self
+        shiftgroupnametextfield = textField
+    }
+    
+    //シフトの時間を入れるテキストフィールドの設定をする
+    func configurationshifttimeTextField(textField: UITextField!){
+        textField.placeholder = "シフトの時間を入力"
+        textField.inputView = self.shifttimeUIPicker
+        textField.inputAccessoryView = self.pickerviewtoolBar
+        textField.tag = 0
+        textField.delegate = self
+        shifttimetextfield = textField
     }
 }
 
