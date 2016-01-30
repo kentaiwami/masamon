@@ -232,7 +232,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             message: errorstaffnametext[0],
             preferredStyle: UIAlertControllerStyle.Alert)
         
-        let addAction:UIAlertAction = UIAlertAction(title: "追加",
+        let addAction:UIAlertAction = UIAlertAction(title: "スタッフ名を登録",
             style: UIAlertActionStyle.Default,
             handler:{
                 (action:UIAlertAction!) -> Void in
