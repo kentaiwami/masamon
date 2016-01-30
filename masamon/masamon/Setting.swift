@@ -330,7 +330,7 @@ class Setting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource,UI
             myUIPicker1.selectRow(44, inComponent: 2, animated: true)
             TimeFrom1.text = time[textfieldrowfrom1]
             TimeTo1.text = time[textfieldrowto1]
-        }else{
+        }else if(textField.tag == 2){
             myUIPicker2.selectRow(44, inComponent: 0, animated: true)
             myUIPicker2.selectRow(10, inComponent: 2, animated: true)
             TimeFrom2.text = time[textfieldrowfrom2]
@@ -373,7 +373,7 @@ class Setting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource,UI
             DBmethod().AddandUpdate(hourlypayrecord1,update: true)
             DBmethod().AddandUpdate(hourlypayrecord2,update: true)
             
-            let alertController = UIAlertController(title: "ニャ!!", message: "保存したニャ", preferredStyle: .Alert)
+            let alertController = UIAlertController(title: "保存完了", message: "設定情報の登録に成功しました", preferredStyle: .Alert)
             
             let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
             alertController.addAction(defaultAction)

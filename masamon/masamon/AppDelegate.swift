@@ -30,13 +30,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     /*MonthlySalaryShowとPDFmethodで使用*/
     var errorstaffnamepdf: [String] = []           //スタッフ名の認識に失敗した場合に、スタッフ名が書かれた1行を格納する
     var errorshiftnamepdf: [String:String] = [:]   //シフトの認識に失敗した場合に、スタッフ名と認識に失敗した文字列を格納する
+    var skipstaff: [String] = []                //シフトの認識が完了しているが、認識エラーと出てしまうスタッフ名を格納する
 
     /*MonthlySalaryShowとXLSXmethodで使用*/
     var errorshiftnamexlsx: [String] = []       //新規シフト体制名が含まれていた場合に格納する
     
+    
     func application(app: UIApplication, openURL url: NSURL, options: [String : AnyObject]) -> Bool {
         fileURL = ""
-        fileURL = String(url)
+        fileURL = String(url.path!)
         
         //DBへパスを記録
         let filepathrecord = FilePathTmpDB()

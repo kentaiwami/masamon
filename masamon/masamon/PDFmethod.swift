@@ -19,13 +19,11 @@ class PDFmethod: UIViewController {
         var pdftextarray: [String] = []
         var lineIndex = 1
         
-        //        let documentsDir = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
         let path: NSString
-        path = NSBundle.mainBundle().pathForResource("sample4", ofType: "pdf")!
-        //        let globaloptlist: String = String(format: "searchpath={{%@} {%@/extractor_ios.app} {%@/extractor_ios.app/resource/cmap}}", arguments: [documentsDir,NSHomeDirectory(),NSHomeDirectory()])
+//        path = NSBundle.mainBundle().pathForResource("sample4", ofType: "pdf")!
+        path = DBmethod().FilePathTmpGet()
         
         let tet = TET()
-        //  tet.set_option(globaloptlist)
         
         let document = tet.open_document(path as String, optlist: "")
         let page = tet.open_page(document, pagenumber: 1, optlist: "granularity=page")
@@ -147,7 +145,12 @@ class PDFmethod: UIViewController {
         var getcharacterstaffname = stafftext[stafftext.startIndex.advancedBy(position)]
 
         while(DBmethod().SearchShiftSystem(String(getcharacterstaffname)) == nil){
-
+            let ABC = stafftext.startIndex.advancedBy(position)
+            
+            if(ABC == stafftext.endIndex.predecessor()){
+                break
+            }
+            
             //勤務シフト体制にある文字が検出されたらループを抜けるパターン
             for(var i = 0; i < shiftsystemnametopcharacter.count; i++){
                 if(String(getcharacterstaffname).containsString(shiftsystemnametopcharacter[i])){
@@ -227,6 +230,7 @@ class PDFmethod: UIViewController {
     
     //受け取ったスタッフ1行分のテキストと位置情報からシフト名を取り出す関数
     func GetShiftNameFromOneLineText(text: String, sg: String, var sp: Int) -> String{
+        
         var result = ""
         var shiftnamearray: [String] = []
         var character = text[text.startIndex.advancedBy(sp)]
@@ -461,9 +465,8 @@ class PDFmethod: UIViewController {
         }
         
         //スタッフの人数分(配列の最後まで)繰り返す
-        for(var i = 26; i < 27; i++){
-
-//        for(var i = 1; i < staffarray.count; i++){
+//        for(var i = 26; i < 27; i++){
+        for(var i = 1; i < staffarray.count; i++){
         
             var staffname = ""
             var staffarraytmp = ""
@@ -481,8 +484,14 @@ class PDFmethod: UIViewController {
             
             //スタッフ名の抽出
             staffname = self.GetStaffName(staffarray[i], i: i)
-            print(staffname)
+//            print(staffname)
             staffarraytmp = staffarray[i]
+            
+            //スキップされたスタッフは取り込みを行わない
+            if(appDelegate.skipstaff.contains(staffname)){
+                break
+            }
+            
             
             /*抽出したスタッフ名(マネージャーのMは除く)が1文字以下or4文字以上ならエラーとして記録
             　エラーでなければシフトの出現場所を配列に格納していく
@@ -636,17 +645,6 @@ class PDFmethod: UIViewController {
             count = earlyshiftlocationarray.count + center1shiftlocationarray.count + center2shiftlocationarray.count + center3shiftlocationarray.count + lateshiftlocationarray.count + holidayshiftlocationarray.count + othershiftlocationarray.count
 //            print(staffname + "  " + String(count))
            
-            
-            print(staffarraytmp)
-//            print(earlyshiftlocationarray.count)
-//            print(center1shiftlocationarray.count)
-//            print(center2shiftlocationarray.count)
-//            print(center3shiftlocationarray.count)
-//            print(lateshiftlocationarray.count)
-//            print(holidayshiftlocationarray.count)
-//            print(othershiftlocationarray.count)
-            
-
             if(count == monthrange.length){
                 
                 //正しく取り込めているが、シフト認識エラーとして記録されて残っている要素があれば削除する
@@ -664,9 +662,10 @@ class PDFmethod: UIViewController {
                 holidayshiftlocationarray.append(99999)
                 othershiftlocationarray.append(99999)
                 
+                
                 //日付分のループを開始
                 for(var i = 0; i < monthrange.length; i++){
-                    
+
                     //シフトの位置が一番小さい値とそのシフト区分を取得する
                     let dayshift = self.GetMinShiftPositionAndGroup(earlyshiftlocationarray[0], center1: center1shiftlocationarray[0], center2: center2shiftlocationarray[0], center3: center3shiftlocationarray[0], late: lateshiftlocationarray[0], holiday: holidayshiftlocationarray[0], other: othershiftlocationarray[0])
                     
@@ -699,8 +698,8 @@ class PDFmethod: UIViewController {
                         break
                     }
                     
-                    let AAA = DBmethod().HolidayNameArrayGet()
-                    if(AAA.contains(staffshift) == false){
+                    let holidayarray = DBmethod().HolidayNameArrayGet()
+                    if(holidayarray.contains(staffshift) == false){
                         dayshiftarray[i] += staffname + ":" + staffshift + ","
                     }
                     
@@ -751,6 +750,7 @@ class PDFmethod: UIViewController {
         let c = NSCalendar.currentCalendar()
         let monthrange = c.rangeOfUnit([NSCalendarUnit.Day],  inUnit: [NSCalendarUnit.Month], forDate: shiftnsdate)
 
+        var shiftdetaildbrecordcount = DBmethod().DBRecordCount(ShiftDetailDB)
         
         if(appDelegate.errorshiftnamepdf.count == 0){
 
@@ -760,14 +760,13 @@ class PDFmethod: UIViewController {
                 
                 if(update){
                     let existshiftdb = DBmethod().SearchShiftDB(importname)
-                    let newshiftdetaildb = ShiftDetailDB()
                     
                     shiftdbrecord.id = existshiftdb.id        //取り込みが上書きの場合は使われているidをそのまま使う
-                    shiftdbrecord.year = 0
-                    shiftdbrecord.month = 0
+                    shiftdbrecord.year = existshiftdb.year
+                    shiftdbrecord.month = existshiftdb.month
                     
-                    newshiftdetaildb.id = existshiftdb.shiftdetail[i].id
-                    newshiftdetaildb.day = existshiftdb.shiftdetail[i].day
+                    shiftdetaildbrecord.id = existshiftdb.shiftdetail[i].id
+                    shiftdetaildbrecord.day = existshiftdb.shiftdetail[i].day
 
                     //開始月が12月の場合は昨年の12月で記録されるようにする
                     if(shiftcours.sm == 12 && flag == 0){
@@ -794,12 +793,15 @@ class PDFmethod: UIViewController {
                         break
                     }
                     
-                    newshiftdetaildb.staff = shiftarray[i]
-                    newshiftdetaildb.shiftDBrelationship = DBmethod().SearchShiftDB(importname)
+                    
+                    shiftdetaildbrecord.staff = shiftarray[i]
+                    shiftdetaildbrecord.shiftDBrelationship = DBmethod().SearchShiftDB(importname)
                     
                     //エラーがない時のみ記録を行う
                     if(appDelegate.errorshiftnamepdf.count == 0){
-                        DBmethod().AddandUpdate(newshiftdetaildb, update: true)
+                        print(String(shiftdetaildbrecord.year) + "  " + String(shiftdetaildbrecord.month))
+                        
+                        DBmethod().AddandUpdate(shiftdetaildbrecord, update: true)
                     }
                     
                 }else{
@@ -812,7 +814,8 @@ class PDFmethod: UIViewController {
                     shiftdbrecord.shiftimportpath = importpath
                     shiftdbrecord.salaly = 0
                     
-                    shiftdetaildbrecord.id = DBmethod().DBRecordCount(ShiftDetailDB) + i
+                    shiftdetaildbrecord.id = shiftdetaildbrecordcount
+                    shiftdetaildbrecordcount++
                     
                     //開始月が12月の場合は昨年の12月で記録されるようにする
                     if(shiftcours.sm == 12 && flag == 0){

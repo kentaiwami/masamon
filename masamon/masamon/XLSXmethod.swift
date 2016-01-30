@@ -30,7 +30,8 @@ class XLSXmethod: UIViewController {
     func SetXLSX() -> (sheet: BRAWorksheet, P1:String){
         
         if(flag){
-            documentPath = NSBundle.mainBundle().pathForResource(TEST, ofType: "xlsx")!
+//            documentPath = NSBundle.mainBundle().pathForResource(TEST, ofType: "xlsx")!
+            documentPath = DBmethod().FilePathTmpGet() as String
             spreadsheet = BRAOfficeDocumentPackage.open(documentPath)
             worksheet = spreadsheet.workbook.worksheets[0] as! BRAWorksheet
             P1String = worksheet.cellForCellReference("P1").stringValue()
@@ -330,7 +331,13 @@ class XLSXmethod: UIViewController {
                 let record = StaffNameDB()
                 record.id = DBmethod().DBRecordCount(StaffNameDB)
                 record.name = staffname
-                DBmethod().AddandUpdate(record, update: true)
+                
+                if(DBmethod().StaffNameArrayGet() == nil){                                  //まだ1件も登録されていない場合
+                    DBmethod().AddandUpdate(record, update: true)
+                    
+                }else if(DBmethod().StaffNameArrayGet()?.contains(staffname) == false){     //登録が被らない場合
+                    DBmethod().AddandUpdate(record, update: true)
+                }
             }
         }
     }
