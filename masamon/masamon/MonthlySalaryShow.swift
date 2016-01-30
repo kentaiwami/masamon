@@ -43,7 +43,8 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     var shiftgroupnameUIPicker: UIPickerView = UIPickerView()
     var shifttimeUIPicker: UIPickerView = UIPickerView()
     var pickerviewtoolBar = UIToolbar()
-
+    var pickerdoneButton = UIBarButtonItem()
+    
     var shiftgroupnametextfield = UITextField()
     var shifttimetextfield = UITextField()
     
@@ -65,7 +66,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         pickerviewtoolBar.tintColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
         pickerviewtoolBar.sizeToFit()
 
-        let pickerdoneButton = UIBarButtonItem(title: "完了", style: UIBarButtonItemStyle.Plain, target: self, action: "donePicker:")
+        pickerdoneButton = UIBarButtonItem(title: "完了", style: UIBarButtonItemStyle.Plain, target: self, action: "donePicker:")
         let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
 
         pickerviewtoolBar.setItems([flexSpace,pickerdoneButton], animated: false)
@@ -630,8 +631,10 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             SaralyLabel.text = String(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB)-1-row))
         }else if(pickerView.tag == 2){
             shiftgroupnametextfield.text = shiftgroupname[row]
+            pickerdoneButton.tag = 2
         }else if(pickerView.tag == 3){
             shifttimetextfield.text = time[row]
+            pickerdoneButton.tag = 3
         }
     }
     
@@ -908,8 +911,13 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     
     //ツールバーの完了ボタンを押した時の関数
     func donePicker(sender:UIButton){
-        shiftgroupnametextfield.resignFirstResponder()
-        shifttimetextfield.resignFirstResponder()
+        
+        if(sender.tag == 2){            //シフトグループの完了ボタン
+            shiftgroupnametextfield.resignFirstResponder()
+            shifttimetextfield.becomeFirstResponder()
+        }else if(sender.tag == 3){      //シフト時間の完了ボタン
+            shifttimetextfield.resignFirstResponder()
+        }        
     }
 
     
