@@ -612,8 +612,10 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         if(pickerView.tag == 1){
             return shiftlist.count
         }else if(pickerView.tag == 2){
+            pickerdoneButton.tag = 2
             return shiftgroupname.count
         }else{
+            pickerdoneButton.tag = 3
             if(component == 0){
                 return time.count
             }else if(component == 1){
@@ -917,7 +919,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             shifttimetextfield.becomeFirstResponder()
         }else if(sender.tag == 3){      //シフト時間の完了ボタン
             shifttimetextfield.resignFirstResponder()
-        }        
+        }
     }
 
     
