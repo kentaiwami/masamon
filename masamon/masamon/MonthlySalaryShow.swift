@@ -515,45 +515,13 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             gid = 5
         }
         
-        if(shifttime == "なし"){
+        //シフト時間に指定なしが含まれていた場合
+        if(shifttime.containsString(time[0])){
             start = 0.0
             end = 0.0
         }else{
-            var index = shifttime.startIndex
-            var timearray: [Double] = []
-            
-            for(var i = 0; i < 2; i++){
-                var charactertmp = ""
-
-                while(shifttime[index] != ":"){
-                    charactertmp += String(shifttime[index])
-                    index = index.successor()
-                }
-                
-                let hour = Double(charactertmp)
-                index = index.successor()
-                charactertmp = ""
-                
-                while(String(shifttime[index]) != " "){
-                    
-                    charactertmp += String(shifttime[index])
-
-                    if(shifttime.endIndex.predecessor() != index){
-                        index = index.successor()
-                    }else{
-                        break
-                    }
-                }
-                
-                let minute = Double(charactertmp)! / 60.0
-
-                timearray.append(hour! + minute)
-                index = index.successor()
-                
-            }
-
-            start = timearray[0]
-            end = timearray[1]
+            start = (Double(shiftstarttimeselectrow) - 1.0) * 0.5
+            end = (Double(shiftendtimeselectrow) - 1.0) * 0.5
         }
         
         record.id = DBmethod().DBRecordCount(ShiftSystemDB)
@@ -562,7 +530,6 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         record.starttime = start
         record.endtime = end
         
-//        print(record)
         return record
     }
     
