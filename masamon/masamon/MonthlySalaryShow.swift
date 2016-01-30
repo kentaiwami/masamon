@@ -23,7 +23,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     let shiftdb = ShiftDB()
     let shiftdetaildb = ShiftDetailDB()
     var shiftlist: NSMutableArray = []
-    var myUIPicker: UIPickerView = UIPickerView()
+    var onecourspicker: UIPickerView = UIPickerView()
     @IBOutlet weak var SaralyLabel: UILabel!
     
     let notificationCenter = NSNotificationCenter.defaultCenter()
@@ -37,8 +37,39 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     var currentnsdate = NSDate()        //MonthlySalaryShowがデータ表示している日付を管理
     var pdfalltextarray: [String] = []
     
+    let wavyline: [String] = ["〜"]
+    let time: [String] = ["0:00","0:30","1:00","1:30","2:00","2:30","3:00","3:30","4:00","4:30","5:00","5:30","6:00","6:30","7:00","7:30","8:00","8:30","9:00","9:30","10:00","10:30","11:00","11:30","12:00","12:30","13:00","13:30","14:00","14:30","15:00","15:30","16:00","16:30","17:00","17:30","18:00","18:30","19:00","19:30","20:00","20:00","21:00","21:30","22:00","22:30","23:00","23:30"]
+    let shiftgroupname: [String] = ["早番","中1","中2","中3","遅番","休み","その他"]
+    var shiftgroupnameUIPicker: UIPickerView = UIPickerView()
+    var shifttimeUIPicker: UIPickerView = UIPickerView()
+    var pickerviewtoolBar = UIToolbar()
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        shiftgroupnameUIPicker.frame = CGRectMake(0,0,self.view.bounds.width/2+20, 260.0)
+        shiftgroupnameUIPicker.delegate = self
+        shiftgroupnameUIPicker.dataSource = self
+        shiftgroupnameUIPicker.tag = 2
+        
+        shifttimeUIPicker.frame = CGRectMake(0,0,self.view.bounds.width/2+20, 260.0)
+        shifttimeUIPicker.delegate = self
+        shifttimeUIPicker.dataSource = self
+        shifttimeUIPicker.tag = 3
+        
+        pickerviewtoolBar.barStyle = UIBarStyle.Default
+        pickerviewtoolBar.translucent = true
+        pickerviewtoolBar.tintColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
+        pickerviewtoolBar.sizeToFit()
+
+        let doneButton1 = UIBarButtonItem(title: "完了", style: UIBarButtonItemStyle.Plain, target: self, action: "donePicker:")
+        let cancelButton1 = UIBarButtonItem(title: "キャンセル", style: UIBarButtonItemStyle.Plain, target: self, action: "donePicker:")
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
+
+        
+        pickerviewtoolBar.setItems([cancelButton1,flexSpace,doneButton1], animated: false)
+        pickerviewtoolBar.userInteractionEnabled = true
+        
         
         currentnsdate = NSDate()
         
@@ -77,10 +108,11 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         notificationCenter.addObserver(self,selector: "MonthlySalaryShowViewActived",name:UIApplicationDidBecomeActiveNotification,object: nil)
         
         //PickerViewの追加
-        myUIPicker.frame = CGRectMake(-20,10,self.view.bounds.width/2+20, 150.0)
-        myUIPicker.delegate = self
-        myUIPicker.dataSource = self
-        self.view.addSubview(myUIPicker)
+        onecourspicker.frame = CGRectMake(-20,10,self.view.bounds.width/2+20, 150.0)
+        onecourspicker.delegate = self
+        onecourspicker.dataSource = self
+        onecourspicker.tag = 1
+        self.view.addSubview(onecourspicker)
         
         //NSArrayへの追加
         if(DBmethod().DBRecordCount(ShiftDB) != 0){
@@ -106,7 +138,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             SaralyLabel.text = String(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB)-1))
         }
         
-        myUIPicker.reloadAllComponents()
+        onecourspicker.reloadAllComponents()
         
         let today = self.currentnsdate
         let date = ReturnYearMonthDayWeekday(today)         //日付を西暦,月,日,曜日に分けて取得
@@ -150,7 +182,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                             self.SaralyLabel.text = String(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB)-1))
                         }
                         
-                        self.myUIPicker.reloadAllComponents()
+                        self.onecourspicker.reloadAllComponents()
                         
                         let today = self.currentnsdate
                         let date = self.ReturnYearMonthDayWeekday(today)
@@ -209,7 +241,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                             self.SaralyLabel.text = String(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB)-1))
                         }
                         
-                        self.myUIPicker.reloadAllComponents()
+                        self.onecourspicker.reloadAllComponents()
                         
                         let today = self.currentnsdate
                         let date = self.ReturnYearMonthDayWeekday(today)
@@ -339,7 +371,9 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         //シフト体制グループ用のtextfieldを追加
         alert.addTextFieldWithConfigurationHandler({ (text:UITextField!) -> Void in
             text.placeholder = "シフトのグループを入力"
-            text.returnKeyType = .Next
+//            text.returnKeyType = .Next
+            text.inputView = self.shiftgroupnameUIPicker
+            text.inputAccessoryView = self.pickerviewtoolBar
             text.tag = 1
             text.delegate = self
         })
@@ -348,6 +382,8 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         alert.addTextFieldWithConfigurationHandler({ (text:UITextField!) -> Void in
             text.placeholder = "シフトの時間を入力"
             text.returnKeyType = .Next
+            text.inputView = self.shifttimeUIPicker
+            text.inputAccessoryView = self.pickerviewtoolBar
             text.tag = 0
             text.delegate = self
         })
@@ -552,24 +588,61 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     
     //pickerviewの属性表示に関する関数
     func pickerView(pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
-        let attributedString = NSAttributedString(string: shiftlist[row] as! String, attributes: [NSForegroundColorAttributeName : UIColor.whiteColor()])
-        return attributedString
+        
+        if(pickerView.tag == 1){
+            let attributedString = NSAttributedString(string: shiftlist[row] as! String, attributes: [NSForegroundColorAttributeName : UIColor.whiteColor()])
+            return attributedString
+        }else if(pickerView.tag == 2){
+            let attributedString = NSAttributedString(string: shiftgroupname[row] , attributes: [NSForegroundColorAttributeName : UIColor.blackColor()])
+            return attributedString
+        }else{
+            if(component == 0){
+                let attributedString = NSAttributedString(string: time[row] , attributes: [NSForegroundColorAttributeName : UIColor.blackColor()])
+                return attributedString
+            }else if(component == 1){
+                let attributedString = NSAttributedString(string: wavyline[row] , attributes: [NSForegroundColorAttributeName : UIColor.blackColor()])
+                return attributedString
+            }else{
+                let attributedString = NSAttributedString(string: time[row] , attributes: [NSForegroundColorAttributeName : UIColor.blackColor()])
+                return attributedString
+            }
+        }
     }
     
     //表示列
     func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
-        return 1
+        
+        if(pickerView.tag == 1 || pickerView.tag == 2){
+            return 1
+        }else{
+            return 3
+        }
     }
     
     //表示個数
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return shiftlist.count
+        
+        if(pickerView.tag == 1){
+            return shiftlist.count
+        }else if(pickerView.tag == 2){
+            return shiftgroupname.count
+        }else{
+            if(component == 0){
+                return time.count
+            }else if(component == 1){
+                return wavyline.count
+            }else{
+                return time.count
+            }
+        }
     }
     
     //選択時
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         
-        SaralyLabel.text = String(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB)-1-row))
+        if(pickerView.tag == 1){
+            SaralyLabel.text = String(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB)-1-row))
+        }
     }
     
     //月給表示画面が表示(アプリがアクティブ)されたら呼ばれる
