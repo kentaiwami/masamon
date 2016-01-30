@@ -626,6 +626,9 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         }
     }
     
+    var starttime = ""
+    var endtime = ""
+    
     //選択時
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         
@@ -635,8 +638,15 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             shiftgroupnametextfield.text = shiftgroupname[row]
             pickerdoneButton.tag = 2
         }else if(pickerView.tag == 3){
-            shifttimetextfield.text = time[row]
+            
+            if(component == 0){
+                starttime = time[row]
+            }else if(component == 2){
+                endtime = time[row]
+            }
             pickerdoneButton.tag = 3
+            
+            shifttimetextfield.text = starttime + " " + wavyline[0] + " " + endtime
         }
     }
     
