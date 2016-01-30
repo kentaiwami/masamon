@@ -47,12 +47,12 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        shiftgroupnameUIPicker.frame = CGRectMake(0,0,self.view.bounds.width/2+20, 260.0)
+        shiftgroupnameUIPicker.frame = CGRectMake(0,0,self.view.bounds.width/2+20, 200.0)
         shiftgroupnameUIPicker.delegate = self
         shiftgroupnameUIPicker.dataSource = self
         shiftgroupnameUIPicker.tag = 2
         
-        shifttimeUIPicker.frame = CGRectMake(0,0,self.view.bounds.width/2+20, 260.0)
+        shifttimeUIPicker.frame = CGRectMake(0,0,self.view.bounds.width/2+20, 200.0)
         shifttimeUIPicker.delegate = self
         shifttimeUIPicker.dataSource = self
         shifttimeUIPicker.tag = 3
