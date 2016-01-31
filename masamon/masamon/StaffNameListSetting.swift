@@ -56,7 +56,7 @@ class StaffNameListSetting: UIViewController, UITableViewDataSource, UITableView
         let EditButton: UITableViewRowAction = UITableViewRowAction(style: .Normal, title: "edit") { (action, index) -> Void in
             
             tableView.editing = false
-            self.alert(self.texts[indexPath.row] + "さんを編集します", messagetext: "新しいスタッフ名を入力して下さい", flag: 0)
+            self.alert(self.texts[indexPath.row] + "さんを編集します", messagetext: "新しいスタッフ名を入力して下さい", index: indexPath.row, flag: 0)
         }
         EditButton.backgroundColor = UIColor.greenColor()
         
@@ -65,7 +65,7 @@ class StaffNameListSetting: UIViewController, UITableViewDataSource, UITableView
             
             tableView.editing = false
             
-            self.alert(self.texts[indexPath.row] + "さんを削除します", messagetext: "本当に削除してよろしいですか？", flag: 1)
+            self.alert(self.texts[indexPath.row] + "さんを削除します", messagetext: "本当に削除してよろしいですか？", index: indexPath.row, flag: 1)
             
         }
         DeleteButton.backgroundColor = UIColor.redColor()
@@ -74,7 +74,7 @@ class StaffNameListSetting: UIViewController, UITableViewDataSource, UITableView
     }
     
     //アラートを表示する関数
-    func alert(titletext: String, messagetext: String, flag: Int){
+    func alert(titletext: String, messagetext: String, index: Int, flag: Int){
         
         var buttontitle = ""
         
@@ -92,8 +92,13 @@ class StaffNameListSetting: UIViewController, UITableViewDataSource, UITableView
                     (action:UIAlertAction!) -> Void in
                     let textFields:Array<UITextField>? =  alert.textFields as Array<UITextField>?
                     if textFields != nil {
-                        
+                        if(textFields![0].text! != ""){
+                            self.texts[index] = textFields![0].text!
+                        }
                     }
+                    
+                    self.table.reloadData()
+                    
             })
             alert.addAction(Action)
             
@@ -111,6 +116,10 @@ class StaffNameListSetting: UIViewController, UITableViewDataSource, UITableView
             })
             alert.addAction(Action)
         }
+        
+        let Back: UIAlertAction = UIAlertAction(title: "戻る", style: UIAlertActionStyle.Cancel, handler: nil)
+        
+        alert.addAction(Back)
         
         self.presentViewController(alert, animated: true, completion: nil)
     }
