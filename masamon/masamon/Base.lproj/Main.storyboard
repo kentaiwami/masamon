@@ -285,16 +285,7 @@
                     <view key="view" contentMode="scaleToFill" id="8bP-zv-Ohp">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WBA-MM-Zyk">
-                                <rect key="frame" x="32" y="95" width="98" height="66"/>
-                                <state key="normal" title="Button"/>
-                                <connections>
-                                    <action selector="TapUserSetting:" destination="wxH-3x-qaL" eventType="touchUpInside" id="JDL-Jg-k0l"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                 </viewController>
