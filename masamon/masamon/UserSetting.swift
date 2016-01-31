@@ -463,4 +463,7 @@ class UserSetting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSourc
             SalalyLabel2.text = String(hourlypayarray[1].pay)
         }
     }
+    @IBAction func TapBackButton(sender: AnyObject) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
 }

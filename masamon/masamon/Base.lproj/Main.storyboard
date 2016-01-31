@@ -224,7 +224,13 @@
                                             <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bZX-C7-TjX">
                                                 <rect key="frame" x="0.0" y="18" width="375" height="44"/>
                                                 <items>
-                                                    <navigationItem title="Title" id="sel-8e-IeJ"/>
+                                                    <navigationItem title="ユーザ設定" id="sel-8e-IeJ">
+                                                        <barButtonItem key="leftBarButtonItem" title="戻る" id="NB4-M0-RFK">
+                                                            <connections>
+                                                                <action selector="TapBackButton:" destination="tsi-6b-VUl" id="XjZ-AT-WCB"/>
+                                                            </connections>
+                                                        </barButtonItem>
+                                                    </navigationItem>
                                                 </items>
                                             </navigationBar>
                                         </subviews>
@@ -266,7 +272,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ObL-QC-7fR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1085.5" y="352.5"/>
+            <point key="canvasLocation" x="1075.5" y="1100.5"/>
         </scene>
         <!--Setting-->
         <scene sceneID="R5N-ZT-HGi">
@@ -294,7 +300,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1Y2-k8-R7g" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1085.5" y="1093.5"/>
+            <point key="canvasLocation" x="1075.5" y="357.5"/>
         </scene>
         <!--Shift Import-->
         <scene sceneID="med-hJ-Wbj">
