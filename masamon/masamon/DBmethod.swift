@@ -294,5 +294,11 @@ class DBmethod: UIViewController {
             return array
         }
     }
+    
+    func StaffNameAllRecordGet() -> Results<StaffNameDB>?{
+        let realm = try! Realm()
+        
+        return realm.objects(StaffNameDB)
+    }
 
 }

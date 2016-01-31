@@ -18,6 +18,19 @@ class StaffNameListSetting: UIViewController, UITableViewDataSource, UITableView
         table.delegate = self
         table.dataSource = self
         
+        //StaffNameDBのレコード全て取得
+        if(DBmethod().StaffNameAllRecordGet() != nil){
+            let results = DBmethod().StaffNameAllRecordGet()
+            
+            for(var i = 0; i < results!.count; i++){
+                records.append(results![i])
+            }
+        }
+        
+        //StaffNameDBから名前を全て取得
+        if(DBmethod().StaffNameArrayGet() != nil){
+            texts = DBmethod().StaffNameArrayGet()!
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -28,7 +41,9 @@ class StaffNameListSetting: UIViewController, UITableViewDataSource, UITableView
     }
     
     // セルに表示するテキスト
-    var texts = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+    var texts: [String] = []
+    //StaffNameDBのレコード配列
+    var records: [StaffNameDB] = []
     
     // セルの行数
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -113,12 +128,15 @@ class StaffNameListSetting: UIViewController, UITableViewDataSource, UITableView
             
             let Action: UIAlertAction = UIAlertAction(title: buttontitle, style: UIAlertActionStyle.Destructive, handler: { (action:UIAlertAction!) -> Void in
                 
+                
+                
+                
             })
             alert.addAction(Action)
         }
         
-        let Back: UIAlertAction = UIAlertAction(title: "戻る", style: UIAlertActionStyle.Cancel, handler: nil)
         
+        let Back: UIAlertAction = UIAlertAction(title: "戻る", style: UIAlertActionStyle.Cancel, handler: nil)
         alert.addAction(Back)
         
         self.presentViewController(alert, animated: true, completion: nil)
