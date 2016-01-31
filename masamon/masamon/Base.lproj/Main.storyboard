@@ -118,6 +118,25 @@
             </objects>
             <point key="canvasLocation" x="253.5" y="352.5"/>
         </scene>
+        <!--Staff Name List Setting-->
+        <scene sceneID="AiQ-pz-8Np">
+            <objects>
+                <viewController storyboardIdentifier="StaffNameListSetting" useStoryboardIdentifierAsRestorationIdentifier="YES" id="mjS-5n-bWb" customClass="StaffNameListSetting" customModule="masamon" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Xyw-VS-ho8"/>
+                        <viewControllerLayoutGuide type="bottom" id="LtR-s6-PsY"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="IqG-pH-DjH">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.50196081400000003" green="0.0" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kN5-E3-cGM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1521.5" y="1116.5"/>
+        </scene>
         <!--User Setting-->
         <scene sceneID="V1x-uh-v1g">
             <objects>
@@ -272,7 +291,45 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ObL-QC-7fR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1075.5" y="1100.5"/>
+            <point key="canvasLocation" x="1075.5" y="1116.5"/>
+        </scene>
+        <!--Shift Name List Setting-->
+        <scene sceneID="cTI-hC-uKQ">
+            <objects>
+                <viewController storyboardIdentifier="ShiftNameListSetting" useStoryboardIdentifierAsRestorationIdentifier="YES" id="5ce-dN-Wqe" customClass="ShiftNameListSetting" customModule="masamon" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="say-5X-qse"/>
+                        <viewControllerLayoutGuide type="bottom" id="YyV-IH-O6u"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ACB-u5-EaY">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Z5Q-1k-9uQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1993.5" y="1108.5"/>
+        </scene>
+        <!--Shift List Setting-->
+        <scene sceneID="026-gx-K7L">
+            <objects>
+                <viewController storyboardIdentifier="ShiftListSetting" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Zya-Cs-PqC" customClass="ShiftListSetting" customModule="masamon" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="4C5-l6-MZL"/>
+                        <viewControllerLayoutGuide type="bottom" id="IvQ-dO-BEP"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="7pl-Od-EPd">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="x3o-PS-DTt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2415.5" y="1108.5"/>
         </scene>
         <!--Setting-->
         <scene sceneID="R5N-ZT-HGi">
@@ -285,7 +342,7 @@
                     <view key="view" contentMode="scaleToFill" id="8bP-zv-Ohp">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                 </viewController>

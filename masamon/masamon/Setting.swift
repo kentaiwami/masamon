@@ -37,13 +37,16 @@ class Setting: UIViewController {
             self.presentViewController( targetViewController, animated: true, completion: nil)
             
         case 2:
-            print("2")
+            let targetViewController = self.storyboard!.instantiateViewControllerWithIdentifier("StaffNameListSetting")
+            self.presentViewController( targetViewController, animated: true, completion: nil)
             
         case 3:
-            print("3")
+            let targetViewController = self.storyboard!.instantiateViewControllerWithIdentifier("ShiftNameListUserSetting")
+            self.presentViewController( targetViewController, animated: true, completion: nil)
             
         case 4:
-            print("4")
+            let targetViewController = self.storyboard!.instantiateViewControllerWithIdentifier("UserSetting")
+            self.presentViewController( targetViewController, animated: true, completion: nil)
             
         default:
             break
