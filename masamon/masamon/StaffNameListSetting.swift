@@ -11,12 +11,21 @@ import UIKit
 class StaffNameListSetting: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var table: UITableView!
+    @IBOutlet weak var navigationbar: UINavigationBar!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         table.delegate = self
         table.dataSource = self
+        
+        self.RefreshData()
+    }
+    
+    func RefreshData(){
+        
+        records.removeAll()
+        texts.removeAll()
         
         //StaffNameDBのレコード全て取得
         if(DBmethod().StaffNameAllRecordGet() != nil){
@@ -31,14 +40,24 @@ class StaffNameListSetting: UIViewController, UITableViewDataSource, UITableView
         if(DBmethod().StaffNameArrayGet() != nil){
             texts = DBmethod().StaffNameArrayGet()!
         }
+        
+        self.table.reloadData()
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
+    
+    //戻るボタンを押したとき
     @IBAction func TapBackButton(sender: AnyObject) {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
+    
+    //プラスボタンを押したとき
+    @IBAction func TapPlusButton(sender: AnyObject) {
+        self.alert("スタッフ名を新規追加します", messagetext: "追加するスタッフ名を入力して下さい", index: DBmethod().DBRecordCount(StaffNameDB), flag: 2)
+    }
+    
     
     // セルに表示するテキスト
     var texts: [String] = []
@@ -98,7 +117,8 @@ class StaffNameListSetting: UIViewController, UITableViewDataSource, UITableView
             preferredStyle: UIAlertControllerStyle.Alert)
         
         //flagが0は編集、flagが1は削除
-        if(flag == 0){
+        switch(flag){
+        case 0:
             buttontitle = "編集完了"
             
             let Action:UIAlertAction = UIAlertAction(title: buttontitle,
@@ -123,11 +143,11 @@ class StaffNameListSetting: UIViewController, UITableViewDataSource, UITableView
                                     break
                                 }
                             }
-                            self.texts[index] = textFields![0].text!
+                            
                         }
                     }
                     
-                    self.table.reloadData()
+                    self.RefreshData()
                     
             })
             alert.addAction(Action)
@@ -138,16 +158,52 @@ class StaffNameListSetting: UIViewController, UITableViewDataSource, UITableView
                 text.returnKeyType = .Next
             })
             
-        }else{
+        case 1:
             buttontitle = "削除する"
             
             let Action: UIAlertAction = UIAlertAction(title: buttontitle, style: UIAlertActionStyle.Destructive, handler: { (action:UIAlertAction!) -> Void in
                 
-                
-                
-                
+                for(var i = 0; i < self.records.count; i++){
+                    
+                    if(self.texts[index] == self.records[i].name){
+                        DBmethod().DeleteRecord(self.records[i])
+                        self.texts.removeObject(self.texts[index])
+                        self.AAA()
+                        break
+                    }
+                }
+                self.RefreshData()
             })
             alert.addAction(Action)
+            
+        case 2:
+            buttontitle = "追加する"
+            
+            let Action: UIAlertAction = UIAlertAction(title: buttontitle, style: UIAlertActionStyle.Default, handler: { (action:UIAlertAction!) -> Void in
+                let textFields:Array<UITextField>? =  alert.textFields as Array<UITextField>?
+                if textFields != nil {
+                    if(textFields![0].text! != ""){
+                        let newrecord = StaffNameDB()
+                        newrecord.id = index
+                        newrecord.name = textFields![0].text!
+                        
+                        DBmethod().AddandUpdate(newrecord, update: true)
+                    }
+                }
+                
+                self.RefreshData()
+            })
+            
+            //シフト名入力用のtextfieldを追加
+            alert.addTextFieldWithConfigurationHandler({(text:UITextField!) -> Void in
+                text.placeholder = "スタッフ名の入力"
+                text.returnKeyType = .Next
+            })
+            
+            alert.addAction(Action)
+            
+        default:
+            break
         }
         
         
@@ -155,5 +211,10 @@ class StaffNameListSetting: UIViewController, UITableViewDataSource, UITableView
         alert.addAction(Back)
         
         self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    //オブジェクト名とidを受け取って、受け取ったidよりも大きいidを詰める関数
+    func AAA(){
+        
     }
 }
