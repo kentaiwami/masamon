@@ -27,14 +27,19 @@ class DBmethod: UIViewController {
         }
     }
     
-//    //データベースからのデータ取得をして表示
-//    func dataGet() {
-//        
-//        let realm = try! Realm()
-//        
-//        let dataContent = realm.objects(ShiftDB)
-//        print(dataContent)
-//    }
+    //指定したオブジェクトを削除する
+    func DeleteRecord(object: Object) {
+        
+        do{
+            let realm = try Realm()
+            
+            try realm.write {
+                realm.delete(object)
+            }
+        }catch{
+            //Error
+        }
+    }
     
     //データベースのパスを表示
     func ShowDBpass(){
@@ -61,7 +66,6 @@ class DBmethod: UIViewController {
     
     /****************ShiftDB関連メソッド*************/
 
-     //TODO: ここでエラーが出る
     //レコードのIDを受け取って名前を返す
     func ShiftDBGet(id: Int) -> String{
         var shiftimportname = ""

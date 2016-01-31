@@ -108,6 +108,21 @@ class StaffNameListSetting: UIViewController, UITableViewDataSource, UITableView
                     let textFields:Array<UITextField>? =  alert.textFields as Array<UITextField>?
                     if textFields != nil {
                         if(textFields![0].text! != ""){
+                            
+                            //上書き処理を行う
+                            for(var i = 0; i < self.records.count; i++){
+                                if(self.texts[index] == self.records[i].name){
+                                    
+                                    let newstaffnamedbrecord = StaffNameDB()
+                                    newstaffnamedbrecord.id = self.records[i].id
+                                    newstaffnamedbrecord.name = textFields![0].text!
+                                    
+                                    DBmethod().DeleteRecord(self.records[i])
+                                    DBmethod().AddandUpdate(newstaffnamedbrecord, update: true)
+                                    
+                                    break
+                                }
+                            }
                             self.texts[index] = textFields![0].text!
                         }
                     }
