@@ -41,11 +41,11 @@ class Setting: UIViewController {
             self.presentViewController( targetViewController, animated: true, completion: nil)
             
         case 3:
-            let targetViewController = self.storyboard!.instantiateViewControllerWithIdentifier("ShiftNameListUserSetting")
+            let targetViewController = self.storyboard!.instantiateViewControllerWithIdentifier("ShiftNameListSetting")
             self.presentViewController( targetViewController, animated: true, completion: nil)
             
         case 4:
-            let targetViewController = self.storyboard!.instantiateViewControllerWithIdentifier("UserSetting")
+            let targetViewController = self.storyboard!.instantiateViewControllerWithIdentifier("ShiftListSetting")
             self.presentViewController( targetViewController, animated: true, completion: nil)
             
         default:
