@@ -9,17 +9,17 @@
 import UIKit
 
 class StaffNameListSetting: UIViewController, UITableViewDataSource, UITableViewDelegate {
-
+    
     @IBOutlet weak var table: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         table.delegate = self
         table.dataSource = self
-
+        
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -56,8 +56,7 @@ class StaffNameListSetting: UIViewController, UITableViewDataSource, UITableView
         let EditButton: UITableViewRowAction = UITableViewRowAction(style: .Normal, title: "edit") { (action, index) -> Void in
             
             tableView.editing = false
-            print("tapedit")
-            
+            self.alert(self.texts[indexPath.row] + "さんを編集します", messagetext: "新しいスタッフ名を入力して下さい", flag: 0)
         }
         EditButton.backgroundColor = UIColor.greenColor()
         
@@ -65,11 +64,54 @@ class StaffNameListSetting: UIViewController, UITableViewDataSource, UITableView
         let DeleteButton: UITableViewRowAction = UITableViewRowAction(style: .Normal, title: "delete") { (action, index) -> Void in
             
             tableView.editing = false
-            print("tapdelete")
+            
+            self.alert(self.texts[indexPath.row] + "さんを削除します", messagetext: "本当に削除してよろしいですか？", flag: 1)
             
         }
         DeleteButton.backgroundColor = UIColor.redColor()
         
         return [EditButton, DeleteButton]
+    }
+    
+    //アラートを表示する関数
+    func alert(titletext: String, messagetext: String, flag: Int){
+        
+        var buttontitle = ""
+        
+        let alert:UIAlertController = UIAlertController(title: titletext,
+            message: messagetext,
+            preferredStyle: UIAlertControllerStyle.Alert)
+        
+        //flagが0は編集、flagが1は削除
+        if(flag == 0){
+            buttontitle = "編集完了"
+            
+            let Action:UIAlertAction = UIAlertAction(title: buttontitle,
+                style: UIAlertActionStyle.Default,
+                handler:{
+                    (action:UIAlertAction!) -> Void in
+                    let textFields:Array<UITextField>? =  alert.textFields as Array<UITextField>?
+                    if textFields != nil {
+                        
+                    }
+            })
+            alert.addAction(Action)
+            
+            //シフト名入力用のtextfieldを追加
+            alert.addTextFieldWithConfigurationHandler({(text:UITextField!) -> Void in
+                text.placeholder = "スタッフ名の入力"
+                text.returnKeyType = .Next
+            })
+            
+        }else{
+            buttontitle = "削除する"
+            
+            let Action: UIAlertAction = UIAlertAction(title: buttontitle, style: UIAlertActionStyle.Destructive, handler: { (action:UIAlertAction!) -> Void in
+                
+            })
+            alert.addAction(Action)
+        }
+        
+        self.presentViewController(alert, animated: true, completion: nil)
     }
 }
