@@ -117,10 +117,10 @@ class ShiftGalleryTable: UIViewController, UITableViewDataSource, UITableViewDel
         
         if(selectedCells[indexPath.row]){
             cell.accessoryType = UITableViewCellAccessoryType.Checkmark
-//            cell.backgroundColor = UIColor.hex("4C4C4C", alpha: 1.0)
+            cell.backgroundColor = UIColor.hex("AFAFAF", alpha: 1.0)
         }else{
             cell.accessoryType = UITableViewCellAccessoryType.None
-//            cell.backgroundColor = UIColor.hex("4C4C4C", alpha: 0.7)
+            cell.backgroundColor = UIColor.clearColor()
         }
  
         cell.selectionStyle = UITableViewCellSelectionStyle.None
@@ -132,7 +132,7 @@ class ShiftGalleryTable: UIViewController, UITableViewDataSource, UITableViewDel
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let cell = tableview.cellForRowAtIndexPath(indexPath)
         cell?.accessoryType = UITableViewCellAccessoryType.Checkmark    //チェックマークをつける
-//        cell?.backgroundColor = UIColor.hex("4C4C4C", alpha: 1.0)
+        cell?.backgroundColor = UIColor.hex("AFAFAF", alpha: 1.0)
         
         selectedCells[indexPath.row] = true
     }
@@ -141,8 +141,8 @@ class ShiftGalleryTable: UIViewController, UITableViewDataSource, UITableViewDel
     func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
         let cell = tableview.cellForRowAtIndexPath(indexPath)
         cell?.accessoryType = UITableViewCellAccessoryType.None         //チェックマークをはずす
-//        cell?.backgroundColor = UIColor.hex("4C4C4C", alpha: 0.7)
-
+        cell?.backgroundColor = UIColor.clearColor()
+            
         selectedCells[indexPath.row] = false
     }
     
