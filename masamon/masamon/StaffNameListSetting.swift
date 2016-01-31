@@ -53,7 +53,7 @@ class StaffNameListSetting: UIViewController, UITableViewDataSource, UITableView
     func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
         
         // Editボタン.
-        let EditButton: UITableViewRowAction = UITableViewRowAction(style: .Normal, title: "edit") { (action, index) -> Void in
+        let EditButton: UITableViewRowAction = UITableViewRowAction(style: .Normal, title: "編集") { (action, index) -> Void in
             
             tableView.editing = false
             self.alert(self.texts[indexPath.row] + "さんを編集します", messagetext: "新しいスタッフ名を入力して下さい", index: indexPath.row, flag: 0)
@@ -61,7 +61,7 @@ class StaffNameListSetting: UIViewController, UITableViewDataSource, UITableView
         EditButton.backgroundColor = UIColor.greenColor()
         
         // Deleteボタン.
-        let DeleteButton: UITableViewRowAction = UITableViewRowAction(style: .Normal, title: "delete") { (action, index) -> Void in
+        let DeleteButton: UITableViewRowAction = UITableViewRowAction(style: .Normal, title: "削除") { (action, index) -> Void in
             
             tableView.editing = false
             
