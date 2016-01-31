@@ -36,13 +36,13 @@ class UserSetting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSourc
     let savebutton   = UIButton()
     
     let catimagepath: [String] = ["../images/cat1.png","../images/cat2.png"]
-    let catinfo: [[Int]] = [[70,540,80],[326,470,80]]
+    let catinfo: [[Int]] = [[70,620,80],[326,470,80]]
     
-    let frameborder: [Int] = [25,195,370]
+    let frameborder: [Int] = [90,265,435]
     
-    let clock: [Int] = [47,218]
-    let yen: [Int] = [107,273]
-    let user: [Int] = [395,448]
+    let clock: [Int] = [110,285]
+    let yen: [Int] = [170,340]
+    let user: [Int] = [460,515]
     let usericonfilename: [String] = ["../images/user.png","../images/user2.png"]
     
     @IBOutlet weak var HPSView: UIView!
@@ -109,7 +109,7 @@ class UserSetting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSourc
         //セーブボタンの追加
         savebutton.tag = 0
         savebutton.frame = CGRectMake(0, 0, 70, 70)
-        savebutton.layer.position = CGPoint(x: self.view.frame.width/2, y:550)
+        savebutton.layer.position = CGPoint(x: self.view.frame.width/2, y:620)
         savebutton.setImage(saveimage, forState: .Normal)
         savebutton.addTarget(self, action: "SaveButtontapped:", forControlEvents:.TouchUpInside)
         self.view.addSubview(savebutton)

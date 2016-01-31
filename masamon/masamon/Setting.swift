@@ -16,6 +16,7 @@ class Setting: UIViewController {
         
     }
     
+    
     @IBAction func TapUserSetting(sender: AnyObject) {
         
         
