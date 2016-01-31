@@ -41,6 +41,28 @@ class DBmethod: UIViewController {
         }
     }
     
+    //指定したデータベースオブジェクトのソートを行う
+    func DataBaseSort(object: Object.Type){
+        let realm = try! Realm()
+
+        let results = realm.objects(object).sorted("id")
+        let results2 = realm.objects(object)
+        
+        
+        
+        print(results)
+        
+        do{
+            try realm.write({ () -> Void in
+//                realm.deleteAll()
+            })
+            
+        }catch{
+            //Error
+        }
+        print(results)
+    }
+    
     //データベースのパスを表示
     func ShowDBpass(){
         do{
@@ -303,6 +325,23 @@ class DBmethod: UIViewController {
         let realm = try! Realm()
         
         return realm.objects(StaffNameDB)
+    }
+    
+    func AAA(id: Int){
+        do{
+            let realm = try Realm()
+            let results = realm.objects(StaffNameDB)
+            
+            for(var i = id; i < results.count; i++){
+                let ABC = realm.objects(StaffNameDB).filter("id = %@",i+1)[0]
+                
+                let XXX = StaffNameDB()
+                XXX.id = ABC.id - 1
+                XXX.name = ABC.name
+            }
+        }catch{
+            //Error
+        }
     }
 
 }

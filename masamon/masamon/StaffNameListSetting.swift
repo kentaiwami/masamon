@@ -116,7 +116,7 @@ class StaffNameListSetting: UIViewController, UITableViewDataSource, UITableView
             message: messagetext,
             preferredStyle: UIAlertControllerStyle.Alert)
         
-        //flagが0は編集、flagが1は削除
+        //flagが0は編集、flagが1は削除, flagが3は追加
         switch(flag){
         case 0:
             buttontitle = "編集完了"
@@ -139,11 +139,11 @@ class StaffNameListSetting: UIViewController, UITableViewDataSource, UITableView
                                     
                                     DBmethod().DeleteRecord(self.records[i])
                                     DBmethod().AddandUpdate(newstaffnamedbrecord, update: true)
+                                    DBmethod().DataBaseSort(StaffNameDB)
                                     
                                     break
                                 }
                             }
-                            
                         }
                     }
                     
@@ -168,7 +168,10 @@ class StaffNameListSetting: UIViewController, UITableViewDataSource, UITableView
                     if(self.texts[index] == self.records[i].name){
                         DBmethod().DeleteRecord(self.records[i])
                         self.texts.removeObject(self.texts[index])
-                        self.AAA()
+                        
+                        DBmethod().DataBaseSort(StaffNameDB)
+                        DBmethod().AAA(self.records[i].id)
+
                         break
                     }
                 }
@@ -211,10 +214,5 @@ class StaffNameListSetting: UIViewController, UITableViewDataSource, UITableView
         alert.addAction(Back)
         
         self.presentViewController(alert, animated: true, completion: nil)
-    }
-    
-    //オブジェクト名とidを受け取って、受け取ったidよりも大きいidを詰める関数
-    func AAA(){
-        
     }
 }
