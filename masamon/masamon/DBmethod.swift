@@ -41,27 +41,6 @@ class DBmethod: UIViewController {
         }
     }
     
-    //指定したデータベースオブジェクトのソートを行う
-    func DataBaseSort(object: Object.Type){
-        let realm = try! Realm()
-
-        let results = realm.objects(object).sorted("id")
-        let results2 = realm.objects(object)
-        
-        
-        
-        print(results)
-        
-        do{
-            try realm.write({ () -> Void in
-//                realm.deleteAll()
-            })
-            
-        }catch{
-            //Error
-        }
-        print(results)
-    }
     
     //データベースのパスを表示
     func ShowDBpass(){
@@ -321,13 +300,15 @@ class DBmethod: UIViewController {
         }
     }
     
+    //StaffNameDBの全レコードを取得する
     func StaffNameAllRecordGet() -> Results<StaffNameDB>?{
         let realm = try! Realm()
         
         return realm.objects(StaffNameDB)
     }
     
-    func AAA(id: Int){
+    //StaffNameDBの虫食い状態を直す関数
+    func StaffNameDBFillHole(id: Int){
         do{
             let realm = try Realm()
             let results = realm.objects(StaffNameDB)
@@ -344,4 +325,37 @@ class DBmethod: UIViewController {
         }
     }
 
+    //データベースオブジェクトのソートを行う
+    func StaffNameDBSort(){
+        let realm = try! Realm()
+        
+        let sortedresults = realm.objects(StaffNameDB).sorted("id")         //ソート後の結果を取得
+        let nonsortedresults = realm.objects(StaffNameDB)                   //ソート前の結果を取得
+        
+        var tmparray: [StaffNameDB] = []
+        
+        //ソート後のレコード内容を作業用配列に入れる
+        for(var i = 0; i < sortedresults.count; i++){
+            let tmprecord = StaffNameDB()
+            tmprecord.id = sortedresults[i].id
+            tmprecord.name = sortedresults[i].name
+            tmparray.append(tmprecord)
+        }
+        
+        //順序がおかしいレコードを全て削除した後に、ソート済みのレコードを書き込む
+        do{
+            try realm.write({ () -> Void in
+                realm.delete(nonsortedresults)
+                for(var i = 0; i < tmparray.count; i++){
+                    realm.add(tmparray[i], update: true)
+                }
+            })
+            
+        }catch{
+            //Error
+        }
+        
+        print(tmparray)
+        
+    }
 }

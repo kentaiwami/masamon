@@ -137,9 +137,14 @@ class StaffNameListSetting: UIViewController, UITableViewDataSource, UITableView
                                     newstaffnamedbrecord.id = self.records[i].id
                                     newstaffnamedbrecord.name = textFields![0].text!
                                     
+                                    //編集前のレコードを削除
                                     DBmethod().DeleteRecord(self.records[i])
+                                    
+                                    //編集後のレコードを追加
                                     DBmethod().AddandUpdate(newstaffnamedbrecord, update: true)
-                                    DBmethod().DataBaseSort(StaffNameDB)
+                                    
+                                    //ソートする
+                                    DBmethod().StaffNameDBSort()
                                     
                                     break
                                 }
@@ -169,8 +174,8 @@ class StaffNameListSetting: UIViewController, UITableViewDataSource, UITableView
                         DBmethod().DeleteRecord(self.records[i])
                         self.texts.removeObject(self.texts[index])
                         
-                        DBmethod().DataBaseSort(StaffNameDB)
-                        DBmethod().AAA(self.records[i].id)
+                        DBmethod().StaffNameDBSort()
+                        DBmethod().StaffNameDBFillHole(self.records[i].id)
 
                         break
                     }
