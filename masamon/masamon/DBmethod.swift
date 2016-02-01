@@ -325,7 +325,7 @@ class DBmethod: UIViewController {
         }
     }
 
-    //データベースオブジェクトのソートを行う
+    //StaffNameDBのソートを行う
     func StaffNameDBSort(){
         let realm = try! Realm()
         
@@ -354,8 +354,5 @@ class DBmethod: UIViewController {
         }catch{
             //Error
         }
-        
-        print(tmparray)
-        
     }
 }
