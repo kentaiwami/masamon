@@ -336,7 +336,7 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <items>
                                     <navigationItem title="追加したシフト名の一覧" id="aiW-R7-Y08">
-                                        <barButtonItem key="leftBarButtonItem" title="戻る" id="8Sm-ZJ-m5W">
+                                        <barButtonItem key="leftBarButtonItem" systemItem="stop" id="8Sm-ZJ-m5W">
                                             <connections>
                                                 <action selector="TapBackButton:" destination="5ce-dN-Wqe" id="CIV-Iu-RmQ"/>
                                             </connections>
