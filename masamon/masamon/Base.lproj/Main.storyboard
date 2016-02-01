@@ -341,6 +341,7 @@
                                                 <action selector="TapBackButton:" destination="5ce-dN-Wqe" id="CIV-Iu-RmQ"/>
                                             </connections>
                                         </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" title="Item" systemItem="add" id="Zfn-Pu-sMQ"/>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
