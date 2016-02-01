@@ -171,11 +171,12 @@ class StaffNameListSetting: UIViewController, UITableViewDataSource, UITableView
                 for(var i = 0; i < self.records.count; i++){
                     
                     if(self.texts[index] == self.records[i].name){
-                        DBmethod().DeleteRecord(self.records[i])
-                        self.texts.removeObject(self.texts[index])
+                        let pivot = self.records[i].id                  //削除前にずらす元となるidを記録する
                         
+                        //対象レコードを削除,並び替え,穴埋め
+                        DBmethod().DeleteRecord(self.records[i])
                         DBmethod().StaffNameDBSort()
-                        DBmethod().StaffNameDBFillHole(self.records[i].id)
+                        DBmethod().StaffNameDBFillHole(pivot)
 
                         break
                     }

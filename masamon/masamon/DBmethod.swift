@@ -311,14 +311,17 @@ class DBmethod: UIViewController {
     func StaffNameDBFillHole(id: Int){
         do{
             let realm = try Realm()
-            let results = realm.objects(StaffNameDB)
+            let count = DBmethod().DBRecordCount(StaffNameDB)
             
-            for(var i = id; i < results.count; i++){
-                let ABC = realm.objects(StaffNameDB).filter("id = %@",i+1)[0]
+            for(var i = id; i < count; i++){
+                //
+                let nextrecord = realm.objects(StaffNameDB).filter("id = %@",i+1)[0]
                 
-                let XXX = StaffNameDB()
-                XXX.id = ABC.id - 1
-                XXX.name = ABC.name
+                let newrecord = StaffNameDB()
+                newrecord.id = nextrecord.id - 1
+                newrecord.name = nextrecord.name
+                
+                DBmethod().AddandUpdate(newrecord, update: true)
             }
         }catch{
             //Error
