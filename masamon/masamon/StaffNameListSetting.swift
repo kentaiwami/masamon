@@ -11,7 +11,6 @@ import UIKit
 class StaffNameListSetting: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var table: UITableView!
-    @IBOutlet weak var navigationbar: UINavigationBar!
     
     override func viewDidLoad() {
         super.viewDidLoad()
