@@ -56,9 +56,13 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
     
     // セルの内容を変更
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "Cell")
+        let cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: "Cell")
         
+        cell.backgroundColor = UIColor.darkGrayColor()
+
         cell.textLabel?.text = texts[indexPath.row]
+        cell.textLabel?.textColor = UIColor.whiteColor()
+        
         cell.detailTextLabel?.text = "19:00 〜 24:30   その他"
         
         return cell

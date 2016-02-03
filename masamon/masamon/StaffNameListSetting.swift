@@ -70,7 +70,7 @@ class StaffNameListSetting: UIViewController, UITableViewDataSource, UITableView
     
     // セルの内容を変更
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: "Cell")
+        let cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "Cell")
         
         cell.backgroundColor = UIColor.darkGrayColor()
         
