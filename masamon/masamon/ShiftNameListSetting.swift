@@ -22,9 +22,10 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
 
     }
     
+    //TODO: 各配列にグループごとに分けて格納する
     func RefreshData(){
         records.removeAll()
-        texts.removeAll()
+        early.removeAll()
         
         //ShiftSystemDBのレコード全て取得
             let results = DBmethod().ShiftSystemAllRecordGet()
@@ -33,7 +34,7 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
             }
         
         //ShiftSystemDBから名前を全て取得
-        texts = DBmethod().ShiftSystemNameArrayGet()
+        early = DBmethod().ShiftSystemNameArrayGet()
         
         self.table.reloadData()
 
@@ -45,13 +46,56 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
     
     
     // セルに表示するテキスト
-    var texts: [String] = []
+    var early: [String] = []
+    var center1: [String] = []
+    var center2: [String] = []
+    var center3: [String] = []
+    var late: [String] = []
+    var other: [String] = []
+    
     //ShiftSystemDBのレコード配列
     var records: [ShiftSystemDB] = []
+    // Sectionで使用する配列を定義する.
+    let sections: NSArray = ["早番", "中1", "中2", "中3", "遅番", "その他"]
+    
+    /*
+    セクションの数を返す.
+    */
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return sections.count
+    }
+    
+    /*
+    セクションのタイトルを返す.
+    */
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return sections[section] as? String
+    }
     
     // セルの行数
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return texts.count
+        switch(section){
+        case 0:
+            return early.count
+            
+        case 1:
+            return center1.count
+            
+        case 2:
+            return center2.count
+            
+        case 3:
+            return center3.count
+            
+        case 4:
+            return late.count
+            
+        case 5:
+            return other.count
+            
+        default:
+            return 0
+        }
     }
     
     // セルの内容を変更
@@ -60,10 +104,33 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
         
         cell.backgroundColor = UIColor.darkGrayColor()
 
-        cell.textLabel?.text = texts[indexPath.row]
+        cell.textLabel?.text = early[indexPath.row]
         cell.textLabel?.textColor = UIColor.whiteColor()
         
-        cell.detailTextLabel?.text = "19:00 〜 24:30   その他"
+        cell.detailTextLabel?.text = "19:00 〜 24:30"
+        
+        switch(indexPath.section){
+        case 0:
+            cell.textLabel?.text = early[indexPath.row]
+            
+        case 1:
+            cell.textLabel?.text = center1[indexPath.row]
+            
+        case 2:
+            cell.textLabel?.text = center2[indexPath.row]
+            
+        case 3:
+            cell.textLabel?.text = center3[indexPath.row]
+            
+        case 4:
+            cell.textLabel?.text = late[indexPath.row]
+            
+        case 5:
+            cell.textLabel?.text = other[indexPath.row]
+            
+        default:
+            break
+        }
         
         return cell
     }
@@ -81,7 +148,7 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
         let EditButton: UITableViewRowAction = UITableViewRowAction(style: .Normal, title: "編集") { (action, index) -> Void in
             
             tableView.editing = false
-            self.alert(self.texts[indexPath.row] + "さんを編集します", messagetext: "新しいスタッフ名を入力して下さい", index: indexPath.row, flag: 0)
+            self.alert(self.early[indexPath.row] + "さんを編集します", messagetext: "新しいスタッフ名を入力して下さい", index: indexPath.row, flag: 0)
         }
         EditButton.backgroundColor = UIColor.greenColor()
         
@@ -90,7 +157,7 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
             
             tableView.editing = false
             
-            self.alert(self.texts[indexPath.row] + "さんを削除します", messagetext: "本当に削除してよろしいですか？", index: indexPath.row, flag: 1)
+            self.alert(self.early[indexPath.row] + "さんを削除します", messagetext: "本当に削除してよろしいですか？", index: indexPath.row, flag: 1)
             
         }
         DeleteButton.backgroundColor = UIColor.redColor()
@@ -122,7 +189,7 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
                             
                             //上書き処理を行う
                             for(var i = 0; i < self.records.count; i++){
-                                if(self.texts[index] == self.records[i].name){
+                                if(self.early[index] == self.records[i].name){
                                     
                                     let newstaffnamedbrecord = StaffNameDB()
                                     newstaffnamedbrecord.id = self.records[i].id
@@ -161,7 +228,7 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
                 
                 for(var i = 0; i < self.records.count; i++){
                     
-                    if(self.texts[index] == self.records[i].name){
+                    if(self.early[index] == self.records[i].name){
                         let pivot = self.records[i].id                  //削除前にずらす元となるidを記録する
                         
                         //対象レコードを削除,並び替え,穴埋め
