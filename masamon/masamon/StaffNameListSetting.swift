@@ -82,6 +82,11 @@ class StaffNameListSetting: UIViewController, UITableViewDataSource, UITableView
         return true
     }
     
+    //セルの選択を禁止する
+    func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+        return nil;
+    }
+    
     //セルを横スクロールした際に表示されるアクションを管理するメソッド
     func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
         
