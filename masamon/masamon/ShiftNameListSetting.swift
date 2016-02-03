@@ -17,11 +17,26 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
 
         table.delegate = self
         table.dataSource = self
+        
+        self.RefreshData()
 
     }
     
     func RefreshData(){
+        records.removeAll()
+        texts.removeAll()
         
+        //ShiftSystemDBのレコード全て取得
+            let results = DBmethod().ShiftSystemAllRecordGet()
+            for(var i = 0; i < results.count; i++){
+                records.append(results[i])
+            }
+        
+        //ShiftSystemDBから名前を全て取得
+        texts = DBmethod().ShiftSystemNameArrayGet()
+        
+        self.table.reloadData()
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -31,8 +46,8 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
     
     // セルに表示するテキスト
     var texts: [String] = []
-    //StaffNameDBのレコード配列
-    var records: [StaffNameDB] = []
+    //ShiftSystemDBのレコード配列
+    var records: [ShiftSystemDB] = []
     
     // セルの行数
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -44,6 +59,8 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
         let cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "Cell")
         
         cell.textLabel?.text = texts[indexPath.row]
+        cell.detailTextLabel?.text = "19:00 〜 24:30   その他"
+        
         return cell
     }
     
@@ -195,6 +212,7 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
     
     //プラスボタンを押したとき
     @IBAction func TapPlusButton(sender: AnyObject) {
+        self.alert("スタッフ名を新規追加します", messagetext: "追加するスタッフ名を入力して下さい", index: DBmethod().DBRecordCount(StaffNameDB), flag: 2)
     }
     
     //戻るボタンを押したとき
