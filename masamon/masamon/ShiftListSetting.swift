@@ -131,9 +131,9 @@ class ShiftListSetting: UIViewController, UITableViewDataSource, UITableViewDele
                     (action:UIAlertAction!) -> Void in
                     let textFields:Array<UITextField>? =  alert.textFields as Array<UITextField>?
                     
-
+                    
                     if textFields != nil {
-
+                        
                         if(textFields![0].text! != ""){
                             
                             var oldfileextension = ""
@@ -179,7 +179,7 @@ class ShiftListSetting: UIViewController, UITableViewDataSource, UITableViewDele
                                 
                             default:
                                 break
-
+                                
                             }
                             
                             newshiftdbrecord.shiftimportpath = newpath
@@ -203,10 +203,10 @@ class ShiftListSetting: UIViewController, UITableViewDataSource, UITableViewDele
                                 
                                 DBmethod().AddandUpdate(newshiftdetaildbrecord, update: true)
                             }
-
+                            
                             DBmethod().DeleteRecord(oldshiftdbrecord)
                             DBmethod().AddandUpdate(newshiftdbrecord, update: true)
-
+                            
                             //ファイル名を変更する
                             let filemanager:NSFileManager = NSFileManager()
                             
@@ -235,9 +235,26 @@ class ShiftListSetting: UIViewController, UITableViewDataSource, UITableViewDele
             
             let Action: UIAlertAction = UIAlertAction(title: buttontitle, style: UIAlertActionStyle.Destructive, handler: { (action:UIAlertAction!) -> Void in
                 
-                //TODO: ShiftDBレコードの削除
-                //TODO: ShiftDetailDBレコードの削除
-                //TODO: ファイルの削除
+                var filepath = ""
+                
+                //ShiftDetailDBレコードの削除
+                let shiftdbrecord = DBmethod().SearchShiftDB(self.texts[index].shiftimportname)
+                filepath = shiftdbrecord.shiftimportpath
+                let shiftdetailarray = shiftdbrecord.shiftdetail
+                DBmethod().DeleteShiftDetailDBRecords(shiftdetailarray)
+                
+                //ShiftDBレコードの削除
+                DBmethod().DeleteRecord(self.texts[index])
+                
+                
+                //ファイルの削除
+                let filemanager:NSFileManager = NSFileManager()
+                do{
+                    try filemanager.removeItemAtPath(filepath)
+                }catch{
+                    print(error)
+                }
+                
                 
                 self.RefreshData()
             })

@@ -339,6 +339,21 @@ class DBmethod: UIViewController {
     }
     
     
+    //受け取ったリストに該当するレコードを削除する
+    func DeleteShiftDetailDBRecords(objects: List<ShiftDetailDB>) {
+        
+        do{
+            let realm = try Realm()
+            
+            try realm.write {
+                realm.delete(objects)
+            }
+        }catch{
+            //Error
+        }
+    }
+
+    
     
     /****************StaffNameDB関連メソッド*************/
     
