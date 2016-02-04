@@ -456,66 +456,6 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         }
     }
     
-    //    //受け取ったテキストからHolidayDBのレコードを生成して返す関数
-    //    func CreateHolidayDBRecord(shiftname: String) -> HolidayDB{
-    //        let record = HolidayDB()
-    //
-    //        record.id = DBmethod().DBRecordCount(HolidayDB)
-    //        record.name = shiftname
-    //
-    //        return record
-    //    }
-    
-    //    //受け取ったテキストからShiftSystemDBのレコードを生成して返す関数
-    //    func CreateShiftSystemDBRecord(shiftname: String, shiftgroup: String, shifttime: String) -> ShiftSystemDB{
-    //        let record = ShiftSystemDB()
-    //        var gid = 0
-    //        var start = 0.0
-    //        var end = 0.0
-    //
-    //        switch(shiftgroup){
-    //        case "早番":
-    //            gid = 0
-    //
-    //        case "中1":
-    //            gid = 1
-    //
-    //        case "中2":
-    //            gid = 2
-    //
-    //        case "中3":
-    //            gid = 3
-    //
-    //        case "遅番":
-    //            gid = 4
-    //
-    //        case "その他":
-    //            gid = 5
-    //
-    //        case "休み":
-    //            gid = 6
-    //
-    //        default:
-    //            break
-    //        }
-    //
-    //        //シフト時間に指定なしが含まれていた場合
-    //        if(shifttime.containsString(time[0])){
-    //            start = 99.9
-    //            end = 99.9
-    //        }else{
-    //            start = (Double(shiftstarttimeselectrow) - 1.0) * 0.5
-    //            end = (Double(shiftendtimeselectrow) - 1.0) * 0.5
-    //        }
-    //
-    //        record.id = DBmethod().DBRecordCount(ShiftSystemDB)
-    //        record.name = shiftname
-    //        record.groupid = gid
-    //        record.starttime = start
-    //        record.endtime = end
-    //
-    //        return record
-    //    }
     
     //並行処理で使用
     func dispatch_async_main(block: () -> ()) {

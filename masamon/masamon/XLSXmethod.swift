@@ -59,10 +59,6 @@ class XLSXmethod: UIViewController {
         
         //30(31)日分繰り返すループ
         for(var i = 0; i < monthrange.length; i++){
-            
-//            let AAA = CGFloat(i) / CGFloat(monthrange.length)
-//            print(String(round(AAA*100))+"%")
-
             let shiftdb = ShiftDB()
             let shiftdetaildb = ShiftDetailDB()
             
@@ -100,7 +96,7 @@ class XLSXmethod: UIViewController {
                 default:
                     break
                 }
-//                appDelegate.errorshiftnamexlsx.removeAll()
+
                 newshiftdetaildb.staff = TheDayStaffAttendance(i, staffcellpositionarray: staffcellposition, worksheet: worksheet.sheet)
                 newshiftdetaildb.shiftDBrelationship = DBmethod().SearchShiftDB(importname)
                 
@@ -144,7 +140,7 @@ class XLSXmethod: UIViewController {
                 default:
                     break
                 }
-//                appDelegate.errorshiftnamexlsx.removeAll()
+
                 shiftdetaildb.shiftDBrelationship = shiftdb
                 shiftdetaildb.staff = TheDayStaffAttendance(i, staffcellpositionarray: staffcellposition, worksheet: worksheet.sheet)
                 
@@ -229,7 +225,7 @@ class XLSXmethod: UIViewController {
         }
         
         //月給の計算をする
-        //var shiftsystem = ShiftSystem()
+
         var monthlysalary = 0.0
         let houlypayrecord = DBmethod().HourlyPayRecordGet()
         

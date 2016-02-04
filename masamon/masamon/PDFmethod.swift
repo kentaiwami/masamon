@@ -84,11 +84,6 @@ class PDFmethod: UIViewController {
             }
         }
         
-        
-        //        for(var i = 0; i < pdftextarray.count; i++){
-        //            print(pdftextarray[i])
-        //        }
-        
         return pdftextarray
     }
     
@@ -487,7 +482,6 @@ class PDFmethod: UIViewController {
             
             //スタッフ名の抽出
             staffname = self.GetStaffName(staffarray[i], i: i)
-//            print(staffname)
             staffarraytmp = staffarray[i]
             
             //スキップされたスタッフは取り込みを行わない
@@ -646,7 +640,6 @@ class PDFmethod: UIViewController {
             //要素数を比較して正しくシフト体制を認識できているかチェックする
             var count = 0
             count = earlyshiftlocationarray.count + center1shiftlocationarray.count + center2shiftlocationarray.count + center3shiftlocationarray.count + lateshiftlocationarray.count + holidayshiftlocationarray.count + othershiftlocationarray.count
-//            print(staffname + "  " + String(count))
            
             if(count == monthrange.length){
                 
@@ -748,7 +741,6 @@ class PDFmethod: UIViewController {
         var flag = 0
         var shiftdetailarray = List<ShiftDetailDB>()
 
-//        let shiftyearandmonth = self.JudgeYearAndMonth("")
         let shiftnsdate = MonthlySalaryShow().DateSerial(CommonMethod().Changecalendar(shiftcours.y, calender: "JP"), month: shiftcours.sm, day: 1)
         let c = NSCalendar.currentCalendar()
         let monthrange = c.rangeOfUnit([NSCalendarUnit.Day],  inUnit: [NSCalendarUnit.Month], forDate: shiftnsdate)

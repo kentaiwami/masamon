@@ -138,17 +138,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
         
-//        //シフト体制(休暇)データ
-//        let holidaynamepattern = ["公","夏","有"]
-//        if(DBmethod().DBRecordCount(HolidayDB) == 0){
-//            for(var i = 0; i < holidaynamepattern.count; i++){
-//                let Record = HolidayDB()
-//                Record.id = i
-//                Record.name = holidaynamepattern[i]
-//                DBmethod().AddandUpdate(Record, update: true)
-//            }
-//        }
-        
         return true
     }
     

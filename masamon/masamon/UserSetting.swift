@@ -50,7 +50,6 @@ class UserSetting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSourc
     
     override func viewDidLoad() {
         super.viewDidLoad()
-      //  DBmethod().ShowDBpass()
         
         self.HPSView.backgroundColor = UIColor.blackColor()
         
@@ -401,10 +400,7 @@ class UserSetting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSourc
         
         let txtLimit = txtActiveField.frame.origin.y + txtActiveField.frame.height + 70.0
         let kbdLimit = myBoundSize.height - keyboardScreenEndFrame.size.height
-        
-//        print("テキストフィールドの下辺：(txtLimit)")
-//        print("キーボードの上辺：(kbdLimit)")
-        
+                
         if txtLimit >= kbdLimit {
             AddScrollView.contentOffset.y = txtLimit - kbdLimit
         }
