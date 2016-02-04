@@ -29,7 +29,7 @@ class ShiftDetailDB: Object {
     dynamic var year = 0        //年
     dynamic var month = 0       //月
     dynamic var day = 0         //日
-    dynamic var staff = ""      //例えば、Aさんが早番、Bさんが遅番、Cさんが公休、Dさんが早番の場合は"A:早,B:遅,D:早"となる予定
+    dynamic var staff = ""      //例えば、Aさんが早番、Bさんが遅番、Cさんが公休、Dさんが早番の場合は"A:早,B:遅,D:早"となる
     dynamic var shiftDBrelationship: ShiftDB?   //月単位でのシフトとの関連付け
     override class func primaryKey() -> String {
         return "id"
@@ -87,16 +87,6 @@ class ShiftSystemDB: Object{
     dynamic var name = ""           //何番か記録
     dynamic var starttime = 0.0     //勤務開始時間
     dynamic var endtime = 0.0       //勤務終了時間
-    
-    override class func primaryKey() -> String {
-        return "id"
-    }
-}
-
-//シフトの休みを示す名前を保存
-class HolidayDB: Object {
-    dynamic var id = 0
-    dynamic var name = ""
     
     override class func primaryKey() -> String {
         return "id"

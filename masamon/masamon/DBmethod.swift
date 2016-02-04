@@ -27,14 +27,20 @@ class DBmethod: UIViewController {
         }
     }
     
-//    //データベースからのデータ取得をして表示
-//    func dataGet() {
-//        
-//        let realm = try! Realm()
-//        
-//        let dataContent = realm.objects(ShiftDB)
-//        print(dataContent)
-//    }
+    //指定したオブジェクトを削除する
+    func DeleteRecord(object: Object) {
+        
+        do{
+            let realm = try Realm()
+            
+            try realm.write {
+                realm.delete(object)
+            }
+        }catch{
+            //Error
+        }
+    }
+    
     
     //データベースのパスを表示
     func ShowDBpass(){
@@ -61,7 +67,6 @@ class DBmethod: UIViewController {
     
     /****************ShiftDB関連メソッド*************/
 
-     //TODO: ここでエラーが出る
     //レコードのIDを受け取って名前を返す
     func ShiftDBGet(id: Int) -> String{
         var shiftimportname = ""
@@ -92,6 +97,17 @@ class DBmethod: UIViewController {
         return shiftdb
     }
     
+    //ShifDBのレコードを配列にして返す
+    func GetShiftDBAllRecordArray() -> Results<ShiftDB>?{
+        let realm = try! Realm()
+        
+        if(DBmethod().DBRecordCount(ShiftDB) != 0){
+            return realm.objects(ShiftDB)
+        }else{
+            return nil
+        }
+    }
+    
     
     /****************HourlyPayDB関連メソッド*************/
 
@@ -100,34 +116,6 @@ class DBmethod: UIViewController {
     func HourlyPayRecordGet() -> Results<HourlyPayDB>{
         let realm = try! Realm()
         return realm.objects(HourlyPayDB)
-    }
-
-    
-    
-    
-    
-    
-    /****************HolidayDB関連メソッド*************/
-
-    //休暇を示すシフト体制の文字を配列にして返す
-    func HolidayNameArrayGet() -> Array<String>{
-        var array: [String] = []
-        
-        let realm = try! Realm()
-        
-        for(var i = 0; i < DBmethod().DBRecordCount(HolidayDB); i++){
-            let name = realm.objects(HolidayDB).filter("id = %@",i)[0].name
-            array.append(name)
-        }
-        
-        return array
-    }
-    
-    //休暇を示すシフト体制のレコードを配列で返す関数
-    func HolidayAllRecordGet() -> Results<HolidayDB>{
-        let realm = try! Realm()
-        
-        return realm.objects(HolidayDB)
     }
     
     
@@ -217,12 +205,28 @@ class DBmethod: UIViewController {
     }
     
     //受け取ったgroupidをShiftSystemから検索し、該当するShiftSystemのレコードを配列で返す
-    func ShiftSystemNameArrayGetByGroudid(groupid: Int) -> Results<ShiftSystemDB>{
+    func ShiftSystemRecordArrayGetByGroudid(groupid: Int) -> Results<ShiftSystemDB>{
         
         let realm = try! Realm()
         let name = realm.objects(ShiftSystemDB).filter("groupid = %@",groupid)
 
         return name
+    }
+    
+    //受け取ったgroupidをShiftSystemから検索し、該当するShiftSystemの名前を配列で返す
+    func ShiftSystemNameArrayGetByGroudid(groupid: Int) -> Array<String>{
+        
+        var name: [String] = []
+        
+        let realm = try! Realm()
+        let results = realm.objects(ShiftSystemDB).filter("groupid = %@",groupid)
+        
+        for(var i = 0; i < results.count; i++){
+            name.append(results[i].name)
+        }
+        
+        return name
+
     }
     
     //シフト名を配列で返す関数
@@ -244,6 +248,66 @@ class DBmethod: UIViewController {
         return realm.objects(ShiftSystemDB)
     }
     
+    //ShiftSystemDBの虫食い状態を直す関数
+    func ShiftSystemDBFillHole(id: Int){
+        do{
+            let realm = try Realm()
+            let count = DBmethod().DBRecordCount(ShiftSystemDB)
+            
+            for(var i = id; i < count; i++){
+                let nextrecord = realm.objects(ShiftSystemDB).filter("id = %@",i+1)[0]
+                
+                let newrecord = ShiftSystemDB()
+                newrecord.id = nextrecord.id - 1
+                newrecord.name = nextrecord.name
+                newrecord.groupid = nextrecord.groupid
+                newrecord.starttime = nextrecord.starttime
+                newrecord.endtime = nextrecord.endtime
+                
+                DBmethod().AddandUpdate(newrecord, update: true)
+            }
+        }catch{
+            //Error
+        }
+    }
+
+    
+    //ShiftSystemDBのソートを行う
+    func ShiftSystemDBSort(){
+        let realm = try! Realm()
+        
+        let sortedresults = realm.objects(ShiftSystemDB).sorted("id")         //ソート後の結果を取得
+        let nonsortedresults = realm.objects(ShiftSystemDB)                   //ソート前の結果を取得
+        
+        var tmparray: [ShiftSystemDB] = []
+        
+        //ソート後のレコード内容を作業用配列に入れる
+        for(var i = 0; i < sortedresults.count; i++){
+            let tmprecord = ShiftSystemDB()
+            tmprecord.id = sortedresults[i].id
+            tmprecord.name = sortedresults[i].name
+            tmprecord.groupid = sortedresults[i].groupid
+            tmprecord.starttime = sortedresults[i].starttime
+            tmprecord.endtime = sortedresults[i].endtime
+            
+            tmparray.append(tmprecord)
+        }
+        
+        
+        //順序がおかしいレコードを全て削除した後に、ソート済みのレコードを書き込む
+        do{
+            try realm.write({ () -> Void in
+                realm.delete(nonsortedresults)
+                for(var i = 0; i < tmparray.count; i++){
+                    realm.add(tmparray[i], update: true)
+                }
+            })
+            
+        }catch{
+            //Error
+        }
+    }
+
 
     
     /****************StaffNumberDB関連メソッド*************/
@@ -275,6 +339,21 @@ class DBmethod: UIViewController {
     }
     
     
+    //受け取ったリストに該当するレコードを削除する
+    func DeleteShiftDetailDBRecords(objects: List<ShiftDetailDB>) {
+        
+        do{
+            let realm = try Realm()
+            
+            try realm.write {
+                realm.delete(objects)
+            }
+        }catch{
+            //Error
+        }
+    }
+
+    
     
     /****************StaffNameDB関連メソッド*************/
     
@@ -294,5 +373,63 @@ class DBmethod: UIViewController {
             return array
         }
     }
+    
+    //StaffNameDBの全レコードを取得する
+    func StaffNameAllRecordGet() -> Results<StaffNameDB>?{
+        let realm = try! Realm()
+        
+        return realm.objects(StaffNameDB)
+    }
+    
+    //StaffNameDBの虫食い状態を直す関数
+    func StaffNameDBFillHole(id: Int){
+        do{
+            let realm = try Realm()
+            let count = DBmethod().DBRecordCount(StaffNameDB)
+            
+            for(var i = id; i < count; i++){
+                //
+                let nextrecord = realm.objects(StaffNameDB).filter("id = %@",i+1)[0]
+                
+                let newrecord = StaffNameDB()
+                newrecord.id = nextrecord.id - 1
+                newrecord.name = nextrecord.name
+                
+                DBmethod().AddandUpdate(newrecord, update: true)
+            }
+        }catch{
+            //Error
+        }
+    }
 
+    //StaffNameDBのソートを行う
+    func StaffNameDBSort(){
+        let realm = try! Realm()
+        
+        let sortedresults = realm.objects(StaffNameDB).sorted("id")         //ソート後の結果を取得
+        let nonsortedresults = realm.objects(StaffNameDB)                   //ソート前の結果を取得
+        
+        var tmparray: [StaffNameDB] = []
+        
+        //ソート後のレコード内容を作業用配列に入れる
+        for(var i = 0; i < sortedresults.count; i++){
+            let tmprecord = StaffNameDB()
+            tmprecord.id = sortedresults[i].id
+            tmprecord.name = sortedresults[i].name
+            tmparray.append(tmprecord)
+        }
+        
+        //順序がおかしいレコードを全て削除した後に、ソート済みのレコードを書き込む
+        do{
+            try realm.write({ () -> Void in
+                realm.delete(nonsortedresults)
+                for(var i = 0; i < tmparray.count; i++){
+                    realm.add(tmparray[i], update: true)
+                }
+            })
+            
+        }catch{
+            //Error
+        }
+    }
 }

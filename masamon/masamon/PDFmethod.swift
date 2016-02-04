@@ -84,11 +84,6 @@ class PDFmethod: UIViewController {
             }
         }
         
-        
-        //        for(var i = 0; i < pdftextarray.count; i++){
-        //            print(pdftextarray[i])
-        //        }
-        
         return pdftextarray
     }
     
@@ -111,7 +106,7 @@ class PDFmethod: UIViewController {
         
         var staffname = ""
         var position = 0
-        let holidaynamearray: [String] = DBmethod().HolidayNameArrayGet()
+        let holidaynamearray: [String] = DBmethod().ShiftSystemNameArrayGetByGroudid(6)
         var holidaynametopcharacter: [String] = []
         let shiftsystemnamearray: [String] = DBmethod().ShiftSystemNameArrayGet()
         var shiftsystemnametopcharacter: [String] = []
@@ -238,40 +233,43 @@ class PDFmethod: UIViewController {
         //シフト区分によって比較対象にする配列の内容を変える処理
         switch(sg){
         case "早":
-            let dbarray = DBmethod().ShiftSystemNameArrayGetByGroudid(0)
+            let dbarray = DBmethod().ShiftSystemRecordArrayGetByGroudid(0)
             for(var i = 0; i < dbarray.count; i++){
                 shiftnamearray.append(dbarray[i].name)
             }
             
         case "中1":
-            let dbarray = DBmethod().ShiftSystemNameArrayGetByGroudid(1)
+            let dbarray = DBmethod().ShiftSystemRecordArrayGetByGroudid(1)
             for(var i = 0; i < dbarray.count; i++){
                 shiftnamearray.append(dbarray[i].name)
             }
             
         case "中2":
-            let dbarray = DBmethod().ShiftSystemNameArrayGetByGroudid(2)
+            let dbarray = DBmethod().ShiftSystemRecordArrayGetByGroudid(2)
             for(var i = 0; i < dbarray.count; i++){
                 shiftnamearray.append(dbarray[i].name)
             }
             
         case "中3":
-            let dbarray = DBmethod().ShiftSystemNameArrayGetByGroudid(3)
+            let dbarray = DBmethod().ShiftSystemRecordArrayGetByGroudid(3)
             for(var i = 0; i < dbarray.count; i++){
                 shiftnamearray.append(dbarray[i].name)
             }
             
         case "遅":
-            let dbarray = DBmethod().ShiftSystemNameArrayGetByGroudid(4)
+            let dbarray = DBmethod().ShiftSystemRecordArrayGetByGroudid(4)
+            for(var i = 0; i < dbarray.count; i++){
+                shiftnamearray.append(dbarray[i].name)
+            }
+            
+        case "他":
+            let dbarray = DBmethod().ShiftSystemRecordArrayGetByGroudid(5)
             for(var i = 0; i < dbarray.count; i++){
                 shiftnamearray.append(dbarray[i].name)
             }
             
         case "休":
-            shiftnamearray = DBmethod().HolidayNameArrayGet()
-            
-        case "他":
-            let dbarray = DBmethod().ShiftSystemNameArrayGetByGroudid(5)
+            let dbarray = DBmethod().ShiftSystemRecordArrayGetByGroudid(6)
             for(var i = 0; i < dbarray.count; i++){
                 shiftnamearray.append(dbarray[i].name)
             }
@@ -317,56 +315,56 @@ class PDFmethod: UIViewController {
     //各配列の要素数を受け取り、要素数が1以上のシフトグループのシフト文字を配列にして返す
     func GetWillRemoveShiftName(early: Int, center1: Int, center2: Int, center3: Int, late: Int, holiday: Int, other: Int) -> Array<String>{
         var array: [String] = []
-        var arraytmp: [String] = []
         
         if(early != 0){
-            let earlyshiftarray = DBmethod().ShiftSystemNameArrayGetByGroudid(0)
+            let earlyshiftarray = DBmethod().ShiftSystemRecordArrayGetByGroudid(0)
             for(var i = 0; i < earlyshiftarray.count; i++){
                 array.append(earlyshiftarray[i].name)
             }
         }
         
         if(center1 != 0){
-            let center1shiftarray = DBmethod().ShiftSystemNameArrayGetByGroudid(1)
+            let center1shiftarray = DBmethod().ShiftSystemRecordArrayGetByGroudid(1)
             for(var i = 0; i < center1shiftarray.count; i++){
                 array.append(center1shiftarray[i].name)
             }
         }
         
         if(center2 != 0){
-            let center2shiftarray = DBmethod().ShiftSystemNameArrayGetByGroudid(2)
+            let center2shiftarray = DBmethod().ShiftSystemRecordArrayGetByGroudid(2)
             for(var i = 0; i < center2shiftarray.count; i++){
                 array.append(center2shiftarray[i].name)
             }
         }
         
         if(center3 != 0){
-            let center3shiftarray = DBmethod().ShiftSystemNameArrayGetByGroudid(3)
+            let center3shiftarray = DBmethod().ShiftSystemRecordArrayGetByGroudid(3)
             for(var i = 0; i < center3shiftarray.count; i++){
                 array.append(center3shiftarray[i].name)
             }
         }
         
         if(late != 0){
-            let lateshiftarray = DBmethod().ShiftSystemNameArrayGetByGroudid(4)
+            let lateshiftarray = DBmethod().ShiftSystemRecordArrayGetByGroudid(4)
             for(var i = 0; i < lateshiftarray.count; i++){
                 array.append(lateshiftarray[i].name)
+            }
+        }
+        
+        
+        //その他を示す文字を追加
+        if(other != 0){
+            let othershiftarray = DBmethod().ShiftSystemRecordArrayGetByGroudid(5)
+            for(var i = 0; i < othershiftarray.count; i++){
+                array.append(othershiftarray[i].name)
             }
         }
         
         //休暇を示す文字を追加
         if(holiday != 0){
-            arraytmp = DBmethod().HolidayNameArrayGet()
-            for(var i = 0; i < arraytmp.count; i++){
-                array.append(arraytmp[i])
-            }
-        }
-        
-        //その他を示す文字を追加
-        if(other != 0){
-            let lateshiftarray = DBmethod().ShiftSystemNameArrayGetByGroudid(5)
-            for(var i = 0; i < lateshiftarray.count; i++){
-                array.append(lateshiftarray[i].name)
+            let holidayshiftarray = DBmethod().ShiftSystemRecordArrayGetByGroudid(6)
+            for(var i = 0; i < holidayshiftarray.count; i++){
+                array.append(holidayshiftarray[i].name)
             }
         }
         
@@ -484,7 +482,6 @@ class PDFmethod: UIViewController {
             
             //スタッフ名の抽出
             staffname = self.GetStaffName(staffarray[i], i: i)
-//            print(staffname)
             staffarraytmp = staffarray[i]
             
             //スキップされたスタッフは取り込みを行わない
@@ -538,7 +535,7 @@ class PDFmethod: UIViewController {
                 }
                 
                 //休みを検出して場所を配列へ代入
-                let holiday = DBmethod().HolidayNameArrayGet()      //休暇のシフト体制を取得
+                let holiday = DBmethod().ShiftSystemNameArrayGetByGroudid(6)      //休暇のシフト体制を取得
                 for(var i = 0; i < holiday.count; i++){
                     holidayshiftlocationarray += self.GetShiftPositionArray(staffarraytmpnsstring, shiftname: holiday[i])
                 }
@@ -643,7 +640,6 @@ class PDFmethod: UIViewController {
             //要素数を比較して正しくシフト体制を認識できているかチェックする
             var count = 0
             count = earlyshiftlocationarray.count + center1shiftlocationarray.count + center2shiftlocationarray.count + center3shiftlocationarray.count + lateshiftlocationarray.count + holidayshiftlocationarray.count + othershiftlocationarray.count
-//            print(staffname + "  " + String(count))
            
             if(count == monthrange.length){
                 
@@ -698,7 +694,7 @@ class PDFmethod: UIViewController {
                         break
                     }
                     
-                    let holidayarray = DBmethod().HolidayNameArrayGet()
+                    let holidayarray = DBmethod().ShiftSystemNameArrayGetByGroudid(6)
                     if(holidayarray.contains(staffshift) == false){
                         dayshiftarray[i] += staffname + ":" + staffshift + ","
                     }
@@ -745,7 +741,6 @@ class PDFmethod: UIViewController {
         var flag = 0
         var shiftdetailarray = List<ShiftDetailDB>()
 
-//        let shiftyearandmonth = self.JudgeYearAndMonth("")
         let shiftnsdate = MonthlySalaryShow().DateSerial(CommonMethod().Changecalendar(shiftcours.y, calender: "JP"), month: shiftcours.sm, day: 1)
         let c = NSCalendar.currentCalendar()
         let monthrange = c.rangeOfUnit([NSCalendarUnit.Day],  inUnit: [NSCalendarUnit.Month], forDate: shiftnsdate)
@@ -872,7 +867,7 @@ class PDFmethod: UIViewController {
         var usershift:[String] = []
         
         let username = DBmethod().UserNameGet()
-        let holiday = DBmethod().HolidayNameArrayGet()      //休暇のシフト体制を取得
+        let holiday = DBmethod().ShiftSystemNameArrayGetByGroudid(6)      //休暇のシフト体制を取得
         
         //1クール分行う
         for(var i = 0; i < shiftarray.count; i++){

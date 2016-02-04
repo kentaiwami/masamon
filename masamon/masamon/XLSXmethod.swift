@@ -13,7 +13,7 @@ class XLSXmethod: UIViewController {
     
     //cellの列(日付が記載されている範囲)
     let cellrow = ["G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","AA","AB","AC","AD","AE","AF","AG","AH","AI","AJ","AK"]
-    let holiday = DBmethod().HolidayNameArrayGet()      //休暇のシフト体制を取得
+    let holiday = DBmethod().ShiftSystemNameArrayGetByGroudid(6)      //休暇のシフト体制を取得
     let mark = "F"
     var number = 6
     
@@ -59,10 +59,6 @@ class XLSXmethod: UIViewController {
         
         //30(31)日分繰り返すループ
         for(var i = 0; i < monthrange.length; i++){
-            
-//            let AAA = CGFloat(i) / CGFloat(monthrange.length)
-//            print(String(round(AAA*100))+"%")
-
             let shiftdb = ShiftDB()
             let shiftdetaildb = ShiftDetailDB()
             
@@ -100,7 +96,7 @@ class XLSXmethod: UIViewController {
                 default:
                     break
                 }
-//                appDelegate.errorshiftnamexlsx.removeAll()
+
                 newshiftdetaildb.staff = TheDayStaffAttendance(i, staffcellpositionarray: staffcellposition, worksheet: worksheet.sheet)
                 newshiftdetaildb.shiftDBrelationship = DBmethod().SearchShiftDB(importname)
                 
@@ -144,7 +140,7 @@ class XLSXmethod: UIViewController {
                 default:
                     break
                 }
-//                appDelegate.errorshiftnamexlsx.removeAll()
+
                 shiftdetaildb.shiftDBrelationship = shiftdb
                 shiftdetaildb.staff = TheDayStaffAttendance(i, staffcellpositionarray: staffcellposition, worksheet: worksheet.sheet)
                 
@@ -221,13 +217,15 @@ class XLSXmethod: UIViewController {
             let replaceday = userposition.stringByReplacingOccurrencesOfString("F", withString: cellrow[i])
             let dayshift: String = worksheet.sheet.cellForCellReference(replaceday).stringValue()
             
-            if(holiday.contains(dayshift) == false){      //holiday以外なら
+            
+            //含まれていない場合は追加
+            if(self.SearchContainsHolidayArray(dayshift) == false){
                 usershift.append(dayshift)
             }
         }
         
         //月給の計算をする
-        //var shiftsystem = ShiftSystem()
+
         var monthlysalary = 0.0
         let houlypayrecord = DBmethod().HourlyPayRecordGet()
         
@@ -283,18 +281,18 @@ class XLSXmethod: UIViewController {
             let staffname: String = worksheet.cellForCellReference(nowstaff).stringValue()
             
             //Holiday以外なら記録
-            if(holiday.contains(dayshift) == false){
+            if(self.SearchContainsHolidayArray(dayshift) == false){
                 staffstring = staffstring + staffname + ":" + dayshift + ","
             }
             
             //新規シフト名だったらエラーとして記録
-            if(DBmethod().SearchShiftSystem(dayshift) == nil && holiday.contains(dayshift) == false){
+            if(DBmethod().SearchShiftSystem(dayshift) == nil && self.SearchContainsHolidayArray(dayshift) == false){
                 if(dayshift != "" && appDelegate.errorshiftnamexlsx.contains(dayshift) == false){     //空白と既に配列にある場合は記録しないため
                     appDelegate.errorshiftnamexlsx.append(dayshift)
                 }
             }else if(DBmethod().SearchShiftSystem(dayshift) != nil && appDelegate.errorshiftnamexlsx.contains(dayshift) == true){
                 appDelegate.errorshiftnamexlsx.removeObject(dayshift)
-            }else if(holiday.contains(dayshift) == true){
+            }else if(self.SearchContainsHolidayArray(dayshift) == true){
                 appDelegate.errorshiftnamexlsx.removeObject(dayshift)
             }
         }
@@ -340,6 +338,23 @@ class XLSXmethod: UIViewController {
                 }
             }
         }
+    }
+    
+    //シフト名を受け取って休暇に含まれているか返す関数
+    func SearchContainsHolidayArray(shiftname: String) -> Bool{
+        
+        var holidayflag = false
+        
+        for(var i = 0; i < holiday.count; i++){
+            if(holiday[i] == shiftname){
+                holidayflag = true
+                break
+            }else{
+                holidayflag = false
+            }
+        }
+        
+        return holidayflag
     }
 }
 
