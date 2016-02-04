@@ -184,13 +184,13 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
                         if(textflag){
                             
                             //新規レコードの作成
-                            let newstaffnamedbrecord = CommonMethod().CreateShiftSystemDBRecord(self.records[section][row].id,shiftname: textFields![0].text!, shiftgroup: textFields![1].text!, shifttime: textFields![2].text!, shiftstarttimerow: self.shiftstarttimeselectrow, shiftendtimerow: self.shiftendtimeselectrow)
+                            let newrecord = CommonMethod().CreateShiftSystemDBRecord(self.records[section][row].id,shiftname: textFields![0].text!, shiftgroup: textFields![1].text!, shifttime: textFields![2].text!, shiftstarttimerow: self.shiftstarttimeselectrow, shiftendtimerow: self.shiftendtimeselectrow)
                             
                             //編集前のレコードを削除
                             DBmethod().DeleteRecord(self.records[section][row])
                             
                             //編集後のレコードを追加
-                            DBmethod().AddandUpdate(newstaffnamedbrecord, update: true)
+                            DBmethod().AddandUpdate(newrecord, update: true)
                             
                             //ソートする
                             DBmethod().ShiftSystemDBSort()
@@ -238,30 +238,45 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
             alert.addAction(Action)
             
         case 2:
-            //            buttontitle = "追加する"
-            //
-            //            let Action: UIAlertAction = UIAlertAction(title: buttontitle, style: UIAlertActionStyle.Default, handler: { (action:UIAlertAction!) -> Void in
-            //                let textFields:Array<UITextField>? =  alert.textFields as Array<UITextField>?
-            //                if textFields != nil {
-            //                    if(textFields![0].text! != ""){
-            //                        let newrecord = StaffNameDB()
-            //                        newrecord.id = index
-            //                        newrecord.name = textFields![0].text!
-            //
-            //                        DBmethod().AddandUpdate(newrecord, update: true)
-            //                    }
-            //                }
-            //
-            //                //                self.RefreshData()
-            //            })
+            buttontitle = "追加する"
+            
+            let Action: UIAlertAction = UIAlertAction(title: buttontitle, style: UIAlertActionStyle.Default, handler: { (action:UIAlertAction!) -> Void in
+                let textFields:Array<UITextField>? =  alert.textFields as Array<UITextField>?
+                if textFields != nil {
+                    
+                    for textField:UITextField in textFields! {
+                        if(textField.text == ""){
+                            textflag = false
+                            break
+                        }else{
+                            textflag = true
+                        }
+                    }
+
+                    if(textflag){
+                        let newrecord = CommonMethod().CreateShiftSystemDBRecord(DBmethod().DBRecordCount(ShiftSystemDB),shiftname: textFields![0].text!, shiftgroup: textFields![1].text!, shifttime: textFields![2].text!, shiftstarttimerow: self.shiftstarttimeselectrow, shiftendtimerow: self.shiftendtimeselectrow)
+                        
+                        DBmethod().AddandUpdate(newrecord, update: true)
+                    }
+                }
+                
+                self.RefreshData()
+            })
             
             //シフト名入力用のtextfieldを追加
             alert.addTextFieldWithConfigurationHandler({(text:UITextField!) -> Void in
-                text.placeholder = "スタッフ名の入力"
+                text.placeholder = "新規シフト名の入力"
                 text.returnKeyType = .Next
             })
             
-            //            alert.addAction(Action)
+            //シフトグループの選択内容を入れるテキストフィールドを追加
+            alert.addTextFieldWithConfigurationHandler(configurationshiftgroupnameTextField)
+            
+            //シフト時間の選択内容を入れるテキストフィールドを追加
+            alert.addTextFieldWithConfigurationHandler(configurationshifttimeTextField)
+            
+            
+            alert.addAction(Action)
             
         default:
             break
@@ -277,7 +292,7 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
     
     //プラスボタンを押したとき
     @IBAction func TapPlusButton(sender: AnyObject) {
-        //        self.alert("スタッフ名を新規追加します", messagetext: "追加するスタッフ名を入力して下さい", index: DBmethod().DBRecordCount(StaffNameDB), flag: 2)
+        self.alert("シフト名を新規追加します", messagetext: "追加するシフト名の情報を入力して下さい", section: 0, row: 0, flag: 2)
     }
     
     //戻るボタンを押したとき
