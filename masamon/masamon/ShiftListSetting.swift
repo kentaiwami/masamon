@@ -133,16 +133,16 @@ class ShiftListSetting: UIViewController, UITableViewDataSource, UITableViewDele
                     if textFields != nil {
                         if(textFields![0].text! != ""){
                             
-                            //                            var oldshiftimportname = ""
                             var oldfileextension = ""
+                            var oldfilepath = ""
                             //上書き処理を行う
                             let oldrecord = DBmethod().SearchShiftDB(self.texts[index].shiftimportname)
-                            //                            oldshiftimportname = oldrecord.shiftimportpath
+                            oldfilepath = oldrecord.shiftimportpath
+                            
                             let newrecord = ShiftDB()
                             newrecord.id = oldrecord.id
                             newrecord.year = oldrecord.year
                             newrecord.month = oldrecord.month
-//                            newrecord.shiftimportname = textFields![0].text!
                             
                             //変更前のファイルの拡張子を判断
                             if(self.texts[index].shiftimportname.containsString(".xlsx")){
@@ -191,14 +191,14 @@ class ShiftListSetting: UIViewController, UITableViewDataSource, UITableViewDele
                             DBmethod().AddandUpdate(newrecord, update: true)
 
                             //ファイル名を変更する
-                            //                            let filemanager:NSFileManager = NSFileManager()
-                            //
-                            //                            do {
-                            //                                try filemanager.moveItemAtPath(oldrecord.shiftimportpath, toPath: newrecord.shiftimportpath)
-                            //                            }
-                            //                            catch{
-                            //                                print(error)
-                            //                            }
+                            let filemanager:NSFileManager = NSFileManager()
+                            
+                            do {
+                                try filemanager.moveItemAtPath(oldfilepath, toPath: newrecord.shiftimportpath)
+                            }
+                            catch{
+                                print(error)
+                            }
                             
                             //TODO: 関連する1日単位でのシフトを変更なしで変更がかかるか調査する
                             
