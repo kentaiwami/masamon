@@ -16,7 +16,7 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
     var shifttimeUIPicker: UIPickerView = UIPickerView()
     var pickerviewtoolBar = UIToolbar()
     var pickerdoneButton = UIBarButtonItem()
-    let shiftgroupname: [String] = ["早番","中1","中2","中3","遅番","その他","休み"]
+    let shiftgroupname = CommonMethod().GetShiftGroupName()
     var shiftgroupnametextfield = UITextField()
     var shifttimetextfield = UITextField()
 

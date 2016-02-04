@@ -16,6 +16,12 @@ class CommonMethod: UIViewController {
 
         return time
     }
+    
+    func GetShiftGroupName() ->Array<String>{
+        let shiftgroupname: [String] = ["早番","中1","中2","中3","遅番","その他","休み"]
+        
+        return shiftgroupname
+    }
 
     //西暦を和暦に、和暦を西暦に変換して返す関数
     func Changecalendar(year: Int, calender: String) -> Int{
