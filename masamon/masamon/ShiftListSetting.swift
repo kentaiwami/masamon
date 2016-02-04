@@ -130,19 +130,22 @@ class ShiftListSetting: UIViewController, UITableViewDataSource, UITableViewDele
                 handler:{
                     (action:UIAlertAction!) -> Void in
                     let textFields:Array<UITextField>? =  alert.textFields as Array<UITextField>?
+                    
+
                     if textFields != nil {
+
                         if(textFields![0].text! != ""){
                             
                             var oldfileextension = ""
                             var oldfilepath = ""
                             //上書き処理を行う
-                            let oldrecord = DBmethod().SearchShiftDB(self.texts[index].shiftimportname)
-                            oldfilepath = oldrecord.shiftimportpath
+                            let oldshiftdbrecord = DBmethod().SearchShiftDB(self.texts[index].shiftimportname)
+                            oldfilepath = oldshiftdbrecord.shiftimportpath
                             
-                            let newrecord = ShiftDB()
-                            newrecord.id = oldrecord.id
-                            newrecord.year = oldrecord.year
-                            newrecord.month = oldrecord.month
+                            let newshiftdbrecord = ShiftDB()
+                            newshiftdbrecord.id = oldshiftdbrecord.id
+                            newshiftdbrecord.year = oldshiftdbrecord.year
+                            newshiftdbrecord.month = oldshiftdbrecord.month
                             
                             //変更前のファイルの拡張子を判断
                             if(self.texts[index].shiftimportname.containsString(".xlsx")){
@@ -153,25 +156,25 @@ class ShiftListSetting: UIViewController, UITableViewDataSource, UITableViewDele
                                 oldfileextension = ".PDF"
                             }
                             
-                            var newpath = oldrecord.shiftimportpath
+                            var newpath = oldshiftdbrecord.shiftimportpath
                             //ユーザが入力した新規取り込み名に拡張子が含まれているか調べる
                             switch(oldfileextension){
                             case ".xlsx":
                                 if(textFields![0].text!.containsString(".xlsx") == false){
                                     newpath = newpath.stringByReplacingOccurrencesOfString(self.texts[index].shiftimportname, withString: textFields![0].text! + oldfileextension)
-                                    newrecord.shiftimportname = textFields![0].text! + oldfileextension
+                                    newshiftdbrecord.shiftimportname = textFields![0].text! + oldfileextension
                                 }
                                 
                             case ".pdf":
                                 if(textFields![0].text!.containsString(".pdf") == false){
                                     newpath = newpath.stringByReplacingOccurrencesOfString(self.texts[index].shiftimportname, withString: textFields![0].text! + oldfileextension)
-                                    newrecord.shiftimportname = textFields![0].text! + oldfileextension
+                                    newshiftdbrecord.shiftimportname = textFields![0].text! + oldfileextension
                                 }
                                 
                             case ".PDF":
                                 if(textFields![0].text!.containsString(".PDF") == false){
                                     newpath = newpath.stringByReplacingOccurrencesOfString(self.texts[index].shiftimportname, withString: textFields![0].text! + oldfileextension)
-                                    newrecord.shiftimportname = textFields![0].text! + oldfileextension
+                                    newshiftdbrecord.shiftimportname = textFields![0].text! + oldfileextension
                                 }
                                 
                             default:
@@ -179,29 +182,40 @@ class ShiftListSetting: UIViewController, UITableViewDataSource, UITableViewDele
 
                             }
                             
-                            newrecord.shiftimportpath = newpath
-                            newrecord.salaly = oldrecord.salaly
+                            newshiftdbrecord.shiftimportpath = newpath
+                            newshiftdbrecord.salaly = oldshiftdbrecord.salaly
                             
-                            let oldshiftdetailarray = oldrecord.shiftdetail
+                            let oldshiftdetailarray = oldshiftdbrecord.shiftdetail
+                            
                             for(var i = 0; i < oldshiftdetailarray.count; i++){
-                                newrecord.shiftdetail.append(oldshiftdetailarray[i])
+                                newshiftdbrecord.shiftdetail.append(oldshiftdetailarray[i])
                             }
                             
-                            DBmethod().DeleteRecord(oldrecord)
-                            DBmethod().AddandUpdate(newrecord, update: true)
+                            //関連するシフトを上書き更新する
+                            for(var i = 0; i < oldshiftdetailarray.count; i++){
+                                let newshiftdetaildbrecord = ShiftDetailDB()
+                                newshiftdetaildbrecord.id = oldshiftdetailarray[i].id
+                                newshiftdetaildbrecord.year = oldshiftdetailarray[i].year
+                                newshiftdetaildbrecord.month = oldshiftdetailarray[i].month
+                                newshiftdetaildbrecord.day = oldshiftdetailarray[i].day
+                                newshiftdetaildbrecord.staff = oldshiftdetailarray[i].staff
+                                newshiftdetaildbrecord.shiftDBrelationship = newshiftdbrecord
+                                
+                                DBmethod().AddandUpdate(newshiftdetaildbrecord, update: true)
+                            }
+
+                            DBmethod().DeleteRecord(oldshiftdbrecord)
+                            DBmethod().AddandUpdate(newshiftdbrecord, update: true)
 
                             //ファイル名を変更する
                             let filemanager:NSFileManager = NSFileManager()
                             
                             do {
-                                try filemanager.moveItemAtPath(oldfilepath, toPath: newrecord.shiftimportpath)
+                                try filemanager.moveItemAtPath(oldfilepath, toPath: newshiftdbrecord.shiftimportpath)
                             }
                             catch{
                                 print(error)
                             }
-                            
-                            //TODO: 関連する1日単位でのシフトを変更なしで変更がかかるか調査する
-                            
                         }
                     }
                     
