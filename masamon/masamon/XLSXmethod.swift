@@ -350,7 +350,7 @@ class XLSXmethod: UIViewController {
         var holidayflag: Bool
         
         for(var i = 0; i < holiday.count; i++){
-            if(holiday[i].name == shiftname){
+            if(holiday[i] == shiftname){
                 holidayflag = true
                 break
             }else{
