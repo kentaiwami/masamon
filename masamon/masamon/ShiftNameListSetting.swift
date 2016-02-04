@@ -8,10 +8,22 @@
 
 import UIKit
 
-class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableViewDelegate{
+class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableViewDelegate, UIPickerViewDelegate, UIPickerViewDataSource,UITextFieldDelegate{
     
     @IBOutlet weak var table: UITableView!
     
+    var shiftgroupnameUIPicker: UIPickerView = UIPickerView()
+    var shifttimeUIPicker: UIPickerView = UIPickerView()
+    var pickerviewtoolBar = UIToolbar()
+    var pickerdoneButton = UIBarButtonItem()
+    let shiftgroupname: [String] = ["早番","中1","中2","中3","遅番","その他","休み"]
+    var shiftgroupnametextfield = UITextField()
+    var shifttimetextfield = UITextField()
+    let time: [String] = ["指定なし","0:00","0:30","1:00","1:30","2:00","2:30","3:00","3:30","4:00","4:30","5:00","5:30","6:00","6:30","7:00","7:30","8:00","8:30","9:00","9:30","10:00","10:30","11:00","11:30","12:00","12:30","13:00","13:30","14:00","14:30","15:00","15:30","16:00","16:30","17:00","17:30","18:00","18:30","19:00","19:30","20:00","20:00","21:00","21:30","22:00","22:30","23:00","23:30"]
+    var starttime = ""
+    var endtime = ""
+    let wavyline: [String] = ["〜"]
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -20,14 +32,40 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
         
         self.RefreshData()
         
+        //シフト時間を選択して表示するテキストフィールドのデフォルト表示を指定
+        starttime = time[0]
+        endtime = time[0]
+        
+        //シフトグループを選択するpickerview
+        shiftgroupnameUIPicker.frame = CGRectMake(0,0,self.view.bounds.width/2+20, 200.0)
+        shiftgroupnameUIPicker.delegate = self
+        shiftgroupnameUIPicker.dataSource = self
+        shiftgroupnameUIPicker.tag = 2
+        
+        //シフト時間を選択するpickerview
+        shifttimeUIPicker.frame = CGRectMake(0,0,self.view.bounds.width/2+20, 200.0)
+        shifttimeUIPicker.delegate = self
+        shifttimeUIPicker.dataSource = self
+        shifttimeUIPicker.tag = 3
+        
+        //pickerviewに表示するツールバー
+        pickerviewtoolBar.barStyle = UIBarStyle.Default
+        pickerviewtoolBar.translucent = true
+        pickerviewtoolBar.tintColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
+        pickerviewtoolBar.sizeToFit()
+        
+        pickerdoneButton = UIBarButtonItem(title: "完了", style: UIBarButtonItemStyle.Plain, target: self, action: "donePicker:")
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
+        
+        pickerviewtoolBar.setItems([flexSpace,pickerdoneButton], animated: false)
+        pickerviewtoolBar.userInteractionEnabled = true
+
     }
     
     
     func RefreshData(){
         records.removeAll()
-//        texts.removeAll()
-        
-        
+
         //ShiftSystemDBのレコード全てをグループ別で配列に格納
         for(var i = 0; i <= 6; i++){
             records.append([])
@@ -35,7 +73,6 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
             
             for(var j = 0; j < results.count; j++){
                 records[i].append(results[j])
-//                texts[i].append(results[i].name)
             }
         }
         
@@ -76,9 +113,6 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: "Cell")
         
-//        cell.backgroundColor = UIColor.darkGrayColor()
-        
-//        cell.textLabel?.textColor = UIColor.whiteColor()
         cell.detailTextLabel?.text = "19:00 〜 24:30"
         cell.textLabel?.text = records[indexPath.section][indexPath.row].name
         
@@ -98,7 +132,7 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
         let EditButton: UITableViewRowAction = UITableViewRowAction(style: .Normal, title: "編集") { (action, index) -> Void in
             
             tableView.editing = false
-            //            self.alert(self.early[indexPath.row] + "さんを編集します", messagetext: "新しいスタッフ名を入力して下さい", index: indexPath.row, flag: 0)
+            self.alert(self.records[indexPath.section][indexPath.row].name + "を編集します", messagetext: "新しいシフト名を入力して下さい", section: indexPath.section, row: indexPath.row, flag: 0)
         }
         EditButton.backgroundColor = UIColor.greenColor()
         
@@ -107,7 +141,7 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
             
             tableView.editing = false
             
-            //            self.alert(self.early[indexPath.row] + "さんを削除します", messagetext: "本当に削除してよろしいですか？", index: indexPath.row, flag: 1)
+            self.alert(self.records[indexPath.section][indexPath.row].name + "を削除します", messagetext: "本当に削除してよろしいですか？", section: indexPath.row, row: indexPath.row, flag: 1)
             
         }
         DeleteButton.backgroundColor = UIColor.redColor()
@@ -116,7 +150,7 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
     }
     
     //アラートを表示する関数
-    func alert(titletext: String, messagetext: String, index: Int, flag: Int){
+    func alert(titletext: String, messagetext: String, section: Int, row: Int, flag: Int){
         
         var buttontitle = ""
         
@@ -124,6 +158,7 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
             message: messagetext,
             preferredStyle: UIAlertControllerStyle.Alert)
         
+        var textflag = false
         //flagが0は編集、flagが1は削除, flagが3は追加
         switch(flag){
         case 0:
@@ -135,41 +170,49 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
                     (action:UIAlertAction!) -> Void in
                     let textFields:Array<UITextField>? =  alert.textFields as Array<UITextField>?
                     if textFields != nil {
-                        if(textFields![0].text! != ""){
+                        
+                        for textField:UITextField in textFields! {
+                            if(textField.text == ""){
+                                textflag = false
+                                break
+                            }else{
+                                textflag = true
+                            }
+                        }
+                        
+                        if(textflag){
                             
-                            //上書き処理を行う
-                            //                            for(var i = 0; i < self.records.count; i++){
-                            //                                if(self.early[index] == self.records[i].name){
-                            //
-                            //                                    let newstaffnamedbrecord = StaffNameDB()
-                            //                                    newstaffnamedbrecord.id = self.records[i].id
-                            //                                    newstaffnamedbrecord.name = textFields![0].text!
-                            //
-                            //                                    //編集前のレコードを削除
-                            //                                    DBmethod().DeleteRecord(self.records[i])
-                            //
-                            //                                    //編集後のレコードを追加
-                            //                                    DBmethod().AddandUpdate(newstaffnamedbrecord, update: true)
-                            //
-                            //                                    //ソートする
-                            //                                    DBmethod().StaffNameDBSort()
-                            //
-                            //                                    break
-                            //                                }
-                            //                            }
+                            //新規レコードの作成
+                            let newstaffnamedbrecord = MonthlySalaryShow().CreateShiftSystemDBRecord(textFields![0].text!, shiftgroup: textFields![1].text!, shifttime: textFields![2].text!)
+                            
+                            //編集前のレコードを削除
+                            DBmethod().DeleteRecord(self.records[section][row])
+                            
+                            //編集後のレコードを追加
+                            DBmethod().AddandUpdate(newstaffnamedbrecord, update: true)
+                            
+                            //ソートする
+//                            DBmethod().StaffNameDBSort()
                         }
                     }
                     
-                    //                    self.RefreshData()
+                    self.RefreshData()
                     
             })
+            
             alert.addAction(Action)
             
             //シフト名入力用のtextfieldを追加
             alert.addTextFieldWithConfigurationHandler({(text:UITextField!) -> Void in
-                text.placeholder = "スタッフ名の入力"
+                text.placeholder = "新規シフト名の入力"
                 text.returnKeyType = .Next
             })
+            
+            //シフトグループの選択内容を入れるテキストフィールドを追加
+            alert.addTextFieldWithConfigurationHandler(configurationshiftgroupnameTextField)
+            
+            //シフト時間の選択内容を入れるテキストフィールドを追加
+            alert.addTextFieldWithConfigurationHandler(configurationshifttimeTextField)
             
         case 1:
             buttontitle = "削除する"
@@ -194,22 +237,22 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
             alert.addAction(Action)
             
         case 2:
-            buttontitle = "追加する"
-            
-            let Action: UIAlertAction = UIAlertAction(title: buttontitle, style: UIAlertActionStyle.Default, handler: { (action:UIAlertAction!) -> Void in
-                let textFields:Array<UITextField>? =  alert.textFields as Array<UITextField>?
-                if textFields != nil {
-                    if(textFields![0].text! != ""){
-                        let newrecord = StaffNameDB()
-                        newrecord.id = index
-                        newrecord.name = textFields![0].text!
-                        
-                        DBmethod().AddandUpdate(newrecord, update: true)
-                    }
-                }
-                
-                //                self.RefreshData()
-            })
+//            buttontitle = "追加する"
+//            
+//            let Action: UIAlertAction = UIAlertAction(title: buttontitle, style: UIAlertActionStyle.Default, handler: { (action:UIAlertAction!) -> Void in
+//                let textFields:Array<UITextField>? =  alert.textFields as Array<UITextField>?
+//                if textFields != nil {
+//                    if(textFields![0].text! != ""){
+//                        let newrecord = StaffNameDB()
+//                        newrecord.id = index
+//                        newrecord.name = textFields![0].text!
+//                        
+//                        DBmethod().AddandUpdate(newrecord, update: true)
+//                    }
+//                }
+//                
+//                //                self.RefreshData()
+//            })
             
             //シフト名入力用のtextfieldを追加
             alert.addTextFieldWithConfigurationHandler({(text:UITextField!) -> Void in
@@ -217,7 +260,7 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
                 text.returnKeyType = .Next
             })
             
-            alert.addAction(Action)
+//            alert.addAction(Action)
             
         default:
             break
@@ -233,11 +276,90 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
     
     //プラスボタンを押したとき
     @IBAction func TapPlusButton(sender: AnyObject) {
-        self.alert("スタッフ名を新規追加します", messagetext: "追加するスタッフ名を入力して下さい", index: DBmethod().DBRecordCount(StaffNameDB), flag: 2)
+//        self.alert("スタッフ名を新規追加します", messagetext: "追加するスタッフ名を入力して下さい", index: DBmethod().DBRecordCount(StaffNameDB), flag: 2)
     }
     
     //戻るボタンを押したとき
     @IBAction func TapBackButton(sender: AnyObject) {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
+    
+    
+    //pickerに表示する列数を返すデータソースメソッド.
+    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+        if(pickerView.tag == 1 || pickerView.tag == 2){
+            return 1
+        }else{
+            return 3
+        }
+
+    }
+    
+    //pickerに表示する行数を返すデータソースメソッド.
+    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        if(pickerView.tag == 2){
+            pickerdoneButton.tag = 2
+            return shiftgroupname.count
+        }else{
+            pickerdoneButton.tag = 3
+            if(component == 0){
+                return time.count
+            }else if(component == 1){
+                return wavyline.count
+            }else{
+                return time.count
+            }
+        }
+    }
+    
+    //pickerに表示する値を返すデリゲートメソッド.
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        if(pickerView.tag == 2){
+            return shiftgroupname[row]
+        }else{
+            if(component == 0 || component == 2){
+                return time[row]
+            }else{
+                return wavyline[row]
+            }
+        }
+    }
+    
+    //pickerが選択されたとき
+    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+
+    }
+    
+    //シフトのグループを入れるテキストフィールドの設定をする
+    func configurationshiftgroupnameTextField(textField: UITextField!){
+        textField.placeholder = "シフトのグループを入力"
+        textField.inputView = self.shiftgroupnameUIPicker
+        textField.inputAccessoryView = self.pickerviewtoolBar
+        textField.tag = 1
+        textField.delegate = self
+        shiftgroupnametextfield = textField
+    }
+    
+    //シフトの時間を入れるテキストフィールドの設定をする
+    func configurationshifttimeTextField(textField: UITextField!){
+        textField.placeholder = "シフトの時間を入力"
+        textField.inputView = self.shifttimeUIPicker
+        textField.inputAccessoryView = self.pickerviewtoolBar
+        textField.tag = 2
+        textField.delegate = self
+        shifttimetextfield = textField
+    }
+    
+    //ツールバーの完了ボタンを押した時の関数
+    func donePicker(sender:UIButton){
+        
+        if(sender.tag == 2){            //シフトグループの完了ボタン
+            shiftgroupnametextfield.resignFirstResponder()
+            shifttimetextfield.becomeFirstResponder()
+        }else if(sender.tag == 3){      //シフト時間の完了ボタン
+            shifttimetextfield.resignFirstResponder()
+        }
+    }
+
+
 }

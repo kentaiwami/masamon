@@ -332,6 +332,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                         
                         if(textField.text == ""){
                             flag = false
+                            break
                         }else{
                             flag = true
                         }
@@ -407,6 +408,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                     for textField:UITextField in textFields! {
                         if(textField.text == ""){
                             flag = false
+                            break
                         }else{
                             flag = true
                         }
