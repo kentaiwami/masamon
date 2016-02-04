@@ -19,11 +19,13 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
     let shiftgroupname: [String] = ["早番","中1","中2","中3","遅番","その他","休み"]
     var shiftgroupnametextfield = UITextField()
     var shifttimetextfield = UITextField()
-    let time: [String] = ["指定なし","0:00","0:30","1:00","1:30","2:00","2:30","3:00","3:30","4:00","4:30","5:00","5:30","6:00","6:30","7:00","7:30","8:00","8:30","9:00","9:30","10:00","10:30","11:00","11:30","12:00","12:30","13:00","13:30","14:00","14:30","15:00","15:30","16:00","16:30","17:00","17:30","18:00","18:30","19:00","19:30","20:00","20:00","21:00","21:30","22:00","22:30","23:00","23:30"]
+
     var starttime = ""
     var endtime = ""
     let wavyline: [String] = ["〜"]
-
+    
+    let time = CommonMethod().GetTime()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -59,13 +61,13 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
         
         pickerviewtoolBar.setItems([flexSpace,pickerdoneButton], animated: false)
         pickerviewtoolBar.userInteractionEnabled = true
-
+        
     }
     
     
     func RefreshData(){
         records.removeAll()
-
+        
         //ShiftSystemDBのレコード全てをグループ別で配列に格納
         for(var i = 0; i <= 6; i++){
             records.append([])
@@ -183,7 +185,7 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
                         if(textflag){
                             
                             //新規レコードの作成
-                            let newstaffnamedbrecord = MonthlySalaryShow().CreateShiftSystemDBRecord(textFields![0].text!, shiftgroup: textFields![1].text!, shifttime: textFields![2].text!)
+                            let newstaffnamedbrecord = CommonMethod().CreateShiftSystemDBRecord(textFields![0].text!, shiftgroup: textFields![1].text!, shifttime: textFields![2].text!, shiftstarttimerow: self.shiftstarttimeselectrow, shiftendtimerow: self.shiftendtimeselectrow)
                             
                             //編集前のレコードを削除
                             DBmethod().DeleteRecord(self.records[section][row])
@@ -192,7 +194,7 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
                             DBmethod().AddandUpdate(newstaffnamedbrecord, update: true)
                             
                             //ソートする
-//                            DBmethod().StaffNameDBSort()
+                            DBmethod().ShiftSystemDBSort()
                         }
                     }
                     
@@ -237,22 +239,22 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
             alert.addAction(Action)
             
         case 2:
-//            buttontitle = "追加する"
-//            
-//            let Action: UIAlertAction = UIAlertAction(title: buttontitle, style: UIAlertActionStyle.Default, handler: { (action:UIAlertAction!) -> Void in
-//                let textFields:Array<UITextField>? =  alert.textFields as Array<UITextField>?
-//                if textFields != nil {
-//                    if(textFields![0].text! != ""){
-//                        let newrecord = StaffNameDB()
-//                        newrecord.id = index
-//                        newrecord.name = textFields![0].text!
-//                        
-//                        DBmethod().AddandUpdate(newrecord, update: true)
-//                    }
-//                }
-//                
-//                //                self.RefreshData()
-//            })
+            //            buttontitle = "追加する"
+            //
+            //            let Action: UIAlertAction = UIAlertAction(title: buttontitle, style: UIAlertActionStyle.Default, handler: { (action:UIAlertAction!) -> Void in
+            //                let textFields:Array<UITextField>? =  alert.textFields as Array<UITextField>?
+            //                if textFields != nil {
+            //                    if(textFields![0].text! != ""){
+            //                        let newrecord = StaffNameDB()
+            //                        newrecord.id = index
+            //                        newrecord.name = textFields![0].text!
+            //
+            //                        DBmethod().AddandUpdate(newrecord, update: true)
+            //                    }
+            //                }
+            //
+            //                //                self.RefreshData()
+            //            })
             
             //シフト名入力用のtextfieldを追加
             alert.addTextFieldWithConfigurationHandler({(text:UITextField!) -> Void in
@@ -260,7 +262,7 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
                 text.returnKeyType = .Next
             })
             
-//            alert.addAction(Action)
+            //            alert.addAction(Action)
             
         default:
             break
@@ -276,7 +278,7 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
     
     //プラスボタンを押したとき
     @IBAction func TapPlusButton(sender: AnyObject) {
-//        self.alert("スタッフ名を新規追加します", messagetext: "追加するスタッフ名を入力して下さい", index: DBmethod().DBRecordCount(StaffNameDB), flag: 2)
+        //        self.alert("スタッフ名を新規追加します", messagetext: "追加するスタッフ名を入力して下さい", index: DBmethod().DBRecordCount(StaffNameDB), flag: 2)
     }
     
     //戻るボタンを押したとき
@@ -292,7 +294,7 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
         }else{
             return 3
         }
-
+        
     }
     
     //pickerに表示する行数を返すデータソースメソッド.
@@ -325,9 +327,30 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
         }
     }
     
+    //シフトグループ,シフト時間(開始),シフト時間(終了)の選択箇所を記録する変数
+    var shiftgroupselectrow = 0
+    var shiftstarttimeselectrow = 0
+    var shiftendtimeselectrow = 0
     //pickerが選択されたとき
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-
+        if(pickerView.tag == 2){      //シフトグループ選択
+            shiftgroupnametextfield.text = shiftgroupname[row]
+            pickerdoneButton.tag = 2
+            shiftgroupselectrow = row
+            
+        }else if(pickerView.tag == 3){      //シフト時間選択
+            
+            if(component == 0){
+                starttime = time[row]
+                shiftstarttimeselectrow = row
+            }else if(component == 2){
+                endtime = time[row]
+                shiftendtimeselectrow = row
+            }
+            pickerdoneButton.tag = 3
+            
+            shifttimetextfield.text = starttime + " " + wavyline[0] + " " + endtime
+        }
     }
     
     //シフトのグループを入れるテキストフィールドの設定をする
@@ -360,6 +383,19 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
             shifttimetextfield.resignFirstResponder()
         }
     }
+    
+    //textfieldがタップされた時
+    func textFieldDidBeginEditing(textField: UITextField) {
+        if(textField.tag == 1){             //シフトグループ選択
+            shiftgroupnameUIPicker.selectRow(shiftgroupselectrow, inComponent: 0, animated: true)
+            textField.text = shiftgroupname[shiftgroupselectrow]
+            
+        }else if(textField.tag == 2){       //シフト時間選択
+            shifttimeUIPicker.selectRow(shiftstarttimeselectrow, inComponent: 0, animated: true)
+            shifttimeUIPicker.selectRow(shiftendtimeselectrow, inComponent: 2, animated: true)
+            textField.text = time[shiftstarttimeselectrow] + " " + wavyline[0] + " " + time[shiftendtimeselectrow]
+        }
+    }
 
-
+    
 }

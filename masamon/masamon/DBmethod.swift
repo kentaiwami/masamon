@@ -265,6 +265,41 @@ class DBmethod: UIViewController {
         return realm.objects(ShiftSystemDB)
     }
     
+    //ShiftSystemDBのソートを行う
+    func ShiftSystemDBSort(){
+        let realm = try! Realm()
+        
+        let sortedresults = realm.objects(ShiftSystemDB).sorted("id")         //ソート後の結果を取得
+        let nonsortedresults = realm.objects(ShiftSystemDB)                   //ソート前の結果を取得
+        
+        var tmparray: [ShiftSystemDB] = []
+        
+        //ソート後のレコード内容を作業用配列に入れる
+        for(var i = 0; i < sortedresults.count; i++){
+            let tmprecord = ShiftSystemDB()
+            tmprecord.id = sortedresults[i].id
+            tmprecord.name = sortedresults[i].name
+            tmprecord.groupid = sortedresults[i].groupid
+            tmprecord.starttime = sortedresults[i].starttime
+            tmprecord.endtime = sortedresults[i].endtime
+            
+            tmparray.append(tmprecord)
+        }
+        
+        //順序がおかしいレコードを全て削除した後に、ソート済みのレコードを書き込む
+        do{
+            try realm.write({ () -> Void in
+                realm.delete(nonsortedresults)
+                for(var i = 0; i < tmparray.count; i++){
+                    realm.add(tmparray[i], update: true)
+                }
+            })
+            
+        }catch{
+            //Error
+        }
+    }
+
 
     
     /****************StaffNumberDB関連メソッド*************/
