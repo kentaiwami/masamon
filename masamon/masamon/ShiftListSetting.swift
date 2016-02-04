@@ -10,6 +10,8 @@ import UIKit
 
 class ShiftListSetting: UIViewController {
 
+    @IBOutlet weak var table: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -21,5 +23,8 @@ class ShiftListSetting: UIViewController {
     }
     @IBAction func TapBackButton(sender: AnyObject) {
         self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    @IBAction func TapAddButton(sender: AnyObject) {
     }
 }
