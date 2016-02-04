@@ -38,7 +38,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     var pdfalltextarray: [String] = []
     
     let wavyline: [String] = ["〜"]
-    let time = CommonMethod().GetTime()
+    let time = CommonMethod().GetTimeNotSpecifiedVer()
     let shiftgroupname = CommonMethod().GetShiftGroupName()
     var shiftgroupnameUIPicker: UIPickerView = UIPickerView()
     var shifttimeUIPicker: UIPickerView = UIPickerView()

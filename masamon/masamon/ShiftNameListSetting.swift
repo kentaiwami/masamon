@@ -24,7 +24,7 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
     var endtime = ""
     let wavyline: [String] = ["〜"]
     
-    let time = CommonMethod().GetTime()
+    let time = CommonMethod().GetTimeNotSpecifiedVer()
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -9,17 +9,18 @@
 import UIKit
 
 class ShiftListSetting: UIViewController, UITableViewDataSource, UITableViewDelegate{
-
+    
     @IBOutlet weak var table: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         table.delegate = self
         table.dataSource = self
-
+        
+        self.RefreshData()
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -38,11 +39,11 @@ class ShiftListSetting: UIViewController, UITableViewDataSource, UITableViewDele
         
         self.table.reloadData()
     }
-
+    
     
     // セルに表示するテキスト
     var texts: [ShiftDB] = []
-
+    
     //戻るボタンをタップしたとき
     @IBAction func TapBackButton(sender: AnyObject) {
         self.dismissViewControllerAnimated(true, completion: nil)
@@ -59,7 +60,7 @@ class ShiftListSetting: UIViewController, UITableViewDataSource, UITableViewDele
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return sections[section]
     }
-
+    
     
     // セルの内容を変更
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -74,7 +75,7 @@ class ShiftListSetting: UIViewController, UITableViewDataSource, UITableViewDele
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return texts.count
     }
-
+    
     
     //セルの削除を許可
     func tableView(tableView: UITableView,canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool
@@ -86,7 +87,7 @@ class ShiftListSetting: UIViewController, UITableViewDataSource, UITableViewDele
     func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
         return nil;
     }
-
+    
     //セルを横スクロールした際に表示されるアクションを管理するメソッド
     func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
         
@@ -94,7 +95,7 @@ class ShiftListSetting: UIViewController, UITableViewDataSource, UITableViewDele
         let EditButton: UITableViewRowAction = UITableViewRowAction(style: .Normal, title: "編集") { (action, index) -> Void in
             
             tableView.editing = false
-            self.alert(self.texts[indexPath.row].shiftimportname + "を編集します", messagetext: "新しいシフト取り込み名を入力して下さい", index: indexPath.row, flag: 0)
+            self.alert(self.texts[indexPath.row].shiftimportname + "を編集します", messagetext: "新しいシフト取り込み名を入力して下さい\nxlxsやpdfなどはつけてもつけなくても大丈夫です。", index: indexPath.row, flag: 0)
         }
         EditButton.backgroundColor = UIColor.greenColor()
         
@@ -109,7 +110,7 @@ class ShiftListSetting: UIViewController, UITableViewDataSource, UITableViewDele
         
         return [EditButton, DeleteButton]
     }
-
+    
     //アラートを表示する関数
     func alert(titletext: String, messagetext: String, index: Int, flag: Int){
         
@@ -132,11 +133,75 @@ class ShiftListSetting: UIViewController, UITableViewDataSource, UITableViewDele
                     if textFields != nil {
                         if(textFields![0].text! != ""){
                             
+                            //                            var oldshiftimportname = ""
+                            var oldfileextension = ""
                             //上書き処理を行う
-                            //TODO: id,shiftimportname,shiftimportpathを変更する
-                            //TODO: ファイル名を変更する
+                            let oldrecord = DBmethod().SearchShiftDB(self.texts[index].shiftimportname)
+                            //                            oldshiftimportname = oldrecord.shiftimportpath
+                            let newrecord = ShiftDB()
+                            newrecord.id = oldrecord.id
+                            newrecord.year = oldrecord.year
+                            newrecord.month = oldrecord.month
+//                            newrecord.shiftimportname = textFields![0].text!
+                            
+                            //変更前のファイルの拡張子を判断
+                            if(self.texts[index].shiftimportname.containsString(".xlsx")){
+                                oldfileextension = ".xlsx"
+                            }else if(self.texts[index].shiftimportname.containsString(".pdf")){
+                                oldfileextension = ".pdf"
+                            }else if(self.texts[index].shiftimportname.containsString(".PDF")){
+                                oldfileextension = ".PDF"
+                            }
+                            
+                            var newpath = oldrecord.shiftimportpath
+                            //ユーザが入力した新規取り込み名に拡張子が含まれているか調べる
+                            switch(oldfileextension){
+                            case ".xlsx":
+                                if(textFields![0].text!.containsString(".xlsx") == false){
+                                    newpath = newpath.stringByReplacingOccurrencesOfString(self.texts[index].shiftimportname, withString: textFields![0].text! + oldfileextension)
+                                    newrecord.shiftimportname = textFields![0].text! + oldfileextension
+                                }
+                                
+                            case ".pdf":
+                                if(textFields![0].text!.containsString(".pdf") == false){
+                                    newpath = newpath.stringByReplacingOccurrencesOfString(self.texts[index].shiftimportname, withString: textFields![0].text! + oldfileextension)
+                                    newrecord.shiftimportname = textFields![0].text! + oldfileextension
+                                }
+                                
+                            case ".PDF":
+                                if(textFields![0].text!.containsString(".PDF") == false){
+                                    newpath = newpath.stringByReplacingOccurrencesOfString(self.texts[index].shiftimportname, withString: textFields![0].text! + oldfileextension)
+                                    newrecord.shiftimportname = textFields![0].text! + oldfileextension
+                                }
+                                
+                            default:
+                                break
+
+                            }
+                            
+                            newrecord.shiftimportpath = newpath
+                            newrecord.salaly = oldrecord.salaly
+                            
+                            let oldshiftdetailarray = oldrecord.shiftdetail
+                            for(var i = 0; i < oldshiftdetailarray.count; i++){
+                                newrecord.shiftdetail.append(oldshiftdetailarray[i])
+                            }
+                            
+                            DBmethod().DeleteRecord(oldrecord)
+                            DBmethod().AddandUpdate(newrecord, update: true)
+
+                            //ファイル名を変更する
+                            //                            let filemanager:NSFileManager = NSFileManager()
+                            //
+                            //                            do {
+                            //                                try filemanager.moveItemAtPath(oldrecord.shiftimportpath, toPath: newrecord.shiftimportpath)
+                            //                            }
+                            //                            catch{
+                            //                                print(error)
+                            //                            }
+                            
                             //TODO: 関連する1日単位でのシフトを変更なしで変更がかかるか調査する
-                           
+                            
                         }
                     }
                     
@@ -156,7 +221,7 @@ class ShiftListSetting: UIViewController, UITableViewDataSource, UITableViewDele
             
             let Action: UIAlertAction = UIAlertAction(title: buttontitle, style: UIAlertActionStyle.Destructive, handler: { (action:UIAlertAction!) -> Void in
                 
-
+                
                 self.RefreshData()
             })
             alert.addAction(Action)
@@ -171,6 +236,4 @@ class ShiftListSetting: UIViewController, UITableViewDataSource, UITableViewDele
         
         self.presentViewController(alert, animated: true, completion: nil)
     }
-
-
 }
