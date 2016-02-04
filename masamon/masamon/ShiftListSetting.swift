@@ -41,6 +41,19 @@ class ShiftListSetting: UIViewController, UITableViewDataSource, UITableViewDele
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
+    let sections = ["最新順"]
+    
+    //セクションの数を返す.
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return sections.count
+    }
+    
+    //セクションのタイトルを返す.
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return sections[section]
+    }
+
+    
     // セルの内容を変更
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "Cell")
