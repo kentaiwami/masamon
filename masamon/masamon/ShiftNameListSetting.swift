@@ -90,7 +90,7 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
     var records: [[ShiftSystemDB]] = []
     
     // Sectionで使用する配列を定義する.
-    let sections = CommonMethod().GetShiftGroupName()
+    let sections = CommonMethod().GetShiftGroupNameAndTime()
     
     /*
     セクションの数を返す.
@@ -115,7 +115,6 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: "Cell")
         
-        cell.detailTextLabel?.text = "19:00 〜 24:30"
         cell.textLabel?.text = records[indexPath.section][indexPath.row].name
         
         return cell

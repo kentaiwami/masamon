@@ -17,10 +17,16 @@ class CommonMethod: UIViewController {
         return time
     }
     
-    func GetShiftGroupName() ->Array<String>{
+    func GetShiftGroupName() -> Array<String>{
         let shiftgroupname: [String] = ["早番","中1","中2","中3","遅番","その他","休み"]
         
         return shiftgroupname
+    }
+    
+    func GetShiftGroupNameAndTime() -> Array<String>{
+        let shiftgroupnameandtime: [String] = ["早番   8:00 〜 16:30","中1   12:00 〜 20:30","中2   13:30 〜 22:00","中3   14:30 〜 23:00","遅番   16:00 〜 24:30","その他","休み"]
+        
+        return shiftgroupnameandtime
     }
 
     //西暦を和暦に、和暦を西暦に変換して返す関数
