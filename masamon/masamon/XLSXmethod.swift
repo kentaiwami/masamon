@@ -347,7 +347,7 @@ class XLSXmethod: UIViewController {
     //シフト名を受け取って休暇に含まれているか返す関数
     func SearchContainsHolidayArray(shiftname: String) -> Bool{
         
-        var holidayflag: Bool
+        var holidayflag = false
         
         for(var i = 0; i < holiday.count; i++){
             if(holiday[i] == shiftname){

@@ -18,27 +18,27 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
         table.delegate = self
         table.dataSource = self
         
-        self.RefreshData()
+//        self.RefreshData()
 
     }
     
 
-    func RefreshData(){
-        records.removeAll()
-        texts.removeAll()
-        
-        //ShiftSystemDBのレコード全て取得
-            let results = DBmethod().ShiftSystemAllRecordGet()
-            for(var i = 0; i < results.count; i++){
-                records.append(results[i])
-            }
-        
-        //ShiftSystemDBから名前を全て取得
-        early = DBmethod().ShiftSystemNameArrayGet()
-        
-        self.table.reloadData()
-
-    }
+//    func RefreshData(){
+//        records.removeAll()
+//        texts.removeAll()
+//        
+//        //ShiftSystemDBのレコード全て取得
+//            let results = DBmethod().ShiftSystemAllRecordGet()
+//            for(var i = 0; i < results.count; i++){
+//                records.append(results[i])
+//            }
+//        
+//        //ShiftSystemDBから名前を全て取得
+//        early = DBmethod().ShiftSystemNameArrayGet()
+//        
+//        self.table.reloadData()
+//
+//    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -84,33 +84,33 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
         
         cell.backgroundColor = UIColor.darkGrayColor()
 
-        cell.textLabel?.text = early[indexPath.row]
-        cell.textLabel?.textColor = UIColor.whiteColor()
-        
-        cell.detailTextLabel?.text = "19:00 〜 24:30"
-        
-        switch(indexPath.section){
-        case 0:
-            cell.textLabel?.text = early[indexPath.row]
-            
-        case 1:
-            cell.textLabel?.text = center1[indexPath.row]
-            
-        case 2:
-            cell.textLabel?.text = center2[indexPath.row]
-            
-        case 3:
-            cell.textLabel?.text = center3[indexPath.row]
-            
-        case 4:
-            cell.textLabel?.text = late[indexPath.row]
-            
-        case 5:
-            cell.textLabel?.text = other[indexPath.row]
-            
-        default:
-            break
-        }
+//        cell.textLabel?.text = early[indexPath.row]
+//        cell.textLabel?.textColor = UIColor.whiteColor()
+//        
+//        cell.detailTextLabel?.text = "19:00 〜 24:30"
+//        
+//        switch(indexPath.section){
+//        case 0:
+//            cell.textLabel?.text = early[indexPath.row]
+//            
+//        case 1:
+//            cell.textLabel?.text = center1[indexPath.row]
+//            
+//        case 2:
+//            cell.textLabel?.text = center2[indexPath.row]
+//            
+//        case 3:
+//            cell.textLabel?.text = center3[indexPath.row]
+//            
+//        case 4:
+//            cell.textLabel?.text = late[indexPath.row]
+//            
+//        case 5:
+//            cell.textLabel?.text = other[indexPath.row]
+//            
+//        default:
+//            break
+//        }
         
         return cell
     }
@@ -128,7 +128,7 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
         let EditButton: UITableViewRowAction = UITableViewRowAction(style: .Normal, title: "編集") { (action, index) -> Void in
             
             tableView.editing = false
-            self.alert(self.early[indexPath.row] + "さんを編集します", messagetext: "新しいスタッフ名を入力して下さい", index: indexPath.row, flag: 0)
+//            self.alert(self.early[indexPath.row] + "さんを編集します", messagetext: "新しいスタッフ名を入力して下さい", index: indexPath.row, flag: 0)
         }
         EditButton.backgroundColor = UIColor.greenColor()
         
@@ -137,7 +137,7 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
             
             tableView.editing = false
             
-            self.alert(self.early[indexPath.row] + "さんを削除します", messagetext: "本当に削除してよろしいですか？", index: indexPath.row, flag: 1)
+//            self.alert(self.early[indexPath.row] + "さんを削除します", messagetext: "本当に削除してよろしいですか？", index: indexPath.row, flag: 1)
             
         }
         DeleteButton.backgroundColor = UIColor.redColor()
@@ -168,29 +168,29 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
                         if(textFields![0].text! != ""){
                             
                             //上書き処理を行う
-                            for(var i = 0; i < self.records.count; i++){
-                                if(self.early[index] == self.records[i].name){
-                                    
-                                    let newstaffnamedbrecord = StaffNameDB()
-                                    newstaffnamedbrecord.id = self.records[i].id
-                                    newstaffnamedbrecord.name = textFields![0].text!
-                                    
-                                    //編集前のレコードを削除
-                                    DBmethod().DeleteRecord(self.records[i])
-                                    
-                                    //編集後のレコードを追加
-                                    DBmethod().AddandUpdate(newstaffnamedbrecord, update: true)
-                                    
-                                    //ソートする
-                                    DBmethod().StaffNameDBSort()
-                                    
-                                    break
-                                }
-                            }
+//                            for(var i = 0; i < self.records.count; i++){
+//                                if(self.early[index] == self.records[i].name){
+//                                    
+//                                    let newstaffnamedbrecord = StaffNameDB()
+//                                    newstaffnamedbrecord.id = self.records[i].id
+//                                    newstaffnamedbrecord.name = textFields![0].text!
+//                                    
+//                                    //編集前のレコードを削除
+//                                    DBmethod().DeleteRecord(self.records[i])
+//                                    
+//                                    //編集後のレコードを追加
+//                                    DBmethod().AddandUpdate(newstaffnamedbrecord, update: true)
+//                                    
+//                                    //ソートする
+//                                    DBmethod().StaffNameDBSort()
+//                                    
+//                                    break
+//                                }
+//                            }
                         }
                     }
                     
-                    self.RefreshData()
+//                    self.RefreshData()
                     
             })
             alert.addAction(Action)
@@ -206,20 +206,20 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
             
             let Action: UIAlertAction = UIAlertAction(title: buttontitle, style: UIAlertActionStyle.Destructive, handler: { (action:UIAlertAction!) -> Void in
                 
-                for(var i = 0; i < self.records.count; i++){
-                    
-                    if(self.early[index] == self.records[i].name){
-                        let pivot = self.records[i].id                  //削除前にずらす元となるidを記録する
-                        
-                        //対象レコードを削除,並び替え,穴埋め
-                        DBmethod().DeleteRecord(self.records[i])
-                        DBmethod().StaffNameDBSort()
-                        DBmethod().StaffNameDBFillHole(pivot)
-                        
-                        break
-                    }
-                }
-                self.RefreshData()
+//                for(var i = 0; i < self.records.count; i++){
+//                    
+//                    if(self.early[index] == self.records[i].name){
+//                        let pivot = self.records[i].id                  //削除前にずらす元となるidを記録する
+//                        
+//                        //対象レコードを削除,並び替え,穴埋め
+//                        DBmethod().DeleteRecord(self.records[i])
+//                        DBmethod().StaffNameDBSort()
+//                        DBmethod().StaffNameDBFillHole(pivot)
+//                        
+//                        break
+//                    }
+//                }
+//                self.RefreshData()
             })
             alert.addAction(Action)
             
@@ -238,7 +238,7 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
                     }
                 }
                 
-                self.RefreshData()
+//                self.RefreshData()
             })
             
             //シフト名入力用のtextfieldを追加

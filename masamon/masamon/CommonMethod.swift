@@ -80,7 +80,7 @@ class CommonMethod: UIViewController {
     func IncludeShiftNameInStaffName(var staffname: String) -> Array<Int>{
         
         let shiftarray = DBmethod().ShiftSystemAllRecordGet()
-        let holiday = DBmethod().HolidayAllRecordGet()
+        let holiday = DBmethod().ShiftSystemRecordArrayGetByGroudid(6)
         
         var groupidarray: [Int] = []
         

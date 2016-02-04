@@ -84,7 +84,7 @@ class ShiftImport: UIViewController,UITextFieldDelegate,QLPreviewControllerDataS
 
                                 do{
                                     try filemanager.removeItemAtPath(self.Libralypath+"/"+self.filenamefield.text!)
-                                    self.FileSaveAndMove(Inboxpath)
+                                    self.FileSaveAndMove(Inboxpath, update: true)
                                 }catch{
                                     print(error)
                                 }
@@ -95,7 +95,7 @@ class ShiftImport: UIViewController,UITextFieldDelegate,QLPreviewControllerDataS
                         alert.addAction(updateAction)
                         presentViewController(alert, animated: true, completion: nil)
                     }else{      //入力したファイル名が被ってない場合
-                        self.FileSaveAndMove(Inboxpath)
+                        self.FileSaveAndMove(Inboxpath, update: false)
                         self.dismissViewControllerAnimated(true, completion: nil)
                     }
                 }
@@ -123,7 +123,7 @@ class ShiftImport: UIViewController,UITextFieldDelegate,QLPreviewControllerDataS
 
                                 do{
                                     try filemanager.removeItemAtPath(self.Libralypath+"/"+self.filenamefield.text!)
-                                    self.FileSaveAndMove(Inboxpath)
+                                    self.FileSaveAndMove(Inboxpath, update: true)
                                 }catch{
                                     print(error)
                                 }
@@ -135,7 +135,7 @@ class ShiftImport: UIViewController,UITextFieldDelegate,QLPreviewControllerDataS
                         alert.addAction(updateAction)
                         presentViewController(alert, animated: true, completion: nil)
                     }else{      //入力したファイル名が被ってない場合
-                        self.FileSaveAndMove(Inboxpath)
+                        self.FileSaveAndMove(Inboxpath, update: false)
                         self.dismissViewControllerAnimated(true, completion: nil)
                     }
                     
@@ -239,7 +239,7 @@ class ShiftImport: UIViewController,UITextFieldDelegate,QLPreviewControllerDataS
         }
     }
     
-    func FileSaveAndMove(Inboxpath: String){
+    func FileSaveAndMove(Inboxpath: String, update: Bool){
         do{
             try filemanager.moveItemAtPath(Inboxpath+self.filename, toPath: self.Libralypath+"/"+self.filenamefield.text!)
 
@@ -248,7 +248,7 @@ class ShiftImport: UIViewController,UITextFieldDelegate,QLPreviewControllerDataS
         }
         self.appDelegate.filesavealert = true
         self.appDelegate.filename = self.filenamefield.text!
-        self.appDelegate.update = true
+        self.appDelegate.update = update
 
         self.InboxFileCountsDBMinusOne()
 
