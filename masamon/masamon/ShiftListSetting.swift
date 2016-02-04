@@ -235,6 +235,9 @@ class ShiftListSetting: UIViewController, UITableViewDataSource, UITableViewDele
             
             let Action: UIAlertAction = UIAlertAction(title: buttontitle, style: UIAlertActionStyle.Destructive, handler: { (action:UIAlertAction!) -> Void in
                 
+                //TODO: ShiftDBレコードの削除
+                //TODO: ShiftDetailDBレコードの削除
+                //TODO: ファイルの削除
                 
                 self.RefreshData()
             })
