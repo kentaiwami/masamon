@@ -340,7 +340,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                     
                     if(flag){   //テキストフィールドに値が全て入っている場合
                         
-                        let newrecord = CommonMethod().CreateShiftSystemDBRecord(textFields![0].text!, shiftgroup: textFields![1].text!, shifttime: textFields![2].text!, shiftstarttimerow: self.shiftstarttimeselectrow,shiftendtimerow: self.shiftendtimeselectrow)
+                        let newrecord = CommonMethod().CreateShiftSystemDBRecord(DBmethod().DBRecordCount(ShiftSystemDB),shiftname: textFields![0].text!, shiftgroup: textFields![1].text!, shifttime: textFields![2].text!, shiftstarttimerow: self.shiftstarttimeselectrow,shiftendtimerow: self.shiftendtimeselectrow)
                         DBmethod().AddandUpdate(newrecord, update: true)
                         
                         self.savedata()
@@ -410,7 +410,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                     
                     if(flag){   //テキストフィールドに値が全て入っている場合
                         
-                        let newrecord = CommonMethod().CreateShiftSystemDBRecord(textFields![0].text!, shiftgroup: textFields![1].text!, shifttime: textFields![2].text!, shiftstarttimerow: self.shiftstarttimeselectrow,shiftendtimerow: self.shiftendtimeselectrow)
+                        let newrecord = CommonMethod().CreateShiftSystemDBRecord(DBmethod().DBRecordCount(ShiftSystemDB),shiftname: textFields![0].text!, shiftgroup: textFields![1].text!, shifttime: textFields![2].text!, shiftstarttimerow: self.shiftstarttimeselectrow,shiftendtimerow: self.shiftendtimeselectrow)
                         DBmethod().AddandUpdate(newrecord, update: true)
                         
                         self.savedata()

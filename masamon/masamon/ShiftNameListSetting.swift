@@ -90,7 +90,7 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
     var records: [[ShiftSystemDB]] = []
     
     // Sectionで使用する配列を定義する.
-    let sections: NSArray = ["早番", "中1", "中2", "中3", "遅番", "その他", "休み"]
+    let sections = CommonMethod().GetShiftGroupName()
     
     /*
     セクションの数を返す.
@@ -103,7 +103,7 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
     セクションのタイトルを返す.
     */
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return sections[section] as? String
+        return sections[section]
     }
     
     // セルの行数
@@ -185,7 +185,7 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
                         if(textflag){
                             
                             //新規レコードの作成
-                            let newstaffnamedbrecord = CommonMethod().CreateShiftSystemDBRecord(textFields![0].text!, shiftgroup: textFields![1].text!, shifttime: textFields![2].text!, shiftstarttimerow: self.shiftstarttimeselectrow, shiftendtimerow: self.shiftendtimeselectrow)
+                            let newstaffnamedbrecord = CommonMethod().CreateShiftSystemDBRecord(self.records[section][row].id,shiftname: textFields![0].text!, shiftgroup: textFields![1].text!, shifttime: textFields![2].text!, shiftstarttimerow: self.shiftstarttimeselectrow, shiftendtimerow: self.shiftendtimeselectrow)
                             
                             //編集前のレコードを削除
                             DBmethod().DeleteRecord(self.records[section][row])

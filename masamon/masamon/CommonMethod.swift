@@ -124,7 +124,7 @@ class CommonMethod: UIViewController {
     }
     
     //受け取ったテキストからShiftSystemDBのレコードを生成して返す関数
-    func CreateShiftSystemDBRecord(shiftname: String, shiftgroup: String, shifttime: String, shiftstarttimerow: Int, shiftendtimerow: Int) -> ShiftSystemDB{
+    func CreateShiftSystemDBRecord(id: Int, shiftname: String, shiftgroup: String, shifttime: String, shiftstarttimerow: Int, shiftendtimerow: Int) -> ShiftSystemDB{
         let record = ShiftSystemDB()
         var gid = 0
         var start = 0.0
@@ -165,7 +165,7 @@ class CommonMethod: UIViewController {
             end = (Double(shiftendtimerow) - 1.0) * 0.5
         }
         
-        record.id = DBmethod().DBRecordCount(ShiftSystemDB)
+        record.id = id
         record.name = shiftname
         record.groupid = gid
         record.starttime = start
