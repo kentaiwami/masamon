@@ -72,10 +72,7 @@ class StaffNameListSetting: UIViewController, UITableViewDataSource, UITableView
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "Cell")
         
-        cell.backgroundColor = UIColor.darkGrayColor()
-        
         cell.textLabel?.text = texts[indexPath.row]
-        cell.textLabel?.textColor = UIColor.whiteColor()
         
         return cell
     }
