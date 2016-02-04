@@ -385,11 +385,6 @@
                                                 <action selector="TapBackButton:" destination="Zya-Cs-PqC" id="fD3-vy-TDL"/>
                                             </connections>
                                         </barButtonItem>
-                                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="tjh-Zx-Jsv">
-                                            <connections>
-                                                <action selector="TapAddButton:" destination="Zya-Cs-PqC" id="AUl-Ev-NSm"/>
-                                            </connections>
-                                        </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>

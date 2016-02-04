@@ -24,16 +24,21 @@ class ShiftListSetting: UIViewController, UITableViewDataSource, UITableViewDele
         super.didReceiveMemoryWarning()
     }
     
+    func RefreshData(){
+        
+
+        
+        self.table.reloadData()
+        
+    }
+
+    
     // セルに表示するテキスト
     var texts: [String] = []
 
     //戻るボタンをタップしたとき
     @IBAction func TapBackButton(sender: AnyObject) {
         self.dismissViewControllerAnimated(true, completion: nil)
-    }
-    
-    //プラスボタンを押したとき
-    @IBAction func TapAddButton(sender: AnyObject) {
     }
     
     // セルの内容を変更
@@ -72,7 +77,7 @@ class ShiftListSetting: UIViewController, UITableViewDataSource, UITableViewDele
         let EditButton: UITableViewRowAction = UITableViewRowAction(style: .Normal, title: "編集") { (action, index) -> Void in
             
             tableView.editing = false
-            self.alert(self.texts[indexPath.row] + "さんを編集します", messagetext: "新しいスタッフ名を入力して下さい", index: indexPath.row, flag: 0)
+            self.alert(self.texts[indexPath.row] + "を編集します", messagetext: "新しいシフト取り込み名を入力して下さい", index: indexPath.row, flag: 0)
         }
         EditButton.backgroundColor = UIColor.greenColor()
         
@@ -81,7 +86,7 @@ class ShiftListSetting: UIViewController, UITableViewDataSource, UITableViewDele
             
             tableView.editing = false
             
-            self.alert(self.texts[indexPath.row] + "さんを削除します", messagetext: "本当に削除してよろしいですか？", index: indexPath.row, flag: 1)
+            self.alert(self.texts[indexPath.row] + "を削除します", messagetext: "関連する情報が全て削除されます。よろしいですか？", index: indexPath.row, flag: 1)
             
         }
         DeleteButton.backgroundColor = UIColor.redColor()
@@ -98,7 +103,7 @@ class ShiftListSetting: UIViewController, UITableViewDataSource, UITableViewDele
             message: messagetext,
             preferredStyle: UIAlertControllerStyle.Alert)
         
-        //flagが0は編集、flagが1は削除, flagが3は追加
+        //flagが0は編集、flagが1は削除
         switch(flag){
         case 0:
             buttontitle = "編集完了"
@@ -112,25 +117,7 @@ class ShiftListSetting: UIViewController, UITableViewDataSource, UITableViewDele
                         if(textFields![0].text! != ""){
                             
                             //上書き処理を行う
-                            for(var i = 0; i < self.records.count; i++){
-                                if(self.texts[index] == self.records[i].name){
-                                    
-                                    let newstaffnamedbrecord = StaffNameDB()
-                                    newstaffnamedbrecord.id = self.records[i].id
-                                    newstaffnamedbrecord.name = textFields![0].text!
-                                    
-                                    //編集前のレコードを削除
-                                    DBmethod().DeleteRecord(self.records[i])
-                                    
-                                    //編集後のレコードを追加
-                                    DBmethod().AddandUpdate(newstaffnamedbrecord, update: true)
-                                    
-                                    //ソートする
-                                    DBmethod().StaffNameDBSort()
-                                    
-                                    break
-                                }
-                            }
+                           
                         }
                     }
                     
@@ -150,47 +137,9 @@ class ShiftListSetting: UIViewController, UITableViewDataSource, UITableViewDele
             
             let Action: UIAlertAction = UIAlertAction(title: buttontitle, style: UIAlertActionStyle.Destructive, handler: { (action:UIAlertAction!) -> Void in
                 
-                for(var i = 0; i < self.records.count; i++){
-                    
-                    if(self.texts[index] == self.records[i].name){
-                        let pivot = self.records[i].id                  //削除前にずらす元となるidを記録する
-                        
-                        //対象レコードを削除,並び替え,穴埋め
-                        DBmethod().DeleteRecord(self.records[i])
-                        DBmethod().StaffNameDBSort()
-                        DBmethod().StaffNameDBFillHole(pivot)
-                        
-                        break
-                    }
-                }
+
                 self.RefreshData()
             })
-            alert.addAction(Action)
-            
-        case 2:
-            buttontitle = "追加する"
-            
-            let Action: UIAlertAction = UIAlertAction(title: buttontitle, style: UIAlertActionStyle.Default, handler: { (action:UIAlertAction!) -> Void in
-                let textFields:Array<UITextField>? =  alert.textFields as Array<UITextField>?
-                if textFields != nil {
-                    if(textFields![0].text! != ""){
-                        let newrecord = StaffNameDB()
-                        newrecord.id = index
-                        newrecord.name = textFields![0].text!
-                        
-                        DBmethod().AddandUpdate(newrecord, update: true)
-                    }
-                }
-                
-                self.RefreshData()
-            })
-            
-            //シフト名入力用のtextfieldを追加
-            alert.addTextFieldWithConfigurationHandler({(text:UITextField!) -> Void in
-                text.placeholder = "スタッフ名の入力"
-                text.returnKeyType = .Next
-            })
-            
             alert.addAction(Action)
             
         default:
