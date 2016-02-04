@@ -94,32 +94,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         //シフト体制データ
-        let shiftnamepattern = ["早","早Ｍ","早カ","はや","中","中2","中3","遅","遅Ｍ","遅カ"]
-        let shiftstartpattern = [8.0,8.0,8.0,8.0,12.0,13.5,14.5,16.0,16.0,16.0]
-        let shiftendpattern = [16.5,16.5,16.5,16.5,20.5,22.0,23.0,24.5,24.5,24.5]
+        let shiftnamepattern = ["早","早Ｍ","早カ","はや","中","中2","中3","遅","遅Ｍ","遅カ","公","夏","有"]
+        let shiftstartpattern = [8.0,8.0,8.0,8.0,12.0,13.5,14.5,16.0,16.0,16.0,99.9,99.9,99.9]
+        let shiftendpattern = [16.5,16.5,16.5,16.5,20.5,22.0,23.0,24.5,24.5,24.5,99.9,99.9,99.9]
 
         if(DBmethod().DBRecordCount(ShiftSystemDB) == 0){
             for(var i = 0; i < shiftnamepattern.count; i++){
                 var gid = 0
                 
                 switch(i){
+                //早番
                 case 0...3:
                     gid = 0
                     
+                //中1番
                 case 4:
                     gid = 1
-                    
+                
+                //中2番
                 case 5:
                     gid = 2
                     
+                //中3番
                 case 6:
                     gid = 3
                     
+                //遅番
                 case 7...9:
                     gid = 4
                     
+                //休み
                 default:
-                    break
+                    gid = 6
                 }
                 
                 let ShiftSystemRecord = ShiftSystemDB()
@@ -132,16 +138,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
         
-        //シフト体制(休暇)データ
-        let holidaynamepattern = ["公","夏","有"]
-        if(DBmethod().DBRecordCount(HolidayDB) == 0){
-            for(var i = 0; i < holidaynamepattern.count; i++){
-                let Record = HolidayDB()
-                Record.id = i
-                Record.name = holidaynamepattern[i]
-                DBmethod().AddandUpdate(Record, update: true)
-            }
-        }
+//        //シフト体制(休暇)データ
+//        let holidaynamepattern = ["公","夏","有"]
+//        if(DBmethod().DBRecordCount(HolidayDB) == 0){
+//            for(var i = 0; i < holidaynamepattern.count; i++){
+//                let Record = HolidayDB()
+//                Record.id = i
+//                Record.name = holidaynamepattern[i]
+//                DBmethod().AddandUpdate(Record, update: true)
+//            }
+//        }
         
         return true
     }

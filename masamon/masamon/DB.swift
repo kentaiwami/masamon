@@ -93,15 +93,15 @@ class ShiftSystemDB: Object{
     }
 }
 
-//シフトの休みを示す名前を保存
-class HolidayDB: Object {
-    dynamic var id = 0
-    dynamic var name = ""
-    
-    override class func primaryKey() -> String {
-        return "id"
-    }
-}
+////シフトの休みを示す名前を保存
+//class HolidayDB: Object {
+//    dynamic var id = 0
+//    dynamic var name = ""
+//    
+//    override class func primaryKey() -> String {
+//        return "id"
+//    }
+//}
 
 //入力したユーザ名を保存
 class UserNameDB: Object {

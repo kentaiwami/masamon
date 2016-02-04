@@ -22,10 +22,10 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
 
     }
     
-    //TODO: 各配列にグループごとに分けて格納する
+
     func RefreshData(){
         records.removeAll()
-        early.removeAll()
+        texts.removeAll()
         
         //ShiftSystemDBのレコード全て取得
             let results = DBmethod().ShiftSystemAllRecordGet()
@@ -46,17 +46,18 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
     
     
     // セルに表示するテキスト
-    var early: [String] = []
-    var center1: [String] = []
-    var center2: [String] = []
-    var center3: [String] = []
-    var late: [String] = []
-    var other: [String] = []
+    var texts: [[String]] = [[]]
     
     //ShiftSystemDBのレコード配列
-    var records: [ShiftSystemDB] = []
+    var records_early: [ShiftSystemDB] = []
+    var records_center1: [ShiftSystemDB] = []
+    var records_center2: [ShiftSystemDB] = []
+    var records_center3: [ShiftSystemDB] = []
+    var records_late: [ShiftSystemDB] = []
+    var records_other: [ShiftSystemDB] = []
+
     // Sectionで使用する配列を定義する.
-    let sections: NSArray = ["早番", "中1", "中2", "中3", "遅番", "その他"]
+    let sections: NSArray = ["早番", "中1", "中2", "中3", "遅番", "その他", "休み"]
     
     /*
     セクションの数を返す.
@@ -74,28 +75,7 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
     
     // セルの行数
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch(section){
-        case 0:
-            return early.count
-            
-        case 1:
-            return center1.count
-            
-        case 2:
-            return center2.count
-            
-        case 3:
-            return center3.count
-            
-        case 4:
-            return late.count
-            
-        case 5:
-            return other.count
-            
-        default:
-            return 0
-        }
+        return texts[section].count
     }
     
     // セルの内容を変更
