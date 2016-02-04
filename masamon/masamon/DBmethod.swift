@@ -265,6 +265,30 @@ class DBmethod: UIViewController {
         return realm.objects(ShiftSystemDB)
     }
     
+    //ShiftSystemDBの虫食い状態を直す関数
+    func ShiftSystemDBFillHole(id: Int){
+        do{
+            let realm = try Realm()
+            let count = DBmethod().DBRecordCount(ShiftSystemDB)
+            
+            for(var i = id; i < count; i++){
+                let nextrecord = realm.objects(ShiftSystemDB).filter("id = %@",i+1)[0]
+                
+                let newrecord = ShiftSystemDB()
+                newrecord.id = nextrecord.id - 1
+                newrecord.name = nextrecord.name
+                newrecord.groupid = nextrecord.groupid
+                newrecord.starttime = nextrecord.starttime
+                newrecord.endtime = nextrecord.endtime
+                
+                DBmethod().AddandUpdate(newrecord, update: true)
+            }
+        }catch{
+            //Error
+        }
+    }
+
+    
     //ShiftSystemDBのソートを行う
     func ShiftSystemDBSort(){
         let realm = try! Realm()
@@ -285,6 +309,7 @@ class DBmethod: UIViewController {
             
             tmparray.append(tmprecord)
         }
+        
         
         //順序がおかしいレコードを全て削除した後に、ソート済みのレコードを書き込む
         do{

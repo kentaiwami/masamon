@@ -142,7 +142,7 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
             
             tableView.editing = false
             
-            self.alert(self.records[indexPath.section][indexPath.row].name + "を削除します", messagetext: "本当に削除してよろしいですか？", section: indexPath.row, row: indexPath.row, flag: 1)
+            self.alert(self.records[indexPath.section][indexPath.row].name + "を削除します", messagetext: "本当に削除してよろしいですか？", section: indexPath.section, row: indexPath.row, flag: 1)
             
         }
         DeleteButton.backgroundColor = UIColor.redColor()
@@ -220,20 +220,16 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
             
             let Action: UIAlertAction = UIAlertAction(title: buttontitle, style: UIAlertActionStyle.Destructive, handler: { (action:UIAlertAction!) -> Void in
                 
-                //                for(var i = 0; i < self.records.count; i++){
-                //
-                //                    if(self.early[index] == self.records[i].name){
-                //                        let pivot = self.records[i].id                  //削除前にずらす元となるidを記録する
-                //
-                //                        //対象レコードを削除,並び替え,穴埋め
-                //                        DBmethod().DeleteRecord(self.records[i])
-                //                        DBmethod().StaffNameDBSort()
-                //                        DBmethod().StaffNameDBFillHole(pivot)
-                //
-                //                        break
-                //                    }
-                //                }
-                //                self.RefreshData()
+                let pivot = self.records[section][row].id                  //削除前にずらす元となるidを記録する
+                
+                //対象レコードを削除,並び替え,穴埋め
+                DBmethod().DeleteRecord(self.records[section][row])
+                DBmethod().ShiftSystemDBSort()
+                DBmethod().ShiftSystemDBFillHole(pivot)
+                DBmethod().ShiftSystemDBSort()
+
+                
+                self.RefreshData()
             })
             alert.addAction(Action)
             
