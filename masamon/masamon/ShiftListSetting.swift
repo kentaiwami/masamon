@@ -26,15 +26,22 @@ class ShiftListSetting: UIViewController, UITableViewDataSource, UITableViewDele
     
     func RefreshData(){
         
-
+        self.texts.removeAll()
+        
+        if(DBmethod().GetShiftDBAllRecordArray() != nil){
+            let results = DBmethod().GetShiftDBAllRecordArray()
+            
+            for(var i = 0; i < results!.count; i++){
+                self.texts.append(results![i])
+            }
+        }
         
         self.table.reloadData()
-        
     }
 
     
     // セルに表示するテキスト
-    var texts: [String] = []
+    var texts: [ShiftDB] = []
 
     //戻るボタンをタップしたとき
     @IBAction func TapBackButton(sender: AnyObject) {
@@ -58,7 +65,7 @@ class ShiftListSetting: UIViewController, UITableViewDataSource, UITableViewDele
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "Cell")
         
-        cell.textLabel?.text = texts[indexPath.row]
+        cell.textLabel?.text = texts[indexPath.row].shiftimportname
         
         return cell
     }
@@ -87,7 +94,7 @@ class ShiftListSetting: UIViewController, UITableViewDataSource, UITableViewDele
         let EditButton: UITableViewRowAction = UITableViewRowAction(style: .Normal, title: "編集") { (action, index) -> Void in
             
             tableView.editing = false
-            self.alert(self.texts[indexPath.row] + "を編集します", messagetext: "新しいシフト取り込み名を入力して下さい", index: indexPath.row, flag: 0)
+            self.alert(self.texts[indexPath.row].shiftimportname + "を編集します", messagetext: "新しいシフト取り込み名を入力して下さい", index: indexPath.row, flag: 0)
         }
         EditButton.backgroundColor = UIColor.greenColor()
         
@@ -96,8 +103,7 @@ class ShiftListSetting: UIViewController, UITableViewDataSource, UITableViewDele
             
             tableView.editing = false
             
-            self.alert(self.texts[indexPath.row] + "を削除します", messagetext: "関連する情報が全て削除されます。よろしいですか？", index: indexPath.row, flag: 1)
-            
+            self.alert(self.texts[indexPath.row].shiftimportname + "を削除します", messagetext: "関連する情報が全て削除されます。よろしいですか？", index: indexPath.row, flag: 1)
         }
         DeleteButton.backgroundColor = UIColor.redColor()
         
@@ -127,6 +133,9 @@ class ShiftListSetting: UIViewController, UITableViewDataSource, UITableViewDele
                         if(textFields![0].text! != ""){
                             
                             //上書き処理を行う
+                            //TODO: id,shiftimportname,shiftimportpathを変更する
+                            //TODO: ファイル名を変更する
+                            //TODO: 関連する1日単位でのシフトを変更なしで変更がかかるか調査する
                            
                         }
                     }
@@ -136,9 +145,9 @@ class ShiftListSetting: UIViewController, UITableViewDataSource, UITableViewDele
             })
             alert.addAction(Action)
             
-            //シフト名入力用のtextfieldを追加
+            //シフト取り込み名入力用のtextfieldを追加
             alert.addTextFieldWithConfigurationHandler({(text:UITextField!) -> Void in
-                text.placeholder = "スタッフ名の入力"
+                text.placeholder = "新規取り込み名の入力"
                 text.returnKeyType = .Next
             })
             

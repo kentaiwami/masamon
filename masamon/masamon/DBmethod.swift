@@ -97,6 +97,17 @@ class DBmethod: UIViewController {
         return shiftdb
     }
     
+    //ShifDBのレコードを配列にして返す
+    func GetShiftDBAllRecordArray() -> Results<ShiftDB>?{
+        let realm = try! Realm()
+        
+        if(DBmethod().DBRecordCount(ShiftDB) != 0){
+            return realm.objects(ShiftDB)
+        }else{
+            return nil
+        }
+    }
+    
     
     /****************HourlyPayDB関連メソッド*************/
 
