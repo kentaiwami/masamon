@@ -112,28 +112,28 @@ class DBmethod: UIViewController {
     
     
     
-    /****************HolidayDB関連メソッド*************/
-
-    //休暇を示すシフト体制の文字を配列にして返す
-    func HolidayNameArrayGet() -> Array<String>{
-        var array: [String] = []
-        
-        let realm = try! Realm()
-        
-        for(var i = 0; i < DBmethod().DBRecordCount(HolidayDB); i++){
-            let name = realm.objects(HolidayDB).filter("id = %@",i)[0].name
-            array.append(name)
-        }
-        
-        return array
-    }
-    
-    //休暇を示すシフト体制のレコードを配列で返す関数
-    func HolidayAllRecordGet() -> Results<HolidayDB>{
-        let realm = try! Realm()
-        
-        return realm.objects(HolidayDB)
-    }
+//    /****************HolidayDB関連メソッド*************/
+//
+//    //休暇を示すシフト体制の文字を配列にして返す
+//    func HolidayNameArrayGet() -> Array<String>{
+//        var array: [String] = []
+//        
+//        let realm = try! Realm()
+//        
+//        for(var i = 0; i < DBmethod().DBRecordCount(HolidayDB); i++){
+//            let name = realm.objects(HolidayDB).filter("id = %@",i)[0].name
+//            array.append(name)
+//        }
+//        
+//        return array
+//    }
+//    
+//    //休暇を示すシフト体制のレコードを配列で返す関数
+//    func HolidayAllRecordGet() -> Results<HolidayDB>{
+//        let realm = try! Realm()
+//        
+//        return realm.objects(HolidayDB)
+//    }
     
     
     
