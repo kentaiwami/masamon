@@ -109,19 +109,22 @@ class PDFmethod: UIViewController {
         }
         
         //スタッフの人数分(配列の最後まで)繰り返す
-        //        for(var i = 1; i < 2; i++){
+//                for(var i = 5; i < 6; i++){
         for(var i = 1; i < staffarray.count; i++){
-            
+        
             var staffname = ""
             var staffarraytmp = ""
             
+            //シフトの出現場所を記録する2次元配列の初期化
             var shiftlocationarray: [[Int]] = []
             for(var i = 0; i < 7; i++){
                 shiftlocationarray.append([])
             }
             
+            //受け取った1名分のテキスト(1行)からスペースを削除する
             staffarray[i] = staffarray[i].stringByReplacingOccurrencesOfString(" ", withString: "")
             staffarray[i] = staffarray[i].stringByReplacingOccurrencesOfString("　", withString: "")
+            
             
             //スタッフ名の抽出
             staffname = self.GetStaffName(staffarray[i], i: i)
@@ -150,10 +153,8 @@ class PDFmethod: UIViewController {
                     }
                 }
                 
-                let staffarraytmpnsstring = staffarraytmp as NSString
-                
-                
                 //シフト体制の分だけループを回し、各ループでスタッフ1人分のシフト出現場所を記録する
+                let staffarraytmpnsstring = staffarraytmp as NSString
                 for(var i = 0; i < DBmethod().DBRecordCount(ShiftSystemDB); i++){
                     let shiftname = DBmethod().ShiftSystemNameGet(i)
                     shiftlocationarray[shiftname.groupid] += self.GetShiftPositionArray(staffarraytmpnsstring, shiftname: shiftname.name)
@@ -227,7 +228,7 @@ class PDFmethod: UIViewController {
             
             
             if(count == monthrange.length){
-                
+
                 //正しく取り込めているが、シフト認識エラーとして記録されて残っている要素があれば削除する
                 if let _ = appDelegate.errorshiftnamepdf[staffname] {
                     appDelegate.errorshiftnamepdf.removeValueForKey(staffname)
@@ -239,6 +240,10 @@ class PDFmethod: UIViewController {
                     shiftlocationarray[i].append(99999)
                 }
                 
+//                for(var i = 0; i < shiftlocationarray.count; i++){
+//                    print(shiftlocationarray[i])
+//                }
+
                 //日付分のループを開始
                 for(var i = 0; i < monthrange.length; i++){
                     
@@ -264,10 +269,10 @@ class PDFmethod: UIViewController {
                     case "遅":
                         shiftlocationarray[4].removeAtIndex(0)
                         
-                    case "休":
+                    case "他":
                         shiftlocationarray[5].removeAtIndex(0)
                         
-                    case "他":
+                    case "休":
                         shiftlocationarray[6].removeAtIndex(0)
                         
                     default:
@@ -280,8 +285,8 @@ class PDFmethod: UIViewController {
                             dayshiftarray[i] += staffname + ":" + staffshift + ","
                         }
                     }
-                    
                 }
+                
                 //認識できないシフト名があった場合
             }else{
                 
@@ -435,7 +440,7 @@ class PDFmethod: UIViewController {
         var sg = ""
         var sp = 0
         
-        let dict: [String:Int] = ["早":array[0][0], "中1":array[1][0], "中2":array[2][0], "中3":array[3][0], "遅": array[4][0], "休":array[5][0], "他":array[6][0]]
+        let dict: [String:Int] = ["早":array[0][0], "中1":array[1][0], "中2":array[2][0], "中3":array[3][0], "遅": array[4][0], "他":array[5][0], "休":array[6][0]]
         
         var values : Array = Array(dict.values)
         values = values.sort()
