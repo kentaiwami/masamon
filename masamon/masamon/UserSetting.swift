@@ -277,6 +277,9 @@ class UserSetting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSourc
                 TimeTo2.resignFirstResponder()
                 
             case 11:    //Cancelボタン
+                textfieldrowfrom2 = 44
+                textfieldrowto2 = 10
+
                 TimeFrom2.text = ""
                 TimeTo2.text = ""
                 TimeFrom2.resignFirstResponder()
@@ -306,9 +309,9 @@ class UserSetting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSourc
             TimeTo1.text = time[textfieldrowto1]
         }else if(textField.tag == 2){
             timeUIPicker.selectRow(textfieldrowfrom2, inComponent: 0, animated: true)
-            timeUIPicker.selectRow(textfieldrowfrom2, inComponent: 2, animated: true)
+            timeUIPicker.selectRow(textfieldrowto2, inComponent: 2, animated: true)
             TimeFrom2.text = time[textfieldrowfrom2]
-            TimeTo2.text = time[textfieldrowfrom2]
+            TimeTo2.text = time[textfieldrowto2]
         }
     }
     
