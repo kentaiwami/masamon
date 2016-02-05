@@ -26,10 +26,10 @@ class UserSetting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSourc
     
     let time = CommonMethod().GetTime()
     let wavyline: [String] = ["〜"]
-    var textfieldrowfrom1 = 10
-    var textfieldrowto1 = 44
-    var textfieldrowfrom2 = 44
-    var textfieldrowto2 = 10
+    var textfieldrowfrom1 = 8
+    var textfieldrowto1 = 42
+    var textfieldrowfrom2 = 42
+    var textfieldrowto2 = 8
     
     let saveimage = UIImage(named: "../images/save.png")
     let savebutton   = UIButton()
@@ -257,8 +257,8 @@ class UserSetting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSourc
                 TimeTo1.resignFirstResponder()
 
             case 11:    //Cancelボタン
-                textfieldrowfrom1 = 10
-                textfieldrowto1 = 44
+                textfieldrowfrom1 = 8
+                textfieldrowto1 = 42
 
                 TimeFrom1.text = ""
                 TimeTo1.text = ""
@@ -277,8 +277,8 @@ class UserSetting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSourc
                 TimeTo2.resignFirstResponder()
                 
             case 11:    //Cancelボタン
-                textfieldrowfrom2 = 44
-                textfieldrowto2 = 10
+                textfieldrowfrom2 = 42
+                textfieldrowto2 = 8
 
                 TimeFrom2.text = ""
                 TimeTo2.text = ""
@@ -330,12 +330,12 @@ class UserSetting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSourc
             let hourlypayrecord1 = HourlyPayDB()
             let hourlypayrecord2 = HourlyPayDB()
             hourlypayrecord1.id = 1
-            hourlypayrecord1.timefrom = Double(time.indexOf(TimeFrom1.text!)!)-(Double(time.indexOf(TimeFrom1.text!)!)*0.5)
-            hourlypayrecord1.timeto = Double(time.indexOf(TimeTo1.text!)!)-(Double(time.indexOf(TimeTo1.text!)!)*0.5)
+            hourlypayrecord1.timefrom = Double(time.indexOf(TimeFrom1.text!)!)-(Double(time.indexOf(TimeFrom1.text!)!)*0.5) + 1.0
+            hourlypayrecord1.timeto = Double(time.indexOf(TimeTo1.text!)!)-(Double(time.indexOf(TimeTo1.text!)!)*0.5) + 1.0
             hourlypayrecord1.pay = Int(Salaly1.text!)!
             hourlypayrecord2.id = 2
-            hourlypayrecord2.timefrom = Double(time.indexOf(TimeFrom2.text!)!)-(Double(time.indexOf(TimeFrom2.text!)!)*0.5)
-            hourlypayrecord2.timeto = Double(time.indexOf(TimeTo2.text!)!)-(Double(time.indexOf(TimeTo2.text!)!)*0.5)
+            hourlypayrecord2.timefrom = Double(time.indexOf(TimeFrom2.text!)!)-(Double(time.indexOf(TimeFrom2.text!)!)*0.5) + 1.0
+            hourlypayrecord2.timeto = Double(time.indexOf(TimeTo2.text!)!)-(Double(time.indexOf(TimeTo2.text!)!)*0.5) + 1.0
             hourlypayrecord2.pay = Int(Salaly2.text!)!
             
             let staffnumberrecord = StaffNumberDB()
