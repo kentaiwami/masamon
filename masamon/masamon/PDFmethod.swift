@@ -87,6 +87,308 @@ class PDFmethod: UIViewController {
         return pdftextarray
     }
     
+    //スタッフのシフトを日にちごとに分けたArrayを返す
+    func SplitDayShiftGet(var staffarray: Array<String>) -> (shiftarray: Array<String>, shiftcours: (Int,Int,Int)){
+        
+        //データを削除して初期化する
+        appDelegate.errorstaffnamepdf.removeAll()
+        appDelegate.errorshiftnamepdf.removeAll()
+        
+        var dayshiftarray: [String] = []        //1日ごとのシフトを記録
+        
+        //1クールが全部で何日間あるかを判断するため
+        let shiftyearandmonth = CommonMethod().JudgeYearAndMonth(staffarray[0])
+        
+        let shiftnsdate = MonthlySalaryShow().DateSerial(CommonMethod().Changecalendar(shiftyearandmonth.year, calender: "JP"), month: shiftyearandmonth.startcoursmonth, day: 1)
+        let c = NSCalendar.currentCalendar()
+        let monthrange = c.rangeOfUnit([NSCalendarUnit.Day],  inUnit: [NSCalendarUnit.Month], forDate: shiftnsdate)
+        
+        //先に空要素を1クール分追加しておく
+        for(var i = 0; i < monthrange.length; i++){
+            dayshiftarray.append("")
+        }
+        
+        //スタッフの人数分(配列の最後まで)繰り返す
+        //        for(var i = 1; i < 2; i++){
+        for(var i = 1; i < staffarray.count; i++){
+            
+            var staffname = ""
+            var staffarraytmp = ""
+            
+            var earlyshiftlocationarray: [Int] = []
+            var center1shiftlocationarray: [Int] = []
+            var center2shiftlocationarray: [Int] = []
+            var center3shiftlocationarray: [Int] = []
+            var lateshiftlocationarray: [Int] = []
+            var holidayshiftlocationarray: [Int] = []       //公,夏,有の場所を記録
+            var othershiftlocationarray: [Int] = []
+            
+            staffarray[i] = staffarray[i].stringByReplacingOccurrencesOfString(" ", withString: "")
+            staffarray[i] = staffarray[i].stringByReplacingOccurrencesOfString("　", withString: "")
+            
+            //スタッフ名の抽出
+            staffname = self.GetStaffName(staffarray[i], i: i)
+            staffarraytmp = staffarray[i]
+            print(staffname)
+            //スキップされたスタッフは取り込みを行わない
+            if(appDelegate.skipstaff.contains(staffname)){
+                break
+            }
+            
+            
+            /*抽出したスタッフ名(マネージャーのMは除く)が1文字以下or4文字以上ならエラーとして記録
+            　エラーでなければシフトの出現場所を配列に格納していく
+            */
+            let removem = staffname.stringByReplacingOccurrencesOfString("M", withString: "")
+            if(removem.characters.count <= 1 || removem.characters.count >= 4){
+                appDelegate.errorstaffnamepdf.append(staffarraytmp)
+            }else{
+                //スタッフ名を正しく認識しているがエラーとして記録されている場合は削除する
+                for(var i = 0; i < appDelegate.errorstaffnamepdf.count; i++){
+                    let errorstaffnametext = appDelegate.errorstaffnamepdf[i]
+                    
+                    if(errorstaffnametext.containsString(staffname)){
+                        appDelegate.errorstaffnamepdf.removeAtIndex(i)
+                        break
+                    }
+                }
+                
+                let staffarraytmpnsstring = staffarraytmp as NSString
+                
+                
+                //シフト体制の分だけループを回し、各ループでスタッフ1人分のシフト出現場所を記録する
+                for(var i = 0; i < DBmethod().DBRecordCount(ShiftSystemDB); i++){
+                    let shiftname = DBmethod().ShiftSystemNameGet(i)
+                    switch(shiftname.groupid){
+                    case 0:
+                        earlyshiftlocationarray += self.GetShiftPositionArray(staffarraytmpnsstring, shiftname: shiftname.name)
+                        
+                    case 1:
+                        center1shiftlocationarray += self.GetShiftPositionArray(staffarraytmpnsstring, shiftname: shiftname.name)
+                        
+                    case 2:
+                        center2shiftlocationarray += self.GetShiftPositionArray(staffarraytmpnsstring, shiftname: shiftname.name)
+                        
+                    case 3:
+                        center3shiftlocationarray += self.GetShiftPositionArray(staffarraytmpnsstring, shiftname: shiftname.name)
+                        
+                    case 4:
+                        lateshiftlocationarray += self.GetShiftPositionArray(staffarraytmpnsstring, shiftname: shiftname.name)
+                        
+                    case 5:
+                        othershiftlocationarray += self.GetShiftPositionArray(staffarraytmpnsstring, shiftname: shiftname.name)
+                        
+                    case 6:
+                        holidayshiftlocationarray += self.GetShiftPositionArray(staffarraytmpnsstring, shiftname: shiftname.name)
+                        
+                    default:
+                        break
+                    }
+                }
+            }
+            
+            //重複した要素を削除する
+            earlyshiftlocationarray = GetRemoveOverlapElementArray(earlyshiftlocationarray)
+            center1shiftlocationarray = GetRemoveOverlapElementArray(center1shiftlocationarray)
+            center2shiftlocationarray = GetRemoveOverlapElementArray(center2shiftlocationarray)
+            center3shiftlocationarray = GetRemoveOverlapElementArray(center3shiftlocationarray)
+            lateshiftlocationarray = GetRemoveOverlapElementArray(lateshiftlocationarray)
+            holidayshiftlocationarray = GetRemoveOverlapElementArray(holidayshiftlocationarray)
+            othershiftlocationarray = GetRemoveOverlapElementArray(othershiftlocationarray)
+            
+            
+            //配列をまたがって重複している要素を削除する
+            let removeresultarray = self.GetRemoveOverlapElementAnotherArray(earlyshiftlocationarray, center1: center1shiftlocationarray, center2: center2shiftlocationarray, center3: center3shiftlocationarray, late: lateshiftlocationarray, other: othershiftlocationarray)
+            earlyshiftlocationarray = removeresultarray.removedearly
+            center1shiftlocationarray = removeresultarray.removedcenter1
+            center2shiftlocationarray = removeresultarray.removedcenter2
+            center3shiftlocationarray = removeresultarray.removedcenter3
+            lateshiftlocationarray = removeresultarray.removedlate
+            othershiftlocationarray = removeresultarray.removedother
+            
+            
+            //要素を昇順でソートする
+            earlyshiftlocationarray = earlyshiftlocationarray.sort()
+            center1shiftlocationarray = center1shiftlocationarray.sort()
+            center2shiftlocationarray = center2shiftlocationarray.sort()
+            center3shiftlocationarray = center3shiftlocationarray.sort()
+            lateshiftlocationarray = lateshiftlocationarray.sort()
+            holidayshiftlocationarray = holidayshiftlocationarray.sort()
+            othershiftlocationarray = othershiftlocationarray.sort()
+            
+            
+            //スタッフ名にシフト名が含まれている場合に、カウントされてしまうため要素を削除する
+            let includeshiftnamearray = CommonMethod().IncludeShiftNameInStaffName(staffname)
+            if(includeshiftnamearray.count != 0){
+                
+                for(var i = 0; i < includeshiftnamearray.count; i++){
+                    switch(includeshiftnamearray[i]){
+                    case 0:
+                        earlyshiftlocationarray.removeAtIndex(0)
+                        
+                    case 1:
+                        center1shiftlocationarray.removeAtIndex(0)
+                        
+                    case 2:
+                        center2shiftlocationarray.removeAtIndex(0)
+                        
+                    case 3:
+                        center3shiftlocationarray.removeAtIndex(0)
+                        
+                    case 4:
+                        lateshiftlocationarray.removeAtIndex(0)
+                        
+                    case 5:
+                        othershiftlocationarray.removeAtIndex(0)
+                        
+                    default: //case 999
+                        holidayshiftlocationarray.removeAtIndex(0)
+                    }
+                }
+            }
+            
+            
+            //1クール分のシフト文字以外のシフト名をカウントしてしまうので、範囲外の要素を削除する
+            var index = staffarraytmp.startIndex
+            var numeralcount = 0
+            var removeflag = false
+            
+            while(index != staffarraytmp.endIndex.predecessor()){
+                
+                if(Int(String(staffarraytmp[index])) != nil){
+                    numeralcount++
+                }else{
+                    numeralcount = 0
+                }
+                
+                //数値の連続が5回以上なら数列として判断する
+                if(numeralcount >= 5){
+                    index = index.advancedBy(-4)
+                    removeflag = true
+                    break
+                }
+                
+                index = index.successor()
+            }
+            
+            
+            if(removeflag){
+                earlyshiftlocationarray = self.RemoveElementThanPivotIndex(earlyshiftlocationarray, pivotindex: index, text: staffarraytmp)
+                center1shiftlocationarray = self.RemoveElementThanPivotIndex(center1shiftlocationarray, pivotindex: index, text: staffarraytmp)
+                center2shiftlocationarray = self.RemoveElementThanPivotIndex(center2shiftlocationarray, pivotindex: index, text: staffarraytmp)
+                center3shiftlocationarray = self.RemoveElementThanPivotIndex(center3shiftlocationarray, pivotindex: index, text: staffarraytmp)
+                lateshiftlocationarray = self.RemoveElementThanPivotIndex(lateshiftlocationarray, pivotindex: index, text: staffarraytmp)
+                othershiftlocationarray = self.RemoveElementThanPivotIndex(othershiftlocationarray, pivotindex: index, text: staffarraytmp)
+                holidayshiftlocationarray = self.RemoveElementThanPivotIndex(holidayshiftlocationarray, pivotindex: index, text: staffarraytmp)
+            }
+            
+            
+            //要素数を比較して正しくシフト体制を認識できているかチェックする
+            var count = 0
+            count = earlyshiftlocationarray.count + center1shiftlocationarray.count + center2shiftlocationarray.count + center3shiftlocationarray.count + lateshiftlocationarray.count + holidayshiftlocationarray.count + othershiftlocationarray.count
+            
+            //            print(earlyshiftlocationarray.count)
+            //            print(center1shiftlocationarray.count)
+            //            print(center2shiftlocationarray.count)
+            //            print(center3shiftlocationarray.count)
+            //            print(lateshiftlocationarray.count)
+            //            print(othershiftlocationarray.count)
+            //            print(holidayshiftlocationarray.count)
+            
+            if(count == monthrange.length){
+                
+                //正しく取り込めているが、シフト認識エラーとして記録されて残っている要素があれば削除する
+                if let _ = appDelegate.errorshiftnamepdf[staffname] {
+                    appDelegate.errorshiftnamepdf.removeValueForKey(staffname)
+                }
+                
+                
+                //各配列に識別子を追加する
+                earlyshiftlocationarray.append(99999)
+                center1shiftlocationarray.append(99999)
+                center2shiftlocationarray.append(99999)
+                center3shiftlocationarray.append(99999)
+                lateshiftlocationarray.append(99999)
+                holidayshiftlocationarray.append(99999)
+                othershiftlocationarray.append(99999)
+                
+                
+                //日付分のループを開始
+                for(var i = 0; i < monthrange.length; i++){
+                    
+                    //シフトの位置が一番小さい値とそのシフト区分を取得する
+                    let dayshift = self.GetMinShiftPositionAndGroup(earlyshiftlocationarray[0], center1: center1shiftlocationarray[0], center2: center2shiftlocationarray[0], center3: center3shiftlocationarray[0], late: lateshiftlocationarray[0], holiday: holidayshiftlocationarray[0], other: othershiftlocationarray[0])
+                    
+                    //シフトの名前をテキストから取得する
+                    let staffshift = self.GetShiftNameFromOneLineText(staffarraytmp, sg: dayshift.shiftgroup, sp: dayshift.shiftposition)
+                    
+                    switch(dayshift.shiftgroup){
+                    case "早":
+                        earlyshiftlocationarray.removeAtIndex(0)
+                        
+                    case "中1":
+                        center1shiftlocationarray.removeAtIndex(0)
+                        
+                    case "中2":
+                        center2shiftlocationarray.removeAtIndex(0)
+                        
+                    case "中3":
+                        center3shiftlocationarray.removeAtIndex(0)
+                        
+                    case "遅":
+                        lateshiftlocationarray.removeAtIndex(0)
+                        
+                    case "休":
+                        holidayshiftlocationarray.removeAtIndex(0)
+                        
+                    case "他":
+                        othershiftlocationarray.removeAtIndex(0)
+                        
+                    default:
+                        break
+                    }
+                    
+                    let holidayarray = DBmethod().ShiftSystemNameArrayGetByGroudid(6)
+                    if(holidayarray.contains(staffshift) == false){
+                        dayshiftarray[i] += staffname + ":" + staffshift + ","
+                    }
+                    
+                }
+                //認識できないシフト名があった場合
+            }else{
+                
+                let successshiftnamearray = self.GetWillRemoveShiftName(earlyshiftlocationarray.count, center1: center1shiftlocationarray.count, center2: center2shiftlocationarray.count, center3: center3shiftlocationarray.count, late: lateshiftlocationarray.count, holiday: holidayshiftlocationarray.count, other: othershiftlocationarray.count)
+                
+                var messagetext = staffarraytmp
+                
+                for(var i = 0; i < successshiftnamearray.count; i++){
+                    messagetext = self.GetRemoveSetShiftName(messagetext, shiftname: successshiftnamearray[i])
+                }
+                
+                appDelegate.errorshiftnamepdf[staffname] = messagetext
+            }
+        }
+        
+        //        let file_name = "TEST.txt"
+        //        let text = dayshiftarray[0]
+        //
+        //        if let dir : NSString = NSSearchPathForDirectoriesInDomains( NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.AllDomainsMask, true ).first {
+        //
+        //            let path_file_name = dir.stringByAppendingPathComponent(file_name)
+        //
+        //            do {
+        //
+        //                try text.writeToFile(path_file_name, atomically: false, encoding: NSUTF8StringEncoding )
+        //                
+        //            } catch {
+        //                //エラー処理
+        //            }
+        //        }
+        
+        return (dayshiftarray,shiftyearandmonth)
+    }
+
+    
     /*スタッフ1人分のテキストを受け取ってスタッフ名のみを返す関数
     stafftext => スタッフ名とシフトが記述されているテキスト
     i         => ループの回数(stafftextの先頭についている数値)
@@ -438,308 +740,6 @@ class PDFmethod: UIViewController {
         }
         
         return array
-    }
-    
-    
-    //スタッフのシフトを日にちごとに分けたArrayを返す
-    func SplitDayShiftGet(var staffarray: Array<String>) -> (shiftarray: Array<String>, shiftcours: (Int,Int,Int)){
-        
-        //データを削除して初期化する
-        appDelegate.errorstaffnamepdf.removeAll()
-        appDelegate.errorshiftnamepdf.removeAll()
-        
-        var dayshiftarray: [String] = []        //1日ごとのシフトを記録
-        
-        //1クールが全部で何日間あるかを判断するため
-        let shiftyearandmonth = CommonMethod().JudgeYearAndMonth(staffarray[0])
-        
-        let shiftnsdate = MonthlySalaryShow().DateSerial(CommonMethod().Changecalendar(shiftyearandmonth.year, calender: "JP"), month: shiftyearandmonth.startcoursmonth, day: 1)
-        let c = NSCalendar.currentCalendar()
-        let monthrange = c.rangeOfUnit([NSCalendarUnit.Day],  inUnit: [NSCalendarUnit.Month], forDate: shiftnsdate)
-        
-        //先に空要素を1クール分追加しておく
-        for(var i = 0; i < monthrange.length; i++){
-            dayshiftarray.append("")
-        }
-        
-        //スタッフの人数分(配列の最後まで)繰り返す
-//        for(var i = 1; i < 2; i++){
-        for(var i = 1; i < staffarray.count; i++){
-        
-            var staffname = ""
-            var staffarraytmp = ""
-            
-            var earlyshiftlocationarray: [Int] = []
-            var center1shiftlocationarray: [Int] = []
-            var center2shiftlocationarray: [Int] = []
-            var center3shiftlocationarray: [Int] = []
-            var lateshiftlocationarray: [Int] = []
-            var holidayshiftlocationarray: [Int] = []       //公,夏,有の場所を記録
-            var othershiftlocationarray: [Int] = []
-            
-            staffarray[i] = staffarray[i].stringByReplacingOccurrencesOfString(" ", withString: "")
-            staffarray[i] = staffarray[i].stringByReplacingOccurrencesOfString("　", withString: "")
-            
-            //スタッフ名の抽出
-            staffname = self.GetStaffName(staffarray[i], i: i)
-            staffarraytmp = staffarray[i]
-            print(staffname)
-            //スキップされたスタッフは取り込みを行わない
-            if(appDelegate.skipstaff.contains(staffname)){
-                break
-            }
-            
-            
-            /*抽出したスタッフ名(マネージャーのMは除く)が1文字以下or4文字以上ならエラーとして記録
-            　エラーでなければシフトの出現場所を配列に格納していく
-            */
-            let removem = staffname.stringByReplacingOccurrencesOfString("M", withString: "")
-            if(removem.characters.count <= 1 || removem.characters.count >= 4){
-                appDelegate.errorstaffnamepdf.append(staffarraytmp)
-            }else{
-                //スタッフ名を正しく認識しているがエラーとして記録されている場合は削除する
-                for(var i = 0; i < appDelegate.errorstaffnamepdf.count; i++){
-                    let errorstaffnametext = appDelegate.errorstaffnamepdf[i]
-                    
-                    if(errorstaffnametext.containsString(staffname)){
-                        appDelegate.errorstaffnamepdf.removeAtIndex(i)
-                        break
-                    }
-                }
-                
-                let staffarraytmpnsstring = staffarraytmp as NSString
-                
-                
-                //シフト体制の分だけループを回し、各ループでスタッフ1人分のシフト出現場所を記録する
-                for(var i = 0; i < DBmethod().DBRecordCount(ShiftSystemDB); i++){
-                    let shiftname = DBmethod().ShiftSystemNameGet(i)
-                    switch(shiftname.groupid){
-                    case 0:
-                        earlyshiftlocationarray += self.GetShiftPositionArray(staffarraytmpnsstring, shiftname: shiftname.name)
-                        
-                    case 1:
-                        center1shiftlocationarray += self.GetShiftPositionArray(staffarraytmpnsstring, shiftname: shiftname.name)
-                        
-                    case 2:
-                        center2shiftlocationarray += self.GetShiftPositionArray(staffarraytmpnsstring, shiftname: shiftname.name)
-                        
-                    case 3:
-                        center3shiftlocationarray += self.GetShiftPositionArray(staffarraytmpnsstring, shiftname: shiftname.name)
-                        
-                    case 4:
-                        lateshiftlocationarray += self.GetShiftPositionArray(staffarraytmpnsstring, shiftname: shiftname.name)
-                        
-                    case 5:
-                        othershiftlocationarray += self.GetShiftPositionArray(staffarraytmpnsstring, shiftname: shiftname.name)
-                        
-                    case 6:
-                        holidayshiftlocationarray += self.GetShiftPositionArray(staffarraytmpnsstring, shiftname: shiftname.name)
-                        
-                    default:
-                        break
-                    }
-                }
-            }
-            
-            //重複した要素を削除する
-            earlyshiftlocationarray = GetRemoveOverlapElementArray(earlyshiftlocationarray)
-            center1shiftlocationarray = GetRemoveOverlapElementArray(center1shiftlocationarray)
-            center2shiftlocationarray = GetRemoveOverlapElementArray(center2shiftlocationarray)
-            center3shiftlocationarray = GetRemoveOverlapElementArray(center3shiftlocationarray)
-            lateshiftlocationarray = GetRemoveOverlapElementArray(lateshiftlocationarray)
-            holidayshiftlocationarray = GetRemoveOverlapElementArray(holidayshiftlocationarray)
-            othershiftlocationarray = GetRemoveOverlapElementArray(othershiftlocationarray)
-            
-            
-            //配列をまたがって重複している要素を削除する
-            let removeresultarray = self.GetRemoveOverlapElementAnotherArray(earlyshiftlocationarray, center1: center1shiftlocationarray, center2: center2shiftlocationarray, center3: center3shiftlocationarray, late: lateshiftlocationarray, other: othershiftlocationarray)
-            earlyshiftlocationarray = removeresultarray.removedearly
-            center1shiftlocationarray = removeresultarray.removedcenter1
-            center2shiftlocationarray = removeresultarray.removedcenter2
-            center3shiftlocationarray = removeresultarray.removedcenter3
-            lateshiftlocationarray = removeresultarray.removedlate
-            othershiftlocationarray = removeresultarray.removedother
-            
-            
-            //要素を昇順でソートする
-            earlyshiftlocationarray = earlyshiftlocationarray.sort()
-            center1shiftlocationarray = center1shiftlocationarray.sort()
-            center2shiftlocationarray = center2shiftlocationarray.sort()
-            center3shiftlocationarray = center3shiftlocationarray.sort()
-            lateshiftlocationarray = lateshiftlocationarray.sort()
-            holidayshiftlocationarray = holidayshiftlocationarray.sort()
-            othershiftlocationarray = othershiftlocationarray.sort()
-            
-            
-            //スタッフ名にシフト名が含まれている場合に、カウントされてしまうため要素を削除する
-            let includeshiftnamearray = CommonMethod().IncludeShiftNameInStaffName(staffname)
-            if(includeshiftnamearray.count != 0){
-                
-                for(var i = 0; i < includeshiftnamearray.count; i++){
-                    switch(includeshiftnamearray[i]){
-                    case 0:
-                        earlyshiftlocationarray.removeAtIndex(0)
-                        
-                    case 1:
-                        center1shiftlocationarray.removeAtIndex(0)
-                        
-                    case 2:
-                        center2shiftlocationarray.removeAtIndex(0)
-                        
-                    case 3:
-                        center3shiftlocationarray.removeAtIndex(0)
-                        
-                    case 4:
-                        lateshiftlocationarray.removeAtIndex(0)
-                        
-                    case 5:
-                        othershiftlocationarray.removeAtIndex(0)
-                        
-                    default: //case 999
-                        holidayshiftlocationarray.removeAtIndex(0)
-                    }
-                }
-            }
-            
-            
-            //1クール分のシフト文字以外のシフト名をカウントしてしまうので、範囲外の要素を削除する
-            var index = staffarraytmp.startIndex
-            var numeralcount = 0
-            var removeflag = false
-            
-            while(index != staffarraytmp.endIndex.predecessor()){
-                
-                if(Int(String(staffarraytmp[index])) != nil){
-                    numeralcount++
-                }else{
-                    numeralcount = 0
-                }
-                
-                //数値の連続が5回以上なら数列として判断する
-                if(numeralcount >= 5){
-                    index = index.advancedBy(-4)
-                    removeflag = true
-                    break
-                }
-                
-                index = index.successor()
-            }
-            
-            
-            if(removeflag){
-                earlyshiftlocationarray = self.RemoveElementThanPivotIndex(earlyshiftlocationarray, pivotindex: index, text: staffarraytmp)
-                center1shiftlocationarray = self.RemoveElementThanPivotIndex(center1shiftlocationarray, pivotindex: index, text: staffarraytmp)
-                center2shiftlocationarray = self.RemoveElementThanPivotIndex(center2shiftlocationarray, pivotindex: index, text: staffarraytmp)
-                center3shiftlocationarray = self.RemoveElementThanPivotIndex(center3shiftlocationarray, pivotindex: index, text: staffarraytmp)
-                lateshiftlocationarray = self.RemoveElementThanPivotIndex(lateshiftlocationarray, pivotindex: index, text: staffarraytmp)
-                othershiftlocationarray = self.RemoveElementThanPivotIndex(othershiftlocationarray, pivotindex: index, text: staffarraytmp)
-                holidayshiftlocationarray = self.RemoveElementThanPivotIndex(holidayshiftlocationarray, pivotindex: index, text: staffarraytmp)
-            }
-            
-            
-            //要素数を比較して正しくシフト体制を認識できているかチェックする
-            var count = 0
-            count = earlyshiftlocationarray.count + center1shiftlocationarray.count + center2shiftlocationarray.count + center3shiftlocationarray.count + lateshiftlocationarray.count + holidayshiftlocationarray.count + othershiftlocationarray.count
-           
-//            print(earlyshiftlocationarray.count)
-//            print(center1shiftlocationarray.count)
-//            print(center2shiftlocationarray.count)
-//            print(center3shiftlocationarray.count)
-//            print(lateshiftlocationarray.count)
-//            print(othershiftlocationarray.count)
-//            print(holidayshiftlocationarray.count)
-            
-            if(count == monthrange.length){
-                
-                //正しく取り込めているが、シフト認識エラーとして記録されて残っている要素があれば削除する
-                if let _ = appDelegate.errorshiftnamepdf[staffname] {
-                    appDelegate.errorshiftnamepdf.removeValueForKey(staffname)
-                }
-                
-                
-                //各配列に識別子を追加する
-                earlyshiftlocationarray.append(99999)
-                center1shiftlocationarray.append(99999)
-                center2shiftlocationarray.append(99999)
-                center3shiftlocationarray.append(99999)
-                lateshiftlocationarray.append(99999)
-                holidayshiftlocationarray.append(99999)
-                othershiftlocationarray.append(99999)
-                
-                
-                //日付分のループを開始
-                for(var i = 0; i < monthrange.length; i++){
-
-                    //シフトの位置が一番小さい値とそのシフト区分を取得する
-                    let dayshift = self.GetMinShiftPositionAndGroup(earlyshiftlocationarray[0], center1: center1shiftlocationarray[0], center2: center2shiftlocationarray[0], center3: center3shiftlocationarray[0], late: lateshiftlocationarray[0], holiday: holidayshiftlocationarray[0], other: othershiftlocationarray[0])
-                    
-                    //シフトの名前をテキストから取得する
-                    let staffshift = self.GetShiftNameFromOneLineText(staffarraytmp, sg: dayshift.shiftgroup, sp: dayshift.shiftposition)
-                    
-                    switch(dayshift.shiftgroup){
-                    case "早":
-                        earlyshiftlocationarray.removeAtIndex(0)
-                        
-                    case "中1":
-                        center1shiftlocationarray.removeAtIndex(0)
-                        
-                    case "中2":
-                        center2shiftlocationarray.removeAtIndex(0)
-                        
-                    case "中3":
-                        center3shiftlocationarray.removeAtIndex(0)
-                        
-                    case "遅":
-                        lateshiftlocationarray.removeAtIndex(0)
-                        
-                    case "休":
-                        holidayshiftlocationarray.removeAtIndex(0)
-                        
-                    case "他":
-                        othershiftlocationarray.removeAtIndex(0)
-                        
-                    default:
-                        break
-                    }
-                    
-                    let holidayarray = DBmethod().ShiftSystemNameArrayGetByGroudid(6)
-                    if(holidayarray.contains(staffshift) == false){
-                        dayshiftarray[i] += staffname + ":" + staffshift + ","
-                    }
-                    
-                }
-            //認識できないシフト名があった場合
-            }else{
-                
-                let successshiftnamearray = self.GetWillRemoveShiftName(earlyshiftlocationarray.count, center1: center1shiftlocationarray.count, center2: center2shiftlocationarray.count, center3: center3shiftlocationarray.count, late: lateshiftlocationarray.count, holiday: holidayshiftlocationarray.count, other: othershiftlocationarray.count)
-                
-                var messagetext = staffarraytmp
-                
-                for(var i = 0; i < successshiftnamearray.count; i++){
-                    messagetext = self.GetRemoveSetShiftName(messagetext, shiftname: successshiftnamearray[i])
-                }
-                
-                appDelegate.errorshiftnamepdf[staffname] = messagetext
-            }
-        }
-
-//        let file_name = "TEST.txt"
-//        let text = dayshiftarray[0]
-//        
-//        if let dir : NSString = NSSearchPathForDirectoriesInDomains( NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.AllDomainsMask, true ).first {
-//            
-//            let path_file_name = dir.stringByAppendingPathComponent(file_name)
-//            
-//            do {
-//                
-//                try text.writeToFile(path_file_name, atomically: false, encoding: NSUTF8StringEncoding )
-//                
-//            } catch {
-//                //エラー処理
-//            }
-//        }
-        
-        return (dayshiftarray,shiftyearandmonth)
     }
     
     //データベースへ記録する関数
