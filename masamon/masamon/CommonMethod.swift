@@ -129,7 +129,7 @@ class CommonMethod: UIViewController {
                 
             }else if(staffname.containsString(holiday[i].name)){
                 staffname = staffname.stringByReplacingOccurrencesOfString(holiday[i].name, withString: "")
-                groupidarray.append(999)
+                groupidarray.append(6)
             }
         }
         

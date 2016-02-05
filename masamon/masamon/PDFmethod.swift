@@ -225,13 +225,16 @@ class PDFmethod: UIViewController {
             
             
             //要素を昇順でソートする
-            earlyshiftlocationarray = earlyshiftlocationarray.sort()
-            center1shiftlocationarray = center1shiftlocationarray.sort()
-            center2shiftlocationarray = center2shiftlocationarray.sort()
-            center3shiftlocationarray = center3shiftlocationarray.sort()
-            lateshiftlocationarray = lateshiftlocationarray.sort()
-            holidayshiftlocationarray = holidayshiftlocationarray.sort()
-            othershiftlocationarray = othershiftlocationarray.sort()
+            for(var i = 0; i < shiftlocationarray.count; i++){
+                shiftlocationarray[i] = shiftlocationarray[i].sort()
+            }
+//            earlyshiftlocationarray = earlyshiftlocationarray.sort()
+//            center1shiftlocationarray = center1shiftlocationarray.sort()
+//            center2shiftlocationarray = center2shiftlocationarray.sort()
+//            center3shiftlocationarray = center3shiftlocationarray.sort()
+//            lateshiftlocationarray = lateshiftlocationarray.sort()
+//            holidayshiftlocationarray = holidayshiftlocationarray.sort()
+//            othershiftlocationarray = othershiftlocationarray.sort()
             
             
             //スタッフ名にシフト名が含まれている場合に、カウントされてしまうため要素を削除する
@@ -239,29 +242,33 @@ class PDFmethod: UIViewController {
             if(includeshiftnamearray.count != 0){
                 
                 for(var i = 0; i < includeshiftnamearray.count; i++){
-                    switch(includeshiftnamearray[i]){
-                    case 0:
-                        earlyshiftlocationarray.removeAtIndex(0)
-                        
-                    case 1:
-                        center1shiftlocationarray.removeAtIndex(0)
-                        
-                    case 2:
-                        center2shiftlocationarray.removeAtIndex(0)
-                        
-                    case 3:
-                        center3shiftlocationarray.removeAtIndex(0)
-                        
-                    case 4:
-                        lateshiftlocationarray.removeAtIndex(0)
-                        
-                    case 5:
-                        othershiftlocationarray.removeAtIndex(0)
-                        
-                    default: //case 999
-                        holidayshiftlocationarray.removeAtIndex(0)
-                    }
+                    shiftlocationarray[includeshiftnamearray[i]].removeAtIndex(0)
                 }
+                
+//                for(var i = 0; i < includeshiftnamearray.count; i++){
+//                    switch(includeshiftnamearray[i]){
+//                    case 0:
+//                        earlyshiftlocationarray.removeAtIndex(0)
+//                        
+//                    case 1:
+//                        center1shiftlocationarray.removeAtIndex(0)
+//                        
+//                    case 2:
+//                        center2shiftlocationarray.removeAtIndex(0)
+//                        
+//                    case 3:
+//                        center3shiftlocationarray.removeAtIndex(0)
+//                        
+//                    case 4:
+//                        lateshiftlocationarray.removeAtIndex(0)
+//                        
+//                    case 5:
+//                        othershiftlocationarray.removeAtIndex(0)
+//                        
+//                    default: //case 999
+//                        holidayshiftlocationarray.removeAtIndex(0)
+//                    }
+//                }
             }
             
             
@@ -290,19 +297,26 @@ class PDFmethod: UIViewController {
             
             
             if(removeflag){
-                earlyshiftlocationarray = self.RemoveElementThanPivotIndex(earlyshiftlocationarray, pivotindex: index, text: staffarraytmp)
-                center1shiftlocationarray = self.RemoveElementThanPivotIndex(center1shiftlocationarray, pivotindex: index, text: staffarraytmp)
-                center2shiftlocationarray = self.RemoveElementThanPivotIndex(center2shiftlocationarray, pivotindex: index, text: staffarraytmp)
-                center3shiftlocationarray = self.RemoveElementThanPivotIndex(center3shiftlocationarray, pivotindex: index, text: staffarraytmp)
-                lateshiftlocationarray = self.RemoveElementThanPivotIndex(lateshiftlocationarray, pivotindex: index, text: staffarraytmp)
-                othershiftlocationarray = self.RemoveElementThanPivotIndex(othershiftlocationarray, pivotindex: index, text: staffarraytmp)
-                holidayshiftlocationarray = self.RemoveElementThanPivotIndex(holidayshiftlocationarray, pivotindex: index, text: staffarraytmp)
+                for(var i = 0; i < shiftlocationarray.count; i++){
+                    shiftlocationarray[i] = self.RemoveElementThanPivotIndex(shiftlocationarray[i], pivotindex: index, text: staffarraytmp)
+                }
+//                earlyshiftlocationarray = self.RemoveElementThanPivotIndex(earlyshiftlocationarray, pivotindex: index, text: staffarraytmp)
+//                center1shiftlocationarray = self.RemoveElementThanPivotIndex(center1shiftlocationarray, pivotindex: index, text: staffarraytmp)
+//                center2shiftlocationarray = self.RemoveElementThanPivotIndex(center2shiftlocationarray, pivotindex: index, text: staffarraytmp)
+//                center3shiftlocationarray = self.RemoveElementThanPivotIndex(center3shiftlocationarray, pivotindex: index, text: staffarraytmp)
+//                lateshiftlocationarray = self.RemoveElementThanPivotIndex(lateshiftlocationarray, pivotindex: index, text: staffarraytmp)
+//                othershiftlocationarray = self.RemoveElementThanPivotIndex(othershiftlocationarray, pivotindex: index, text: staffarraytmp)
+//                holidayshiftlocationarray = self.RemoveElementThanPivotIndex(holidayshiftlocationarray, pivotindex: index, text: staffarraytmp)
             }
             
             
             //要素数を比較して正しくシフト体制を認識できているかチェックする
             var count = 0
-            count = earlyshiftlocationarray.count + center1shiftlocationarray.count + center2shiftlocationarray.count + center3shiftlocationarray.count + lateshiftlocationarray.count + holidayshiftlocationarray.count + othershiftlocationarray.count
+            for(var i = 0; i < shiftlocationarray.count; i++){
+                count += shiftlocationarray[i].count
+            }
+            
+//            count = earlyshiftlocationarray.count + center1shiftlocationarray.count + center2shiftlocationarray.count + center3shiftlocationarray.count + lateshiftlocationarray.count + holidayshiftlocationarray.count + othershiftlocationarray.count
             
             //            print(earlyshiftlocationarray.count)
             //            print(center1shiftlocationarray.count)
@@ -321,13 +335,16 @@ class PDFmethod: UIViewController {
                 
                 
                 //各配列に識別子を追加する
-                earlyshiftlocationarray.append(99999)
-                center1shiftlocationarray.append(99999)
-                center2shiftlocationarray.append(99999)
-                center3shiftlocationarray.append(99999)
-                lateshiftlocationarray.append(99999)
-                holidayshiftlocationarray.append(99999)
-                othershiftlocationarray.append(99999)
+                for(var i = 0; i < shiftlocationarray.count; i++){
+                    shiftlocationarray[i].append(99999)
+                }
+//                earlyshiftlocationarray.append(99999)
+//                center1shiftlocationarray.append(99999)
+//                center2shiftlocationarray.append(99999)
+//                center3shiftlocationarray.append(99999)
+//                lateshiftlocationarray.append(99999)
+//                holidayshiftlocationarray.append(99999)
+//                othershiftlocationarray.append(99999)
                 
                 
                 //日付分のループを開始
