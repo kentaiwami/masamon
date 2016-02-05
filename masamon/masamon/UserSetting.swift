@@ -22,8 +22,7 @@ class UserSetting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSourc
     
     let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得
 
-    var myUIPicker1: UIPickerView = UIPickerView()
-//    var myUIPicker2: UIPickerView = UIPickerView()
+    var timeUIPicker: UIPickerView = UIPickerView()
     
     let time = CommonMethod().GetTime()
     let wavyline: [String] = ["〜"]
@@ -126,90 +125,61 @@ class UserSetting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSourc
         TimeTo1.tag = 1
         TimeFrom2.tag = 2
         TimeTo2.tag = 2
+        Salaly1.tag = 3
+        Salaly2.tag = 4
+        staffnumbertextfield.tag = 5
         
-        myUIPicker1.tag = 1
-//        myUIPicker2.tag = 2
+        timeUIPicker.tag = 1
         
         //Toolbarの作成
-        let toolBar1 = UIToolbar()
-        toolBar1.barStyle = UIBarStyle.Default
-        toolBar1.translucent = true
-        toolBar1.sizeToFit()
-//        let toolBar2 = UIToolbar()
-//        toolBar2.barStyle = UIBarStyle.Default
-//        toolBar2.translucent = true
-//        toolBar2.sizeToFit()
-        let toolBarsalaly1 = UIToolbar()
-        toolBarsalaly1.barStyle = UIBarStyle.Default
-        toolBarsalaly1.translucent = true
-        toolBarsalaly1.sizeToFit()
-        let toolBarsalaly2 = UIToolbar()
-        toolBarsalaly2.barStyle = UIBarStyle.Default
-        toolBarsalaly2.translucent = true
-        toolBarsalaly2.sizeToFit()
-        let keyboardtoolbar = UIToolbar()
-        keyboardtoolbar.barStyle = UIBarStyle.Default
-        keyboardtoolbar.translucent = true
-        keyboardtoolbar.sizeToFit()
+        let pickertoolBar = UIToolbar()
+        pickertoolBar.barStyle = UIBarStyle.Default
+        pickertoolBar.translucent = true
+        pickertoolBar.sizeToFit()
+        let numberpadtoolBar = UIToolbar()
+        numberpadtoolBar.barStyle = UIBarStyle.Default
+        numberpadtoolBar.translucent = true
+        numberpadtoolBar.sizeToFit()
         
         //Toolbarにつけるボタンの作成
-        let doneButton1 = UIBarButtonItem(title: "完了", style: UIBarButtonItemStyle.Plain, target: self, action: "donePicker:")
-        let cancelButton1 = UIBarButtonItem(title: "キャンセル", style: UIBarButtonItemStyle.Plain, target: self, action: "donePicker:")
-//        let doneButton2 = UIBarButtonItem(title: "完了", style: UIBarButtonItemStyle.Plain, target: self, action: "donePicker:")
-//        let cancelButton2 = UIBarButtonItem(title: "キャンセル", style: UIBarButtonItemStyle.Plain, target: self, action: "donePicker:")
+        let pickerdoneButton = UIBarButtonItem(title: "完了", style: UIBarButtonItemStyle.Plain, target: self, action: "TapButton:")
+        let pickercancelButton = UIBarButtonItem(title: "キャンセル", style: UIBarButtonItemStyle.Plain, target: self, action: "TapButton:")
         let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
-        let salalyButton1 = UIBarButtonItem(title: "完了", style: UIBarButtonItemStyle.Plain, target: self, action: "doneSalalyLabel:")
-        let salalyButton2 = UIBarButtonItem(title: "完了", style: UIBarButtonItemStyle.Plain, target: self, action: "doneSalalyLabel:")
-        let donebutton = UIBarButtonItem(title: "完了", style: UIBarButtonItemStyle.Plain, target: self, action: "TapToolBarButton:")
-        let cancelbutton = UIBarButtonItem(title: "キャンセル", style: UIBarButtonItemStyle.Plain, target: self, action: "TapToolBarButton:")
+        let salalyButton = UIBarButtonItem(title: "完了", style: UIBarButtonItemStyle.Plain, target: self, action: "TapButton:")
         
-        donebutton.tag = 1
-        cancelbutton.tag = 2
-        doneButton1.tag = 10
-        cancelButton1.tag = 11
-//        doneButton2.tag = 20
-//        cancelButton2.tag = 21
-        salalyButton1.tag = 30
-        salalyButton2.tag = 31
+        pickerdoneButton.tag = 10
+        pickercancelButton.tag = 11
+        salalyButton.tag = 30
         
         //Toolbarへボタンの追加
-        toolBar1.setItems([cancelButton1,flexSpace,doneButton1], animated: false)
-        toolBar1.userInteractionEnabled = true
-//        toolBar2.setItems([cancelButton2,flexSpace,doneButton2], animated: false)
-//        toolBar2.userInteractionEnabled = true
-        toolBarsalaly1.setItems([flexSpace,salalyButton1], animated: false)
-        toolBarsalaly1.userInteractionEnabled = true
-        toolBarsalaly2.setItems([flexSpace,salalyButton2], animated: false)
-        toolBarsalaly2.userInteractionEnabled = true
-        keyboardtoolbar.setItems([flexSpace,donebutton], animated: false)
-        keyboardtoolbar.userInteractionEnabled = true
+        pickertoolBar.setItems([pickercancelButton,flexSpace,pickerdoneButton], animated: false)
+        pickertoolBar.userInteractionEnabled = true
+        numberpadtoolBar.setItems([flexSpace,salalyButton], animated: false)
+        numberpadtoolBar.userInteractionEnabled = true
         
         //PickerViewの追加
-        myUIPicker1.frame = CGRectMake(0,0,self.view.bounds.width/2+20, 260.0)
-        myUIPicker1.delegate = self
-        myUIPicker1.dataSource = self
-//        myUIPicker2.frame = CGRectMake(0,0,self.view.bounds.width/2+20, 260.0)
-//        myUIPicker2.delegate = self
-//        myUIPicker2.dataSource = self
+        timeUIPicker.frame = CGRectMake(0,0,self.view.bounds.width/2+20, 260.0)
+        timeUIPicker.delegate = self
+        timeUIPicker.dataSource = self
         
         Salaly1.keyboardType = .NumberPad
         Salaly2.keyboardType = .NumberPad
-        Salaly1.inputAccessoryView = toolBarsalaly1
-        Salaly2.inputAccessoryView = toolBarsalaly2
+        Salaly1.inputAccessoryView = numberpadtoolBar
+        Salaly2.inputAccessoryView = numberpadtoolBar
         
-        TimeFrom1.inputView = myUIPicker1
-        TimeFrom1.inputAccessoryView = toolBar1
-        TimeTo1.inputView = myUIPicker1
-        TimeTo1.inputAccessoryView = toolBar1
-        TimeFrom2.inputView = myUIPicker1
-        TimeFrom2.inputAccessoryView = toolBar1
-        TimeTo2.inputView = myUIPicker1
-        TimeTo2.inputAccessoryView = toolBar1
+        TimeFrom1.inputView = timeUIPicker
+        TimeFrom1.inputAccessoryView = pickertoolBar
+        TimeTo1.inputView = timeUIPicker
+        TimeTo1.inputAccessoryView = pickertoolBar
+        TimeFrom2.inputView = timeUIPicker
+        TimeFrom2.inputAccessoryView = pickertoolBar
+        TimeTo2.inputView = timeUIPicker
+        TimeTo2.inputAccessoryView = pickertoolBar
         
         usernametextfield.returnKeyType = .Done
         
         staffnumbertextfield.keyboardType = .NumberPad
-        staffnumbertextfield.inputAccessoryView = keyboardtoolbar
+        staffnumbertextfield.inputAccessoryView = numberpadtoolBar
     }
     
     override func didReceiveMemoryWarning() {
@@ -275,8 +245,8 @@ class UserSetting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSourc
         return 50
     }
     
-    //pickerview上のボタン動作
-    func donePicker(sender: UIButton){
+    //pickerviewやツールバー上のボタン動作
+    func TapButton(sender: UIButton){
         
         if(selecttextfieldtag == 1){            //日中のテキストフィールドが選択されている状態
             switch(sender.tag){
@@ -313,44 +283,12 @@ class UserSetting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSourc
                 break
             }
 
-        }
-        
-//        switch(sender.tag){
-//        case 10: //上のテキストフィールドのDoneボタン
-//            TimeFrom1.text = time[textfieldrowfrom1]
-//            TimeTo1.text = time[textfieldrowto1]
-//            TimeFrom1.resignFirstResponder()
-//            TimeTo1.resignFirstResponder()
-//        case 11: //上のテキストフィールドのcalcelボタン
-//            TimeFrom1.text = ""
-//            TimeTo1.text = ""
-//            TimeFrom1.resignFirstResponder()
-//            TimeTo1.resignFirstResponder()
-//        case 20: //下のテキストフィールドのDoneボタン
-//            TimeFrom2.text = time[textfieldrowfrom2]
-//            TimeTo2.text = time[textfieldrowto2]
-//            TimeFrom2.resignFirstResponder()
-//            TimeTo2.resignFirstResponder()
-//        case 21: //上のテキストフィールドのcalcelボタン
-//            TimeFrom2.text = ""
-//            TimeTo2.text = ""
-//            TimeFrom2.resignFirstResponder()
-//            TimeTo2.resignFirstResponder()
-//        default:
-//            break
-//            
-//        }
-    }
-    
-    //時給入力時の完了を押した時
-    func doneSalalyLabel(sender: UIButton){
-        switch(sender.tag){
-        case 30:
+        }else if(selecttextfieldtag == 3){      //日中の時給テキストフィールドが選択されている
             Salaly1.resignFirstResponder()
-        case 31:
+        }else if(selecttextfieldtag == 4){      //深夜の時給テキストフィールドが選択されている
             Salaly2.resignFirstResponder()
-        default:
-            break
+        }else if(selecttextfieldtag == 5){      //スタッフ人数テキストフィールドが選択されている
+            staffnumbertextfield.resignFirstResponder()
         }
     }
     
@@ -359,13 +297,13 @@ class UserSetting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSourc
     func textFieldDidBeginEditing(textField: UITextField) {
         selecttextfieldtag = textField.tag
         if(textField.tag == 1){
-            myUIPicker1.selectRow(10, inComponent: 0, animated: true)
-            myUIPicker1.selectRow(44, inComponent: 2, animated: true)
+            timeUIPicker.selectRow(10, inComponent: 0, animated: true)
+            timeUIPicker.selectRow(44, inComponent: 2, animated: true)
             TimeFrom1.text = time[textfieldrowfrom1]
             TimeTo1.text = time[textfieldrowto1]
         }else if(textField.tag == 2){
-            myUIPicker1.selectRow(44, inComponent: 0, animated: true)
-            myUIPicker1.selectRow(10, inComponent: 2, animated: true)
+            timeUIPicker.selectRow(44, inComponent: 0, animated: true)
+            timeUIPicker.selectRow(10, inComponent: 2, animated: true)
             TimeFrom2.text = time[textfieldrowfrom2]
             TimeTo2.text = time[textfieldrowto2]
         }
