@@ -59,7 +59,8 @@ class SwipeBetweenViewControllers: UINavigationController,UIPageViewControllerDe
     var pageController :UIPageViewController
     var navigationView :UIView
     var buttonText :[String] = []
-    
+    let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -88,7 +89,7 @@ class SwipeBetweenViewControllers: UINavigationController,UIPageViewControllerDe
         let numControllers :Int = viewControllerArray.count
 
         if (buttonText.count == 0) {
-            buttonText = ["シフト","カレンダー","設定","履歴"] //%%%buttontitle
+            buttonText = ["シフト","カレンダー","設定","ファイル"] //%%%buttontitle
         }
 
         for (var i = 0 ; i < numControllers; i++) {
@@ -111,8 +112,26 @@ class SwipeBetweenViewControllers: UINavigationController,UIPageViewControllerDe
     
     //%%% sets up the selection bar under the buttons on the navigation bar
     func setupSelector() {
-        selectionBar = UIView(frame: CGRectMake(X_BUFFER-X_OFFSET, SELECTOR_Y_BUFFER,(self.view.frame.size.width-2*X_BUFFER)/CGFloat(viewControllerArray.count), SELECTOR_HEIGHT))
-        selectionBar.backgroundColor = UIColor.hex("07E665", alpha: 1.0) //%%% sbcolor
+        var positon = 0.0
+        switch(appDelegate.screennumber){
+        case 0:
+            positon = -8.0
+            
+        case 1:
+            positon = 87.75
+            
+        case 2:
+            positon = 179.5
+            
+        case 3:
+            positon = 273.25
+            
+        default:
+            break
+        }
+        
+        selectionBar = UIView(frame: CGRectMake(CGFloat(positon), SELECTOR_Y_BUFFER,(self.view.frame.size.width-2*X_BUFFER)/CGFloat(viewControllerArray.count), SELECTOR_HEIGHT))
+        selectionBar.backgroundColor = UIColor.hex("F2B33D", alpha: 1.0) //%%% sbcolor
         selectionBar.alpha = 0.8; //%%% sbalpha
         navigationView.addSubview(selectionBar)
     }
@@ -140,7 +159,7 @@ class SwipeBetweenViewControllers: UINavigationController,UIPageViewControllerDe
         pageController = self.topViewController as! UIPageViewController
         pageController.delegate = self
         pageController.dataSource = self
-        pageController.setViewControllers([viewControllerArray[0]], direction: UIPageViewControllerNavigationDirection.Forward, animated: true, completion: nil)
+        pageController.setViewControllers([viewControllerArray[appDelegate.screennumber]], direction: UIPageViewControllerNavigationDirection.Forward, animated: true, completion: nil)
         self.syncScrollView()
     }
 
@@ -225,7 +244,7 @@ class SwipeBetweenViewControllers: UINavigationController,UIPageViewControllerDe
         //i.e. if you're on the second page, it makes sure that the bar starts from the frame.origin.x of the
         //second tab instead of the beginning
         let xCoor:CGFloat = X_BUFFER + selectionBar.frame.size.width * CGFloat(currentPageIndex) - X_OFFSET;
-        
+
         selectionBar.frame = CGRectMake(xCoor-xFromCenter/CGFloat(viewControllerArray.count), selectionBar.frame.origin.y, selectionBar.frame.size.width, selectionBar.frame.size.height);
     }
     

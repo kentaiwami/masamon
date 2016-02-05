@@ -69,6 +69,7 @@ class ShiftGalleryTable: UIViewController, UITableViewDataSource, UITableViewDel
     
     override func viewDidAppear(animated: Bool) {
         self.myCollectionView.reloadData()
+        appDelegate.screennumber = 3
     }
     
     var flag = false

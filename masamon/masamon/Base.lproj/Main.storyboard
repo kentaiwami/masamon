@@ -305,8 +305,8 @@
                     <connections>
                         <outlet property="AddScrollView" destination="ReX-lv-aWl" id="Fhr-vg-9Bp"/>
                         <outlet property="HPSView" destination="ABz-QY-q8E" id="0HL-h8-Y1T"/>
-                        <outlet property="SalalyLabel1" destination="5om-Ih-YdK" id="2zj-Zs-aKt"/>
-                        <outlet property="SalalyLabel2" destination="Ngr-tK-qPC" id="xA5-Bh-lW0"/>
+                        <outlet property="Salaly1" destination="5om-Ih-YdK" id="OTu-KP-Fsj"/>
+                        <outlet property="Salaly2" destination="Ngr-tK-qPC" id="FmF-vw-RKo"/>
                         <outlet property="TimeFrom1" destination="WZn-fS-lGq" id="m1W-6b-pDX"/>
                         <outlet property="TimeFrom2" destination="sF4-8Z-uh9" id="4c2-Uk-1uK"/>
                         <outlet property="TimeTo1" destination="WPM-wm-Uok" id="N7e-SM-vF9"/>

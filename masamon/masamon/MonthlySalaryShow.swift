@@ -70,7 +70,6 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         //pickerviewに表示するツールバー
         pickerviewtoolBar.barStyle = UIBarStyle.Default
         pickerviewtoolBar.translucent = true
-        pickerviewtoolBar.tintColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
         pickerviewtoolBar.sizeToFit()
         
         pickerdoneButton = UIBarButtonItem(title: "完了", style: UIBarButtonItemStyle.Plain, target: self, action: "donePicker:")
@@ -145,6 +144,8 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             
             //pickerviewのデフォルト表示
             SaralyLabel.text = String(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB)-1))
+        }else{
+            SaralyLabel.text = ""
         }
         
         onecourspicker.reloadAllComponents()
@@ -153,6 +154,8 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         let date = ReturnYearMonthDayWeekday(today)         //日付を西暦,月,日,曜日に分けて取得
         self.ShowAllData(CommonMethod().Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day)           //データ表示へ分けた日付を渡す
         CalenderLabel.text = "\(date.year)年\(date.month)月\(date.day)日 (\(self.ReturnWeekday(date.weekday)))"
+        
+        appDelegate.screennumber = 0
     }
     
     //バックグラウンドで保存しながらプログレスを表示する
@@ -531,7 +534,9 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         
         if(pickerView.tag == 1){            //取り込んだシフト
-            SaralyLabel.text = String(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB)-1-row))
+            if(DBmethod().DBRecordCount(ShiftDB) != 0){         //レコードが0のときは何もしない
+                SaralyLabel.text = String(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB)-1-row))
+            }
             
         }else if(pickerView.tag == 2){      //シフトグループ選択
             shiftgroupnametextfield.text = shiftgroupname[row]
