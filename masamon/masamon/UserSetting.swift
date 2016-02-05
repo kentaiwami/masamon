@@ -15,8 +15,8 @@ class UserSetting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSourc
     @IBOutlet weak var TimeTo1: UITextField!
     @IBOutlet weak var TimeFrom2: UITextField!
     @IBOutlet weak var TimeTo2: UITextField!
-    @IBOutlet weak var SalalyLabel1: UITextField!
-    @IBOutlet weak var SalalyLabel2: UITextField!
+    @IBOutlet weak var Salaly1: UITextField!
+    @IBOutlet weak var Salaly2: UITextField!
     @IBOutlet weak var usernametextfield: UITextField!
     @IBOutlet weak var staffnumbertextfield: UITextField!
     
@@ -117,8 +117,8 @@ class UserSetting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSourc
         TimeTo1.delegate = self
         TimeFrom2.delegate = self
         TimeTo2.delegate = self
-        SalalyLabel1.delegate = self
-        SalalyLabel2.delegate = self
+        Salaly1.delegate = self
+        Salaly2.delegate = self
         usernametextfield.delegate = self
         staffnumbertextfield.delegate = self
         
@@ -134,27 +134,22 @@ class UserSetting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSourc
         let toolBar1 = UIToolbar()
         toolBar1.barStyle = UIBarStyle.Default
         toolBar1.translucent = true
-//        toolBar1.tintColor = UIColor.blueColor()
         toolBar1.sizeToFit()
         let toolBar2 = UIToolbar()
         toolBar2.barStyle = UIBarStyle.Default
         toolBar2.translucent = true
-//        toolBar2.tintColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
         toolBar2.sizeToFit()
         let toolBarsalaly1 = UIToolbar()
         toolBarsalaly1.barStyle = UIBarStyle.Default
         toolBarsalaly1.translucent = true
-//        toolBarsalaly1.tintColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
         toolBarsalaly1.sizeToFit()
         let toolBarsalaly2 = UIToolbar()
         toolBarsalaly2.barStyle = UIBarStyle.Default
         toolBarsalaly2.translucent = true
-//        toolBarsalaly2.tintColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
         toolBarsalaly2.sizeToFit()
         let keyboardtoolbar = UIToolbar()
         keyboardtoolbar.barStyle = UIBarStyle.Default
         keyboardtoolbar.translucent = true
-//        keyboardtoolbar.tintColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
         keyboardtoolbar.sizeToFit()
         
         //Toolbarにつけるボタンの作成
@@ -197,10 +192,10 @@ class UserSetting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSourc
         myUIPicker2.delegate = self
         myUIPicker2.dataSource = self
         
-        SalalyLabel1.keyboardType = .NumberPad
-        SalalyLabel2.keyboardType = .NumberPad
-        SalalyLabel1.inputAccessoryView = toolBarsalaly1
-        SalalyLabel2.inputAccessoryView = toolBarsalaly2
+        Salaly1.keyboardType = .NumberPad
+        Salaly2.keyboardType = .NumberPad
+        Salaly1.inputAccessoryView = toolBarsalaly1
+        Salaly2.inputAccessoryView = toolBarsalaly2
         
         TimeFrom1.inputView = myUIPicker1
         TimeFrom1.inputAccessoryView = toolBar1
@@ -314,9 +309,9 @@ class UserSetting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSourc
     func doneSalalyLabel(sender: UIButton){
         switch(sender.tag){
         case 30:
-            SalalyLabel1.resignFirstResponder()
+            Salaly1.resignFirstResponder()
         case 31:
-            SalalyLabel2.resignFirstResponder()
+            Salaly2.resignFirstResponder()
         default:
             break
         }
@@ -340,7 +335,7 @@ class UserSetting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSourc
     //セーブボタンを押した時
     func SaveButtontapped(sender: UIButton){
         
-        if(TimeFrom1.text?.isEmpty == true || TimeTo1.text?.isEmpty == true || TimeFrom2.text?.isEmpty == true || TimeTo2.text?.isEmpty == true || SalalyLabel1.text?.isEmpty == true || SalalyLabel2.text?.isEmpty == true || usernametextfield.text?.isEmpty == true || staffnumbertextfield.text?.isEmpty == true){
+        if(TimeFrom1.text?.isEmpty == true || TimeTo1.text?.isEmpty == true || TimeFrom2.text?.isEmpty == true || TimeTo2.text?.isEmpty == true || Salaly1.text?.isEmpty == true || Salaly2.text?.isEmpty == true || usernametextfield.text?.isEmpty == true || staffnumbertextfield.text?.isEmpty == true){
             
             let alertController = UIAlertController(title: "ニャ!!", message: "項目を埋めてから押すニャ", preferredStyle: .Alert)
             
@@ -354,11 +349,11 @@ class UserSetting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSourc
             hourlypayrecord1.id = 1
             hourlypayrecord1.timefrom = Double(time.indexOf(TimeFrom1.text!)!)-(Double(time.indexOf(TimeFrom1.text!)!)*0.5)
             hourlypayrecord1.timeto = Double(time.indexOf(TimeTo1.text!)!)-(Double(time.indexOf(TimeTo1.text!)!)*0.5)
-            hourlypayrecord1.pay = Int(SalalyLabel1.text!)!
+            hourlypayrecord1.pay = Int(Salaly1.text!)!
             hourlypayrecord2.id = 2
             hourlypayrecord2.timefrom = Double(time.indexOf(TimeFrom2.text!)!)-(Double(time.indexOf(TimeFrom2.text!)!)*0.5)
             hourlypayrecord2.timeto = Double(time.indexOf(TimeTo2.text!)!)-(Double(time.indexOf(TimeTo2.text!)!)*0.5)
-            hourlypayrecord2.pay = Int(SalalyLabel2.text!)!
+            hourlypayrecord2.pay = Int(Salaly2.text!)!
             
             let staffnumberrecord = StaffNumberDB()
             staffnumberrecord.id = 0
@@ -442,8 +437,8 @@ class UserSetting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSourc
             TimeFrom2.placeholder = "no data"
             TimeTo1.placeholder = "no data"
             TimeTo2.placeholder = "no data"
-            SalalyLabel1.placeholder = "no data"
-            SalalyLabel2.placeholder = "no data"
+            Salaly1.placeholder = "no data"
+            Salaly2.placeholder = "no data"
             
         }else{
             usernametextfield.text = DBmethod().UserNameGet()
@@ -455,8 +450,8 @@ class UserSetting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSourc
             TimeTo1.text = time[Int(hourlypayarray[0].timeto * 2)]
             TimeFrom2.text = time[Int(hourlypayarray[1].timefrom * 2)]
             TimeTo2.text = time[Int(hourlypayarray[1].timeto * 2)]
-            SalalyLabel1.text = String(hourlypayarray[0].pay)
-            SalalyLabel2.text = String(hourlypayarray[1].pay)
+            Salaly1.text = String(hourlypayarray[0].pay)
+            Salaly2.text = String(hourlypayarray[1].pay)
         }
     }
     @IBAction func TapBackButton(sender: AnyObject) {
