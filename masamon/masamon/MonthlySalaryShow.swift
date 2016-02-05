@@ -531,7 +531,9 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         
         if(pickerView.tag == 1){            //取り込んだシフト
-            SaralyLabel.text = String(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB)-1-row))
+            if(DBmethod().DBRecordCount(ShiftDB) != 0){         //レコードが0のときは何もしない
+                SaralyLabel.text = String(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB)-1-row))
+            }
             
         }else if(pickerView.tag == 2){      //シフトグループ選択
             shiftgroupnametextfield.text = shiftgroupname[row]
