@@ -145,6 +145,8 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             
             //pickerviewのデフォルト表示
             SaralyLabel.text = String(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB)-1))
+        }else{
+            SaralyLabel.text = ""
         }
         
         onecourspicker.reloadAllComponents()
