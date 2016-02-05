@@ -89,7 +89,7 @@ class SwipeBetweenViewControllers: UINavigationController,UIPageViewControllerDe
         let numControllers :Int = viewControllerArray.count
 
         if (buttonText.count == 0) {
-            buttonText = ["シフト","カレンダー","設定","履歴"] //%%%buttontitle
+            buttonText = ["シフト","カレンダー","設定","ファイル"] //%%%buttontitle
         }
 
         for (var i = 0 ; i < numControllers; i++) {
