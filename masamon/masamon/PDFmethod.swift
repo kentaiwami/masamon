@@ -463,7 +463,7 @@ class PDFmethod: UIViewController {
         }
         
         //スタッフの人数分(配列の最後まで)繰り返す
-//        for(var i = 26; i < 27; i++){
+//        for(var i = 1; i < 2; i++){
         for(var i = 1; i < staffarray.count; i++){
         
             var staffname = ""
@@ -483,7 +483,7 @@ class PDFmethod: UIViewController {
             //スタッフ名の抽出
             staffname = self.GetStaffName(staffarray[i], i: i)
             staffarraytmp = staffarray[i]
-            
+            print(staffname)
             //スキップされたスタッフは取り込みを行わない
             if(appDelegate.skipstaff.contains(staffname)){
                 break
@@ -529,15 +529,15 @@ class PDFmethod: UIViewController {
                     case 4:
                         lateshiftlocationarray += self.GetShiftPositionArray(staffarraytmpnsstring, shiftname: shiftname.name)
                         
-                    default:
+                    case 5:
                         othershiftlocationarray += self.GetShiftPositionArray(staffarraytmpnsstring, shiftname: shiftname.name)
+                        
+                    case 6:
+                        holidayshiftlocationarray += self.GetShiftPositionArray(staffarraytmpnsstring, shiftname: shiftname.name)
+                        
+                    default:
+                        break
                     }
-                }
-                
-                //休みを検出して場所を配列へ代入
-                let holiday = DBmethod().ShiftSystemNameArrayGetByGroudid(6)      //休暇のシフト体制を取得
-                for(var i = 0; i < holiday.count; i++){
-                    holidayshiftlocationarray += self.GetShiftPositionArray(staffarraytmpnsstring, shiftname: holiday[i])
                 }
             }
             
@@ -641,6 +641,14 @@ class PDFmethod: UIViewController {
             var count = 0
             count = earlyshiftlocationarray.count + center1shiftlocationarray.count + center2shiftlocationarray.count + center3shiftlocationarray.count + lateshiftlocationarray.count + holidayshiftlocationarray.count + othershiftlocationarray.count
            
+//            print(earlyshiftlocationarray.count)
+//            print(center1shiftlocationarray.count)
+//            print(center2shiftlocationarray.count)
+//            print(center3shiftlocationarray.count)
+//            print(lateshiftlocationarray.count)
+//            print(othershiftlocationarray.count)
+//            print(holidayshiftlocationarray.count)
+            
             if(count == monthrange.length){
                 
                 //正しく取り込めているが、シフト認識エラーとして記録されて残っている要素があれば削除する
