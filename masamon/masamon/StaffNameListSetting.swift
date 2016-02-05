@@ -160,6 +160,8 @@ class StaffNameListSetting: UIViewController, UITableViewDataSource, UITableView
                     self.RefreshData()
                     
             })
+            
+            
             alert.addAction(Action)
             
             //シフト名入力用のtextfieldを追加

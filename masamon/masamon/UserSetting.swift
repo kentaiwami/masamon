@@ -134,27 +134,27 @@ class UserSetting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSourc
         let toolBar1 = UIToolbar()
         toolBar1.barStyle = UIBarStyle.Default
         toolBar1.translucent = true
-        toolBar1.tintColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
+//        toolBar1.tintColor = UIColor.blueColor()
         toolBar1.sizeToFit()
         let toolBar2 = UIToolbar()
         toolBar2.barStyle = UIBarStyle.Default
         toolBar2.translucent = true
-        toolBar2.tintColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
+//        toolBar2.tintColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
         toolBar2.sizeToFit()
         let toolBarsalaly1 = UIToolbar()
         toolBarsalaly1.barStyle = UIBarStyle.Default
         toolBarsalaly1.translucent = true
-        toolBarsalaly1.tintColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
+//        toolBarsalaly1.tintColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
         toolBarsalaly1.sizeToFit()
         let toolBarsalaly2 = UIToolbar()
         toolBarsalaly2.barStyle = UIBarStyle.Default
         toolBarsalaly2.translucent = true
-        toolBarsalaly2.tintColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
+//        toolBarsalaly2.tintColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
         toolBarsalaly2.sizeToFit()
         let keyboardtoolbar = UIToolbar()
         keyboardtoolbar.barStyle = UIBarStyle.Default
         keyboardtoolbar.translucent = true
-        keyboardtoolbar.tintColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
+//        keyboardtoolbar.tintColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
         keyboardtoolbar.sizeToFit()
         
         //Toolbarにつけるボタンの作成
