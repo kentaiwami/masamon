@@ -59,6 +59,7 @@ class CalenderViewController: UIViewController {
     
     override func viewDidAppear(animated: Bool) {
         NowCalendarSettings()
+        appDelegate.screennumber = 1
     }
     
     override func didReceiveMemoryWarning() {

@@ -59,7 +59,8 @@ class SwipeBetweenViewControllers: UINavigationController,UIPageViewControllerDe
     var pageController :UIPageViewController
     var navigationView :UIView
     var buttonText :[String] = []
-    
+    let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -140,7 +141,7 @@ class SwipeBetweenViewControllers: UINavigationController,UIPageViewControllerDe
         pageController = self.topViewController as! UIPageViewController
         pageController.delegate = self
         pageController.dataSource = self
-        pageController.setViewControllers([viewControllerArray[0]], direction: UIPageViewControllerNavigationDirection.Forward, animated: true, completion: nil)
+        pageController.setViewControllers([viewControllerArray[appDelegate.screennumber]], direction: UIPageViewControllerNavigationDirection.Forward, animated: true, completion: nil)
         self.syncScrollView()
     }
 

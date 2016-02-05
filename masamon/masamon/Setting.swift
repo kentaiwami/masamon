@@ -13,7 +13,8 @@ class Setting: UIViewController {
 
     let buttonimages = ["../images/usersetting.png","../images/staffnamelist.png","../images/shiftnamelist.png","../images/shiftlist.png"]
     let buttonpositon: [[Int]] = [[80,160],[280,160],[90,380],[280,380]]
-        
+    let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -29,6 +30,10 @@ class Setting: UIViewController {
             self.view.addSubview(button)
             
         }
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        appDelegate.screennumber = 2
     }
     
     func Buttontapped(sender:UIButton){

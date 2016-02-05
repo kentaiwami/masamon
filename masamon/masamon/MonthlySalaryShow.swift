@@ -154,6 +154,8 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         let date = ReturnYearMonthDayWeekday(today)         //日付を西暦,月,日,曜日に分けて取得
         self.ShowAllData(CommonMethod().Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day)           //データ表示へ分けた日付を渡す
         CalenderLabel.text = "\(date.year)年\(date.month)月\(date.day)日 (\(self.ReturnWeekday(date.weekday)))"
+        
+        appDelegate.screennumber = 0
     }
     
     //バックグラウンドで保存しながらプログレスを表示する
