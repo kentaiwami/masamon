@@ -70,7 +70,6 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         //pickerviewに表示するツールバー
         pickerviewtoolBar.barStyle = UIBarStyle.Default
         pickerviewtoolBar.translucent = true
-        pickerviewtoolBar.tintColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
         pickerviewtoolBar.sizeToFit()
         
         pickerdoneButton = UIBarButtonItem(title: "完了", style: UIBarButtonItemStyle.Plain, target: self, action: "donePicker:")
