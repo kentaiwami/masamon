@@ -88,7 +88,7 @@ class PDFmethod: UIViewController {
     }
     
     //スタッフのシフトを日にちごとに分けたArrayを返す
-    func SplitDayShiftGet(var staffarray: Array<String>) -> (shiftarray: Array<String>, shiftcours: (Int,Int,Int)){
+    func SplitDayShiftGet(var staffarray: Array<String>) -> (shiftarray: Array<String>, shiftcours: (Int,Int,Int,Int,Int)){
         
         //データを削除して初期化する
         appDelegate.errorstaffnamepdf.removeAll()
@@ -239,10 +239,6 @@ class PDFmethod: UIViewController {
                 for(var i = 0; i < shiftlocationarray.count; i++){
                     shiftlocationarray[i].append(99999)
                 }
-                
-//                for(var i = 0; i < shiftlocationarray.count; i++){
-//                    print(shiftlocationarray[i])
-//                }
 
                 //日付分のループを開始
                 for(var i = 0; i < monthrange.length; i++){
@@ -638,7 +634,7 @@ class PDFmethod: UIViewController {
     }
     
     //データベースへ記録する関数
-    func RegistDataBase(shiftarray: Array<String>, shiftcours: (y: Int,sm: Int,em: Int), importname: String, importpath: String, update: Bool){
+    func RegistDataBase(shiftarray: Array<String>, shiftcours: (y: Int,sm: Int,sy: Int,em: Int, ey: Int), importname: String, importpath: String, update: Bool){
         
         var date = 11
         var flag = 0
@@ -666,15 +662,9 @@ class PDFmethod: UIViewController {
                     shiftdetaildbrecord.id = existshiftdb.shiftdetail[i].id
                     shiftdetaildbrecord.day = existshiftdb.shiftdetail[i].day
                     
-                    //開始月が12月の場合は昨年の12月で記録されるようにする
-                    if(shiftcours.sm == 12 && flag == 0){
-                        shiftdetaildbrecord.year = shiftcours.y - 1
-                    }else{
-                        shiftdetaildbrecord.year = shiftcours.y
-                    }
-                    
                     switch(flag){
                     case 0:         //11日〜30(31)日までの場合
+                        shiftdetaildbrecord.year = shiftcours.sy
                         shiftdetaildbrecord.month = shiftcours.sm
                         date++
                         
@@ -684,6 +674,7 @@ class PDFmethod: UIViewController {
                         }
                         
                     case 1:         //1日〜10日までの場合
+                        shiftdetaildbrecord.year = shiftcours.ey
                         shiftdetaildbrecord.month = shiftcours.em
                         date++
                         
@@ -715,17 +706,11 @@ class PDFmethod: UIViewController {
                     shiftdetaildbrecord.id = shiftdetaildbrecordcount
                     shiftdetaildbrecordcount++
                     
-                    //開始月が12月の場合は昨年の12月で記録されるようにする
-                    if(shiftcours.sm == 12 && flag == 0){
-                        shiftdetaildbrecord.year = shiftcours.y - 1
-                    }else{
-                        shiftdetaildbrecord.year = shiftcours.y
-                    }
-                    
                     shiftdetaildbrecord.day = date
                     
                     switch(flag){
                     case 0:         //11日〜30(31)日までの場合
+                        shiftdetaildbrecord.year = shiftcours.sy
                         shiftdetaildbrecord.month = shiftcours.sm
                         date++
                         
@@ -735,6 +720,7 @@ class PDFmethod: UIViewController {
                         }
                         
                     case 1:         //1日〜10日までの場合
+                        shiftdetaildbrecord.year = shiftcours.ey
                         shiftdetaildbrecord.month = shiftcours.em
                         date++
                         
@@ -766,7 +752,7 @@ class PDFmethod: UIViewController {
     }
     
     //入力したユーザ名の月給を計算して結果を記録する
-    func UserMonthlySalaryRegist(shiftarray: Array<String>, shiftcours: (y: Int,sm: Int,em: Int), importname: String){
+    func UserMonthlySalaryRegist(shiftarray: Array<String>, shiftcours: (y: Int,sm: Int,sy: Int,em: Int, ey: Int), importname: String){
         var usershift:[String] = []
         
         let username = DBmethod().UserNameGet()
