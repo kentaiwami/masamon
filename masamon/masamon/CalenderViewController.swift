@@ -73,7 +73,7 @@ class CalenderViewController: UIViewController {
         nowMonthButton.backgroundColor = UIColor.hex("FF8E92", alpha: 1.0)
         
         prevMonthButton.setTitle("前月", forState: .Normal)
-        nextMonthButton.setTitle("前月", forState: .Normal)
+        nextMonthButton.setTitle("来月", forState: .Normal)
         nowMonthButton.setTitle("今月", forState: .Normal)
         
         prevMonthButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
