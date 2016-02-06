@@ -183,7 +183,9 @@ class PDFmethod: UIViewController {
             if(includeshiftnamearray.count != 0){
                 
                 for(var i = 0; i < includeshiftnamearray.count; i++){
-                    shiftlocationarray[includeshiftnamearray[i]].removeAtIndex(0)
+                    if(shiftlocationarray[includeshiftnamearray[i]].count != 0){
+                        shiftlocationarray[includeshiftnamearray[i]].removeAtIndex(0)
+                    }
                 }
                 
             }
