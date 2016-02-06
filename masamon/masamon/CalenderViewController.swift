@@ -318,6 +318,7 @@ class CalenderViewController: UIViewController {
                 
             }
             
+            
             //ボタンの配色の設定
             //@remark:このサンプルでは正円のボタンを作っていますが、背景画像の設定等も可能です。
             
@@ -378,6 +379,22 @@ class CalenderViewController: UIViewController {
             button.titleLabel!.font = UIFont(name: "System", size: CGFloat(calendarFontSize))
             button.layer.cornerRadius = CGFloat(buttonRadius)
             
+            
+            //今日の日付と合致するボタンがあったら装飾する
+            let nowdate = NSDate()
+            let calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)
+            let comps:NSDateComponents = calendar!.components([NSCalendarUnit.Year,NSCalendarUnit.Month,NSCalendarUnit.Day],
+                fromDate: nowdate)
+            let buttonyear = comps.year
+            let buttonmonth = comps.month
+            let buttonday = comps.day
+            
+            //今日の日付と一致するボタンがある場合
+            if(buttonyear == year && buttonmonth == month && buttonday == button.tag){
+                button.layer.borderColor = UIColor.whiteColor().CGColor
+                button.layer.borderWidth = CGFloat(4.5)
+            }
+
             //配置したボタンに押した際のアクションを設定する
             button.addTarget(self, action: "buttonTapped:", forControlEvents: .TouchUpInside)
             
