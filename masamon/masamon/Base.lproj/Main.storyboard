@@ -270,7 +270,7 @@
                                                 <rect key="frame" x="0.0" y="18" width="375" height="44"/>
                                                 <items>
                                                     <navigationItem title="ユーザ設定" id="sel-8e-IeJ">
-                                                        <barButtonItem key="leftBarButtonItem" title="戻る" id="NB4-M0-RFK">
+                                                        <barButtonItem key="leftBarButtonItem" systemItem="stop" id="NB4-M0-RFK">
                                                             <connections>
                                                                 <action selector="TapBackButton:" destination="tsi-6b-VUl" id="XjZ-AT-WCB"/>
                                                             </connections>
@@ -279,7 +279,7 @@
                                                 </items>
                                             </navigationBar>
                                         </subviews>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     </view>
                                 </subviews>
                                 <constraints>

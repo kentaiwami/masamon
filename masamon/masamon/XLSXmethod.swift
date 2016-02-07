@@ -72,15 +72,10 @@ class XLSXmethod: UIViewController {
                 
                 newshiftdetaildb.id = existshiftdb.shiftdetail[i].id
                 newshiftdetaildb.day = existshiftdb.shiftdetail[i].day
-                
-                if(CommonMethod().JudgeYearAndMonth(worksheet.P1).startcoursmonth == 12 && flag == 0){                     //開始月が12月の場合は昨年の12月で記録されるようにする
-                    newshiftdetaildb.year = CommonMethod().JudgeYearAndMonth(worksheet.P1).year-1
-                }else{
-                    newshiftdetaildb.year = CommonMethod().JudgeYearAndMonth(worksheet.P1).year
-                }
 
                 switch(flag){
                 case 0:         //11日〜30日までの場合
+                    newshiftdetaildb.year = CommonMethod().JudgeYearAndMonth(worksheet.P1).startcoursmonthyear
                     newshiftdetaildb.month = CommonMethod().JudgeYearAndMonth(worksheet.P1).startcoursmonth
                     date++
                     
@@ -90,6 +85,7 @@ class XLSXmethod: UIViewController {
                     }
                     
                 case 1:         //1日〜10日までの場合
+                    newshiftdetaildb.year = CommonMethod().JudgeYearAndMonth(worksheet.P1).endcoursmonthyear
                     newshiftdetaildb.month = CommonMethod().JudgeYearAndMonth(worksheet.P1).endcoursmonth
                     date++
                     
@@ -116,15 +112,10 @@ class XLSXmethod: UIViewController {
                 shiftdetaildb.id = shiftdetailrecordcount
                 shiftdetailrecordcount++
                 shiftdetaildb.day = date
-                
-                if(CommonMethod().JudgeYearAndMonth(worksheet.P1).startcoursmonth == 12 && flag == 0){                     //開始月が12月の場合は昨年の12月で記録されるようにする
-                    shiftdetaildb.year = CommonMethod().JudgeYearAndMonth(worksheet.P1).year-1
-                }else{
-                    shiftdetaildb.year = CommonMethod().JudgeYearAndMonth(worksheet.P1).year
-                }
 
                 switch(flag){
                 case 0:         //11日〜30(31)日までの場合
+                    shiftdetaildb.year = CommonMethod().JudgeYearAndMonth(worksheet.P1).startcoursmonthyear
                     shiftdetaildb.month = CommonMethod().JudgeYearAndMonth(worksheet.P1).startcoursmonth
                     date++
                     
@@ -134,6 +125,7 @@ class XLSXmethod: UIViewController {
                     }
                     
                 case 1:         //1日〜10日までの場合
+                    shiftdetaildb.year = CommonMethod().JudgeYearAndMonth(worksheet.P1).endcoursmonthyear
                     shiftdetaildb.month = CommonMethod().JudgeYearAndMonth(worksheet.P1).endcoursmonth
                     date++
                     

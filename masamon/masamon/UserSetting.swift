@@ -429,10 +429,10 @@ class UserSetting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSourc
             
             let hourlypayarray = DBmethod().HourlyPayRecordGet()
             
-            TimeFrom1.text = time[Int(hourlypayarray[0].timefrom * 2)]
-            TimeTo1.text = time[Int(hourlypayarray[0].timeto * 2)]
-            TimeFrom2.text = time[Int(hourlypayarray[1].timefrom * 2)]
-            TimeTo2.text = time[Int(hourlypayarray[1].timeto * 2)]
+            TimeFrom1.text = time[Int(hourlypayarray[0].timefrom * 2) - 2]
+            TimeTo1.text = time[Int(hourlypayarray[0].timeto * 2) - 2]
+            TimeFrom2.text = time[Int(hourlypayarray[1].timefrom * 2) - 2]
+            TimeTo2.text = time[Int(hourlypayarray[1].timeto * 2) - 2]
             Salaly1.text = String(hourlypayarray[0].pay)
             Salaly2.text = String(hourlypayarray[1].pay)
         }
