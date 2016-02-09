@@ -47,9 +47,8 @@ class XLSXmethod: UIViewController {
     func ShiftDBOneCoursRegist(importname: String, importpath: String, update: Bool){
         let worksheet = self.SetXLSX()
         let shiftyearandmonth = CommonMethod().JudgeYearAndMonth(worksheet.P1)
-        let shiftnsdate = MonthlySalaryShow().DateSerial(CommonMethod().Changecalendar(shiftyearandmonth.year, calender: "JP"), month: shiftyearandmonth.startcoursmonth, day: 1)
-        let c = NSCalendar.currentCalendar()
-        let monthrange = c.rangeOfUnit([NSCalendarUnit.Day],  inUnit: [NSCalendarUnit.Month], forDate: shiftnsdate)
+        
+        let monthrange = CommonMethod().GetShiftCoursMonthRange(shiftyearandmonth.startcoursmonthyear, shiftstartmonth: shiftyearandmonth.startcoursmonth)
         
         var date = 11
         let staffcellposition = self.StaffCellPositionGet()     //スタッフの名前が記載されているセル場所 ex.)F8,F9
@@ -190,9 +189,11 @@ class XLSXmethod: UIViewController {
         var userposition = ""
         
         let shiftyearandmonth = CommonMethod().JudgeYearAndMonth(worksheet.P1)
-        let shiftnsdate = MonthlySalaryShow().DateSerial(CommonMethod().Changecalendar(shiftyearandmonth.year, calender: "JP"), month: shiftyearandmonth.startcoursmonth, day: 1)
-        let c = NSCalendar.currentCalendar()
-        let monthrange = c.rangeOfUnit([NSCalendarUnit.Day],  inUnit: [NSCalendarUnit.Month], forDate: shiftnsdate)
+        let monthrange = CommonMethod().GetShiftCoursMonthRange(shiftyearandmonth.startcoursmonthyear, shiftstartmonth: shiftyearandmonth.startcoursmonth)
+
+//        let shiftnsdate = MonthlySalaryShow().DateSerial(CommonMethod().Changecalendar(shiftyearandmonth.year, calender: "JP"), month: shiftyearandmonth.startcoursmonth, day: 1)
+//        let c = NSCalendar.currentCalendar()
+//        let monthrange = c.rangeOfUnit([NSCalendarUnit.Day],  inUnit: [NSCalendarUnit.Month], forDate: shiftnsdate)
         
         //F列からユーザ名と合致する箇所を探す
         for(var i = 0; i < DBmethod().StaffNumberGet(); i++){
@@ -297,9 +298,11 @@ class XLSXmethod: UIViewController {
     func CheckShift(){
         let worksheet = self.SetXLSX()
         let shiftyearandmonth = CommonMethod().JudgeYearAndMonth(worksheet.P1)
-        let shiftnsdate = MonthlySalaryShow().DateSerial(CommonMethod().Changecalendar(shiftyearandmonth.year, calender: "JP"), month: shiftyearandmonth.startcoursmonth, day: 1)
-        let c = NSCalendar.currentCalendar()
-        let monthrange = c.rangeOfUnit([NSCalendarUnit.Day],  inUnit: [NSCalendarUnit.Month], forDate: shiftnsdate)
+        let monthrange = CommonMethod().GetShiftCoursMonthRange(shiftyearandmonth.startcoursmonthyear, shiftstartmonth: shiftyearandmonth.startcoursmonth)
+
+//        let shiftnsdate = MonthlySalaryShow().DateSerial(CommonMethod().Changecalendar(shiftyearandmonth.year, calender: "JP"), month: shiftyearandmonth.startcoursmonth, day: 1)
+//        let c = NSCalendar.currentCalendar()
+//        let monthrange = c.rangeOfUnit([NSCalendarUnit.Day],  inUnit: [NSCalendarUnit.Month], forDate: shiftnsdate)
         let staffcellposition = self.StaffCellPositionGet()     //スタッフの名前が記載されているセル場所 ex.)F8,F9
 
         for(var i = 0; i < monthrange.length; i++){
