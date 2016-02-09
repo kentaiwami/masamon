@@ -98,11 +98,8 @@ class PDFmethod: UIViewController {
         
         //1クールが全部で何日間あるかを判断するため
         let shiftyearandmonth = CommonMethod().JudgeYearAndMonth(staffarray[0])
-        
-        let shiftnsdate = MonthlySalaryShow().DateSerial(CommonMethod().Changecalendar(shiftyearandmonth.startcoursmonthyear, calender: "JP"), month: shiftyearandmonth.startcoursmonth, day: 1)
-        let c = NSCalendar.currentCalendar()
-        let monthrange = c.rangeOfUnit([NSCalendarUnit.Day],  inUnit: [NSCalendarUnit.Month], forDate: shiftnsdate)
-        
+        let monthrange = self.GetShiftCoursMonthRange(shiftyearandmonth.startcoursmonthyear, shiftstartmonth: shiftyearandmonth.startcoursmonth)
+
         //先に空要素を1クール分追加しておく
         for(var i = 0; i < monthrange.length; i++){
             dayshiftarray.append("")
@@ -641,9 +638,8 @@ class PDFmethod: UIViewController {
         var flag = 0
         var shiftdetailarray = List<ShiftDetailDB>()
         
-        let shiftnsdate = MonthlySalaryShow().DateSerial(CommonMethod().Changecalendar(shiftcours.sy, calender: "JP"), month: shiftcours.sm, day: 1)
-        let c = NSCalendar.currentCalendar()
-        let monthrange = c.rangeOfUnit([NSCalendarUnit.Day],  inUnit: [NSCalendarUnit.Month], forDate: shiftnsdate)
+        //1クールが全部で何日間あるかを判断するため
+        let monthrange = self.GetShiftCoursMonthRange(shiftcours.sy, shiftstartmonth: shiftcours.sm)
         
         var shiftdetaildbrecordcount = DBmethod().DBRecordCount(ShiftDetailDB)
         let shiftdbrecordcount = DBmethod().DBRecordCount(ShiftDB)
@@ -818,6 +814,15 @@ class PDFmethod: UIViewController {
         newshiftdbsalalyadd.month = shiftcours.em
         
         DBmethod().AddandUpdate(newshiftdbsalalyadd, update: true)
+    }
+    
+    //1クールのシフト範囲を返す関数
+    func GetShiftCoursMonthRange(shiftstartyear: Int, shiftstartmonth: Int) -> NSRange{
+        let shiftnsdate = MonthlySalaryShow().DateSerial(CommonMethod().Changecalendar(shiftstartyear, calender: "JP"), month: shiftstartmonth, day: 1)
+        let c = NSCalendar.currentCalendar()
+        let monthrange = c.rangeOfUnit([NSCalendarUnit.Day],  inUnit: [NSCalendarUnit.Month], forDate: shiftnsdate)
+        
+        return monthrange
     }
     
 }
