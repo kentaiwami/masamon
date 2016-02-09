@@ -109,8 +109,8 @@ class PDFmethod: UIViewController {
         }
         
         //スタッフの人数分(配列の最後まで)繰り返す
-        for(var i = 24; i < 25; i++){
-            //        for(var i = 1; i < staffarray.count; i++){
+//        for(var i = 24; i < 25; i++){
+        for(var i = 1; i < staffarray.count; i++){
             
             var staffname = ""
             var staffarraytmp = ""
@@ -641,7 +641,7 @@ class PDFmethod: UIViewController {
         var flag = 0
         var shiftdetailarray = List<ShiftDetailDB>()
         
-        let shiftnsdate = MonthlySalaryShow().DateSerial(CommonMethod().Changecalendar(shiftcours.y, calender: "JP"), month: shiftcours.sm, day: 1)
+        let shiftnsdate = MonthlySalaryShow().DateSerial(CommonMethod().Changecalendar(shiftcours.sy, calender: "JP"), month: shiftcours.sm, day: 1)
         let c = NSCalendar.currentCalendar()
         let monthrange = c.rangeOfUnit([NSCalendarUnit.Day],  inUnit: [NSCalendarUnit.Month], forDate: shiftnsdate)
         
@@ -675,7 +675,7 @@ class PDFmethod: UIViewController {
                             flag = 1
                         }
                         
-                    case 1:         //1日〜10日までの場合
+                    case 1:         //11日〜月末日までの場合
                         shiftdetaildbrecord.year = shiftcours.ey
                         shiftdetaildbrecord.month = shiftcours.em
                         date++
@@ -711,7 +711,7 @@ class PDFmethod: UIViewController {
                     shiftdetaildbrecord.day = date
                     
                     switch(flag){
-                    case 0:         //11日〜30(31)日までの場合
+                    case 0:         //11日〜月末日までの場合
                         shiftdetaildbrecord.year = shiftcours.sy
                         shiftdetaildbrecord.month = shiftcours.sm
                         date++
