@@ -215,10 +215,11 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             progress.show(style: OrangeClearStyle())
             dispatch_async_global{
                 
+                //PDF内のデータをテキスト配列に格納＆エラーのチェック
                 var pdfalltextarray: [String] = []
-
                 pdfalltextarray = PDFmethod().AllTextGet()
                 let pdfdata = PDFmethod().SplitDayShiftGet(pdfalltextarray)
+                
                 
                 //エラーがない場合はデータベースへ書き込みを行う
                 if(self.appDelegate.errorstaffnamepdf.count == 0 && self.appDelegate.errorshiftnamepdf.count == 0){
@@ -245,16 +246,16 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                             }
                         }
                         
-//                        /*pickerview,label,シフトの表示を更新する*/
-//                        self.shiftlist.removeAllObjects()
-//                        if(DBmethod().DBRecordCount(ShiftDB) != 0){
-//                            for(var i = DBmethod().DBRecordCount(ShiftDB)-1; i >= 0; i--){
-//                                self.shiftlist.addObject(DBmethod().ShiftDBGet(i))
-//                            }
-//                            self.SaralyLabel.text = String(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB)-1))
-//                        }
+                        /*pickerview,label,シフトの表示を更新する*/
+                        self.shiftlist.removeAllObjects()
+                        if(DBmethod().DBRecordCount(ShiftDB) != 0){
+                            for(var i = DBmethod().DBRecordCount(ShiftDB)-1; i >= 0; i--){
+                                self.shiftlist.addObject(DBmethod().ShiftDBGet(i))
+                            }
+                            self.SaralyLabel.text = String(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB)-1))
+                        }
                         
-//                        self.onecourspicker.reloadAllComponents()
+                        self.onecourspicker.reloadAllComponents()
                         
                         let today = self.currentnsdate
                         let date = self.ReturnYearMonthDayWeekday(today)

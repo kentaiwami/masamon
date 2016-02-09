@@ -646,6 +646,7 @@ class PDFmethod: UIViewController {
         let monthrange = c.rangeOfUnit([NSCalendarUnit.Day],  inUnit: [NSCalendarUnit.Month], forDate: shiftnsdate)
         
         var shiftdetaildbrecordcount = DBmethod().DBRecordCount(ShiftDetailDB)
+        let shiftdbrecordcount = DBmethod().DBRecordCount(ShiftDB)
         
         if(appDelegate.errorshiftnamepdf.count == 0){
             
@@ -695,8 +696,8 @@ class PDFmethod: UIViewController {
                     }
                     
                 }else{
-                    
-                    shiftdbrecord.id = DBmethod().DBRecordCount(ShiftDB)
+
+                    shiftdbrecord.id = shiftdbrecordcount
 
                     shiftdbrecord.year = 0
                     shiftdbrecord.month = 0
