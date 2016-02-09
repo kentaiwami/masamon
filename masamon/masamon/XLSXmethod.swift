@@ -54,6 +54,8 @@ class XLSXmethod: UIViewController {
         let staffcellposition = self.StaffCellPositionGet()     //スタッフの名前が記載されているセル場所 ex.)F8,F9
         var shiftdetailarray = List<ShiftDetailDB>()
         var shiftdetailrecordcount = DBmethod().DBRecordCount(ShiftDetailDB)
+        let shiftdbrecordcount = DBmethod().DBRecordCount(ShiftDB)
+
         var flag = 0
         
         //30(31)日分繰り返すループ
@@ -73,7 +75,7 @@ class XLSXmethod: UIViewController {
                 newshiftdetaildb.day = existshiftdb.shiftdetail[i].day
 
                 switch(flag){
-                case 0:         //11日〜30日までの場合
+                case 0:         //11日〜月末までの場合
                     newshiftdetaildb.year = CommonMethod().JudgeYearAndMonth(worksheet.P1).startcoursmonthyear
                     newshiftdetaildb.month = CommonMethod().JudgeYearAndMonth(worksheet.P1).startcoursmonth
                     date++
@@ -101,7 +103,8 @@ class XLSXmethod: UIViewController {
                 }
                 
             }else{
-                shiftdb.id = DBmethod().DBRecordCount(ShiftDetailDB)/monthrange.length     //新規の場合はレコードの数を割ったidを使う
+                shiftdb.id = shiftdbrecordcount
+                    
                 shiftdb.shiftimportname = importname
                 shiftdb.shiftimportpath = importpath
                 shiftdb.salaly = 0
