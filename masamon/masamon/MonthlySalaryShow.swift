@@ -880,5 +880,26 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             textField.text = time[shiftstarttimeselectrow] + " " + wavyline[0] + " " + time[shiftendtimeselectrow]
         }
     }
+    
+    //シェイクジェスチャーを有効にする
+    override func canBecomeFirstResponder() -> Bool {
+        return true
+    }
+    
+    override func motionBegan(motion: UIEventSubtype,withEvent event: UIEvent?){
+        
+        if(motion == UIEventSubtype.MotionShake){
+            //TODO: viewを出す            
+        }
+    }
+//    override func motionEnded(motion: UIEventSubtype,withEvent event: UIEvent?){
+//        
+//        if(motion == UIEventSubtype.MotionShake){
+//            print("motionEndedが呼ばれました")
+//        }
+//    }
+//    override func motionCancelled(motion: UIEventSubtype,withEvent event: UIEvent?){
+//        print("motionCancelledが呼ばれました");
+//    }
 }
 

@@ -540,6 +540,25 @@
             </objects>
             <point key="canvasLocation" x="253.5" y="1093.5"/>
         </scene>
+        <!--Video-->
+        <scene sceneID="IWI-mn-lHe">
+            <objects>
+                <viewController storyboardIdentifier="Video" useStoryboardIdentifierAsRestorationIdentifier="YES" id="zO2-EF-qMy" customClass="Video" customModule="masamon" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="lXP-BF-mhe"/>
+                        <viewControllerLayoutGuide type="bottom" id="gla-oY-wOg"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="DO6-hI-Ije">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eBg-Zg-agZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="253.5" y="1852.5"/>
+        </scene>
         <!--Calender View Controller-->
         <scene sceneID="2io-Zl-q4d">
             <objects>

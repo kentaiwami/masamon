@@ -28,6 +28,7 @@
 		373C10EB1C5E049D0082CB8E /* StaffNameListSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373C10EA1C5E049D0082CB8E /* StaffNameListSetting.swift */; };
 		373C10EF1C5E04D10082CB8E /* ShiftNameListSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373C10EE1C5E04D10082CB8E /* ShiftNameListSetting.swift */; };
 		373C10F11C5E05010082CB8E /* ShiftListSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373C10F01C5E05010082CB8E /* ShiftListSetting.swift */; };
+		374090A01C784EEA00B01DC4 /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3740909F1C784EEA00B01DC4 /* Video.swift */; };
 		3742AF561C12D8D1003AB33B /* libz.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3742AF551C12D8D1003AB33B /* libz.1.dylib */; };
 		3742AF901C130391003AB33B /* libXlsxReaderWriter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3742AF8B1C130360003AB33B /* libXlsxReaderWriter.a */; };
 		376C92D61BE695D000D45FC2 /* extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376C92D51BE695D000D45FC2 /* extentions.swift */; };
@@ -144,6 +145,7 @@
 		373C10EA1C5E049D0082CB8E /* StaffNameListSetting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StaffNameListSetting.swift; sourceTree = "<group>"; };
 		373C10EE1C5E04D10082CB8E /* ShiftNameListSetting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShiftNameListSetting.swift; sourceTree = "<group>"; };
 		373C10F01C5E05010082CB8E /* ShiftListSetting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShiftListSetting.swift; sourceTree = "<group>"; };
+		3740909F1C784EEA00B01DC4 /* Video.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Video.swift; sourceTree = "<group>"; };
 		3742AF551C12D8D1003AB33B /* libz.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.dylib; path = ../../../../../../usr/lib/libz.1.dylib; sourceTree = "<group>"; };
 		3742AF831C130360003AB33B /* XlsxReaderWriter.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = XlsxReaderWriter.xcodeproj; path = "XlsxReaderWriter-master/XlsxReaderWriter.xcodeproj"; sourceTree = "<group>"; };
 		376C92D51BE695D000D45FC2 /* extentions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = extentions.swift; sourceTree = "<group>"; };
@@ -256,6 +258,7 @@
 				370ACE431BDF573500AB73EB /* DB.swift */,
 				370ACE491BDF9C8A00AB73EB /* DBmethod.swift */,
 				370ACDFE1BDF486700AB73EB /* Main.storyboard */,
+				3740909F1C784EEA00B01DC4 /* Video.swift */,
 				373C10F01C5E05010082CB8E /* ShiftListSetting.swift */,
 				373C10EE1C5E04D10082CB8E /* ShiftNameListSetting.swift */,
 				373C10EA1C5E049D0082CB8E /* StaffNameListSetting.swift */,
@@ -555,6 +558,7 @@
 				373C10EB1C5E049D0082CB8E /* StaffNameListSetting.swift in Sources */,
 				371DE5151C5DBD4D0058F73B /* Setting.swift in Sources */,
 				377D2DAE1C36C08B009CC388 /* BlueDarkStyle.swift in Sources */,
+				374090A01C784EEA00B01DC4 /* Video.swift in Sources */,
 				376C92D61BE695D000D45FC2 /* extentions.swift in Sources */,
 				370ACE441BDF573500AB73EB /* DB.swift in Sources */,
 				373C10EF1C5E04D10082CB8E /* ShiftNameListSetting.swift in Sources */,
