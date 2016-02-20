@@ -573,6 +573,16 @@
             </objects>
             <point key="canvasLocation" x="253.5" y="1852.5"/>
         </scene>
+        <!--AV Player View Controller-->
+        <scene sceneID="wgP-sS-ocw">
+            <objects>
+                <avPlayerViewController storyboardIdentifier="VideoViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" videoGravity="AVLayerVideoGravityResizeAspect" id="1Vu-SP-Zxn" customClass="VideoViewController" customModule="masamon" customModuleProvider="target" sceneMemberID="viewController">
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                </avPlayerViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ygl-gQ-POP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="682.5" y="1852.5"/>
+        </scene>
         <!--Calender View Controller-->
         <scene sceneID="2io-Zl-q4d">
             <objects>
