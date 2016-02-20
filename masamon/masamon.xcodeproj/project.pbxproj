@@ -11,8 +11,6 @@
 		370ACDFD1BDF486700AB73EB /* MonthlySalaryShow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370ACDFC1BDF486700AB73EB /* MonthlySalaryShow.swift */; };
 		370ACE021BDF486700AB73EB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 370ACE011BDF486700AB73EB /* Assets.xcassets */; };
 		370ACE051BDF486700AB73EB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 370ACE031BDF486700AB73EB /* LaunchScreen.storyboard */; };
-		370ACE101BDF486700AB73EB /* masamonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370ACE0F1BDF486700AB73EB /* masamonTests.swift */; };
-		370ACE1B1BDF486700AB73EB /* masamonUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370ACE1A1BDF486700AB73EB /* masamonUITests.swift */; };
 		370ACE291BDF4B7700AB73EB /* images in Resources */ = {isa = PBXBuildFile; fileRef = 370ACE281BDF4B7700AB73EB /* images */; };
 		370ACE441BDF573500AB73EB /* DB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370ACE431BDF573500AB73EB /* DB.swift */; };
 		370ACE4A1BDF9C8A00AB73EB /* DBmethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370ACE491BDF9C8A00AB73EB /* DBmethod.swift */; };
@@ -127,11 +125,7 @@
 		370ACE041BDF486700AB73EB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		370ACE061BDF486700AB73EB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		370ACE0B1BDF486700AB73EB /* masamonTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = masamonTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		370ACE0F1BDF486700AB73EB /* masamonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = masamonTests.swift; sourceTree = "<group>"; };
-		370ACE111BDF486700AB73EB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		370ACE161BDF486700AB73EB /* masamonUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = masamonUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		370ACE1A1BDF486700AB73EB /* masamonUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = masamonUITests.swift; sourceTree = "<group>"; };
-		370ACE1C1BDF486700AB73EB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		370ACE281BDF4B7700AB73EB /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = images; sourceTree = "<group>"; };
 		370ACE431BDF573500AB73EB /* DB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DB.swift; sourceTree = "<group>"; };
 		370ACE491BDF9C8A00AB73EB /* DBmethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBmethod.swift; sourceTree = "<group>"; };
@@ -228,8 +222,6 @@
 				3742AF551C12D8D1003AB33B /* libz.1.dylib */,
 				370ACE281BDF4B7700AB73EB /* images */,
 				370ACDF91BDF486600AB73EB /* masamon */,
-				370ACE0E1BDF486700AB73EB /* masamonTests */,
-				370ACE191BDF486700AB73EB /* masamonUITests */,
 				370ACDF81BDF486600AB73EB /* Products */,
 				273B5D0506CACB8F3F46583C /* Pods */,
 				7423B7CBCF975D0B30BA5249 /* Frameworks */,
@@ -274,24 +266,6 @@
 				370ACE061BDF486700AB73EB /* Info.plist */,
 			);
 			path = masamon;
-			sourceTree = "<group>";
-		};
-		370ACE0E1BDF486700AB73EB /* masamonTests */ = {
-			isa = PBXGroup;
-			children = (
-				370ACE0F1BDF486700AB73EB /* masamonTests.swift */,
-				370ACE111BDF486700AB73EB /* Info.plist */,
-			);
-			path = masamonTests;
-			sourceTree = "<group>";
-		};
-		370ACE191BDF486700AB73EB /* masamonUITests */ = {
-			isa = PBXGroup;
-			children = (
-				370ACE1A1BDF486700AB73EB /* masamonUITests.swift */,
-				370ACE1C1BDF486700AB73EB /* Info.plist */,
-			);
-			path = masamonUITests;
 			sourceTree = "<group>";
 		};
 		3742AF841C130360003AB33B /* Products */ = {
@@ -576,7 +550,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				370ACE101BDF486700AB73EB /* masamonTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -584,7 +557,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				370ACE1B1BDF486700AB73EB /* masamonUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
