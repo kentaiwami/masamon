@@ -26,9 +26,11 @@ class Video: UIViewController {
             thumbnailbutton.setImage(image, forState: .Normal)
             thumbnailbutton.frame = CGRectMake(0, 0, 300, 200)
             thumbnailbutton.layer.position = CGPoint(x: self.view.frame.width/2, y: self.view.frame.height/2+CGFloat(position[i]))
-            thumbnailbutton.contentMode = UIViewContentMode.ScaleAspectFit
             thumbnailbutton.tag = i+1
             thumbnailbutton.addTarget(self, action: "TapThumbnail:", forControlEvents: .TouchUpInside)
+            thumbnailbutton.layer.masksToBounds = true
+            thumbnailbutton.layer.cornerRadius = 15
+            thumbnailbutton.clipsToBounds = true
             
             //2つ目の動画を作成していないため、ボタンを無効化する
             if(i == 1){
