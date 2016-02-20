@@ -11,8 +11,6 @@
 		370ACDFD1BDF486700AB73EB /* MonthlySalaryShow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370ACDFC1BDF486700AB73EB /* MonthlySalaryShow.swift */; };
 		370ACE021BDF486700AB73EB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 370ACE011BDF486700AB73EB /* Assets.xcassets */; };
 		370ACE051BDF486700AB73EB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 370ACE031BDF486700AB73EB /* LaunchScreen.storyboard */; };
-		370ACE101BDF486700AB73EB /* masamonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370ACE0F1BDF486700AB73EB /* masamonTests.swift */; };
-		370ACE1B1BDF486700AB73EB /* masamonUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370ACE1A1BDF486700AB73EB /* masamonUITests.swift */; };
 		370ACE291BDF4B7700AB73EB /* images in Resources */ = {isa = PBXBuildFile; fileRef = 370ACE281BDF4B7700AB73EB /* images */; };
 		370ACE441BDF573500AB73EB /* DB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370ACE431BDF573500AB73EB /* DB.swift */; };
 		370ACE4A1BDF9C8A00AB73EB /* DBmethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370ACE491BDF9C8A00AB73EB /* DBmethod.swift */; };
@@ -28,6 +26,9 @@
 		373C10EB1C5E049D0082CB8E /* StaffNameListSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373C10EA1C5E049D0082CB8E /* StaffNameListSetting.swift */; };
 		373C10EF1C5E04D10082CB8E /* ShiftNameListSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373C10EE1C5E04D10082CB8E /* ShiftNameListSetting.swift */; };
 		373C10F11C5E05010082CB8E /* ShiftListSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373C10F01C5E05010082CB8E /* ShiftListSetting.swift */; };
+		374090A01C784EEA00B01DC4 /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3740909F1C784EEA00B01DC4 /* Video.swift */; };
+		374090BC1C7858D800B01DC4 /* video1.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 374090BB1C7858D800B01DC4 /* video1.mp4 */; };
+		374090C01C78641E00B01DC4 /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374090BF1C78641E00B01DC4 /* VideoViewController.swift */; };
 		3742AF561C12D8D1003AB33B /* libz.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3742AF551C12D8D1003AB33B /* libz.1.dylib */; };
 		3742AF901C130391003AB33B /* libXlsxReaderWriter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3742AF8B1C130360003AB33B /* libXlsxReaderWriter.a */; };
 		376C92D61BE695D000D45FC2 /* extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376C92D51BE695D000D45FC2 /* extentions.swift */; };
@@ -47,20 +48,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		370ACE0C1BDF486700AB73EB /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 370ACDEF1BDF486600AB73EB /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 370ACDF61BDF486600AB73EB;
-			remoteInfo = masamon;
-		};
-		370ACE171BDF486700AB73EB /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 370ACDEF1BDF486600AB73EB /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 370ACDF61BDF486600AB73EB;
-			remoteInfo = masamon;
-		};
 		3742AF8A1C130360003AB33B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3742AF831C130360003AB33B /* XlsxReaderWriter.xcodeproj */;
@@ -125,12 +112,6 @@
 		370ACE011BDF486700AB73EB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		370ACE041BDF486700AB73EB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		370ACE061BDF486700AB73EB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		370ACE0B1BDF486700AB73EB /* masamonTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = masamonTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		370ACE0F1BDF486700AB73EB /* masamonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = masamonTests.swift; sourceTree = "<group>"; };
-		370ACE111BDF486700AB73EB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		370ACE161BDF486700AB73EB /* masamonUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = masamonUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		370ACE1A1BDF486700AB73EB /* masamonUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = masamonUITests.swift; sourceTree = "<group>"; };
-		370ACE1C1BDF486700AB73EB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		370ACE281BDF4B7700AB73EB /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = images; sourceTree = "<group>"; };
 		370ACE431BDF573500AB73EB /* DB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DB.swift; sourceTree = "<group>"; };
 		370ACE491BDF9C8A00AB73EB /* DBmethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBmethod.swift; sourceTree = "<group>"; };
@@ -144,6 +125,9 @@
 		373C10EA1C5E049D0082CB8E /* StaffNameListSetting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StaffNameListSetting.swift; sourceTree = "<group>"; };
 		373C10EE1C5E04D10082CB8E /* ShiftNameListSetting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShiftNameListSetting.swift; sourceTree = "<group>"; };
 		373C10F01C5E05010082CB8E /* ShiftListSetting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShiftListSetting.swift; sourceTree = "<group>"; };
+		3740909F1C784EEA00B01DC4 /* Video.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Video.swift; sourceTree = "<group>"; };
+		374090BB1C7858D800B01DC4 /* video1.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = video1.mp4; sourceTree = "<group>"; };
+		374090BF1C78641E00B01DC4 /* VideoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VideoViewController.swift; path = ../VideoViewController.swift; sourceTree = "<group>"; };
 		3742AF551C12D8D1003AB33B /* libz.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.dylib; path = ../../../../../../usr/lib/libz.1.dylib; sourceTree = "<group>"; };
 		3742AF831C130360003AB33B /* XlsxReaderWriter.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = XlsxReaderWriter.xcodeproj; path = "XlsxReaderWriter-master/XlsxReaderWriter.xcodeproj"; sourceTree = "<group>"; };
 		376C92D51BE695D000D45FC2 /* extentions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = extentions.swift; sourceTree = "<group>"; };
@@ -185,20 +169,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		370ACE081BDF486700AB73EB /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		370ACE131BDF486700AB73EB /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -224,10 +194,9 @@
 				3724CDCC1C14317500D73528 /* RealmSwift.framework */,
 				3742AF831C130360003AB33B /* XlsxReaderWriter.xcodeproj */,
 				3742AF551C12D8D1003AB33B /* libz.1.dylib */,
+				374090B81C7858AD00B01DC4 /* videos */,
 				370ACE281BDF4B7700AB73EB /* images */,
 				370ACDF91BDF486600AB73EB /* masamon */,
-				370ACE0E1BDF486700AB73EB /* masamonTests */,
-				370ACE191BDF486700AB73EB /* masamonUITests */,
 				370ACDF81BDF486600AB73EB /* Products */,
 				273B5D0506CACB8F3F46583C /* Pods */,
 				7423B7CBCF975D0B30BA5249 /* Frameworks */,
@@ -238,8 +207,6 @@
 			isa = PBXGroup;
 			children = (
 				370ACDF71BDF486600AB73EB /* masamon.app */,
-				370ACE0B1BDF486700AB73EB /* masamonTests.xctest */,
-				370ACE161BDF486700AB73EB /* masamonUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -248,6 +215,7 @@
 			isa = PBXGroup;
 			children = (
 				370ACDFA1BDF486700AB73EB /* AppDelegate.swift */,
+				374090BF1C78641E00B01DC4 /* VideoViewController.swift */,
 				37DD8EF41C1C0135007C0E6C /* SwipeBetweenViewControllers.swift */,
 				370ACDFC1BDF486700AB73EB /* MonthlySalaryShow.swift */,
 				3721B1161C51499D0002A373 /* CommonMethod.swift */,
@@ -256,6 +224,7 @@
 				370ACE431BDF573500AB73EB /* DB.swift */,
 				370ACE491BDF9C8A00AB73EB /* DBmethod.swift */,
 				370ACDFE1BDF486700AB73EB /* Main.storyboard */,
+				3740909F1C784EEA00B01DC4 /* Video.swift */,
 				373C10F01C5E05010082CB8E /* ShiftListSetting.swift */,
 				373C10EE1C5E04D10082CB8E /* ShiftNameListSetting.swift */,
 				373C10EA1C5E049D0082CB8E /* StaffNameListSetting.swift */,
@@ -273,22 +242,12 @@
 			path = masamon;
 			sourceTree = "<group>";
 		};
-		370ACE0E1BDF486700AB73EB /* masamonTests */ = {
+		374090B81C7858AD00B01DC4 /* videos */ = {
 			isa = PBXGroup;
 			children = (
-				370ACE0F1BDF486700AB73EB /* masamonTests.swift */,
-				370ACE111BDF486700AB73EB /* Info.plist */,
+				374090BB1C7858D800B01DC4 /* video1.mp4 */,
 			);
-			path = masamonTests;
-			sourceTree = "<group>";
-		};
-		370ACE191BDF486700AB73EB /* masamonUITests */ = {
-			isa = PBXGroup;
-			children = (
-				370ACE1A1BDF486700AB73EB /* masamonUITests.swift */,
-				370ACE1C1BDF486700AB73EB /* Info.plist */,
-			);
-			path = masamonUITests;
+			path = videos;
 			sourceTree = "<group>";
 		};
 		3742AF841C130360003AB33B /* Products */ = {
@@ -347,42 +306,6 @@
 			productReference = 370ACDF71BDF486600AB73EB /* masamon.app */;
 			productType = "com.apple.product-type.application";
 		};
-		370ACE0A1BDF486700AB73EB /* masamonTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 370ACE221BDF486700AB73EB /* Build configuration list for PBXNativeTarget "masamonTests" */;
-			buildPhases = (
-				370ACE071BDF486700AB73EB /* Sources */,
-				370ACE081BDF486700AB73EB /* Frameworks */,
-				370ACE091BDF486700AB73EB /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				370ACE0D1BDF486700AB73EB /* PBXTargetDependency */,
-			);
-			name = masamonTests;
-			productName = masamonTests;
-			productReference = 370ACE0B1BDF486700AB73EB /* masamonTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		370ACE151BDF486700AB73EB /* masamonUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 370ACE251BDF486700AB73EB /* Build configuration list for PBXNativeTarget "masamonUITests" */;
-			buildPhases = (
-				370ACE121BDF486700AB73EB /* Sources */,
-				370ACE131BDF486700AB73EB /* Frameworks */,
-				370ACE141BDF486700AB73EB /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				370ACE181BDF486700AB73EB /* PBXTargetDependency */,
-			);
-			name = masamonUITests;
-			productName = masamonUITests;
-			productReference = 370ACE161BDF486700AB73EB /* masamonUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -396,16 +319,6 @@
 					370ACDF61BDF486600AB73EB = {
 						CreatedOnToolsVersion = 7.1;
 						DevelopmentTeam = TLVYAZUQZL;
-					};
-					370ACE0A1BDF486700AB73EB = {
-						CreatedOnToolsVersion = 7.1;
-						DevelopmentTeam = TLVYAZUQZL;
-						TestTargetID = 370ACDF61BDF486600AB73EB;
-					};
-					370ACE151BDF486700AB73EB = {
-						CreatedOnToolsVersion = 7.1;
-						DevelopmentTeam = TLVYAZUQZL;
-						TestTargetID = 370ACDF61BDF486600AB73EB;
 					};
 				};
 			};
@@ -433,8 +346,6 @@
 			projectRoot = "";
 			targets = (
 				370ACDF61BDF486600AB73EB /* masamon */,
-				370ACE0A1BDF486700AB73EB /* masamonTests */,
-				370ACE151BDF486700AB73EB /* masamonUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -472,22 +383,9 @@
 				379A2DBE1C1E5F9900751425 /* no_data.png in Resources */,
 				370ACE291BDF4B7700AB73EB /* images in Resources */,
 				370ACE051BDF486700AB73EB /* LaunchScreen.storyboard in Resources */,
+				374090BC1C7858D800B01DC4 /* video1.mp4 in Resources */,
 				37DD8EFF1C1C29FF007C0E6C /* Main.storyboard in Resources */,
 				370ACE021BDF486700AB73EB /* Assets.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		370ACE091BDF486700AB73EB /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		370ACE141BDF486700AB73EB /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -554,7 +452,9 @@
 				370ACDFD1BDF486700AB73EB /* MonthlySalaryShow.swift in Sources */,
 				373C10EB1C5E049D0082CB8E /* StaffNameListSetting.swift in Sources */,
 				371DE5151C5DBD4D0058F73B /* Setting.swift in Sources */,
+				374090C01C78641E00B01DC4 /* VideoViewController.swift in Sources */,
 				377D2DAE1C36C08B009CC388 /* BlueDarkStyle.swift in Sources */,
+				374090A01C784EEA00B01DC4 /* Video.swift in Sources */,
 				376C92D61BE695D000D45FC2 /* extentions.swift in Sources */,
 				370ACE441BDF573500AB73EB /* DB.swift in Sources */,
 				373C10EF1C5E04D10082CB8E /* ShiftNameListSetting.swift in Sources */,
@@ -568,35 +468,9 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		370ACE071BDF486700AB73EB /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				370ACE101BDF486700AB73EB /* masamonTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		370ACE121BDF486700AB73EB /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				370ACE1B1BDF486700AB73EB /* masamonUITests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		370ACE0D1BDF486700AB73EB /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 370ACDF61BDF486600AB73EB /* masamon */;
-			targetProxy = 370ACE0C1BDF486700AB73EB /* PBXContainerItemProxy */;
-		};
-		370ACE181BDF486700AB73EB /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 370ACDF61BDF486600AB73EB /* masamon */;
-			targetProxy = 370ACE171BDF486700AB73EB /* PBXContainerItemProxy */;
-		};
 		3742AF921C130494003AB33B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = XlsxReaderWriter;
@@ -755,54 +629,6 @@
 			};
 			name = Release;
 		};
-		370ACE231BDF486700AB73EB /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				INFOPLIST_FILE = masamonTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.Kenta.masamonTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/masamon.app/masamon";
-			};
-			name = Debug;
-		};
-		370ACE241BDF486700AB73EB /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				INFOPLIST_FILE = masamonTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.Kenta.masamonTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/masamon.app/masamon";
-			};
-			name = Release;
-		};
-		370ACE261BDF486700AB73EB /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = masamonUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.Kenta.masamonUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_TARGET_NAME = masamon;
-				USES_XCTRUNNER = YES;
-			};
-			name = Debug;
-		};
-		370ACE271BDF486700AB73EB /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = masamonUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.Kenta.masamonUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_TARGET_NAME = masamon;
-				USES_XCTRUNNER = YES;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -820,24 +646,6 @@
 			buildConfigurations = (
 				370ACE201BDF486700AB73EB /* Debug */,
 				370ACE211BDF486700AB73EB /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		370ACE221BDF486700AB73EB /* Build configuration list for PBXNativeTarget "masamonTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				370ACE231BDF486700AB73EB /* Debug */,
-				370ACE241BDF486700AB73EB /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		370ACE251BDF486700AB73EB /* Build configuration list for PBXNativeTarget "masamonUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				370ACE261BDF486700AB73EB /* Debug */,
-				370ACE271BDF486700AB73EB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

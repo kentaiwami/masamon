@@ -39,6 +39,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     /*各画面で使用*/
     var screennumber = 0    //シフト：0, カレンダー：1, 設定：2,　履歴：3
     
+    /*VideoViewControllerで使用*/
+    var thumbnailnumber = 0     //タップしたサムネイルの番号を格納
+    
     func application(app: UIApplication, openURL url: NSURL, options: [String : AnyObject]) -> Bool {
         fileURL = ""
         fileURL = String(url.path!)
