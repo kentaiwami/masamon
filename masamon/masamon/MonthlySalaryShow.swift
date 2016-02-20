@@ -889,7 +889,8 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     override func motionBegan(motion: UIEventSubtype,withEvent event: UIEvent?){
         
         if(motion == UIEventSubtype.MotionShake){
-            //TODO: viewを出す            
+            let targetViewController = self.storyboard!.instantiateViewControllerWithIdentifier("Video")
+            self.presentViewController( targetViewController, animated: true, completion: nil)
         }
     }
 //    override func motionEnded(motion: UIEventSubtype,withEvent event: UIEvent?){
