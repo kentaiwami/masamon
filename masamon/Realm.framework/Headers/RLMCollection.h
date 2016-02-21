@@ -20,7 +20,7 @@
 
 RLM_ASSUME_NONNULL_BEGIN
 
-@class RLMRealm, RLMResults, RLMObject;
+@class RLMRealm, RLMResults, RLMObject, RLMSortDescriptor, RLMNotificationToken;
 
 /**
  A homogenous collection of `RLMObject`s like `RLMArray` or `RLMResults`.
@@ -53,7 +53,7 @@ RLM_ASSUME_NONNULL_BEGIN
  
  @param index   The index to look up.
  
- @return An RLMObject of the class contained by this RLMCollection.
+ @return An RLMObject of the type contained in this RLMCollection.
  */
 - (id)objectAtIndex:(NSUInteger)index;
 
@@ -62,7 +62,7 @@ RLM_ASSUME_NONNULL_BEGIN
  
  Returns `nil` if called on an empty RLMCollection.
  
- @return An RLMObject of the class contained by this RLMCollection.
+ @return An RLMObject of the type contained in this RLMCollection.
  */
 - (nullable id)firstObject;
 
@@ -71,7 +71,7 @@ RLM_ASSUME_NONNULL_BEGIN
  
  Returns `nil` if called on an empty RLMCollection.
  
- @return An RLMObject of the class contained by this RLMCollection.
+ @return An RLMObject of the type contained in this RLMCollection.
  */
 - (nullable id)lastObject;
 
@@ -95,6 +95,9 @@ RLM_ASSUME_NONNULL_BEGIN
  */
 - (NSUInteger)indexOfObjectWhere:(NSString *)predicateFormat, ...;
 
+/// :nodoc:
+- (NSUInteger)indexOfObjectWhere:(NSString *)predicateFormat args:(va_list)args;
+
 /**
  Gets the index of the first object matching the predicate.
  
@@ -112,6 +115,9 @@ RLM_ASSUME_NONNULL_BEGIN
  @return    An RLMResults of objects that match the given predicate
  */
 - (RLMResults *)objectsWhere:(NSString *)predicateFormat, ...;
+
+/// :nodoc:
+- (RLMResults *)objectsWhere:(NSString *)predicateFormat args:(va_list)args;
 
 /**
  Get objects matching the given predicate in the RLMCollection.
@@ -139,7 +145,7 @@ RLM_ASSUME_NONNULL_BEGIN
  
  @return    An RLMResults sorted by the specified properties.
  */
-- (RLMResults *)sortedResultsUsingDescriptors:(NSArray *)properties;
+- (RLMResults *)sortedResultsUsingDescriptors:(NSArray RLM_GENERIC(RLMSortDescriptor *) *)properties;
 
 /// :nodoc:
 - (id)objectAtIndexedSubscript:(NSUInteger)index;
@@ -162,6 +168,16 @@ RLM_ASSUME_NONNULL_BEGIN
  @param key   The name of the property.
  */
 - (void)setValue:(nullable id)value forKey:(NSString *)key;
+
+#pragma mark - Notifications
+
+/**
+ Register a block to be called each time the collection changes.
+
+ @param block The block to be called each time the collection changes.
+ @return A token which must be held for as long as you want notifications to be delivered.
+ */
+- (RLMNotificationToken *)addNotificationBlock:(void (^)(id<RLMCollection> collection))block;
 
 @end
 
