@@ -23,7 +23,7 @@
 
 RLM_ASSUME_NONNULL_BEGIN
 
-@class RLMObject, RLMRealm, RLMResults RLM_GENERIC_COLLECTION;
+@class RLMObject, RLMRealm, RLMResults RLM_GENERIC_COLLECTION, RLMNotificationToken;
 
 /**
 
@@ -90,7 +90,7 @@ RLM_ASSUME_NONNULL_BEGIN
 
  @param index   The index to look up.
 
- @return An RLMObject of the class contained by this RLMArray.
+ @return An RLMObject of the type contained in this RLMArray.
  */
 - (RLMObjectType)objectAtIndex:(NSUInteger)index;
 
@@ -99,7 +99,7 @@ RLM_ASSUME_NONNULL_BEGIN
 
  Returns `nil` if called on an empty RLMArray.
 
- @return An RLMObject of the class contained by this RLMArray.
+ @return An RLMObject of the type contained in this RLMArray.
  */
 - (nullable RLMObjectType)firstObject;
 
@@ -108,7 +108,7 @@ RLM_ASSUME_NONNULL_BEGIN
 
  Returns `nil` if called on an empty RLMArray.
 
- @return An RLMObject of the class contained by this RLMArray.
+ @return An RLMObject of the type contained in this RLMArray.
  */
 - (nullable RLMObjectType)lastObject;
 
@@ -121,7 +121,7 @@ RLM_ASSUME_NONNULL_BEGIN
 
  @warning This method can only be called during a write transaction.
 
- @param object  An RLMObject of the class contained by this RLMArray.
+ @param object  An RLMObject of the type contained in this RLMArray.
  */
 - (void)addObject:(RLMObjectArgument)object;
 
@@ -138,11 +138,11 @@ RLM_ASSUME_NONNULL_BEGIN
 /**
  Inserts an object at the given index.
 
- Throws an exception when called with an index greater than the number of objects in this RLMArray.
+ Throws an exception when the index exceeds the bounds of this RLMArray.
 
  @warning This method can only be called during a write transaction.
 
- @param anObject  An object (of the same type as returned from the objectClassName selector).
+ @param anObject  An RLMObject of the type contained in this RLMArray.
  @param index   The array index at which the object is inserted.
  */
 - (void)insertObject:(RLMObjectArgument)anObject atIndex:(NSUInteger)index;
@@ -150,7 +150,7 @@ RLM_ASSUME_NONNULL_BEGIN
 /**
  Removes an object at a given index.
 
- Throws an exception when called with an index greater than the number of objects in this RLMArray.
+ Throws an exception when the index exceeds the bounds of this RLMArray.
 
  @warning This method can only be called during a write transaction.
 
@@ -175,7 +175,7 @@ RLM_ASSUME_NONNULL_BEGIN
 /**
  Replaces an object at the given index with a new object.
 
- Throws an exception when called with an index greater than the number of objects in this RLMArray.
+ Throws an exception when the index exceeds the bounds of this RLMArray.
 
  @warning This method can only be called during a write transaction.
 
@@ -187,8 +187,7 @@ RLM_ASSUME_NONNULL_BEGIN
 /**
  Moves the object at the given source index to the given destination index.
 
- Throws an exception when called with an index greater than or equal to the
- number of objects in this RLMArray.
+ Throws an exception when the index exceeds the bounds of this RLMArray.
 
  @warning This method can only be called during a write transaction.
 
@@ -229,6 +228,9 @@ RLM_ASSUME_NONNULL_BEGIN
  */
 - (NSUInteger)indexOfObjectWhere:(NSString *)predicateFormat, ...;
 
+/// :nodoc:
+- (NSUInteger)indexOfObjectWhere:(NSString *)predicateFormat args:(va_list)args;
+
 /**
  Gets the index of the first object matching the predicate.
 
@@ -246,6 +248,9 @@ RLM_ASSUME_NONNULL_BEGIN
  @return                An RLMResults of objects that match the given predicate
  */
 - (RLMResults RLM_GENERIC_RETURN*)objectsWhere:(NSString *)predicateFormat, ...;
+
+/// :nodoc:
+- (RLMResults RLM_GENERIC_RETURN*)objectsWhere:(NSString *)predicateFormat args:(va_list)args;
 
 /**
  Get objects matching the given predicate in the RLMArray.
@@ -280,6 +285,25 @@ RLM_ASSUME_NONNULL_BEGIN
 
 /// :nodoc:
 - (void)setObject:(RLMObjectType)newValue atIndexedSubscript:(NSUInteger)index;
+
+#pragma mark - Notifications
+
+/**
+ Register a block to be called each time the RLMArray changes.
+
+ The block will be asynchronously called with the initial array, and then
+ called again after each write transaction which changes the array or any
+ items contained in the array. You must retain the returned token for as long as
+ you want the block to continue to be called. To stop receiving updates, call
+ `-stop` on the token.
+
+ The error parameter will always be `nil`, and is present only for compatiblity
+ with the RLMResults version of this method, which can potentially fail.
+
+ @param block The block to be called each time the array changes.
+ @return A token which must be held for as long as you want notifications to be delivered.
+ */
+- (RLMNotificationToken *)addNotificationBlock:(void (^)(RLMArray RLM_GENERIC_RETURN *array, NSError *))block;
 
 #pragma mark - Unavailable Methods
 
