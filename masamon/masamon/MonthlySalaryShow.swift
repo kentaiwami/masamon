@@ -49,6 +49,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
         
         //シフト時間を選択して表示するテキストフィールドのデフォルト表示を指定
         starttime = time[0]
@@ -128,7 +129,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             }
             
             //pickerviewのデフォルト表示
-            SaralyLabel.text = String(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB)-1))
+            SaralyLabel.text = self.GetCommaSalalyString(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB)-1))
         }
     }
     
@@ -142,7 +143,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             }
             
             //pickerviewのデフォルト表示
-            SaralyLabel.text = String(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB)-1))
+            SaralyLabel.text = self.GetCommaSalalyString(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB)-1))
         }else{
             SaralyLabel.text = ""
         }
@@ -190,7 +191,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                             for(var i = DBmethod().DBRecordCount(ShiftDB)-1; i >= 0; i--){
                                 self.shiftlist.addObject(DBmethod().ShiftDBGet(i))
                             }
-                            self.SaralyLabel.text = String(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB)-1))
+                            self.SaralyLabel.text = self.GetCommaSalalyString(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB)-1))
                         }
                         
                         self.onecourspicker.reloadAllComponents()
@@ -252,7 +253,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                             for(var i = DBmethod().DBRecordCount(ShiftDB)-1; i >= 0; i--){
                                 self.shiftlist.addObject(DBmethod().ShiftDBGet(i))
                             }
-                            self.SaralyLabel.text = String(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB)-1))
+                            self.SaralyLabel.text = self.GetCommaSalalyString(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB)-1))
                         }
                         
                         self.onecourspicker.reloadAllComponents()
@@ -537,7 +538,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         
         if(pickerView.tag == 1){            //取り込んだシフト
             if(DBmethod().DBRecordCount(ShiftDB) != 0){         //レコードが0のときは何もしない
-                SaralyLabel.text = String(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB)-1-row))
+                SaralyLabel.text = self.GetCommaSalalyString(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB)-1-row))
             }
             
         }else if(pickerView.tag == 2){      //シフトグループ選択
@@ -694,6 +695,26 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         let comp : NSDateComponents = calendar.components(
             [.Year,.Month,.Day,.Weekday], fromDate: date)
         return (comp.year,comp.month,comp.day,comp.weekday)
+    }
+    
+    //金額をコンマ付きの文字列として返す関数
+    func GetCommaSalalyString(salaly: Int) -> String{
+        
+        var tmp = String(salaly)
+        var index = tmp.endIndex.predecessor()
+        var i = 1
+        
+        while(tmp.startIndex != index){
+            
+            if(i % 3 == 0){
+                tmp.insert(",", atIndex: index)
+            }
+            
+            i++
+            index = index.predecessor()
+        }
+        
+        return tmp
     }
     
     
