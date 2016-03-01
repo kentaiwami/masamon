@@ -20,7 +20,6 @@ class PDFmethod: UIViewController {
         var lineIndex = 1
         
         let path: NSString
-        //        path = NSBundle.mainBundle().pathForResource("sample4", ofType: "pdf")!
         path = DBmethod().FilePathTmpGet()
         
         let tet = TET()

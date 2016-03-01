@@ -17,7 +17,6 @@ class XLSXmethod: UIViewController {
     let mark = "F"
     var number = 6
     
-    let TEST = "bbb"
     var flag = true
     
     var documentPath: String = ""
@@ -30,7 +29,6 @@ class XLSXmethod: UIViewController {
     func SetXLSX() -> (sheet: BRAWorksheet, P1:String){
         
         if(flag){
-//            documentPath = NSBundle.mainBundle().pathForResource(TEST, ofType: "xlsx")!
             documentPath = DBmethod().FilePathTmpGet() as String
             spreadsheet = BRAOfficeDocumentPackage.open(documentPath)
             worksheet = spreadsheet.workbook.worksheets[0] as! BRAWorksheet
