@@ -1,29 +1,28 @@
 まさもん
 ====
 
-## Overview
-シフト表のxlsxファイルやPDFファイルを取り込んで、月給の計算やシフトを1日単位で簡単に見ることができる  
+## 概要
+シフト表のxlsxファイルやPDFファイルを取り込んで、月給の計算やシフトを1日単位で簡単に見ることができる。  
 **Warning:**サンプルファイル([PDF](https://github.com/kentaiwami/masamon/blob/master/masamon/sampleshift.pdf)もしくは[XLSX](https://github.com/kentaiwami/masamon/blob/master/masamon/sampleshift.xlsx))の形式でなければ動作しません。
 
-## Demo
+## デモ
 
-## Requirement
-
-## Usage
-
-## Install
-
-#### バージョンとか
-* xcode 7.2.1
+## サポート情報
+* Xcode 7.2.1
 * iOS 9.2.1
 * iPhone 6,6s
+* サンプルファイル ([pdf](https://github.com/kentaiwami/masamon/blob/master/masamon/sampleshift.pdf) or [xlsx](https://github.com/kentaiwami/masamon/blob/master/masamon/sampleshift.xlsx))
 
-#### 主な機能
-* 時給登録
-* 給与計算
-* シフトの取り込み
+## 使い方
+1. 設定画面 > ユーザの設定で日中,深夜,シフト関連の情報を登録します。
+2. 取り込みたいシフトファイルを他アプリ(Safari,Line,Dropboxなど)で開いた状態からまさもんを開きます。
+3. 取り込む際の名前を入力して取り込むをタップします。
+4. インジケータが消えて取り込みが完了します。
 
-#### 使用したライブラリ
+## インストール
+zipでダウンロードして解凍することで使用可能です。
+
+#### 使用しているライブラリ
 * XlsxReaderWriter
 * SwipeBetweenViewControllers
 * handMadeCalendarOfSwift
