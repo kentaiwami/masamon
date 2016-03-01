@@ -1,8 +1,31 @@
+まさもん
+====
 
-# まさもん
+## Overview
+シフト表のエクセルファイルやPDFファイルを取り込んで、月給の計算やシフトを1日単位で簡単に見ることができる
 
-#### このアプリでは何ができるのか？
-* シフト表のエクセルファイルやPDFファイルを取り込んで、月給の計算やシフトを1日単位で簡単に見ることができる
+## Description
+ほげほげ
+
+## Demo
+
+## VS. 
+
+## Requirement
+
+## Usage
+
+## Install
+
+## Contribution
+
+## Licence
+
+[MIT](https://github.com/tcnksm/tool/blob/master/LICENCE)
+
+## Author
+
+[tcnksm](https://github.com/tcnksm)
 
 #### バージョンとか
 * xcode 7.2.1
@@ -20,5 +43,3 @@
 * handMadeCalendarOfSwift
 * Gradient Circular Progress
 * TET
-
-
