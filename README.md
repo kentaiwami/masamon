@@ -1,3 +1,5 @@
+<img src="masamon/masamon/Assets.xcassets/AppIcon.appiconset/Icon-60@2x.png" align="right" />
+
 まさもん
 ====
 
