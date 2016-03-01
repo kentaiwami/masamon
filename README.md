@@ -8,7 +8,7 @@
 **Warning:**サンプルファイル([PDF](https://github.com/kentaiwami/masamon/blob/master/masamon/sampleshift.pdf)もしくは[XLSX](https://github.com/kentaiwami/masamon/blob/master/masamon/sampleshift.xlsx))の形式でなければ動作しません。
 
 ## デモ
-
+![demo](https://github.com/kentaiwami/masamon/blob/master/demo.gif)
 ## サポート情報
 * Xcode 7.2.1
 * iOS 9.2.1
