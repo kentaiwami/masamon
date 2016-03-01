@@ -2,8 +2,8 @@
 ====
 
 ## Overview
-シフト表のxlsxファイルやPDFファイルを取り込んで、月給の計算やシフトを1日単位で簡単に見ることができる
- **Warning:**サンプルファイル([PDF](https://github.com/kentaiwami/masamon/blob/master/masamon/sampleshift.pdf)もしくは[XLSX](https://github.com/kentaiwami/masamon/blob/master/masamon/sampleshift.xlsx))の形式でなければ動作しません。
+シフト表のxlsxファイルやPDFファイルを取り込んで、月給の計算やシフトを1日単位で簡単に見ることができる  
+**Warning:**サンプルファイル([PDF](https://github.com/kentaiwami/masamon/blob/master/masamon/sampleshift.pdf)もしくは[XLSX](https://github.com/kentaiwami/masamon/blob/master/masamon/sampleshift.xlsx))の形式でなければ動作しません。
 
 ## Description
 ほげほげ
