@@ -365,8 +365,8 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                 self.savedata()
         })
         
-        alert.addAction(addAction)
         alert.addAction(skipAction)
+        alert.addAction(addAction)
         
         //シフト名入力用のtextfieldを追加
         alert.addTextFieldWithConfigurationHandler({(text:UITextField!) -> Void in
