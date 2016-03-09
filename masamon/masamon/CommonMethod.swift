@@ -82,37 +82,37 @@ class CommonMethod: UIViewController {
         let positionmonth = P1NSString.rangeOfString("月度").location
         
         //月の文字取得(1の位)
-        let monthsecondcharacter = String(P1[P1.startIndex.advancedBy(positionmonth-1)])
+        let monthfirstdigit = String(P1[P1.startIndex.advancedBy(positionmonth-1)])
         
         //月の文字取得(10の位)
-        let monthfirstcharacter = String(P1[P1.startIndex.advancedBy(positionmonth-2)])
+        let monthseconddigit = String(P1[P1.startIndex.advancedBy(positionmonth-2)])
         
 
         //年度の月が5月度〜10月度ならば年度の操作をせずに返す
-        if(monthsecondcharacter >= "5" && monthsecondcharacter <= "9"){
-            return (Int(year)!, Int(monthsecondcharacter)!-1, Int(year)!, Int(monthsecondcharacter)!, Int(year)!)
+        if(monthfirstdigit >= "5" && monthfirstdigit <= "9"){
+            return (Int(year)!, Int(monthfirstdigit)!-1, Int(year)!, Int(monthfirstdigit)!, Int(year)!)
             
         }
             
         //年度の月が10月度ならば月を操作して返す
-        else if(monthsecondcharacter == "0"){
+        else if(monthfirstdigit == "0"){
             return (Int(year)!, 9, Int(year)!, 10, Int(year)!)
         }
 
             
         //年度の月が11月度,12月度ならば年度の操作をせずに返す
-        else if((monthsecondcharacter >= "1" && monthsecondcharacter <= "2") && monthfirstcharacter == "1"){
-            return (Int(year)!, Int(monthfirstcharacter+monthsecondcharacter)!-1, Int(year)!, Int(monthfirstcharacter+monthsecondcharacter)!, Int(year)!)
+        else if((monthfirstdigit >= "1" && monthfirstdigit <= "2") && monthseconddigit == "1"){
+            return (Int(year)!, Int(monthseconddigit+monthfirstdigit)!-1, Int(year)!, Int(monthseconddigit+monthfirstdigit)!, Int(year)!)
         }
         
         //年度の月が1月度ならば開始月がその年,終了月は来年にして返す
-        else if(monthsecondcharacter == "1"){
-            return (Int(year)!, 12, Int(year)!, Int(monthsecondcharacter)!, Int(year)!+1)
+        else if(monthfirstdigit == "1"){
+            return (Int(year)!, 12, Int(year)!, Int(monthfirstdigit)!, Int(year)!+1)
         }
         
         //年度の月が2月度〜4月度ならば、来年にして返す
-        else if(monthsecondcharacter >= "2" && monthsecondcharacter <= "4"){
-            return (Int(year)!, Int(monthsecondcharacter)!-1, Int(year)!+1, Int(monthsecondcharacter)!, Int(year)!+1)
+        else if(monthfirstdigit >= "2" && monthfirstdigit <= "4"){
+            return (Int(year)!, Int(monthfirstdigit)!-1, Int(year)!+1, Int(monthfirstdigit)!, Int(year)!+1)
         }
         
         else{
