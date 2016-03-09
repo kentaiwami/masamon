@@ -88,10 +88,9 @@ class CommonMethod: UIViewController {
         let monthseconddigit = String(P1[P1.startIndex.advancedBy(positionmonth-2)])
         
 
-        //年度の月が5月度〜10月度ならば年度の操作をせずに返す
-        if(monthfirstdigit >= "5" && monthfirstdigit <= "9"){
+        //年度の月が4月度〜9月度ならば年度の操作をせずに返す
+        if(monthfirstdigit >= "4" && monthfirstdigit <= "9"){
             return (Int(year)!, Int(monthfirstdigit)!-1, Int(year)!, Int(monthfirstdigit)!, Int(year)!)
-            
         }
             
         //年度の月が10月度ならば月を操作して返す
@@ -110,8 +109,8 @@ class CommonMethod: UIViewController {
             return (Int(year)!, 12, Int(year)!, Int(monthfirstdigit)!, Int(year)!+1)
         }
         
-        //年度の月が2月度〜4月度ならば、来年にして返す
-        else if(monthfirstdigit >= "2" && monthfirstdigit <= "4"){
+        //年度の月が2月度〜3月度ならば、来年にして返す
+        else if(monthfirstdigit >= "2" && monthfirstdigit <= "3"){
             return (Int(year)!, Int(monthfirstdigit)!-1, Int(year)!+1, Int(monthfirstdigit)!, Int(year)!+1)
         }
         
