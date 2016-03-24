@@ -69,7 +69,7 @@ class CommonMethod: UIViewController {
     endcoursmonth           =>シフト終了月
     endcoursmonthyear       =>シフト終了月の年
     */
-    func JudgeYearAndMonth(var P1: String) -> (year: Int, startcoursmonth: Int, startcoursmonthyear: Int, endcoursmonth: Int, endcoursmonthyear: Int){
+    func JudgeYearAndMonth( P1: String) -> (year: Int, startcoursmonth: Int, startcoursmonthyear: Int, endcoursmonth: Int, endcoursmonthyear: Int){
         
         //スペースがあった場合は削除
         P1 = P1.stringByReplacingOccurrencesOfString(" ", withString: "")
@@ -120,7 +120,7 @@ class CommonMethod: UIViewController {
     }
     
     //スタッフ名に含まれているシフト体制を検索して結果を返す関数
-    func IncludeShiftNameInStaffName(var staffname: String) -> Array<Int>{
+    func IncludeShiftNameInStaffName( staffname: String) -> Array<Int>{
         
         let shiftarray = DBmethod().ShiftSystemAllRecordGet()
         let holiday = DBmethod().ShiftSystemRecordArrayGetByGroudid(6)

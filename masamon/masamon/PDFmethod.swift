@@ -87,7 +87,7 @@ class PDFmethod: UIViewController {
     }
     
     //スタッフのシフトを日にちごとに分けたArrayを返す
-    func SplitDayShiftGet(var staffarray: Array<String>) -> (shiftarray: Array<String>, shiftcours: (Int,Int,Int,Int,Int)){
+    func SplitDayShiftGet( staffarray: Array<String>) -> (shiftarray: Array<String>, shiftcours: (Int,Int,Int,Int,Int)){
         
         //データを削除して初期化する
         appDelegate.errorstaffnamepdf.removeAll()
@@ -451,7 +451,7 @@ class PDFmethod: UIViewController {
     }
     
     //受け取ったスタッフ1行分のテキストと位置情報からシフト名を取り出す関数
-    func GetShiftNameFromOneLineText(text: String, sg: String, var sp: Int) -> String{
+    func GetShiftNameFromOneLineText(text: String, sg: String, sp: Int) -> String{
         
         var result = ""
         var shiftnamearray: [String] = []
@@ -600,7 +600,7 @@ class PDFmethod: UIViewController {
     removedarray    => 文字数が少なく、要素が削除される側の配列
     comparisonarray => 文字数が多く、要素の削除のための比較用になる配列
     */
-    func RemoveIntersectArrayToArray(var removedarray: Array<Int>, comparisonarray: Array<Int>) -> Array<Int>{
+    func RemoveIntersectArrayToArray( removedarray: Array<Int>, comparisonarray: Array<Int>) -> Array<Int>{
         
         let setarray = Set(removedarray).intersect(comparisonarray)
         
@@ -612,7 +612,7 @@ class PDFmethod: UIViewController {
     }
     
     //受け取ったpivotindexよりも大きいindexの要素は削除する関数
-    func RemoveElementThanPivotIndex(var array: Array<Int>, pivotindex: String.CharacterView.Index, text: String) -> Array<Int>{
+    func RemoveElementThanPivotIndex( array: Array<Int>, pivotindex: String.CharacterView.Index, text: String) -> Array<Int>{
         
         let index = text.startIndex
         var removeelement: [Int] = []
