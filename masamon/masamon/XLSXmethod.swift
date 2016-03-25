@@ -57,7 +57,8 @@ class XLSXmethod: UIViewController {
         var flag = 0
         
         //30(31)日分繰り返すループ
-        for(var i = 0; i < monthrange.length; i++){
+        
+        for i in 0 ..< monthrange.length {
             let shiftdb = ShiftDB()
             let shiftdetaildb = ShiftDetailDB()
             
@@ -76,7 +77,7 @@ class XLSXmethod: UIViewController {
                 case 0:         //11日〜月末までの場合
                     newshiftdetaildb.year = CommonMethod().JudgeYearAndMonth(worksheet.P1).startcoursmonthyear
                     newshiftdetaildb.month = CommonMethod().JudgeYearAndMonth(worksheet.P1).startcoursmonth
-                    date++
+                    date += 1
                     
                     if(date > monthrange.length){
                         date = 1
@@ -86,7 +87,7 @@ class XLSXmethod: UIViewController {
                 case 1:         //1日〜10日までの場合
                     newshiftdetaildb.year = CommonMethod().JudgeYearAndMonth(worksheet.P1).endcoursmonthyear
                     newshiftdetaildb.month = CommonMethod().JudgeYearAndMonth(worksheet.P1).endcoursmonth
-                    date++
+                    date += 1
                     
                 default:
                     break
@@ -110,14 +111,14 @@ class XLSXmethod: UIViewController {
                 shiftdb.month = 0
                 
                 shiftdetaildb.id = shiftdetailrecordcount
-                shiftdetailrecordcount++
+                shiftdetailrecordcount += 1
                 shiftdetaildb.day = date
 
                 switch(flag){
                 case 0:         //11日〜30(31)日までの場合
                     shiftdetaildb.year = CommonMethod().JudgeYearAndMonth(worksheet.P1).startcoursmonthyear
                     shiftdetaildb.month = CommonMethod().JudgeYearAndMonth(worksheet.P1).startcoursmonth
-                    date++
+                    date += 1
                     
                     if(date > monthrange.length){
                         date = 1
@@ -127,7 +128,7 @@ class XLSXmethod: UIViewController {
                 case 1:         //1日〜10日までの場合
                     shiftdetaildb.year = CommonMethod().JudgeYearAndMonth(worksheet.P1).endcoursmonthyear
                     shiftdetaildb.month = CommonMethod().JudgeYearAndMonth(worksheet.P1).endcoursmonth
-                    date++
+                    date += 1
                     
                 default:
                     break
@@ -137,7 +138,7 @@ class XLSXmethod: UIViewController {
                 shiftdetaildb.staff = TheDayStaffAttendance(i, staffcellpositionarray: staffcellposition, worksheet: worksheet.sheet)
                 
                 //すでに記録してあるListを取得して後ろに現在の記録を追加する
-                for(var i = 0; i < shiftdetailarray.count; i++){
+                for i in 0 ..< shiftdetailarray.count{
                     shiftdb.shiftdetail.append(shiftdetailarray[i])
                 }
                 shiftdb.shiftdetail.append(shiftdetaildb)
@@ -164,10 +165,10 @@ class XLSXmethod: UIViewController {
         while(true){
             let Fcell: String = worksheet.sheet.cellForCellReference(mark+String(number)).stringValue()
             if(Fcell.isEmpty){       //セルが空なら進めるだけ
-                number++
+                number += 1
             }else{
                 array.append(mark+String(number))
-                number++
+                number += 1
             }
             
             if(DBmethod().StaffNumberGet() == array.count){       //設定したスタッフ人数と取り込み数が一致したら
@@ -197,7 +198,7 @@ class XLSXmethod: UIViewController {
 //        let monthrange = c.rangeOfUnit([NSCalendarUnit.Day],  inUnit: [NSCalendarUnit.Month], forDate: shiftnsdate)
         
         //F列からユーザ名と合致する箇所を探す
-        for(var i = 0; i < DBmethod().StaffNumberGet(); i++){
+        for i in 0 ..< DBmethod().StaffNumberGet(){
             let nowcell: String = worksheet.sheet.cellForCellReference(staffcellposition[i]).stringValue()
             
             if(nowcell == username){
@@ -207,7 +208,7 @@ class XLSXmethod: UIViewController {
         }
         
         //1クール分行う
-        for(var i = 0; i < monthrange.length; i++){
+        for i in 0 ..< monthrange.length{
             let replaceday = userposition.stringByReplacingOccurrencesOfString("F", withString: cellrow[i])
             let dayshift: String = worksheet.sheet.cellForCellReference(replaceday).stringValue()
             
@@ -223,7 +224,7 @@ class XLSXmethod: UIViewController {
         var monthlysalary = 0.0
         let houlypayrecord = DBmethod().HourlyPayRecordGet()
         
-        for(var i = 0; i < usershift.count; i++){
+        for i in 0 ..< usershift.count{
             
             let shiftsystem = DBmethod().SearchShiftSystem(usershift[i])
             if(shiftsystem![0].endtime <= houlypayrecord[0].timeto){
@@ -243,7 +244,7 @@ class XLSXmethod: UIViewController {
         
         newshiftdbsalalyadd.id = oldshiftdbsalalynone.id
         
-        for(var i = 0; i < oldshiftdbsalalynone.shiftdetail.count; i++){
+        for i in 0 ..< oldshiftdbsalalynone.shiftdetail.count{
             newshiftdbsalalyadd.shiftdetail.append(oldshiftdbsalalynone.shiftdetail[i])
         }
         
@@ -267,7 +268,7 @@ class XLSXmethod: UIViewController {
         
         var staffstring = ""
         
-        for(var i = 0; i < DBmethod().StaffNumberGet(); i++){
+        for i in 0 ..< DBmethod().StaffNumberGet(){
             let nowstaff = staffcellpositionarray[i]
             let replaceday = nowstaff.stringByReplacingOccurrencesOfString("F", withString: cellrow[day])
             
@@ -306,7 +307,7 @@ class XLSXmethod: UIViewController {
 //        let monthrange = c.rangeOfUnit([NSCalendarUnit.Day],  inUnit: [NSCalendarUnit.Month], forDate: shiftnsdate)
         let staffcellposition = self.StaffCellPositionGet()     //スタッフの名前が記載されているセル場所 ex.)F8,F9
 
-        for(var i = 0; i < monthrange.length; i++){
+        for i in 0 ..< monthrange.length{
             self.TheDayStaffAttendance(i, staffcellpositionarray: staffcellposition, worksheet: worksheet.sheet)
         }
     }
@@ -316,7 +317,7 @@ class XLSXmethod: UIViewController {
         let staffpositionarray = self.StaffCellPositionGet()
         let worksheet = self.SetXLSX()
         
-        for(var i = 0; i < staffpositionarray.count; i++){
+        for i in 0 ..< staffpositionarray.count{
             let staffname: String = worksheet.sheet.cellForCellReference(staffpositionarray[i]).stringValue()
             
             let array = CommonMethod().IncludeShiftNameInStaffName(staffname)
@@ -341,7 +342,7 @@ class XLSXmethod: UIViewController {
         
         var holidayflag = false
         
-        for(var i = 0; i < holiday.count; i++){
+        for i in 0 ..< holiday.count{
             if(holiday[i] == shiftname){
                 holidayflag = true
                 break
