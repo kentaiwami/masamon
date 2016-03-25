@@ -32,7 +32,7 @@ class StaffNameListSetting: UIViewController, UITableViewDataSource, UITableView
         if(DBmethod().StaffNameAllRecordGet() != nil){
             let results = DBmethod().StaffNameAllRecordGet()
             
-            for(var i = 0; i < results!.count; i++){
+            for i in 0 ..< results!.count{
                 records.append(results![i])
             }
         }
@@ -137,7 +137,7 @@ class StaffNameListSetting: UIViewController, UITableViewDataSource, UITableView
                         if(textFields![0].text! != ""){
                             
                             //上書き処理を行う
-                            for(var i = 0; i < self.records.count; i++){
+                            for i in 0 ..< self.records.count{
                                 if(self.texts[index] == self.records[i].name){
                                     
                                     let newstaffnamedbrecord = StaffNameDB()
@@ -177,7 +177,7 @@ class StaffNameListSetting: UIViewController, UITableViewDataSource, UITableView
             
             let Action: UIAlertAction = UIAlertAction(title: buttontitle, style: UIAlertActionStyle.Destructive, handler: { (action:UIAlertAction!) -> Void in
                 
-                for(var i = 0; i < self.records.count; i++){
+                for i in 0 ..< self.records.count{
                     
                     if(self.texts[index] == self.records[i].name){
                         let pivot = self.records[i].id                  //削除前にずらす元となるidを記録する
