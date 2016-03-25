@@ -124,7 +124,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         
         //NSArrayへの追加
         if(DBmethod().DBRecordCount(ShiftDB) != 0){
-            for i in DBmethod().DBRecordCount(ShiftDB)-1 ... 0{
+            for i in (0 ... DBmethod().DBRecordCount(ShiftDB)-1).reverse(){
                 shiftlist.addObject(DBmethod().ShiftDBGet(i))
             }
             
@@ -138,7 +138,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         
         shiftlist.removeAllObjects()
         if(DBmethod().DBRecordCount(ShiftDB) != 0){
-            for i in DBmethod().DBRecordCount(ShiftDB)-1 ... 0{
+            for i in (0 ... DBmethod().DBRecordCount(ShiftDB)-1).reverse(){
                 shiftlist.addObject(DBmethod().ShiftDBGet(i))
             }
             
@@ -188,7 +188,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                         /*pickerview,label,シフトの表示を更新する*/
                         self.shiftlist.removeAllObjects()
                         if(DBmethod().DBRecordCount(ShiftDB) != 0){
-                            for i in DBmethod().DBRecordCount(ShiftDB)-1 ... 0{
+                            for i in (0 ... DBmethod().DBRecordCount(ShiftDB)-1).reverse(){
                                 self.shiftlist.addObject(DBmethod().ShiftDBGet(i))
                             }
                             self.SaralyLabel.text = self.GetCommaSalalyString(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB)-1))
@@ -250,7 +250,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                         /*pickerview,label,シフトの表示を更新する*/
                         self.shiftlist.removeAllObjects()
                         if(DBmethod().DBRecordCount(ShiftDB) != 0){
-                            for i in DBmethod().DBRecordCount(ShiftDB)-1 ... 0{
+                            for i in (0 ... DBmethod().DBRecordCount(ShiftDB)-1).reverse(){
                                 self.shiftlist.addObject(DBmethod().ShiftDBGet(i))
                             }
                             self.SaralyLabel.text = self.GetCommaSalalyString(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB)-1))

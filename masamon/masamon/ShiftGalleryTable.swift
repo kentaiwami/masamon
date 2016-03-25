@@ -37,7 +37,7 @@ class ShiftGalleryTable: UIViewController, UITableViewDataSource, UITableViewDel
         tableview.allowsMultipleSelection = true
         
         if(DBmethod().DBRecordCount(ShiftImportHistoryDB) != 0){
-            for i in DBmethod().DBRecordCount(ShiftImportHistoryDB)-1 ... 0{
+            for i in (0 ... DBmethod().DBRecordCount(ShiftImportHistoryDB)-1).reverse(){
                 let historydate = DBmethod().ShiftImportHistoryDBGet()[i].date
                 let historyname = DBmethod().ShiftImportHistoryDBGet()[i].name
                 shiftlist.append(historydate + "   " + historyname)
@@ -56,7 +56,7 @@ class ShiftGalleryTable: UIViewController, UITableViewDataSource, UITableViewDel
         selectedCells.removeAll()
         
         if(DBmethod().DBRecordCount(ShiftImportHistoryDB) != 0){
-            for i in DBmethod().DBRecordCount(ShiftImportHistoryDB)-1 ... 0{
+            for i in (0 ... DBmethod().DBRecordCount(ShiftImportHistoryDB)-1).reverse(){
                 let historydate = DBmethod().ShiftImportHistoryDBGet()[i].date
                 let historyname = DBmethod().ShiftImportHistoryDBGet()[i].name
                 shiftlist.append(historydate + "   " + historyname)
