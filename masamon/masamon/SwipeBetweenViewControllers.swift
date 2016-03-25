@@ -92,7 +92,7 @@ class SwipeBetweenViewControllers: UINavigationController,UIPageViewControllerDe
             buttonText = ["シフト","カレンダー","設定","ファイル"] //%%%buttontitle
         }
 
-        for (var i = 0 ; i < numControllers; i++) {
+        for i in 0  ..< numControllers {
             let frame :CGRect = CGRectMake(X_BUFFER+CGFloat(i)*(self.view.frame.size.width-2*X_BUFFER)/CGFloat(numControllers)-X_OFFSET, Y_BUFFER, (self.view.frame.size.width-2*X_BUFFER)/CGFloat(numControllers), HEIGHT)
             let button :UIButton = UIButton(frame: frame)
             navigationView.addSubview(button)
@@ -100,7 +100,7 @@ class SwipeBetweenViewControllers: UINavigationController,UIPageViewControllerDe
             button.tag = i //%%% IMPORTANT: if you make your own custom buttons, you have to tag them appropriately
 //            button.backgroundColor = UIColor(red: 0.03, green: 0.07, blue: 0.08, alpha: 1) //%%% buttoncolors
             button.backgroundColor = UIColor.hex("55586B", alpha: 1.0)
-            button.addTarget(self, action: "tapSegmentButtonAction:", forControlEvents: UIControlEvents.TouchUpInside)
+            button.addTarget(self, action: #selector(SwipeBetweenViewControllers.tapSegmentButtonAction(_:)), forControlEvents: UIControlEvents.TouchUpInside)
             button.setTitle(buttonText[i], forState:UIControlState.Normal) //%%%buttontitle
            // button.setImage(UIImage(named: "../images/settings48-2.png"), forState: .Normal)
         }
@@ -202,7 +202,7 @@ class SwipeBetweenViewControllers: UINavigationController,UIPageViewControllerDe
         //%%% check to see if you're going left -> right or right -> left
         if button.tag > tempIndex {
             //%%% scroll through all the objects between the two points
-            for var i = tempIndex+1 ; i <= button.tag ; i++ {
+            for i in tempIndex+1 ... button.tag{
                 let index = i
                 pageController.setViewControllers([viewControllerArray[i]], direction:UIPageViewControllerNavigationDirection.Forward, animated: true, completion: {complete in
                 
@@ -217,7 +217,7 @@ class SwipeBetweenViewControllers: UINavigationController,UIPageViewControllerDe
         
         //%%% this is the same thing but for going right -> left
         else if button.tag < tempIndex {
-            for var i = tempIndex-1 ; i >= button.tag ; i-- {
+            for i in tempIndex-1 ... button.tag{
                 let index = i
                 pageController.setViewControllers([viewControllerArray[i]], direction: UIPageViewControllerNavigationDirection.Reverse, animated: true, completion: {complete in
                     if complete {
@@ -274,7 +274,7 @@ class SwipeBetweenViewControllers: UINavigationController,UIPageViewControllerDe
         if (index == NSNotFound) {
             return nil
         }
-        index--
+        index -= 1
         if (0 <= index && index < viewControllerArray.count) {
             return viewControllerArray[index]
         }
@@ -286,7 +286,7 @@ class SwipeBetweenViewControllers: UINavigationController,UIPageViewControllerDe
         if (index == NSNotFound) {
             return nil
         }
-        index++
+        index += 1
         if (0 <= index && index < viewControllerArray.count) {
             return viewControllerArray[index]
         }
@@ -302,7 +302,7 @@ class SwipeBetweenViewControllers: UINavigationController,UIPageViewControllerDe
     //%%% checks to see which item we are currently looking at from the array of view controllers.
     // not really a delegate method, but is used in all the delegate methods, so might as well include it here
     func indexOfController(viewController :UIViewController) -> Int {
-        for (var i = 0 ; i < viewControllerArray.count ; i++) {
+        for i in 0  ..< viewControllerArray.count  {
             if (viewController == viewControllerArray[i]) {
                 return i
             }
