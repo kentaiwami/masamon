@@ -72,7 +72,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         pickerviewtoolBar.translucent = true
         pickerviewtoolBar.sizeToFit()
         
-        pickerdoneButton = UIBarButtonItem(title: "完了", style: UIBarButtonItemStyle.Plain, target: self, action: "donePicker:")
+        pickerdoneButton = UIBarButtonItem(title: "完了", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(MonthlySalaryShow.donePicker(_:)))
         let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
         
         pickerviewtoolBar.setItems([flexSpace,pickerdoneButton], animated: false)
@@ -95,7 +95,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         CalenderLabel.text = "\(date.year)年\(date.month)月\(date.day)日 (\(self.ReturnWeekday(date.weekday)))"
         
         //アイコンとボタンの設置
-        for(var i = 0; i < 2; i++){
+        for i in 0 ..< 2{
             let imageview = UIImageView()
             imageview.image = UIImage(named: iconnamearray[i])
             imageview.frame = CGRectMake(CGFloat(iconpositionarray[i]), 20, 42, 40)
@@ -104,16 +104,16 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             let calenderbutton = UIButton()
             calenderbutton.setImage(UIImage(named: calenderbuttonnamearray[i]), forState: .Normal)
             calenderbutton.frame = CGRectMake(CGFloat(calenderbuttonposition[i]), 548, 50, 48)
-            calenderbutton.addTarget(self, action: "TapCalenderButton:", forControlEvents: .TouchUpInside)
+            calenderbutton.addTarget(self, action: #selector(MonthlySalaryShow.TapCalenderButton(_:)), forControlEvents: .TouchUpInside)
             calenderbutton.tag = i
             self.view.addSubview(calenderbutton)
         }
         
-        NSTimer.scheduledTimerWithTimeInterval(1.0,target:self,selector:Selector("FileSaveSuccessfulAlertShow"),
+        NSTimer.scheduledTimerWithTimeInterval(1.0,target:self,selector:#selector(MonthlySalaryShow.FileSaveSuccessfulAlertShow),
             userInfo: nil, repeats: true);
         
         //アプリがアクティブになったとき
-        notificationCenter.addObserver(self,selector: "MonthlySalaryShowViewActived",name:UIApplicationDidBecomeActiveNotification,object: nil)
+        notificationCenter.addObserver(self,selector: #selector(MonthlySalaryShow.MonthlySalaryShowViewActived),name:UIApplicationDidBecomeActiveNotification,object: nil)
         
         //PickerViewの追加
         onecourspicker.frame = CGRectMake(-20,10,self.view.bounds.width/2+20, 150.0)
@@ -124,7 +124,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         
         //NSArrayへの追加
         if(DBmethod().DBRecordCount(ShiftDB) != 0){
-            for(var i = DBmethod().DBRecordCount(ShiftDB)-1; i >= 0; i--){
+            for i in DBmethod().DBRecordCount(ShiftDB)-1 ... 0{
                 shiftlist.addObject(DBmethod().ShiftDBGet(i))
             }
             
@@ -138,7 +138,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         
         shiftlist.removeAllObjects()
         if(DBmethod().DBRecordCount(ShiftDB) != 0){
-            for(var i = DBmethod().DBRecordCount(ShiftDB)-1; i >= 0; i--){
+            for i in DBmethod().DBRecordCount(ShiftDB)-1 ... 0{
                 shiftlist.addObject(DBmethod().ShiftDBGet(i))
             }
             
@@ -188,7 +188,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                         /*pickerview,label,シフトの表示を更新する*/
                         self.shiftlist.removeAllObjects()
                         if(DBmethod().DBRecordCount(ShiftDB) != 0){
-                            for(var i = DBmethod().DBRecordCount(ShiftDB)-1; i >= 0; i--){
+                            for i in DBmethod().DBRecordCount(ShiftDB)-1 ... 0{
                                 self.shiftlist.addObject(DBmethod().ShiftDBGet(i))
                             }
                             self.SaralyLabel.text = self.GetCommaSalalyString(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB)-1))
@@ -250,7 +250,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                         /*pickerview,label,シフトの表示を更新する*/
                         self.shiftlist.removeAllObjects()
                         if(DBmethod().DBRecordCount(ShiftDB) != 0){
-                            for(var i = DBmethod().DBRecordCount(ShiftDB)-1; i >= 0; i--){
+                            for i in DBmethod().DBRecordCount(ShiftDB)-1 ... 0{
                                 self.shiftlist.addObject(DBmethod().ShiftDBGet(i))
                             }
                             self.SaralyLabel.text = self.GetCommaSalalyString(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB)-1))
@@ -569,7 +569,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         let files = filemanager.enumeratorAtPath(NSHomeDirectory() + "/Documents/Inbox")
         var filecount = 0
         while let _ = files?.nextObject() {
-            filecount++
+            filecount += 1
         }
         
         if(DBmethod().InboxFileCountsGet() < filecount){   //ファイル数が増えていたら(新規でダウンロードしていたら)
@@ -677,7 +677,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         }
         
         //最後の文字を削除するための処理
-        for(var i = 0; i < staffshiftarray.count; i++){
+        for i in 0 ..< staffshiftarray.count{
             if(staffshiftarray[i] != ""){
                 var str = staffshiftarray[i]
                 let endPoint = str.characters.count - 1
@@ -710,7 +710,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                 tmp.insert(",", atIndex: index)
             }
             
-            i++
+            i += 1
             index = index.predecessor()
         }
         
@@ -743,7 +743,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             var splitedstaffarray = self.SplitStaffShift(shiftdetaidb![0].staff)
             
             //スタッフ名がない場合にメッセージを代入するためのループ
-            for(var i = 0; i < splitedstaffarray.count; i++){
+            for i in 0 ..< splitedstaffarray.count{
                 if(splitedstaffarray[i] == ""){
                     splitedstaffarray[i] = "該当スタッフなし"
                 }
@@ -751,7 +751,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             
             let shiftarray = ["早番：","中1：","中2：","中3：","遅番：","その他："]
             //テキストビューにスタッフ名を羅列するためのループ
-            for(var i = 0; i < splitedstaffarray.count; i++){
+            for i in 0 ..< splitedstaffarray.count{
                 var myString = NSMutableAttributedString()
                 if((splitedstaffarray[i].rangeOfString(DBmethod().UserNameGet())) != nil){
                     
