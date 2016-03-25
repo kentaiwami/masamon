@@ -58,7 +58,7 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
         pickerviewtoolBar.tintColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
         pickerviewtoolBar.sizeToFit()
         
-        pickerdoneButton = UIBarButtonItem(title: "完了", style: UIBarButtonItemStyle.Plain, target: self, action: "donePicker:")
+        pickerdoneButton = UIBarButtonItem(title: "完了", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(ShiftNameListSetting.donePicker(_:)))
         let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
         
         pickerviewtoolBar.setItems([flexSpace,pickerdoneButton], animated: false)
@@ -71,11 +71,12 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
         records.removeAll()
         
         //ShiftSystemDBのレコード全てをグループ別で配列に格納
-        for(var i = 0; i <= 6; i++){
+        for i in 0 ... 6 {
+        
             records.append([])
             let results = DBmethod().ShiftSystemRecordArrayGetByGroudid(i)
             
-            for(var j = 0; j < results.count; j++){
+            for j in 0 ..< results.count{
                 records[i].append(results[j])
             }
         }
