@@ -37,7 +37,7 @@ class ShiftGalleryTable: UIViewController, UITableViewDataSource, UITableViewDel
         tableview.allowsMultipleSelection = true
         
         if(DBmethod().DBRecordCount(ShiftImportHistoryDB) != 0){
-            for(var i = DBmethod().DBRecordCount(ShiftImportHistoryDB)-1; i >= 0; i--){
+            for i in DBmethod().DBRecordCount(ShiftImportHistoryDB)-1 ... 0{
                 let historydate = DBmethod().ShiftImportHistoryDBGet()[i].date
                 let historyname = DBmethod().ShiftImportHistoryDBGet()[i].name
                 shiftlist.append(historydate + "   " + historyname)
@@ -56,7 +56,7 @@ class ShiftGalleryTable: UIViewController, UITableViewDataSource, UITableViewDel
         selectedCells.removeAll()
         
         if(DBmethod().DBRecordCount(ShiftImportHistoryDB) != 0){
-            for(var i = DBmethod().DBRecordCount(ShiftImportHistoryDB)-1; i >= 0; i--){
+            for i in DBmethod().DBRecordCount(ShiftImportHistoryDB)-1 ... 0{
                 let historydate = DBmethod().ShiftImportHistoryDBGet()[i].date
                 let historyname = DBmethod().ShiftImportHistoryDBGet()[i].name
                 shiftlist.append(historydate + "   " + historyname)
@@ -76,7 +76,7 @@ class ShiftGalleryTable: UIViewController, UITableViewDataSource, UITableViewDel
     //表示ボタンを押した時に呼ばれる関数
     @IBAction func TapShowButton(sender: AnyObject) {
         
-        for(var i = 0; i < selectedCells.count; i++){
+        for i in 0 ..< selectedCells.count{
             if(selectedCells[i] == true){
                 flag = true
                 break
@@ -181,7 +181,7 @@ class ShiftGalleryTable: UIViewController, UITableViewDataSource, UITableViewDel
         
         closebutton.frame = CGRectMake(closeview.frame.width/2-37, 550, 74, 30)
         closebutton.setTitle("閉じる", forState: .Normal)
-        closebutton.addTarget(self, action: "TapCloseButton:", forControlEvents: .TouchUpInside)
+        closebutton.addTarget(self, action: #selector(ShiftGalleryTable.TapCloseButton(_:)), forControlEvents: .TouchUpInside)
         closebutton.setTitleColor(UIColor(red: 0, green: 122/255, blue: 1, alpha: 1.0), forState: .Normal)
         
         myCollectionView.addSubview(closeview)
@@ -201,9 +201,9 @@ class ShiftGalleryTable: UIViewController, UITableViewDataSource, UITableViewDel
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         var count = 0
         
-        for(var i = 0; i < appDelegate.selectedcell.count; i++){
+        for i in 0 ..< appDelegate.selectedcell.count{
             if(appDelegate.selectedcell[i] == true){
-                count++
+                count += 1
             }
         }
         return count
@@ -216,7 +216,7 @@ class ShiftGalleryTable: UIViewController, UITableViewDataSource, UITableViewDel
         let count = DBmethod().DBRecordCount(ShiftImportHistoryDB)-1
         
         if(DBmethod().DBRecordCount(ShiftImportHistoryDB) != 0){
-            for(var i = 0; i <= count; i++){
+            for i in 0 ... count{
                 if(appDelegate.selectedcell[i]){
                     let historydate = DBmethod().ShiftImportHistoryDBGet()[count-i].date
                     let historyname = DBmethod().ShiftImportHistoryDBGet()[count-i].name
@@ -245,7 +245,7 @@ class ShiftGalleryTable: UIViewController, UITableViewDataSource, UITableViewDel
         let count = DBmethod().DBRecordCount(ShiftImportHistoryDB)-1
         
         if(DBmethod().DBRecordCount(ShiftImportHistoryDB) != 0){
-            for(var i = 0; i <= count; i++){
+            for i in 0 ... count{
                 if(appDelegate.selectedcell[i]){
                     let historyname = DBmethod().ShiftImportHistoryDBGet()[count-i].name
                     shiftlist.append(historyname)
