@@ -55,7 +55,7 @@ class UserSetting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSourc
         SetText()
       
         //区切るための枠線を追加
-        for(var i = 0; i < 3; i++){
+        for i in 0 ..< 3{
             let frameborderline = UIView()
             frameborderline.frame = CGRectMake(0, CGFloat(frameborder[i]), self.view.frame.width, 135)
             frameborderline.backgroundColor = UIColor.clearColor()
@@ -67,7 +67,7 @@ class UserSetting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSourc
         }
 
         //時計アイコンの設置
-        for(var i = 0; i < 2; i++){
+        for i in 0 ..< 2{
             let clockicon = UIImageView()
             clockicon.image = UIImage(named: "../images/clock.png")
             clockicon.frame = CGRectMake(24, CGFloat(clock[i]), 42, 40)
@@ -75,7 +75,7 @@ class UserSetting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSourc
         }
         
         //円アイコンの設置
-        for(var i = 0; i < 2; i++){
+        for i in 0 ..< 2{
             let yenicon = UIImageView()
             yenicon.image = UIImage(named: "../images/yen.png")
             yenicon.frame = CGRectMake(24, CGFloat(yen[i]), 42, 40)
@@ -83,7 +83,7 @@ class UserSetting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSourc
         }
         
         //シフト関連のアイコンを設置
-        for(var i = 0; i < 2; i++){
+        for i in 0 ..< 2{
             let usericon = UIImageView()
             usericon.image = UIImage(named: usericonfilename[i])
             usericon.frame = CGRectMake(24, CGFloat(user[i]), 42, 40)
@@ -92,7 +92,7 @@ class UserSetting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSourc
         }
         
         //猫の追加
-        for(var i = 0; i < catimagepath.count; i++){
+        for i in 0 ..< catimagepath.count{
             let catimage = UIImage(named: catimagepath[i])
             let catimageview = UIImageView()
             
@@ -109,7 +109,7 @@ class UserSetting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSourc
         savebutton.frame = CGRectMake(0, 0, 70, 70)
         savebutton.layer.position = CGPoint(x: self.view.frame.width/2, y:620)
         savebutton.setImage(saveimage, forState: .Normal)
-        savebutton.addTarget(self, action: "SaveButtontapped:", forControlEvents:.TouchUpInside)
+        savebutton.addTarget(self, action: #selector(UserSetting.SaveButtontapped(_:)), forControlEvents:.TouchUpInside)
         self.view.addSubview(savebutton)
         
         TimeFrom1.delegate = self
@@ -142,10 +142,10 @@ class UserSetting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSourc
         numberpadtoolBar.sizeToFit()
         
         //Toolbarにつけるボタンの作成
-        let pickerdoneButton = UIBarButtonItem(title: "完了", style: UIBarButtonItemStyle.Plain, target: self, action: "TapButton:")
-        let pickercancelButton = UIBarButtonItem(title: "キャンセル", style: UIBarButtonItemStyle.Plain, target: self, action: "TapButton:")
+        let pickerdoneButton = UIBarButtonItem(title: "完了", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(UserSetting.TapButton(_:)))
+        let pickercancelButton = UIBarButtonItem(title: "キャンセル", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(UserSetting.TapButton(_:)))
         let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
-        let salalyButton = UIBarButtonItem(title: "完了", style: UIBarButtonItemStyle.Plain, target: self, action: "TapButton:")
+        let salalyButton = UIBarButtonItem(title: "完了", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(UserSetting.TapButton(_:)))
         
         pickerdoneButton.tag = 10
         pickercancelButton.tag = 11
@@ -393,8 +393,8 @@ class UserSetting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSourc
         super.viewWillAppear(animated)
         
         let notificationCenter = NSNotificationCenter.defaultCenter()
-        notificationCenter.addObserver(self, selector: "handleKeyboardWillShowNotification:", name: UIKeyboardWillShowNotification, object: nil)
-        notificationCenter.addObserver(self, selector: "handleKeyboardWillHideNotification:", name: UIKeyboardWillHideNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(UserSetting.handleKeyboardWillShowNotification(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(UserSetting.handleKeyboardWillHideNotification(_:)), name: UIKeyboardWillHideNotification, object: nil)
     }
     
     override func viewDidDisappear(animated: Bool) {
