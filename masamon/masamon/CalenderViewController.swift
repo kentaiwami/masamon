@@ -80,9 +80,9 @@ class CalenderViewController: UIViewController {
         nextMonthButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         nowMonthButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         
-        prevMonthButton.addTarget(self, action: "getPrevMonthData:", forControlEvents: .TouchUpInside)
-        nextMonthButton.addTarget(self, action: "getNextMonthData:", forControlEvents: .TouchUpInside)
-        nowMonthButton.addTarget(self, action: "getNowMonthData:", forControlEvents: .TouchUpInside)
+        prevMonthButton.addTarget(self, action: #selector(CalenderViewController.getPrevMonthData(_:)), forControlEvents: .TouchUpInside)
+        nextMonthButton.addTarget(self, action: #selector(CalenderViewController.getNextMonthData(_:)), forControlEvents: .TouchUpInside)
+        nowMonthButton.addTarget(self, action: #selector(CalenderViewController.getNowMonthData(_:)), forControlEvents: .TouchUpInside)
         
         calendarBar.frame = CGRectMake(0, 140, self.view.frame.width, 40)
         
@@ -308,7 +308,7 @@ class CalenderViewController: UIViewController {
                 //日付の入る部分はボタンのタグを設定する（日にち）
                 button.setTitle(String(tagNumber), forState: .Normal)
                 button.tag = tagNumber
-                tagNumber++
+                tagNumber += 1
                 
             }else if(i == dayOfWeek + maxDay - 1 || i < total){
                 
@@ -396,7 +396,7 @@ class CalenderViewController: UIViewController {
             }
 
             //配置したボタンに押した際のアクションを設定する
-            button.addTarget(self, action: "buttonTapped:", forControlEvents: .TouchUpInside)
+            button.addTarget(self, action: #selector(CalenderViewController.buttonTapped(_:)), forControlEvents: .TouchUpInside)
             
             //ボタンを配置する
             self.view.addSubview(button)
@@ -418,7 +418,7 @@ class CalenderViewController: UIViewController {
             var nowindex = staff.startIndex
             
             //ユーザのシフトが出る場所までindexを進めるループ
-            for(var i = 0; i < shiftstartposition; i++){
+            for _ in 0 ..< shiftstartposition{
                 nowindex = nowindex.successor()
             }
             
@@ -623,7 +623,7 @@ class CalenderViewController: UIViewController {
             OKButton.setTitle("OK", forState: .Normal)
             OKButton.setTitleColor(UIColor.hex("0099ff", alpha: 1.0), forState: .Normal)
             OKButton.layer.cornerRadius = 25
-            OKButton.addTarget(self, action: "TapOK:", forControlEvents: .TouchUpInside)
+            OKButton.addTarget(self, action: #selector(CalenderViewController.TapOK(_:)), forControlEvents: .TouchUpInside)
             
             //アラートのテキストとボタンの境界線を表示する設定
             lineview.frame = CGRectMake(self.view.frame.width/2-350/2, self.view.frame.height/2-250/2+220, 350, 1)
