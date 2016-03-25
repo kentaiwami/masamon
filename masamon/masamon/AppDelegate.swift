@@ -105,7 +105,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let shiftendpattern = [16.5,16.5,16.5,16.5,20.5,22.0,23.0,24.5,24.5,24.5,99.9,99.9,99.9]
 
         if(DBmethod().DBRecordCount(ShiftSystemDB) == 0){
-            for(var i = 0; i < shiftnamepattern.count; i++){
+            for i in 0 ..< shiftnamepattern.count{
                 var gid = 0
                 
                 switch(i){
