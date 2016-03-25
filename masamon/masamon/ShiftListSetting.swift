@@ -34,7 +34,7 @@ class ShiftListSetting: UIViewController, UITableViewDataSource, UITableViewDele
         if(DBmethod().GetShiftDBAllRecordArray() != nil){
             let results = DBmethod().GetShiftDBAllRecordArray()
             
-            for(var i = 0; i < results!.count; i++){
+            for i in 0 ..< results!.count{
                 self.texts.append(results![i])
             }
         }
@@ -189,12 +189,12 @@ class ShiftListSetting: UIViewController, UITableViewDataSource, UITableViewDele
                             
                             let oldshiftdetailarray = oldshiftdbrecord.shiftdetail
                             
-                            for(var i = 0; i < oldshiftdetailarray.count; i++){
+                            for i in 0 ..< oldshiftdetailarray.count{
                                 newshiftdbrecord.shiftdetail.append(oldshiftdetailarray[i])
                             }
                             
                             //関連するシフトを上書き更新する
-                            for(var i = 0; i < oldshiftdetailarray.count; i++){
+                            for i in 0 ..< oldshiftdetailarray.count{
                                 let newshiftdetaildbrecord = ShiftDetailDB()
                                 newshiftdetaildbrecord.id = oldshiftdetailarray[i].id
                                 newshiftdetaildbrecord.year = oldshiftdetailarray[i].year
