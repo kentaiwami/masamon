@@ -100,7 +100,7 @@ class PDFmethod: UIViewController {
         let monthrange = CommonMethod().GetShiftCoursMonthRange(shiftyearandmonth.startcoursmonthyear, shiftstartmonth: shiftyearandmonth.startcoursmonth)
 
         //先に空要素を1クール分追加しておく
-        for i in 0 ..< monthrange.length{
+        for _ in 0 ..< monthrange.length{
             dayshiftarray.append("")
         }
         
@@ -111,20 +111,21 @@ class PDFmethod: UIViewController {
             var staffname = ""
             var staffarraytmp = ""
             
+            staffarraytmp = staffarray[i]
+            
             //シフトの出現場所を記録する2次元配列の初期化
             var shiftlocationarray: [[Int]] = []
-            for i in 0 ..< 7{
+            for _ in 0 ..< 7{
                 shiftlocationarray.append([])
             }
             
             //受け取った1名分のテキスト(1行)からスペースを削除する
-            staffarray[i] = staffarray[i].stringByReplacingOccurrencesOfString(" ", withString: "")
-            staffarray[i] = staffarray[i].stringByReplacingOccurrencesOfString("　", withString: "")
+            staffarraytmp = staffarraytmp.stringByReplacingOccurrencesOfString(" ", withString: "")
+            staffarraytmp = staffarraytmp.stringByReplacingOccurrencesOfString("　", withString: "")
             
             
             //スタッフ名の抽出
             staffname = self.GetStaffName(staffarray[i], i: i)
-            staffarraytmp = staffarray[i]
             //            print(staffname)
             //スキップされたスタッフは取り込みを行わない
             if(appDelegate.skipstaff.contains(staffname)){
@@ -505,6 +506,7 @@ class PDFmethod: UIViewController {
             break
         }
         
+        var position_sp = sp
         for i in 0 ..< shiftnamearray.count{
             
             let tmp = shiftnamearray[i]
@@ -515,8 +517,8 @@ class PDFmethod: UIViewController {
                 if(tmp[dbindex] == character){
                     result += String(tmp[dbindex])
                     dbindex = dbindex.successor()
-                    sp++
-                    character = text[text.startIndex.advancedBy(sp)]
+                    position_sp += 1
+                    character = text[text.startIndex.advancedBy(position_sp)]
                 }else{
                     result = ""
                     break
@@ -604,11 +606,12 @@ class PDFmethod: UIViewController {
         
         let setarray = Set(removedarray).intersect(comparisonarray)
         
+        var resultsarray = removedarray
         for i in 0 ..< setarray.count{
-            removedarray.removeObject(setarray[setarray.startIndex.advancedBy(i)])
+            resultsarray.removeObject(setarray[setarray.startIndex.advancedBy(i)])
         }
         
-        return removedarray
+        return resultsarray
     }
     
     //受け取ったpivotindexよりも大きいindexの要素は削除する関数
@@ -623,11 +626,13 @@ class PDFmethod: UIViewController {
             }
         }
         
+        var resultsarray = array
+        
         for i in 0 ..< removeelement.count{
-            array.removeObject(removeelement[i])
+            resultsarray.removeObject(removeelement[i])
         }
         
-        return array
+        return resultsarray
     }
     
     //データベースへ記録する関数
