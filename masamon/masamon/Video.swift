@@ -20,14 +20,14 @@ class Video: UIViewController {
         let imagepath = ["../images/thumbnail1.png","../images/thumbnail2.png"]
         let position = [-120,180]
         
-        for(var i = 0; i < 2; i++){
+        for i in 0 ..< 2{
             let thumbnailbutton = UIButton()
             let image = UIImage(named: imagepath[i])
             thumbnailbutton.setImage(image, forState: .Normal)
             thumbnailbutton.frame = CGRectMake(0, 0, 300, 200)
             thumbnailbutton.layer.position = CGPoint(x: self.view.frame.width/2, y: self.view.frame.height/2+CGFloat(position[i]))
             thumbnailbutton.tag = i+1
-            thumbnailbutton.addTarget(self, action: "TapThumbnail:", forControlEvents: .TouchUpInside)
+            thumbnailbutton.addTarget(self, action: #selector(Video.TapThumbnail(_:)), forControlEvents: .TouchUpInside)
             thumbnailbutton.layer.masksToBounds = true
             thumbnailbutton.layer.cornerRadius = 15
             thumbnailbutton.clipsToBounds = true
