@@ -221,7 +221,7 @@ class DBmethod: UIViewController {
         let realm = try! Realm()
         let results = realm.objects(ShiftSystemDB).filter("groupid = %@",groupid)
         
-        for(var i = 0; i < results.count; i++){
+        for i in 0 ..< results.count{
             name.append(results[i].name)
         }
         
@@ -234,7 +234,7 @@ class DBmethod: UIViewController {
         var array: [String] = []
         let realm = try! Realm()
         
-        for(var i = 0; i < DBmethod().DBRecordCount(ShiftSystemDB); i++){
+        for i in 0 ..< DBmethod().DBRecordCount(ShiftSystemDB){
             let name = realm.objects(ShiftSystemDB).filter("id = %@",i)[0].name
             array.append(name)
         }
@@ -254,7 +254,7 @@ class DBmethod: UIViewController {
             let realm = try Realm()
             let count = DBmethod().DBRecordCount(ShiftSystemDB)
             
-            for(var i = id; i < count; i++){
+            for i in id ..< count{
                 let nextrecord = realm.objects(ShiftSystemDB).filter("id = %@",i+1)[0]
                 
                 let newrecord = ShiftSystemDB()
@@ -282,7 +282,7 @@ class DBmethod: UIViewController {
         var tmparray: [ShiftSystemDB] = []
         
         //ソート後のレコード内容を作業用配列に入れる
-        for(var i = 0; i < sortedresults.count; i++){
+        for i in 0 ..< sortedresults.count{
             let tmprecord = ShiftSystemDB()
             tmprecord.id = sortedresults[i].id
             tmprecord.name = sortedresults[i].name
@@ -298,7 +298,7 @@ class DBmethod: UIViewController {
         do{
             try realm.write({ () -> Void in
                 realm.delete(nonsortedresults)
-                for(var i = 0; i < tmparray.count; i++){
+                for i in 0 ..< tmparray.count{
                     realm.add(tmparray[i], update: true)
                 }
             })
@@ -365,7 +365,7 @@ class DBmethod: UIViewController {
         if(DBmethod().DBRecordCount(StaffNameDB) == 0){
             return nil
         }else{
-            for(var i = 0; i < DBmethod().DBRecordCount(StaffNameDB); i++){
+            for i in 0 ..< DBmethod().DBRecordCount(StaffNameDB){
                 let name = realm.objects(StaffNameDB).filter("id = %@",i)[0].name
                 array.append(name)
             }
@@ -387,7 +387,7 @@ class DBmethod: UIViewController {
             let realm = try Realm()
             let count = DBmethod().DBRecordCount(StaffNameDB)
             
-            for(var i = id; i < count; i++){
+            for i in id ..< count{
                 //
                 let nextrecord = realm.objects(StaffNameDB).filter("id = %@",i+1)[0]
                 
@@ -412,7 +412,7 @@ class DBmethod: UIViewController {
         var tmparray: [StaffNameDB] = []
         
         //ソート後のレコード内容を作業用配列に入れる
-        for(var i = 0; i < sortedresults.count; i++){
+        for i in 0 ..< sortedresults.count{
             let tmprecord = StaffNameDB()
             tmprecord.id = sortedresults[i].id
             tmprecord.name = sortedresults[i].name
@@ -423,7 +423,7 @@ class DBmethod: UIViewController {
         do{
             try realm.write({ () -> Void in
                 realm.delete(nonsortedresults)
-                for(var i = 0; i < tmparray.count; i++){
+                for i in 0 ..< tmparray.count{
                     realm.add(tmparray[i], update: true)
                 }
             })
