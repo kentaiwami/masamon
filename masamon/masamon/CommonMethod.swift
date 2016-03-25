@@ -71,21 +71,23 @@ class CommonMethod: UIViewController {
     */
     func JudgeYearAndMonth( P1: String) -> (year: Int, startcoursmonth: Int, startcoursmonthyear: Int, endcoursmonth: Int, endcoursmonthyear: Int){
         
+        var P1String = P1
+
         //スペースがあった場合は削除
-        P1 = P1.stringByReplacingOccurrencesOfString(" ", withString: "")
+        P1String = P1String.stringByReplacingOccurrencesOfString(" ", withString: "")
         
         //平成何年かを取得
-        let P1NSString = P1 as NSString
+        let P1NSString = P1String as NSString
         let year = P1NSString.substringWithRange(NSRange(location: 2, length: 2))
         
         //"月度"が出る場所を記録
         let positionmonth = P1NSString.rangeOfString("月度").location
         
         //月の文字取得(1の位)
-        let monthfirstdigit = String(P1[P1.startIndex.advancedBy(positionmonth-1)])
+        let monthfirstdigit = String(P1String[P1String.startIndex.advancedBy(positionmonth-1)])
         
         //月の文字取得(10の位)
-        let monthseconddigit = String(P1[P1.startIndex.advancedBy(positionmonth-2)])
+        let monthseconddigit = String(P1String[P1String.startIndex.advancedBy(positionmonth-2)])
         
 
         //年度の月が4月度〜9月度ならば年度の操作をせずに返す
@@ -127,26 +129,28 @@ class CommonMethod: UIViewController {
         
         var groupidarray: [Int] = []
         
+        var staffnamestring = staffname
+        
         //出勤シフトを見つけるループ処理
-        for(var i = 0; i < shiftarray.count; i++){
+        for i in 0 ..< shiftarray.count{
             
-            if(staffname.characters.count == 0){
+            if(staffnamestring.characters.count == 0){
                 return groupidarray
                 
-            }else if(staffname.containsString(shiftarray[i].name)){
-                staffname = staffname.stringByReplacingOccurrencesOfString(shiftarray[i].name, withString: "")
+            }else if(staffnamestring.containsString(shiftarray[i].name)){
+                staffnamestring = staffnamestring.stringByReplacingOccurrencesOfString(shiftarray[i].name, withString: "")
                 groupidarray.append(shiftarray[i].groupid)
             }
         }
         
         //休暇シフトを見つけるループ処理
-        for(var i = 0; i < holiday.count; i++){
+        for i in 0 ..< holiday.count{
             
-            if(staffname.characters.count == 0){
+            if(staffnamestring.characters.count == 0){
                 return groupidarray
                 
-            }else if(staffname.containsString(holiday[i].name)){
-                staffname = staffname.stringByReplacingOccurrencesOfString(holiday[i].name, withString: "")
+            }else if(staffnamestring.containsString(holiday[i].name)){
+                staffnamestring = staffnamestring.stringByReplacingOccurrencesOfString(holiday[i].name, withString: "")
                 groupidarray.append(6)
             }
         }
