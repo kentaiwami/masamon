@@ -18,7 +18,7 @@ class Setting: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        for(var i = 0; i < 4; i++){
+        for i in 0 ..< 4{
             
             //画面遷移するためのボタンを追加
             let button = UIButton()
@@ -26,7 +26,7 @@ class Setting: UIViewController {
             button.setImage(UIImage(named: buttonimages[i]), forState: .Normal)
             button.frame = CGRectMake(0, 0, 100, 100)
             button.layer.position = CGPoint(x: buttonpositon[i][0], y:buttonpositon[i][1])
-            button.addTarget(self, action: "Buttontapped:", forControlEvents:.TouchUpInside)
+            button.addTarget(self, action: #selector(Setting.Buttontapped(_:)), forControlEvents:.TouchUpInside)
             self.view.addSubview(button)
             
         }
