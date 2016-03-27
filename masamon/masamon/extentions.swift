@@ -6,7 +6,7 @@ extension UIColor {
         var hexString = hexStr
         
         hexString = hexString.stringByReplacingOccurrencesOfString("#", withString: "")
-        let scanner = NSScanner(string: hexStr as String)
+        let scanner = NSScanner(string: hexString as String)
         var color: UInt32 = 0
         if scanner.scanHexInt(&color) {
             let r = CGFloat((color & 0xFF0000) >> 16) / 255.0
