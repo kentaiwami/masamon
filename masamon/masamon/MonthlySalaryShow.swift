@@ -50,6 +50,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.setupSwipeGestures()
         
         //シフト時間を選択して表示するテキストフィールドのデフォルト表示を指定
         starttime = time[0]
@@ -100,13 +101,6 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             imageview.image = UIImage(named: iconnamearray[i])
             imageview.frame = CGRectMake(CGFloat(iconpositionarray[i]), 20, 42, 40)
             self.view.addSubview(imageview)
-            
-            let calenderbutton = UIButton()
-            calenderbutton.setImage(UIImage(named: calenderbuttonnamearray[i]), forState: .Normal)
-            calenderbutton.frame = CGRectMake(CGFloat(calenderbuttonposition[i]), 548, 50, 48)
-            calenderbutton.addTarget(self, action: #selector(MonthlySalaryShow.TapCalenderButton(_:)), forControlEvents: .TouchUpInside)
-            calenderbutton.tag = i
-            self.view.addSubview(calenderbutton)
         }
         
         NSTimer.scheduledTimerWithTimeInterval(1.0,target:self,selector:#selector(MonthlySalaryShow.FileSaveSuccessfulAlertShow),
@@ -594,29 +588,37 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         }
     }
     
-    //画面下のカレンダー操作のボタンをタップした際に動作
-    func TapCalenderButton(sender: UIButton){
-        switch(sender.tag){
-        case 0:
-            let nsdatesplit = self.ReturnYearMonthDayWeekday(currentnsdate)
-            let newnsdate = self.DateSerial(nsdatesplit.year, month: nsdatesplit.month, day: nsdatesplit.day-1)
-            currentnsdate = newnsdate
-            
-            let currentnsdatesplit = self.ReturnYearMonthDayWeekday(currentnsdate)
-            self.ShowAllData(CommonMethod().Changecalendar(currentnsdatesplit.year, calender: "A.D"), m: currentnsdatesplit.month, d: currentnsdatesplit.day)
-            CalenderLabel.text = "\(currentnsdatesplit.year)年\(currentnsdatesplit.month)月\(currentnsdatesplit.day)日 (\(self.ReturnWeekday(currentnsdatesplit.weekday)))"
-            
-        case 1:
-            let nsdatesplit = self.ReturnYearMonthDayWeekday(currentnsdate)
-            let newnsdate = self.DateSerial(nsdatesplit.year, month: nsdatesplit.month, day: nsdatesplit.day+1)
-            currentnsdate = newnsdate
-            
-            let currentnsdatesplit = self.ReturnYearMonthDayWeekday(currentnsdate)
-            self.ShowAllData(CommonMethod().Changecalendar(currentnsdatesplit.year, calender: "A.D"), m: currentnsdatesplit.month, d: currentnsdatesplit.day)
-            CalenderLabel.text = "\(currentnsdatesplit.year)年\(currentnsdatesplit.month)月\(currentnsdatesplit.day)日 (\(self.ReturnWeekday(currentnsdatesplit.weekday)))"
-        default:
-            break
-        }
+    //スワイプを検知するメソッド
+    func setupSwipeGestures() {
+        // 右方向へのスワイプ
+        let gestureToRight = UISwipeGestureRecognizer(target: self, action: #selector(MonthlySalaryShow.prevday))
+        gestureToRight.direction = UISwipeGestureRecognizerDirection.Right
+        self.view.addGestureRecognizer(gestureToRight)
+        
+        // 左方向へのスワイプ
+        let gestureToLeft = UISwipeGestureRecognizer(target: self, action: #selector(MonthlySalaryShow.nextday))
+        gestureToLeft.direction = UISwipeGestureRecognizerDirection.Left
+        self.view.addGestureRecognizer(gestureToLeft)
+    }
+
+    func nextday(){
+        self.DayControl(1)
+    }
+    
+    func prevday(){
+        self.DayControl(-1)
+    }
+    
+    //何日進めるかの値を受け取って日付を操作して表示内容を変更する
+    func DayControl(control: Int){
+        let nsdatesplit = self.ReturnYearMonthDayWeekday(currentnsdate)
+        let newnsdate = self.DateSerial(nsdatesplit.year, month: nsdatesplit.month, day: nsdatesplit.day+control)
+        currentnsdate = newnsdate
+        
+        let currentnsdatesplit = self.ReturnYearMonthDayWeekday(currentnsdate)
+        self.ShowAllData(CommonMethod().Changecalendar(currentnsdatesplit.year, calender: "A.D"), m: currentnsdatesplit.month, d: currentnsdatesplit.day)
+        CalenderLabel.text = "\(currentnsdatesplit.year)年\(currentnsdatesplit.month)月\(currentnsdatesplit.day)日 (\(self.ReturnWeekday(currentnsdatesplit.weekday)))"
+
     }
     
     //"今日"をタップした時の動作
