@@ -41,7 +41,6 @@
 		379A2DBE1C1E5F9900751425 /* no_data.png in Resources */ = {isa = PBXBuildFile; fileRef = 379A2DBD1C1E5F9900751425 /* no_data.png */; };
 		379A2E051C1FDFFC00751425 /* CustomUICollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379A2E041C1FDFFC00751425 /* CustomUICollectionViewCell.swift */; };
 		37D4B3101BE0F59900F06759 /* UserSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D4B30F1BE0F59900F06759 /* UserSetting.swift */; };
-		37DD8EF51C1C0135007C0E6C /* SwipeBetweenViewControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DD8EF41C1C0135007C0E6C /* SwipeBetweenViewControllers.swift */; };
 		37DD8EFF1C1C29FF007C0E6C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 370ACDFE1BDF486700AB73EB /* Main.storyboard */; };
 		37F75CAB1C3F18C30075F9FD /* PDFmethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F75CAA1C3F18C30075F9FD /* PDFmethod.swift */; };
 		37F75CBF1C3F1E4C0075F9FD /* TET_ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37F75CB61C3F1B610075F9FD /* TET_ios.framework */; };
@@ -146,7 +145,6 @@
 		37CB96FE1C40569400171B76 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
 		37CB96FF1C40569400171B76 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		37D4B30F1BE0F59900F06759 /* UserSetting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSetting.swift; sourceTree = "<group>"; };
-		37DD8EF41C1C0135007C0E6C /* SwipeBetweenViewControllers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipeBetweenViewControllers.swift; sourceTree = "<group>"; };
 		37F75CAA1C3F18C30075F9FD /* PDFmethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PDFmethod.swift; sourceTree = "<group>"; };
 		37F75CAD1C3F19CE0075F9FD /* TET.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = TET.xcodeproj; path = TET/sample_app/TET.xcodeproj; sourceTree = "<group>"; };
 		37F75CB31C3F1A7D0075F9FD /* libstdc++.6.0.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.0.9.dylib"; path = "../../../../../../usr/lib/libstdc++.6.0.9.dylib"; sourceTree = "<group>"; };
@@ -221,7 +219,6 @@
 			children = (
 				370ACDFA1BDF486700AB73EB /* AppDelegate.swift */,
 				374090BF1C78641E00B01DC4 /* VideoViewController.swift */,
-				37DD8EF41C1C0135007C0E6C /* SwipeBetweenViewControllers.swift */,
 				370ACDFC1BDF486700AB73EB /* MonthlySalaryShow.swift */,
 				3721B1161C51499D0002A373 /* CommonMethod.swift */,
 				3726B3991C30009700F22F34 /* CalenderViewController.swift */,
@@ -461,7 +458,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				3726B39A1C30009700F22F34 /* CalenderViewController.swift in Sources */,
-				37DD8EF51C1C0135007C0E6C /* SwipeBetweenViewControllers.swift in Sources */,
 				379955951C14431F00BAAD9E /* XLSXmethod.swift in Sources */,
 				37F75CAB1C3F18C30075F9FD /* PDFmethod.swift in Sources */,
 				370ACE4A1BDF9C8A00AB73EB /* DBmethod.swift in Sources */,
@@ -535,7 +531,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -581,7 +577,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;

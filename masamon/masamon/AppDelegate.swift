@@ -56,32 +56,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let monthlysalaryshow = storyboard.instantiateViewControllerWithIdentifier("MonthlySalaryShow") as! MonthlySalaryShow
-        let setting = storyboard.instantiateViewControllerWithIdentifier("Setting") as! Setting
-        let shiftgallerytable = storyboard.instantiateViewControllerWithIdentifier("ShiftGalleryTable") as! ShiftGalleryTable
-        let calender = storyboard.instantiateViewControllerWithIdentifier("CalenderViewController") as! CalenderViewController
-        
-        self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
-        
-        let pageController:UIPageViewController = UIPageViewController(transitionStyle: UIPageViewControllerTransitionStyle.Scroll, navigationOrientation: UIPageViewControllerNavigationOrientation.Horizontal, options: nil)
-        
-        let navigationController:SwipeBetweenViewControllers = SwipeBetweenViewControllers(rootViewController: pageController)
-        
-        // Override point for customization after application launch.
-        let monthlysalaryshowview:UIViewController = monthlysalaryshow
-        let calenderview:UIViewController = calender
-        let shiftgallerytableview:UIViewController = shiftgallerytable
-        let settingview:UIViewController = setting
-        
-        monthlysalaryshowview.view.backgroundColor = UIColor.blackColor()
-        calenderview.view.backgroundColor = UIColor.hex("696969", alpha: 0.5)
-        
-        navigationController.viewControllerArray = [monthlysalaryshowview,calenderview,settingview,shiftgallerytableview]
-        
-        self.window?.rootViewController = navigationController
-        self.window?.makeKeyAndVisible()
-        
         //InboxFileCountに空レコード(ダミー)を追加
         if(DBmethod().DBRecordCount(InboxFileCountDB) == 0){
             //レコードを追加
