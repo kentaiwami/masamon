@@ -588,7 +588,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         }
     }
     
-    //スワイプを検知するメソッド
+    //ジェスチャーを検知するメソッド
     func setupSwipeGestures() {
         // 右方向へのスワイプ
         let gestureToRight = UISwipeGestureRecognizer(target: self, action: #selector(MonthlySalaryShow.prevday))
@@ -599,8 +599,21 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         let gestureToLeft = UISwipeGestureRecognizer(target: self, action: #selector(MonthlySalaryShow.nextday))
         gestureToLeft.direction = UISwipeGestureRecognizerDirection.Left
         self.view.addGestureRecognizer(gestureToLeft)
+        
+        //タップ
+        let myTap = UITapGestureRecognizer(target: self, action: #selector(MonthlySalaryShow.today))
+        self.view.addGestureRecognizer(myTap)
     }
 
+    func today(){
+        let today = NSDate()
+        let date = ReturnYearMonthDayWeekday(today)         //日付を西暦,月,日,曜日に分けて取得
+        self.ShowAllData(CommonMethod().Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day)           //データ表示へ分けた日付を渡す
+        CalenderLabel.text = "\(date.year)年\(date.month)月\(date.day)日 (\(self.ReturnWeekday(date.weekday)))"
+        
+        currentnsdate = today
+    }
+    
     func nextday(){
         self.DayControl(1)
     }
@@ -620,17 +633,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         CalenderLabel.text = "\(currentnsdatesplit.year)年\(currentnsdatesplit.month)月\(currentnsdatesplit.day)日 (\(self.ReturnWeekday(currentnsdatesplit.weekday)))"
 
     }
-    
-    //"今日"をタップした時の動作
-    @IBAction func TapTodayButton(sender: AnyObject) {
-        let today = NSDate()
-        let date = ReturnYearMonthDayWeekday(today)         //日付を西暦,月,日,曜日に分けて取得
-        self.ShowAllData(CommonMethod().Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day)           //データ表示へ分けた日付を渡す
-        CalenderLabel.text = "\(date.year)年\(date.month)月\(date.day)日 (\(self.ReturnWeekday(date.weekday)))"
         
-        currentnsdate = today
-    }
-    
     //受け取った文字列をシフト体制に分別して返す
     func SplitStaffShift(staff: String) -> Array<String>{
         var staffshiftarray: [String] = ["","","","","",""]         //早番,中1,中2,中3,遅,その他
