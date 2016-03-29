@@ -29,10 +29,6 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     let notificationCenter = NSNotificationCenter.defaultCenter()
     let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得
     let alertview = UIImageView()
-    let iconnamearray = ["../images/work.png","../images/salaly.png"]
-    let iconpositionarray = [15,200]
-    let calenderbuttonposition = [15,315]
-    let calenderbuttonnamearray = ["../images/backday.png","../images/nextday.png"]
     
     var currentnsdate = NSDate()        //MonthlySalaryShowがデータ表示している日付を管理
     
@@ -49,8 +45,10 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         self.setupSwipeGestures()
+        
+        self.setupdayofweekLabel()
         
         //シフト時間を選択して表示するテキストフィールドのデフォルト表示を指定
         starttime = time[0]
@@ -95,16 +93,8 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         self.ShowAllData(CommonMethod().Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day)           //データ表示へ分けた日付を渡す
         CalenderLabel.text = "\(date.year)年\(date.month)月\(date.day)日 (\(self.ReturnWeekday(date.weekday)))"
         
-        //アイコンとボタンの設置
-        for i in 0 ..< 2{
-            let imageview = UIImageView()
-            imageview.image = UIImage(named: iconnamearray[i])
-            imageview.frame = CGRectMake(CGFloat(iconpositionarray[i]), 20, 42, 40)
-            self.view.addSubview(imageview)
-        }
-        
         NSTimer.scheduledTimerWithTimeInterval(1.0,target:self,selector:#selector(MonthlySalaryShow.FileSaveSuccessfulAlertShow),
-            userInfo: nil, repeats: true);
+                                               userInfo: nil, repeats: true);
         
         //アプリがアクティブになったとき
         notificationCenter.addObserver(self,selector: #selector(MonthlySalaryShow.MonthlySalaryShowViewActived),name:UIApplicationDidBecomeActiveNotification,object: nil)
@@ -270,29 +260,29 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         let donecount = appDelegate.errorstaffnamefastcount - appDelegate.errorstaffnamepdf.count
         
         let alert:UIAlertController = UIAlertController(title:"\(donecount+1)/\(appDelegate.errorstaffnamefastcount)人    スタッフ名が認識できませんでした",
-            message: errorstaffnametext[0],
-            preferredStyle: UIAlertControllerStyle.Alert)
+                                                        message: errorstaffnametext[0],
+                                                        preferredStyle: UIAlertControllerStyle.Alert)
         
         let addAction:UIAlertAction = UIAlertAction(title: "スタッフ名を登録",
-            style: UIAlertActionStyle.Default,
-            handler:{
-                (action:UIAlertAction!) -> Void in
-                let textFields:Array<UITextField>? =  alert.textFields as Array<UITextField>?
-                if textFields != nil {
-                    
-                    if(textFields![0].text != ""){   //テキストフィールドに値が入っている場合
-                        
-                        let staffnamerecord = StaffNameDB()
-                        staffnamerecord.id = DBmethod().DBRecordCount(StaffNameDB)
-                        staffnamerecord.name = textFields![0].text!
-                        
-                        DBmethod().AddandUpdate(staffnamerecord, update: true)
-                        
-                        self.savedata()
-                    }else{
-                        self.StaffNameErrorAlertShowPDF()
-                    }
-                }
+                                                    style: UIAlertActionStyle.Default,
+                                                    handler:{
+                                                        (action:UIAlertAction!) -> Void in
+                                                        let textFields:Array<UITextField>? =  alert.textFields as Array<UITextField>?
+                                                        if textFields != nil {
+                                                            
+                                                            if(textFields![0].text != ""){   //テキストフィールドに値が入っている場合
+                                                                
+                                                                let staffnamerecord = StaffNameDB()
+                                                                staffnamerecord.id = DBmethod().DBRecordCount(StaffNameDB)
+                                                                staffnamerecord.name = textFields![0].text!
+                                                                
+                                                                DBmethod().AddandUpdate(staffnamerecord, update: true)
+                                                                
+                                                                self.savedata()
+                                                            }else{
+                                                                self.StaffNameErrorAlertShowPDF()
+                                                            }
+                                                        }
         })
         
         alert.addAction(addAction)
@@ -319,44 +309,44 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         let donecount = appDelegate.errorshiftnamefastcount - appDelegate.errorshiftnamepdf.count
         
         let alert:UIAlertController = UIAlertController(title:"\(donecount+1)/\(appDelegate.errorshiftnamefastcount)人" + "\n" + keys+"さんのシフトが取り込めません",
-            message: values + "\n\n" + "<シフトの名前> \n 例) 出勤 \n",
-            preferredStyle: UIAlertControllerStyle.Alert)
+                                                        message: values + "\n\n" + "<シフトの名前> \n 例) 出勤 \n",
+                                                        preferredStyle: UIAlertControllerStyle.Alert)
         
         let addAction:UIAlertAction = UIAlertAction(title: "追加",
-            style: UIAlertActionStyle.Default,
-            handler:{
-                (action:UIAlertAction!) -> Void in
-                let textFields:Array<UITextField>? =  alert.textFields as Array<UITextField>?
-                if textFields != nil {
-                    for textField:UITextField in textFields! {
-                        
-                        if(textField.text == ""){
-                            flag = false
-                            break
-                        }else{
-                            flag = true
-                        }
-                    }
-                    
-                    if(flag){   //テキストフィールドに値が全て入っている場合
-                        
-                        let newrecord = CommonMethod().CreateShiftSystemDBRecord(DBmethod().DBRecordCount(ShiftSystemDB),shiftname: textFields![0].text!, shiftgroup: textFields![1].text!, shifttime: textFields![2].text!, shiftstarttimerow: self.shiftstarttimeselectrow,shiftendtimerow: self.shiftendtimeselectrow)
-                        DBmethod().AddandUpdate(newrecord, update: true)
-                        
-                        self.savedata()
-                    }else{
-                        self.StaffShiftErrorAlertShowPDF()
-                    }
-                }
+                                                    style: UIAlertActionStyle.Default,
+                                                    handler:{
+                                                        (action:UIAlertAction!) -> Void in
+                                                        let textFields:Array<UITextField>? =  alert.textFields as Array<UITextField>?
+                                                        if textFields != nil {
+                                                            for textField:UITextField in textFields! {
+                                                                
+                                                                if(textField.text == ""){
+                                                                    flag = false
+                                                                    break
+                                                                }else{
+                                                                    flag = true
+                                                                }
+                                                            }
+                                                            
+                                                            if(flag){   //テキストフィールドに値が全て入っている場合
+                                                                
+                                                                let newrecord = CommonMethod().CreateShiftSystemDBRecord(DBmethod().DBRecordCount(ShiftSystemDB),shiftname: textFields![0].text!, shiftgroup: textFields![1].text!, shifttime: textFields![2].text!, shiftstarttimerow: self.shiftstarttimeselectrow,shiftendtimerow: self.shiftendtimeselectrow)
+                                                                DBmethod().AddandUpdate(newrecord, update: true)
+                                                                
+                                                                self.savedata()
+                                                            }else{
+                                                                self.StaffShiftErrorAlertShowPDF()
+                                                            }
+                                                        }
         })
         
         let skipAction:UIAlertAction = UIAlertAction(title: "スキップ",
-            style: UIAlertActionStyle.Destructive,
-            handler:{
-                (action:UIAlertAction!) -> Void in
-                self.appDelegate.skipstaff.append(keys)
-                
-                self.savedata()
+                                                     style: UIAlertActionStyle.Destructive,
+                                                     handler:{
+                                                        (action:UIAlertAction!) -> Void in
+                                                        self.appDelegate.skipstaff.append(keys)
+                                                        
+                                                        self.savedata()
         })
         
         alert.addAction(skipAction)
@@ -389,35 +379,35 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         let donecount = appDelegate.errorshiftnamefastcount - appDelegate.errorshiftnamexlsx.count
         
         let alert:UIAlertController = UIAlertController(title:"\(donecount+1)/\(appDelegate.errorshiftnamefastcount)個" + "\n" + errorshiftnamexlsxarray[0]+"のシフトに関する情報を入力して下さい",
-            message: "<シフトの名前> \n 例) 出勤 \n",
-            preferredStyle: UIAlertControllerStyle.Alert)
+                                                        message: "<シフトの名前> \n 例) 出勤 \n",
+                                                        preferredStyle: UIAlertControllerStyle.Alert)
         
         let addAction:UIAlertAction = UIAlertAction(title: "追加",
-            style: UIAlertActionStyle.Default,
-            handler:{
-                (action:UIAlertAction!) -> Void in
-                let textFields:Array<UITextField>? =  alert.textFields as Array<UITextField>?
-                if textFields != nil {
-                    
-                    for textField:UITextField in textFields! {
-                        if(textField.text == ""){
-                            flag = false
-                            break
-                        }else{
-                            flag = true
-                        }
-                    }
-                    
-                    if(flag){   //テキストフィールドに値が全て入っている場合
-                        
-                        let newrecord = CommonMethod().CreateShiftSystemDBRecord(DBmethod().DBRecordCount(ShiftSystemDB),shiftname: textFields![0].text!, shiftgroup: textFields![1].text!, shifttime: textFields![2].text!, shiftstarttimerow: self.shiftstarttimeselectrow,shiftendtimerow: self.shiftendtimeselectrow)
-                        DBmethod().AddandUpdate(newrecord, update: true)
-                        
-                        self.savedata()
-                    }else{
-                        self.StaffShiftErrorAlertShowXLSX()
-                    }
-                }
+                                                    style: UIAlertActionStyle.Default,
+                                                    handler:{
+                                                        (action:UIAlertAction!) -> Void in
+                                                        let textFields:Array<UITextField>? =  alert.textFields as Array<UITextField>?
+                                                        if textFields != nil {
+                                                            
+                                                            for textField:UITextField in textFields! {
+                                                                if(textField.text == ""){
+                                                                    flag = false
+                                                                    break
+                                                                }else{
+                                                                    flag = true
+                                                                }
+                                                            }
+                                                            
+                                                            if(flag){   //テキストフィールドに値が全て入っている場合
+                                                                
+                                                                let newrecord = CommonMethod().CreateShiftSystemDBRecord(DBmethod().DBRecordCount(ShiftSystemDB),shiftname: textFields![0].text!, shiftgroup: textFields![1].text!, shifttime: textFields![2].text!, shiftstarttimerow: self.shiftstarttimeselectrow,shiftendtimerow: self.shiftendtimeselectrow)
+                                                                DBmethod().AddandUpdate(newrecord, update: true)
+                                                                
+                                                                self.savedata()
+                                                            }else{
+                                                                self.StaffShiftErrorAlertShowXLSX()
+                                                            }
+                                                        }
         })
         
         alert.addAction(addAction)
@@ -604,7 +594,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         let myTap = UITapGestureRecognizer(target: self, action: #selector(MonthlySalaryShow.today))
         self.view.addGestureRecognizer(myTap)
     }
-
+    
     func today(){
         let today = NSDate()
         let date = ReturnYearMonthDayWeekday(today)         //日付を西暦,月,日,曜日に分けて取得
@@ -631,9 +621,9 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         let currentnsdatesplit = self.ReturnYearMonthDayWeekday(currentnsdate)
         self.ShowAllData(CommonMethod().Changecalendar(currentnsdatesplit.year, calender: "A.D"), m: currentnsdatesplit.month, d: currentnsdatesplit.day)
         CalenderLabel.text = "\(currentnsdatesplit.year)年\(currentnsdatesplit.month)月\(currentnsdatesplit.day)日 (\(self.ReturnWeekday(currentnsdatesplit.weekday)))"
-
-    }
         
+    }
+    
     //受け取った文字列をシフト体制に分別して返す
     func SplitStaffShift(staff: String) -> Array<String>{
         var staffshiftarray: [String] = ["","","","","",""]         //早番,中1,中2,中3,遅,その他
@@ -724,11 +714,11 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     
     
     /*
-    引数の説明
-    y: 和暦
-    m: 月
-    d: 日
-    */
+     引数の説明
+     y: 和暦
+     m: 月
+     d: 日
+     */
     //受け取った日付のデータ表示を行う
     func ShowAllData(y: Int, m: Int, d: Int){
         
@@ -918,6 +908,62 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             let targetViewController = self.storyboard!.instantiateViewControllerWithIdentifier("Video")
             self.presentViewController( targetViewController, animated: true, completion: nil)
         }
+    }
+    
+    func setupdayofweekLabel(){
+        //曜日ラベルの配置
+        let monthName:[String] = ["日","月","火","水","木","金","土"]
+        let calendarLabelIntervalX = 15;
+        let calendarLabelX         = 50;
+        let calendarLabelY         = 150;
+        let calendarLabelWidth     = 45;
+        let calendarLabelHeight    = 25;
+        
+        for i in 0...6{
+            
+            //ラベルを作成
+            let calendarBaseLabel: UILabel = UILabel()
+            
+            //X座標の値をCGFloat型へ変換して設定
+            calendarBaseLabel.frame = CGRectMake(
+                CGFloat(calendarLabelIntervalX + calendarLabelX * (i % 7)),
+                CGFloat(calendarLabelY),
+                CGFloat(calendarLabelWidth),
+                CGFloat(calendarLabelHeight)
+            )
+            
+            //日曜日の場合は赤色を指定
+            if(i == 0){
+                
+                //RGBカラーの設定は小数値をCGFloat型にしてあげる
+                calendarBaseLabel.textColor = UIColor(
+                    red: CGFloat(1.0), green: CGFloat(0.0), blue: CGFloat(0.0), alpha: CGFloat(1.0)
+                )
+                
+                //土曜日の場合は青色を指定
+            }else if(i == 6){
+                
+                //RGBカラーの設定は小数値をCGFloat型にしてあげる
+                calendarBaseLabel.textColor = UIColor(
+                    red: CGFloat(0.0), green: CGFloat(0.0), blue: CGFloat(1.0), alpha: CGFloat(1.0)
+                )
+                
+                //平日の場合は灰色を指定
+            }else{
+                
+                //既に用意されている配色パターンの場合
+                calendarBaseLabel.textColor = UIColor.whiteColor()
+                
+            }
+            
+            //曜日ラベルの配置
+            calendarBaseLabel.text = String(monthName[i] as NSString)
+            calendarBaseLabel.textAlignment = NSTextAlignment.Center
+            calendarBaseLabel.font = UIFont.systemFontOfSize(UIFont.systemFontSize())
+            self.view.addSubview(calendarBaseLabel)
+            
+        }
+        
     }
 }
 
