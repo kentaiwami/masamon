@@ -966,10 +966,15 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         }
     }
     
-    var buttontilearray = ["27","28","29","30","31","1","2"]
+    var buttontilearray:[String] = []
     
     func SetupDayButton(){
-        for i in 0...6{
+        
+        //今日の日付と合致するボタンがあったら装飾する
+        let todaynsdate = self.ReturnYearMonthDayWeekday(NSDate())
+        self.SetDayArray(NSDate(),weekday:todaynsdate.weekday)      //buttontilearrayへ値を格納する
+        
+        for i in 0..<0{
             
             //配置場所の定義
             let positionX   = 15 + 50 * (i % 7)
@@ -992,16 +997,10 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             button.titleLabel!.font = UIFont.systemFontOfSize(19)
             button.layer.cornerRadius = CGFloat(22.5)
             
-            
-            //今日の日付と合致するボタンがあったら装飾する
-            let nowdate = NSDate()
-            let calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)
-            let comps:NSDateComponents = calendar!.components([NSCalendarUnit.Day],fromDate: nowdate)
-            
             button.setTitle(buttontilearray[i], forState: .Normal)
             
             //currentnsdateと一致するボタンがある場合
-            if(comps.day == Int(buttontilearray[i])){
+            if(todaynsdate.day == Int(buttontilearray[i])){
                 button.backgroundColor = UIColor.hex("FF8E92", alpha: 1.0)
                 button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
             }
@@ -1017,6 +1016,24 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     
     func TapDayButton(sender: UIButton){
         print("tap")
+    }
+    
+    //1週間分の日付を配列へ格納するメソッド
+    func SetDayArray(nsdate: NSDate, weekday: Int){
+        var tmparray = []
+        
+        /*方針メモ*/
+        /*
+         今日の日付を入手する
+         曜日の値を使って翌日翌日とループさせて日付をtmparrayに入れる
+         同様に前日前日とループさせてtmparrayに入れる
+         tmparray昇順にソートする
+         tmparrayの中身をstringにしてbuttontilearrayにコピーする
+         
+         ・翌日前日の入手はDateSerialを使用する？
+         */
+        print(weekday)
+        
     }
 }
 
