@@ -50,7 +50,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         
         self.setupdayofweekLabel()
         
-        self.AAA()
+        self.SetupDayButton()
         
         //シフト時間を選択して表示するテキストフィールドのデフォルト表示を指定
         starttime = time[0]
@@ -966,7 +966,9 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         }
     }
     
-    func AAA(){
+    var buttontilearray = ["27","28","29","30","31","1","2"]
+    
+    func SetupDayButton(){
         for i in 0...6{
             
             //配置場所の定義
@@ -984,32 +986,28 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                 CGFloat(buttonSizeY)
             );
             
-            //ボタンの配色の設定
-            
             //ボタンのデザインを決定する
-            button.backgroundColor = UIColor.redColor()
-            button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-            button.titleLabel!.font = UIFont.systemFontOfSize(UIFont.systemFontSize())
+            button.backgroundColor = UIColor.clearColor()
+            button.setTitleColor(UIColor.grayColor(), forState: .Normal)
+            button.titleLabel!.font = UIFont.systemFontOfSize(19)
             button.layer.cornerRadius = CGFloat(22.5)
             
             
             //今日の日付と合致するボタンがあったら装飾する
             let nowdate = NSDate()
             let calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)
-            let comps:NSDateComponents = calendar!.components([NSCalendarUnit.Year,NSCalendarUnit.Month,NSCalendarUnit.Day],
-                                                              fromDate: nowdate)
-            let buttonyear = comps.year
-            let buttonmonth = comps.month
-            let buttonday = comps.day
+            let comps:NSDateComponents = calendar!.components([NSCalendarUnit.Day],fromDate: nowdate)
             
-//            //今日の日付と一致するボタンがある場合
-//            if(buttonyear == year && buttonmonth == month && buttonday == button.tag){
-//                button.layer.borderColor = UIColor.whiteColor().CGColor
-//                button.layer.borderWidth = CGFloat(4.5)
-//            }
+            button.setTitle(buttontilearray[i], forState: .Normal)
+            
+            //currentnsdateと一致するボタンがある場合
+            if(comps.day == Int(buttontilearray[i])){
+                button.backgroundColor = UIColor.hex("FF8E92", alpha: 1.0)
+                button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+            }
             
             //配置したボタンに押した際のアクションを設定する
-            button.addTarget(self, action: #selector(MonthlySalaryShow.BBB(_:)), forControlEvents: .TouchUpInside)
+            button.addTarget(self, action: #selector(MonthlySalaryShow.TapDayButton(_:)), forControlEvents: .TouchUpInside)
             
             //ボタンを配置する
             self.view.addSubview(button)
@@ -1017,7 +1015,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         }
     }
     
-    func BBB(sender: UIButton){
+    func TapDayButton(sender: UIButton){
         print("tap")
     }
 }
