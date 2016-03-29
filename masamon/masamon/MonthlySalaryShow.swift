@@ -50,6 +50,8 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         
         self.setupdayofweekLabel()
         
+        self.AAA()
+        
         //シフト時間を選択して表示するテキストフィールドのデフォルト表示を指定
         starttime = time[0]
         endtime = time[0]
@@ -959,11 +961,64 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             //曜日ラベルの配置
             calendarBaseLabel.text = String(monthName[i] as NSString)
             calendarBaseLabel.textAlignment = NSTextAlignment.Center
-            calendarBaseLabel.font = UIFont.systemFontOfSize(UIFont.systemFontSize())
+            calendarBaseLabel.font = UIFont.systemFontOfSize(UIFont.smallSystemFontSize())
             self.view.addSubview(calendarBaseLabel)
-            
         }
-        
+    }
+    
+    func AAA(){
+        for i in 0...6{
+            
+            //配置場所の定義
+            let positionX   = 15 + 50 * (i % 7)
+            let positionY   = 175
+            let buttonSizeX = 45;
+            let buttonSizeY = 45;
+            
+            //ボタンをつくる
+            let button: UIButton = UIButton()
+            button.frame = CGRectMake(
+                CGFloat(positionX),
+                CGFloat(positionY),
+                CGFloat(buttonSizeX),
+                CGFloat(buttonSizeY)
+            );
+            
+            //ボタンの配色の設定
+            
+            //ボタンのデザインを決定する
+            button.backgroundColor = UIColor.redColor()
+            button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+            button.titleLabel!.font = UIFont.systemFontOfSize(UIFont.systemFontSize())
+            button.layer.cornerRadius = CGFloat(22.5)
+            
+            
+            //今日の日付と合致するボタンがあったら装飾する
+            let nowdate = NSDate()
+            let calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)
+            let comps:NSDateComponents = calendar!.components([NSCalendarUnit.Year,NSCalendarUnit.Month,NSCalendarUnit.Day],
+                                                              fromDate: nowdate)
+            let buttonyear = comps.year
+            let buttonmonth = comps.month
+            let buttonday = comps.day
+            
+//            //今日の日付と一致するボタンがある場合
+//            if(buttonyear == year && buttonmonth == month && buttonday == button.tag){
+//                button.layer.borderColor = UIColor.whiteColor().CGColor
+//                button.layer.borderWidth = CGFloat(4.5)
+//            }
+            
+            //配置したボタンに押した際のアクションを設定する
+            button.addTarget(self, action: #selector(MonthlySalaryShow.BBB(_:)), forControlEvents: .TouchUpInside)
+            
+            //ボタンを配置する
+            self.view.addSubview(button)
+            self.view.bringSubviewToFront(button)
+        }
+    }
+    
+    func BBB(sender: UIButton){
+        print("tap")
     }
 }
 
