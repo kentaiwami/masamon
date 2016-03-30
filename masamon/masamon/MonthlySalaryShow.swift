@@ -1017,10 +1017,29 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     
     func nextday(){
         self.DayControl(1)
+        
+        //日付表示ラベルを画面右側からアニメーション表示させる
+        CalenderLabel.frame = CGRectMake(20, 230, 359, 33)
+        CalenderLabel.alpha = 0.0
+
+        UIView.animateWithDuration(0.5) {
+            self.CalenderLabel.frame = CGRectMake(8, 230, 359, 33)
+            self.CalenderLabel.alpha = 1.0
+        }
+
     }
     
     func prevday(){
         self.DayControl(-1)
+        
+        //日付表示ラベルを画面左側からアニメーション表示させる
+        CalenderLabel.frame = CGRectMake(-4, 230, 359, 33)
+        CalenderLabel.alpha = 0.0
+        
+        UIView.animateWithDuration(0.5) {
+            self.CalenderLabel.frame = CGRectMake(8, 230, 359, 33)
+            self.CalenderLabel.alpha = 1.0
+        }
     }
     
     //何日進めるかの値を受け取って日付を操作して表示内容を変更する
@@ -1031,10 +1050,6 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         
         let currentnsdatesplit = self.ReturnYearMonthDayWeekday(currentnsdate)
         self.ShowAllData(CommonMethod().Changecalendar(currentnsdatesplit.year, calender: "A.D"), m: currentnsdatesplit.month, d: currentnsdatesplit.day)
-        
-        UIView.animateWithDuration(0.5) {
-            
-        }
         
         CalenderLabel.text = "\(currentnsdatesplit.year)年\(currentnsdatesplit.month)月\(currentnsdatesplit.day)日 (\(self.ReturnWeekday(currentnsdatesplit.weekday)))"
         
