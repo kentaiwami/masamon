@@ -211,7 +211,7 @@ class CommonMethod: UIViewController {
     
     //1クールのシフト範囲を返す関数
     func GetShiftCoursMonthRange(shiftstartyear: Int, shiftstartmonth: Int) -> NSRange{
-        let shiftnsdate = MonthlySalaryShow().DateSerial(CommonMethod().Changecalendar(shiftstartyear, calender: "JP"), month: shiftstartmonth, day: 1)
+        let shiftnsdate = MonthlySalaryShow().CreateNSDate(CommonMethod().Changecalendar(shiftstartyear, calender: "JP"), month: shiftstartmonth, day: 1)
         let c = NSCalendar.currentCalendar()
         let monthrange = c.rangeOfUnit([NSCalendarUnit.Day],  inUnit: [NSCalendarUnit.Month], forDate: shiftnsdate)
         

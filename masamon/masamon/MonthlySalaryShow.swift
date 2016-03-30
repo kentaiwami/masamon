@@ -617,7 +617,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     //何日進めるかの値を受け取って日付を操作して表示内容を変更する
     func DayControl(control: Int){
         let nsdatesplit = self.ReturnYearMonthDayWeekday(currentnsdate)
-        let newnsdate = self.DateSerial(nsdatesplit.year, month: nsdatesplit.month, day: nsdatesplit.day+control)
+        let newnsdate = self.CreateNSDate(nsdatesplit.year, month: nsdatesplit.month, day: nsdatesplit.day+control)
         currentnsdate = newnsdate
         
         let currentnsdatesplit = self.ReturnYearMonthDayWeekday(currentnsdate)
@@ -838,7 +838,8 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         }
     }
     
-    func DateSerial(year : Int, month : Int, day : Int) -> NSDate {
+    //年,月,日からNSDateを生成する
+    func CreateNSDate(year : Int, month : Int, day : Int) -> NSDate {
         let comp = NSDateComponents()
         comp.year = year
         comp.month = month
@@ -970,11 +971,11 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     
     func SetupDayButton(){
         
-        //今日の日付と合致するボタンがあったら装飾する
+        //ボタンのタイトルを日付から計算して生成する
         let todaynsdate = self.ReturnYearMonthDayWeekday(NSDate())
-        self.SetDayArray(NSDate(),weekday:todaynsdate.weekday)      //buttontilearrayへ値を格納する
+        self.SetDayArray(NSDate(),pivotweekday:todaynsdate.weekday)      //buttontilearrayへ値を格納する
         
-        for i in 0..<0{
+        for i in 0...6{
             
             //配置場所の定義
             let positionX   = 15 + 50 * (i % 7)
@@ -1019,21 +1020,32 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     }
     
     //1週間分の日付を配列へ格納するメソッド
-    func SetDayArray(nsdate: NSDate, weekday: Int){
-        var tmparray = []
+    func SetDayArray(pivotnsdate: NSDate, pivotweekday: Int){
+        var tmparray: [Int] = []
+        var j = 0                   //日付を増やすための変数
         
-        /*方針メモ*/
-        /*
-         今日の日付を入手する
-         曜日の値を使って翌日翌日とループさせて日付をtmparrayに入れる
-         同様に前日前日とループさせてtmparrayに入れる
-         tmparray昇順にソートする
-         tmparrayの中身をstringにしてbuttontilearrayにコピーする
-         
-         ・翌日前日の入手はDateSerialを使用する？
-         */
-        print(weekday)
+        let nsdatesplit = self.ReturnYearMonthDayWeekday(pivotnsdate)
         
+        //今日の日付から日曜日までの日付を追加する
+        for i in (1..<pivotweekday).reverse() {
+            let newnsdate = self.CreateNSDate(nsdatesplit.year, month: nsdatesplit.month, day: nsdatesplit.day-i)
+            let newnsdatesplit = self.ReturnYearMonthDayWeekday(newnsdate)
+            tmparray.append(newnsdatesplit.day)
+        }
+        
+        //今日の日付から土曜日までの日付を追加する
+        for _ in pivotweekday...7 {
+            let newnsdate = self.CreateNSDate(nsdatesplit.year, month: nsdatesplit.month, day: nsdatesplit.day+j)
+            j += 1
+            let newnsdatesplit = self.ReturnYearMonthDayWeekday(newnsdate)
+            tmparray.append(newnsdatesplit.day)
+        }
+        
+        self.buttontilearray.removeAll()
+        
+        for i in 0...6 {
+            self.buttontilearray.append(String(tmparray[i]))
+        }
     }
 }
 
