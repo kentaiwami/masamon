@@ -604,6 +604,8 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         CalenderLabel.text = "\(date.year)年\(date.month)月\(date.day)日 (\(self.ReturnWeekday(date.weekday)))"
         
         currentnsdate = today
+        
+        self.SetupDayButton()
     }
     
     func nextday(){
@@ -624,6 +626,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         self.ShowAllData(CommonMethod().Changecalendar(currentnsdatesplit.year, calender: "A.D"), m: currentnsdatesplit.month, d: currentnsdatesplit.day)
         CalenderLabel.text = "\(currentnsdatesplit.year)年\(currentnsdatesplit.month)月\(currentnsdatesplit.day)日 (\(self.ReturnWeekday(currentnsdatesplit.weekday)))"
         
+        self.SetupDayButton()
     }
     
     //受け取った文字列をシフト体制に分別して返す
@@ -968,12 +971,17 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     }
     
     var buttontilearray:[String] = []
+    var buttonobjectarray: [UIButton] = []
     
     func SetupDayButton(){
         
+        for i in 0..<buttonobjectarray.count {
+            buttonobjectarray[i].removeFromSuperview()
+        }
+        
         //ボタンのタイトルを日付から計算して生成する
-        let todaynsdate = self.ReturnYearMonthDayWeekday(NSDate())
-        self.SetDayArray(NSDate(),pivotweekday:todaynsdate.weekday)      //buttontilearrayへ値を格納する
+        let todaynsdate = self.ReturnYearMonthDayWeekday(currentnsdate)
+        self.SetDayArray(currentnsdate,pivotweekday:todaynsdate.weekday)      //buttontilearrayへ値を格納する
         
         for i in 0...6{
             
@@ -1013,6 +1021,8 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             //ボタンを配置する
             self.view.addSubview(button)
             self.view.bringSubviewToFront(button)
+            
+            buttonobjectarray.append(button)
         }
     }
     
