@@ -945,23 +945,22 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             //配置場所の定義
             let positionX   = 15 + 50 * (i % 7)
             let positionY   = 175
-            let buttonSizeX = 45;
-            let buttonSizeY = 45;
+            let buttonSize = 40;
             
             //ボタンをつくる
             let button: UIButton = UIButton()
             button.frame = CGRectMake(
                 CGFloat(positionX),
                 CGFloat(positionY),
-                CGFloat(buttonSizeX),
-                CGFloat(buttonSizeY)
+                CGFloat(buttonSize),
+                CGFloat(buttonSize)
             );
             
             //ボタンのデザインを決定する
             button.backgroundColor = UIColor.clearColor()
             button.setTitleColor(UIColor.grayColor(), forState: .Normal)
             button.titleLabel!.font = UIFont.systemFontOfSize(19)
-            button.layer.cornerRadius = CGFloat(22.5)
+            button.layer.cornerRadius = CGFloat(buttonSize/2)
             button.tag = i
             
             button.setTitle(buttontilearray[i], forState: .Normal)
@@ -1032,7 +1031,6 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         
         let currentnsdatesplit = self.ReturnYearMonthDayWeekday(currentnsdate)
         self.ShowAllData(CommonMethod().Changecalendar(currentnsdatesplit.year, calender: "A.D"), m: currentnsdatesplit.month, d: currentnsdatesplit.day)
-        
         
         UIView.animateWithDuration(0.5) {
             
