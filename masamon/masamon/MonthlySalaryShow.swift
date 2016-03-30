@@ -1000,6 +1000,12 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         let currentdayindex = buttontilearray.indexOf(String(currentsplitday.day))
         
         self.DayControl(tagindex!-currentdayindex!)
+        
+        if tagindex! - currentdayindex! > 0 {
+            self.AnimationDayLabel(20, afterposition: 8)
+        }else{
+            self.AnimationDayLabel(-4, afterposition: 8)
+        }
     }
     
     
