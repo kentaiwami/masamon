@@ -975,9 +975,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     
     func SetupDayButton(){
         
-        for i in 0..<buttonobjectarray.count {
-            buttonobjectarray[i].removeFromSuperview()
-        }
+        self.RemoveButtonObjects()
         
         //ボタンのタイトルを日付から計算して生成する
         let todaynsdate = self.ReturnYearMonthDayWeekday(currentnsdate)
@@ -1052,11 +1050,18 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             tmparray.append(newnsdatesplit.day)
         }
         
-        self.buttontilearray.removeAll()
-        
         for i in 0...6 {
             self.buttontilearray.append(String(tmparray[i]))
         }
+    }
+    
+    func RemoveButtonObjects(){
+        
+        for i in 0..<buttonobjectarray.count {
+            buttonobjectarray[i].removeFromSuperview()
+        }
+
+        self.buttontilearray.removeAll()
     }
 }
 
