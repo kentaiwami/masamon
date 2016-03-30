@@ -986,7 +986,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     func TapDayButton(sender: UIButton){
         print("tap")
     }
-
+    
     
     //ジェスチャーを検知するメソッド
     func setupSwipeGestures() {
@@ -1023,7 +1023,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     func prevday(){
         self.DayControl(-1)
     }
-
+    
     //何日進めるかの値を受け取って日付を操作して表示内容を変更する
     func DayControl(control: Int){
         let nsdatesplit = self.ReturnYearMonthDayWeekday(currentnsdate)
@@ -1034,7 +1034,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         self.ShowAllData(CommonMethod().Changecalendar(currentnsdatesplit.year, calender: "A.D"), m: currentnsdatesplit.month, d: currentnsdatesplit.day)
         
         
-        UIView.animateWithDuration(0.5) { 
+        UIView.animateWithDuration(0.5) {
             
         }
         
@@ -1076,7 +1076,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         for i in 0..<buttonobjectarray.count {
             buttonobjectarray[i].removeFromSuperview()
         }
-
+        
         self.buttontilearray.removeAll()
     }
 }
