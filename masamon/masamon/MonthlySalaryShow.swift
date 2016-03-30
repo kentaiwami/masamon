@@ -937,8 +937,8 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         self.RemoveButtonObjects()
         
         //ボタンのタイトルを日付から計算して生成する
-        let todaynsdate = self.ReturnYearMonthDayWeekday(currentnsdate)
-        self.SetDayArray(currentnsdate,pivotweekday:todaynsdate.weekday)      //buttontilearrayへ値を格納する
+        let currentsplitdate = self.ReturnYearMonthDayWeekday(currentnsdate)
+        self.SetDayArray(currentnsdate,pivotweekday:currentsplitdate.weekday)      //buttontilearrayへ値を格納する
         
         for i in 0...6{
             
@@ -966,10 +966,19 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             button.setTitle(buttontilearray[i], forState: .Normal)
             
             //currentnsdateと一致するボタンがある場合
-            if todaynsdate.day == Int(buttontilearray[i]) {
+            if currentsplitdate.day == Int(buttontilearray[i]) {
                 button.backgroundColor = UIColor.hex("FF8E92", alpha: 1.0)
                 button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
             }
+            
+            //todayと一致するボタンタイトルがある場合は常に文字を白表示にする
+            let totayNSDate = NSDate()
+            let todaysplitday = ReturnYearMonthDayWeekday(totayNSDate) //日付を西暦,月,日,曜日に分けて取得
+
+            if todaysplitday.day == Int(buttontilearray[i]) {
+                button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+            }
+            
             
             //配置したボタンに押した際のアクションを設定する
             button.addTarget(self, action: #selector(MonthlySalaryShow.TapDayButton(_:)), forControlEvents: .TouchUpInside)
