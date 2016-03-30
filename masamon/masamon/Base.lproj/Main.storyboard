@@ -70,13 +70,6 @@
                                         <rect key="frame" x="8" y="0.0" width="359" height="116"/>
                                         <color key="backgroundColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
                                     </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="日付を表示" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uyq-dO-S21">
-                                        <rect key="frame" x="8" y="76" width="359" height="33"/>
-                                        <color key="backgroundColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="FVc-BZ-itc">
                                         <rect key="frame" x="8" y="124" width="359" height="63"/>
                                         <color key="backgroundColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -128,7 +121,6 @@
                     <tabBarItem key="tabBarItem" systemItem="topRated" id="3O3-oy-DWv"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
-                        <outlet property="CalenderLabel" destination="Uyq-dO-S21" id="9Zz-r1-sYl"/>
                         <outlet property="Center1ShiftText" destination="fVD-hn-WuX" id="DIX-Ua-abs"/>
                         <outlet property="Center2ShiftText" destination="6ca-ut-rU4" id="Knt-j3-EIu"/>
                         <outlet property="Center3ShiftText" destination="5vh-L8-JtH" id="joH-H3-MFa"/>

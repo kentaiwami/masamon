@@ -12,7 +12,6 @@ import GradientCircularProgress
 
 class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate{
     
-    @IBOutlet weak var CalenderLabel: UILabel!
     @IBOutlet weak var EarlyShiftText: UITextView!
     @IBOutlet weak var Center1ShiftText: UITextView!
     @IBOutlet weak var Center2ShiftText: UITextView!
@@ -42,6 +41,8 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     
     var shiftgroupnametextfield = UITextField()
     var shifttimetextfield = UITextField()
+    
+    var CalenderLabel = UILabel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -93,7 +94,13 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         let today = NSDate()
         let date = ReturnYearMonthDayWeekday(today)         //日付を西暦,月,日,曜日に分けて取得
         self.ShowAllData(CommonMethod().Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day)           //データ表示へ分けた日付を渡す
+        
+        CalenderLabel.frame = CGRectMake(8, 230, 359, 33)
+        CalenderLabel.backgroundColor = UIColor.hex("4C4C4C", alpha: 1.0)
+        CalenderLabel.textColor = UIColor.whiteColor()
+        CalenderLabel.textAlignment = NSTextAlignment.Center
         CalenderLabel.text = "\(date.year)年\(date.month)月\(date.day)日 (\(self.ReturnWeekday(date.weekday)))"
+        self.view.addSubview(CalenderLabel)
         
         NSTimer.scheduledTimerWithTimeInterval(1.0,target:self,selector:#selector(MonthlySalaryShow.FileSaveSuccessfulAlertShow),
                                                userInfo: nil, repeats: true);
@@ -1024,6 +1031,12 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         
         let currentnsdatesplit = self.ReturnYearMonthDayWeekday(currentnsdate)
         self.ShowAllData(CommonMethod().Changecalendar(currentnsdatesplit.year, calender: "A.D"), m: currentnsdatesplit.month, d: currentnsdatesplit.day)
+        
+        
+        UIView.animateWithDuration(0.5) { 
+            
+        }
+        
         CalenderLabel.text = "\(currentnsdatesplit.year)年\(currentnsdatesplit.month)月\(currentnsdatesplit.day)日 (\(self.ReturnWeekday(currentnsdatesplit.weekday)))"
         
         self.SetupDayButton()
