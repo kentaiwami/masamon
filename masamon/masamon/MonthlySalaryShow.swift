@@ -961,7 +961,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             button.setTitleColor(UIColor.grayColor(), forState: .Normal)
             button.titleLabel!.font = UIFont.systemFontOfSize(19)
             button.layer.cornerRadius = CGFloat(buttonSize/2)
-            button.tag = i
+            button.tag = Int(buttontilearray[i])!
             
             button.setTitle(buttontilearray[i], forState: .Normal)
             
@@ -992,7 +992,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     }
     
     func TapDayButton(sender: UIButton){
-        print("tap")
+        //TODO: sender.tagに設定されている日付を利用する
     }
     
     
