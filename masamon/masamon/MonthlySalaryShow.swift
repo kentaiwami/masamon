@@ -580,55 +580,6 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         }
     }
     
-    //ジェスチャーを検知するメソッド
-    func setupSwipeGestures() {
-        // 右方向へのスワイプ
-        let gestureToRight = UISwipeGestureRecognizer(target: self, action: #selector(MonthlySalaryShow.prevday))
-        gestureToRight.direction = UISwipeGestureRecognizerDirection.Right
-        self.view.addGestureRecognizer(gestureToRight)
-        
-        // 左方向へのスワイプ
-        let gestureToLeft = UISwipeGestureRecognizer(target: self, action: #selector(MonthlySalaryShow.nextday))
-        gestureToLeft.direction = UISwipeGestureRecognizerDirection.Left
-        self.view.addGestureRecognizer(gestureToLeft)
-        
-        //タップ
-        let myTap = UITapGestureRecognizer(target: self, action: #selector(MonthlySalaryShow.today))
-        self.view.addGestureRecognizer(myTap)
-    }
-    
-    func today(){
-        let today = NSDate()
-        let date = ReturnYearMonthDayWeekday(today)         //日付を西暦,月,日,曜日に分けて取得
-        self.ShowAllData(CommonMethod().Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day)           //データ表示へ分けた日付を渡す
-        CalenderLabel.text = "\(date.year)年\(date.month)月\(date.day)日 (\(self.ReturnWeekday(date.weekday)))"
-        
-        currentnsdate = today
-        
-        self.SetupDayButton()
-    }
-    
-    func nextday(){
-        self.DayControl(1)
-    }
-    
-    func prevday(){
-        self.DayControl(-1)
-    }
-    
-    //何日進めるかの値を受け取って日付を操作して表示内容を変更する
-    func DayControl(control: Int){
-        let nsdatesplit = self.ReturnYearMonthDayWeekday(currentnsdate)
-        let newnsdate = self.CreateNSDate(nsdatesplit.year, month: nsdatesplit.month, day: nsdatesplit.day+control)
-        currentnsdate = newnsdate
-        
-        let currentnsdatesplit = self.ReturnYearMonthDayWeekday(currentnsdate)
-        self.ShowAllData(CommonMethod().Changecalendar(currentnsdatesplit.year, calender: "A.D"), m: currentnsdatesplit.month, d: currentnsdatesplit.day)
-        CalenderLabel.text = "\(currentnsdatesplit.year)年\(currentnsdatesplit.month)月\(currentnsdatesplit.day)日 (\(self.ReturnWeekday(currentnsdatesplit.weekday)))"
-        
-        self.SetupDayButton()
-    }
-    
     //受け取った文字列をシフト体制に分別して返す
     func SplitStaffShift(staff: String) -> Array<String>{
         var staffshiftarray: [String] = ["","","","","",""]         //早番,中1,中2,中3,遅,その他
@@ -1027,6 +978,56 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     func TapDayButton(sender: UIButton){
         print("tap")
     }
+
+    
+    //ジェスチャーを検知するメソッド
+    func setupSwipeGestures() {
+        // 右方向へのスワイプ
+        let gestureToRight = UISwipeGestureRecognizer(target: self, action: #selector(MonthlySalaryShow.prevday))
+        gestureToRight.direction = UISwipeGestureRecognizerDirection.Right
+        self.view.addGestureRecognizer(gestureToRight)
+        
+        // 左方向へのスワイプ
+        let gestureToLeft = UISwipeGestureRecognizer(target: self, action: #selector(MonthlySalaryShow.nextday))
+        gestureToLeft.direction = UISwipeGestureRecognizerDirection.Left
+        self.view.addGestureRecognizer(gestureToLeft)
+        
+        //タップ
+        let myTap = UITapGestureRecognizer(target: self, action: #selector(MonthlySalaryShow.today))
+        self.view.addGestureRecognizer(myTap)
+    }
+    
+    func today(){
+        let today = NSDate()
+        let date = ReturnYearMonthDayWeekday(today)         //日付を西暦,月,日,曜日に分けて取得
+        self.ShowAllData(CommonMethod().Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day)           //データ表示へ分けた日付を渡す
+        CalenderLabel.text = "\(date.year)年\(date.month)月\(date.day)日 (\(self.ReturnWeekday(date.weekday)))"
+        
+        currentnsdate = today
+        
+        self.SetupDayButton()
+    }
+    
+    func nextday(){
+        self.DayControl(1)
+    }
+    
+    func prevday(){
+        self.DayControl(-1)
+    }
+
+    //何日進めるかの値を受け取って日付を操作して表示内容を変更する
+    func DayControl(control: Int){
+        let nsdatesplit = self.ReturnYearMonthDayWeekday(currentnsdate)
+        let newnsdate = self.CreateNSDate(nsdatesplit.year, month: nsdatesplit.month, day: nsdatesplit.day+control)
+        currentnsdate = newnsdate
+        
+        let currentnsdatesplit = self.ReturnYearMonthDayWeekday(currentnsdate)
+        self.ShowAllData(CommonMethod().Changecalendar(currentnsdatesplit.year, calender: "A.D"), m: currentnsdatesplit.month, d: currentnsdatesplit.day)
+        CalenderLabel.text = "\(currentnsdatesplit.year)年\(currentnsdatesplit.month)月\(currentnsdatesplit.day)日 (\(self.ReturnWeekday(currentnsdatesplit.weekday)))"
+        
+        self.SetupDayButton()
+    }
     
     //1週間分の日付を配列へ格納するメソッド
     func SetDayArray(pivotnsdate: NSDate, pivotweekday: Int){
@@ -1055,6 +1056,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         }
     }
     
+    //ボタンオブジェクトを削除するメソッド
     func RemoveButtonObjects(){
         
         for i in 0..<buttonobjectarray.count {
