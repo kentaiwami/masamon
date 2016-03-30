@@ -29,7 +29,7 @@ class StaffNameListSetting: UIViewController, UITableViewDataSource, UITableView
         texts.removeAll()
         
         //StaffNameDBのレコード全て取得
-        if(DBmethod().StaffNameAllRecordGet() != nil){
+        if DBmethod().StaffNameAllRecordGet() != nil {
             let results = DBmethod().StaffNameAllRecordGet()
             
             for i in 0 ..< results!.count{
@@ -38,7 +38,7 @@ class StaffNameListSetting: UIViewController, UITableViewDataSource, UITableView
         }
         
         //StaffNameDBから名前を全て取得
-        if(DBmethod().StaffNameArrayGet() != nil){
+        if DBmethod().StaffNameArrayGet() != nil {
             texts = DBmethod().StaffNameArrayGet()!
         }
         
@@ -134,11 +134,11 @@ class StaffNameListSetting: UIViewController, UITableViewDataSource, UITableView
                     (action:UIAlertAction!) -> Void in
                     let textFields:Array<UITextField>? =  alert.textFields as Array<UITextField>?
                     if textFields != nil {
-                        if(textFields![0].text! != ""){
+                        if textFields![0].text! != "" {
                             
                             //上書き処理を行う
                             for i in 0 ..< self.records.count{
-                                if(self.texts[index] == self.records[i].name){
+                                if self.texts[index] == self.records[i].name {
                                     
                                     let newstaffnamedbrecord = StaffNameDB()
                                     newstaffnamedbrecord.id = self.records[i].id
@@ -179,7 +179,7 @@ class StaffNameListSetting: UIViewController, UITableViewDataSource, UITableView
                 
                 for i in 0 ..< self.records.count{
                     
-                    if(self.texts[index] == self.records[i].name){
+                    if self.texts[index] == self.records[i].name {
                         let pivot = self.records[i].id                  //削除前にずらす元となるidを記録する
                         
                         //対象レコードを削除,並び替え,穴埋め
@@ -200,7 +200,7 @@ class StaffNameListSetting: UIViewController, UITableViewDataSource, UITableView
             let Action: UIAlertAction = UIAlertAction(title: buttontitle, style: UIAlertActionStyle.Default, handler: { (action:UIAlertAction!) -> Void in
                 let textFields:Array<UITextField>? =  alert.textFields as Array<UITextField>?
                 if textFields != nil {
-                    if(textFields![0].text! != ""){
+                    if textFields![0].text! != "" {
                         let newrecord = StaffNameDB()
                         newrecord.id = index
                         newrecord.name = textFields![0].text!

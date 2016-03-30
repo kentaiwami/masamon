@@ -193,9 +193,9 @@ class UserSetting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSourc
     
     //表示個数
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        if(component == 0){
+        if component == 0 {
             return time.count
-        }else if(component == 1){
+        }else if component == 1 {
             return wavyline.count
         }else{
             return time.count
@@ -205,9 +205,9 @@ class UserSetting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSourc
     //表示内容
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         
-        if(component == 0){
+        if component == 0 {
             return time[row]
-        }else if(component == 1){
+        }else if component == 1 {
             return wavyline[row]
         }else{
             return time[row]
@@ -217,16 +217,16 @@ class UserSetting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSourc
     //選択時
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
 
-        if(component == 0){
-            if(selecttextfieldtag == 1){
+        if component == 0 {
+            if selecttextfieldtag == 1 {
                 TimeFrom1.text = time[row]
                 textfieldrowfrom1 = row
             }else{
                 TimeFrom2.text = time[row]
                 textfieldrowfrom2 = row
             }
-        }else if(component == 2){
-            if(selecttextfieldtag == 1){
+        }else if component == 2 {
+            if selecttextfieldtag == 1 {
                 TimeTo1.text = time[row]
                 textfieldrowto1 = row
             }else{
@@ -248,7 +248,7 @@ class UserSetting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSourc
     //pickerviewやツールバー上のボタン動作
     func TapButton(sender: UIButton){
         
-        if(selecttextfieldtag == 1){            //日中のテキストフィールドが選択されている状態
+        if selecttextfieldtag == 1 {            //日中のテキストフィールドが選択されている状態
             switch(sender.tag){
             case 10:    //Doneボタン
                 TimeFrom1.text = time[textfieldrowfrom1]
@@ -268,7 +268,7 @@ class UserSetting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSourc
             default:
                 break
             }
-        }else if(selecttextfieldtag == 2){      //深夜のテキストフィールドが選択されている状態
+        }else if selecttextfieldtag == 2 {      //深夜のテキストフィールドが選択されている状態
             switch(sender.tag){
             case 10:    //Doneボタン
                 TimeFrom2.text = time[textfieldrowfrom2]
@@ -289,11 +289,11 @@ class UserSetting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSourc
                 break
             }
 
-        }else if(selecttextfieldtag == 3){      //日中の時給テキストフィールドが選択されている
+        }else if selecttextfieldtag == 3 {      //日中の時給テキストフィールドが選択されている
             Salaly1.resignFirstResponder()
-        }else if(selecttextfieldtag == 4){      //深夜の時給テキストフィールドが選択されている
+        }else if selecttextfieldtag == 4 {      //深夜の時給テキストフィールドが選択されている
             Salaly2.resignFirstResponder()
-        }else if(selecttextfieldtag == 5){      //スタッフ人数テキストフィールドが選択されている
+        }else if selecttextfieldtag == 5 {      //スタッフ人数テキストフィールドが選択されている
             staffnumbertextfield.resignFirstResponder()
         }
     }
@@ -302,12 +302,12 @@ class UserSetting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSourc
     //textfieldがタップされた時
     func textFieldDidBeginEditing(textField: UITextField) {
         selecttextfieldtag = textField.tag
-        if(textField.tag == 1){
+        if textField.tag == 1 {
             timeUIPicker.selectRow(textfieldrowfrom1, inComponent: 0, animated: true)
             timeUIPicker.selectRow(textfieldrowto1, inComponent: 2, animated: true)
             TimeFrom1.text = time[textfieldrowfrom1]
             TimeTo1.text = time[textfieldrowto1]
-        }else if(textField.tag == 2){
+        }else if textField.tag == 2 {
             timeUIPicker.selectRow(textfieldrowfrom2, inComponent: 0, animated: true)
             timeUIPicker.selectRow(textfieldrowto2, inComponent: 2, animated: true)
             TimeFrom2.text = time[textfieldrowfrom2]
@@ -318,7 +318,7 @@ class UserSetting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSourc
     //セーブボタンを押した時
     func SaveButtontapped(sender: UIButton){
         
-        if(TimeFrom1.text?.isEmpty == true || TimeTo1.text?.isEmpty == true || TimeFrom2.text?.isEmpty == true || TimeTo2.text?.isEmpty == true || Salaly1.text?.isEmpty == true || Salaly2.text?.isEmpty == true || usernametextfield.text?.isEmpty == true || staffnumbertextfield.text?.isEmpty == true){
+        if TimeFrom1.text?.isEmpty == true || TimeTo1.text?.isEmpty == true || TimeFrom2.text?.isEmpty == true || TimeTo2.text?.isEmpty == true || Salaly1.text?.isEmpty == true || Salaly2.text?.isEmpty == true || usernametextfield.text?.isEmpty == true || staffnumbertextfield.text?.isEmpty == true {
             
             let alertController = UIAlertController(title: "ニャ!!", message: "項目を埋めてから押すニャ", preferredStyle: .Alert)
             
@@ -413,7 +413,7 @@ class UserSetting: UIViewController, UIPickerViewDelegate, UIPickerViewDataSourc
     
     func SetText(){
         //既に登録されていたら登録内容を表示する
-        if(DBmethod().DBRecordCount(UserNameDB) == 0){
+        if DBmethod().DBRecordCount(UserNameDB) == 0 {
             usernametextfield.placeholder = "シフト表上での名前を入力"
             staffnumbertextfield.placeholder = "スタッフの人数を入力"
             TimeFrom1.placeholder = "no data"
