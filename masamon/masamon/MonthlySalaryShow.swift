@@ -991,8 +991,15 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         }
     }
     
+    //日付ボタンをタップした際に呼ばれる関数
     func TapDayButton(sender: UIButton){
-        //TODO: sender.tagに設定されている日付を利用する
+        let currentsplitday = ReturnYearMonthDayWeekday(currentnsdate) //日付を西暦,月,日,曜日に分けて取得
+
+        //タップした日付ボタンと表示中の日付の配列位置を比較
+        let tagindex = buttontilearray.indexOf(String(sender.tag))
+        let currentdayindex = buttontilearray.indexOf(String(currentsplitday.day))
+        
+        self.DayControl(tagindex!-currentdayindex!)
     }
     
     
