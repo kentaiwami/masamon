@@ -31,7 +31,7 @@ class ShiftListSetting: UIViewController, UITableViewDataSource, UITableViewDele
         
         self.texts.removeAll()
         
-        if(DBmethod().GetShiftDBAllRecordArray() != nil){
+        if DBmethod().GetShiftDBAllRecordArray() != nil {
             let results = DBmethod().GetShiftDBAllRecordArray()
             
             for i in 0 ..< results!.count{
@@ -136,7 +136,7 @@ class ShiftListSetting: UIViewController, UITableViewDataSource, UITableViewDele
                     
                     if textFields != nil {
                         
-                        if(textFields![0].text! != ""){
+                        if textFields![0].text! != "" {
                             
                             var oldfileextension = ""
                             var oldfilepath = ""
@@ -150,11 +150,11 @@ class ShiftListSetting: UIViewController, UITableViewDataSource, UITableViewDele
                             newshiftdbrecord.month = oldshiftdbrecord.month
                             
                             //変更前のファイルの拡張子を判断
-                            if(self.texts[index].shiftimportname.containsString(".xlsx")){
+                            if self.texts[index].shiftimportname.containsString(".xlsx") {
                                 oldfileextension = ".xlsx"
-                            }else if(self.texts[index].shiftimportname.containsString(".pdf")){
+                            }else if self.texts[index].shiftimportname.containsString(".pdf") {
                                 oldfileextension = ".pdf"
-                            }else if(self.texts[index].shiftimportname.containsString(".PDF")){
+                            }else if self.texts[index].shiftimportname.containsString(".PDF") {
                                 oldfileextension = ".PDF"
                             }
                             
@@ -162,19 +162,19 @@ class ShiftListSetting: UIViewController, UITableViewDataSource, UITableViewDele
                             //ユーザが入力した新規取り込み名に拡張子が含まれているか調べる
                             switch(oldfileextension){
                             case ".xlsx":
-                                if(textFields![0].text!.containsString(".xlsx") == false){
+                                if textFields![0].text!.containsString(".xlsx") == false {
                                     newpath = newpath.stringByReplacingOccurrencesOfString(self.texts[index].shiftimportname, withString: textFields![0].text! + oldfileextension)
                                     newshiftdbrecord.shiftimportname = textFields![0].text! + oldfileextension
                                 }
                                 
                             case ".pdf":
-                                if(textFields![0].text!.containsString(".pdf") == false){
+                                if textFields![0].text!.containsString(".pdf") == false {
                                     newpath = newpath.stringByReplacingOccurrencesOfString(self.texts[index].shiftimportname, withString: textFields![0].text! + oldfileextension)
                                     newshiftdbrecord.shiftimportname = textFields![0].text! + oldfileextension
                                 }
                                 
                             case ".PDF":
-                                if(textFields![0].text!.containsString(".PDF") == false){
+                                if textFields![0].text!.containsString(".PDF") == false {
                                     newpath = newpath.stringByReplacingOccurrencesOfString(self.texts[index].shiftimportname, withString: textFields![0].text! + oldfileextension)
                                     newshiftdbrecord.shiftimportname = textFields![0].text! + oldfileextension
                                 }

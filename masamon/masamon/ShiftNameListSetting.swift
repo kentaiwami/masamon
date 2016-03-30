@@ -176,7 +176,7 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
                     if textFields != nil {
                         
                         for textField:UITextField in textFields! {
-                            if(textField.text == ""){
+                            if textField.text == "" {
                                 textflag = false
                                 break
                             }else{
@@ -184,7 +184,7 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
                             }
                         }
                         
-                        if(textflag){
+                        if textflag {
                             
                             //新規レコードの作成
                             let newrecord = CommonMethod().CreateShiftSystemDBRecord(self.records[section][row].id,shiftname: textFields![0].text!, shiftgroup: textFields![1].text!, shifttime: textFields![2].text!, shiftstarttimerow: self.shiftstarttimeselectrow, shiftendtimerow: self.shiftendtimeselectrow)
@@ -244,7 +244,7 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
                 if textFields != nil {
                     
                     for textField:UITextField in textFields! {
-                        if(textField.text == ""){
+                        if textField.text == "" {
                             textflag = false
                             break
                         }else{
@@ -252,7 +252,7 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
                         }
                     }
 
-                    if(textflag){
+                    if textflag {
                         let newrecord = CommonMethod().CreateShiftSystemDBRecord(DBmethod().DBRecordCount(ShiftSystemDB),shiftname: textFields![0].text!, shiftgroup: textFields![1].text!, shifttime: textFields![2].text!, shiftstarttimerow: self.shiftstarttimeselectrow, shiftendtimerow: self.shiftendtimeselectrow)
                         
                         DBmethod().AddandUpdate(newrecord, update: true)
@@ -302,7 +302,7 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
     
     //pickerに表示する列数を返すデータソースメソッド.
     func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
-        if(pickerView.tag == 1 || pickerView.tag == 2){
+        if pickerView.tag == 1 || pickerView.tag == 2 {
             return 1
         }else{
             return 3
@@ -312,14 +312,14 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
     
     //pickerに表示する行数を返すデータソースメソッド.
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        if(pickerView.tag == 2){
+        if pickerView.tag == 2 {
             pickerdoneButton.tag = 2
             return shiftgroupname.count
         }else{
             pickerdoneButton.tag = 3
-            if(component == 0){
+            if component == 0 {
                 return time.count
-            }else if(component == 1){
+            }else if component == 1 {
                 return wavyline.count
             }else{
                 return time.count
@@ -329,10 +329,10 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
     
     //pickerに表示する値を返すデリゲートメソッド.
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        if(pickerView.tag == 2){
+        if pickerView.tag == 2 {
             return shiftgroupname[row]
         }else{
-            if(component == 0 || component == 2){
+            if component == 0 || component == 2 {
                 return time[row]
             }else{
                 return wavyline[row]
@@ -346,17 +346,17 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
     var shiftendtimeselectrow = 0
     //pickerが選択されたとき
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        if(pickerView.tag == 2){      //シフトグループ選択
+        if pickerView.tag == 2 {      //シフトグループ選択
             shiftgroupnametextfield.text = shiftgroupname[row]
             pickerdoneButton.tag = 2
             shiftgroupselectrow = row
             
-        }else if(pickerView.tag == 3){      //シフト時間選択
+        }else if pickerView.tag == 3 {      //シフト時間選択
             
-            if(component == 0){
+            if component == 0 {
                 starttime = time[row]
                 shiftstarttimeselectrow = row
-            }else if(component == 2){
+            }else if component == 2 {
                 endtime = time[row]
                 shiftendtimeselectrow = row
             }
@@ -389,21 +389,21 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
     //ツールバーの完了ボタンを押した時の関数
     func donePicker(sender:UIButton){
         
-        if(sender.tag == 2){            //シフトグループの完了ボタン
+        if sender.tag == 2 {            //シフトグループの完了ボタン
             shiftgroupnametextfield.resignFirstResponder()
             shifttimetextfield.becomeFirstResponder()
-        }else if(sender.tag == 3){      //シフト時間の完了ボタン
+        }else if sender.tag == 3 {      //シフト時間の完了ボタン
             shifttimetextfield.resignFirstResponder()
         }
     }
     
     //textfieldがタップされた時
     func textFieldDidBeginEditing(textField: UITextField) {
-        if(textField.tag == 1){             //シフトグループ選択
+        if textField.tag == 1 {             //シフトグループ選択
             shiftgroupnameUIPicker.selectRow(shiftgroupselectrow, inComponent: 0, animated: true)
             textField.text = shiftgroupname[shiftgroupselectrow]
             
-        }else if(textField.tag == 2){       //シフト時間選択
+        }else if textField.tag == 2 {       //シフト時間選択
             shifttimeUIPicker.selectRow(shiftstarttimeselectrow, inComponent: 0, animated: true)
             shifttimeUIPicker.selectRow(shiftendtimeselectrow, inComponent: 2, animated: true)
             textField.text = time[shiftstarttimeselectrow] + " " + wavyline[0] + " " + time[shiftendtimeselectrow]
