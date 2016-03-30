@@ -1010,6 +1010,36 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         self.ShowAllData(CommonMethod().Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day)           //データ表示へ分けた日付を渡す
         CalenderLabel.text = "\(date.year)年\(date.month)月\(date.day)日 (\(self.ReturnWeekday(date.weekday)))"
         
+        //現在表示している日付と今日の日付を比較して、アニメーションを切り替えて表示する
+        let calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)!
+        let compareunit = calendar.compareDate(currentnsdate, toDate: today, toUnitGranularity: .Day)
+        
+        CalenderLabel.alpha = 0.0
+
+        if compareunit == .OrderedAscending {           //currentnsdateが今日より小さい(前の日付)場合
+            CalenderLabel.frame = CGRectMake(20, 230, 359, 33)
+
+            UIView.animateWithDuration(0.5) {
+                self.CalenderLabel.frame = CGRectMake(8, 230, 359, 33)
+                self.CalenderLabel.alpha = 1.0
+            }
+            
+        }else if compareunit == .OrderedDescending{     //currentnsdateが今日より大きい(後の日付)場合
+            CalenderLabel.frame = CGRectMake(-4, 230, 359, 33)
+
+            UIView.animateWithDuration(0.5) {
+                self.CalenderLabel.frame = CGRectMake(8, 230, 359, 33)
+                self.CalenderLabel.alpha = 1.0
+            }
+
+        }else{                                          //日付が同じ場合
+            UIView.animateWithDuration(0.5) {
+                self.CalenderLabel.frame = CGRectMake(8, 230, 359, 33)
+                self.CalenderLabel.alpha = 1.0
+            }
+
+        }
+        
         currentnsdate = today
         
         self.SetupDayButton()
