@@ -95,6 +95,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         let date = ReturnYearMonthDayWeekday(today)         //日付を西暦,月,日,曜日に分けて取得
         self.ShowAllData(CommonMethod().Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day)           //データ表示へ分けた日付を渡す
         
+        //日付を表示するラベルの初期設定
         CalenderLabel.frame = CGRectMake(8, 230, 359, 33)
         CalenderLabel.backgroundColor = UIColor.hex("4C4C4C", alpha: 1.0)
         CalenderLabel.textColor = UIColor.whiteColor()
