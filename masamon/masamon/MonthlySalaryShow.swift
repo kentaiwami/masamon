@@ -1030,30 +1030,16 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         let calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)!
         let compareunit = calendar.compareDate(currentnsdate, toDate: today, toUnitGranularity: .Day)
         
-        CalenderLabel.alpha = 0.0
-
         if compareunit == .OrderedAscending {           //currentnsdateが今日より小さい(前の日付)場合
-            CalenderLabel.frame = CGRectMake(20, 230, 359, 33)
-
-            UIView.animateWithDuration(0.5) {
-                self.CalenderLabel.frame = CGRectMake(8, 230, 359, 33)
-                self.CalenderLabel.alpha = 1.0
-            }
+            
+            self.AnimationDayLabel(20, afterposition: 8)
             
         }else if compareunit == .OrderedDescending{     //currentnsdateが今日より大きい(後の日付)場合
-            CalenderLabel.frame = CGRectMake(-4, 230, 359, 33)
-
-            UIView.animateWithDuration(0.5) {
-                self.CalenderLabel.frame = CGRectMake(8, 230, 359, 33)
-                self.CalenderLabel.alpha = 1.0
-            }
-
+            
+            self.AnimationDayLabel(-4, afterposition: 8)
+            
         }else{                                          //日付が同じ場合
-            UIView.animateWithDuration(0.5) {
-                self.CalenderLabel.frame = CGRectMake(8, 230, 359, 33)
-                self.CalenderLabel.alpha = 1.0
-            }
-
+            self.AnimationDayLabel(8, afterposition: 8)
         }
         
         currentnsdate = today
@@ -1061,31 +1047,29 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         self.SetupDayButton()
     }
     
+    //日付を表示しているLabelをアニメーション表示するメソッド
+    func AnimationDayLabel(beforeposition: CGFloat, afterposition: CGFloat) {
+        CalenderLabel.alpha = 0.0
+        CalenderLabel.frame = CGRectMake(beforeposition, 230, 359, 33)
+        
+        UIView.animateWithDuration(0.5) {
+            self.CalenderLabel.frame = CGRectMake(afterposition, 230, 359, 33)
+            self.CalenderLabel.alpha = 1.0
+        }
+    }
+    
     func nextday(){
         self.DayControl(1)
         
         //日付表示ラベルを画面右側からアニメーション表示させる
-        CalenderLabel.frame = CGRectMake(20, 230, 359, 33)
-        CalenderLabel.alpha = 0.0
-
-        UIView.animateWithDuration(0.5) {
-            self.CalenderLabel.frame = CGRectMake(8, 230, 359, 33)
-            self.CalenderLabel.alpha = 1.0
-        }
-
+        self.AnimationDayLabel(20, afterposition: 8)
     }
     
     func prevday(){
         self.DayControl(-1)
         
         //日付表示ラベルを画面左側からアニメーション表示させる
-        CalenderLabel.frame = CGRectMake(-4, 230, 359, 33)
-        CalenderLabel.alpha = 0.0
-        
-        UIView.animateWithDuration(0.5) {
-            self.CalenderLabel.frame = CGRectMake(8, 230, 359, 33)
-            self.CalenderLabel.alpha = 1.0
-        }
+        self.AnimationDayLabel(-4, afterposition: 8)
     }
     
     //何日進めるかの値を受け取って日付を操作して表示内容を変更する
