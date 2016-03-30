@@ -997,6 +997,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             button.setTitleColor(UIColor.grayColor(), forState: .Normal)
             button.titleLabel!.font = UIFont.systemFontOfSize(19)
             button.layer.cornerRadius = CGFloat(22.5)
+            button.tag = i
             
             button.setTitle(buttontilearray[i], forState: .Normal)
             
