@@ -1008,7 +1008,6 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         }
     }
     
-    
     //ジェスチャーを検知するメソッド
     func setupSwipeGestures() {
         // 右方向へのスワイプ
