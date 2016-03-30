@@ -38,7 +38,7 @@ class CommonMethod: UIViewController {
 
     //西暦を和暦に、和暦を西暦に変換して返す関数
     func Changecalendar(year: Int, calender: String) -> Int{
-        if(calender == "JP"){   //和暦から西暦
+        if calender == "JP" {   //和暦から西暦
             let yeartemp = String(year - 12)
             return Int("20"+yeartemp)!
         }else{                  //西暦から和暦
@@ -91,28 +91,28 @@ class CommonMethod: UIViewController {
         
 
         //年度の月が4月度〜9月度ならば年度の操作をせずに返す
-        if(monthfirstdigit >= "4" && monthfirstdigit <= "9"){
+        if monthfirstdigit >= "4" && monthfirstdigit <= "9" {
             return (Int(year)!, Int(monthfirstdigit)!-1, Int(year)!, Int(monthfirstdigit)!, Int(year)!)
         }
             
         //年度の月が10月度ならば月を操作して返す
-        else if(monthfirstdigit == "0"){
+        else if monthfirstdigit == "0" {
             return (Int(year)!, 9, Int(year)!, 10, Int(year)!)
         }
 
             
         //年度の月が11月度,12月度ならば年度の操作をせずに返す
-        else if((monthfirstdigit >= "1" && monthfirstdigit <= "2") && monthseconddigit == "1"){
+        else if (monthfirstdigit >= "1" && monthfirstdigit <= "2") && monthseconddigit == "1" {
             return (Int(year)!, Int(monthseconddigit+monthfirstdigit)!-1, Int(year)!, Int(monthseconddigit+monthfirstdigit)!, Int(year)!)
         }
         
         //年度の月が1月度ならば開始月がその年,終了月は来年にして返す
-        else if(monthfirstdigit == "1"){
+        else if monthfirstdigit == "1" {
             return (Int(year)!, 12, Int(year)!, Int(monthfirstdigit)!, Int(year)!+1)
         }
         
         //年度の月が2月度〜3月度ならば、来年にして返す
-        else if(monthfirstdigit >= "2" && monthfirstdigit <= "3"){
+        else if monthfirstdigit >= "2" && monthfirstdigit <= "3" {
             return (Int(year)!, Int(monthfirstdigit)!-1, Int(year)!+1, Int(monthfirstdigit)!, Int(year)!+1)
         }
         
@@ -134,10 +134,10 @@ class CommonMethod: UIViewController {
         //出勤シフトを見つけるループ処理
         for i in 0 ..< shiftarray.count{
             
-            if(staffnamestring.characters.count == 0){
+            if staffnamestring.characters.count == 0 {
                 return groupidarray
                 
-            }else if(staffnamestring.containsString(shiftarray[i].name)){
+            }else if staffnamestring.containsString(shiftarray[i].name) {
                 staffnamestring = staffnamestring.stringByReplacingOccurrencesOfString(shiftarray[i].name, withString: "")
                 groupidarray.append(shiftarray[i].groupid)
             }
@@ -146,10 +146,10 @@ class CommonMethod: UIViewController {
         //休暇シフトを見つけるループ処理
         for i in 0 ..< holiday.count{
             
-            if(staffnamestring.characters.count == 0){
+            if staffnamestring.characters.count == 0 {
                 return groupidarray
                 
-            }else if(staffnamestring.containsString(holiday[i].name)){
+            }else if staffnamestring.containsString(holiday[i].name) {
                 staffnamestring = staffnamestring.stringByReplacingOccurrencesOfString(holiday[i].name, withString: "")
                 groupidarray.append(6)
             }
@@ -192,7 +192,7 @@ class CommonMethod: UIViewController {
         }
         
         //シフト時間に指定なしが含まれていた場合
-        if(shifttime.containsString("指定なし")){
+        if shifttime.containsString("指定なし") {
             start = 0.0
             end = 0.0
         }else{
