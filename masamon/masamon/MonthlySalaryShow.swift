@@ -875,6 +875,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         }
     }
     
+    //曜日ラベルを表示するためのメソッド
     func setupdayofweekLabel(){
         //曜日ラベルの配置
         let monthName:[String] = ["日","月","火","水","木","金","土"]
