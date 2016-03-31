@@ -1002,27 +1002,6 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         }
     }
     
-    //日付を表示するボタンのアニメーションを行うメソッド
-    func AnimationDayButton(button: UIButton, beforeposition: Int, afterpositon: Int, positionY: Int, buttonsize: Int){
-        button.frame = CGRectMake(
-            CGFloat(beforeposition),
-            CGFloat(positionY),
-            CGFloat(buttonsize),
-            CGFloat(buttonsize)
-        );
-        
-        UIView.animateWithDuration(0.3, animations: {
-            button.frame = CGRectMake(
-                CGFloat(afterpositon),
-                CGFloat(positionY),
-                CGFloat(buttonsize),
-                CGFloat(buttonsize)
-            );
-            
-        })
-
-    }
-    
     //日付ボタンをタップした際に呼ばれる関数
     func TapDayButton(sender: UIButton){
         let currentsplitday = ReturnYearMonthDayWeekday(currentnsdate) //日付を西暦,月,日,曜日に分けて取得
@@ -1096,6 +1075,25 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             self.CalenderLabel.frame = CGRectMake(afterposition, 230, 359, 33)
             self.CalenderLabel.alpha = 1.0
         }
+    }
+    
+    //日付を表示するボタンのアニメーションを行うメソッド
+    func AnimationDayButton(button: UIButton, beforeposition: Int, afterpositon: Int, positionY: Int, buttonsize: Int){
+        button.frame = CGRectMake(
+            CGFloat(beforeposition),
+            CGFloat(positionY),
+            CGFloat(buttonsize),
+            CGFloat(buttonsize)
+        );
+        
+        UIView.animateWithDuration(0.3, animations: {
+            button.frame = CGRectMake(
+                CGFloat(afterpositon),
+                CGFloat(positionY),
+                CGFloat(buttonsize),
+                CGFloat(buttonsize)
+            );
+        })
     }
     
     func nextday(){
