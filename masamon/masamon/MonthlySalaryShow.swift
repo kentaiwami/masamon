@@ -51,7 +51,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         
         self.setupdayofweekLabel()
         
-        self.SetupDayButton()
+        self.SetupDayButton(0)
         
         //シフト時間を選択して表示するテキストフィールドのデフォルト表示を指定
         starttime = time[0]
@@ -933,7 +933,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     var buttontilearray:[String] = []
     var buttonobjectarray: [UIButton] = []
     
-    func SetupDayButton(){
+    func SetupDayButton(judgeswipe: Int){
         
         self.RemoveButtonObjects()
         
@@ -988,8 +988,39 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             self.view.addSubview(button)
             self.view.bringSubviewToFront(button)
             
+            //土曜日を表示中に、日付を進めるスワイプが発生したら
+            if judgeswipe == 1 && currentsplitdate.weekday == 1 {
+                
+                self.AnimationDayButton(button, beforeposition: positionX+300, afterpositon: positionX, positionY: positionY, buttonsize: buttonSize)
+                
+                //日曜日を表示中に、日付を戻すスワイプが発生したら
+            }else if judgeswipe == -1 && currentsplitdate.weekday == 7 {
+                self.AnimationDayButton(button, beforeposition: positionX-300, afterpositon: positionX, positionY: positionY, buttonsize: buttonSize)
+            }
+
             buttonobjectarray.append(button)
         }
+    }
+    
+    //日付を表示するボタンのアニメーションを行うメソッド
+    func AnimationDayButton(button: UIButton, beforeposition: Int, afterpositon: Int, positionY: Int, buttonsize: Int){
+        button.frame = CGRectMake(
+            CGFloat(beforeposition),
+            CGFloat(positionY),
+            CGFloat(buttonsize),
+            CGFloat(buttonsize)
+        );
+        
+        UIView.animateWithDuration(0.3, animations: {
+            button.frame = CGRectMake(
+                CGFloat(afterpositon),
+                CGFloat(positionY),
+                CGFloat(buttonsize),
+                CGFloat(buttonsize)
+            );
+            
+        })
+
     }
     
     //日付ボタンをタップした際に呼ばれる関数
@@ -1039,18 +1070,19 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         if compareunit == .OrderedAscending {           //currentnsdateが今日より小さい(前の日付)場合
             
             self.AnimationDayLabel(20, afterposition: 8)
+            self.SetupDayButton(1)
             
         }else if compareunit == .OrderedDescending{     //currentnsdateが今日より大きい(後の日付)場合
             
             self.AnimationDayLabel(-4, afterposition: 8)
+            self.SetupDayButton(-1)
             
         }else{                                          //日付が同じ場合
             self.AnimationDayLabel(8, afterposition: 8)
+            self.SetupDayButton(0)
         }
         
         currentnsdate = today
-        
-        self.SetupDayButton()
     }
     
     //日付を表示しているLabelをアニメーション表示するメソッド
@@ -1089,7 +1121,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         
         CalenderLabel.text = "\(currentnsdatesplit.year)年\(currentnsdatesplit.month)月\(currentnsdatesplit.day)日 \(self.ReturnWeekday(currentnsdatesplit.weekday))曜日"
         
-        self.SetupDayButton()
+        self.SetupDayButton(control)
     }
     
     //1週間分の日付を配列へ格納するメソッド
