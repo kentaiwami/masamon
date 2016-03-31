@@ -1001,6 +1001,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             buttonobjectarray.append(button)
         }
     }
+    //TODO: アニメーションをした後に、タップをして今日に移動しようとしても日付ボタンが変わらない問題
     
     //日付を表示するボタンのアニメーションを行うメソッド
     func AnimationDayButton(button: UIButton, beforeposition: Int, afterpositon: Int, positionY: Int, buttonsize: Int){
