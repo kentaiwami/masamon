@@ -935,6 +935,10 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     
     func SetupDayButton(judgeswipe: Int){
         
+        //todayと一致するボタンタイトルがある場合は常に文字を白表示にする
+        let totayNSDate = NSDate()
+        let todaysplitday = ReturnYearMonthDayWeekday(totayNSDate) //日付を西暦,月,日,曜日に分けて取得
+        
         self.RemoveButtonObjects()
         
         //ボタンのタイトルを日付から計算して生成する
@@ -972,14 +976,10 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                 button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
             }
             
-            //todayと一致するボタンタイトルがある場合は常に文字を白表示にする
-            let totayNSDate = NSDate()
-            let todaysplitday = ReturnYearMonthDayWeekday(totayNSDate) //日付を西暦,月,日,曜日に分けて取得
-
+            //今日の日付と一致するボタンがある場合は文字色を白にする
             if todaysplitday.day == Int(buttontilearray[i]) {
                 button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
             }
-            
             
             //配置したボタンに押した際のアクションを設定する
             button.addTarget(self, action: #selector(MonthlySalaryShow.TapDayButton(_:)), forControlEvents: .TouchUpInside)
@@ -997,15 +997,26 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             }else if judgeswipe == -1 && currentsplitdate.weekday == 7 {
                 self.AnimationDayButton(button, beforeposition: positionX-300, afterpositon: positionX, positionY: positionY, buttonsize: buttonSize)
             }
-
+            
+            //タップをして今日に移動する際に、アニメーションを行う
+            if tapanimationbuttonflag {
+                if judgeswipe == 1 && tapanimationbuttonflag {
+                    self.AnimationDayButton(button, beforeposition: positionX+300, afterpositon: positionX, positionY: positionY, buttonsize: buttonSize)
+                }else if judgeswipe == -1 && tapanimationbuttonflag {
+                    self.AnimationDayButton(button, beforeposition: positionX-300, afterpositon: positionX, positionY: positionY, buttonsize: buttonSize)
+                }
+            }
+            
             buttonobjectarray.append(button)
         }
+        
+        tapanimationbuttonflag = false
     }
     
     //日付ボタンをタップした際に呼ばれる関数
     func TapDayButton(sender: UIButton){
         let currentsplitday = ReturnYearMonthDayWeekday(currentnsdate) //日付を西暦,月,日,曜日に分けて取得
-
+        
         //タップした日付ボタンと表示中の日付の配列位置を比較
         let tagindex = buttontilearray.indexOf(String(sender.tag))
         let currentdayindex = buttontilearray.indexOf(String(currentsplitday.day))
@@ -1038,6 +1049,8 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         self.view.addGestureRecognizer(myTap)
     }
     
+    var tapanimationbuttonflag = false      //タップをした際にbuttontilearray内に今日の日付が含まれているかを記録
+    
     func today(){
         let today = NSDate()
         let date = ReturnYearMonthDayWeekday(today)         //日付を西暦,月,日,曜日に分けて取得
@@ -1049,7 +1062,11 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         let compareunit = calendar.compareDate(currentnsdate, toDate: today, toUnitGranularity: .Day)
         
         currentnsdate = today
-
+        
+        if buttontilearray.contains(String(date.day)) == false {
+            tapanimationbuttonflag = true
+        }
+        
         if compareunit == .OrderedAscending {           //currentnsdateが今日より小さい(前の日付)場合
             
             self.AnimationDayLabel(20, afterposition: 8)
