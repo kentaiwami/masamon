@@ -1035,8 +1035,10 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         
         if tagindex! - currentdayindex! > 0 {
             self.AnimationDayLabel(20, afterposition: 8)
-        }else{
+        }else if tagindex! - currentdayindex! < 0 {
             self.AnimationDayLabel(-4, afterposition: 8)
+        }else{
+            self.AnimationDayLabel(8, afterposition: 8)
         }
     }
     
