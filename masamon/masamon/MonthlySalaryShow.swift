@@ -1113,6 +1113,15 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         })
     }
     
+    //TODO: 方針メモ
+    /*storyboardのTextViewをコピーする
+     コピーしたTextViewにスワイプしている方向をもとに前日か翌日の内容を反映させる
+     スワイプが中止されたら反映した内容は消す
+     スワイプが行われたらコピーしたTextViewをスワイプの移動量をもとにview自体を移動させる
+     それと同時に、storyboardのTextViewも移動させる
+     移動が完了(storyboardのTextViewとコピーしたTextViewの場所が入れ替わったら)したら、
+     storyboardのTextViewを真ん中に表示させ、コピーしたTextViewは非表示にする
+     */
     func nextday(){
         self.DayControl(1)
         
