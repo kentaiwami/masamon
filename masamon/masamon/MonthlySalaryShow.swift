@@ -37,7 +37,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     
     var CalenderLabel = UILabel()
     
-    let shiftarray = ["早番：","中1：","中2：","中3：","遅番：","その他："]
+    let shiftarray = [" 早番："," 中1："," 中2："," 中3："," 遅番："," その他："]
 
     var ShiftLabelArray: [UILabel] = []
     
@@ -87,7 +87,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         self.ShowAllData(CommonMethod().Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day)           //データ表示へ分けた日付を渡す
         
         //日付を表示するラベルの初期設定
-        CalenderLabel.frame = CGRectMake(8, 230, 359, 33)
+        CalenderLabel.frame = CGRectMake(8, 240, 359, 33)
         CalenderLabel.backgroundColor = UIColor.clearColor()
         CalenderLabel.textColor = UIColor.whiteColor()
         CalenderLabel.textAlignment = NSTextAlignment.Center
@@ -119,19 +119,22 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     }
     
     //シフトを表示するラベルを設置する関数
-    let shiftlabel_y = [124,195,238,283,329,400]
     let shiftlabel_h = [63,35,35,35,63,63]
     let shiftlabel_line = [3,1,1,1,3,3]
     func setupShiftLabel(){
+        let space = 7
         
+        var startheight = 275+space
+
         for i in 0..<shiftlabel_line.count {
             let label = UILabel()
-            label.frame = CGRectMake(8, CGFloat(shiftlabel_y[i]), 359, CGFloat(shiftlabel_h[i]))
+            label.frame = CGRectMake(8, CGFloat(startheight + i*space), 359, CGFloat(shiftlabel_h[i]))
             label.backgroundColor = UIColor.hex("4C4C4C", alpha: 1.0)
             label.numberOfLines = shiftlabel_line[i]
             
             ShiftLabelArray.append(label)
             self.view.addSubview(label)
+            startheight += shiftlabel_h[i]
         }
     }
     
@@ -749,7 +752,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                     myString = NSMutableAttributedString(string: shiftarray[i] + splitedstaffarray[i], attributes: myAttribute )
                     myString.addAttribute(NSForegroundColorAttributeName, value: UIColor.hex("BEBEBE", alpha: 1.0), range: myRange)
                     
-                    ShiftLabelArray[i].attributedText = myString                    
+                    ShiftLabelArray[i].attributedText = myString
                 }
             }
         }
@@ -858,7 +861,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         let monthName:[String] = ["日","月","火","水","木","金","土"]
         let calendarLabelIntervalX = 15;
         let calendarLabelX         = 50;
-        let calendarLabelY         = 150;
+        let calendarLabelY         = 170;
         let calendarLabelWidth     = 45;
         let calendarLabelHeight    = 25;
         
@@ -926,7 +929,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             
             //配置場所の定義
             let positionX   = 15 + 50 * (i % 7)
-            let positionY   = 175
+            let positionY   = 195
             let buttonSize = 40;
             
             //ボタンをつくる

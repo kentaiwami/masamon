@@ -67,7 +67,7 @@
                                 <rect key="frame" x="0.0" y="148" width="375" height="519"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Y3j-fT-WIs">
-                                        <rect key="frame" x="8" y="0.0" width="359" height="116"/>
+                                        <rect key="frame" x="8" y="16" width="359" height="109"/>
                                         <color key="backgroundColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
                                     </view>
                                 </subviews>
