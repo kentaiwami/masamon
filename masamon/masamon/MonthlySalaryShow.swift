@@ -97,7 +97,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         
         //日付を表示するラベルの初期設定
         CalenderLabel.frame = CGRectMake(8, 230, 359, 33)
-        CalenderLabel.backgroundColor = UIColor.hex("4C4C4C", alpha: 1.0)
+        CalenderLabel.backgroundColor = UIColor.clearColor()
         CalenderLabel.textColor = UIColor.whiteColor()
         CalenderLabel.textAlignment = NSTextAlignment.Center
         CalenderLabel.text = "\(date.year)年\(date.month)月\(date.day)日 \(self.ReturnWeekday(date.weekday))曜日"
