@@ -12,13 +12,6 @@ import GradientCircularProgress
 
 class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate{
     
-    @IBOutlet weak var EarlyShiftText: UILabel!
-    @IBOutlet weak var Center1ShiftText: UILabel!
-    @IBOutlet weak var Center2ShiftText: UILabel!
-    @IBOutlet weak var Center3ShiftText: UILabel!
-    @IBOutlet weak var LateShiftText: UILabel!
-    @IBOutlet weak var OtherShiftText: UILabel!
-    
     let shiftdb = ShiftDB()
     let shiftdetaildb = ShiftDetailDB()
     var shiftlist: NSMutableArray = []
@@ -44,8 +37,14 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     
     var CalenderLabel = UILabel()
     
+    let shiftarray = ["早番：","中1：","中2：","中3：","遅番：","その他："]
+
+    var ShiftLabelArray: [UILabel] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.setupShiftLabel()
         
         self.setupSwipeGestures()
         
@@ -83,14 +82,6 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         
         currentnsdate = NSDate()
         
-        //テキストビューの編集をできないようにする
-//        EarlyShiftText.editable = false
-//        Center1ShiftText.editable = false
-//        Center2ShiftText.editable = false
-//        Center3ShiftText.editable = false
-//        LateShiftText.editable = false
-//        OtherShiftText.editable = false
-        
         let today = NSDate()
         let date = ReturnYearMonthDayWeekday(today)         //日付を西暦,月,日,曜日に分けて取得
         self.ShowAllData(CommonMethod().Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day)           //データ表示へ分けた日付を渡す
@@ -124,6 +115,23 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             
             //pickerviewのデフォルト表示
             SaralyLabel.text = self.GetCommaSalalyString(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB)-1))
+        }
+    }
+    
+    //シフトを表示するラベルを設置する関数
+    let shiftlabel_y = [124,195,238,283,329,400]
+    let shiftlabel_h = [63,35,35,35,63,63]
+    let shiftlabel_line = [3,1,1,1,3,3]
+    func setupShiftLabel(){
+        
+        for i in 0..<shiftlabel_line.count {
+            let label = UILabel()
+            label.frame = CGRectMake(8, CGFloat(shiftlabel_y[i]), 359, CGFloat(shiftlabel_h[i]))
+            label.backgroundColor = UIColor.hex("4C4C4C", alpha: 1.0)
+            label.numberOfLines = shiftlabel_line[i]
+            
+            ShiftLabelArray.append(label)
+            self.view.addSubview(label)
         }
     }
     
@@ -691,12 +699,10 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         if DBmethod().TheDayStaffGet(y, month: m, date: d) == nil {
             let whiteAttribute = [ NSForegroundColorAttributeName: UIColor.hex("BEBEBE", alpha: 1.0),NSFontAttributeName: UIFont.systemFontOfSize(fontsize)]
             
-            EarlyShiftText.attributedText = NSMutableAttributedString(string: "早番：No Data", attributes: whiteAttribute)
-            Center1ShiftText.attributedText = NSMutableAttributedString(string: "中1：No Data", attributes: whiteAttribute)
-            Center2ShiftText.attributedText = NSMutableAttributedString(string: "中2：No Data", attributes: whiteAttribute)
-            Center3ShiftText.attributedText = NSMutableAttributedString(string: "中3：No Data", attributes: whiteAttribute)
-            LateShiftText.attributedText = NSMutableAttributedString(string: "遅番：No Data", attributes: whiteAttribute)
-            OtherShiftText.attributedText = NSMutableAttributedString(string: "その他：No Data", attributes: whiteAttribute)
+            for i in 0..<ShiftLabelArray.count {
+                ShiftLabelArray[i].attributedText = NSMutableAttributedString(string: shiftarray[i] + "No Data", attributes: whiteAttribute)
+            }
+            
         }else{
             let shiftdetaidb = DBmethod().TheDayStaffGet(y, month: m, date: d)
             var splitedstaffarray = self.SplitStaffShift(shiftdetaidb![0].staff)
@@ -708,7 +714,6 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                 }
             }
             
-            let shiftarray = ["早番：","中1：","中2：","中3：","遅番：","その他："]
             //テキストビューにスタッフ名を羅列するためのループ
             for i in 0 ..< splitedstaffarray.count{
                 var myString = NSMutableAttributedString()
@@ -735,44 +740,16 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                     myString.addAttributes(whiteAttribute, range: myRange2)
                     myString.addAttribute(NSForegroundColorAttributeName, value: UIColor.hex("ff33ff", alpha: 1.0), range: myRange)                //ユーザ名強調表示
                     
-                    switch(i){
-                    case 0:
-                        EarlyShiftText.attributedText = myString
-                    case 1:
-                        Center1ShiftText.attributedText = myString
-                    case 2:
-                        Center2ShiftText.attributedText = myString
-                    case 3:
-                        Center3ShiftText.attributedText = myString
-                    case 4:
-                        LateShiftText.attributedText = myString
-                    case 5:
-                        OtherShiftText.attributedText = myString
-                    default:
-                        break
-                    }
+                    ShiftLabelArray[i].attributedText = myString
+                    
                 }else{      //ユーザ名が含まれていない場合の表示
                     let myAttribute = [ NSFontAttributeName: UIFont.systemFontOfSize(fontsize) ]
                     let myRange = NSRange(location: 0, length: (shiftarray[i] + splitedstaffarray[i]).characters.count)
                     
                     myString = NSMutableAttributedString(string: shiftarray[i] + splitedstaffarray[i], attributes: myAttribute )
                     myString.addAttribute(NSForegroundColorAttributeName, value: UIColor.hex("BEBEBE", alpha: 1.0), range: myRange)
-                    switch(i){
-                    case 0:
-                        EarlyShiftText.attributedText = myString
-                    case 1:
-                        Center1ShiftText.attributedText = myString
-                    case 2:
-                        Center2ShiftText.attributedText = myString
-                    case 3:
-                        Center3ShiftText.attributedText = myString
-                    case 4:
-                        LateShiftText.attributedText = myString
-                    case 5:
-                        OtherShiftText.attributedText = myString
-                    default:
-                        break
-                    }
+                    
+                    ShiftLabelArray[i].attributedText = myString                    
                 }
             }
         }
@@ -1114,7 +1091,9 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     }
     
     //TODO: 方針メモ1
-    /*storyboardのTextViewをコピーする
+    /*storyboardのTextViewをコードで生成するようにして配列に格納する => MainArray
+     それをさらに別の配列に生成する => SubArray
+     
      コピーしたTextViewにスワイプしている方向をもとに前日か翌日の内容を反映させる
      スワイプが中止されたら反映した内容は消す
      スワイプが行われたらコピーしたTextViewをスワイプの移動量をもとにview自体を移動させる
