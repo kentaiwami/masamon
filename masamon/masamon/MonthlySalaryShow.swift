@@ -39,7 +39,8 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     
     let shiftarray = [" 早番："," 中1："," 中2："," 中3："," 遅番："," その他："]
 
-    var ShiftLabelArray: [UILabel] = []
+    var ShiftLabelArrayMain: [UILabel] = []
+    var ShiftLabelArraySub: [UILabel] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -121,19 +122,35 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     //シフトを表示するラベルを設置する関数
     let shiftlabel_h = [63,35,35,35,63,63]
     let shiftlabel_line = [3,1,1,1,3,3]
+    
     func setupShiftLabel(){
         let space = 7
         
         var startheight = 275+space
 
+        //メインで画面中央に表示するラベル
         for i in 0..<shiftlabel_line.count {
             let label = UILabel()
             label.frame = CGRectMake(8, CGFloat(startheight + i*space), 359, CGFloat(shiftlabel_h[i]))
             label.backgroundColor = UIColor.hex("4C4C4C", alpha: 1.0)
             label.numberOfLines = shiftlabel_line[i]
             
-            ShiftLabelArray.append(label)
+            ShiftLabelArrayMain.append(label)
             self.view.addSubview(label)
+            startheight += shiftlabel_h[i]
+        }
+        
+        startheight = 275+space
+        
+        //サブで画面からはずれた場所に配置するラベル
+        for i in 0..<shiftlabel_line.count {
+            let label = UILabel()
+            label.frame = CGRectMake(375, CGFloat(startheight + i*space), 359, CGFloat(shiftlabel_h[i]))
+            label.backgroundColor = UIColor.hex("4C4C4C", alpha: 1.0)
+            label.numberOfLines = shiftlabel_line[i]
+            
+            ShiftLabelArraySub.append(label)
+
             startheight += shiftlabel_h[i]
         }
     }
@@ -702,8 +719,8 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         if DBmethod().TheDayStaffGet(y, month: m, date: d) == nil {
             let whiteAttribute = [ NSForegroundColorAttributeName: UIColor.hex("BEBEBE", alpha: 1.0),NSFontAttributeName: UIFont.systemFontOfSize(fontsize)]
             
-            for i in 0..<ShiftLabelArray.count {
-                ShiftLabelArray[i].attributedText = NSMutableAttributedString(string: shiftarray[i] + "No Data", attributes: whiteAttribute)
+            for i in 0..<ShiftLabelArrayMain.count {
+                ShiftLabelArrayMain[i].attributedText = NSMutableAttributedString(string: shiftarray[i] + "No Data", attributes: whiteAttribute)
             }
             
         }else{
@@ -743,7 +760,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                     myString.addAttributes(whiteAttribute, range: myRange2)
                     myString.addAttribute(NSForegroundColorAttributeName, value: UIColor.hex("ff33ff", alpha: 1.0), range: myRange)                //ユーザ名強調表示
                     
-                    ShiftLabelArray[i].attributedText = myString
+                    ShiftLabelArrayMain[i].attributedText = myString
                     
                 }else{      //ユーザ名が含まれていない場合の表示
                     let myAttribute = [ NSFontAttributeName: UIFont.systemFontOfSize(fontsize) ]
@@ -752,7 +769,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                     myString = NSMutableAttributedString(string: shiftarray[i] + splitedstaffarray[i], attributes: myAttribute )
                     myString.addAttribute(NSForegroundColorAttributeName, value: UIColor.hex("BEBEBE", alpha: 1.0), range: myRange)
                     
-                    ShiftLabelArray[i].attributedText = myString
+                    ShiftLabelArrayMain[i].attributedText = myString
                 }
             }
         }
