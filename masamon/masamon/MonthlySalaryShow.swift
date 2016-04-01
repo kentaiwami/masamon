@@ -44,13 +44,13 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.setupShiftLabel()
+        self.setupShiftLabel()      //シフトを表示するラベルを設置する
         
-        self.setupSwipeGestures()
+        self.setupTapGesture()      //タップを検出するジェスチャーを追加
         
-        self.setupdayofweekLabel()
+        self.setupdayofweekLabel()  //日曜日〜土曜日までのラベルを設置する
         
-        self.SetupDayButton(0)
+        self.SetupDayButton(0)      //1週間分の日付を表示するボタンを設置する
         
         //シフト時間を選択して表示するテキストフィールドのデフォルト表示を指定
         starttime = time[0]
@@ -1013,15 +1013,15 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     }
     
     //ジェスチャーを検知するメソッド
-    func setupSwipeGestures() {
-        // 右方向へのスワイプ
-        let gestureToRight = UISwipeGestureRecognizer(target: self, action: #selector(MonthlySalaryShow.prevday))
-        gestureToRight.direction = UISwipeGestureRecognizerDirection.Right
+    func setupTapGesture() {
+//        // 右方向へのスワイプ
+//        let gestureToRight = UISwipeGestureRecognizer(target: self, action: #selector(MonthlySalaryShow.prevday))
+//        gestureToRight.direction = UISwipeGestureRecognizerDirection.Right
 //        self.view.addGestureRecognizer(gestureToRight)
         
-        // 左方向へのスワイプ
-        let gestureToLeft = UISwipeGestureRecognizer(target: self, action: #selector(MonthlySalaryShow.nextday))
-        gestureToLeft.direction = UISwipeGestureRecognizerDirection.Left
+//        // 左方向へのスワイプ
+//        let gestureToLeft = UISwipeGestureRecognizer(target: self, action: #selector(MonthlySalaryShow.nextday))
+//        gestureToLeft.direction = UISwipeGestureRecognizerDirection.Left
 //        self.view.addGestureRecognizer(gestureToLeft)
         
         //タップ
