@@ -12,12 +12,12 @@ import GradientCircularProgress
 
 class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate{
     
-    @IBOutlet weak var EarlyShiftText: UITextView!
-    @IBOutlet weak var Center1ShiftText: UITextView!
-    @IBOutlet weak var Center2ShiftText: UITextView!
-    @IBOutlet weak var Center3ShiftText: UITextView!
-    @IBOutlet weak var LateShiftText: UITextView!
-    @IBOutlet weak var OtherShiftText: UITextView!
+    @IBOutlet weak var EarlyShiftText: UILabel!
+    @IBOutlet weak var Center1ShiftText: UILabel!
+    @IBOutlet weak var Center2ShiftText: UILabel!
+    @IBOutlet weak var Center3ShiftText: UILabel!
+    @IBOutlet weak var LateShiftText: UILabel!
+    @IBOutlet weak var OtherShiftText: UILabel!
     
     let shiftdb = ShiftDB()
     let shiftdetaildb = ShiftDetailDB()
@@ -84,12 +84,12 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         currentnsdate = NSDate()
         
         //テキストビューの編集をできないようにする
-        EarlyShiftText.editable = false
-        Center1ShiftText.editable = false
-        Center2ShiftText.editable = false
-        Center3ShiftText.editable = false
-        LateShiftText.editable = false
-        OtherShiftText.editable = false
+//        EarlyShiftText.editable = false
+//        Center1ShiftText.editable = false
+//        Center2ShiftText.editable = false
+//        Center3ShiftText.editable = false
+//        LateShiftText.editable = false
+//        OtherShiftText.editable = false
         
         let today = NSDate()
         let date = ReturnYearMonthDayWeekday(today)         //日付を西暦,月,日,曜日に分けて取得
@@ -1122,6 +1122,44 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
      移動が完了(storyboardのTextViewとコピーしたTextViewの場所が入れ替わったら)したら、
      storyboardのTextViewを真ん中に表示させ、コピーしたTextViewは非表示にする
      */
+    
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        print("Began")
+    }
+    
+    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        print("Ended")
+    }
+    
+    override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
+        print("Cancelled")
+    }
+    
+    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        print("Moved")
+        // タッチイベントを取得.
+        let aTouch = touches.first
+        
+        // 移動した先の座標を取得.
+        let location = aTouch!.locationInView(self.view)
+        
+        // 移動する前の座標を取得.
+        let prevLocation = aTouch!.previousLocationInView(self.view)
+        
+        // CGRect生成.
+        var myFrame: CGRect = self.view.frame
+        
+        // ドラッグで移動したx, y距離をとる.
+        let deltaX: CGFloat = location.x - prevLocation.x
+        let deltaY: CGFloat = location.y - prevLocation.y
+        
+        // 移動した分の距離をmyFrameの座標にプラスする.
+        myFrame.origin.x += deltaX
+        myFrame.origin.y += deltaY
+        
+        print(location)
+    }
+    
     func nextday(){
         self.DayControl(1)
         
