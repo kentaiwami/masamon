@@ -1037,12 +1037,12 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         // 右方向へのスワイプ
         let gestureToRight = UISwipeGestureRecognizer(target: self, action: #selector(MonthlySalaryShow.prevday))
         gestureToRight.direction = UISwipeGestureRecognizerDirection.Right
-        self.view.addGestureRecognizer(gestureToRight)
+//        self.view.addGestureRecognizer(gestureToRight)
         
         // 左方向へのスワイプ
         let gestureToLeft = UISwipeGestureRecognizer(target: self, action: #selector(MonthlySalaryShow.nextday))
         gestureToLeft.direction = UISwipeGestureRecognizerDirection.Left
-        self.view.addGestureRecognizer(gestureToLeft)
+//        self.view.addGestureRecognizer(gestureToLeft)
         
         //タップ
         let myTap = UITapGestureRecognizer(target: self, action: #selector(MonthlySalaryShow.today))
@@ -1113,7 +1113,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         })
     }
     
-    //TODO: 方針メモ
+    //TODO: 方針メモ1
     /*storyboardのTextViewをコピーする
      コピーしたTextViewにスワイプしている方向をもとに前日か翌日の内容を反映させる
      スワイプが中止されたら反映した内容は消す
@@ -1121,6 +1121,12 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
      それと同時に、storyboardのTextViewも移動させる
      移動が完了(storyboardのTextViewとコピーしたTextViewの場所が入れ替わったら)したら、
      storyboardのTextViewを真ん中に表示させ、コピーしたTextViewは非表示にする
+     */
+    
+    //TODO: 方針メモ2
+    /*
+     スワイプジェスチャーとtouchesメソッドの共存が困難なため、
+     スワイプの移動量をもとにnextやprevのメソッドを実行するように変更する
      */
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
