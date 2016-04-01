@@ -101,7 +101,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         notificationCenter.addObserver(self,selector: #selector(MonthlySalaryShow.MonthlySalaryShowViewActived),name:UIApplicationDidBecomeActiveNotification,object: nil)
         
         //PickerViewの追加
-        onecourspicker.frame = CGRectMake(-20,10,self.view.bounds.width/2+20, 150.0)
+        onecourspicker.frame = CGRectMake(-20,35,self.view.bounds.width/2+20, 150.0)
         onecourspicker.delegate = self
         onecourspicker.dataSource = self
         onecourspicker.tag = 1
