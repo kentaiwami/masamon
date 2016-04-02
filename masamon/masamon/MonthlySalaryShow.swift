@@ -999,54 +999,12 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     
     //ジェスチャーを検知するメソッド
     func setupTapGesture() {
-//        // 右方向へのスワイプ
-//        let gestureToRight = UISwipeGestureRecognizer(target: self, action: #selector(MonthlySalaryShow.prevday))
-//        gestureToRight.direction = UISwipeGestureRecognizerDirection.Right
-//        self.view.addGestureRecognizer(gestureToRight)
-//        
-//        // 左方向へのスワイプ
-//        let gestureToLeft = UISwipeGestureRecognizer(target: self, action: #selector(MonthlySalaryShow.nextday))
-//        gestureToLeft.direction = UISwipeGestureRecognizerDirection.Left
-//        self.view.addGestureRecognizer(gestureToLeft)
-        
         //タップ
         let myTap = UITapGestureRecognizer(target: self, action: #selector(MonthlySalaryShow.today))
         self.view.addGestureRecognizer(myTap)
     }
     
     var tapanimationbuttonflag = false      //タップをした際にbuttontilearray内に今日の日付が含まれているかを記録
-    
-    func today(){
-        let today = NSDate()
-        let date = ReturnYearMonthDayWeekday(today)         //日付を西暦,月,日,曜日に分けて取得
-        self.ShowAllData(CommonMethod().Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day, arraynumber: 1)           //データ表示へ分けた日付を渡す
-        CalenderLabel.text = "\(date.year)年\(date.month)月\(date.day)日 \(self.ReturnWeekday(date.weekday))曜日"
-        
-        //現在表示している日付と今日の日付を比較して、アニメーションを切り替えて表示する
-        let calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)!
-        let compareunit = calendar.compareDate(currentnsdate, toDate: today, toUnitGranularity: .Day)
-        
-        currentnsdate = today
-        
-        if buttontilearray.contains(String(date.day)) == false {
-            tapanimationbuttonflag = true
-        }
-        
-        if compareunit == .OrderedAscending {           //currentnsdateが今日より小さい(前の日付)場合
-            
-            self.AnimationDayLabel(20, afterposition: 8)
-            self.SetupDayButton(1)
-            
-        }else if compareunit == .OrderedDescending{     //currentnsdateが今日より大きい(後の日付)場合
-            
-            self.AnimationDayLabel(-4, afterposition: 8)
-            self.SetupDayButton(-1)
-            
-        }else{                                          //日付が同じ場合
-            self.AnimationDayLabel(8, afterposition: 8)
-            self.SetupDayButton(0)
-        }
-    }
     
     //日付を表示しているLabelをアニメーション表示するメソッド
     func AnimationDayLabel(beforeposition: CGFloat, afterposition: CGFloat) {
@@ -1218,6 +1176,41 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         //日付表示ラベルを画面左側からアニメーション表示させる
         self.AnimationDayLabel(-4, afterposition: 8)
     }
+    
+    func today(){
+        let today = NSDate()
+        let date = ReturnYearMonthDayWeekday(today)         //日付を西暦,月,日,曜日に分けて取得
+        self.ShowAllData(CommonMethod().Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day, arraynumber: 1)           //データ表示へ分けた日付を渡す
+        CalenderLabel.text = "\(date.year)年\(date.month)月\(date.day)日 \(self.ReturnWeekday(date.weekday))曜日"
+        
+        //現在表示している日付と今日の日付を比較して、アニメーションを切り替えて表示する
+        let calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)!
+        let compareunit = calendar.compareDate(currentnsdate, toDate: today, toUnitGranularity: .Day)
+        
+        currentnsdate = today
+        
+        if buttontilearray.contains(String(date.day)) == false {
+            tapanimationbuttonflag = true
+        }
+        
+        if compareunit == .OrderedAscending {           //currentnsdateが今日より小さい(前の日付)場合
+            
+            self.AnimationDayLabel(20, afterposition: 8)
+            self.SetupDayButton(1)
+            self.AnimationShiftLabelCompletion(shiftlabel_x[0], mainposition: shiftlabel_x[0], nextpositon: shiftlabel_x[1])
+            
+        }else if compareunit == .OrderedDescending{     //currentnsdateが今日より大きい(後の日付)場合
+            
+            self.AnimationDayLabel(-4, afterposition: 8)
+            self.SetupDayButton(-1)
+            self.AnimationShiftLabelCompletion(shiftlabel_x[1], mainposition: shiftlabel_x[2], nextpositon: shiftlabel_x[2])
+            
+        }else{                                          //日付が同じ場合
+            self.AnimationDayLabel(8, afterposition: 8)
+            self.SetupDayButton(0)
+        }
+    }
+
     
     //何日進めるかの値を受け取って日付を操作して表示内容を変更する
     func DayControl(control: Int){
