@@ -1083,10 +1083,10 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     //日付を表示しているLabelをアニメーション表示するメソッド
     func AnimationDayLabel(beforeposition: CGFloat, afterposition: CGFloat) {
         CalenderLabel.alpha = 0.0
-        CalenderLabel.frame = CGRectMake(beforeposition, 230, 359, 33)
+        CalenderLabel.frame = CGRectMake(beforeposition, 240, 359, 33)
         
         UIView.animateWithDuration(0.5) {
-            self.CalenderLabel.frame = CGRectMake(afterposition, 230, 359, 33)
+            self.CalenderLabel.frame = CGRectMake(afterposition, 240, 359, 33)
             self.CalenderLabel.alpha = 1.0
         }
     }
