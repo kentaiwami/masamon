@@ -85,9 +85,8 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         let today = NSDate()
         let date = ReturnYearMonthDayWeekday(today)         //日付を西暦,月,日,曜日に分けて取得
         
-        let daycontrol = [-1,0,1]
         //前日、当日、翌日のラベルにデータをセットする
-
+        let daycontrol = [-1,0,1]
         for i in 0..<ShiftLabelArray.count {
             self.ShowAllData(CommonMethod().Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day+daycontrol[i], arraynumber: i)
         }
@@ -1079,7 +1078,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         })
     }
     
-    //シフトlabelをアニメーションするメソッド
+    //シフトラベルをアニメーションするメソッド
     func AnimationShiftLabel(prevposition: Int, mainposition: Int, nextpositon: Int){
         let positionarray = [prevposition,mainposition,nextpositon]
         
@@ -1095,6 +1094,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         }
     }
     
+    //シフトラベルをアニメーションした後に、初期位置に戻す関数
     func AnimationShiftLabelCompletion(prevposition: Int, mainposition: Int, nextpositon: Int){
         let positionarray = [prevposition,mainposition,nextpositon]
         var y: CGFloat = 0
@@ -1121,6 +1121,13 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                         h = self.ShiftLabelArray[i][j].frame.size.height
                         self.ShiftLabelArray[i][j].frame = CGRectMake(CGFloat(self.shiftlabel_x[i]), y, w, h)
                     }
+                }
+                
+                //配置を元に戻すと同時に表示内容も更新する
+                let currentnsdatesplit = self.ReturnYearMonthDayWeekday(self.currentnsdate)
+                let daycontrol = [-1,0,1]
+                for i in 0..<self.ShiftLabelArray.count {
+                    self.ShowAllData(CommonMethod().Changecalendar(currentnsdatesplit.year, calender: "A.D"), m: currentnsdatesplit.month, d: currentnsdatesplit.day+daycontrol[i], arraynumber: i)
                 }
         })
     }
@@ -1169,11 +1176,11 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             self.AnimationShiftLabel(shiftlabel_x[0], mainposition: shiftlabel_x[1], nextpositon: shiftlabel_x[2])
             
         }else if self.view.frame.width/2 < prevshiftlabel {
-//            self.AnimationShiftLabel(shiftlabel_x[1], mainposition: shiftlabel_x[2], nextpositon: shiftlabel_x[2])
+            self.prevday()
             self.AnimationShiftLabelCompletion(shiftlabel_x[1], mainposition: shiftlabel_x[2], nextpositon: shiftlabel_x[2])
             
         }else if self.view.frame.width/2 > nextshiftlabel {
-//            self.AnimationShiftLabel(shiftlabel_x[0], mainposition: shiftlabel_x[0], nextpositon: shiftlabel_x[1])
+            self.nextday()
             self.AnimationShiftLabelCompletion(shiftlabel_x[0], mainposition: shiftlabel_x[0], nextpositon: shiftlabel_x[1])
         }
     }
