@@ -39,8 +39,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     
     let shiftarray = [" 早番："," 中1："," 中2："," 中3："," 遅番："," その他："]
 
-    var ShiftLabelArrayMain: [UILabel] = []
-    var ShiftLabelArraySub: [UILabel] = []
+    var ShiftLabelArray: [[UILabel]] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -85,7 +84,13 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         
         let today = NSDate()
         let date = ReturnYearMonthDayWeekday(today)         //日付を西暦,月,日,曜日に分けて取得
-        self.ShowAllData(CommonMethod().Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day)           //データ表示へ分けた日付を渡す
+        
+        let daycontrol = [-1,0,1]
+        //前日、当日、翌日のラベルにデータをセットする
+
+        for i in 0..<ShiftLabelArray.count {
+            self.ShowAllData(CommonMethod().Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day+daycontrol[i], arraynumber: i)
+        }
         
         //日付を表示するラベルの初期設定
         CalenderLabel.frame = CGRectMake(8, 240, 359, 33)
@@ -119,42 +124,6 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         }
     }
     
-    //シフトを表示するラベルを設置する関数
-    let shiftlabel_h = [63,35,35,35,63,63]
-    let shiftlabel_line = [3,1,1,1,3,3]
-    
-    func setupShiftLabel(){
-        let space = 7
-        
-        var startheight = 275+space
-
-        //メインで画面中央に表示するラベル
-        for i in 0..<shiftlabel_line.count {
-            let label = UILabel()
-            label.frame = CGRectMake(8, CGFloat(startheight + i*space), 359, CGFloat(shiftlabel_h[i]))
-            label.backgroundColor = UIColor.hex("4C4C4C", alpha: 1.0)
-            label.numberOfLines = shiftlabel_line[i]
-            
-            ShiftLabelArrayMain.append(label)
-            self.view.addSubview(label)
-            startheight += shiftlabel_h[i]
-        }
-        
-        startheight = 275+space
-        
-        //サブで画面からはずれた場所に配置するラベル
-        for i in 0..<shiftlabel_line.count {
-            let label = UILabel()
-            label.frame = CGRectMake(375, CGFloat(startheight + i*space), 359, CGFloat(shiftlabel_h[i]))
-            label.backgroundColor = UIColor.hex("4C4C4C", alpha: 1.0)
-            label.numberOfLines = shiftlabel_line[i]
-            
-            ShiftLabelArraySub.append(label)
-
-            startheight += shiftlabel_h[i]
-        }
-    }
-    
     //pickerview,label,シフトの表示を更新する
     override func viewDidAppear(animated: Bool) {
         
@@ -174,7 +143,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         
         let today = self.currentnsdate
         let date = ReturnYearMonthDayWeekday(today)         //日付を西暦,月,日,曜日に分けて取得
-        self.ShowAllData(CommonMethod().Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day)           //データ表示へ分けた日付を渡す
+        self.ShowAllData(CommonMethod().Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day, arraynumber: 1)           //データ表示へ分けた日付を渡す
         CalenderLabel.text = "\(date.year)年\(date.month)月\(date.day)日 \(self.ReturnWeekday(date.weekday))曜日"
         
         appDelegate.screennumber = 0
@@ -220,7 +189,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                         
                         let today = self.currentnsdate
                         let date = self.ReturnYearMonthDayWeekday(today)
-                        self.ShowAllData(CommonMethod().Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day)
+                        self.ShowAllData(CommonMethod().Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day, arraynumber: 1)
                         self.CalenderLabel.text = "\(date.year)年\(date.month)月\(date.day)日 \(self.ReturnWeekday(date.weekday))曜日"
                         
                         if self.appDelegate.errorshiftnamexlsx.count != 0 {  //新規シフト名がある場合
@@ -282,7 +251,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                         
                         let today = self.currentnsdate
                         let date = self.ReturnYearMonthDayWeekday(today)
-                        self.ShowAllData(CommonMethod().Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day)
+                        self.ShowAllData(CommonMethod().Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day, arraynumber: 1)
                         self.CalenderLabel.text = "\(date.year)年\(date.month)月\(date.day)日 \(self.ReturnWeekday(date.weekday))曜日"
                         
                     })
@@ -712,15 +681,15 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
      d: 日
      */
     //受け取った日付のデータ表示を行う
-    func ShowAllData(y: Int, m: Int, d: Int){
+    func ShowAllData(y: Int, m: Int, d: Int, arraynumber: Int){
         
         let fontsize:CGFloat = 14
         
         if DBmethod().TheDayStaffGet(y, month: m, date: d) == nil {
             let whiteAttribute = [ NSForegroundColorAttributeName: UIColor.hex("BEBEBE", alpha: 1.0),NSFontAttributeName: UIFont.systemFontOfSize(fontsize)]
             
-            for i in 0..<ShiftLabelArrayMain.count {
-                ShiftLabelArrayMain[i].attributedText = NSMutableAttributedString(string: shiftarray[i] + "No Data", attributes: whiteAttribute)
+            for i in 0..<ShiftLabelArray[arraynumber].count {
+                ShiftLabelArray[arraynumber][i].attributedText = NSMutableAttributedString(string: shiftarray[i] + "No Data", attributes: whiteAttribute)
             }
             
         }else{
@@ -760,7 +729,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                     myString.addAttributes(whiteAttribute, range: myRange2)
                     myString.addAttribute(NSForegroundColorAttributeName, value: UIColor.hex("ff33ff", alpha: 1.0), range: myRange)                //ユーザ名強調表示
                     
-                    ShiftLabelArrayMain[i].attributedText = myString
+                    ShiftLabelArray[arraynumber][i].attributedText = myString
                     
                 }else{      //ユーザ名が含まれていない場合の表示
                     let myAttribute = [ NSFontAttributeName: UIFont.systemFontOfSize(fontsize) ]
@@ -769,7 +738,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                     myString = NSMutableAttributedString(string: shiftarray[i] + splitedstaffarray[i], attributes: myAttribute )
                     myString.addAttribute(NSForegroundColorAttributeName, value: UIColor.hex("BEBEBE", alpha: 1.0), range: myRange)
                     
-                    ShiftLabelArrayMain[i].attributedText = myString
+                    ShiftLabelArray[arraynumber][i].attributedText = myString
                 }
             }
         }
@@ -1035,7 +1004,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
 //        let gestureToRight = UISwipeGestureRecognizer(target: self, action: #selector(MonthlySalaryShow.prevday))
 //        gestureToRight.direction = UISwipeGestureRecognizerDirection.Right
 //        self.view.addGestureRecognizer(gestureToRight)
-        
+//        
 //        // 左方向へのスワイプ
 //        let gestureToLeft = UISwipeGestureRecognizer(target: self, action: #selector(MonthlySalaryShow.nextday))
 //        gestureToLeft.direction = UISwipeGestureRecognizerDirection.Left
@@ -1051,7 +1020,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     func today(){
         let today = NSDate()
         let date = ReturnYearMonthDayWeekday(today)         //日付を西暦,月,日,曜日に分けて取得
-        self.ShowAllData(CommonMethod().Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day)           //データ表示へ分けた日付を渡す
+        self.ShowAllData(CommonMethod().Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day, arraynumber: 1)           //データ表示へ分けた日付を渡す
         CalenderLabel.text = "\(date.year)年\(date.month)月\(date.day)日 \(self.ReturnWeekday(date.weekday))曜日"
         
         //現在表示している日付と今日の日付を比較して、アニメーションを切り替えて表示する
@@ -1110,59 +1079,90 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         })
     }
     
-    //TODO: 方針メモ1
-    /*storyboardのTextViewをコードで生成するようにして配列に格納する => MainArray
-     それをさらに別の配列に生成する => SubArray
-     
-     コピーしたTextViewにスワイプしている方向をもとに前日か翌日の内容を反映させる
-     スワイプが中止されたら反映した内容は消す
-     スワイプが行われたらコピーしたTextViewをスワイプの移動量をもとにview自体を移動させる
-     それと同時に、storyboardのTextViewも移動させる
-     移動が完了(storyboardのTextViewとコピーしたTextViewの場所が入れ替わったら)したら、
-     storyboardのTextViewを真ん中に表示させ、コピーしたTextViewは非表示にする
-     */
+    //シフトlabelをアニメーションするメソッド
+    func AnimationShiftLabel(prevposition: Int, mainposition: Int, nextpositon: Int){
+        let positionarray = [prevposition,mainposition,nextpositon]
+        
+        UIView.animateWithDuration(0.3) {
+            for i in 0..<self.ShiftLabelArray.count {
+                for j in 0..<self.ShiftLabelArray[i].count {
+                    let prev_y = self.ShiftLabelArray[i][j].frame.origin.y
+                    let prev_w = self.ShiftLabelArray[i][j].frame.size.width
+                    let prev_h = self.ShiftLabelArray[i][j].frame.size.height
+                    self.ShiftLabelArray[i][j].frame = CGRectMake(CGFloat(positionarray[i]), prev_y, prev_w, prev_h)
+                }
+            }
+        }
+    }
     
-    //TODO: 方針メモ2
-    /*
-     スワイプジェスチャーとtouchesメソッドの共存が困難なため、
-     スワイプの移動量をもとにnextやprevのメソッドを実行するように変更する
-     */
+    //シフトを表示するラベルを設置する関数
+    let shiftlabel_h = [63,35,35,35,63,63]
+    let shiftlabel_line = [3,1,1,1,3,3]
+    let shiftlabel_x = [-360,8,375]
+    
+    func setupShiftLabel(){
+        let space = 7
+        
+        //2次元配列の初期化
+        for i in 0...2 {
+            var startheight = 275+space
+            ShiftLabelArray.append([])
+            
+            for j in 0..<shiftlabel_line.count {
+                let label = UILabel()
+                label.frame = CGRectMake(CGFloat(shiftlabel_x[i]), CGFloat(startheight + j*space), 359, CGFloat(shiftlabel_h[j]))
+                label.backgroundColor = UIColor.hex("4C4C4C", alpha: 1.0)
+                label.numberOfLines = shiftlabel_line[j]
+                
+                ShiftLabelArray[i].append(label)
+                self.view.addSubview(label)
+
+                startheight += shiftlabel_h[j]
+            }
+        }
+    }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        print("Began")
+//        print("Began")
     }
     
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        print("Ended")
+        print("end")
+        
+        //if:前日のlabelが画面の半分より越えていないor翌日のラベルが画面の半分より小さくなければ自動でもとに戻す
+        //else if: 指定領域を超えたラベルを中央に配置するようにアニメーションを実行
+        let prevshiftlabel = ShiftLabelArray[0][0].frame.origin.x + ShiftLabelArray[0][0].frame.size.width
+        let nextshiftlabel = ShiftLabelArray[2][0].frame.origin.x
+        
+        if self.view.frame.width/2 > prevshiftlabel && self.view.frame.width/2 < nextshiftlabel{
+            self.AnimationShiftLabel(shiftlabel_x[0], mainposition: shiftlabel_x[1], nextpositon: shiftlabel_x[2])
+            
+        }else if self.view.frame.width/2 < prevshiftlabel {
+            self.AnimationShiftLabel(shiftlabel_x[1], mainposition: shiftlabel_x[2], nextpositon: shiftlabel_x[2])
+            
+        }else if self.view.frame.width/2 > nextshiftlabel {
+            self.AnimationShiftLabel(shiftlabel_x[0], mainposition: shiftlabel_x[0], nextpositon: shiftlabel_x[1])
+        }
     }
     
     override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
         print("Cancelled")
+        
     }
     
     override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        print("Moved")
-        // タッチイベントを取得.
+//        print("Moved")
         let aTouch = touches.first
-        
-        // 移動した先の座標を取得.
         let location = aTouch!.locationInView(self.view)
-        
-        // 移動する前の座標を取得.
         let prevLocation = aTouch!.previousLocationInView(self.view)
-        
-        // CGRect生成.
-        var myFrame: CGRect = self.view.frame
-        
-        // ドラッグで移動したx, y距離をとる.
         let deltaX: CGFloat = location.x - prevLocation.x
-        let deltaY: CGFloat = location.y - prevLocation.y
         
-        // 移動した分の距離をmyFrameの座標にプラスする.
-        myFrame.origin.x += deltaX
-        myFrame.origin.y += deltaY
-        
-        print(location)
+        //画面右へスワイプしている時(日付を前日にする時)
+        for i in 0..<ShiftLabelArray.count {
+            for j in 0..<ShiftLabelArray[i].count {
+                ShiftLabelArray[i][j].frame = CGRectMake(ShiftLabelArray[i][j].frame.origin.x + deltaX, ShiftLabelArray[i][j].frame.origin.y, ShiftLabelArray[i][j].frame.size.width, ShiftLabelArray[i][j].frame.size.height)
+            }
+        }
     }
     
     func nextday(){
@@ -1186,7 +1186,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         currentnsdate = newnsdate
         
         let currentnsdatesplit = self.ReturnYearMonthDayWeekday(currentnsdate)
-        self.ShowAllData(CommonMethod().Changecalendar(currentnsdatesplit.year, calender: "A.D"), m: currentnsdatesplit.month, d: currentnsdatesplit.day)
+        self.ShowAllData(CommonMethod().Changecalendar(currentnsdatesplit.year, calender: "A.D"), m: currentnsdatesplit.month, d: currentnsdatesplit.day, arraynumber: 1)
         
         CalenderLabel.text = "\(currentnsdatesplit.year)年\(currentnsdatesplit.month)月\(currentnsdatesplit.day)日 \(self.ReturnWeekday(currentnsdatesplit.weekday))曜日"
         
