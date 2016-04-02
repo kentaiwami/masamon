@@ -1124,22 +1124,20 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
         print("end")
-        
-        //if:前日のlabelが画面の半分より越えていないor翌日のラベルが画面の半分より小さくなければ自動でもとに戻す
-        //else if: 指定領域を超えたラベルを中央に配置するようにアニメーションを実行
+
+        //スワイプの移動量が一定以上であればその方向にアニメーションをする
+        //シフトラベルが画面の半分を越えていなければ位置を動かさずに、強制的に戻す
         let prevshiftlabel = ShiftLabelArray[0][0].frame.origin.x + ShiftLabelArray[0][0].frame.size.width
         let nextshiftlabel = ShiftLabelArray[2][0].frame.origin.x
         
-        if self.view.frame.width/2 > prevshiftlabel && self.view.frame.width/2 < nextshiftlabel{
-            self.AnimationShiftLabel(shiftlabel_x[0], mainposition: shiftlabel_x[1], nextpositon: shiftlabel_x[2])
-            
-        }else if self.view.frame.width/2 < prevshiftlabel {
+        if self.view.frame.width/2 < prevshiftlabel || swipedelta > 10 {
             self.prevday()
             self.AnimationShiftLabelCompletion(shiftlabel_x[1], mainposition: shiftlabel_x[2], nextpositon: shiftlabel_x[2])
-            
-        }else if self.view.frame.width/2 > nextshiftlabel {
+        }else if self.view.frame.width/2 > nextshiftlabel || swipedelta < -10 {
             self.nextday()
             self.AnimationShiftLabelCompletion(shiftlabel_x[0], mainposition: shiftlabel_x[0], nextpositon: shiftlabel_x[1])
+        }else if self.view.frame.width/2 > prevshiftlabel && self.view.frame.width/2 < nextshiftlabel {
+            self.AnimationShiftLabel(shiftlabel_x[0], mainposition: shiftlabel_x[1], nextpositon: shiftlabel_x[2])
         }
     }
     
@@ -1148,6 +1146,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         
     }
     
+    var swipedelta: CGFloat = 0
     override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
 //        print("Moved")
         let aTouch = touches.first
@@ -1155,6 +1154,8 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         let prevLocation = aTouch!.previousLocationInView(self.view)
         let deltaX: CGFloat = location.x - prevLocation.x
         
+        print(deltaX)
+        swipedelta = deltaX
         //画面右へスワイプしている時(日付を前日にする時)
         for i in 0..<ShiftLabelArray.count {
             for j in 0..<ShiftLabelArray[i].count {
