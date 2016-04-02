@@ -1095,6 +1095,37 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         }
     }
     
+    func AnimationShiftLabelCompletion(prevposition: Int, mainposition: Int, nextpositon: Int){
+        let positionarray = [prevposition,mainposition,nextpositon]
+        var y: CGFloat = 0
+        var w: CGFloat = 0
+        var h: CGFloat = 0
+        
+        UIView.animateWithDuration(0.3, animations: {
+            for i in 0..<self.ShiftLabelArray.count {
+                for j in 0..<self.ShiftLabelArray[i].count {
+                    y = self.ShiftLabelArray[i][j].frame.origin.y
+                    w = self.ShiftLabelArray[i][j].frame.size.width
+                    h = self.ShiftLabelArray[i][j].frame.size.height
+                    self.ShiftLabelArray[i][j].frame = CGRectMake(CGFloat(positionarray[i]), y, w, h)
+                }
+            }
+
+            }, completion: {
+                (value: Bool) in
+                //配置場所をユーザが気づかないように瞬時に戻す
+                for i in 0..<self.ShiftLabelArray.count {
+                    for j in 0..<self.ShiftLabelArray[i].count {
+                        y = self.ShiftLabelArray[i][j].frame.origin.y
+                        w = self.ShiftLabelArray[i][j].frame.size.width
+                        h = self.ShiftLabelArray[i][j].frame.size.height
+                        self.ShiftLabelArray[i][j].frame = CGRectMake(CGFloat(self.shiftlabel_x[i]), y, w, h)
+                    }
+                }
+        })
+    }
+    
+    
     //シフトを表示するラベルを設置する関数
     let shiftlabel_h = [63,35,35,35,63,63]
     let shiftlabel_line = [3,1,1,1,3,3]
@@ -1138,10 +1169,12 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             self.AnimationShiftLabel(shiftlabel_x[0], mainposition: shiftlabel_x[1], nextpositon: shiftlabel_x[2])
             
         }else if self.view.frame.width/2 < prevshiftlabel {
-            self.AnimationShiftLabel(shiftlabel_x[1], mainposition: shiftlabel_x[2], nextpositon: shiftlabel_x[2])
+//            self.AnimationShiftLabel(shiftlabel_x[1], mainposition: shiftlabel_x[2], nextpositon: shiftlabel_x[2])
+            self.AnimationShiftLabelCompletion(shiftlabel_x[1], mainposition: shiftlabel_x[2], nextpositon: shiftlabel_x[2])
             
         }else if self.view.frame.width/2 > nextshiftlabel {
-            self.AnimationShiftLabel(shiftlabel_x[0], mainposition: shiftlabel_x[0], nextpositon: shiftlabel_x[1])
+//            self.AnimationShiftLabel(shiftlabel_x[0], mainposition: shiftlabel_x[0], nextpositon: shiftlabel_x[1])
+            self.AnimationShiftLabelCompletion(shiftlabel_x[0], mainposition: shiftlabel_x[0], nextpositon: shiftlabel_x[1])
         }
     }
     
