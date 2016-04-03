@@ -37,7 +37,7 @@ class PDFmethod: UIViewController {
             
             let judgeheisei = line.substringToIndex(line.startIndex.successor().successor())
             
-            if(judgeheisei == "平成"){
+            if judgeheisei == "平成" {
                 pdftextarray.append(line)
                 stop = true
             }
@@ -51,10 +51,10 @@ class PDFmethod: UIViewController {
         pdftext.enumerateLines{
             line, stop in
             
-            if(nowIndex < lineIndex){      //平成を見つけた行まで進める
+            if nowIndex < lineIndex {      //平成を見つけた行まで進める
                 nowIndex += 1
             }else{
-                if((line.rangeOfString("店長")) != nil){
+                if (line.rangeOfString("店長")) != nil {
                     pdftextarray.append(line)
                     lineIndex = nowIndex
                     stop = true
@@ -71,12 +71,12 @@ class PDFmethod: UIViewController {
         pdftext.enumerateLines{
             line, stop in
             
-            if(nowIndex < lineIndex){      //店長を見つけた行まで進める
+            if nowIndex < lineIndex {      //店長を見つけた行まで進める
                 nowIndex += 1
             }else{
                 let judgehtopcharacter = line.substringToIndex(line.startIndex.successor())
                 
-                if(Int(judgehtopcharacter) != nil){         //先頭文字が数値の場合のみ
+                if Int(judgehtopcharacter) != nil {         //先頭文字が数値の場合のみ
                     pdftextarray.append(line)
                     staffcount += 1
                 }
@@ -128,7 +128,7 @@ class PDFmethod: UIViewController {
             staffname = self.GetStaffName(staffarray[i], i: i)
             //            print(staffname)
             //スキップされたスタッフは取り込みを行わない
-            if(appDelegate.skipstaff.contains(staffname)){
+            if appDelegate.skipstaff.contains(staffname) {
                 break
             }
             
@@ -137,14 +137,14 @@ class PDFmethod: UIViewController {
             　エラーでなければシフトの出現場所を配列に格納していく
             */
             let removem = staffname.stringByReplacingOccurrencesOfString("M", withString: "")
-            if(removem.characters.count <= 1 || removem.characters.count >= 4){
+            if removem.characters.count <= 1 || removem.characters.count >= 4 {
                 appDelegate.errorstaffnamepdf.append(staffarraytmp)
             }else{
                 //スタッフ名を正しく認識しているがエラーとして記録されている場合は削除する
                 for i in 0 ..< appDelegate.errorstaffnamepdf.count{
                     let errorstaffnametext = appDelegate.errorstaffnamepdf[i]
                     
-                    if(errorstaffnametext.containsString(staffname)){
+                    if errorstaffnametext.containsString(staffname) {
                         appDelegate.errorstaffnamepdf.removeAtIndex(i)
                         break
                     }
@@ -177,10 +177,10 @@ class PDFmethod: UIViewController {
             
             //スタッフ名にシフト名が含まれている場合に、カウントされてしまうため要素を削除する
             let includeshiftnamearray = CommonMethod().IncludeShiftNameInStaffName(staffname)
-            if(includeshiftnamearray.count != 0){
+            if includeshiftnamearray.count != 0 {
                 
                 for i in 0 ..< includeshiftnamearray.count{
-                    if(shiftlocationarray[includeshiftnamearray[i]].count != 0){
+                    if shiftlocationarray[includeshiftnamearray[i]].count != 0 {
                         shiftlocationarray[includeshiftnamearray[i]].removeAtIndex(0)
                     }
                 }
@@ -195,14 +195,14 @@ class PDFmethod: UIViewController {
             
             while(index != staffarraytmp.endIndex.predecessor()){
                 
-                if(Int(String(staffarraytmp[index])) != nil){
+                if Int(String(staffarraytmp[index])) != nil {
                     numeralcount += 1
                 }else{
                     numeralcount = 0
                 }
                 
                 //数値の連続が5回以上なら数列として判断する
-                if(numeralcount >= 5){
+                if numeralcount >= 5 {
                     index = index.advancedBy(-4)
                     removeflag = true
                     break
@@ -212,7 +212,7 @@ class PDFmethod: UIViewController {
             }
             
             
-            if(removeflag){
+            if removeflag {
                 for i in 0 ..< shiftlocationarray.count{
                     shiftlocationarray[i] = self.RemoveElementThanPivotIndex(shiftlocationarray[i], pivotindex: index, text: staffarraytmp)
                 }
@@ -225,7 +225,7 @@ class PDFmethod: UIViewController {
                 count += shiftlocationarray[i].count
             }
             
-            if(count == monthrange.length){
+            if count == monthrange.length {
                 
                 //正しく取り込めているが、シフト認識エラーとして記録されて残っている要素があれば削除する
                 if let _ = appDelegate.errorshiftnamepdf[staffname] {
@@ -274,8 +274,8 @@ class PDFmethod: UIViewController {
                     }
                     
                     let holidayarray = DBmethod().ShiftSystemNameArrayGetByGroudid(6)
-                    if(staffshift != ""){
-                        if(holidayarray.contains(staffshift) == false){
+                    if staffshift != "" {
+                        if holidayarray.contains(staffshift) == false {
                             dayshiftarray[i] += staffname + ":" + staffshift + ","
                         }
                     }
@@ -322,10 +322,10 @@ class PDFmethod: UIViewController {
     func GetStaffName(stafftext: String, i: Int) -> String{
         
         //もし、データベースに登録しているスタッフ名があった場合はそれを返す
-        if(DBmethod().StaffNameArrayGet() != nil){
+        if DBmethod().StaffNameArrayGet() != nil {
             let staffnamearray = DBmethod().StaffNameArrayGet()
             for i in 0 ..< staffnamearray!.count{
-                if(stafftext.containsString(staffnamearray![i])){
+                if stafftext.containsString(staffnamearray![i]) {
                     return staffnamearray![i]
                 }
             }
@@ -358,7 +358,7 @@ class PDFmethod: UIViewController {
         }
         
         //スタッフ名の読み込みを開始する場所を決定
-        if(i <= 9){
+        if i <= 9 {
             position = 1
         }else{
             position = 2
@@ -370,20 +370,20 @@ class PDFmethod: UIViewController {
         while(DBmethod().SearchShiftSystem(String(getcharacterstaffname)) == nil){
             let ABC = stafftext.startIndex.advancedBy(position)
             
-            if(ABC == stafftext.endIndex.predecessor()){
+            if ABC == stafftext.endIndex.predecessor() {
                 break
             }
             
             //勤務シフト体制にある文字が検出されたらループを抜けるパターン
             for i in 0 ..< shiftsystemnametopcharacter.count{
-                if(String(getcharacterstaffname).containsString(shiftsystemnametopcharacter[i])){
+                if String(getcharacterstaffname).containsString(shiftsystemnametopcharacter[i]) {
                     return staffname
                 }
             }
             
             //休暇シフト体制にある文字が検出されたらループを抜けるパターン
             for i in 0 ..< holidaynametopcharacter.count{
-                if(String(getcharacterstaffname).containsString(holidaynametopcharacter[i])){
+                if String(getcharacterstaffname).containsString(holidaynametopcharacter[i]) {
                     return staffname
                 }
             }
@@ -403,7 +403,7 @@ class PDFmethod: UIViewController {
         var searchresult = staffarraysstring.rangeOfString(shiftname, options: NSStringCompareOptions.CaseInsensitiveSearch, range: searchrange)
         
         while(searchresult.location != NSNotFound){
-            if(searchresult.location != NSNotFound){
+            if searchresult.location != NSNotFound {
                 
                 shiftnamelocation.append(searchresult.location)
                 
@@ -441,7 +441,7 @@ class PDFmethod: UIViewController {
         
         for (key, value) in dict {
             
-            if(values[0] == value){
+            if values[0] == value {
                 sg = key
                 sp = value
                 break
@@ -514,7 +514,7 @@ class PDFmethod: UIViewController {
             
             while(dbindex != shiftnamearray[i].endIndex){
                 
-                if(tmp[dbindex] == character){
+                if tmp[dbindex] == character {
                     result += String(tmp[dbindex])
                     dbindex = dbindex.successor()
                     position_sp += 1
@@ -525,7 +525,7 @@ class PDFmethod: UIViewController {
                 }
             }
             
-            if(result.characters.count == tmp.characters.count){
+            if result.characters.count == tmp.characters.count {
                 return result
             }
         }
@@ -548,7 +548,7 @@ class PDFmethod: UIViewController {
         for i in 0 ..< array.count{
             let count = array[i].count
             
-            if(count != 0){
+            if count != 0 {
                 let shiftarray = DBmethod().ShiftSystemRecordArrayGetByGroudid(i)
                 for i in 0 ..< shiftarray.count{
                     shiftgroupnamearray.append(shiftarray[i].name)
@@ -573,14 +573,14 @@ class PDFmethod: UIViewController {
             
             for j in 0 ..< shiftsystemarray.count{
                 
-                if(shiftsystemarray[j].groupid != Record.groupid){
-                    if(shiftsystemarray[j].name.characters.count > Record.name.characters.count){
-                        if(shiftsystemarray[j].name.containsString(Record.name)){
+                if shiftsystemarray[j].groupid != Record.groupid {
+                    if shiftsystemarray[j].name.characters.count > Record.name.characters.count {
+                        if shiftsystemarray[j].name.containsString(Record.name) {
                             let result = self.RemoveIntersectArrayToArray(dict[Record.groupid]!, comparisonarray: dict[shiftsystemarray[j].groupid]!)
                             dict.updateValue(result, forKey: Record.groupid)
                         }
                     }else{
-                        if(Record.name.containsString(shiftsystemarray[j].name)){
+                        if Record.name.containsString(shiftsystemarray[j].name) {
                             let result = self.RemoveIntersectArrayToArray(dict[shiftsystemarray[j].groupid]!, comparisonarray: dict[Record.groupid]!)
                             dict.updateValue(result, forKey: shiftsystemarray[j].groupid)
                         }
@@ -621,7 +621,7 @@ class PDFmethod: UIViewController {
         var removeelement: [Int] = []
         
         for i in 0 ..< array.count{
-            if(index.advancedBy(array[i]) >= pivotindex){
+            if index.advancedBy(array[i]) >= pivotindex {
                 removeelement.append(array[i])
             }
         }
@@ -648,13 +648,13 @@ class PDFmethod: UIViewController {
         var shiftdetaildbrecordcount = DBmethod().DBRecordCount(ShiftDetailDB)
         let shiftdbrecordcount = DBmethod().DBRecordCount(ShiftDB)
         
-        if(appDelegate.errorshiftnamepdf.count == 0){
+        if appDelegate.errorshiftnamepdf.count == 0 {
             
             for i in 0 ..< shiftarray.count{
                 let shiftdbrecord = ShiftDB()
                 let shiftdetaildbrecord = ShiftDetailDB()
                 
-                if(update){
+                if update {
                     let existshiftdb = DBmethod().SearchShiftDB(importname)
                     
                     shiftdbrecord.id = existshiftdb.id        //取り込みが上書きの場合は使われているidをそのまま使う
@@ -670,7 +670,7 @@ class PDFmethod: UIViewController {
                         shiftdetaildbrecord.month = shiftcours.sm
                         date += 1
                         
-                        if(date > monthrange.length){
+                        if date > monthrange.length {
                             date = 1
                             flag = 1
                         }
@@ -689,7 +689,7 @@ class PDFmethod: UIViewController {
                     shiftdetaildbrecord.shiftDBrelationship = DBmethod().SearchShiftDB(importname)
                     
                     //エラーがない時のみ記録を行う
-                    if(appDelegate.errorshiftnamepdf.count == 0){
+                    if appDelegate.errorshiftnamepdf.count == 0 {
                         //                        print(String(shiftdetaildbrecord.year) + "  " + String(shiftdetaildbrecord.month))
                         
                         DBmethod().AddandUpdate(shiftdetaildbrecord, update: true)
@@ -716,7 +716,7 @@ class PDFmethod: UIViewController {
                         shiftdetaildbrecord.month = shiftcours.sm
                         date += 1
                         
-                        if(date > monthrange.length){
+                        if date > monthrange.length {
                             date = 1
                             flag = 1
                         }
@@ -742,7 +742,7 @@ class PDFmethod: UIViewController {
                     let ID = shiftdbrecord.id
                     
                     //エラーがない場合のみ記録を行う
-                    if(appDelegate.errorstaffnamepdf.count == 0 && appDelegate.errorshiftnamepdf.count == 0){
+                    if appDelegate.errorstaffnamepdf.count == 0 && appDelegate.errorshiftnamepdf.count == 0 {
                         DBmethod().AddandUpdate(shiftdbrecord, update: true)
                         DBmethod().AddandUpdate(shiftdetaildbrecord, update: true)
                         shiftdetailarray = CommonMethod().ShiftDBRelationArrayGet(ID)
@@ -766,7 +766,7 @@ class PDFmethod: UIViewController {
             var dayshift = ""
             
             let nsstring = shiftarray[i] as NSString
-            if(nsstring.containsString(username)){
+            if nsstring.containsString(username) {
                 
                 let userlocation = nsstring.rangeOfString(username).location
                 
@@ -777,7 +777,7 @@ class PDFmethod: UIViewController {
                     index = index.successor()
                 }
                 
-                if(holiday.contains(dayshift) == false){      //holiday以外なら
+                if holiday.contains(dayshift) == false {      //holiday以外なら
                     usershift.append(dayshift)
                 }
             }
@@ -790,7 +790,7 @@ class PDFmethod: UIViewController {
         for i in 0 ..< usershift.count{
             
             let shiftsystem = DBmethod().SearchShiftSystem(usershift[i])
-            if(shiftsystem![0].endtime <= houlypayrecord[0].timeto){
+            if shiftsystem![0].endtime <= houlypayrecord[0].timeto {
                 monthlysalary = monthlysalary + (shiftsystem![0].endtime - shiftsystem![0].starttime - 1) * Double(houlypayrecord[0].pay)
             }else{
                 //22時以降の給与を先に計算

@@ -36,7 +36,7 @@ class ShiftGalleryTable: UIViewController, UITableViewDataSource, UITableViewDel
         tableview.dataSource = self
         tableview.allowsMultipleSelection = true
         
-        if(DBmethod().DBRecordCount(ShiftImportHistoryDB) != 0){
+        if DBmethod().DBRecordCount(ShiftImportHistoryDB) != 0 {
             for i in (0 ... DBmethod().DBRecordCount(ShiftImportHistoryDB)-1).reverse(){
                 let historydate = DBmethod().ShiftImportHistoryDBGet()[i].date
                 let historyname = DBmethod().ShiftImportHistoryDBGet()[i].name
@@ -55,7 +55,7 @@ class ShiftGalleryTable: UIViewController, UITableViewDataSource, UITableViewDel
         shiftlist.removeAll()
         selectedCells.removeAll()
         
-        if(DBmethod().DBRecordCount(ShiftImportHistoryDB) != 0){
+        if DBmethod().DBRecordCount(ShiftImportHistoryDB) != 0 {
             for i in (0 ... DBmethod().DBRecordCount(ShiftImportHistoryDB)-1).reverse(){
                 let historydate = DBmethod().ShiftImportHistoryDBGet()[i].date
                 let historyname = DBmethod().ShiftImportHistoryDBGet()[i].name
@@ -77,14 +77,14 @@ class ShiftGalleryTable: UIViewController, UITableViewDataSource, UITableViewDel
     @IBAction func TapShowButton(sender: AnyObject) {
         
         for i in 0 ..< selectedCells.count{
-            if(selectedCells[i] == true){
+            if selectedCells[i] == true {
                 flag = true
                 break
             }
         }
         
         //1つでも選択されていたらtrue
-        if(flag){
+        if flag {
             let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得
             appDelegate.selectedcell = self.selectedCells
             
@@ -116,7 +116,7 @@ class ShiftGalleryTable: UIViewController, UITableViewDataSource, UITableViewDel
         cell.textLabel?.text = shiftlist[indexPath.row]
 //        cell.textLabel?.textColor = UIColor.whiteColor()
         
-        if(selectedCells[indexPath.row]){
+        if selectedCells[indexPath.row] {
             cell.accessoryType = UITableViewCellAccessoryType.Checkmark
             cell.backgroundColor = UIColor.hex("AFAFAF", alpha: 1.0)
         }else{
@@ -202,7 +202,7 @@ class ShiftGalleryTable: UIViewController, UITableViewDataSource, UITableViewDel
         var count = 0
         
         for i in 0 ..< appDelegate.selectedcell.count{
-            if(appDelegate.selectedcell[i] == true){
+            if appDelegate.selectedcell[i] == true {
                 count += 1
             }
         }
@@ -215,9 +215,9 @@ class ShiftGalleryTable: UIViewController, UITableViewDataSource, UITableViewDel
         var shiftlist: [String] = []
         let count = DBmethod().DBRecordCount(ShiftImportHistoryDB)-1
         
-        if(DBmethod().DBRecordCount(ShiftImportHistoryDB) != 0){
+        if DBmethod().DBRecordCount(ShiftImportHistoryDB) != 0 {
             for i in 0 ... count{
-                if(appDelegate.selectedcell[i]){
+                if appDelegate.selectedcell[i] {
                     let historydate = DBmethod().ShiftImportHistoryDBGet()[count-i].date
                     let historyname = DBmethod().ShiftImportHistoryDBGet()[count-i].name
                     shiftlist.append(historydate + "     " + historyname)
@@ -244,9 +244,9 @@ class ShiftGalleryTable: UIViewController, UITableViewDataSource, UITableViewDel
         var shiftlist: [String] = []
         let count = DBmethod().DBRecordCount(ShiftImportHistoryDB)-1
         
-        if(DBmethod().DBRecordCount(ShiftImportHistoryDB) != 0){
+        if DBmethod().DBRecordCount(ShiftImportHistoryDB) != 0 {
             for i in 0 ... count{
-                if(appDelegate.selectedcell[i]){
+                if appDelegate.selectedcell[i] {
                     let historyname = DBmethod().ShiftImportHistoryDBGet()[count-i].name
                     shiftlist.append(historyname)
                 }
@@ -271,7 +271,7 @@ class ShiftGalleryTable: UIViewController, UITableViewDataSource, UITableViewDel
         let currentPoint = scrollView.contentOffset;
         
         //表示ボタンを押してviewを表示した時だけ移動するようにする
-        if(flag){
+        if flag {
             closeview.center.y = currentPoint.y + self.view.frame.height-30
             closebutton.center.y = currentPoint.y + self.view.frame.height-30
         }else{

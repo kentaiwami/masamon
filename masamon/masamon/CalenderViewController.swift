@@ -240,7 +240,7 @@ class CalenderViewController: UIViewController {
             )
             
             //日曜日の場合は赤色を指定
-            if(i == 0){
+            if i == 0 {
                 
                 //RGBカラーの設定は小数値をCGFloat型にしてあげる
                 calendarBaseLabel.textColor = UIColor(
@@ -248,7 +248,7 @@ class CalenderViewController: UIViewController {
                 )
                 
                 //土曜日の場合は青色を指定
-            }else if(i == 6){
+            }else if i == 6 {
                 
                 //RGBカラーの設定は小数値をCGFloat型にしてあげる
                 calendarBaseLabel.textColor = UIColor(
@@ -297,20 +297,20 @@ class CalenderViewController: UIViewController {
             );
             
             //ボタンの初期設定をする
-            if(i < dayOfWeek - 1){
+            if i < dayOfWeek - 1 {
                 
                 //日付の入らない部分はボタンを押せなくする
                 button.setTitle("", forState: .Normal)
                 button.enabled = false
                 
-            }else if(i == dayOfWeek - 1 || i < dayOfWeek + maxDay - 1){
+            }else if i == dayOfWeek - 1 || i < dayOfWeek + maxDay - 1 {
                 
                 //日付の入る部分はボタンのタグを設定する（日にち）
                 button.setTitle(String(tagNumber), forState: .Normal)
                 button.tag = tagNumber
                 tagNumber += 1
                 
-            }else if(i == dayOfWeek + maxDay - 1 || i < total){
+            }else if i == dayOfWeek + maxDay - 1 || i < total {
                 
                 //日付の入らない部分はボタンを押せなくする
                 button.setTitle("", forState: .Normal)
@@ -322,18 +322,18 @@ class CalenderViewController: UIViewController {
             //ボタンの配色の設定
             //@remark:このサンプルでは正円のボタンを作っていますが、背景画像の設定等も可能です。
             
-            if(DBmethod().TheDayStaffGet(CommonMethod().Changecalendar(self.year, calender: "A.D"), month: self.month, date: button.tag) == nil){
+            if DBmethod().TheDayStaffGet(CommonMethod().Changecalendar(self.year, calender: "A.D"), month: self.month, date: button.tag) == nil {
                 calendarBackGroundColor = UIColor.lightGrayColor()
             }else{
                 let usershift = self.ReturnUserShift(DBmethod().TheDayStaffGet(CommonMethod().Changecalendar(self.year, calender: "A.D"), month: self.month, date: button.tag)![0].staff)
                 
                 var gid = 999
 
-                if(usershift == "breaktime"){
+                if usershift == "breaktime" {
                     gid = 5
                 }else{
                     let resultshift = DBmethod().SearchShiftSystem(usershift)
-                    if(resultshift != nil){
+                    if resultshift != nil {
                         gid = resultshift![0].groupid
                     }
                 }
@@ -390,7 +390,7 @@ class CalenderViewController: UIViewController {
             let buttonday = comps.day
             
             //今日の日付と一致するボタンがある場合
-            if(buttonyear == year && buttonmonth == month && buttonday == button.tag){
+            if buttonyear == year && buttonmonth == month && buttonday == button.tag {
                 button.layer.borderColor = UIColor.whiteColor().CGColor
                 button.layer.borderWidth = CGFloat(4.5)
             }
@@ -409,7 +409,7 @@ class CalenderViewController: UIViewController {
     //受け取った文字列の中からユーザのシフトを返す関数
     func ReturnUserShift(staff: String) -> String{
         
-        if(staff.rangeOfString(DBmethod().UserNameGet()) == nil){
+        if staff.rangeOfString(DBmethod().UserNameGet()) == nil {
             return "breaktime"
         }else{
             let staffNSString: NSString = staff as NSString
@@ -482,7 +482,7 @@ class CalenderViewController: UIViewController {
     func setupPrevCalendarData() {
         
         //現在の月に対して-1をする
-        if(month == 0){
+        if month == 0 {
             year = year - 1;
             month = 12;
         }else{
@@ -505,7 +505,7 @@ class CalenderViewController: UIViewController {
     func setupNextCalendarData() {
         
         //現在の月に対して+1をする
-        if(month == 12){
+        if month == 12 {
             year = year + 1;
             month = 1;
         }else{
@@ -576,7 +576,7 @@ class CalenderViewController: UIViewController {
     
     //カレンダーボタンをタップした時のアクション
     func buttonTapped(button: UIButton){
-        if(DBmethod().TheDayStaffGet(CommonMethod().Changecalendar(year, calender: "A.D"), month: month, date: button.tag) == nil){
+        if DBmethod().TheDayStaffGet(CommonMethod().Changecalendar(year, calender: "A.D"), month: month, date: button.tag) == nil {
             let alertController = UIAlertController(title: "\(year)年\(month)月\(button.tag)日", message: "データなし", preferredStyle: .Alert)
             let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
             alertController.addAction(defaultAction)
@@ -630,7 +630,7 @@ class CalenderViewController: UIViewController {
             lineview.backgroundColor = UIColor.hex("000000", alpha: 0.2)
             
             //viewを無限に追加しないためにflagを使用する
-            if(flag){
+            if flag {
                 UIView.animateWithDuration(0.3, animations: { () -> Void in
                     self.alertview.alpha = 1.0
                 })

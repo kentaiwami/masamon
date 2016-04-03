@@ -33,7 +33,7 @@ class Video: UIViewController {
             thumbnailbutton.clipsToBounds = true
             
             //2つ目の動画を作成していないため、ボタンを無効化する
-            if(i == 1){
+            if i == 1 {
                 thumbnailbutton.enabled = false
             }
             

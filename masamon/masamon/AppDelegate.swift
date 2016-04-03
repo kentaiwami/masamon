@@ -57,7 +57,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
         //InboxFileCountに空レコード(ダミー)を追加
-        if(DBmethod().DBRecordCount(InboxFileCountDB) == 0){
+        if DBmethod().DBRecordCount(InboxFileCountDB) == 0 {
             //レコードを追加
             let InboxFileCountRecord = InboxFileCountDB()
             InboxFileCountRecord.id = 0
@@ -66,7 +66,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         //FilePathTmpに空レコード(ダミー)を追加
-        if(DBmethod().DBRecordCount(FilePathTmpDB) == 0){
+        if DBmethod().DBRecordCount(FilePathTmpDB) == 0 {
             let FilePathTmpRecord = FilePathTmpDB()
             FilePathTmpRecord.id = 0
             FilePathTmpRecord.path = "nil"
@@ -78,7 +78,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let shiftstartpattern = [8.0,8.0,8.0,8.0,12.0,13.5,14.5,16.0,16.0,16.0,99.9,99.9,99.9]
         let shiftendpattern = [16.5,16.5,16.5,16.5,20.5,22.0,23.0,24.5,24.5,24.5,99.9,99.9,99.9]
 
-        if(DBmethod().DBRecordCount(ShiftSystemDB) == 0){
+        if DBmethod().DBRecordCount(ShiftSystemDB) == 0 {
             for i in 0 ..< shiftnamepattern.count{
                 var gid = 0
                 

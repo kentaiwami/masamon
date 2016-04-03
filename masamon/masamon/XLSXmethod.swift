@@ -28,7 +28,7 @@ class XLSXmethod: UIViewController {
     //XLSXファイルのインスタンスをセットするメソッド
     func SetXLSX() -> (sheet: BRAWorksheet, P1:String){
         
-        if(flag){
+        if flag {
             documentPath = DBmethod().FilePathTmpGet() as String
             spreadsheet = BRAOfficeDocumentPackage.open(documentPath)
             worksheet = spreadsheet.workbook.worksheets[0] as! BRAWorksheet
@@ -62,7 +62,7 @@ class XLSXmethod: UIViewController {
             let shiftdb = ShiftDB()
             let shiftdetaildb = ShiftDetailDB()
             
-            if(update){
+            if update {
                 let existshiftdb = DBmethod().SearchShiftDB(importname)
                 let newshiftdetaildb = ShiftDetailDB()
                 
@@ -79,7 +79,7 @@ class XLSXmethod: UIViewController {
                     newshiftdetaildb.month = CommonMethod().JudgeYearAndMonth(worksheet.P1).startcoursmonth
                     date += 1
                     
-                    if(date > monthrange.length){
+                    if date > monthrange.length {
                         date = 1
                         flag = 1
                     }
@@ -97,7 +97,7 @@ class XLSXmethod: UIViewController {
                 newshiftdetaildb.shiftDBrelationship = DBmethod().SearchShiftDB(importname)
                 
                 //エラーがない時のみ記録を行う
-                if(appDelegate.errorshiftnamexlsx.count == 0){
+                if appDelegate.errorshiftnamexlsx.count == 0 {
                     DBmethod().AddandUpdate(newshiftdetaildb, update: true)
                 }
                 
@@ -120,7 +120,7 @@ class XLSXmethod: UIViewController {
                     shiftdetaildb.month = CommonMethod().JudgeYearAndMonth(worksheet.P1).startcoursmonth
                     date += 1
                     
-                    if(date > monthrange.length){
+                    if date > monthrange.length {
                         date = 1
                         flag = 1
                     }
@@ -146,7 +146,7 @@ class XLSXmethod: UIViewController {
                 let ID = shiftdb.id
                 
                 //エラーがない場合のみ記録を行う
-                if(appDelegate.errorshiftnamexlsx.count == 0){
+                if appDelegate.errorshiftnamexlsx.count == 0 {
                     DBmethod().AddandUpdate(shiftdb, update: true)
                     DBmethod().AddandUpdate(shiftdetaildb, update: true)
                     shiftdetailarray = CommonMethod().ShiftDBRelationArrayGet(ID)
@@ -164,14 +164,14 @@ class XLSXmethod: UIViewController {
         
         while(true){
             let Fcell: String = worksheet.sheet.cellForCellReference(mark+String(number)).stringValue()
-            if(Fcell.isEmpty){       //セルが空なら進めるだけ
+            if Fcell.isEmpty {       //セルが空なら進めるだけ
                 number += 1
             }else{
                 array.append(mark+String(number))
                 number += 1
             }
             
-            if(DBmethod().StaffNumberGet() == array.count){       //設定したスタッフ人数と取り込み数が一致したら
+            if DBmethod().StaffNumberGet() == array.count {       //設定したスタッフ人数と取り込み数が一致したら
                 break
             }
         }
@@ -201,7 +201,7 @@ class XLSXmethod: UIViewController {
         for i in 0 ..< DBmethod().StaffNumberGet(){
             let nowcell: String = worksheet.sheet.cellForCellReference(staffcellposition[i]).stringValue()
             
-            if(nowcell == username){
+            if nowcell == username {
                 userposition = staffcellposition[i]
                 break
             }
@@ -214,7 +214,7 @@ class XLSXmethod: UIViewController {
             
             
             //含まれていない場合は追加
-            if(self.SearchContainsHolidayArray(dayshift) == false){
+            if self.SearchContainsHolidayArray(dayshift) == false {
                 usershift.append(dayshift)
             }
         }
@@ -227,7 +227,7 @@ class XLSXmethod: UIViewController {
         for i in 0 ..< usershift.count{
             
             let shiftsystem = DBmethod().SearchShiftSystem(usershift[i])
-            if(shiftsystem![0].endtime <= houlypayrecord[0].timeto){
+            if shiftsystem![0].endtime <= houlypayrecord[0].timeto {
                 monthlysalary = monthlysalary + (shiftsystem![0].endtime - shiftsystem![0].starttime - 1) * Double(houlypayrecord[0].pay)
             }else{
                 //22時以降の給与を先に計算
@@ -276,18 +276,18 @@ class XLSXmethod: UIViewController {
             let staffname: String = worksheet.cellForCellReference(nowstaff).stringValue()
             
             //Holiday以外なら記録
-            if(self.SearchContainsHolidayArray(dayshift) == false){
+            if self.SearchContainsHolidayArray(dayshift) == false {
                 staffstring = staffstring + staffname + ":" + dayshift + ","
             }
             
             //新規シフト名だったらエラーとして記録
-            if(DBmethod().SearchShiftSystem(dayshift) == nil && self.SearchContainsHolidayArray(dayshift) == false){
-                if(dayshift != "" && appDelegate.errorshiftnamexlsx.contains(dayshift) == false){     //空白と既に配列にある場合は記録しないため
+            if DBmethod().SearchShiftSystem(dayshift) == nil && self.SearchContainsHolidayArray(dayshift) == false {
+                if dayshift != "" && appDelegate.errorshiftnamexlsx.contains(dayshift) == false {     //空白と既に配列にある場合は記録しないため
                     appDelegate.errorshiftnamexlsx.append(dayshift)
                 }
-            }else if(DBmethod().SearchShiftSystem(dayshift) != nil && appDelegate.errorshiftnamexlsx.contains(dayshift) == true){
+            }else if DBmethod().SearchShiftSystem(dayshift) != nil && appDelegate.errorshiftnamexlsx.contains(dayshift) == true {
                 appDelegate.errorshiftnamexlsx.removeObject(dayshift)
-            }else if(self.SearchContainsHolidayArray(dayshift) == true){
+            }else if self.SearchContainsHolidayArray(dayshift) == true {
                 appDelegate.errorshiftnamexlsx.removeObject(dayshift)
             }
         }
@@ -322,15 +322,15 @@ class XLSXmethod: UIViewController {
             
             let array = CommonMethod().IncludeShiftNameInStaffName(staffname)
             
-            if(array.count != 0){
+            if array.count != 0 {
                 let record = StaffNameDB()
                 record.id = DBmethod().DBRecordCount(StaffNameDB)
                 record.name = staffname
                 
-                if(DBmethod().StaffNameArrayGet() == nil){                                  //まだ1件も登録されていない場合
+                if DBmethod().StaffNameArrayGet() == nil {                                  //まだ1件も登録されていない場合
                     DBmethod().AddandUpdate(record, update: true)
                     
-                }else if(DBmethod().StaffNameArrayGet()?.contains(staffname) == false){     //登録が被らない場合
+                }else if DBmethod().StaffNameArrayGet()?.contains(staffname) == false {     //登録が被らない場合
                     DBmethod().AddandUpdate(record, update: true)
                 }
             }
@@ -343,7 +343,7 @@ class XLSXmethod: UIViewController {
         var holidayflag = false
         
         for i in 0 ..< holiday.count{
-            if(holiday[i] == shiftname){
+            if holiday[i] == shiftname {
                 holidayflag = true
                 break
             }else{
