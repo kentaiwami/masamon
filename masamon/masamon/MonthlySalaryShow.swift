@@ -1059,7 +1059,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         var w: CGFloat = 0
         var h: CGFloat = 0
         
-        UIView.animateWithDuration(0.3, animations: {
+        UIView.animateWithDuration(0.2, animations: {
             for i in 0..<self.ShiftLabelArray.count {
                 for j in 0..<self.ShiftLabelArray[i].count {
                     y = self.ShiftLabelArray[i][j].frame.origin.y
@@ -1118,13 +1118,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         }
     }
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-//        print("Began")
-    }
-    
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        print("end")
-
         //スワイプの移動量が一定以上であればその方向にアニメーションをする
         //シフトラベルが画面の半分を越えていなければ位置を動かさずに、強制的に戻す
         let prevshiftlabel = ShiftLabelArray[0][0].frame.origin.x + ShiftLabelArray[0][0].frame.size.width
@@ -1141,21 +1135,15 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         }
     }
     
-    override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
-        print("Cancelled")
-        
-    }
-    
     var swipedelta: CGFloat = 0
     override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
-//        print("Moved")
         let aTouch = touches.first
         let location = aTouch!.locationInView(self.view)
         let prevLocation = aTouch!.previousLocationInView(self.view)
         let deltaX: CGFloat = location.x - prevLocation.x
         
-        print(deltaX)
         swipedelta = deltaX
+        
         //画面右へスワイプしている時(日付を前日にする時)
         for i in 0..<ShiftLabelArray.count {
             for j in 0..<ShiftLabelArray[i].count {
@@ -1180,8 +1168,8 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     
     func today(){
         let today = NSDate()
-        let date = ReturnYearMonthDayWeekday(today)         //日付を西暦,月,日,曜日に分けて取得
-        self.ShowAllData(CommonMethod().Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day, arraynumber: 1)           //データ表示へ分けた日付を渡す
+        let date = ReturnYearMonthDayWeekday(today)
+        self.ShowAllData(CommonMethod().Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day, arraynumber: 1)
         CalenderLabel.text = "\(date.year)年\(date.month)月\(date.day)日 \(self.ReturnWeekday(date.weekday))曜日"
         
         //現在表示している日付と今日の日付を比較して、アニメーションを切り替えて表示する
