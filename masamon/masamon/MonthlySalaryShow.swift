@@ -1009,9 +1009,11 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         gestureToLeft.direction = UISwipeGestureRecognizerDirection.Left
         self.view.addGestureRecognizer(gestureToLeft)
         
-        //タップ
-        let myTap = UITapGestureRecognizer(target: self, action: #selector(MonthlySalaryShow.today))
-        self.view.addGestureRecognizer(myTap)
+        //長押し
+        let myLongPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(MonthlySalaryShow.today))
+        myLongPressGesture.minimumPressDuration = 0.5
+        myLongPressGesture.allowableMovement = 150
+        self.view.addGestureRecognizer(myLongPressGesture)
     }
     
     var tapanimationbuttonflag = false      //タップをした際にbuttontilearray内に今日の日付が含まれているかを記録
@@ -1045,7 +1047,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             );
         })
     }
-        
+    
     //シフトラベルをアニメーションした後に、初期位置に戻す関数
     func AnimationShiftLabelCompletion(prevposition: Int, mainposition: Int, nextpositon: Int){
         let positionarray = [prevposition,mainposition,nextpositon]
