@@ -999,6 +999,16 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     
     //ジェスチャーを検知するメソッド
     func setupTapGesture() {
+        // 右方向へのスワイプ
+        let gestureToRight = UISwipeGestureRecognizer(target: self, action: #selector(MonthlySalaryShow.prevday))
+        gestureToRight.direction = UISwipeGestureRecognizerDirection.Right
+        self.view.addGestureRecognizer(gestureToRight)
+        
+        // 左方向へのスワイプ
+        let gestureToLeft = UISwipeGestureRecognizer(target: self, action: #selector(MonthlySalaryShow.nextday))
+        gestureToLeft.direction = UISwipeGestureRecognizerDirection.Left
+        self.view.addGestureRecognizer(gestureToLeft)
+        
         //タップ
         let myTap = UITapGestureRecognizer(target: self, action: #selector(MonthlySalaryShow.today))
         self.view.addGestureRecognizer(myTap)
@@ -1035,23 +1045,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             );
         })
     }
-    
-    //シフトラベルをアニメーションするメソッド
-    func AnimationShiftLabel(prevposition: Int, mainposition: Int, nextpositon: Int){
-        let positionarray = [prevposition,mainposition,nextpositon]
         
-        UIView.animateWithDuration(0.3) {
-            for i in 0..<self.ShiftLabelArray.count {
-                for j in 0..<self.ShiftLabelArray[i].count {
-                    let prev_y = self.ShiftLabelArray[i][j].frame.origin.y
-                    let prev_w = self.ShiftLabelArray[i][j].frame.size.width
-                    let prev_h = self.ShiftLabelArray[i][j].frame.size.height
-                    self.ShiftLabelArray[i][j].frame = CGRectMake(CGFloat(positionarray[i]), prev_y, prev_w, prev_h)
-                }
-            }
-        }
-    }
-    
     //シフトラベルをアニメーションした後に、初期位置に戻す関数
     func AnimationShiftLabelCompletion(prevposition: Int, mainposition: Int, nextpositon: Int){
         let positionarray = [prevposition,mainposition,nextpositon]
@@ -1059,7 +1053,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         var w: CGFloat = 0
         var h: CGFloat = 0
         
-        UIView.animateWithDuration(0.2, animations: {
+        UIView.animateWithDuration(0.4, animations: {
             for i in 0..<self.ShiftLabelArray.count {
                 for j in 0..<self.ShiftLabelArray[i].count {
                     y = self.ShiftLabelArray[i][j].frame.origin.y
@@ -1118,45 +1112,12 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         }
     }
     
-    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        //スワイプの移動量が一定以上であればその方向にアニメーションをする
-        //シフトラベルが画面の半分を越えていなければ位置を動かさずに、強制的に戻す
-        let prevshiftlabel = ShiftLabelArray[0][0].frame.origin.x + ShiftLabelArray[0][0].frame.size.width
-        let nextshiftlabel = ShiftLabelArray[2][0].frame.origin.x
-        
-        if self.view.frame.width/2 < prevshiftlabel || swipedelta > 10 {
-            self.prevday()
-            self.AnimationShiftLabelCompletion(shiftlabel_x[1], mainposition: shiftlabel_x[2], nextpositon: shiftlabel_x[2])
-        }else if self.view.frame.width/2 > nextshiftlabel || swipedelta < -10 {
-            self.nextday()
-            self.AnimationShiftLabelCompletion(shiftlabel_x[0], mainposition: shiftlabel_x[0], nextpositon: shiftlabel_x[1])
-        }else if self.view.frame.width/2 > prevshiftlabel && self.view.frame.width/2 < nextshiftlabel {
-            self.AnimationShiftLabel(shiftlabel_x[0], mainposition: shiftlabel_x[1], nextpositon: shiftlabel_x[2])
-        }
-    }
-    
-    var swipedelta: CGFloat = 0
-    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        let aTouch = touches.first
-        let location = aTouch!.locationInView(self.view)
-        let prevLocation = aTouch!.previousLocationInView(self.view)
-        let deltaX: CGFloat = location.x - prevLocation.x
-        
-        swipedelta = deltaX
-        
-        //画面右へスワイプしている時(日付を前日にする時)
-        for i in 0..<ShiftLabelArray.count {
-            for j in 0..<ShiftLabelArray[i].count {
-                ShiftLabelArray[i][j].frame = CGRectMake(ShiftLabelArray[i][j].frame.origin.x + deltaX, ShiftLabelArray[i][j].frame.origin.y, ShiftLabelArray[i][j].frame.size.width, ShiftLabelArray[i][j].frame.size.height)
-            }
-        }
-    }
-    
     func nextday(){
         self.DayControl(1)
         
         //日付表示ラベルを画面右側からアニメーション表示させる
         self.AnimationDayLabel(20, afterposition: 8)
+        self.AnimationShiftLabelCompletion(shiftlabel_x[0], mainposition: shiftlabel_x[0], nextpositon: shiftlabel_x[1])
     }
     
     func prevday(){
@@ -1164,6 +1125,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         
         //日付表示ラベルを画面左側からアニメーション表示させる
         self.AnimationDayLabel(-4, afterposition: 8)
+        self.AnimationShiftLabelCompletion(shiftlabel_x[1], mainposition: shiftlabel_x[2], nextpositon: shiftlabel_x[2])
     }
     
     func today(){
