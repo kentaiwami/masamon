@@ -105,9 +105,9 @@ class PDFmethod: UIViewController {
         }
         
         //スタッフの人数分(配列の最後まで)繰り返す
-//        for(var i = 24; i < 25; i++){
+//        for i in 13..<14 {
         for i in 1 ..< staffarray.count{
-            
+        
             var staffname = ""
             var staffarraytmp = ""
             
@@ -132,7 +132,6 @@ class PDFmethod: UIViewController {
                 break
             }
             
-            print(staffname)
             /*抽出したスタッフ名(マネージャーのMは除く)が1文字以下or4文字以上ならエラーとして記録
             　エラーでなければシフトの出現場所を配列に格納していく
             */
@@ -156,27 +155,27 @@ class PDFmethod: UIViewController {
                 for i in 0..<shiftsystemnamearray.count {
                     dict[shiftsystemnamearray[i]] = shiftsystemnamearray[i].characters.count
                 }
+                
                 var sortedvalues : Array = Array(dict.values)
                 sortedvalues = sortedvalues.sort().reverse()
-                
-                var AAA: [String] = []
+
+                var sortedshiftname: [String] = []
                 for i in 0..<sortedvalues.count {
                     for (key, value) in dict {
                         if value == sortedvalues[i] {
-                            AAA.append(key)
+                            sortedshiftname.append(key)
+                            dict[key] = nil
                             break
                         }
                     }
                 }
                 
-                
-                
                 //シフト体制の分だけループを回し、各ループでスタッフ1人分のシフト出現場所を記録する
                 let staffarraytmpnsstring = staffarraytmp as NSString
                 for i in 0 ..< DBmethod().DBRecordCount(ShiftSystemDB){
-                    let BBB = DBmethod().SearchShiftSystem(AAA[i])
-                    if BBB != nil {
-                        let shiftname = DBmethod().ShiftSystemNameGet(BBB![0].id)
+                    let shiftsystemrecord = DBmethod().SearchShiftSystem(sortedshiftname[i])
+                    if shiftsystemrecord != nil {
+                        let shiftname = DBmethod().ShiftSystemNameGet(shiftsystemrecord![0].id)
                         shiftlocationarray[shiftname.groupid] += self.GetShiftPositionArray(staffarraytmpnsstring, shiftname: shiftname.name)
                     }
                 }
