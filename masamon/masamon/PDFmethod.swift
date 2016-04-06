@@ -151,29 +151,13 @@ class PDFmethod: UIViewController {
                 
                 //TODO: シフト体制を文字列の長さ順に並び替えてその順番ごとのidを配列に記録する
                 let shiftsystemnamearray = DBmethod().ShiftSystemNameArrayGet()
-                var dict: [String:Int] = [:]
-                for i in 0..<shiftsystemnamearray.count {
-                    dict[shiftsystemnamearray[i]] = shiftsystemnamearray[i].characters.count
-                }
                 
-                var sortedvalues : Array = Array(dict.values)
-                sortedvalues = sortedvalues.sort().reverse()
-
-                var sortedshiftname: [String] = []
-                for i in 0..<sortedvalues.count {
-                    for (key, value) in dict {
-                        if value == sortedvalues[i] {
-                            sortedshiftname.append(key)
-                            dict[key] = nil
-                            break
-                        }
-                    }
-                }
+                let desc_shiftname = self.GetDescStringArray(shiftsystemnamearray)
                 
                 //シフト体制の分だけループを回し、各ループでスタッフ1人分のシフト出現場所を記録する
                 let staffarraytmpnsstring = staffarraytmp as NSString
                 for i in 0 ..< DBmethod().DBRecordCount(ShiftSystemDB){
-                    let shiftsystemrecord = DBmethod().SearchShiftSystem(sortedshiftname[i])
+                    let shiftsystemrecord = DBmethod().SearchShiftSystem(desc_shiftname[i])
                     if shiftsystemrecord != nil {
                         let shiftname = DBmethod().ShiftSystemNameGet(shiftsystemrecord![0].id)
                         shiftlocationarray[shiftname.groupid] += self.GetShiftPositionArray(staffarraytmpnsstring, shiftname: shiftname.name)
@@ -593,42 +577,31 @@ class PDFmethod: UIViewController {
     
     //各配列の要素数を受け取り、要素数が1以上のシフトグループのシフト文字を配列にして返す
     func GetWillRemoveShiftName(array: [[Int]]) -> Array<String>{
-        var shiftgroupnamearray: [String] = []
+        var removeshiftnamearray: [String] = []
         
         for i in 0 ..< array.count{
             let count = array[i].count
             
             if(count != 0){
-                let shiftarray = DBmethod().ShiftSystemRecordArrayGetByGroudid(i)
+                let shiftarraytmp = DBmethod().ShiftSystemRecordArrayGetByGroudid(i)    //シフト体制をグループidで取得する
+                var shiftnamearray: [String] = []
+                
+                //シフトの名前を配列に格納していく
+                for j in 0..<shiftarraytmp.count {
+                    shiftnamearray.append(shiftarraytmp[j].name)
+                }
                 
                 //TODO: ここで文字列が長い順に並び替える
-                var dict: [String:Int] = [:]
-                for j in 0..<shiftarray.count {
-                    dict[shiftarray[j].name] = shiftarray[j].name.characters.count
-                }
-                var sortedvalues : Array = Array(dict.values)
-                sortedvalues = sortedvalues.sort().reverse()
-                
-                var sortedshiftname: [String] = []
-                for i in 0..<sortedvalues.count {
-                    for (key, value) in dict {
-                        if value == sortedvalues[i] {
-                            sortedshiftname.append(key)
-                            dict[key] = nil
-                            break
-                        }
-                    }
-                }
-
+                let desc_shiftnamearray = self.GetDescStringArray(shiftnamearray)
                 
                 
-                for k in 0 ..< shiftarray.count{
-                    shiftgroupnamearray.append(sortedshiftname)
+                for k in 0 ..< desc_shiftnamearray.count{
+                    removeshiftnamearray.append(desc_shiftnamearray[k])
                 }
             }
         }
         
-        return shiftgroupnamearray
+        return removeshiftnamearray
     }
     
     
