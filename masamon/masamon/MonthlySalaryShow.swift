@@ -989,11 +989,11 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         self.DayControl(tagindex!-currentdayindex!)
         
         if tagindex! - currentdayindex! > 0 {
-            self.AnimationDayLabel(20, afterposition: 8)
+            self.AnimationCalenderLabel(20, afterposition: 8)
         }else if tagindex! - currentdayindex! < 0 {
-            self.AnimationDayLabel(-4, afterposition: 8)
+            self.AnimationCalenderLabel(-4, afterposition: 8)
         }else{
-            self.AnimationDayLabel(8, afterposition: 8)
+            self.AnimationCalenderLabel(8, afterposition: 8)
         }
     }
     
@@ -1019,7 +1019,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     var tapanimationbuttonflag = false      //タップをした際にbuttontilearray内に今日の日付が含まれているかを記録
     
     //日付を表示しているLabelをアニメーション表示するメソッド
-    func AnimationDayLabel(beforeposition: CGFloat, afterposition: CGFloat) {
+    func AnimationCalenderLabel(beforeposition: CGFloat, afterposition: CGFloat) {
         CalenderLabel.alpha = 0.0
         CalenderLabel.frame = CGRectMake(beforeposition, 240, 359, 33)
         
@@ -1118,7 +1118,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         self.DayControl(1)
         
         //日付表示ラベルを画面右側からアニメーション表示させる
-        self.AnimationDayLabel(20, afterposition: 8)
+        self.AnimationCalenderLabel(20, afterposition: 8)
         self.AnimationShiftLabelCompletion(shiftlabel_x[0], mainposition: shiftlabel_x[0], nextpositon: shiftlabel_x[1])
     }
     
@@ -1126,7 +1126,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         self.DayControl(-1)
         
         //日付表示ラベルを画面左側からアニメーション表示させる
-        self.AnimationDayLabel(-4, afterposition: 8)
+        self.AnimationCalenderLabel(-4, afterposition: 8)
         self.AnimationShiftLabelCompletion(shiftlabel_x[1], mainposition: shiftlabel_x[2], nextpositon: shiftlabel_x[2])
     }
     
@@ -1148,18 +1148,18 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         
         if compareunit == .OrderedAscending {           //currentnsdateが今日より小さい(前の日付)場合
             
-            self.AnimationDayLabel(20, afterposition: 8)
+            self.AnimationCalenderLabel(20, afterposition: 8)
             self.SetupDayButton(1)
             self.AnimationShiftLabelCompletion(shiftlabel_x[0], mainposition: shiftlabel_x[0], nextpositon: shiftlabel_x[1])
             
         }else if compareunit == .OrderedDescending{     //currentnsdateが今日より大きい(後の日付)場合
             
-            self.AnimationDayLabel(-4, afterposition: 8)
+            self.AnimationCalenderLabel(-4, afterposition: 8)
             self.SetupDayButton(-1)
             self.AnimationShiftLabelCompletion(shiftlabel_x[1], mainposition: shiftlabel_x[2], nextpositon: shiftlabel_x[2])
             
         }else{                                          //日付が同じ場合
-            self.AnimationDayLabel(8, afterposition: 8)
+            self.AnimationCalenderLabel(8, afterposition: 8)
             self.SetupDayButton(0)
         }
     }
