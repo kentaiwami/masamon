@@ -149,9 +149,8 @@ class PDFmethod: UIViewController {
                     }
                 }
                 
-                //TODO: シフト体制を文字列の長さ順に並び替えてその順番ごとのidを配列に記録する
+                //シフト体制を文字列の長さ順に並び替えて配列に記録する
                 let shiftsystemnamearray = DBmethod().ShiftSystemNameArrayGet()
-                
                 let desc_shiftname = self.GetDescStringArray(shiftsystemnamearray)
                 
                 //シフト体制の分だけループを回し、各ループでスタッフ1人分のシフト出現場所を記録する
@@ -230,7 +229,7 @@ class PDFmethod: UIViewController {
             var count = 0
             for i in 0 ..< shiftlocationarray.count{
                 count += shiftlocationarray[i].count
-                print(shiftlocationarray[i])
+                print(shiftlocationarray[i].count)
             }
             
             if(count == monthrange.length){
@@ -591,7 +590,7 @@ class PDFmethod: UIViewController {
                     shiftnamearray.append(shiftarraytmp[j].name)
                 }
                 
-                //TODO: ここで文字列が長い順に並び替える
+                //文字列が長い順に並び替える
                 let desc_shiftnamearray = self.GetDescStringArray(shiftnamearray)
                 
                 
