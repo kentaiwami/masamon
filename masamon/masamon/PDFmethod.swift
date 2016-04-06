@@ -441,7 +441,6 @@ class PDFmethod: UIViewController {
         return shiftnamelocation
     }
     
-    //TODO: 文字数が多い順に動作をしていくようにすれば、Mとかカを手動で消す必要がなくなる？
     //指定したシフト体制を削除した文字列を返す関数
     func GetRemoveSetShiftName(staffarraysstring: NSString, shiftname: String) -> String{
         var removedshiftstring = ""
@@ -563,6 +562,33 @@ class PDFmethod: UIViewController {
         let result = set.array as! [Int]
         
         return result
+    }
+    
+    //文字列配列を文字列の多い順にソートして返す関数
+    func GetDescStringArray(array: Array<String>) -> Array<String> {
+        var dict: [String:Int] = [:]
+        
+        //文字列をkey、文字数をvalueとしてdictに保存していく
+        for i in 0..<array.count {
+            dict[array[i]] = array[i].characters.count
+        }
+        
+        //dict内のvalueを取り出して、降順にソートする
+        var sortedvalues : Array = Array(dict.values)
+        sortedvalues = sortedvalues.sort().reverse()
+
+        //文字数と一致するvalueを持っているkeyを配列に格納していく
+        var sortedkeyarray: [String] = []
+        for i in 0..<sortedvalues.count {
+            for (key, value) in dict {
+                if value == sortedvalues[i] {
+                    sortedkeyarray.append(key)
+                    dict[key] = nil
+                    break
+                }
+            }
+        }
+        return sortedkeyarray
     }
     
     //各配列の要素数を受け取り、要素数が1以上のシフトグループのシフト文字を配列にして返す
