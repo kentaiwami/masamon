@@ -26,6 +26,8 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     var onecourspicker: UIPickerView = UIPickerView()
     @IBOutlet weak var SaralyLabel: UILabel!
     
+    let filemanager:NSFileManager = NSFileManager()
+
     let notificationCenter = NSNotificationCenter.defaultCenter()
     let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得
     let alertview = UIImageView()
@@ -50,7 +52,6 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
         //シフト時間を選択して表示するテキストフィールドのデフォルト表示を指定
         starttime = time[0]
         endtime = time[0]
@@ -301,7 +302,22 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                 }
         })
         
+        let cancelAction:UIAlertAction = UIAlertAction(title: "キャンセル", style: UIAlertActionStyle.Cancel) { (UIAlertAction) in
+            //ファイルの削除
+            let libralypath = self.Libralypath + "/"
+            let filename = DBmethod().FilePathTmpGet().lastPathComponent    //ファイル名の抽出
+            
+            //コピーしたファイルの削除
+            do{
+                try self.filemanager.removeItemAtPath(libralypath + filename)
+                ShiftImport().InboxFileCountsDBMinusOne()
+            }catch{
+                print(error)
+            }
+        }
+        
         alert.addAction(addAction)
+        alert.addAction(cancelAction)
         
         //シフト名入力用のtextfieldを追加
         alert.addTextFieldWithConfigurationHandler({(text:UITextField!) -> Void in
@@ -365,8 +381,23 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                 self.savedata()
         })
         
-        alert.addAction(skipAction)
+        let cancelAction: UIAlertAction = UIAlertAction(title: "キャンセル", style: UIAlertActionStyle.Cancel) { (UIAlertAction) in
+            //ファイルの削除
+            let libralypath = self.Libralypath + "/"
+            let filename = DBmethod().FilePathTmpGet().lastPathComponent    //ファイル名の抽出
+
+            //コピーしたファイルの削除
+            do{
+                try self.filemanager.removeItemAtPath(libralypath + filename)
+                ShiftImport().InboxFileCountsDBMinusOne()
+            }catch{
+                print(error)
+            }
+        }
+        
         alert.addAction(addAction)
+        alert.addAction(skipAction)
+        alert.addAction(cancelAction)
         
         //シフト名入力用のtextfieldを追加
         alert.addTextFieldWithConfigurationHandler({(text:UITextField!) -> Void in
@@ -390,7 +421,6 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     //XLSXで新規シフト体制名が含まれていた場合に表示するアラート
     func StaffShiftErrorAlertShowXLSX(){
         let errorshiftnamexlsxarray = self.appDelegate.errorshiftnamexlsx
-        print(errorshiftnamexlsxarray)
         var flag = false
         let donecount = appDelegate.errorshiftnamefastcount - appDelegate.errorshiftnamexlsx.count
         
@@ -862,7 +892,6 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             shifttimetextfield.resignFirstResponder()
         }
     }
-    
     
     //シフトのグループを入れるテキストフィールドの設定をする
     func configurationshiftgroupnameTextField(textField: UITextField!){

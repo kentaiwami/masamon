@@ -98,16 +98,16 @@ class PDFmethod: UIViewController {
         //1クールが全部で何日間あるかを判断するため
         let shiftyearandmonth = CommonMethod().JudgeYearAndMonth(staffarray[0])
         let monthrange = CommonMethod().GetShiftCoursMonthRange(shiftyearandmonth.startcoursmonthyear, shiftstartmonth: shiftyearandmonth.startcoursmonth)
-
+        
         //先に空要素を1クール分追加しておく
         for _ in 0 ..< monthrange.length{
             dayshiftarray.append("")
         }
         
         //スタッフの人数分(配列の最後まで)繰り返す
-        for i in 10..<11 {
-//        for i in 1 ..< staffarray.count{
-        
+        //        for i in 10..<11 {
+        for i in 1 ..< staffarray.count{
+            
             var staffname = ""
             var staffarraytmp = ""
             
@@ -126,183 +126,182 @@ class PDFmethod: UIViewController {
             
             //スタッフ名の抽出
             staffname = self.GetStaffName(staffarraytmp, i: i)
-            //            print(staffname)
+
             //スキップされたスタッフは取り込みを行わない
             if(appDelegate.skipstaff.contains(staffname)){
-                break
-            }
-            
-            /*抽出したスタッフ名(マネージャーのMは除く)が1文字以下or4文字以上ならエラーとして記録
-            　エラーでなければシフトの出現場所を配列に格納していく
-            */
-            let removem = staffname.stringByReplacingOccurrencesOfString("M", withString: "")
-            if(removem.characters.count <= 1 || removem.characters.count >= 4){
-                appDelegate.errorstaffnamepdf.append(staffarraytmp)
+                //ループを抜けて次のループに移る
             }else{
-                //スタッフ名を正しく認識しているがエラーとして記録されている場合は削除する
-                for i in 0 ..< appDelegate.errorstaffnamepdf.count{
-                    let errorstaffnametext = appDelegate.errorstaffnamepdf[i]
-                    
-                    if(errorstaffnametext.containsString(staffname)){
-                        appDelegate.errorstaffnamepdf.removeAtIndex(i)
-                        break
-                    }
-                }
                 
-                //シフト体制を文字列の長さ順に並び替えて配列に記録する
-                let shiftsystemnamearray = DBmethod().ShiftSystemNameArrayGet()
-                let desc_shiftname = self.GetDescStringArray(shiftsystemnamearray)
-                
-                //シフト体制の分だけループを回し、各ループでスタッフ1人分のシフト出現場所を記録する
-                var staffarraytmpnsstring = staffarraytmp as NSString
-                for i in 0 ..< DBmethod().DBRecordCount(ShiftSystemDB){
-                    let shiftsystemrecord = DBmethod().SearchShiftSystem(desc_shiftname[i])
-                    if shiftsystemrecord != nil {
-                        let shiftname = DBmethod().ShiftSystemNameGet(shiftsystemrecord![0].id)
-                        let AAA = self.GetShiftPositionArray(staffarraytmpnsstring, shiftname: shiftname.name)
-                        
-                        shiftlocationarray[shiftname.groupid] += AAA.positionarray
-                        staffarraytmpnsstring = AAA.replacementstring
-                        print(staffarraytmpnsstring)
-                    }
-                }
-            }
-            
-            
-            //重複した要素を削除する
-            for i in 0 ..< shiftlocationarray.count{
-                shiftlocationarray[i] = self.GetRemoveOverlapElementArray(shiftlocationarray[i])
-            }
-            
-            
-            //配列をまたがって重複している要素を削除する
-            for i in 0 ..< shiftlocationarray.count{
-                let resultsarray = self.GetRemoveOverlapElementAnotherArray(shiftlocationarray)
-                shiftlocationarray[i] = resultsarray[i]
-            }
-            
-            //要素を昇順でソートする
-            for i in 0 ..< shiftlocationarray.count{
-                shiftlocationarray[i] = shiftlocationarray[i].sort()
-            }
-            
-            //スタッフ名にシフト名が含まれている場合に、カウントされてしまうため要素を削除する
-            let includeshiftnamearray = CommonMethod().IncludeShiftNameInStaffName(staffname)
-            if(includeshiftnamearray.count != 0){
-                
-                for i in 0 ..< includeshiftnamearray.count{
-                    if(shiftlocationarray[includeshiftnamearray[i]].count != 0){
-                        shiftlocationarray[includeshiftnamearray[i]].removeAtIndex(0)
-                    }
-                }
-                
-            }
-            
-            
-            //1クール分のシフト文字以外のシフト名をカウントしてしまうので、範囲外の要素を削除する
-            var index = staffarraytmp.startIndex
-            var numeralcount = 0
-            var removeflag = false
-            
-            while(index != staffarraytmp.endIndex.predecessor()){
-                
-                if(Int(String(staffarraytmp[index])) != nil){
-                    numeralcount += 1
+                /*抽出したスタッフ名(マネージャーのMは除く)が1文字以下or4文字以上ならエラーとして記録
+                 　エラーでなければシフトの出現場所を配列に格納していく
+                 */
+                let removem = staffname.stringByReplacingOccurrencesOfString("M", withString: "")
+                if(removem.characters.count <= 1 || removem.characters.count >= 4){
+                    appDelegate.errorstaffnamepdf.append(staffarraytmp)
                 }else{
-                    numeralcount = 0
-                }
-                
-                //数値の連続が5回以上なら数列として判断する
-                if(numeralcount >= 5){
-                    index = index.advancedBy(-4)
-                    removeflag = true
-                    break
-                }
-                
-                index = index.successor()
-            }
-            
-            
-            if(removeflag){
-                for i in 0 ..< shiftlocationarray.count{
-                    shiftlocationarray[i] = self.RemoveElementThanPivotIndex(shiftlocationarray[i], pivotindex: index, text: staffarraytmp)
-                }
-            }
-            
-            
-            //要素数を比較して正しくシフト体制を認識できているかチェックする
-            var count = 0
-            for i in 0 ..< shiftlocationarray.count{
-                count += shiftlocationarray[i].count
-            }
-            
-            if(count == monthrange.length){
-                
-                //正しく取り込めているが、シフト認識エラーとして記録されて残っている要素があれば削除する
-                if let _ = appDelegate.errorshiftnamepdf[staffname] {
-                    appDelegate.errorshiftnamepdf.removeValueForKey(staffname)
-                }
-                
-                
-                //各配列に識別子を追加する
-                for i in 0 ..< shiftlocationarray.count{
-                    shiftlocationarray[i].append(99999)
-                }
-                
-                //日付分のループを開始
-                for i in 0 ..< monthrange.length{
-                    
-                    //シフトの位置が一番小さい値とそのシフト区分を取得する
-                    let dayshift = self.GetMinShiftPositionAndGroup(shiftlocationarray)
-                    
-                    //シフトの名前をテキストから取得する
-                    let staffshift = self.GetShiftNameFromOneLineText(staffarraytmp, sg: dayshift.shiftgroup, sp: dayshift.shiftposition)
-                    
-                    switch(dayshift.shiftgroup){
-                    case "早":
-                        shiftlocationarray[0].removeAtIndex(0)
+                    //スタッフ名を正しく認識しているがエラーとして記録されている場合は削除する
+                    for i in 0 ..< appDelegate.errorstaffnamepdf.count{
+                        let errorstaffnametext = appDelegate.errorstaffnamepdf[i]
                         
-                    case "中1":
-                        shiftlocationarray[1].removeAtIndex(0)
-                        
-                    case "中2":
-                        shiftlocationarray[2].removeAtIndex(0)
-                        
-                    case "中3":
-                        shiftlocationarray[3].removeAtIndex(0)
-                        
-                    case "遅":
-                        shiftlocationarray[4].removeAtIndex(0)
-                        
-                    case "他":
-                        shiftlocationarray[5].removeAtIndex(0)
-                        
-                    case "休":
-                        shiftlocationarray[6].removeAtIndex(0)
-                        
-                    default:
-                        break
+                        if(errorstaffnametext.containsString(staffname)){
+                            appDelegate.errorstaffnamepdf.removeAtIndex(i)
+                            break
+                        }
                     }
                     
-                    let holidayarray = DBmethod().ShiftSystemNameArrayGetByGroudid(6)
-                    if(staffshift != ""){
-                        if(holidayarray.contains(staffshift) == false){
-                            dayshiftarray[i] += staffname + ":" + staffshift + ","
+                    //シフト体制を文字列の長さ順に並び替えて配列に記録する
+                    let shiftsystemnamearray = DBmethod().ShiftSystemNameArrayGet()
+                    let desc_shiftname = self.GetDescStringArray(shiftsystemnamearray)
+                    
+                    //シフト体制の分だけループを回し、各ループでスタッフ1人分のシフト出現場所を記録する
+                    var staffarraytmpnsstring = staffarraytmp as NSString
+                    for i in 0 ..< DBmethod().DBRecordCount(ShiftSystemDB){
+                        let shiftsystemrecord = DBmethod().SearchShiftSystem(desc_shiftname[i])
+                        if shiftsystemrecord != nil {
+                            let shiftname = DBmethod().ShiftSystemNameGet(shiftsystemrecord![0].id)
+                            let results = self.GetShiftPositionArray(staffarraytmpnsstring, shiftname: shiftname.name)
+                            
+                            shiftlocationarray[shiftname.groupid] += results.positionarray
+                            staffarraytmpnsstring = results.replacementstring
                         }
                     }
                 }
                 
-                //認識できないシフト名があった場合
-            }else{
                 
-                let successshiftnamearray = self.GetWillRemoveShiftName(shiftlocationarray)
-                var messagetext = staffarraytmp
-                
-                for i in 0 ..< successshiftnamearray.count{
-                    messagetext = self.GetRemoveSetShiftName(messagetext, shiftname: successshiftnamearray[i])
+                //重複した要素を削除する
+                for i in 0 ..< shiftlocationarray.count{
+                    shiftlocationarray[i] = self.GetRemoveOverlapElementArray(shiftlocationarray[i])
                 }
                 
-                appDelegate.errorshiftnamepdf[staffname] = messagetext
+                
+                //配列をまたがって重複している要素を削除する
+                for i in 0 ..< shiftlocationarray.count{
+                    let resultsarray = self.GetRemoveOverlapElementAnotherArray(shiftlocationarray)
+                    shiftlocationarray[i] = resultsarray[i]
+                }
+                
+                //要素を昇順でソートする
+                for i in 0 ..< shiftlocationarray.count{
+                    shiftlocationarray[i] = shiftlocationarray[i].sort()
+                }
+                
+                //スタッフ名にシフト名が含まれている場合に、カウントされてしまうため要素を削除する
+                let includeshiftnamearray = CommonMethod().IncludeShiftNameInStaffName(staffname)
+                if(includeshiftnamearray.count != 0){
+                    
+                    for i in 0 ..< includeshiftnamearray.count{
+                        if(shiftlocationarray[includeshiftnamearray[i]].count != 0){
+                            shiftlocationarray[includeshiftnamearray[i]].removeAtIndex(0)
+                        }
+                    }
+                    
+                }
+                
+                //1クール分のシフト文字以外のシフト名をカウントしてしまうので、範囲外の要素を削除する
+                var index = staffarraytmp.startIndex
+                var numeralcount = 0
+                var removeflag = false
+                
+                while(index != staffarraytmp.endIndex.predecessor()){
+                    
+                    if(Int(String(staffarraytmp[index])) != nil){
+                        numeralcount += 1
+                    }else{
+                        numeralcount = 0
+                    }
+                    
+                    //数値の連続が5回以上なら数列として判断する
+                    if(numeralcount >= 5){
+                        index = index.advancedBy(-4)
+                        removeflag = true
+                        break
+                    }
+                    
+                    index = index.successor()
+                }
+                
+                
+                if(removeflag){
+                    for i in 0 ..< shiftlocationarray.count{
+                        shiftlocationarray[i] = self.RemoveElementThanPivotIndex(shiftlocationarray[i], pivotindex: index, text: staffarraytmp)
+                    }
+                }
+                
+                
+                //要素数を比較して正しくシフト体制を認識できているかチェックする
+                var count = 0
+                for i in 0 ..< shiftlocationarray.count{
+                    count += shiftlocationarray[i].count
+                }
+                
+                if(count == monthrange.length){
+                    
+                    //正しく取り込めているが、シフト認識エラーとして記録されて残っている要素があれば削除する
+                    if let _ = appDelegate.errorshiftnamepdf[staffname] {
+                        appDelegate.errorshiftnamepdf.removeValueForKey(staffname)
+                    }
+                    
+                    
+                    //各配列に識別子を追加する
+                    for i in 0 ..< shiftlocationarray.count{
+                        shiftlocationarray[i].append(99999)
+                    }
+                    
+                    //日付分のループを開始
+                    for i in 0 ..< monthrange.length{
+                        
+                        //シフトの位置が一番小さい値とそのシフト区分を取得する
+                        let dayshift = self.GetMinShiftPositionAndGroup(shiftlocationarray)
+                        
+                        //シフトの名前をテキストから取得する
+                        let staffshift = self.GetShiftNameFromOneLineText(staffarraytmp, sg: dayshift.shiftgroup, sp: dayshift.shiftposition)
+
+                        switch(dayshift.shiftgroup){
+                        case "早":
+                            shiftlocationarray[0].removeAtIndex(0)
+                            
+                        case "中1":
+                            shiftlocationarray[1].removeAtIndex(0)
+                            
+                        case "中2":
+                            shiftlocationarray[2].removeAtIndex(0)
+                            
+                        case "中3":
+                            shiftlocationarray[3].removeAtIndex(0)
+                            
+                        case "遅":
+                            shiftlocationarray[4].removeAtIndex(0)
+                            
+                        case "他":
+                            shiftlocationarray[5].removeAtIndex(0)
+                            
+                        case "休":
+                            shiftlocationarray[6].removeAtIndex(0)
+                            
+                        default:
+                            break
+                        }
+                        
+                        let holidayarray = DBmethod().ShiftSystemNameArrayGetByGroudid(6)
+                        if(staffshift != ""){
+                            if(holidayarray.contains(staffshift) == false){
+                                dayshiftarray[i] += staffname + ":" + staffshift + ","
+                            }
+                        }
+                    }
+                    
+                    //認識できないシフト名があった場合
+                }else{
+                    
+                    let successshiftnamearray = self.GetWillRemoveShiftName(shiftlocationarray)
+                    var messagetext = staffarraytmp
+                    
+                    for i in 0 ..< successshiftnamearray.count{
+                        messagetext = self.GetRemoveSetShiftName(messagetext, shiftname: successshiftnamearray[i])
+                    }
+                    
+                    appDelegate.errorshiftnamepdf[staffname] = messagetext
+                }
             }
         }
         
@@ -327,9 +326,9 @@ class PDFmethod: UIViewController {
     
     
     /*スタッフ1人分のテキストを受け取ってスタッフ名のみを返す関数
-    stafftext => スタッフ名とシフトが記述されているテキスト
-    i         => ループの回数(stafftextの先頭についている数値)
-    */
+     stafftext => スタッフ名とシフトが記述されているテキスト
+     i         => ループの回数(stafftextの先頭についている数値)
+     */
     func GetStaffName(stafftext: String, i: Int) -> String{
         
         //もし、データベースに登録しているスタッフ名があった場合はそれを返す
@@ -379,9 +378,9 @@ class PDFmethod: UIViewController {
         var getcharacterstaffname = stafftext[stafftext.startIndex.advancedBy(position)]
         
         while(DBmethod().SearchShiftSystem(String(getcharacterstaffname)) == nil){
-            let ABC = stafftext.startIndex.advancedBy(position)
+            let character = stafftext.startIndex.advancedBy(position)
             
-            if(ABC == stafftext.endIndex.predecessor()){
+            if(character == stafftext.endIndex.predecessor()){
                 break
             }
             
@@ -409,18 +408,18 @@ class PDFmethod: UIViewController {
     
     //受け取ったシフト体制の場所を配列にして返す関数
     func GetShiftPositionArray(staffarraysstring: NSString, shiftname: String) -> (positionarray: Array<Int>, replacementstring: NSString){
-        var BBB = staffarraysstring
+        var staffstring = staffarraysstring
         var shiftnamelocation: [Int] = []
-        let searchrange = NSMakeRange(0, BBB.length)
-        var searchresult = BBB.rangeOfString(shiftname, options: NSStringCompareOptions.CaseInsensitiveSearch, range: searchrange)
+        let searchrange = NSMakeRange(0, staffstring.length)
+        var searchresult = staffstring.rangeOfString(shiftname, options: NSStringCompareOptions.CaseInsensitiveSearch, range: searchrange)
         let number = shiftname.characters.count
-
+        
         while(searchresult.location != NSNotFound){
             if(searchresult.location != NSNotFound){
                 
                 shiftnamelocation.append(searchresult.location)
                 
-                let replaceStartIndex = (BBB as String).startIndex.advancedBy(searchresult.location)
+                let replaceStartIndex = (staffstring as String).startIndex.advancedBy(searchresult.location)
                 let replaceEndIndex = replaceStartIndex.advancedBy(number)
                 var replacestring = ""
                 
@@ -428,18 +427,14 @@ class PDFmethod: UIViewController {
                     replacestring += "鬱"
                 }
                 
+                let replacedstring = (staffstring as String).stringByReplacingCharactersInRange(replaceStartIndex..<replaceEndIndex, withString: replacestring)
+                staffstring = replacedstring as NSString
                 
-                let aaa = (BBB as String).stringByReplacingCharactersInRange(replaceStartIndex..<replaceEndIndex, withString: replacestring)
-                BBB = aaa as NSString
-                
-//                searchrange = NSMakeRange(searchresult.location + searchresult.length, BBB.length-(searchresult.location + searchresult.length))
-                
-                searchresult = BBB.rangeOfString(shiftname, options: NSStringCompareOptions.CaseInsensitiveSearch, range: searchrange)
+                searchresult = staffstring.rangeOfString(shiftname, options: NSStringCompareOptions.CaseInsensitiveSearch, range: searchrange)
             }
-//            searchrange = NSMakeRange(0, BBB.length)
         }
         
-        return (shiftnamelocation,BBB)
+        return (shiftnamelocation,staffstring)
     }
     
     //指定したシフト体制を削除した文字列を返す関数
@@ -577,7 +572,7 @@ class PDFmethod: UIViewController {
         //dict内のvalueを取り出して、降順にソートする
         var sortedvalues : Array = Array(dict.values)
         sortedvalues = sortedvalues.sort().reverse()
-
+        
         //文字数と一致するvalueを持っているkeyを配列に格納していく
         var sortedkeyarray: [String] = []
         for i in 0..<sortedvalues.count {
@@ -661,9 +656,9 @@ class PDFmethod: UIViewController {
     
     
     /*受け取った配列同士の重複を調べて処理後の配列を返す関数
-    removedarray    => 文字数が少なく、要素が削除される側の配列
-    comparisonarray => 文字数が多く、要素の削除のための比較用になる配列
-    */
+     removedarray    => 文字数が少なく、要素が削除される側の配列
+     comparisonarray => 文字数が多く、要素の削除のための比較用になる配列
+     */
     func RemoveIntersectArrayToArray( removedarray: Array<Int>, comparisonarray: Array<Int>) -> Array<Int>{
         
         let setarray = Set(removedarray).intersect(comparisonarray)
@@ -758,9 +753,9 @@ class PDFmethod: UIViewController {
                     }
                     
                 }else{
-
+                    
                     shiftdbrecord.id = shiftdbrecordcount
-
+                    
                     shiftdbrecord.year = 0
                     shiftdbrecord.month = 0
                     shiftdbrecord.shiftimportname = importname
@@ -868,7 +863,7 @@ class PDFmethod: UIViewController {
         let oldshiftdbsalalynone = DBmethod().SearchShiftDB(importname)     //月給がデフォルト値で登録されているShiftDBオブジェクト
         
         newshiftdbsalalyadd.id = oldshiftdbsalalynone.id
-
+        
         for i in 0 ..< oldshiftdbsalalynone.shiftdetail.count{
             newshiftdbsalalyadd.shiftdetail.append(oldshiftdbsalalynone.shiftdetail[i])
         }
