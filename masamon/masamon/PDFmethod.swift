@@ -154,15 +154,20 @@ class PDFmethod: UIViewController {
                 let desc_shiftname = self.GetDescStringArray(shiftsystemnamearray)
                 
                 //シフト体制の分だけループを回し、各ループでスタッフ1人分のシフト出現場所を記録する
-                let staffarraytmpnsstring = staffarraytmp as NSString
+                var staffarraytmpnsstring = staffarraytmp as NSString
                 for i in 0 ..< DBmethod().DBRecordCount(ShiftSystemDB){
                     let shiftsystemrecord = DBmethod().SearchShiftSystem(desc_shiftname[i])
                     if shiftsystemrecord != nil {
                         let shiftname = DBmethod().ShiftSystemNameGet(shiftsystemrecord![0].id)
-                        shiftlocationarray[shiftname.groupid] += self.GetShiftPositionArray(staffarraytmpnsstring, shiftname: shiftname.name)
+                        let AAA = self.GetShiftPositionArray(staffarraytmpnsstring, shiftname: shiftname.name)
+                        
+                        shiftlocationarray[shiftname.groupid] += AAA.positionarray
+                        staffarraytmpnsstring = AAA.replacementstring
+                        print(staffarraytmpnsstring)
                     }
                 }
             }
+            
             
             //重複した要素を削除する
             for i in 0 ..< shiftlocationarray.count{
@@ -229,7 +234,6 @@ class PDFmethod: UIViewController {
             var count = 0
             for i in 0 ..< shiftlocationarray.count{
                 count += shiftlocationarray[i].count
-                print(shiftlocationarray[i].count)
             }
             
             if(count == monthrange.length){
@@ -404,24 +408,38 @@ class PDFmethod: UIViewController {
     }
     
     //受け取ったシフト体制の場所を配列にして返す関数
-    func GetShiftPositionArray(staffarraysstring: NSString, shiftname: String) -> Array<Int>{
+    func GetShiftPositionArray(staffarraysstring: NSString, shiftname: String) -> (positionarray: Array<Int>, replacementstring: NSString){
+        var BBB = staffarraysstring
         var shiftnamelocation: [Int] = []
-        var searchrange = NSMakeRange(0, staffarraysstring.length)
-        var searchresult = staffarraysstring.rangeOfString(shiftname, options: NSStringCompareOptions.CaseInsensitiveSearch, range: searchrange)
-        
+        let searchrange = NSMakeRange(0, BBB.length)
+        var searchresult = BBB.rangeOfString(shiftname, options: NSStringCompareOptions.CaseInsensitiveSearch, range: searchrange)
+        let number = shiftname.characters.count
+
         while(searchresult.location != NSNotFound){
             if(searchresult.location != NSNotFound){
                 
                 shiftnamelocation.append(searchresult.location)
                 
-                searchrange = NSMakeRange(searchresult.location + searchresult.length, staffarraysstring.length-(searchresult.location + searchresult.length))
+                let replaceStartIndex = (BBB as String).startIndex.advancedBy(searchresult.location)
+                let replaceEndIndex = replaceStartIndex.advancedBy(number)
+                var replacestring = ""
                 
-                searchresult = staffarraysstring.rangeOfString(shiftname, options: NSStringCompareOptions.CaseInsensitiveSearch, range: searchrange)
+                for _ in 0..<number {
+                    replacestring += "鬱"
+                }
+                
+                
+                let aaa = (BBB as String).stringByReplacingCharactersInRange(replaceStartIndex..<replaceEndIndex, withString: replacestring)
+                BBB = aaa as NSString
+                
+//                searchrange = NSMakeRange(searchresult.location + searchresult.length, BBB.length-(searchresult.location + searchresult.length))
+                
+                searchresult = BBB.rangeOfString(shiftname, options: NSStringCompareOptions.CaseInsensitiveSearch, range: searchrange)
             }
-            searchrange = NSMakeRange(0, staffarraysstring.length)
+//            searchrange = NSMakeRange(0, BBB.length)
         }
         
-        return shiftnamelocation
+        return (shiftnamelocation,BBB)
     }
     
     //指定したシフト体制を削除した文字列を返す関数
