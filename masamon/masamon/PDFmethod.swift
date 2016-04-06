@@ -105,8 +105,8 @@ class PDFmethod: UIViewController {
         }
         
         //スタッフの人数分(配列の最後まで)繰り返す
-//        for i in 13..<14 {
-        for i in 1 ..< staffarray.count{
+        for i in 10..<11 {
+//        for i in 1 ..< staffarray.count{
         
             var staffname = ""
             var staffarraytmp = ""
@@ -246,6 +246,7 @@ class PDFmethod: UIViewController {
             var count = 0
             for i in 0 ..< shiftlocationarray.count{
                 count += shiftlocationarray[i].count
+                print(shiftlocationarray[i])
             }
             
             if(count == monthrange.length){
@@ -573,8 +574,8 @@ class PDFmethod: UIViewController {
             
             if(count != 0){
                 let shiftarray = DBmethod().ShiftSystemRecordArrayGetByGroudid(i)
-                for i in 0 ..< shiftarray.count{
-                    shiftgroupnamearray.append(shiftarray[i].name)
+                for j in 0 ..< shiftarray.count{
+                    shiftgroupnamearray.append(shiftarray[j].name)
                 }
             }
         }
