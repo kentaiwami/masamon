@@ -574,8 +574,30 @@ class PDFmethod: UIViewController {
             
             if(count != 0){
                 let shiftarray = DBmethod().ShiftSystemRecordArrayGetByGroudid(i)
-                for j in 0 ..< shiftarray.count{
-                    shiftgroupnamearray.append(shiftarray[j].name)
+                
+                //TODO: ここで文字列が長い順に並び替える
+                var dict: [String:Int] = [:]
+                for j in 0..<shiftarray.count {
+                    dict[shiftarray[j].name] = shiftarray[j].name.characters.count
+                }
+                var sortedvalues : Array = Array(dict.values)
+                sortedvalues = sortedvalues.sort().reverse()
+                
+                var sortedshiftname: [String] = []
+                for i in 0..<sortedvalues.count {
+                    for (key, value) in dict {
+                        if value == sortedvalues[i] {
+                            sortedshiftname.append(key)
+                            dict[key] = nil
+                            break
+                        }
+                    }
+                }
+
+                
+                
+                for k in 0 ..< shiftarray.count{
+                    shiftgroupnamearray.append(sortedshiftname)
                 }
             }
         }
