@@ -1067,6 +1067,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
 
             }, completion: {
                 (value: Bool) in
+
                 //配置場所をユーザが気づかないように瞬時に戻す
                 for i in 0..<self.ShiftLabelArray.count {
                     for j in 0..<self.ShiftLabelArray[i].count {
@@ -1165,14 +1166,13 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     }
 
     
-    //何日進めるかの値を受け取って日付を操作して表示内容を変更する
+    //何日進めるかの値を受け取って日付を操作する
     func DayControl(control: Int){
         let nsdatesplit = self.ReturnYearMonthDayWeekday(currentnsdate)
         let newnsdate = self.CreateNSDate(nsdatesplit.year, month: nsdatesplit.month, day: nsdatesplit.day+control)
         currentnsdate = newnsdate
         
         let currentnsdatesplit = self.ReturnYearMonthDayWeekday(currentnsdate)
-        self.ShowAllData(CommonMethod().Changecalendar(currentnsdatesplit.year, calender: "A.D"), m: currentnsdatesplit.month, d: currentnsdatesplit.day, arraynumber: 1)
         
         CalenderLabel.text = "\(currentnsdatesplit.year)年\(currentnsdatesplit.month)月\(currentnsdatesplit.day)日 \(self.ReturnWeekday(currentnsdatesplit.weekday))曜日"
         
