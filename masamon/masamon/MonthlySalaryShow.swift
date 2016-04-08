@@ -96,7 +96,8 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         CalenderLabel.backgroundColor = UIColor.clearColor()
         CalenderLabel.textColor = UIColor.whiteColor()
         CalenderLabel.textAlignment = NSTextAlignment.Center
-        CalenderLabel.text = "\(date.year)年\(date.month)月\(date.day)日 \(self.ReturnWeekday(date.weekday))曜日"
+        self.SetCalenderLabel(date.year, month: date.month, day: date.day, weekday: date.weekday)
+
         self.view.addSubview(CalenderLabel)
         
         NSTimer.scheduledTimerWithTimeInterval(1.0,target:self,selector:#selector(MonthlySalaryShow.FileSaveSuccessfulAlertShow),
@@ -1029,6 +1030,11 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         }
     }
     
+    //日付を表示しているLabelに日付の内容をセットするメソッド
+    func SetCalenderLabel(year: Int, month: Int, day: Int, weekday: Int){
+        CalenderLabel.text = "\(year)年\(month)月\(day)日 \(self.ReturnWeekday(weekday))曜日"
+    }
+    
     //日付を表示するボタンのアニメーションを行うメソッド
     func AnimationDayButton(button: UIButton, beforeposition: Int, afterpositon: Int, positionY: Int, buttonsize: Int){
         button.frame = CGRectMake(
@@ -1135,7 +1141,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         let today = NSDate()
         let date = ReturnYearMonthDayWeekday(today)
         self.ShowAllData(CommonMethod().Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day, arraynumber: 1)
-        CalenderLabel.text = "\(date.year)年\(date.month)月\(date.day)日 \(self.ReturnWeekday(date.weekday))曜日"
+        self.SetCalenderLabel(date.year, month: date.month, day: date.day, weekday: date.weekday)
         
         //現在表示している日付と今日の日付を比較して、アニメーションを切り替えて表示する
         let calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)!
@@ -1173,8 +1179,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         currentnsdate = newnsdate
         
         let currentnsdatesplit = self.ReturnYearMonthDayWeekday(currentnsdate)
-        
-        CalenderLabel.text = "\(currentnsdatesplit.year)年\(currentnsdatesplit.month)月\(currentnsdatesplit.day)日 \(self.ReturnWeekday(currentnsdatesplit.weekday))曜日"
+        self.SetCalenderLabel(currentnsdatesplit.year, month: currentnsdatesplit.month, day: currentnsdatesplit.day, weekday: currentnsdatesplit.weekday)
         
         self.SetupDayButton(control)
     }
