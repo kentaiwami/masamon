@@ -1027,7 +1027,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         
         //長押し
         let myLongPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(MonthlySalaryShow.today))
-        myLongPressGesture.minimumPressDuration = 0.5
+        myLongPressGesture.minimumPressDuration = 0.2
         myLongPressGesture.allowableMovement = 150
         self.view.addGestureRecognizer(myLongPressGesture)
     }
@@ -1156,36 +1156,40 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         self.AnimationShiftLabelCompletion(shiftlabel_x[1], mainposition: shiftlabel_x[2], nextpositon: shiftlabel_x[2])
     }
     
-    func today(){
-        let today = NSDate()
-        let date = ReturnYearMonthDayWeekday(today)
-        self.SetCalenderLabel(date.year, month: date.month, day: date.day, weekday: date.weekday)
+    func today(sender: UILongPressGestureRecognizer){
         
-        let calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)!
-        let compareunit = calendar.compareDate(currentnsdate, toDate: today, toUnitGranularity: .Day)
-        
-        currentnsdate = today
-        
-        if buttontilearray.contains(String(date.day)) == false {
-            tapanimationbuttonflag = true
-        }
-        
-        //現在表示している日付と今日の日付を比較して、アニメーションを切り替えて表示する
-        if compareunit == .OrderedAscending {           //currentnsdateが今日より小さい(前の日付)場合
-            self.ShowAllData(CommonMethod().Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day, arraynumber: 2)
-            self.AnimationCalenderLabel(20, afterposition: 8)
-            self.SetupDayButton(1)
-            self.AnimationShiftLabelCompletion(shiftlabel_x[0], mainposition: shiftlabel_x[0], nextpositon: shiftlabel_x[1])
+        if sender.state == UIGestureRecognizerState.Ended {
             
-        }else if compareunit == .OrderedDescending{     //currentnsdateが今日より大きい(後の日付)場合
-            self.ShowAllData(CommonMethod().Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day, arraynumber: 0)
-            self.AnimationCalenderLabel(-4, afterposition: 8)
-            self.SetupDayButton(-1)
-            self.AnimationShiftLabelCompletion(shiftlabel_x[1], mainposition: shiftlabel_x[2], nextpositon: shiftlabel_x[2])
+            let today = NSDate()
+            let date = ReturnYearMonthDayWeekday(today)
+            self.SetCalenderLabel(date.year, month: date.month, day: date.day, weekday: date.weekday)
             
-        }else{                                          //日付が同じ場合
-            self.AnimationCalenderLabel(8, afterposition: 8)
-            self.SetupDayButton(0)
+            let calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)!
+            let compareunit = calendar.compareDate(currentnsdate, toDate: today, toUnitGranularity: .Day)
+            
+            currentnsdate = today
+            
+            if buttontilearray.contains(String(date.day)) == false {
+                tapanimationbuttonflag = true
+            }
+            
+            //現在表示している日付と今日の日付を比較して、アニメーションを切り替えて表示する
+            if compareunit == .OrderedAscending {           //currentnsdateが今日より小さい(前の日付)場合
+                self.ShowAllData(CommonMethod().Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day, arraynumber: 2)
+                self.AnimationCalenderLabel(20, afterposition: 8)
+                self.SetupDayButton(1)
+                self.AnimationShiftLabelCompletion(shiftlabel_x[0], mainposition: shiftlabel_x[0], nextpositon: shiftlabel_x[1])
+                
+            }else if compareunit == .OrderedDescending{     //currentnsdateが今日より大きい(後の日付)場合
+                self.ShowAllData(CommonMethod().Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day, arraynumber: 0)
+                self.AnimationCalenderLabel(-4, afterposition: 8)
+                self.SetupDayButton(-1)
+                self.AnimationShiftLabelCompletion(shiftlabel_x[1], mainposition: shiftlabel_x[2], nextpositon: shiftlabel_x[2])
+                
+            }else{                                          //日付が同じ場合
+                self.AnimationCalenderLabel(8, afterposition: 8)
+                self.SetupDayButton(0)
+            }
         }
     }
 
