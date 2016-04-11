@@ -83,14 +83,19 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         currentnsdate = NSDate()
         
         let today = NSDate()
-        let date = ReturnYearMonthDayWeekday(today)         //日付を西暦,月,日,曜日に分けて取得
         
         //前日、当日、翌日のラベルにデータをセットする
         let daycontrol = [-1,0,1]
         for i in 0..<ShiftLabelArray.count {
-            self.ShowAllData(CommonMethod().Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day+daycontrol[i], arraynumber: i)
+            //control[i]分だけ日付を操作したnsdateを作成する
+            let calendar = NSCalendar.currentCalendar()
+            let daycontroled_nsdate = calendar.dateByAddingUnit(.Day, value: daycontrol[i], toDate: today, options: [])
+            let daycontroled_splitday = self.ReturnYearMonthDayWeekday(daycontroled_nsdate!)
+
+            self.ShowAllData(CommonMethod().Changecalendar(daycontroled_splitday.year, calender: "A.D"), m: daycontroled_splitday.month, d: daycontroled_splitday.day, arraynumber: i)
         }
         
+        let date = self.ReturnYearMonthDayWeekday(today)
         //日付を表示するラベルの初期設定
         CalenderLabel.frame = CGRectMake(8, 240, 359, 33)
         CalenderLabel.backgroundColor = UIColor.clearColor()
@@ -1095,10 +1100,14 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                 }
                 
                 //配置を元に戻すと同時に表示内容も更新する
-                let currentnsdatesplit = self.ReturnYearMonthDayWeekday(self.currentnsdate)
                 let daycontrol = [-1,0,1]
                 for i in 0..<self.ShiftLabelArray.count {
-                    self.ShowAllData(CommonMethod().Changecalendar(currentnsdatesplit.year, calender: "A.D"), m: currentnsdatesplit.month, d: currentnsdatesplit.day+daycontrol[i], arraynumber: i)
+                    //control[i]分だけ日付を操作したnsdateを作成する
+                    let calendar = NSCalendar.currentCalendar()
+                    let daycontroled_nsdate = calendar.dateByAddingUnit(.Day, value: daycontrol[i], toDate: self.currentnsdate, options: [])
+                    let daycontroled_splitday = self.ReturnYearMonthDayWeekday(daycontroled_nsdate!)
+
+                    self.ShowAllData(CommonMethod().Changecalendar(daycontroled_splitday.year, calender: "A.D"), m: daycontroled_splitday.month, d: daycontroled_splitday.day, arraynumber: i)
                 }
         })
     }
@@ -1183,9 +1192,11 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     
     //何日進めるかの値を受け取って日付を操作する
     func DayControl(control: Int){
-        let nsdatesplit = self.ReturnYearMonthDayWeekday(currentnsdate)
-        let newnsdate = self.CreateNSDate(nsdatesplit.year, month: nsdatesplit.month, day: nsdatesplit.day+control)
-        currentnsdate = newnsdate
+        //control分だけ日付を操作したnsdateを作成する
+        let calendar = NSCalendar.currentCalendar()
+        let daycontroled_nsdate = calendar.dateByAddingUnit(.Day, value: control, toDate: self.currentnsdate, options: [])
+        
+        currentnsdate = daycontroled_nsdate!
 
         let currentnsdatesplit = self.ReturnYearMonthDayWeekday(currentnsdate)
         
