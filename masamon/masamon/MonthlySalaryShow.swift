@@ -988,15 +988,18 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         let currentdayindex = buttontilearray.indexOf(String(currentsplitday.day))
         
         self.DayControl(tagindex!-currentdayindex!)
-        
+        let currentnsdatesplit = self.ReturnYearMonthDayWeekday(currentnsdate)
+
         //今日の日付より大きい日付(翌日以降)のボタンがタップされた場合
         if tagindex! - currentdayindex! > 0 {
             self.AnimationCalenderLabel(20, afterposition: 8)
+            self.ShowAllData(CommonMethod().Changecalendar(currentnsdatesplit.year, calender: "A.D"), m: currentnsdatesplit.month, d: currentnsdatesplit.day, arraynumber: 2)
             self.AnimationShiftLabelCompletion(shiftlabel_x[0], mainposition: shiftlabel_x[0], nextpositon: shiftlabel_x[1])
         
         //今日の日付より小さい日付(前日以降)のボタンがタップされた場合
         }else if tagindex! - currentdayindex! < 0 {
             self.AnimationCalenderLabel(-4, afterposition: 8)
+            self.ShowAllData(CommonMethod().Changecalendar(currentnsdatesplit.year, calender: "A.D"), m: currentnsdatesplit.month, d: currentnsdatesplit.day, arraynumber: 0)
             self.AnimationShiftLabelCompletion(shiftlabel_x[1], mainposition: shiftlabel_x[2], nextpositon: shiftlabel_x[2])
         
         //今日の日付と同じボタンがタップされた場合
