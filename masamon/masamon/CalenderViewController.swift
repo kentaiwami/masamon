@@ -209,29 +209,7 @@ class CalenderViewController: UIViewController {
                 CGFloat(calendarLabelHeight)
             )
             
-            //日曜日の場合は赤色を指定
-            if i == 0 {
-                
-                //RGBカラーの設定は小数値をCGFloat型にしてあげる
-                calendarBaseLabel.textColor = UIColor(
-                    red: CGFloat(0.831), green: CGFloat(0.349), blue: CGFloat(0.224), alpha: CGFloat(1.0)
-                )
-                
-                //土曜日の場合は青色を指定
-            }else if i == 6 {
-                
-                //RGBカラーの設定は小数値をCGFloat型にしてあげる
-                calendarBaseLabel.textColor = UIColor(
-                    red: CGFloat(0.400), green: CGFloat(0.471), blue: CGFloat(0.980), alpha: CGFloat(1.0)
-                )
-                
-                //平日の場合は灰色を指定
-            }else{
-                
-                //既に用意されている配色パターンの場合
-                calendarBaseLabel.textColor = UIColor.lightGrayColor()
-                
-            }
+            calendarBaseLabel.textColor = UIColor.lightGrayColor()
             
             //曜日ラベルの配置
             calendarBaseLabel.text = String(array[i] as! NSString)
