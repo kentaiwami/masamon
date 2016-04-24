@@ -65,7 +65,7 @@ class CalenderViewController: UIViewController {
     
     func CalenderViewDidLoad(){
         calendarBar.backgroundColor = UIColor.hex("FF8E92", alpha: 1.0)
-        calendarBar.frame = CGRectMake(0, 140, self.view.frame.width, 40)
+        calendarBar.frame = CGRectMake(0, 190, self.view.frame.width, 40)
         
         //凡例の背景色を設定
         earlyshiftlegend.backgroundColor = UIColor(
@@ -104,12 +104,12 @@ class CalenderViewController: UIViewController {
         breaktimelegend.textAlignment = NSTextAlignment.Center
         
         //凡例を表示する場所と大きさを設定
-        earlyshiftlegend.frame = CGRectMake(40, 20, 45, 45)
-        center1shiftlegend.frame = CGRectMake(40, 80, 45, 45)
-        center2shiftlegend.frame = CGRectMake(self.view.frame.width/2-22.5, 20, 45, 45)
-        center3shiftlegend.frame = CGRectMake(self.view.frame.width/2-22.5, 80, 45, 45)
-        latershiftlegend.frame = CGRectMake(self.view.frame.width-80, 20, 45, 45)
-        breaktimelegend.frame = CGRectMake(self.view.frame.width-80, 80, 45, 45)
+        earlyshiftlegend.frame = CGRectMake(40, 70, 45, 45)
+        center1shiftlegend.frame = CGRectMake(40, 130, 45, 45)
+        center2shiftlegend.frame = CGRectMake(self.view.frame.width/2-22.5, 70, 45, 45)
+        center3shiftlegend.frame = CGRectMake(self.view.frame.width/2-22.5, 130, 45, 45)
+        latershiftlegend.frame = CGRectMake(self.view.frame.width-80, 70, 45, 45)
+        breaktimelegend.frame = CGRectMake(self.view.frame.width-80, 130, 45, 45)
         
         //凡例のマスクを有効に設定
         earlyshiftlegend.layer.masksToBounds = true
@@ -141,7 +141,7 @@ class CalenderViewController: UIViewController {
         //iPhone6
         calendarLabelIntervalX = 15;
         calendarLabelX         = 50;
-        calendarLabelY         = 190;
+        calendarLabelY         = 240;
         calendarLabelWidth     = 45;
         calendarLabelHeight    = 25;
         calendarLableFontSize  = 16;
@@ -150,8 +150,8 @@ class CalenderViewController: UIViewController {
         
         calendarIntervalX      = 15;
         calendarX              = 50;
-        calendarIntervalY      = 230;
-        calendarY              = 50;
+        calendarIntervalY      = 280;
+        calendarY              = 53;
         calendarSize           = 45;
         calendarFontSize       = 19;
         
