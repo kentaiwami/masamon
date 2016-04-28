@@ -622,11 +622,10 @@ class CalenderViewController: UIViewController {
         myLongPressGesture.minimumPressDuration = 0.2
         myLongPressGesture.allowableMovement = 150
         self.view.addGestureRecognizer(myLongPressGesture)
-
     }
     
     //日付を表示しているLabelをアニメーション表示するメソッド
-    func AnimationcalendarBar(beforeposition: CGFloat, afterposition: CGFloat) {
+    func AnimationcalendarBar(beforeposition: CGFloat) {
         calendarBar.alpha = 0.0
         calendarBar.frame = CGRectMake(beforeposition, 190, self.view.frame.width, 40)
         
@@ -646,6 +645,7 @@ class CalenderViewController: UIViewController {
         setupPrevCalendarData()
         generateCalendar()
         setupCalendarTitleLabel()
+        AnimationcalendarBar(-20)
     }
     
     //次月を表示するメソッド
@@ -654,6 +654,7 @@ class CalenderViewController: UIViewController {
         setupNextCalendarData()
         generateCalendar()
         setupCalendarTitleLabel()
+        AnimationcalendarBar(20)
     }
     
     //今月を表示するメソッド
