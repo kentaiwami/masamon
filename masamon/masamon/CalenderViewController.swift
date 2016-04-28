@@ -625,6 +625,18 @@ class CalenderViewController: UIViewController {
 
     }
     
+    //日付を表示しているLabelをアニメーション表示するメソッド
+    func AnimationcalendarBar(beforeposition: CGFloat, afterposition: CGFloat) {
+        calendarBar.alpha = 0.0
+        calendarBar.frame = CGRectMake(beforeposition, 190, self.view.frame.width, 40)
+        
+        UIView.animateWithDuration(0.5) {
+            self.calendarBar.frame = CGRectMake(0, 190, self.view.frame.width, 40)
+            self.calendarBar.alpha = 1.0
+        }
+    }
+
+    
   
     
     
