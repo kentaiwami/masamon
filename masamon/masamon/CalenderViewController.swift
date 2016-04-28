@@ -655,6 +655,7 @@ class CalenderViewController: UIViewController {
     
     //今月を表示するメソッド
     func NowCalendarSettings(){
+        CompareDay()
         removeCalendarButtonObject()
         setupCurrentCalendarData()
         generateCalendar()
@@ -662,8 +663,20 @@ class CalenderViewController: UIViewController {
         AnimationcalendarBar(0)
     }
     
-    func AAA(){
+    func CompareDay(){
+        let calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)!
+        let currentNSDate = CommonMethod().CreateNSDate(year, month: month, day: day)
+        let compareunit = calendar.compareDate(now, toDate: currentNSDate, toUnitGranularity: .Day)
         
+        //今日より小さい(前の日付の場合)
+        if compareunit == .OrderedAscending {
+            print("A")
+            
+        //今日より大きい(後の日付の場合)
+        }else if compareunit == .OrderedDescending {
+        
+            print("B")
+        }
     }
     
 }

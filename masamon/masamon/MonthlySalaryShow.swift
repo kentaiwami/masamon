@@ -770,19 +770,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             return ""
         }
     }
-    
-    //年,月,日からNSDateを生成する
-    func CreateNSDate(year : Int, month : Int, day : Int) -> NSDate {
-        let comp = NSDateComponents()
-        comp.year = year
-        comp.month = month
-        comp.day = day
-        let cal = NSCalendar.currentCalendar()
-        let date = cal.dateFromComponents(comp)
         
-        return date!
-    }
-    
     //ツールバーの完了ボタンを押した時の関数
     func donePicker(sender:UIButton){
         
@@ -1219,14 +1207,14 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         
         //今日の日付から日曜日までの日付を追加する
         for i in (1..<pivotweekday).reverse() {
-            let newnsdate = self.CreateNSDate(nsdatesplit.year, month: nsdatesplit.month, day: nsdatesplit.day-i)
+            let newnsdate = CommonMethod().CreateNSDate(nsdatesplit.year, month: nsdatesplit.month, day: nsdatesplit.day-i)
             let newnsdatesplit = self.ReturnYearMonthDayWeekday(newnsdate)
             tmparray.append(newnsdatesplit.day)
         }
         
         //今日の日付から土曜日までの日付を追加する
         for _ in pivotweekday...7 {
-            let newnsdate = self.CreateNSDate(nsdatesplit.year, month: nsdatesplit.month, day: nsdatesplit.day+j)
+            let newnsdate = CommonMethod().CreateNSDate(nsdatesplit.year, month: nsdatesplit.month, day: nsdatesplit.day+j)
             j += 1
             let newnsdatesplit = self.ReturnYearMonthDayWeekday(newnsdate)
             tmparray.append(newnsdatesplit.day)
