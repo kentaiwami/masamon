@@ -52,6 +52,7 @@ class CalenderViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         CalenderViewDidLoad()
+        setupTapGesture()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -604,20 +605,27 @@ class CalenderViewController: UIViewController {
         })
     }
     
-    //前の月のボタンを押した際のアクション
-    func getPrevMonthData(sender: UIButton) {
-        prevCalendarSettings()
+    func setupTapGesture(){
+        // 右方向へのスワイプ
+        let gestureToRight = UISwipeGestureRecognizer(target: self, action: #selector(CalenderViewController.prevCalendarSettings))
+        gestureToRight.direction = UISwipeGestureRecognizerDirection.Right
+        self.view.addGestureRecognizer(gestureToRight)
+        
+        // 左方向へのスワイプ
+        let gestureToLeft = UISwipeGestureRecognizer(target: self, action: #selector(CalenderViewController.nextCalendarSettings))
+        gestureToLeft.direction = UISwipeGestureRecognizerDirection.Left
+        self.view.addGestureRecognizer(gestureToLeft)
+        
+        //長押し
+        let myLongPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(CalenderViewController.NowCalendarSettings))
+        myLongPressGesture.minimumPressDuration = 0.2
+        myLongPressGesture.allowableMovement = 150
+        self.view.addGestureRecognizer(myLongPressGesture)
+
     }
     
-    //次の月のボタンを押した際のアクション
-    func getNextMonthData(sender: UIButton) {
-        nextCalendarSettings()
-    }
+  
     
-    //今月ボタンを押した際のアクション
-    func getNowMonthData(sender: UIButton){
-        NowCalendarSettings()
-    }
     
     //前月を表示するメソッド
     func prevCalendarSettings() {
