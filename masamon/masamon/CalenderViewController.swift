@@ -56,7 +56,6 @@ class CalenderViewController: UIViewController {
     }
     
     override func viewDidAppear(animated: Bool) {
-        NowCalendarSettings()
         appDelegate.screennumber = 1
     }
     
@@ -654,29 +653,36 @@ class CalenderViewController: UIViewController {
     }
     
     //今月を表示するメソッド
-    func NowCalendarSettings(){
-        CompareDay()
-        removeCalendarButtonObject()
-        setupCurrentCalendarData()
-        generateCalendar()
-        setupCalendarTitleLabel()
-        AnimationcalendarBar(0)
+    func NowCalendarSettings(sender: UILongPressGestureRecognizer){
+        if sender.state == UIGestureRecognizerState.Began {
+            
+            let position = CompareDay()
+            removeCalendarButtonObject()
+            setupCurrentCalendarData()
+            generateCalendar()
+            setupCalendarTitleLabel()
+            AnimationcalendarBar(position)
+        }
     }
     
-    func CompareDay(){
+    //日付を比較してcalendarBarのアニメーション開始前の場所を返す
+    func CompareDay() -> CGFloat{
         let calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)!
         let currentNSDate = CommonMethod().CreateNSDate(year, month: month, day: day)
         let compareunit = calendar.compareDate(now, toDate: currentNSDate, toUnitGranularity: .Day)
+        var position:CGFloat = 0
         
         //今日より小さい(前の日付の場合)
         if compareunit == .OrderedAscending {
-            print("A")
+            position = -20
             
         //今日より大きい(後の日付の場合)
         }else if compareunit == .OrderedDescending {
         
-            print("B")
+            position = 20
         }
+        
+        return position
     }
     
 }
