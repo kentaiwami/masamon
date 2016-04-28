@@ -49,17 +49,6 @@ class CommonMethod: UIViewController {
         }
     }
     
-    //ShiftDBのリレーションシップ配列を返す
-    func ShiftDBRelationArrayGet(id: Int) -> List<ShiftDetailDB>{
-        var list = List<ShiftDetailDB>()
-        let realm = try! Realm()
-        
-        list = realm.objects(ShiftDB).filter("id = %@", id)[0].shiftdetail
-        
-        return list
-        
-    }
-    
     /*
     引き数： 平成yy年度 mm月度 ****というテキスト
     返り値：

@@ -745,7 +745,7 @@ class PDFmethod: UIViewController {
                     if appDelegate.errorstaffnamepdf.count == 0 && appDelegate.errorshiftnamepdf.count == 0 {
                         DBmethod().AddandUpdate(shiftdbrecord, update: true)
                         DBmethod().AddandUpdate(shiftdetaildbrecord, update: true)
-                        shiftdetailarray = CommonMethod().ShiftDBRelationArrayGet(ID)
+                        shiftdetailarray = DBmethod().ShiftDBRelationArrayGet(ID)
                     }
                 }
                 

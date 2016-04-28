@@ -149,7 +149,7 @@ class XLSXmethod: UIViewController {
                 if appDelegate.errorshiftnamexlsx.count == 0 {
                     DBmethod().AddandUpdate(shiftdb, update: true)
                     DBmethod().AddandUpdate(shiftdetaildb, update: true)
-                    shiftdetailarray = CommonMethod().ShiftDBRelationArrayGet(ID)
+                    shiftdetailarray = DBmethod().ShiftDBRelationArrayGet(ID)
                 }
                 
             }

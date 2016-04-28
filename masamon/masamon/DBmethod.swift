@@ -52,6 +52,7 @@ class DBmethod: UIViewController {
         
     }
     
+    
     //指定したDBのレコード数を返す
     func DBRecordCount(DBName: Object.Type) -> Int {
         var dbrecordcount = 0
@@ -76,6 +77,16 @@ class DBmethod: UIViewController {
         return shiftimportname
     }
     
+    //ShiftDBのリレーションシップ配列を返す
+    func ShiftDBRelationArrayGet(id: Int) -> List<ShiftDetailDB>{
+        var list = List<ShiftDetailDB>()
+        let realm = try! Realm()
+        
+        list = realm.objects(ShiftDB).filter("id = %@", id)[0].shiftdetail
+        
+        return list
+        
+    }
     
     //レコードのIDを受け取って月給を返す
     func ShiftDBSaralyGet(id: Int) ->Int{
