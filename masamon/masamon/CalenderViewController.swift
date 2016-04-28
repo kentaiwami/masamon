@@ -683,7 +683,7 @@ class CalenderViewController: UIViewController {
         }
         
         //同じ月かどうかを判定する
-        let ABC = MonthlySalaryShow().ReturnYearMonthDayWeekday(now)
+        let ABC = CommonMethod().ReturnYearMonthDayWeekday(now)
         if year ==  ABC.year && month == ABC.month {
             position = 0
         }

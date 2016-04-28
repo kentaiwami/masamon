@@ -90,12 +90,12 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             //control[i]分だけ日付を操作したnsdateを作成する
             let calendar = NSCalendar.currentCalendar()
             let daycontroled_nsdate = calendar.dateByAddingUnit(.Day, value: daycontrol[i], toDate: today, options: [])
-            let daycontroled_splitday = self.ReturnYearMonthDayWeekday(daycontroled_nsdate!)
+            let daycontroled_splitday = CommonMethod().ReturnYearMonthDayWeekday(daycontroled_nsdate!)
 
             self.ShowAllData(CommonMethod().Changecalendar(daycontroled_splitday.year, calender: "A.D"), m: daycontroled_splitday.month, d: daycontroled_splitday.day, arraynumber: i)
         }
         
-        let date = self.ReturnYearMonthDayWeekday(today)
+        let date = CommonMethod().ReturnYearMonthDayWeekday(today)
         //日付を表示するラベルの初期設定
         CalenderLabel.frame = CGRectMake(8, 240, 359, 33)
         CalenderLabel.backgroundColor = UIColor.clearColor()
@@ -147,7 +147,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         onecourspicker.reloadAllComponents()
         
         let today = self.currentnsdate
-        let date = ReturnYearMonthDayWeekday(today)         //日付を西暦,月,日,曜日に分けて取得
+        let date = CommonMethod().ReturnYearMonthDayWeekday(today)         //日付を西暦,月,日,曜日に分けて取得
         self.ShowAllData(CommonMethod().Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day, arraynumber: 1)           //データ表示へ分けた日付を渡す
         CalenderLabel.text = "\(date.year)年\(date.month)月\(date.day)日 \(self.ReturnWeekday(date.weekday))曜日"
         
@@ -193,7 +193,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                         self.onecourspicker.reloadAllComponents()
                         
                         let today = self.currentnsdate
-                        let date = self.ReturnYearMonthDayWeekday(today)
+                        let date = CommonMethod().ReturnYearMonthDayWeekday(today)
                         self.ShowAllData(CommonMethod().Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day, arraynumber: 1)
                         self.CalenderLabel.text = "\(date.year)年\(date.month)月\(date.day)日 \(self.ReturnWeekday(date.weekday))曜日"
                         
@@ -255,7 +255,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                         self.onecourspicker.reloadAllComponents()
                         
                         let today = self.currentnsdate
-                        let date = self.ReturnYearMonthDayWeekday(today)
+                        let date = CommonMethod().ReturnYearMonthDayWeekday(today)
                         self.ShowAllData(CommonMethod().Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day, arraynumber: 1)
                         self.CalenderLabel.text = "\(date.year)年\(date.month)月\(date.day)日 \(self.ReturnWeekday(date.weekday))曜日"
                         
@@ -650,14 +650,6 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         return staffshiftarray
     }
     
-    //受け取ったNSDateを年(西暦),月,日,曜日に分けて返す
-    func ReturnYearMonthDayWeekday(date : NSDate) -> (year: Int, month: Int, day: Int, weekday: Int) {
-        let calendar = NSCalendar.currentCalendar()
-        let comp : NSDateComponents = calendar.components(
-            [.Year,.Month,.Day,.Weekday], fromDate: date)
-        return (comp.year,comp.month,comp.day,comp.weekday)
-    }
-    
     //金額をコンマ付きの文字列として返す関数
     func GetCommaSalalyString(salaly: Int) -> String{
         
@@ -896,12 +888,12 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         
         //todayと一致するボタンタイトルがある場合は常に文字を白表示にする
         let totayNSDate = NSDate()
-        let todaysplitday = ReturnYearMonthDayWeekday(totayNSDate) //日付を西暦,月,日,曜日に分けて取得
+        let todaysplitday = CommonMethod().ReturnYearMonthDayWeekday(totayNSDate) //日付を西暦,月,日,曜日に分けて取得
         
         self.RemoveButtonObjects()
         
         //ボタンのタイトルを日付から計算して生成する
-        let currentsplitdate = self.ReturnYearMonthDayWeekday(currentnsdate)
+        let currentsplitdate = CommonMethod().ReturnYearMonthDayWeekday(currentnsdate)
         self.SetDayArray(currentnsdate,pivotweekday:currentsplitdate.weekday)      //buttontilearrayへ値を格納する
         
         for i in 0...6{
@@ -974,14 +966,14 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     
     //日付ボタンをタップした際に呼ばれる関数
     func TapDayButton(sender: UIButton){
-        let currentsplitday = ReturnYearMonthDayWeekday(currentnsdate) //日付を西暦,月,日,曜日に分けて取得
+        let currentsplitday = CommonMethod().ReturnYearMonthDayWeekday(currentnsdate) //日付を西暦,月,日,曜日に分けて取得
         
         //タップした日付ボタンと表示中の日付の配列位置を比較
         let tagindex = buttontilearray.indexOf(String(sender.tag))
         let currentdayindex = buttontilearray.indexOf(String(currentsplitday.day))
         
         self.DayControl(tagindex!-currentdayindex!)
-        let currentnsdatesplit = self.ReturnYearMonthDayWeekday(currentnsdate)
+        let currentnsdatesplit = CommonMethod().ReturnYearMonthDayWeekday(currentnsdate)
 
         //今日の日付より大きい日付(翌日以降)のボタンがタップされた場合
         if tagindex! - currentdayindex! > 0 {
@@ -1093,7 +1085,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                     //control[i]分だけ日付を操作したnsdateを作成する
                     let calendar = NSCalendar.currentCalendar()
                     let daycontroled_nsdate = calendar.dateByAddingUnit(.Day, value: daycontrol[i], toDate: self.currentnsdate, options: [])
-                    let daycontroled_splitday = self.ReturnYearMonthDayWeekday(daycontroled_nsdate!)
+                    let daycontroled_splitday = CommonMethod().ReturnYearMonthDayWeekday(daycontroled_nsdate!)
 
                     self.ShowAllData(CommonMethod().Changecalendar(daycontroled_splitday.year, calender: "A.D"), m: daycontroled_splitday.month, d: daycontroled_splitday.day, arraynumber: i)
                 }
@@ -1149,7 +1141,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         if sender.state == UIGestureRecognizerState.Began {
             
             let today = NSDate()
-            let date = ReturnYearMonthDayWeekday(today)
+            let date = CommonMethod().ReturnYearMonthDayWeekday(today)
             self.SetCalenderLabel(date.year, month: date.month, day: date.day, weekday: date.weekday)
             
             let calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)!
@@ -1190,7 +1182,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         
         currentnsdate = daycontroled_nsdate!
 
-        let currentnsdatesplit = self.ReturnYearMonthDayWeekday(currentnsdate)
+        let currentnsdatesplit = CommonMethod().ReturnYearMonthDayWeekday(currentnsdate)
         
         //日付を表示しているラベルの内容を変更する
         self.SetCalenderLabel(currentnsdatesplit.year, month: currentnsdatesplit.month, day: currentnsdatesplit.day, weekday: currentnsdatesplit.weekday)
@@ -1203,12 +1195,12 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         var tmparray: [Int] = []
         var j = 0                   //日付を増やすための変数
         
-        let nsdatesplit = self.ReturnYearMonthDayWeekday(pivotnsdate)
+        let nsdatesplit = CommonMethod().ReturnYearMonthDayWeekday(pivotnsdate)
         
         //今日の日付から日曜日までの日付を追加する
         for i in (1..<pivotweekday).reverse() {
             let newnsdate = CommonMethod().CreateNSDate(nsdatesplit.year, month: nsdatesplit.month, day: nsdatesplit.day-i)
-            let newnsdatesplit = self.ReturnYearMonthDayWeekday(newnsdate)
+            let newnsdatesplit = CommonMethod().ReturnYearMonthDayWeekday(newnsdate)
             tmparray.append(newnsdatesplit.day)
         }
         
@@ -1216,7 +1208,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         for _ in pivotweekday...7 {
             let newnsdate = CommonMethod().CreateNSDate(nsdatesplit.year, month: nsdatesplit.month, day: nsdatesplit.day+j)
             j += 1
-            let newnsdatesplit = self.ReturnYearMonthDayWeekday(newnsdate)
+            let newnsdatesplit = CommonMethod().ReturnYearMonthDayWeekday(newnsdate)
             tmparray.append(newnsdatesplit.day)
         }
         

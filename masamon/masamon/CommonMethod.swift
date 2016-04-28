@@ -219,5 +219,12 @@ class CommonMethod: UIViewController {
         return date!
     }
 
+    //受け取ったNSDateを年(西暦),月,日,曜日に分けて返す
+    func ReturnYearMonthDayWeekday(date : NSDate) -> (year: Int, month: Int, day: Int, weekday: Int) {
+        let calendar = NSCalendar.currentCalendar()
+        let comp : NSDateComponents = calendar.components(
+            [.Year,.Month,.Day,.Weekday], fromDate: date)
+        return (comp.year,comp.month,comp.day,comp.weekday)
+    }
 
 }
