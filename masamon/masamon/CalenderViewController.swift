@@ -65,7 +65,7 @@ class CalenderViewController: UIViewController {
     }
     
     func CalenderViewDidLoad(){
-        calendarBar.backgroundColor = UIColor.hex("FF8E92", alpha: 1.0)
+        calendarBar.backgroundColor = UIColor.clearColor()
         calendarBar.frame = CGRectMake(0, 190, self.view.frame.width, 40)
         
         //凡例の背景色を設定
