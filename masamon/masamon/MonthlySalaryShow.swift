@@ -1158,7 +1158,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     
     func today(sender: UILongPressGestureRecognizer){
         
-        if sender.state == UIGestureRecognizerState.Ended {
+        if sender.state == UIGestureRecognizerState.Began {
             
             let today = NSDate()
             let date = ReturnYearMonthDayWeekday(today)

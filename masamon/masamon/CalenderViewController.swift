@@ -635,10 +635,6 @@ class CalenderViewController: UIViewController {
         }
     }
 
-    
-  
-    
-    
     //前月を表示するメソッド
     func prevCalendarSettings() {
         removeCalendarButtonObject()
@@ -663,6 +659,11 @@ class CalenderViewController: UIViewController {
         setupCurrentCalendarData()
         generateCalendar()
         setupCalendarTitleLabel()
+        AnimationcalendarBar(0)
+    }
+    
+    func AAA(){
+        
     }
     
 }
