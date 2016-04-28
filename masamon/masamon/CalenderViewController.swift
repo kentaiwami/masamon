@@ -67,6 +67,7 @@ class CalenderViewController: UIViewController {
     func CalenderViewDidLoad(){
         calendarBar.backgroundColor = UIColor.clearColor()
         calendarBar.frame = CGRectMake(0, 190, self.view.frame.width, 40)
+        calendarBar.font = UIFont.systemFontOfSize(19)
         
         //凡例の背景色を設定
         earlyshiftlegend.backgroundColor = UIColor(
