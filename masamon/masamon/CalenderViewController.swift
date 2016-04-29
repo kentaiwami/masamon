@@ -41,7 +41,7 @@ class CalenderViewController: UIViewController {
     
     var buttonRadius: Float!
     
-    var calendarIntervalX: Int!
+    var calendarIntervalX: [Int] = []
     var calendarX: Int!
     var calendarIntervalY: Int!
     var calendarY: Int!
@@ -150,12 +150,16 @@ class CalenderViewController: UIViewController {
         
         buttonRadius           = 22.5;
         
-        calendarIntervalX      = 15;
         calendarX              = 50;
         calendarIntervalY      = 280;
         calendarY              = 53;
         calendarSize           = 45;
         calendarFontSize       = 19;
+        
+        //カレンダーの配置場所を決定
+        calendarIntervalX.append(-(15+50*(41%7)+45))
+        calendarIntervalX.append(15)
+        calendarIntervalX.append((15+50*(41%7)+60))
         
         //現在の日付を取得する
         now = NSDate()
@@ -235,7 +239,7 @@ class CalenderViewController: UIViewController {
             for j in 0...41{
                 
                 //配置場所の定義
-                let positionX   = calendarIntervalX + calendarX * (j % 7)
+                let positionX   = calendarIntervalX[i] + calendarX * (j % 7)
                 let positionY   = calendarIntervalY + calendarY * (j / 7)
                 let buttonSizeX = calendarSize;
                 let buttonSizeY = calendarSize;
