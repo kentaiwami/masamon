@@ -470,6 +470,12 @@ class CalenderViewController: UIViewController {
     //前の年月に該当するデータを取得する関数
     func setupPrevCalendarData() {
         
+        //年月情報をずらす
+        year[2] = year[1]
+        month[2] = month[1]
+        year[1] = year[0]
+        month[1] = month[0]
+        
         //現在の月に対して-1をする
         if month[0] == 0 {
             year[0] = year[0] - 1;
@@ -493,6 +499,12 @@ class CalenderViewController: UIViewController {
     //次の年月に該当するデータを取得する関数
     func setupNextCalendarData() {
         
+        //年月情報をずらす
+        year[0] = year[1]
+        month[0] = month[1]
+        year[1] = year[2]
+        month[1] = month[2]
+
         //現在の月に対して+1をする
         if month[2] == 12 {
             year[2] = year[2] + 1;
