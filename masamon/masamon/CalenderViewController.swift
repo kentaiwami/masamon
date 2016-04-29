@@ -455,28 +455,8 @@ class CalenderViewController: UIViewController {
         let calendar: NSCalendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
         
         for i in 0..<for_parameter.count {
-            var tmp_nsdate = NSDate()
-            var tmp_nsdate_split = CommonMethod().ReturnYearMonthDayWeekday(tmp_nsdate)
-            
-            //先月を設定する場合の処理
-            if tmp_nsdate_split.month == 1 && i == 0{
-                tmp_nsdate_split.year = tmp_nsdate_split.year + for_parameter[i]
-                tmp_nsdate_split.month = 12
-            }else if tmp_nsdate_split.month >= 2 && i == 0 {
-                tmp_nsdate_split.month = tmp_nsdate_split.month + for_parameter[i]
-            }
-            
-            //来月を設定する場合の処理
-            if tmp_nsdate_split.month == 12 && i == 2{
-                tmp_nsdate_split.year = tmp_nsdate_split.year + for_parameter[i]
-                tmp_nsdate_split.month = 1
-            }else if tmp_nsdate_split.month >= 2 && i == 2 {
-                tmp_nsdate_split.month = tmp_nsdate_split.month + for_parameter[i]
-            }
-            
-            tmp_nsdate_split.day = 1
-            
-            tmp_nsdate = CommonMethod().CreateNSDate(tmp_nsdate_split.year, month: tmp_nsdate_split.month, day: tmp_nsdate_split.day)
+
+            let tmp_nsdate = GetPrevCurrentNextNSDate(i)
 
             nsdate[i] = tmp_nsdate
 
