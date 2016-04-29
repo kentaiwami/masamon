@@ -449,6 +449,7 @@ class CalenderViewController: UIViewController {
         //inUnit:で指定した単位（月）の中で、rangeOfUnit:で指定した単位（日）が取り得る範囲
         let calendar: NSCalendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
         
+        
         //最初にメンバ変数に格納するための現在日付の情報を取得する
         comps[1] = calendar.components([NSCalendarUnit.Year, NSCalendarUnit.Month, NSCalendarUnit.Day, NSCalendarUnit.Weekday],fromDate:now_nsdate)
         
@@ -485,15 +486,17 @@ class CalenderViewController: UIViewController {
         }
         
         //setupCurrentCalendarData()と同様の処理を行う
-        let prevCalendar: NSCalendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
-        let prevComps: NSDateComponents = NSDateComponents()
-        
-        prevComps.year  = year[0]
-        prevComps.month = month[0]
-        prevComps.day   = 1
-        
-        let prevDate: NSDate = prevCalendar.dateFromComponents(prevComps)!
-        recreateCalendarParameter(prevCalendar, currentDate: prevDate, calendarnumber: 0)
+        for i in 0..<for_parameter.count {
+            let prevCalendar: NSCalendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
+            let prevComps: NSDateComponents = NSDateComponents()
+            
+            prevComps.year  = year[i]
+            prevComps.month = month[i]
+            prevComps.day   = 1
+            
+            let prevDate: NSDate = prevCalendar.dateFromComponents(prevComps)!
+            recreateCalendarParameter(prevCalendar, currentDate: prevDate, calendarnumber: i)
+        }
     }
     
     //次の年月に該当するデータを取得する関数
@@ -514,15 +517,17 @@ class CalenderViewController: UIViewController {
         }
         
         //setupCurrentCalendarData()と同様の処理を行う
-        let nextCalendar: NSCalendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
-        let nextComps: NSDateComponents = NSDateComponents()
-        
-        nextComps.year  = year[2]
-        nextComps.month = month[2]
-        nextComps.day   = 1
-        
-        let nextDate: NSDate = nextCalendar.dateFromComponents(nextComps)!
-        recreateCalendarParameter(nextCalendar, currentDate: nextDate, calendarnumber: 2)
+        for i in 0..<for_parameter.count {
+            let nextCalendar: NSCalendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
+            let nextComps: NSDateComponents = NSDateComponents()
+            
+            nextComps.year  = year[i]
+            nextComps.month = month[i]
+            nextComps.day   = 1
+            
+            let nextDate: NSDate = nextCalendar.dateFromComponents(nextComps)!
+            recreateCalendarParameter(nextCalendar, currentDate: nextDate, calendarnumber: i)
+        }
     }
     
     //カレンダーのパラメータを再作成する関数
@@ -689,7 +694,7 @@ class CalenderViewController: UIViewController {
     }
     
     //カレンダーをアニメーション表示するメソッド
-    func Animationcalendar(prevIntervalX: Int, mainIntervalX: Int, nextIntervalX: Int) {
+    func Animationcalendar(prevIntervalX: Int, mainIntervalX: Int, nextIntervalX: Int, barposition: Int) {
         let IntervalX = [prevIntervalX, mainIntervalX, nextIntervalX]
         
         UIView.animateWithDuration(0.5, animations: { 
@@ -704,36 +709,35 @@ class CalenderViewController: UIViewController {
                 }
             }
             }) { (value: Bool) in
-                //
+                self.removeCalendarButtonObject()
+                
+                if barposition > 0 {
+                    self.setupNextCalendarData()
+                }else {
+                    self.setupPrevCalendarData()
+                }
+                self.generateCalendar()
+                self.setupCalendarTitleLabel()
         }
     }
 
     //前月を表示するメソッド
     func prevCalendarSettings() {
-        removeCalendarButtonObject()
-        setupPrevCalendarData()
-        generateCalendar()
-        setupCalendarTitleLabel()
-        AnimationcalendarBar(-20)
-        
         let prevX = 15
         let mainX = (15+50*(41%7)+60)
         let nextX = (15+50*(41%7)+60)
-        Animationcalendar(prevX, mainIntervalX: mainX, nextIntervalX: nextX)
+
+        Animationcalendar(prevX, mainIntervalX: mainX, nextIntervalX: nextX, barposition: -20)
+        AnimationcalendarBar(-20)
     }
     
     //次月を表示するメソッド
     func nextCalendarSettings() {
-        removeCalendarButtonObject()
-        setupNextCalendarData()
-        generateCalendar()
-        setupCalendarTitleLabel()
-        AnimationcalendarBar(20)
-
         let prevX = (15+50*(41%7)+60)
         let mainX = (15+50*(41%7)+60)
         let nextX = 15
-        Animationcalendar(-prevX, mainIntervalX: -mainX, nextIntervalX: nextX)
+        Animationcalendar(-prevX, mainIntervalX: -mainX, nextIntervalX: nextX, barposition: 20)
+        AnimationcalendarBar(20)
     }
     
     //今月を表示するメソッド
