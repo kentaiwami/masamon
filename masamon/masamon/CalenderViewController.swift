@@ -6,7 +6,7 @@ class CalenderViewController: UIViewController {
     //メンバ変数の設定（配列格納用）
     var count: Int!
 //    var mArray: NSMutableArray!
-    var mArray: [UIButton] = []
+    var mArray: [[UIButton]] = [[],[],[]]
     
     //メンバ変数の設定（カレンダー用）
     var now: NSDate!
@@ -224,135 +224,139 @@ class CalenderViewController: UIViewController {
     //カレンダーを生成する関数
     func generateCalendar(){
         
-        //タグナンバーとトータルカウントの定義
-        var tagNumber = 1
-        let total     = 42
-        
-        //7×6=42個のボタン要素を作る
-        for i in 0...41{
+        for i in 0...2 {
+            mArray.append([])
             
-            //配置場所の定義
-            let positionX   = calendarIntervalX + calendarX * (i % 7)
-            let positionY   = calendarIntervalY + calendarY * (i / 7)
-            let buttonSizeX = calendarSize;
-            let buttonSizeY = calendarSize;
+            //タグナンバーとトータルカウントの定義
+            var tagNumber = 1
+            let total     = 42
             
-            //ボタンをつくる
-            let button: UIButton = UIButton()
-            button.frame = CGRectMake(
-                CGFloat(positionX),
-                CGFloat(positionY),
-                CGFloat(buttonSizeX),
-                CGFloat(buttonSizeY)
-            );
-            
-            //ボタンの初期設定をする
-            if i < dayOfWeek - 1 {
+            //7×6=42個のボタン要素を作る
+            for j in 0...41{
                 
-                //日付の入らない部分はボタンを押せなくする
-                button.setTitle("", forState: .Normal)
-                button.enabled = false
+                //配置場所の定義
+                let positionX   = calendarIntervalX + calendarX * (j % 7)
+                let positionY   = calendarIntervalY + calendarY * (j / 7)
+                let buttonSizeX = calendarSize;
+                let buttonSizeY = calendarSize;
                 
-            }else if i == dayOfWeek - 1 || i < dayOfWeek + maxDay - 1 {
+                //ボタンをつくる
+                let button: UIButton = UIButton()
+                button.frame = CGRectMake(
+                    CGFloat(positionX),
+                    CGFloat(positionY),
+                    CGFloat(buttonSizeX),
+                    CGFloat(buttonSizeY)
+                );
                 
-                //日付の入る部分はボタンのタグを設定する（日にち）
-                button.setTitle(String(tagNumber), forState: .Normal)
-                button.tag = tagNumber
-                tagNumber += 1
-                
-            }else if i == dayOfWeek + maxDay - 1 || i < total {
-                
-                //日付の入らない部分はボタンを押せなくする
-                button.setTitle("", forState: .Normal)
-                button.enabled = false
-                
-            }
-            
-            
-            //ボタンの配色の設定
-            //@remark:このサンプルでは正円のボタンを作っていますが、背景画像の設定等も可能です。
-            
-            if DBmethod().TheDayStaffGet(CommonMethod().Changecalendar(self.year, calender: "A.D"), month: self.month, date: button.tag) == nil {
-                calendarBackGroundColor = UIColor.lightGrayColor()
-            }else{
-                let usershift = self.ReturnUserShift(DBmethod().TheDayStaffGet(CommonMethod().Changecalendar(self.year, calender: "A.D"), month: self.month, date: button.tag)![0].staff)
-                
-                var gid = 999
-
-                if usershift == "breaktime" {
-                    gid = 5
-                }else{
-                    let resultshift = DBmethod().SearchShiftSystem(usershift)
-                    if resultshift != nil {
-                        gid = resultshift![0].groupid
-                    }
+                //ボタンの初期設定をする
+                if j < dayOfWeek - 1 {
+                    
+                    //日付の入らない部分はボタンを押せなくする
+                    button.setTitle("", forState: .Normal)
+                    button.enabled = false
+                    
+                }else if j == dayOfWeek - 1 || j < dayOfWeek + maxDay - 1 {
+                    
+                    //日付の入る部分はボタンのタグを設定する（日にち）
+                    button.setTitle(String(tagNumber), forState: .Normal)
+                    button.tag = tagNumber
+                    tagNumber += 1
+                    
+                }else if j == dayOfWeek + maxDay - 1 || j < total {
+                    
+                    //日付の入らない部分はボタンを押せなくする
+                    button.setTitle("", forState: .Normal)
+                    button.enabled = false
+                    
                 }
                 
-                switch(gid){
-                //早番
-                case 0:
-                    calendarBackGroundColor = UIColor(
-                        red: CGFloat(0.400), green: CGFloat(0.471), blue: CGFloat(0.980), alpha: CGFloat(1.0)
-                    )
                 
-                //中1
-                case 1:
-                    calendarBackGroundColor = UIColor.hex("00EE76", alpha: 0.9)
-                    
-                //中2
-                case 2:
-                    calendarBackGroundColor = UIColor.hex("ff9900", alpha: 1.0)
-                    
-                //中3
-                case 3:
-                    calendarBackGroundColor = UIColor.hex("ff9966", alpha: 1.0)
+                //ボタンの配色の設定
+                //@remark:このサンプルでは正円のボタンを作っていますが、背景画像の設定等も可能です。
                 
-                //遅番
-                case 4:
-                    calendarBackGroundColor = UIColor.blackColor()
-                
-                //休み
-                case 5:
-                    calendarBackGroundColor = UIColor(
-                        red: CGFloat(0.831), green: CGFloat(0.349), blue: CGFloat(0.224), alpha: CGFloat(1.0)
-                    )
-                    
-                default:
+                if DBmethod().TheDayStaffGet(CommonMethod().Changecalendar(self.year, calender: "A.D"), month: self.month, date: button.tag) == nil {
                     calendarBackGroundColor = UIColor.lightGrayColor()
+                }else{
+                    let usershift = self.ReturnUserShift(DBmethod().TheDayStaffGet(CommonMethod().Changecalendar(self.year, calender: "A.D"), month: self.month, date: button.tag)![0].staff)
+                    
+                    var gid = 999
+                    
+                    if usershift == "breaktime" {
+                        gid = 5
+                    }else{
+                        let resultshift = DBmethod().SearchShiftSystem(usershift)
+                        if resultshift != nil {
+                            gid = resultshift![0].groupid
+                        }
+                    }
+                    
+                    switch(gid){
+                    //早番
+                    case 0:
+                        calendarBackGroundColor = UIColor(
+                            red: CGFloat(0.400), green: CGFloat(0.471), blue: CGFloat(0.980), alpha: CGFloat(1.0)
+                        )
+                        
+                    //中1
+                    case 1:
+                        calendarBackGroundColor = UIColor.hex("00EE76", alpha: 0.9)
+                        
+                    //中2
+                    case 2:
+                        calendarBackGroundColor = UIColor.hex("ff9900", alpha: 1.0)
+                        
+                    //中3
+                    case 3:
+                        calendarBackGroundColor = UIColor.hex("ff9966", alpha: 1.0)
+                        
+                    //遅番
+                    case 4:
+                        calendarBackGroundColor = UIColor.blackColor()
+                        
+                    //休み
+                    case 5:
+                        calendarBackGroundColor = UIColor(
+                            red: CGFloat(0.831), green: CGFloat(0.349), blue: CGFloat(0.224), alpha: CGFloat(1.0)
+                        )
+                        
+                    default:
+                        calendarBackGroundColor = UIColor.lightGrayColor()
+                    }
+                    
                 }
                 
+                //ボタンのデザインを決定する
+                button.backgroundColor = calendarBackGroundColor
+                button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+                button.titleLabel!.font = UIFont(name: "System", size: CGFloat(calendarFontSize))
+                button.layer.cornerRadius = CGFloat(buttonRadius)
+                
+                
+                //今日の日付と合致するボタンがあったら装飾する
+                let nowdate = NSDate()
+                let calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)
+                let comps:NSDateComponents = calendar!.components([NSCalendarUnit.Year,NSCalendarUnit.Month,NSCalendarUnit.Day],
+                                                                  fromDate: nowdate)
+                let buttonyear = comps.year
+                let buttonmonth = comps.month
+                let buttonday = comps.day
+                
+                //今日の日付と一致するボタンがある場合
+                if buttonyear == year && buttonmonth == month && buttonday == button.tag {
+                    button.layer.borderColor = UIColor.whiteColor().CGColor
+                    button.layer.borderWidth = CGFloat(4.5)
+                }
+                
+                //配置したボタンに押した際のアクションを設定する
+                button.addTarget(self, action: #selector(CalenderViewController.buttonTapped(_:)), forControlEvents: .TouchUpInside)
+                
+                //ボタンを配置する
+                self.view.addSubview(button)
+                //            mArray.addObject(button)
+                mArray[i].append(button)
+                self.view.bringSubviewToFront(alertview)
             }
-            
-            //ボタンのデザインを決定する
-            button.backgroundColor = calendarBackGroundColor
-            button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-            button.titleLabel!.font = UIFont(name: "System", size: CGFloat(calendarFontSize))
-            button.layer.cornerRadius = CGFloat(buttonRadius)
-            
-            
-            //今日の日付と合致するボタンがあったら装飾する
-            let nowdate = NSDate()
-            let calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)
-            let comps:NSDateComponents = calendar!.components([NSCalendarUnit.Year,NSCalendarUnit.Month,NSCalendarUnit.Day],
-                fromDate: nowdate)
-            let buttonyear = comps.year
-            let buttonmonth = comps.month
-            let buttonday = comps.day
-            
-            //今日の日付と一致するボタンがある場合
-            if buttonyear == year && buttonmonth == month && buttonday == button.tag {
-                button.layer.borderColor = UIColor.whiteColor().CGColor
-                button.layer.borderWidth = CGFloat(4.5)
-            }
-
-            //配置したボタンに押した際のアクションを設定する
-            button.addTarget(self, action: #selector(CalenderViewController.buttonTapped(_:)), forControlEvents: .TouchUpInside)
-            
-            //ボタンを配置する
-            self.view.addSubview(button)
-//            mArray.addObject(button)
-            mArray.append(button)
-            self.view.bringSubviewToFront(alertview)
         }
         
     }
@@ -502,7 +506,9 @@ class CalenderViewController: UIViewController {
         
         //ビューからボタンオブジェクトを削除する
         for i in 0..<mArray.count {
-            mArray[i].removeFromSuperview()
+            for j in 0..<mArray[i].count {
+                mArray[i][j].removeFromSuperview()
+            }
         }
         
         //配列に格納したボタンオブジェクトも削除する
