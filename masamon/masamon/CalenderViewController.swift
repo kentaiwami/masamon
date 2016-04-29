@@ -169,28 +169,8 @@ class CalenderViewController: UIViewController {
         
         //年月日と最後の日付と曜日を取得(NSIntegerをintへのキャスト不要)
         for i in 0..<for_parameter.count {
-            var tmp_nsdate = NSDate()
-            var tmp_nsdate_split = CommonMethod().ReturnYearMonthDayWeekday(tmp_nsdate)
             
-            //先月を設定する場合の処理
-            if tmp_nsdate_split.month == 1 && i == 0{
-                tmp_nsdate_split.year = tmp_nsdate_split.year + for_parameter[i]
-                tmp_nsdate_split.month = 12
-            }else if tmp_nsdate_split.month >= 2 && i == 0 {
-                tmp_nsdate_split.month = tmp_nsdate_split.month + for_parameter[i]
-            }
-            
-            //来月を設定する場合の処理
-            if tmp_nsdate_split.month == 12 && i == 2{
-                tmp_nsdate_split.year = tmp_nsdate_split.year + for_parameter[i]
-                tmp_nsdate_split.month = 1
-            }else if tmp_nsdate_split.month >= 2 && i == 2 {
-                tmp_nsdate_split.month = tmp_nsdate_split.month + for_parameter[i]
-            }
-            
-            tmp_nsdate_split.day = 1
-            
-            tmp_nsdate = CommonMethod().CreateNSDate(tmp_nsdate_split.year, month: tmp_nsdate_split.month, day: tmp_nsdate_split.day)
+            let tmp_nsdate = GetPrevCurrentNextNSDate(i)
             
             nsdate.append(tmp_nsdate)
             comps.append(NSDateComponents())
@@ -212,10 +192,6 @@ class CalenderViewController: UIViewController {
             dayOfWeek.append(orgDayOfWeek)
             maxDay.append(max)
         }
-        
-        
-        //空の配列を作成する（カレンダーデータの格納用）
-//        mArray = NSMutableArray()
         
         //曜日ラベル初期定義
         let monthName:[String] = ["日","月","火","水","木","金","土"]
@@ -429,6 +405,35 @@ class CalenderViewController: UIViewController {
         calendarBar.textAlignment = NSTextAlignment.Center
         calendarBar.textColor = UIColor.whiteColor()
         
+    }
+    
+    //年月を増減するパラメータを受け取りパラメータに応じたNSDateを返す(先月，今月，来月)
+    func GetPrevCurrentNextNSDate(i: Int) -> NSDate {
+        var tmp_nsdate = NSDate()
+        var tmp_nsdate_split = CommonMethod().ReturnYearMonthDayWeekday(tmp_nsdate)
+        
+        //先月を設定する場合の処理
+        if tmp_nsdate_split.month == 1 && i == 0{
+            tmp_nsdate_split.year = tmp_nsdate_split.year + for_parameter[i]
+            tmp_nsdate_split.month = 12
+        }else if tmp_nsdate_split.month >= 2 && i == 0 {
+            tmp_nsdate_split.month = tmp_nsdate_split.month + for_parameter[i]
+        }
+        
+        //来月を設定する場合の処理
+        if tmp_nsdate_split.month == 12 && i == 2{
+            tmp_nsdate_split.year = tmp_nsdate_split.year + for_parameter[i]
+            tmp_nsdate_split.month = 1
+        }else if tmp_nsdate_split.month >= 2 && i == 2 {
+            tmp_nsdate_split.month = tmp_nsdate_split.month + for_parameter[i]
+        }
+        
+        tmp_nsdate_split.day = 1
+        
+        tmp_nsdate = CommonMethod().CreateNSDate(tmp_nsdate_split.year, month: tmp_nsdate_split.month, day: tmp_nsdate_split.day)
+        
+        return tmp_nsdate
+
     }
     
     //現在（初期表示時）の年月に該当するデータを取得する関数
