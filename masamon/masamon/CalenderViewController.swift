@@ -16,6 +16,7 @@ class CalenderViewController: UIViewController {
     var day: [Int] = []
     var maxDay: [Int] = []
     var dayOfWeek: [Int] = []
+    var now_nsdate = NSDate()
     
     //メンバ変数の設定（カレンダー関数から取得したものを渡す）
     var comps: [NSDateComponents] = []
@@ -162,29 +163,54 @@ class CalenderViewController: UIViewController {
         calendarIntervalX.append(15)
         calendarIntervalX.append((15+50*(41%7)+60))
         
-        //現在の日付を取得する
-        now = NSDate()
         
         //inUnit:で指定した単位（月）の中で、rangeOfUnit:で指定した単位（日）が取り得る範囲
         let calendar: NSCalendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
-        let range: NSRange = calendar.rangeOfUnit(NSCalendarUnit.Day, inUnit:NSCalendarUnit.Month, forDate:now)
-        
-        //最初にメンバ変数に格納するための現在日付の情報を取得する
-        comps = calendar.components([NSCalendarUnit.Year, NSCalendarUnit.Month, NSCalendarUnit.Day, NSCalendarUnit.Weekday],fromDate:now)
         
         //年月日と最後の日付と曜日を取得(NSIntegerをintへのキャスト不要)
         for i in 0..<for_parameter.count {
-            let orgYear: NSInteger      = comps.year
-            let orgMonth: NSInteger     = comps.month
-            let orgDay: NSInteger       = comps.day
-            let orgDayOfWeek: NSInteger = comps.weekday
+            var tmp_nsdate = NSDate()
+            var tmp_nsdate_split = CommonMethod().ReturnYearMonthDayWeekday(tmp_nsdate)
+            
+            //先月を設定する場合の処理
+            if tmp_nsdate_split.month == 1 && i == 0{
+                tmp_nsdate_split.year = tmp_nsdate_split.year + for_parameter[i]
+                tmp_nsdate_split.month = 12
+            }else if tmp_nsdate_split.month >= 2 && i == 0 {
+                tmp_nsdate_split.month = tmp_nsdate_split.month + for_parameter[i]
+            }
+            
+            //来月を設定する場合の処理
+            if tmp_nsdate_split.month == 12 && i == 2{
+                tmp_nsdate_split.year = tmp_nsdate_split.year + for_parameter[i]
+                tmp_nsdate_split.month = 1
+            }else if tmp_nsdate_split.month >= 2 && i == 2 {
+                tmp_nsdate_split.month = tmp_nsdate_split.month + for_parameter[i]
+            }
+            
+            tmp_nsdate_split.day = 1
+            
+            tmp_nsdate = CommonMethod().CreateNSDate(tmp_nsdate_split.year, month: tmp_nsdate_split.month, day: tmp_nsdate_split.day)
+            
+            nsdate.append(tmp_nsdate)
+            comps.append(NSDateComponents())
+
+            let range: NSRange = calendar.rangeOfUnit(NSCalendarUnit.Day, inUnit:NSCalendarUnit.Month, forDate:tmp_nsdate)
+            
+            //最初にメンバ変数に格納するための現在日付の情報を取得する
+            comps[i] = calendar.components([NSCalendarUnit.Year, NSCalendarUnit.Month, NSCalendarUnit.Day, NSCalendarUnit.Weekday],fromDate:tmp_nsdate)
+
+            let orgYear: NSInteger      = comps[i].year
+            let orgMonth: NSInteger     = comps[i].month
+            let orgDay: NSInteger       = comps[i].day
+            let orgDayOfWeek: NSInteger = comps[i].weekday
             let max: NSInteger          = range.length
             
             year.append(orgYear)
-            month     = orgMonth
-            day       = orgDay
-            dayOfWeek = orgDayOfWeek
-            maxDay    = max
+            month.append(orgMonth)
+            day.append(orgDay)
+            dayOfWeek.append(orgDayOfWeek)
+            maxDay.append(max)
         }
         
         
@@ -232,7 +258,7 @@ class CalenderViewController: UIViewController {
     //カレンダーを生成する関数
     func generateCalendar(){
         
-        for i in 0...2 {
+        for i in 0..<for_parameter.count {
             mArray.append([])
             
             //タグナンバーとトータルカウントの定義
@@ -258,20 +284,20 @@ class CalenderViewController: UIViewController {
                 );
                 
                 //ボタンの初期設定をする
-                if j < dayOfWeek - 1 {
+                if j < dayOfWeek[i] - 1 {
                     
                     //日付の入らない部分はボタンを押せなくする
                     button.setTitle("", forState: .Normal)
                     button.enabled = false
                     
-                }else if j == dayOfWeek - 1 || j < dayOfWeek + maxDay - 1 {
+                }else if j == dayOfWeek[i] - 1 || j < dayOfWeek[i] + maxDay[i] - 1 {
                     
                     //日付の入る部分はボタンのタグを設定する（日にち）
                     button.setTitle(String(tagNumber), forState: .Normal)
                     button.tag = tagNumber
                     tagNumber += 1
                     
-                }else if j == dayOfWeek + maxDay - 1 || j < total {
+                }else if j == dayOfWeek[i] + maxDay[i] - 1 || j < total {
                     
                     //日付の入らない部分はボタンを押せなくする
                     button.setTitle("", forState: .Normal)
@@ -283,10 +309,10 @@ class CalenderViewController: UIViewController {
                 //ボタンの配色の設定
                 //@remark:このサンプルでは正円のボタンを作っていますが、背景画像の設定等も可能です。
                 
-                if DBmethod().TheDayStaffGet(CommonMethod().Changecalendar(self.year, calender: "A.D"), month: self.month, date: button.tag) == nil {
+                if DBmethod().TheDayStaffGet(CommonMethod().Changecalendar(year[i], calender: "A.D"), month: month[i], date: button.tag) == nil {
                     calendarBackGroundColor = UIColor.lightGrayColor()
                 }else{
-                    let usershift = self.ReturnUserShift(DBmethod().TheDayStaffGet(CommonMethod().Changecalendar(self.year, calender: "A.D"), month: self.month, date: button.tag)![0].staff)
+                    let usershift = self.ReturnUserShift(DBmethod().TheDayStaffGet(CommonMethod().Changecalendar(year[i], calender: "A.D"), month: month[i], date: button.tag)![0].staff)
                     
                     var gid = 999
                     
@@ -351,7 +377,7 @@ class CalenderViewController: UIViewController {
                 let buttonday = comps.day
                 
                 //今日の日付と一致するボタンがある場合
-                if buttonyear == year && buttonmonth == month && buttonday == button.tag {
+                if buttonyear == year[i] && buttonmonth == month[i] && buttonday == button.tag {
                     button.layer.borderColor = UIColor.whiteColor().CGColor
                     button.layer.borderWidth = CGFloat(4.5)
                 }
@@ -418,95 +444,95 @@ class CalenderViewController: UIViewController {
         let currentComps: NSDateComponents = NSDateComponents()
         
         //現在の日付を取得する
-        now = NSDate()
+        now_nsdate = NSDate()
         
         //inUnit:で指定した単位（月）の中で、rangeOfUnit:で指定した単位（日）が取り得る範囲
         let calendar: NSCalendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
         
         //最初にメンバ変数に格納するための現在日付の情報を取得する
-        comps = calendar.components([NSCalendarUnit.Year, NSCalendarUnit.Month, NSCalendarUnit.Day, NSCalendarUnit.Weekday],fromDate:now)
+        comps[1] = calendar.components([NSCalendarUnit.Year, NSCalendarUnit.Month, NSCalendarUnit.Day, NSCalendarUnit.Weekday],fromDate:now_nsdate)
         
         //年月日と最後の日付と曜日を取得(NSIntegerをintへのキャスト不要)
-        let orgYear: NSInteger      = comps.year
-        let orgMonth: NSInteger     = comps.month
+        let orgYear: NSInteger      = comps[1].year
+        let orgMonth: NSInteger     = comps[1].month
         
-        year      = orgYear
-        month     = orgMonth
+        year[1]      = orgYear
+        month[1]     = orgMonth
         
-        currentComps.year  = year
-        currentComps.month = month
+        currentComps.year  = year[1]
+        currentComps.month = month[1]
         currentComps.day   = 1
         
         let currentDate: NSDate = currentCalendar.dateFromComponents(currentComps)!
-        recreateCalendarParameter(currentCalendar, currentDate: currentDate)
+        recreateCalendarParameter(currentCalendar, currentDate: currentDate, calendarnumber: 1)
     }
     
     //前の年月に該当するデータを取得する関数
     func setupPrevCalendarData() {
         
         //現在の月に対して-1をする
-        if month == 0 {
-            year = year - 1;
-            month = 12;
+        if month[0] == 0 {
+            year[0] = year[0] - 1;
+            month[0] = 12;
         }else{
-            month = month - 1;
+            month[0] = month[0] - 1;
         }
         
         //setupCurrentCalendarData()と同様の処理を行う
         let prevCalendar: NSCalendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
         let prevComps: NSDateComponents = NSDateComponents()
         
-        prevComps.year  = year
-        prevComps.month = month
+        prevComps.year  = year[0]
+        prevComps.month = month[0]
         prevComps.day   = 1
         
         let prevDate: NSDate = prevCalendar.dateFromComponents(prevComps)!
-        recreateCalendarParameter(prevCalendar, currentDate: prevDate)
+        recreateCalendarParameter(prevCalendar, currentDate: prevDate, calendarnumber: 0)
     }
     
     //次の年月に該当するデータを取得する関数
     func setupNextCalendarData() {
         
         //現在の月に対して+1をする
-        if month == 12 {
-            year = year + 1;
-            month = 1;
+        if month[2] == 12 {
+            year[2] = year[2] + 1;
+            month[2] = 1;
         }else{
-            month = month + 1;
+            month[2] = month[2] + 1;
         }
         
         //setupCurrentCalendarData()と同様の処理を行う
         let nextCalendar: NSCalendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
         let nextComps: NSDateComponents = NSDateComponents()
         
-        nextComps.year  = year
-        nextComps.month = month
+        nextComps.year  = year[2]
+        nextComps.month = month[2]
         nextComps.day   = 1
         
         let nextDate: NSDate = nextCalendar.dateFromComponents(nextComps)!
-        recreateCalendarParameter(nextCalendar, currentDate: nextDate)
+        recreateCalendarParameter(nextCalendar, currentDate: nextDate, calendarnumber: 2)
     }
     
     //カレンダーのパラメータを再作成する関数
-    func recreateCalendarParameter(currentCalendar: NSCalendar, currentDate: NSDate) {
+    func recreateCalendarParameter(currentCalendar: NSCalendar, currentDate: NSDate, calendarnumber: Int) {
         
         //引数で渡されたものをもとに日付の情報を取得する
         let currentRange: NSRange = currentCalendar.rangeOfUnit(NSCalendarUnit.Day, inUnit:NSCalendarUnit.Month, forDate:currentDate)
         
-        comps = currentCalendar.components([NSCalendarUnit.Year, NSCalendarUnit.Month, NSCalendarUnit.Day, NSCalendarUnit.Weekday],fromDate:currentDate)
+        comps[calendarnumber] = currentCalendar.components([NSCalendarUnit.Year, NSCalendarUnit.Month, NSCalendarUnit.Day, NSCalendarUnit.Weekday],fromDate:currentDate)
         
         //年月日と最後の日付と曜日を取得(NSIntegerをintへのキャスト不要)
-        let currentYear: NSInteger      = comps.year
-        let currentMonth: NSInteger     = comps.month
-        let currentDay: NSInteger       = comps.day
-        let currentDayOfWeek: NSInteger = comps.weekday
+        let currentYear: NSInteger      = comps[calendarnumber].year
+        let currentMonth: NSInteger     = comps[calendarnumber].month
+        let currentDay: NSInteger       = comps[calendarnumber].day
+        let currentDayOfWeek: NSInteger = comps[calendarnumber].weekday
         let currentMax: NSInteger       = currentRange.length
         
-        year      = currentYear
-        month     = currentMonth
-        day       = currentDay
-        dayOfWeek = currentDayOfWeek
-        maxDay    = currentMax
+        year[calendarnumber]      = currentYear
+        month[calendarnumber]     = currentMonth
+        day[calendarnumber]       = currentDay
+        dayOfWeek[calendarnumber] = currentDayOfWeek
+        maxDay[calendarnumber]    = currentMax
     }
     
     //表示されているボタンオブジェクトを一旦削除する関数
@@ -541,14 +567,14 @@ class CalenderViewController: UIViewController {
     
     //カレンダーボタンをタップした時のアクション
     func buttonTapped(button: UIButton){
-        if DBmethod().TheDayStaffGet(CommonMethod().Changecalendar(year, calender: "A.D"), month: month, date: button.tag) == nil {
+        if DBmethod().TheDayStaffGet(CommonMethod().Changecalendar(year[1], calender: "A.D"), month: month[1], date: button.tag) == nil {
             let alertController = UIAlertController(title: "\(year)年\(month)月\(button.tag)日", message: "データなし", preferredStyle: .Alert)
             let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
             alertController.addAction(defaultAction)
             
             presentViewController(alertController, animated: true, completion: nil)
         }else{
-            let staffstring = DBmethod().TheDayStaffGet(CommonMethod().Changecalendar(year, calender: "A.D"),month: month,date: button.tag)![0].staff
+            let staffstring = DBmethod().TheDayStaffGet(CommonMethod().Changecalendar(year[1], calender: "A.D"),month: month[1],date: button.tag)![0].staff
             let splitedstaffarray = MonthlySalaryShow().SplitStaffShift(staffstring)
             
             let alertviewtitle = "\(year)年\(month)月\(button.tag)日"
@@ -649,6 +675,26 @@ class CalenderViewController: UIViewController {
             self.calendarBar.alpha = 1.0
         }
     }
+    
+    //カレンダーをアニメーション表示するメソッド
+    func Animationcalendar(prevIntervalX: Int, mainIntervalX: Int, nextIntervalX: Int) {
+        let IntervalX = [prevIntervalX, mainIntervalX, nextIntervalX]
+        
+        UIView.animateWithDuration(0.5, animations: { 
+            for i in 0..<self.mArray.count {
+                for j in 0..<self.mArray[i].count {
+                    let positionX   = IntervalX[i] + self.calendarX * (j % 7)
+                    let positionY   = self.calendarIntervalY + self.calendarY * (j / 7)
+                    let buttonSizeX = self.calendarSize;
+                    let buttonSizeY = self.calendarSize;
+
+                    self.mArray[i][j].frame = CGRectMake(CGFloat(positionX), CGFloat(positionY), CGFloat(buttonSizeX), CGFloat(buttonSizeY))
+                }
+            }
+            }) { (value: Bool) in
+                //
+        }
+    }
 
     //前月を表示するメソッド
     func prevCalendarSettings() {
@@ -657,6 +703,11 @@ class CalenderViewController: UIViewController {
         generateCalendar()
         setupCalendarTitleLabel()
         AnimationcalendarBar(-20)
+        
+        let prevX = 15
+        let mainX = (15+50*(41%7)+60)
+        let nextX = (15+50*(41%7)+60)
+        Animationcalendar(prevX, mainIntervalX: mainX, nextIntervalX: nextX)
     }
     
     //次月を表示するメソッド
@@ -666,6 +717,11 @@ class CalenderViewController: UIViewController {
         generateCalendar()
         setupCalendarTitleLabel()
         AnimationcalendarBar(20)
+
+        let prevX = (15+50*(41%7)+60)
+        let mainX = (15+50*(41%7)+60)
+        let nextX = 15
+        Animationcalendar(-prevX, mainIntervalX: -mainX, nextIntervalX: nextX)
     }
     
     //今月を表示するメソッド
@@ -684,8 +740,8 @@ class CalenderViewController: UIViewController {
     //日付を比較してcalendarBarのアニメーション開始前の場所を返す
     func CompareDay() -> CGFloat{
         let calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)!
-        let currentNSDate = CommonMethod().CreateNSDate(year, month: month, day: day)
-        let compareunit = calendar.compareDate(now, toDate: currentNSDate, toUnitGranularity: .Day)
+        let currentNSDate = CommonMethod().CreateNSDate(year[1], month: month[1], day: day[1])
+        let compareunit = calendar.compareDate(now_nsdate, toDate: currentNSDate, toUnitGranularity: .Day)
         var position:CGFloat = 0
         
         //今日より小さい(前の日付の場合)
@@ -699,8 +755,8 @@ class CalenderViewController: UIViewController {
         }
         
         //同じ月かどうかを判定する
-        let nsdatesplit = CommonMethod().ReturnYearMonthDayWeekday(now)
-        if year ==  nsdatesplit.year && month == nsdatesplit.month {
+        let nsdatesplit = CommonMethod().ReturnYearMonthDayWeekday(now_nsdate)
+        if year[1] ==  nsdatesplit.year && month[1] == nsdatesplit.month {
             position = 0
         }
         
