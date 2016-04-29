@@ -753,9 +753,8 @@ class CalenderViewController: UIViewController {
     func NowCalendarSettings(sender: UILongPressGestureRecognizer){
         if sender.state == UIGestureRecognizerState.Began {
             
-            let prevX = (15+50*(41%7)+60)
-            let mainX = (15+50*(41%7)+60)
-            let nextX = 15
+            let rightX = (15+50*(41%7)+60)
+            let centerX = 15
 
             let position = CompareDay()
             setupCurrentCalendarData()
@@ -763,10 +762,10 @@ class CalenderViewController: UIViewController {
             AnimationcalendarBar(position)
             
             if position > 0 {
-                Animationcalendar(-prevX, mainIntervalX: -mainX, nextIntervalX: nextX, barposition: Int(position))
+                Animationcalendar(-rightX, mainIntervalX: -rightX, nextIntervalX: centerX, barposition: Int(position))
 
             }else if position < 0 {
-                Animationcalendar(prevX, mainIntervalX: mainX, nextIntervalX: nextX, barposition: Int(position))
+                Animationcalendar(centerX, mainIntervalX: rightX, nextIntervalX: rightX, barposition: Int(position))
             }
         }
     }
