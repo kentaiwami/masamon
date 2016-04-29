@@ -425,7 +425,7 @@ class CalenderViewController: UIViewController {
     
     //タイトル表記を設定する関数
     func setupCalendarTitleLabel() {
-        calendarBar.text = String("\(year)年\(month)月")
+        calendarBar.text = String("\(year[1])年\(month[1])月")
         calendarBar.textAlignment = NSTextAlignment.Center
         calendarBar.textColor = UIColor.whiteColor()
         
@@ -710,14 +710,7 @@ class CalenderViewController: UIViewController {
             }
             }) { (value: Bool) in
                 self.removeCalendarButtonObject()
-                
-                if barposition > 0 {
-                    self.setupNextCalendarData()
-                }else {
-                    self.setupPrevCalendarData()
-                }
                 self.generateCalendar()
-                self.setupCalendarTitleLabel()
         }
     }
 
@@ -727,7 +720,9 @@ class CalenderViewController: UIViewController {
         let mainX = (15+50*(41%7)+60)
         let nextX = (15+50*(41%7)+60)
 
+        self.setupPrevCalendarData()
         Animationcalendar(prevX, mainIntervalX: mainX, nextIntervalX: nextX, barposition: -20)
+        self.setupCalendarTitleLabel()
         AnimationcalendarBar(-20)
     }
     
@@ -736,7 +731,10 @@ class CalenderViewController: UIViewController {
         let prevX = (15+50*(41%7)+60)
         let mainX = (15+50*(41%7)+60)
         let nextX = 15
+
+        self.setupNextCalendarData()
         Animationcalendar(-prevX, mainIntervalX: -mainX, nextIntervalX: nextX, barposition: 20)
+        self.setupCalendarTitleLabel()
         AnimationcalendarBar(20)
     }
     
