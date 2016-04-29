@@ -5,7 +5,8 @@ class CalenderViewController: UIViewController {
     
     //メンバ変数の設定（配列格納用）
     var count: Int!
-    var mArray: NSMutableArray!
+//    var mArray: NSMutableArray!
+    var mArray: [UIButton] = []
     
     //メンバ変数の設定（カレンダー用）
     var now: NSDate!
@@ -180,7 +181,7 @@ class CalenderViewController: UIViewController {
         maxDay    = max
         
         //空の配列を作成する（カレンダーデータの格納用）
-        mArray = NSMutableArray()
+//        mArray = NSMutableArray()
         
         //曜日ラベル初期定義
         let monthName:[String] = ["日","月","火","水","木","金","土"]
@@ -349,7 +350,8 @@ class CalenderViewController: UIViewController {
             
             //ボタンを配置する
             self.view.addSubview(button)
-            mArray.addObject(button)
+//            mArray.addObject(button)
+            mArray.append(button)
             self.view.bringSubviewToFront(alertview)
         }
         
@@ -504,7 +506,7 @@ class CalenderViewController: UIViewController {
         }
         
         //配列に格納したボタンオブジェクトも削除する
-        mArray.removeAllObjects()
+        mArray.removeAll()
     }
     
     //現在のカレンダーをセットアップする関数
