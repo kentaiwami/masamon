@@ -449,23 +449,49 @@ class CalenderViewController: UIViewController {
         //inUnit:で指定した単位（月）の中で、rangeOfUnit:で指定した単位（日）が取り得る範囲
         let calendar: NSCalendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
         
-        
-        //最初にメンバ変数に格納するための現在日付の情報を取得する
-        comps[1] = calendar.components([NSCalendarUnit.Year, NSCalendarUnit.Month, NSCalendarUnit.Day, NSCalendarUnit.Weekday],fromDate:now_nsdate)
-        
-        //年月日と最後の日付と曜日を取得(NSIntegerをintへのキャスト不要)
-        let orgYear: NSInteger      = comps[1].year
-        let orgMonth: NSInteger     = comps[1].month
-        
-        year[1]      = orgYear
-        month[1]     = orgMonth
-        
-        currentComps.year  = year[1]
-        currentComps.month = month[1]
-        currentComps.day   = 1
-        
-        let currentDate: NSDate = currentCalendar.dateFromComponents(currentComps)!
-        recreateCalendarParameter(currentCalendar, currentDate: currentDate, calendarnumber: 1)
+        for i in 0..<for_parameter.count {
+            var tmp_nsdate = NSDate()
+            var tmp_nsdate_split = CommonMethod().ReturnYearMonthDayWeekday(tmp_nsdate)
+            
+            //先月を設定する場合の処理
+            if tmp_nsdate_split.month == 1 && i == 0{
+                tmp_nsdate_split.year = tmp_nsdate_split.year + for_parameter[i]
+                tmp_nsdate_split.month = 12
+            }else if tmp_nsdate_split.month >= 2 && i == 0 {
+                tmp_nsdate_split.month = tmp_nsdate_split.month + for_parameter[i]
+            }
+            
+            //来月を設定する場合の処理
+            if tmp_nsdate_split.month == 12 && i == 2{
+                tmp_nsdate_split.year = tmp_nsdate_split.year + for_parameter[i]
+                tmp_nsdate_split.month = 1
+            }else if tmp_nsdate_split.month >= 2 && i == 2 {
+                tmp_nsdate_split.month = tmp_nsdate_split.month + for_parameter[i]
+            }
+            
+            tmp_nsdate_split.day = 1
+            
+            tmp_nsdate = CommonMethod().CreateNSDate(tmp_nsdate_split.year, month: tmp_nsdate_split.month, day: tmp_nsdate_split.day)
+
+            nsdate[i] = tmp_nsdate
+
+            //最初にメンバ変数に格納するための現在日付の情報を取得する
+            comps[i] = calendar.components([NSCalendarUnit.Year, NSCalendarUnit.Month, NSCalendarUnit.Day, NSCalendarUnit.Weekday],fromDate:tmp_nsdate)
+            
+            //年月日と最後の日付と曜日を取得(NSIntegerをintへのキャスト不要)
+            let orgYear: NSInteger      = comps[i].year
+            let orgMonth: NSInteger     = comps[i].month
+            
+            year[i]      = orgYear
+            month[i]     = orgMonth
+            
+            currentComps.year  = year[i]
+            currentComps.month = month[i]
+            currentComps.day   = 1
+            
+            let currentDate: NSDate = currentCalendar.dateFromComponents(currentComps)!
+            recreateCalendarParameter(currentCalendar, currentDate: currentDate, calendarnumber: i)
+        }
     }
     
     //前の年月に該当するデータを取得する関数
