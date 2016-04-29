@@ -596,7 +596,7 @@ class CalenderViewController: UIViewController {
     //カレンダーボタンをタップした時のアクション
     func buttonTapped(button: UIButton){
         if DBmethod().TheDayStaffGet(CommonMethod().Changecalendar(year[1], calender: "A.D"), month: month[1], date: button.tag) == nil {
-            let alertController = UIAlertController(title: "\(year)年\(month)月\(button.tag)日", message: "データなし", preferredStyle: .Alert)
+            let alertController = UIAlertController(title: "\(year[1])年\(month[1])月\(button.tag)日", message: "データなし", preferredStyle: .Alert)
             let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
             alertController.addAction(defaultAction)
             
@@ -605,7 +605,7 @@ class CalenderViewController: UIViewController {
             let staffstring = DBmethod().TheDayStaffGet(CommonMethod().Changecalendar(year[1], calender: "A.D"),month: month[1],date: button.tag)![0].staff
             let splitedstaffarray = MonthlySalaryShow().SplitStaffShift(staffstring)
             
-            let alertviewtitle = "\(year)年\(month)月\(button.tag)日"
+            let alertviewtitle = "\(year[1])年\(month[1])月\(button.tag)日"
             let earlystaff = "　早番："+splitedstaffarray[0]+"\n\n"
             let center1staff = "　中1："+splitedstaffarray[1]+"\n\n"
             let center2staff = "　中2："+splitedstaffarray[2]+"\n\n"
@@ -708,7 +708,7 @@ class CalenderViewController: UIViewController {
     func Animationcalendar(prevIntervalX: Int, mainIntervalX: Int, nextIntervalX: Int, barposition: Int) {
         let IntervalX = [prevIntervalX, mainIntervalX, nextIntervalX]
         
-        UIView.animateWithDuration(0.5, animations: { 
+        UIView.animateWithDuration(0.4, animations: {
             for i in 0..<self.mArray.count {
                 for j in 0..<self.mArray[i].count {
                     let positionX   = IntervalX[i] + self.calendarX * (j % 7)
