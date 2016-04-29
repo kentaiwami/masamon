@@ -7,9 +7,10 @@ class CalenderViewController: UIViewController {
     var count: Int!
 //    var mArray: NSMutableArray!
     var mArray: [[UIButton]] = [[],[],[]]
+    let for_parameter: [Int] = [-1,0,1]
     
     //メンバ変数の設定（カレンダー用）
-    var now: NSDate!
+    var nsdate: [NSDate] = []
     var year: [Int] = []
     var month: [Int] = []
     var day: [Int] = []
@@ -17,7 +18,7 @@ class CalenderViewController: UIViewController {
     var dayOfWeek: [Int] = []
     
     //メンバ変数の設定（カレンダー関数から取得したものを渡す）
-    var comps: NSDateComponents!
+    var comps: [NSDateComponents] = []
     
     //メンバ変数の設定（カレンダーの背景色）
     var calendarBackGroundColor: UIColor!
@@ -172,17 +173,20 @@ class CalenderViewController: UIViewController {
         comps = calendar.components([NSCalendarUnit.Year, NSCalendarUnit.Month, NSCalendarUnit.Day, NSCalendarUnit.Weekday],fromDate:now)
         
         //年月日と最後の日付と曜日を取得(NSIntegerをintへのキャスト不要)
-        let orgYear: NSInteger      = comps.year
-        let orgMonth: NSInteger     = comps.month
-        let orgDay: NSInteger       = comps.day
-        let orgDayOfWeek: NSInteger = comps.weekday
-        let max: NSInteger          = range.length
+        for i in 0..<for_parameter.count {
+            let orgYear: NSInteger      = comps.year
+            let orgMonth: NSInteger     = comps.month
+            let orgDay: NSInteger       = comps.day
+            let orgDayOfWeek: NSInteger = comps.weekday
+            let max: NSInteger          = range.length
+            
+            year.append(orgYear)
+            month     = orgMonth
+            day       = orgDay
+            dayOfWeek = orgDayOfWeek
+            maxDay    = max
+        }
         
-        year      = orgYear
-        month     = orgMonth
-        day       = orgDay
-        dayOfWeek = orgDayOfWeek
-        maxDay    = max
         
         //空の配列を作成する（カレンダーデータの格納用）
 //        mArray = NSMutableArray()
