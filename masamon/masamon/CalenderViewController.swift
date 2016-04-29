@@ -10,11 +10,11 @@ class CalenderViewController: UIViewController {
     
     //メンバ変数の設定（カレンダー用）
     var now: NSDate!
-    var year: Int!
-    var month: Int!
-    var day: Int!
-    var maxDay: Int!
-    var dayOfWeek: Int!
+    var year: [Int] = []
+    var month: [Int] = []
+    var day: [Int] = []
+    var maxDay: [Int] = []
+    var dayOfWeek: [Int] = []
     
     //メンバ変数の設定（カレンダー関数から取得したものを渡す）
     var comps: NSDateComponents!
