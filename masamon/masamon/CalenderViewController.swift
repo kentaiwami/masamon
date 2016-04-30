@@ -232,9 +232,9 @@ class CalenderViewController: UIViewController {
     }
     
     //カレンダーを生成する関数
-    func generateCalendar(){
+    func generateCalendar(start: Int, end: Int){
         
-        for i in 0..<for_parameter.count {
+        for i in start..<end {
             mArray.append([])
             
             //タグナンバーとトータルカウントの定義
@@ -577,11 +577,20 @@ class CalenderViewController: UIViewController {
         mArray.removeAll()
     }
     
+    //指定した配列に格納されているボタンオブジェクトを削除する
+    func removeCalendarButtonObjectWithArrayNumber(arraynumber: Int) {
+        for i in 0..<mArray[arraynumber].count {
+            mArray[arraynumber][i].removeFromSuperview()
+        }
+        mArray[arraynumber].removeAll()
+    }
+    
+    
     //現在のカレンダーをセットアップする関数
     func setupCurrentCalendar() {
         
         setupCurrentCalendarData()
-        generateCalendar()
+        generateCalendar(0, end: for_parameter.count)
         setupCalendarTitleLabel()
     }
     
@@ -721,7 +730,7 @@ class CalenderViewController: UIViewController {
             }
             }) { (value: Bool) in
                 self.removeCalendarButtonObject()
-                self.generateCalendar()
+                self.generateCalendar(0,end: self.for_parameter.count)
         }
     }
 
@@ -745,6 +754,7 @@ class CalenderViewController: UIViewController {
 
         self.setupNextCalendarData()
         Animationcalendar(-prevX, mainIntervalX: -mainX, nextIntervalX: nextX, barposition: 20)
+        
         self.setupCalendarTitleLabel()
         AnimationcalendarBar(20)
     }
@@ -761,10 +771,19 @@ class CalenderViewController: UIViewController {
             setupCalendarTitleLabel()
             AnimationcalendarBar(position)
             
+            //戻るアニメーションの場合は，今月のカレンダーを生成
+            //それを画面左に設置しておく
+            //進む場合は，今月のカレンダーを生成し画面右に設置しておく
             if position > 0 {
+//                self.removeCalendarButtonObjectWithArrayNumber(0)
+//                self.generateCalendar(0, end: 1)
+                
                 Animationcalendar(-rightX, mainIntervalX: -rightX, nextIntervalX: centerX, barposition: Int(position))
 
             }else if position < 0 {
+//                self.removeCalendarButtonObjectWithArrayNumber(2)
+//                self.generateCalendar(2, end: for_parameter.count)
+                
                 Animationcalendar(centerX, mainIntervalX: rightX, nextIntervalX: rightX, barposition: Int(position))
             }
         }
