@@ -234,6 +234,11 @@ class CalenderViewController: UIViewController {
     //カレンダーを生成する関数
     func generateCalendar(start: Int, end: Int){
         
+        /*
+         長押しして月を進める場合に必要な処理．
+         画面右のカレンダー情報を一旦記録しておいて，今月のカレンダー情報を記録する
+         カレンダー生成が終わったらもとの値に戻す(本メソッド下の処理)
+         */
         var tmp: [Int] = []
         if start == 2 && end == 3 {
             tmp.append(dayOfWeek[2])
@@ -245,6 +250,19 @@ class CalenderViewController: UIViewController {
             maxDay[2] = maxDay[1]
             year[2] = year[1]
             month[2] = month[1]
+            
+        //長押しして月を戻す場合に必要な処理
+        }else if start == 0 && end == 1 {
+            tmp.append(dayOfWeek[0])
+            tmp.append(maxDay[0])
+            tmp.append(year[0])
+            tmp.append(month[0])
+
+            dayOfWeek[0] = dayOfWeek[1]
+            maxDay[0] = maxDay[1]
+            year[0] = year[1]
+            month[0] = month[1]
+
         }
         
         for i in start..<end {
@@ -382,11 +400,17 @@ class CalenderViewController: UIViewController {
             }
         }
         
-        if tmp.count != 0 {
+        //今月のカレンダー生成が終わったらもとの値に戻す
+        if tmp.count != 0 && start == 2 && end == 3{
             dayOfWeek[2] = tmp[0]
             maxDay[2] = tmp[1]
             year[2] = tmp[2]
             month[2] = tmp[3]
+        }else if tmp.count != 0 && start == 0 && end == 1 {
+            dayOfWeek[0] = tmp[0]
+            maxDay[0] = tmp[1]
+            year[0] = tmp[2]
+            month[0] = tmp[3]
         }
         
     }
@@ -802,15 +826,12 @@ class CalenderViewController: UIViewController {
                 Animationcalendar(-rightX, mainIntervalX: -rightX, nextIntervalX: centerX, barposition: Int(position))
 
             }else if position < 0 {
-//                self.removeCalendarButtonObjectWithArrayNumber(2)
-//                self.generateCalendar(2, end: for_parameter.count)
+                self.removeCalendarButtonObjectWithArrayNumber(0)
+                self.removeCalendarButtonObjectWithArrayNumber(2)
+                self.generateCalendar(0, end: 1)
                 
                 Animationcalendar(centerX, mainIntervalX: rightX, nextIntervalX: rightX, barposition: Int(position))
             }
-        }
-        
-        for i in 0..<for_parameter.count {
-            print(month[i])
         }
     }
     
