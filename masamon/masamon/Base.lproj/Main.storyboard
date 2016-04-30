@@ -537,6 +537,7 @@
                                 <items>
                                     <navigationItem title="ムービー" id="rYp-dx-TEt">
                                         <barButtonItem key="leftBarButtonItem" systemItem="stop" id="QN6-ei-zPo">
+                                            <color key="tintColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                                             <connections>
                                                 <action selector="TapBackButton:" destination="zO2-EF-qMy" id="RAh-dJ-cQr"/>
                                             </connections>
