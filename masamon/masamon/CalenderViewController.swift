@@ -438,7 +438,7 @@ class CalenderViewController: UIViewController {
     
     //タイトル表記を設定する関数
     func setupCalendarTitleLabel() {
-        calendarBar.text = String("\(year)年\(month)月")
+        calendarBar.text = String("\(year[1])年\(month[1])月")
         calendarBar.textAlignment = NSTextAlignment.Center
         calendarBar.textColor = UIColor.whiteColor()
         
