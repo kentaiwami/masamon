@@ -1094,7 +1094,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     
     
     //シフトを表示するラベルを設置する関数
-    let shiftlabel_h = [63,35,35,35,63,63]
+    let shiftlabel_h = [65,35,35,35,65,65]
     let shiftlabel_line = [3,1,1,1,3,3]
     let shiftlabel_x = [-360,8,375]
     
