@@ -52,6 +52,7 @@ class DBmethod: UIViewController {
         
     }
     
+    
     //指定したDBのレコード数を返す
     func DBRecordCount(DBName: Object.Type) -> Int {
         var dbrecordcount = 0
@@ -76,6 +77,16 @@ class DBmethod: UIViewController {
         return shiftimportname
     }
     
+    //ShiftDBのリレーションシップ配列を返す
+    func ShiftDBRelationArrayGet(id: Int) -> List<ShiftDetailDB>{
+        var list = List<ShiftDetailDB>()
+        let realm = try! Realm()
+        
+        list = realm.objects(ShiftDB).filter("id = %@", id)[0].shiftdetail
+        
+        return list
+        
+    }
     
     //レコードのIDを受け取って月給を返す
     func ShiftDBSaralyGet(id: Int) ->Int{
@@ -101,7 +112,7 @@ class DBmethod: UIViewController {
     func GetShiftDBAllRecordArray() -> Results<ShiftDB>?{
         let realm = try! Realm()
         
-        if(DBmethod().DBRecordCount(ShiftDB) != 0){
+        if DBmethod().DBRecordCount(ShiftDB) != 0 {
             return realm.objects(ShiftDB)
         }else{
             return nil
@@ -188,7 +199,7 @@ class DBmethod: UIViewController {
         let realm = try! Realm()
         let shiftsystem = realm.objects(ShiftSystemDB).filter("name = %@",shift)
         
-        if(shiftsystem.count == 0){
+        if shiftsystem.count == 0 {
             return nil
         }else{
             return shiftsystem
@@ -331,7 +342,7 @@ class DBmethod: UIViewController {
         let realm = try! Realm()
         let stafflist = realm.objects(ShiftDetailDB).filter("year = %@ AND month = %@ AND day = %@",year,month,date)
         
-        if(stafflist.count == 0){
+        if stafflist.count == 0 {
             return nil
         }else{
             return stafflist
@@ -362,7 +373,7 @@ class DBmethod: UIViewController {
         var array: [String] = []
         let realm = try! Realm()
         
-        if(DBmethod().DBRecordCount(StaffNameDB) == 0){
+        if DBmethod().DBRecordCount(StaffNameDB) == 0 {
             return nil
         }else{
             for i in 0 ..< DBmethod().DBRecordCount(StaffNameDB){

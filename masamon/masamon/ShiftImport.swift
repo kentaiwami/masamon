@@ -32,7 +32,7 @@ class ShiftImport: UIViewController,UITextFieldDelegate,QLPreviewControllerDataS
         filenamefield.delegate = self
         filenamefield.returnKeyType = .Done
         
-        if(DBmethod().FilePathTmpGet() != ""){
+        if DBmethod().FilePathTmpGet() != "" {
             filenamefield.text = DBmethod().FilePathTmpGet().lastPathComponent
         }
         
@@ -51,7 +51,7 @@ class ShiftImport: UIViewController,UITextFieldDelegate,QLPreviewControllerDataS
     @IBAction func xlsximport(sender: AnyObject) {
         
         //設定が登録されていない場合
-        if(DBmethod().DBRecordCount(UserNameDB) == 0){
+        if DBmethod().DBRecordCount(UserNameDB) == 0 {
             let alertController = UIAlertController(title: "取り込みエラー", message: "先に設定画面で情報の登録をして下さい", preferredStyle: .Alert)
             
             let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
@@ -61,12 +61,12 @@ class ShiftImport: UIViewController,UITextFieldDelegate,QLPreviewControllerDataS
             
         }else{
             //ファイル形式がpdfの場合
-            if(filename.containsString(".pdf") || filename.containsString(".PDF")){
-                if(filenamefield.text != ""){
+            if filename.containsString(".pdf") || filename.containsString(".PDF") {
+                if filenamefield.text != "" {
                     let Inboxpath = documentspath + "/Inbox/"       //Inboxまでのパス
                     let filemanager = NSFileManager()
                     
-                    if(filemanager.fileExistsAtPath(Libralypath+"/"+filenamefield.text!)){       //入力したファイル名が既に存在する場合
+                    if filemanager.fileExistsAtPath(Libralypath+"/"+filenamefield.text!) {       //入力したファイル名が既に存在する場合
                         //アラートを表示して上書きかキャンセルかを選択させる
                         let alert:UIAlertController = UIAlertController(title:"取り込みエラー",
                             message: "既に同じファイル名が存在します",
@@ -100,12 +100,12 @@ class ShiftImport: UIViewController,UITextFieldDelegate,QLPreviewControllerDataS
                     }
                 }
             }else{
-                if(filenamefield.text != ""){
+                if filenamefield.text != "" {
                     let Inboxpath = documentspath + "/Inbox/"       //Inboxまでのパス
                     
                     let filemanager = NSFileManager()
                     
-                    if(filemanager.fileExistsAtPath(Libralypath+"/"+filenamefield.text!)){       //入力したファイル名が既に存在する場合
+                    if filemanager.fileExistsAtPath(Libralypath+"/"+filenamefield.text!) {       //入力したファイル名が既に存在する場合
                         //アラートを表示して上書きかキャンセルかを選択させる
                         let alert:UIAlertController = UIAlertController(title:"取り込みエラー",
                             message: "既に同じファイル名が存在します",
@@ -189,7 +189,7 @@ class ShiftImport: UIViewController,UITextFieldDelegate,QLPreviewControllerDataS
         
         //取り込み履歴へのレコード追加
         let ShiftImportHistoryDBRecord = ShiftImportHistoryDB()
-        if(DBmethod().DBRecordCount(ShiftImportHistoryDB) == 0){
+        if DBmethod().DBRecordCount(ShiftImportHistoryDB) == 0 {
             ShiftImportHistoryDBRecord.id = 0
         }else{
             ShiftImportHistoryDBRecord.id = DBmethod().DBRecordCount(ShiftImportHistoryDB)
@@ -223,7 +223,7 @@ class ShiftImport: UIViewController,UITextFieldDelegate,QLPreviewControllerDataS
     //プレビューで表示するファイルの設定
     func previewController(controller: QLPreviewController, previewItemAtIndex index: Int) -> QLPreviewItem{
 
-        if(DBmethod().DBRecordCount(ShiftImportHistoryDB) == 0){
+        if DBmethod().DBRecordCount(ShiftImportHistoryDB) == 0 {
             lasttimeimportlabel.text = "前回の取り込み: なし"
             let mainbundle = NSBundle.mainBundle()
             let url = mainbundle.pathForResource("no_data", ofType: "png")!

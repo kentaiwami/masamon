@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3701A3C11C8252DA007D7015 /* LaunchScreenImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 3701A3C01C8252DA007D7015 /* LaunchScreenImage.png */; };
 		370ACDFB1BDF486700AB73EB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370ACDFA1BDF486700AB73EB /* AppDelegate.swift */; };
 		370ACDFD1BDF486700AB73EB /* MonthlySalaryShow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370ACDFC1BDF486700AB73EB /* MonthlySalaryShow.swift */; };
 		370ACE021BDF486700AB73EB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 370ACE011BDF486700AB73EB /* Assets.xcassets */; };
@@ -40,8 +39,8 @@
 		379955951C14431F00BAAD9E /* XLSXmethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379955941C14431F00BAAD9E /* XLSXmethod.swift */; };
 		379A2DBE1C1E5F9900751425 /* no_data.png in Resources */ = {isa = PBXBuildFile; fileRef = 379A2DBD1C1E5F9900751425 /* no_data.png */; };
 		379A2E051C1FDFFC00751425 /* CustomUICollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379A2E041C1FDFFC00751425 /* CustomUICollectionViewCell.swift */; };
+		37C8B2401CD4E29D001E3766 /* OriginUITabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C8B23F1CD4E29D001E3766 /* OriginUITabBarController.swift */; };
 		37D4B3101BE0F59900F06759 /* UserSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D4B30F1BE0F59900F06759 /* UserSetting.swift */; };
-		37DD8EF51C1C0135007C0E6C /* SwipeBetweenViewControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DD8EF41C1C0135007C0E6C /* SwipeBetweenViewControllers.swift */; };
 		37DD8EFF1C1C29FF007C0E6C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 370ACDFE1BDF486700AB73EB /* Main.storyboard */; };
 		37F75CAB1C3F18C30075F9FD /* PDFmethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F75CAA1C3F18C30075F9FD /* PDFmethod.swift */; };
 		37F75CBF1C3F1E4C0075F9FD /* TET_ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37F75CB61C3F1B610075F9FD /* TET_ios.framework */; };
@@ -107,7 +106,6 @@
 
 /* Begin PBXFileReference section */
 		1B7B2B25D5EE69B36B550A20 /* Pods-masamon.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-masamon.release.xcconfig"; path = "Pods/Target Support Files/Pods-masamon/Pods-masamon.release.xcconfig"; sourceTree = "<group>"; };
-		3701A3C01C8252DA007D7015 /* LaunchScreenImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LaunchScreenImage.png; sourceTree = "<group>"; };
 		370ACDF71BDF486600AB73EB /* masamon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = masamon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		370ACDFA1BDF486700AB73EB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		370ACDFC1BDF486700AB73EB /* MonthlySalaryShow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlySalaryShow.swift; sourceTree = "<group>"; };
@@ -143,10 +141,10 @@
 		379955941C14431F00BAAD9E /* XLSXmethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XLSXmethod.swift; sourceTree = "<group>"; };
 		379A2DBD1C1E5F9900751425 /* no_data.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = no_data.png; sourceTree = "<group>"; };
 		379A2E041C1FDFFC00751425 /* CustomUICollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomUICollectionViewCell.swift; sourceTree = "<group>"; };
+		37C8B23F1CD4E29D001E3766 /* OriginUITabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OriginUITabBarController.swift; sourceTree = "<group>"; };
 		37CB96FE1C40569400171B76 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
 		37CB96FF1C40569400171B76 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		37D4B30F1BE0F59900F06759 /* UserSetting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSetting.swift; sourceTree = "<group>"; };
-		37DD8EF41C1C0135007C0E6C /* SwipeBetweenViewControllers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipeBetweenViewControllers.swift; sourceTree = "<group>"; };
 		37F75CAA1C3F18C30075F9FD /* PDFmethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PDFmethod.swift; sourceTree = "<group>"; };
 		37F75CAD1C3F19CE0075F9FD /* TET.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = TET.xcodeproj; path = TET/sample_app/TET.xcodeproj; sourceTree = "<group>"; };
 		37F75CB31C3F1A7D0075F9FD /* libstdc++.6.0.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.0.9.dylib"; path = "../../../../../../usr/lib/libstdc++.6.0.9.dylib"; sourceTree = "<group>"; };
@@ -191,7 +189,6 @@
 				378B24421CA584960009E037 /* Realm.framework */,
 				378B24431CA584960009E037 /* RealmSwift.framework */,
 				371E8C2C1C85579F006B7C8C /* sampleshift */,
-				3701A3C01C8252DA007D7015 /* LaunchScreenImage.png */,
 				37F75CB51C3F1AEE0075F9FD /* masamon-Bridging-Header.h */,
 				37F75CAD1C3F19CE0075F9FD /* TET.xcodeproj */,
 				377D2DAD1C36C08B009CC388 /* BlueDarkStyle.swift */,
@@ -220,8 +217,8 @@
 			isa = PBXGroup;
 			children = (
 				370ACDFA1BDF486700AB73EB /* AppDelegate.swift */,
+				37C8B23F1CD4E29D001E3766 /* OriginUITabBarController.swift */,
 				374090BF1C78641E00B01DC4 /* VideoViewController.swift */,
-				37DD8EF41C1C0135007C0E6C /* SwipeBetweenViewControllers.swift */,
 				370ACDFC1BDF486700AB73EB /* MonthlySalaryShow.swift */,
 				3721B1161C51499D0002A373 /* CommonMethod.swift */,
 				3726B3991C30009700F22F34 /* CalenderViewController.swift */,
@@ -399,7 +396,6 @@
 				370ACE291BDF4B7700AB73EB /* images in Resources */,
 				374090BC1C7858D800B01DC4 /* video1.mp4 in Resources */,
 				371E8C321C8557BF006B7C8C /* sampleshift.xlsx in Resources */,
-				3701A3C11C8252DA007D7015 /* LaunchScreenImage.png in Resources */,
 				37DD8EFF1C1C29FF007C0E6C /* Main.storyboard in Resources */,
 				370ACE021BDF486700AB73EB /* Assets.xcassets in Resources */,
 			);
@@ -460,8 +456,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				37C8B2401CD4E29D001E3766 /* OriginUITabBarController.swift in Sources */,
 				3726B39A1C30009700F22F34 /* CalenderViewController.swift in Sources */,
-				37DD8EF51C1C0135007C0E6C /* SwipeBetweenViewControllers.swift in Sources */,
 				379955951C14431F00BAAD9E /* XLSXmethod.swift in Sources */,
 				37F75CAB1C3F18C30075F9FD /* PDFmethod.swift in Sources */,
 				370ACE4A1BDF9C8A00AB73EB /* DBmethod.swift in Sources */,
@@ -607,6 +603,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SRCROOT)/",
@@ -630,6 +627,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SRCROOT)/",

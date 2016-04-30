@@ -31,7 +31,7 @@ extension Array {
             }
         }
         
-        if(index != nil) {
+        if index != nil {
             self.removeAtIndex(index!)
         }
     }

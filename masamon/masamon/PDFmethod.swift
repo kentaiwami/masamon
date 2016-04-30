@@ -126,7 +126,7 @@ class PDFmethod: UIViewController {
             
             //スタッフ名の抽出
             staffname = self.GetStaffName(staffarraytmp, i: i)
-
+            
             //スキップされたスタッフは取り込みを行わない
             if(appDelegate.skipstaff.contains(staffname)){
                 //ループを抜けて次のループに移る
@@ -255,7 +255,7 @@ class PDFmethod: UIViewController {
                         
                         //シフトの名前をテキストから取得する
                         let staffshift = self.GetShiftNameFromOneLineText(staffarraytmp, sg: dayshift.shiftgroup, sp: dayshift.shiftposition)
-
+                        
                         switch(dayshift.shiftgroup){
                         case "早":
                             shiftlocationarray[0].removeAtIndex(0)
@@ -802,7 +802,7 @@ class PDFmethod: UIViewController {
                     if(appDelegate.errorstaffnamepdf.count == 0 && appDelegate.errorshiftnamepdf.count == 0){
                         DBmethod().AddandUpdate(shiftdbrecord, update: true)
                         DBmethod().AddandUpdate(shiftdetaildbrecord, update: true)
-                        shiftdetailarray = CommonMethod().ShiftDBRelationArrayGet(ID)
+                        shiftdetailarray = DBmethod().ShiftDBRelationArrayGet(ID)
                     }
                 }
                 

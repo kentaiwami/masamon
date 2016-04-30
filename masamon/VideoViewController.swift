@@ -21,7 +21,7 @@ class VideoViewController: AVPlayerViewController {
         
         let mainbundle = NSBundle.mainBundle()
         
-        if(appDelegate.thumbnailnumber == 1){
+        if appDelegate.thumbnailnumber == 1 {
             filename = "video1"
         }else{
             filename = "video2"
