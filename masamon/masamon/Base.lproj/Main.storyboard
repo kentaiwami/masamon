@@ -26,7 +26,7 @@
             </objects>
             <point key="canvasLocation" x="-926" y="43"/>
         </scene>
-        <!--Monthly Salary Show-->
+        <!--1日ごとのシフト-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController storyboardIdentifier="MonthlySalaryShow" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BYZ-38-t0r" customClass="MonthlySalaryShow" customModule="masamon" customModuleProvider="target" sceneMemberID="viewController">
@@ -76,7 +76,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" systemItem="topRated" id="3O3-oy-DWv"/>
+                    <tabBarItem key="tabBarItem" title="1日ごとのシフト" image="tabbarmss" id="3O3-oy-DWv"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="SaralyLabel" destination="4IL-L2-8ra" id="WXj-3r-Hnu"/>
@@ -372,7 +372,7 @@
             </objects>
             <point key="canvasLocation" x="1551.5" y="1222.5"/>
         </scene>
-        <!--Setting-->
+        <!--設定-->
         <scene sceneID="R5N-ZT-HGi">
             <objects>
                 <viewController storyboardIdentifier="Setting" useStoryboardIdentifierAsRestorationIdentifier="YES" id="wxH-3x-qaL" customClass="Setting" customModule="masamon" customModuleProvider="target" sceneMemberID="viewController">
@@ -439,7 +439,7 @@
                         </subviews>
                         <color key="backgroundColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
-                    <tabBarItem key="tabBarItem" systemItem="bookmarks" id="R4Z-ZK-RVK"/>
+                    <tabBarItem key="tabBarItem" title="設定" image="tabbarsetting" id="R4Z-ZK-RVK"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1Y2-k8-R7g" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -562,7 +562,7 @@
             </objects>
             <point key="canvasLocation" x="702.5" y="-255.5"/>
         </scene>
-        <!--Calender View Controller-->
+        <!--月ごとのシフト-->
         <scene sceneID="2io-Zl-q4d">
             <objects>
                 <viewController storyboardIdentifier="CalenderViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="41r-t4-FLQ" customClass="CalenderViewController" customModule="masamon" customModuleProvider="target" sceneMemberID="viewController">
@@ -595,14 +595,14 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" systemItem="contacts" id="smv-gO-Zcp"/>
+                    <tabBarItem key="tabBarItem" title="月ごとのシフト" image="tabbarcalendar" id="smv-gO-Zcp"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CMS-Q0-48q" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-194.5" y="477.5"/>
         </scene>
-        <!--Shift Gallery Table-->
+        <!--シフト取り込み一覧-->
         <scene sceneID="Wco-XA-FuF">
             <objects>
                 <viewController storyboardIdentifier="ShiftGalleryTable" useStoryboardIdentifierAsRestorationIdentifier="YES" id="FTR-Tl-LZ9" customClass="ShiftGalleryTable" customModule="masamon" customModuleProvider="target" sceneMemberID="viewController">
@@ -635,7 +635,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" systemItem="downloads" id="hRS-Co-C4b"/>
+                    <tabBarItem key="tabBarItem" title="シフト取り込み一覧" image="tabbarshiftimport" id="hRS-Co-C4b"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="ButtomView" destination="5OY-FG-mzQ" id="57r-cW-5hc"/>
@@ -647,4 +647,10 @@
             <point key="canvasLocation" x="-194.5" y="1972.5"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="tabbarcalendar" width="30" height="30"/>
+        <image name="tabbarmss" width="30" height="30"/>
+        <image name="tabbarsetting" width="30" height="30"/>
+        <image name="tabbarshiftimport" width="30" height="30"/>
+    </resources>
 </document>

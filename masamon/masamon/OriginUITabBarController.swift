@@ -24,7 +24,6 @@ class OriginUITabBarController: UITabBarController {
 
         self.tabBarItem.setTitleTextAttributes(selectedAttributes, forState: UIControlState.Selected)
         UITabBar.appearance().tintColor = selectedColor
-
     }
 
     override func didReceiveMemoryWarning() {
