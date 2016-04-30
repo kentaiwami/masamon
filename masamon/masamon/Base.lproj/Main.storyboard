@@ -107,11 +107,13 @@
                                 <items>
                                     <navigationItem title="追加したスタッフ名の一覧" id="iX3-gT-ann">
                                         <barButtonItem key="leftBarButtonItem" systemItem="stop" id="Jfx-Dw-9nl">
+                                            <color key="tintColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                                             <connections>
                                                 <action selector="TapBackButton:" destination="mjS-5n-bWb" id="w8B-Zi-POD"/>
                                             </connections>
                                         </barButtonItem>
                                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="faC-IF-N9A">
+                                            <color key="tintColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                                             <connections>
                                                 <action selector="TapPlusButton:" destination="mjS-5n-bWb" id="MJ4-tP-jeK"/>
                                             </connections>
@@ -239,6 +241,7 @@
                                                 <items>
                                                     <navigationItem title="ユーザ設定" id="sel-8e-IeJ">
                                                         <barButtonItem key="leftBarButtonItem" systemItem="stop" id="NB4-M0-RFK">
+                                                            <color key="tintColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                                                             <connections>
                                                                 <action selector="TapBackButton:" destination="tsi-6b-VUl" id="XjZ-AT-WCB"/>
                                                             </connections>
@@ -304,11 +307,13 @@
                                 <items>
                                     <navigationItem title="追加したシフト名の一覧" id="aiW-R7-Y08">
                                         <barButtonItem key="leftBarButtonItem" systemItem="stop" id="8Sm-ZJ-m5W">
+                                            <color key="tintColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                                             <connections>
                                                 <action selector="TapBackButton:" destination="5ce-dN-Wqe" id="CIV-Iu-RmQ"/>
                                             </connections>
                                         </barButtonItem>
                                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="Zfn-Pu-sMQ">
+                                            <color key="tintColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                                             <connections>
                                                 <action selector="TapPlusButton:" destination="5ce-dN-Wqe" id="yuP-eD-59e"/>
                                             </connections>
@@ -349,6 +354,7 @@
                                 <items>
                                     <navigationItem title="取り込み済みのシフト一覧" id="f3E-BL-d3F">
                                         <barButtonItem key="leftBarButtonItem" systemItem="stop" id="4zz-rL-tay">
+                                            <color key="tintColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                                             <connections>
                                                 <action selector="TapBackButton:" destination="Zya-Cs-PqC" id="fD3-vy-TDL"/>
                                             </connections>
