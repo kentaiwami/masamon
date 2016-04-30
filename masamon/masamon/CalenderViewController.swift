@@ -234,6 +234,19 @@ class CalenderViewController: UIViewController {
     //カレンダーを生成する関数
     func generateCalendar(start: Int, end: Int){
         
+        var tmp: [Int] = []
+        if start == 2 && end == 3 {
+            tmp.append(dayOfWeek[2])
+            tmp.append(maxDay[2])
+            tmp.append(year[2])
+            tmp.append(month[2])
+            
+            dayOfWeek[2] = dayOfWeek[1]
+            maxDay[2] = maxDay[1]
+            year[2] = year[1]
+            month[2] = month[1]
+        }
+        
         for i in start..<end {
             mArray.append([])
             
@@ -369,6 +382,13 @@ class CalenderViewController: UIViewController {
             }
         }
         
+        if tmp.count != 0 {
+            dayOfWeek[2] = tmp[0]
+            maxDay[2] = tmp[1]
+            year[2] = tmp[2]
+            month[2] = tmp[3]
+        }
+        
     }
     
     //受け取った文字列の中からユーザのシフトを返す関数
@@ -401,7 +421,7 @@ class CalenderViewController: UIViewController {
     
     //タイトル表記を設定する関数
     func setupCalendarTitleLabel() {
-        calendarBar.text = String("\(year[1])年\(month[1])月")
+        calendarBar.text = String("\(year)年\(month)月")
         calendarBar.textAlignment = NSTextAlignment.Center
         calendarBar.textColor = UIColor.whiteColor()
         
@@ -775,8 +795,9 @@ class CalenderViewController: UIViewController {
             //それを画面左に設置しておく
             //進む場合は，今月のカレンダーを生成し画面右に設置しておく
             if position > 0 {
-//                self.removeCalendarButtonObjectWithArrayNumber(0)
-//                self.generateCalendar(0, end: 1)
+                self.removeCalendarButtonObjectWithArrayNumber(0)
+                self.removeCalendarButtonObjectWithArrayNumber(2)
+                self.generateCalendar(2, end: 3)
                 
                 Animationcalendar(-rightX, mainIntervalX: -rightX, nextIntervalX: centerX, barposition: Int(position))
 
@@ -786,6 +807,10 @@ class CalenderViewController: UIViewController {
                 
                 Animationcalendar(centerX, mainIntervalX: rightX, nextIntervalX: rightX, barposition: Int(position))
             }
+        }
+        
+        for i in 0..<for_parameter.count {
+            print(month[i])
         }
     }
     
