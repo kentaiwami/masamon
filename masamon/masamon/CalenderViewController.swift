@@ -231,38 +231,37 @@ class CalenderViewController: UIViewController {
         }
     }
     
+    /*
+     カレンダー情報を保存しておいて，
+     今月分のカレンダー情報を画面右or左のカレンダー情報にコピーする
+     */
+    func SaveCalendarInfoAndCopyInfo(arraynumber: Int)  -> Array<Int>{
+        var tmp: [Int] = []
+        
+        tmp.append(dayOfWeek[arraynumber])
+        tmp.append(maxDay[arraynumber])
+        tmp.append(year[arraynumber])
+        tmp.append(month[arraynumber])
+
+        dayOfWeek[arraynumber] = dayOfWeek[1]
+        maxDay[arraynumber] = maxDay[1]
+        year[arraynumber] = year[1]
+        month[arraynumber] = month[1]
+        
+        return tmp
+    }
+    
     //カレンダーを生成する関数
     func generateCalendar(start: Int, end: Int){
         
         /*
-         長押しして月を進める場合に必要な処理．
+         長押しして月を進めるor戻す場合に必要な処理．
          画面右のカレンダー情報を一旦記録しておいて，今月のカレンダー情報を記録する
          カレンダー生成が終わったらもとの値に戻す(本メソッド下の処理)
          */
         var tmp: [Int] = []
-        if start == 2 && end == 3 {
-            tmp.append(dayOfWeek[2])
-            tmp.append(maxDay[2])
-            tmp.append(year[2])
-            tmp.append(month[2])
-            
-            dayOfWeek[2] = dayOfWeek[1]
-            maxDay[2] = maxDay[1]
-            year[2] = year[1]
-            month[2] = month[1]
-            
-        //長押しして月を戻す場合に必要な処理
-        }else if start == 0 && end == 1 {
-            tmp.append(dayOfWeek[0])
-            tmp.append(maxDay[0])
-            tmp.append(year[0])
-            tmp.append(month[0])
-
-            dayOfWeek[0] = dayOfWeek[1]
-            maxDay[0] = maxDay[1]
-            year[0] = year[1]
-            month[0] = month[1]
-
+        if !(start == 0 && end == 3) {
+            tmp = SaveCalendarInfoAndCopyInfo(start)
         }
         
         for i in start..<end {
@@ -401,18 +400,12 @@ class CalenderViewController: UIViewController {
         }
         
         //今月のカレンダー生成が終わったらもとの値に戻す
-        if tmp.count != 0 && start == 2 && end == 3{
-            dayOfWeek[2] = tmp[0]
-            maxDay[2] = tmp[1]
-            year[2] = tmp[2]
-            month[2] = tmp[3]
-        }else if tmp.count != 0 && start == 0 && end == 1 {
-            dayOfWeek[0] = tmp[0]
-            maxDay[0] = tmp[1]
-            year[0] = tmp[2]
-            month[0] = tmp[3]
+        if tmp.count != 0 {
+            dayOfWeek[start] = tmp[0]
+            maxDay[start] = tmp[1]
+            year[start] = tmp[2]
+            month[start] = tmp[3]
         }
-        
     }
     
     //受け取った文字列の中からユーザのシフトを返す関数
