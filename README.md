@@ -30,7 +30,6 @@ zipでダウンロードして解凍することで使用可能です。
 
 ## 使用しているライブラリ
 * XlsxReaderWriter
-* SwipeBetweenViewControllers
 * handMadeCalendarOfSwift
 * Gradient Circular Progress
 * TET
