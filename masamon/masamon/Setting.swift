@@ -39,6 +39,11 @@ class Setting: UIViewController, UITableViewDataSource, UITableViewDelegate {
         let cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "Cell")
         
         cell.textLabel?.text = texts[indexPath.row]
+        
+        if texts[indexPath.row].characters.count != 0 {
+            cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+        }
+        
         return cell
     }
     
@@ -50,6 +55,5 @@ class Setting: UIViewController, UITableViewDataSource, UITableViewDelegate {
         }else {
             return indexPath
         }
-
     }
 }
