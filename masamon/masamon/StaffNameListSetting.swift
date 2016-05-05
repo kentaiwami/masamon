@@ -15,7 +15,7 @@ class StaffNameListSetting: UIViewController, UITableViewDataSource, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = UIColor.hex("55586B", alpha: 1.0)
+        self.view.backgroundColor = UIColor.hex("191919", alpha: 1.0)
         
         table.delegate = self
         table.dataSource = self

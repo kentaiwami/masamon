@@ -8,55 +8,95 @@
 
 import UIKit
 
-class Setting: UIViewController {
+class Setting: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
-
-    let buttonimages = ["../images/usersetting.png","../images/staffnamelist.png","../images/shiftnamelist.png","../images/shiftlist.png"]
-    let buttonpositon: [[Int]] = [[90,160],[280,160],[100,380],[280,380]]
+    @IBOutlet weak var tableview: UITableView!
+    
     let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        for i in 0 ..< 4{
-            
-            //画面遷移するためのボタンを追加
-            let button = UIButton()
-            button.tag = i + 1
-            button.setImage(UIImage(named: buttonimages[i]), forState: .Normal)
-            button.frame = CGRectMake(0, 0, 100, 100)
-            button.layer.position = CGPoint(x: buttonpositon[i][0], y:buttonpositon[i][1])
-            button.addTarget(self, action: #selector(Setting.Buttontapped(_:)), forControlEvents:.TouchUpInside)
-            self.view.addSubview(button)
-            
-        }
+        tableview.delegate = self
+        tableview.dataSource = self
+        tableview.scrollEnabled = false
+        
+        //tableviewの下の余白部分を埋める処理
+        let spaceview = UIView()
+        let spaceview_y:CGFloat = 404
+        spaceview.backgroundColor = UIColor.hex("FFFFFF", alpha: 0.9)
+        spaceview.frame = CGRectMake(0, spaceview_y, self.view.frame.width, self.view.frame.height - spaceview_y)
+        self.view.addSubview(spaceview)
     }
     
     override func viewDidAppear(animated: Bool) {
         appDelegate.screennumber = 2
     }
     
-    func Buttontapped(sender:UIButton){
-        switch(sender.tag){
-        case 1:
-            let targetViewController = self.storyboard!.instantiateViewControllerWithIdentifier("UserSetting")
-            self.presentViewController( targetViewController, animated: true, completion: nil)
-            
-        case 2:
-            let targetViewController = self.storyboard!.instantiateViewControllerWithIdentifier("StaffNameListSetting")
-            self.presentViewController( targetViewController, animated: true, completion: nil)
+    // セルに表示するテキスト
+    let texts = ["時給登録", "ユーザ名とスタッフ人数", "", "スタッフ名を追加・編集・削除", "", "シフト名を追加・編集・削除", "", "取り込んだシフトを編集・削除"]
+    
+    // セルの行数
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return texts.count
+    }
+    
+    // セルの内容を変更
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "Cell")
+        
+        cell.textLabel?.text = texts[indexPath.row]
+        
+        if texts[indexPath.row].characters.count != 0 {
+            cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+            cell.textLabel?.textColor = UIColor.blackColor()
+        }else {
+            cell.backgroundColor = UIColor.hex("000000", alpha: 0.07)
+        }
+        
+        
+        let cellSelectedView = UIView()
+        cellSelectedView.backgroundColor = UIColor.lightGrayColor()
+        cell.selectedBackgroundView = cellSelectedView
+        
+        return cell
+    }
+    
+    //空白セルを選択不可にする
+    func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+
+        if texts[indexPath.row].characters.count == 0  {
+            return nil
+        }else {
+            return indexPath
+        }
+    }
+    
+    //セルをタップして選択したら動作
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        var screen_name = ""
+        switch indexPath.row {
+        case 0,1:
+            screen_name = "UserSetting"
             
         case 3:
-            let targetViewController = self.storyboard!.instantiateViewControllerWithIdentifier("ShiftNameListSetting")
-            self.presentViewController( targetViewController, animated: true, completion: nil)
+            screen_name = "StaffNameListSetting"
             
-        case 4:
-            let targetViewController = self.storyboard!.instantiateViewControllerWithIdentifier("ShiftListSetting")
-            self.presentViewController( targetViewController, animated: true, completion: nil)
+        case 5:
+            screen_name = "ShiftNameListSetting"
             
+        case 7:
+            screen_name = "ShiftListSetting"
         default:
             break
-
         }
+        
+        let targetViewController = self.storyboard!.instantiateViewControllerWithIdentifier(screen_name)
+        targetViewController.modalTransitionStyle = UIModalTransitionStyle.FlipHorizontal
+        self.presentViewController( targetViewController, animated: true, completion: nil)
+        
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+
     }
 }
