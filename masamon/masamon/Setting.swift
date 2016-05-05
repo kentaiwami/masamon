@@ -67,4 +67,30 @@ class Setting: UIViewController, UITableViewDataSource, UITableViewDelegate {
             return indexPath
         }
     }
+    
+    //セルをタップして選択したら動作
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        var screen_name = ""
+        switch indexPath.row {
+        case 0,1:
+            screen_name = "UserSetting"
+            
+        case 3:
+            screen_name = "StaffNameListSetting"
+            
+        case 5:
+            screen_name = "ShiftNameListSetting"
+            
+        case 7:
+            screen_name = "ShiftListSetting"
+        default:
+            break
+        }
+        
+        let targetViewController = self.storyboard!.instantiateViewControllerWithIdentifier(screen_name)
+        targetViewController.modalTransitionStyle = UIModalTransitionStyle.FlipHorizontal
+        self.presentViewController( targetViewController, animated: true, completion: nil)
+
+    }
 }
