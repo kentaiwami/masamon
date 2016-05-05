@@ -23,7 +23,7 @@ class Setting: UIViewController, UITableViewDataSource, UITableViewDelegate {
         
         //tableviewの下の余白部分を埋める処理
         let spaceview = UIView()
-        let spaceview_y:CGFloat = 400
+        let spaceview_y:CGFloat = 404
         spaceview.backgroundColor = UIColor.hex("FFFFFF", alpha: 0.9)
         spaceview.frame = CGRectMake(0, spaceview_y, self.view.frame.width, self.view.frame.height - spaceview_y)
         self.view.addSubview(spaceview)
@@ -54,6 +54,10 @@ class Setting: UIViewController, UITableViewDataSource, UITableViewDelegate {
             cell.backgroundColor = UIColor.hex("000000", alpha: 0.07)
         }
         
+        
+        let cellSelectedView = UIView()
+        cellSelectedView.backgroundColor = UIColor.lightGrayColor()
+        cell.selectedBackgroundView = cellSelectedView
         
         return cell
     }
