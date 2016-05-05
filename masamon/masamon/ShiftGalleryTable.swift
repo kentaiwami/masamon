@@ -12,7 +12,6 @@ import QuickLook
 class ShiftGalleryTable: UIViewController, UITableViewDataSource, UITableViewDelegate,UICollectionViewDelegate, UICollectionViewDataSource,QLPreviewControllerDataSource{
     
     @IBOutlet weak var tableview: UITableView!
-    @IBOutlet weak var ButtomView: UIView!
     
     let closeview = UIView()
     let closebutton = UIButton()
@@ -29,8 +28,6 @@ class ShiftGalleryTable: UIViewController, UITableViewDataSource, UITableViewDel
         super.viewDidLoad()
         
         self.SetUpCollectionView()
-        
-        ButtomView.alpha = 0.8
         
         tableview.delegate = self
         tableview.dataSource = self
