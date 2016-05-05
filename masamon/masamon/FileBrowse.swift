@@ -7,9 +7,8 @@
 //
 
 import UIKit
-import QuickLook
 
-class FileBrowse: UIViewController, UITableViewDataSource, UITableViewDelegate,UICollectionViewDelegate, UICollectionViewDataSource,QLPreviewControllerDataSource{
+class FileBrowse: UIViewController, UITableViewDataSource, UITableViewDelegate{
     
     @IBOutlet weak var tableview: UITableView!
     
@@ -18,16 +17,11 @@ class FileBrowse: UIViewController, UITableViewDataSource, UITableViewDelegate,U
     
     let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得
     
-    //  チェックされたセルの位置を保存しておく辞書をプロパティに宣言
-    var selectedCells:[Bool]=[Bool]()
-    
     // セルに表示するテキスト
     var shiftlist: [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.SetUpCollectionView()
         
         tableview.delegate = self
         tableview.dataSource = self
@@ -38,7 +32,6 @@ class FileBrowse: UIViewController, UITableViewDataSource, UITableViewDelegate,U
                 let historydate = DBmethod().ShiftImportHistoryDBGet()[i].date
                 let historyname = DBmethod().ShiftImportHistoryDBGet()[i].name
                 shiftlist.append(historydate + "   " + historyname)
-                selectedCells.append(false)
             }
         }
     }
@@ -50,14 +43,12 @@ class FileBrowse: UIViewController, UITableViewDataSource, UITableViewDelegate,U
     override func viewWillAppear(animated: Bool) {
                 
         shiftlist.removeAll()
-        selectedCells.removeAll()
         
         if DBmethod().DBRecordCount(ShiftImportHistoryDB) != 0 {
             for i in (0 ... DBmethod().DBRecordCount(ShiftImportHistoryDB)-1).reverse(){
                 let historydate = DBmethod().ShiftImportHistoryDBGet()[i].date
                 let historyname = DBmethod().ShiftImportHistoryDBGet()[i].name
                 shiftlist.append(historydate + "   " + historyname)
-                selectedCells.append(false)
             }
         }
         
@@ -65,7 +56,6 @@ class FileBrowse: UIViewController, UITableViewDataSource, UITableViewDelegate,U
     }
     
     override func viewDidAppear(animated: Bool) {
-        self.myCollectionView.reloadData()
         appDelegate.screennumber = 3
     }
     
@@ -73,23 +63,10 @@ class FileBrowse: UIViewController, UITableViewDataSource, UITableViewDelegate,U
     //表示ボタンを押した時に呼ばれる関数
     @IBAction func TapShowButton(sender: AnyObject) {
         
-        for i in 0 ..< selectedCells.count{
-            if selectedCells[i] == true {
-                flag = true
-                break
-            }
-        }
-        
         //1つでも選択されていたらtrue
         if flag {
             let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得
-            appDelegate.selectedcell = self.selectedCells
-            
-            UIView.animateWithDuration(0.3, animations: { () -> Void in
-                self.myCollectionView.alpha = 1.0
-                self.view.bringSubviewToFront(self.myCollectionView)
-                self.myCollectionView.reloadData()
-            })
+//            appDelegate.selectedcell = self.selectedCells
             
         }else{          //1つも選択されていない場合
             let alertController = UIAlertController(title: "履歴表示エラー", message: "シフトが1つも選択されていません", preferredStyle: .Alert)
@@ -112,151 +89,135 @@ class FileBrowse: UIViewController, UITableViewDataSource, UITableViewDelegate,U
         
         cell.textLabel?.text = shiftlist[indexPath.row]
 //        cell.textLabel?.textColor = UIColor.whiteColor()
-        
-        if selectedCells[indexPath.row] {
-            cell.accessoryType = UITableViewCellAccessoryType.Checkmark
-            cell.backgroundColor = UIColor.hex("AFAFAF", alpha: 1.0)
-        }else{
-            cell.accessoryType = UITableViewCellAccessoryType.None
-            cell.backgroundColor = UIColor.clearColor()
-        }
  
-        cell.selectionStyle = UITableViewCellSelectionStyle.None
+        cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
         
         return cell
     }
     
     //セルが選択された時に呼ばれる
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let cell = tableview.cellForRowAtIndexPath(indexPath)
-        cell?.accessoryType = UITableViewCellAccessoryType.Checkmark    //チェックマークをつける
-        cell?.backgroundColor = UIColor.hex("AFAFAF", alpha: 1.0)
-        
-        selectedCells[indexPath.row] = true
+//        let cell = tableview.cellForRowAtIndexPath(indexPath)
+//        cell?.backgroundColor = UIColor.hex("AFAFAF", alpha: 1.0)
     }
     
     //セルの選択が解除された時に呼ばれる
     func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
         let cell = tableview.cellForRowAtIndexPath(indexPath)
-        cell?.accessoryType = UITableViewCellAccessoryType.None         //チェックマークをはずす
         cell?.backgroundColor = UIColor.clearColor()
-            
-        selectedCells[indexPath.row] = false
     }
     
-    var myCollectionView: UICollectionView!
+//    func SetUpCollectionView(){
+//        
+//        // CollectionViewのレイアウトを生成.
+//        let layout = UICollectionViewFlowLayout()
+//        
+//        // Cell一つ一つの大きさ.
+//        layout.itemSize = CGSizeMake(self.view.frame.width, 270)
+//        
+//        // Cellのマージン.
+//        layout.sectionInset = UIEdgeInsetsMake(0, 0, 160, 0)
+//        layout.minimumLineSpacing = 100.0
+//        
+//        // セクション毎のヘッダーサイズ.
+//        layout.headerReferenceSize = CGSizeMake(100,30)
+//        
+//        // CollectionViewを生成.
+//        myCollectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
+//        
+//        // Cellに使われるクラスを登録.
+//        myCollectionView.registerClass(CustomUICollectionViewCell.self, forCellWithReuseIdentifier: "MyCell")
+//        
+//        myCollectionView.delegate = self
+//        myCollectionView.dataSource = self
+//        
+//        myCollectionView.backgroundColor = UIColor.blackColor()
+//        myCollectionView.alpha = 0.0
+//        
+//        closeview.frame = CGRectMake(0, myCollectionView.frame.height-130, myCollectionView.frame.width, 70)
+//        closeview.backgroundColor = UIColor.hex("E6E6E6", alpha: 0.8)
+//        
+//        closebutton.frame = CGRectMake(closeview.frame.width/2-37, 550, 74, 30)
+//        closebutton.setTitle("閉じる", forState: .Normal)
+//        closebutton.addTarget(self, action: #selector(FileBrowse.TapCloseButton(_:)), forControlEvents: .TouchUpInside)
+//        closebutton.setTitleColor(UIColor(red: 0, green: 122/255, blue: 1, alpha: 1.0), forState: .Normal)
+//        
+//        myCollectionView.addSubview(closeview)
+//        myCollectionView.addSubview(closebutton)
+//        
+//        self.view.addSubview(myCollectionView)
+//    }
     
-    func SetUpCollectionView(){
-        
-        // CollectionViewのレイアウトを生成.
-        let layout = UICollectionViewFlowLayout()
-        
-        // Cell一つ一つの大きさ.
-        layout.itemSize = CGSizeMake(self.view.frame.width, 270)
-        
-        // Cellのマージン.
-        layout.sectionInset = UIEdgeInsetsMake(0, 0, 160, 0)
-        layout.minimumLineSpacing = 100.0
-        
-        // セクション毎のヘッダーサイズ.
-        layout.headerReferenceSize = CGSizeMake(100,30)
-        
-        // CollectionViewを生成.
-        myCollectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
-        
-        // Cellに使われるクラスを登録.
-        myCollectionView.registerClass(CustomUICollectionViewCell.self, forCellWithReuseIdentifier: "MyCell")
-        
-        myCollectionView.delegate = self
-        myCollectionView.dataSource = self
-        
-        myCollectionView.backgroundColor = UIColor.blackColor()
-        myCollectionView.alpha = 0.0
-        
-        closeview.frame = CGRectMake(0, myCollectionView.frame.height-130, myCollectionView.frame.width, 70)
-        closeview.backgroundColor = UIColor.hex("E6E6E6", alpha: 0.8)
-        
-        closebutton.frame = CGRectMake(closeview.frame.width/2-37, 550, 74, 30)
-        closebutton.setTitle("閉じる", forState: .Normal)
-        closebutton.addTarget(self, action: #selector(FileBrowse.TapCloseButton(_:)), forControlEvents: .TouchUpInside)
-        closebutton.setTitleColor(UIColor(red: 0, green: 122/255, blue: 1, alpha: 1.0), forState: .Normal)
-        
-        myCollectionView.addSubview(closeview)
-        myCollectionView.addSubview(closebutton)
-        
-        self.view.addSubview(myCollectionView)
-    }
+//    func TapCloseButton(sender: UIButton){
+//        
+//        UIView.animateWithDuration(0.2, animations: { () -> Void in
+//            self.myCollectionView.alpha = 0.0
+//        })
+//    }
     
-    func TapCloseButton(sender: UIButton){
-        
-        UIView.animateWithDuration(0.2, animations: { () -> Void in
-            self.myCollectionView.alpha = 0.0
-        })
-    }
+//    //Cellの総数を返す
+//    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+//        var count = 0
+//        
+//        for i in 0 ..< appDelegate.selectedcell.count{
+//            if appDelegate.selectedcell[i] == true {
+//                count += 1
+//            }
+//        }
+//        return count
+//    }
     
-    //Cellの総数を返す
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        var count = 0
-        
-        for i in 0 ..< appDelegate.selectedcell.count{
-            if appDelegate.selectedcell[i] == true {
-                count += 1
-            }
-        }
-        return count
-    }
+//    //Cellに値を設定する
+//    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+//        
+//        var shiftlist: [String] = []
+//        let count = DBmethod().DBRecordCount(ShiftImportHistoryDB)-1
+//        
+//        if DBmethod().DBRecordCount(ShiftImportHistoryDB) != 0 {
+//            for i in 0 ... count{
+//                if appDelegate.selectedcell[i] {
+//                    let historydate = DBmethod().ShiftImportHistoryDBGet()[count-i].date
+//                    let historyname = DBmethod().ShiftImportHistoryDBGet()[count-i].name
+//                    shiftlist.append(historydate + "     " + historyname)
+//                }
+//            }
+//        }
+//        
+//        let cell : CustomUICollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("MyCell", forIndexPath: indexPath) as! CustomUICollectionViewCell
+//        
+//        cell.textLabel?.text = shiftlist[indexPath.row]
+//        cell.ql.dataSource = self
+//        cell.ql.currentPreviewItemIndex = indexPath.row
+//
+//        return cell
+//    }
     
-    //Cellに値を設定する
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        
-        var shiftlist: [String] = []
-        let count = DBmethod().DBRecordCount(ShiftImportHistoryDB)-1
-        
-        if DBmethod().DBRecordCount(ShiftImportHistoryDB) != 0 {
-            for i in 0 ... count{
-                if appDelegate.selectedcell[i] {
-                    let historydate = DBmethod().ShiftImportHistoryDBGet()[count-i].date
-                    let historyname = DBmethod().ShiftImportHistoryDBGet()[count-i].name
-                    shiftlist.append(historydate + "     " + historyname)
-                }
-            }
-        }
-        
-        let cell : CustomUICollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("MyCell", forIndexPath: indexPath) as! CustomUICollectionViewCell
-        
-        cell.textLabel?.text = shiftlist[indexPath.row]
-        cell.ql.dataSource = self
-        cell.ql.currentPreviewItemIndex = indexPath.row
-
-        return cell
-    }
+//    //プレビューでの表示数
+//    func numberOfPreviewItemsInPreviewController(controller: QLPreviewController) -> Int{
+//        return 1
+//    }
     
-    //プレビューでの表示数
-    func numberOfPreviewItemsInPreviewController(controller: QLPreviewController) -> Int{
-        return 1
-    }
-    
-    //プレビューで表示するファイルの設定
-    func previewController(controller: QLPreviewController, previewItemAtIndex index: Int) -> QLPreviewItem{
-        var shiftlist: [String] = []
-        let count = DBmethod().DBRecordCount(ShiftImportHistoryDB)-1
-        
-        if DBmethod().DBRecordCount(ShiftImportHistoryDB) != 0 {
-            for i in 0 ... count{
-                if appDelegate.selectedcell[i] {
-                    let historyname = DBmethod().ShiftImportHistoryDBGet()[count-i].name
-                    shiftlist.append(historyname)
-                }
-            }
-        }
-        
-        let Libralypath = NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0] as String
-        let url = Libralypath + "/" + shiftlist[index]
-        
-        //        let documentPath: String = NSBundle.mainBundle().pathForResource("aaa", ofType: "xlsx")!
-        let doc = NSURL(fileURLWithPath: url)
-        return doc
-    }
+//    //プレビューで表示するファイルの設定
+//    func previewController(controller: QLPreviewController, previewItemAtIndex index: Int) -> QLPreviewItem{
+//        var shiftlist: [String] = []
+//        let count = DBmethod().DBRecordCount(ShiftImportHistoryDB)-1
+//        
+//        if DBmethod().DBRecordCount(ShiftImportHistoryDB) != 0 {
+//            for i in 0 ... count{
+//                if appDelegate.selectedcell[i] {
+//                    let historyname = DBmethod().ShiftImportHistoryDBGet()[count-i].name
+//                    shiftlist.append(historyname)
+//                }
+//            }
+//        }
+//        
+//        let Libralypath = NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0] as String
+//        let url = Libralypath + "/" + shiftlist[index]
+//        
+//        //        let documentPath: String = NSBundle.mainBundle().pathForResource("aaa", ofType: "xlsx")!
+//        let doc = NSURL(fileURLWithPath: url)
+//        return doc
+//    }
     
     //スクロールした際に動作する関数
     var scrollBeginingPoint: CGPoint!

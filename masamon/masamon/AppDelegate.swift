@@ -21,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var update = true                           //シフトの取り込みが上書きかを記録
     
     /*ShiftGalleryTableで使用*/
-    var selectedcell: [Bool] = []               //ShiftGalleryTableで選択をしたセルを記録
+    var selectedcellname = ""               //ShiftGalleryTableで選択をしたセルを記録
 
     /*MonthlySalaryShowで使用*/
     var errorshiftnamefastcount = 0             //シフトの認識に失敗した場合の最初の失敗数を格納しておく変数
