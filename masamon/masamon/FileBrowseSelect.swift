@@ -78,6 +78,9 @@ class FileBrowseSelect: UIViewController, UITableViewDataSource, UITableViewDele
         let ql = QLPreviewController()
         ql.dataSource = self
         
+        ql.navigationController?.navigationBar.barTintColor = UIColor.brownColor()
+        ql.navigationController?.navigationBar.tintColor = UIColor.brownColor()
+
         presentViewController(ql, animated: true, completion: nil)
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
