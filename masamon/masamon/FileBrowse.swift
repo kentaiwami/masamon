@@ -27,13 +27,8 @@ class FileBrowse: UIViewController, UITableViewDataSource, UITableViewDelegate{
         tableview.dataSource = self
         tableview.allowsMultipleSelection = true
         
-        if DBmethod().DBRecordCount(ShiftImportHistoryDB) != 0 {
-            for i in (0 ... DBmethod().DBRecordCount(ShiftImportHistoryDB)-1).reverse(){
-                let historydate = DBmethod().ShiftImportHistoryDBGet()[i].date
-                let historyname = DBmethod().ShiftImportHistoryDBGet()[i].name
-                shiftlist.append(historydate + "   " + historyname)
-            }
-        }
+        SetShiftListArray()
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -44,19 +39,23 @@ class FileBrowse: UIViewController, UITableViewDataSource, UITableViewDelegate{
                 
         shiftlist.removeAll()
         
-        if DBmethod().DBRecordCount(ShiftImportHistoryDB) != 0 {
-            for i in (0 ... DBmethod().DBRecordCount(ShiftImportHistoryDB)-1).reverse(){
-                let historydate = DBmethod().ShiftImportHistoryDBGet()[i].date
-                let historyname = DBmethod().ShiftImportHistoryDBGet()[i].name
-                shiftlist.append(historydate + "   " + historyname)
-            }
-        }
+        SetShiftListArray()
         
         self.tableview.reloadData()
     }
     
     override func viewDidAppear(animated: Bool) {
         appDelegate.screennumber = 3
+    }
+    
+    func SetShiftListArray() {
+        if DBmethod().DBRecordCount(ShiftDB) != 0 {
+            
+            let results = DBmethod().GetShiftDBAllRecordArray()
+            for i in (0..<results!.count).reverse() {
+                shiftlist.append(results![i].shiftimportname)
+            }
+        }
     }
     
     var flag = false
