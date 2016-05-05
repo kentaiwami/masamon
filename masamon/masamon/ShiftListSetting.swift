@@ -37,10 +37,6 @@ class ShiftListSetting: UIViewController, UITableViewDataSource, UITableViewDele
             for i in (0 ..< results!.count).reverse() {
                 self.texts.append(results![i])
             }
-            
-            for i in 0..<results!.count {
-                print(self.texts[i].shiftimportname)
-            }
         }
         
         self.table.reloadData()
