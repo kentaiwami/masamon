@@ -27,7 +27,7 @@ class Setting: UIViewController, UITableViewDataSource, UITableViewDelegate {
     }
     
     // セルに表示するテキスト
-    let texts = ["", "時給登録", "ユーザ名とスタッフ人数", "", "スタッフ名を追加・編集・削除", "", "シフト名を追加・編集・削除", "", "取り込んだ1クールごとのシフトを編集・削除"]
+    let texts = ["", "時給登録", "ユーザ名とスタッフ人数", "", "スタッフ名を追加・編集・削除", "", "シフト名を追加・編集・削除", "", "取り込んだシフトを編集・削除"]
     
     // セルの行数
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
