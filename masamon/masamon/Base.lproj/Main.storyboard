@@ -570,10 +570,10 @@
             </objects>
             <point key="canvasLocation" x="-194.5" y="477.5"/>
         </scene>
-        <!--シフト取り込み一覧-->
+        <!--ファイルの閲覧-->
         <scene sceneID="Wco-XA-FuF">
             <objects>
-                <viewController storyboardIdentifier="ShiftGalleryTable" useStoryboardIdentifierAsRestorationIdentifier="YES" id="FTR-Tl-LZ9" customClass="ShiftGalleryTable" customModule="masamon" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ShiftGalleryTable" useStoryboardIdentifierAsRestorationIdentifier="YES" id="FTR-Tl-LZ9" customClass="FileBrowse" customModule="masamon" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="wgt-wu-fO2"/>
                         <viewControllerLayoutGuide type="bottom" id="gO1-af-gdb"/>
@@ -582,7 +582,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text=" シフト取り込み一覧" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xK8-Ck-yp1">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text=" ファイルの閲覧" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xK8-Ck-yp1">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="54"/>
                                 <color key="backgroundColor" red="0.098039217289999994" green="0.098039217289999994" blue="0.098039217289999994" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
@@ -596,10 +596,10 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="シフト取り込み一覧" image="tabbarshiftimport" id="hRS-Co-C4b"/>
+                    <tabBarItem key="tabBarItem" title="ファイルの閲覧" image="tabbarshiftimport" id="hRS-Co-C4b"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
-                        <outlet property="tableview" destination="rDp-Pp-js4" id="1i7-lo-FcR"/>
+                        <outlet property="tableview" destination="rDp-Pp-js4" id="Dw9-PX-yFn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cV5-Fo-dKS" userLabel="First Responder" sceneMemberID="firstResponder"/>

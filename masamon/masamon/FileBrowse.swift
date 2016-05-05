@@ -9,7 +9,7 @@
 import UIKit
 import QuickLook
 
-class ShiftGalleryTable: UIViewController, UITableViewDataSource, UITableViewDelegate,UICollectionViewDelegate, UICollectionViewDataSource,QLPreviewControllerDataSource{
+class FileBrowse: UIViewController, UITableViewDataSource, UITableViewDelegate,UICollectionViewDelegate, UICollectionViewDataSource,QLPreviewControllerDataSource{
     
     @IBOutlet weak var tableview: UITableView!
     
@@ -178,7 +178,7 @@ class ShiftGalleryTable: UIViewController, UITableViewDataSource, UITableViewDel
         
         closebutton.frame = CGRectMake(closeview.frame.width/2-37, 550, 74, 30)
         closebutton.setTitle("閉じる", forState: .Normal)
-        closebutton.addTarget(self, action: #selector(ShiftGalleryTable.TapCloseButton(_:)), forControlEvents: .TouchUpInside)
+        closebutton.addTarget(self, action: #selector(FileBrowse.TapCloseButton(_:)), forControlEvents: .TouchUpInside)
         closebutton.setTitleColor(UIColor(red: 0, green: 122/255, blue: 1, alpha: 1.0), forState: .Normal)
         
         myCollectionView.addSubview(closeview)
