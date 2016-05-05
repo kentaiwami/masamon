@@ -573,7 +573,7 @@
         <!--ファイルの閲覧-->
         <scene sceneID="Wco-XA-FuF">
             <objects>
-                <viewController storyboardIdentifier="ShiftGalleryTable" useStoryboardIdentifierAsRestorationIdentifier="YES" id="FTR-Tl-LZ9" customClass="FileBrowse" customModule="masamon" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ShiftGalleryTable" useStoryboardIdentifierAsRestorationIdentifier="YES" id="FTR-Tl-LZ9" customClass="FileBrowseSelect" customModule="masamon" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="wgt-wu-fO2"/>
                         <viewControllerLayoutGuide type="bottom" id="gO1-af-gdb"/>
@@ -605,6 +605,34 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cV5-Fo-dKS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-194.5" y="1972.5"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="9PU-Db-ymh">
+            <objects>
+                <viewController id="RMD-zi-mxH" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="wgt-T3-pI4"/>
+                        <viewControllerLayoutGuide type="bottom" id="pfJ-Ij-FIk"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="VcC-ND-gqX">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text=" ファイル名ほげほげ" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qLW-8m-5QG">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="54"/>
+                                <color key="backgroundColor" red="0.098039217289999994" green="0.098039217289999994" blue="0.098039217289999994" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uFf-y5-oOc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="277.5" y="1972.5"/>
         </scene>
     </scenes>
     <resources>

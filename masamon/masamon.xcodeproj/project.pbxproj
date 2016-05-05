@@ -29,9 +29,10 @@
 		374090C01C78641E00B01DC4 /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374090BF1C78641E00B01DC4 /* VideoViewController.swift */; };
 		3742AF561C12D8D1003AB33B /* libz.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3742AF551C12D8D1003AB33B /* libz.1.dylib */; };
 		3742AF901C130391003AB33B /* libXlsxReaderWriter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3742AF8B1C130360003AB33B /* libXlsxReaderWriter.a */; };
+		37526DCE1CDBACCF00F180DA /* FileBrowse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37526DCD1CDBACCF00F180DA /* FileBrowse.swift */; };
 		376C92D61BE695D000D45FC2 /* extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376C92D51BE695D000D45FC2 /* extentions.swift */; };
 		377D2DAE1C36C08B009CC388 /* BlueDarkStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377D2DAD1C36C08B009CC388 /* BlueDarkStyle.swift */; };
-		377D2DBB1C37EFE6009CC388 /* FileBrowse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377D2DBA1C37EFE5009CC388 /* FileBrowse.swift */; };
+		377D2DBB1C37EFE6009CC388 /* FileBrowseSelect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377D2DBA1C37EFE5009CC388 /* FileBrowseSelect.swift */; };
 		378B24441CA584960009E037 /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 378B24421CA584960009E037 /* Realm.framework */; };
 		378B24451CA584960009E037 /* Realm.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 378B24421CA584960009E037 /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		378B24461CA584960009E037 /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 378B24431CA584960009E037 /* RealmSwift.framework */; };
@@ -132,11 +133,12 @@
 		374090BF1C78641E00B01DC4 /* VideoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VideoViewController.swift; path = ../VideoViewController.swift; sourceTree = "<group>"; };
 		3742AF551C12D8D1003AB33B /* libz.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.dylib; path = ../../../../../../usr/lib/libz.1.dylib; sourceTree = "<group>"; };
 		3742AF831C130360003AB33B /* XlsxReaderWriter.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = XlsxReaderWriter.xcodeproj; path = "XlsxReaderWriter-master/XlsxReaderWriter.xcodeproj"; sourceTree = "<group>"; };
+		37526DCD1CDBACCF00F180DA /* FileBrowse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileBrowse.swift; sourceTree = "<group>"; };
 		376C92D51BE695D000D45FC2 /* extentions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = extentions.swift; sourceTree = "<group>"; };
 		377D2DAA1C36BFD2009CC388 /* GradientCircularProgress.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GradientCircularProgress.framework; path = "Pods/../build/Debug-iphoneos/GradientCircularProgress.framework"; sourceTree = "<group>"; };
 		377D2DAD1C36C08B009CC388 /* BlueDarkStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlueDarkStyle.swift; sourceTree = "<group>"; };
 		377D2DAF1C36C14A009CC388 /* GradientCircularProgress.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GradientCircularProgress.framework; path = "Pods/../build/Debug-iphoneos/GradientCircularProgress.framework"; sourceTree = "<group>"; };
-		377D2DBA1C37EFE5009CC388 /* FileBrowse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileBrowse.swift; sourceTree = "<group>"; };
+		377D2DBA1C37EFE5009CC388 /* FileBrowseSelect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileBrowseSelect.swift; sourceTree = "<group>"; };
 		378B24421CA584960009E037 /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Realm.framework; sourceTree = "<group>"; };
 		378B24431CA584960009E037 /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RealmSwift.framework; sourceTree = "<group>"; };
 		379955941C14431F00BAAD9E /* XLSXmethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XLSXmethod.swift; sourceTree = "<group>"; };
@@ -229,13 +231,14 @@
 				370ACE431BDF573500AB73EB /* DB.swift */,
 				370ACE491BDF9C8A00AB73EB /* DBmethod.swift */,
 				370ACDFE1BDF486700AB73EB /* Main.storyboard */,
+				37526DCD1CDBACCF00F180DA /* FileBrowse.swift */,
 				3740909F1C784EEA00B01DC4 /* Video.swift */,
 				373C10F01C5E05010082CB8E /* ShiftListSetting.swift */,
 				373C10EE1C5E04D10082CB8E /* ShiftNameListSetting.swift */,
 				373C10EA1C5E049D0082CB8E /* StaffNameListSetting.swift */,
 				37D4B30F1BE0F59900F06759 /* UserSetting.swift */,
 				371DE5141C5DBD4D0058F73B /* Setting.swift */,
-				377D2DBA1C37EFE5009CC388 /* FileBrowse.swift */,
+				377D2DBA1C37EFE5009CC388 /* FileBrowseSelect.swift */,
 				379A2E041C1FDFFC00751425 /* CustomUICollectionViewCell.swift */,
 				379955941C14431F00BAAD9E /* XLSXmethod.swift */,
 				37F75CAA1C3F18C30075F9FD /* PDFmethod.swift */,
@@ -466,6 +469,7 @@
 				37F75CAB1C3F18C30075F9FD /* PDFmethod.swift in Sources */,
 				370ACE4A1BDF9C8A00AB73EB /* DBmethod.swift in Sources */,
 				370ACDFD1BDF486700AB73EB /* MonthlySalaryShow.swift in Sources */,
+				37526DCE1CDBACCF00F180DA /* FileBrowse.swift in Sources */,
 				373C10EB1C5E049D0082CB8E /* StaffNameListSetting.swift in Sources */,
 				371DE5151C5DBD4D0058F73B /* Setting.swift in Sources */,
 				374090C01C78641E00B01DC4 /* VideoViewController.swift in Sources */,
@@ -479,7 +483,7 @@
 				37D4B3101BE0F59900F06759 /* UserSetting.swift in Sources */,
 				373C10F11C5E05010082CB8E /* ShiftListSetting.swift in Sources */,
 				3721B1171C51499D0002A373 /* CommonMethod.swift in Sources */,
-				377D2DBB1C37EFE6009CC388 /* FileBrowse.swift in Sources */,
+				377D2DBB1C37EFE6009CC388 /* FileBrowseSelect.swift in Sources */,
 				370ACDFB1BDF486700AB73EB /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
