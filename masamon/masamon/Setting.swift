@@ -19,7 +19,14 @@ class Setting: UIViewController, UITableViewDataSource, UITableViewDelegate {
         
         tableview.delegate = self
         tableview.dataSource = self
+        tableview.scrollEnabled = false
         
+        //tableviewの下の余白部分を埋める処理
+        let spaceview = UIView()
+        let spaceview_y:CGFloat = 400
+        spaceview.backgroundColor = UIColor.hex("FFFFFF", alpha: 0.9)
+        spaceview.frame = CGRectMake(0, spaceview_y, self.view.frame.width, self.view.frame.height - spaceview_y)
+        self.view.addSubview(spaceview)
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -27,7 +34,7 @@ class Setting: UIViewController, UITableViewDataSource, UITableViewDelegate {
     }
     
     // セルに表示するテキスト
-    let texts = ["", "時給登録", "ユーザ名とスタッフ人数", "", "スタッフ名を追加・編集・削除", "", "シフト名を追加・編集・削除", "", "取り込んだシフトを編集・削除"]
+    let texts = ["時給登録", "ユーザ名とスタッフ人数", "", "スタッフ名を追加・編集・削除", "", "シフト名を追加・編集・削除", "", "取り込んだシフトを編集・削除"]
     
     // セルの行数
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -42,7 +49,11 @@ class Setting: UIViewController, UITableViewDataSource, UITableViewDelegate {
         
         if texts[indexPath.row].characters.count != 0 {
             cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+            cell.textLabel?.textColor = UIColor.blackColor()
+        }else {
+            cell.backgroundColor = UIColor.hex("000000", alpha: 0.07)
         }
+        
         
         return cell
     }
