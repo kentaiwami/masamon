@@ -95,6 +95,8 @@ class Setting: UIViewController, UITableViewDataSource, UITableViewDelegate {
         let targetViewController = self.storyboard!.instantiateViewControllerWithIdentifier(screen_name)
         targetViewController.modalTransitionStyle = UIModalTransitionStyle.FlipHorizontal
         self.presentViewController( targetViewController, animated: true, completion: nil)
+        
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
 
     }
 }
