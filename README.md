@@ -12,7 +12,7 @@
 * まさもん起動後、画面遷移をせずにシェイクジェスチャーでムービー画面へと遷移しますが、個人情報を含んでいるため関連するファイルをignoreしています。そのため、シェイクジェスチャーを行うとアプリがクラッシュします。
 
 ## デモ
-![demo](https://github.com/kentaiwami/masamon/blob/master/demo.gif)
+![demo](https://github.com/kentaiwami/masamon/blob/master/demo2.mov)
 ## サポート情報
 * Xcode 7.3
 * iOS 9.3
