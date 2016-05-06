@@ -30,13 +30,12 @@ class FileBrowse: UIViewController, QLPreviewControllerDataSource{
     }
     
     func previewController(controller: QLPreviewController, previewItemAtIndex index: Int) -> QLPreviewItem {
-//        let Libralypath = NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0] as String
-//        let filePath = Libralypath + "/" + shiftdbrecord.shiftimportname
-        
-        let mainbundle = NSBundle.mainBundle()
-        let url = mainbundle.pathForResource("sampleshift", ofType: "pdf")!
+        let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得
 
-        let doc = NSURL(fileURLWithPath: url)
+        let Libralypath = NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0] as String
+        let filePath = Libralypath + "/" + appDelegate.selectedcellname
+        
+        let doc = NSURL(fileURLWithPath: filePath)
         return doc
     }
 
