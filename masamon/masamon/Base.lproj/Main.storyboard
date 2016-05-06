@@ -635,6 +635,9 @@
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="navigationbar" destination="G69-H5-8xj" id="i9q-u2-L4Q"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cdZ-h7-h1O" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

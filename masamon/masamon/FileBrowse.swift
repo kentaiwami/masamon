@@ -11,6 +11,10 @@ import QuickLook
 
 class FileBrowse: UIViewController, QLPreviewControllerDataSource{
 
+    let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得
+    
+    @IBOutlet weak var navigationbar: UINavigationBar!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -21,6 +25,13 @@ class FileBrowse: UIViewController, QLPreviewControllerDataSource{
         self.view.addSubview(ql.view)
     }
 
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        navigationbar.topItem?.title = appDelegate.selectedcellname
+    }
+    
+    
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -30,7 +41,6 @@ class FileBrowse: UIViewController, QLPreviewControllerDataSource{
     }
     
     func previewController(controller: QLPreviewController, previewItemAtIndex index: Int) -> QLPreviewItem {
-        let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得
 
         let Libralypath = NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0] as String
         let filePath = Libralypath + "/" + appDelegate.selectedcellname
