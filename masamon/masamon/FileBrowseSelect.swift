@@ -77,13 +77,17 @@ class FileBrowseSelect: UIViewController, UITableViewDataSource, UITableViewDele
     
     //セルが選択された時に呼ばれる
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let ql = QLPreviewController()
-        ql.dataSource = self
+//        let ql = QLPreviewController()
+//        ql.dataSource = self
 
         shiftdbrecord = DBmethod().SearchShiftDB(shiftlist[indexPath.row])
 
-        presentViewController(ql, animated: true, completion: nil)
+//        presentViewController(ql, animated: true, completion: nil)
         
+        let targetViewController = self.storyboard!.instantiateViewControllerWithIdentifier("FileBrowse")
+        targetViewController.modalTransitionStyle = UIModalTransitionStyle.FlipHorizontal
+        self.presentViewController( targetViewController, animated: true, completion: nil)
+
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
