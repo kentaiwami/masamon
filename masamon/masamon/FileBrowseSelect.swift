@@ -7,9 +7,8 @@
 //
 
 import UIKit
-import QuickLook
 
-class FileBrowseSelect: UIViewController, UITableViewDataSource, UITableViewDelegate, QLPreviewControllerDataSource{
+class FileBrowseSelect: UIViewController, UITableViewDataSource, UITableViewDelegate{
     
     @IBOutlet weak var tableview: UITableView!
     
@@ -73,28 +72,19 @@ class FileBrowseSelect: UIViewController, UITableViewDataSource, UITableViewDele
         return cell
     }
     
-    var shiftdbrecord: ShiftDB = ShiftDB()
+    let shiftdbrecord: ShiftDB = ShiftDB()
     
     //セルが選択された時に呼ばれる
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let ql = QLPreviewController()
-        ql.dataSource = self
-
+        var shiftdbrecord: ShiftDB = ShiftDB()
         shiftdbrecord = DBmethod().SearchShiftDB(shiftlist[indexPath.row])
-
-        presentViewController(ql, animated: true, completion: nil)
         
+        appDelegate.selectedcellname = shiftdbrecord.shiftimportname
+        
+        let targetViewController = self.storyboard!.instantiateViewControllerWithIdentifier("FileBrowse")
+        targetViewController.modalTransitionStyle = UIModalTransitionStyle.FlipHorizontal
+        self.presentViewController( targetViewController, animated: true, completion: nil)
+
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
-    }
-    
-    func numberOfPreviewItemsInPreviewController(controller: QLPreviewController) -> Int{
-        return 1
-    }
-    
-    func previewController(controller: QLPreviewController, previewItemAtIndex index: Int) -> QLPreviewItem {
-        let Libralypath = NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0] as String
-        let filePath = Libralypath + "/" + shiftdbrecord.shiftimportname
-        let doc = NSURL(fileURLWithPath: filePath)
-        return doc
     }
 }

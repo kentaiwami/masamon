@@ -122,7 +122,7 @@
                                 </items>
                             </navigationBar>
                         </subviews>
-                        <color key="backgroundColor" red="0.098039217289999994" green="0.098039217289999994" blue="0.098039217289999994" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
@@ -605,6 +605,43 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cV5-Fo-dKS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-194.5" y="1972.5"/>
+        </scene>
+        <!--File Browse-->
+        <scene sceneID="ODa-sN-eYe">
+            <objects>
+                <viewController storyboardIdentifier="FileBrowse" useStoryboardIdentifierAsRestorationIdentifier="YES" id="nts-1T-IOa" customClass="FileBrowse" customModule="masamon" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="7Mc-98-92f"/>
+                        <viewControllerLayoutGuide type="bottom" id="8Ep-9H-NJx"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Ga5-OR-QNg">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="G69-H5-8xj">
+                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                                <items>
+                                    <navigationItem title="ファイル名ほげほげ" id="QA3-WC-CBS">
+                                        <barButtonItem key="leftBarButtonItem" systemItem="stop" id="2jm-Vi-iKb">
+                                            <color key="tintColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                            <connections>
+                                                <action selector="TapBackButton:" destination="nts-1T-IOa" id="Ye1-C3-o7r"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                        </subviews>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="navigationbar" destination="G69-H5-8xj" id="i9q-u2-L4Q"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cdZ-h7-h1O" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="222.5" y="1972.5"/>
         </scene>
     </scenes>
     <resources>
