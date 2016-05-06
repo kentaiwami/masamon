@@ -73,13 +73,14 @@ class FileBrowseSelect: UIViewController, UITableViewDataSource, UITableViewDele
         return cell
     }
     
+    var shiftdbrecord: ShiftDB = ShiftDB()
+    
     //セルが選択された時に呼ばれる
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let ql = QLPreviewController()
         ql.dataSource = self
-        
-        ql.navigationController?.navigationBar.barTintColor = UIColor.brownColor()
-        ql.navigationController?.navigationBar.tintColor = UIColor.brownColor()
+
+        shiftdbrecord = DBmethod().SearchShiftDB(shiftlist[indexPath.row])
 
         presentViewController(ql, animated: true, completion: nil)
         
@@ -91,10 +92,9 @@ class FileBrowseSelect: UIViewController, UITableViewDataSource, UITableViewDele
     }
     
     func previewController(controller: QLPreviewController, previewItemAtIndex index: Int) -> QLPreviewItem {
-        let mainbundle = NSBundle.mainBundle()
-        let url = mainbundle.pathForResource("sampleshift", ofType: "pdf")!
-        
-        let doc = NSURL(fileURLWithPath: url)
+        let Libralypath = NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0] as String
+        let filePath = Libralypath + "/" + shiftdbrecord.shiftimportname
+        let doc = NSURL(fileURLWithPath: filePath)
         return doc
     }
 }
