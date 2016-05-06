@@ -237,19 +237,22 @@ class ShiftListSetting: UIViewController, UITableViewDataSource, UITableViewDele
             
             let Action: UIAlertAction = UIAlertAction(title: buttontitle, style: UIAlertActionStyle.Destructive, handler: { (action:UIAlertAction!) -> Void in
                 
-                var filepath = ""
+                var filename = ""
                 
                 //ShiftDetailDBレコードの削除
                 let shiftdbrecord = DBmethod().SearchShiftDB(self.texts[index].shiftimportname)
-                filepath = shiftdbrecord.shiftimportpath
                 let shiftdetailarray = shiftdbrecord.shiftdetail
+                
+                filename = shiftdbrecord.shiftimportname
                 DBmethod().DeleteShiftDetailDBRecords(shiftdetailarray)
                 
                 //ShiftDBレコードの削除
                 DBmethod().DeleteRecord(self.texts[index])
                 
-                
                 //ファイルの削除
+                let Libralypath = NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0] as String
+                let filepath = Libralypath + "/" + filename
+
                 let filemanager:NSFileManager = NSFileManager()
                 do{
                     try filemanager.removeItemAtPath(filepath)
