@@ -1,5 +1,5 @@
 //
-//  HourlyPaySetting.swift
+//  HourlyWageSetting.swift
 //  masamon
 //
 //  Created by 岩見建汰 on 2015/10/28.
@@ -16,8 +16,6 @@ class HourlyWageSetting: UIViewController, UIPickerViewDelegate, UIPickerViewDat
     @IBOutlet weak var TimeTo2: UITextField!
     @IBOutlet weak var Salaly1: UITextField!
     @IBOutlet weak var Salaly2: UITextField!
-//    @IBOutlet weak var usernametextfield: UITextField!
-//    @IBOutlet weak var staffnumbertextfield: UITextField!
     
     let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得
 
@@ -77,15 +75,6 @@ class HourlyWageSetting: UIViewController, UIPickerViewDelegate, UIPickerViewDat
             self.view.addSubview(yenicon)
         }
         
-//        //シフト関連のアイコンを設置
-//        for i in 0 ..< 2{
-//            let usericon = UIImageView()
-//            usericon.image = UIImage(named: usericonfilename[i])
-//            usericon.frame = CGRectMake(24, CGFloat(user[i]), 42, 40)
-//            self.HPSView.addSubview(usericon)
-//
-//        }
-                
         //セーブボタンの追加
         savebutton.tag = 0
         savebutton.frame = CGRectMake(0, 0, 70, 70)
@@ -100,8 +89,6 @@ class HourlyWageSetting: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         TimeTo2.delegate = self
         Salaly1.delegate = self
         Salaly2.delegate = self
-//        usernametextfield.delegate = self
-//        staffnumbertextfield.delegate = self
         
         TimeFrom1.tag = 1
         TimeTo1.tag = 1
@@ -109,7 +96,6 @@ class HourlyWageSetting: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         TimeTo2.tag = 2
         Salaly1.tag = 3
         Salaly2.tag = 4
-//        staffnumbertextfield.tag = 5
         
         timeUIPicker.tag = 1
         
@@ -157,11 +143,6 @@ class HourlyWageSetting: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         TimeFrom2.inputAccessoryView = pickertoolBar
         TimeTo2.inputView = timeUIPicker
         TimeTo2.inputAccessoryView = pickertoolBar
-        
-//        usernametextfield.returnKeyType = .Done
-//        
-//        staffnumbertextfield.keyboardType = .NumberPad
-//        staffnumbertextfield.inputAccessoryView = numberpadtoolBar
     }
     
     override func didReceiveMemoryWarning() {
@@ -275,8 +256,6 @@ class HourlyWageSetting: UIViewController, UIPickerViewDelegate, UIPickerViewDat
             Salaly1.resignFirstResponder()
         }else if selecttextfieldtag == 4 {      //深夜の時給テキストフィールドが選択されている
             Salaly2.resignFirstResponder()
-        }else if selecttextfieldtag == 5 {      //スタッフ人数テキストフィールドが選択されている
-//            staffnumbertextfield.resignFirstResponder()
         }
     }
     
@@ -320,15 +299,6 @@ class HourlyWageSetting: UIViewController, UIPickerViewDelegate, UIPickerViewDat
             hourlypayrecord2.timeto = Double(time.indexOf(TimeTo2.text!)!)-(Double(time.indexOf(TimeTo2.text!)!)*0.5) + 1.0
             hourlypayrecord2.pay = Int(Salaly2.text!)!
             
-//            let staffnumberrecord = StaffNumberDB()
-//            staffnumberrecord.id = 0
-//            staffnumberrecord.number = Int(staffnumbertextfield.text!)!
-//            let usernamerecord = UserNameDB()
-//            usernamerecord.id = 0
-//            usernamerecord.name = usernametextfield.text!
-            
-//            DBmethod().AddandUpdate(usernamerecord, update: true)
-//            DBmethod().AddandUpdate(staffnumberrecord, update: true)
             DBmethod().AddandUpdate(hourlypayrecord1,update: true)
             DBmethod().AddandUpdate(hourlypayrecord2,update: true)
             
@@ -351,7 +321,7 @@ class HourlyWageSetting: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         view.endEditing(true)
         return true
     }
-        
+    
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
         
@@ -366,8 +336,6 @@ class HourlyWageSetting: UIViewController, UIPickerViewDelegate, UIPickerViewDat
     func SetText(){
         //既に登録されていたら登録内容を表示する
         if DBmethod().DBRecordCount(UserNameDB) == 0 {
-//            usernametextfield.placeholder = "シフト表上での名前を入力"
-//            staffnumbertextfield.placeholder = "スタッフの人数を入力"
             TimeFrom1.placeholder = "no data"
             TimeFrom2.placeholder = "no data"
             TimeTo1.placeholder = "no data"
@@ -376,8 +344,6 @@ class HourlyWageSetting: UIViewController, UIPickerViewDelegate, UIPickerViewDat
             Salaly2.placeholder = "no data"
             
         }else{
-//            usernametextfield.text = DBmethod().UserNameGet()
-//            staffnumbertextfield.text = String(DBmethod().StaffNumberGet())
             
             let hourlypayarray = DBmethod().HourlyPayRecordGet()
             

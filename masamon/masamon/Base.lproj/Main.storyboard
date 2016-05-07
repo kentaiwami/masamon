@@ -230,10 +230,10 @@
             </objects>
             <point key="canvasLocation" x="864.5" y="1222.5"/>
         </scene>
-        <!--Shift Import Setting-->
+        <!--ユーザ名とスタッフ人数-->
         <scene sceneID="eo9-Qa-olU">
             <objects>
-                <viewController storyboardIdentifier="ShiftImportSetting" useStoryboardIdentifierAsRestorationIdentifier="YES" id="xbb-ml-PSM" customClass="ShiftImportSetting" customModule="masamon" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ShiftImportSetting" title="ユーザ名とスタッフ人数" useStoryboardIdentifierAsRestorationIdentifier="YES" id="xbb-ml-PSM" customClass="ShiftImportSetting" customModule="masamon" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="LrE-q1-0fx"/>
                         <viewControllerLayoutGuide type="bottom" id="IH0-7c-fWL"/>
@@ -250,12 +250,12 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sdL-i0-6Ci">
-                                <rect key="frame" x="96" y="201" width="183" height="30"/>
+                                <rect key="frame" x="120" y="195" width="183" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ptf-yc-f6W">
-                                <rect key="frame" x="96" y="148" width="183" height="30"/>
+                                <rect key="frame" x="120" y="135" width="183" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
@@ -263,6 +263,10 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="staffnumbertextfield" destination="sdL-i0-6Ci" id="DRs-0Q-P5b"/>
+                        <outlet property="usernametextfield" destination="ptf-yc-f6W" id="aoN-7t-MmS"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oQ8-Sj-PGi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
