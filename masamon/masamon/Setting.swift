@@ -82,8 +82,11 @@ class Setting: UIViewController, UITableViewDataSource, UITableViewDelegate {
         
         var screen_name = ""
         switch indexPath.row {
-        case 0,1:
-            screen_name = "UserSetting"
+        case 0:
+            screen_name = "HourlyWageSetting"
+        
+        case 1:
+            screen_name = "ShiftImportSetting"
             
         case 3:
             screen_name = "StaffNameListSetting"

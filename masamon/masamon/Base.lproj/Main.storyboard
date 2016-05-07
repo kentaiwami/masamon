@@ -86,10 +86,10 @@
             </objects>
             <point key="canvasLocation" x="-194.5" y="-255.5"/>
         </scene>
-        <!--Staff Name List Setting-->
+        <!--スタッフ名の一覧-->
         <scene sceneID="AiQ-pz-8Np">
             <objects>
-                <viewController storyboardIdentifier="StaffNameListSetting" useStoryboardIdentifierAsRestorationIdentifier="YES" id="mjS-5n-bWb" customClass="StaffNameListSetting" customModule="masamon" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="StaffNameListSetting" title="スタッフ名の一覧" useStoryboardIdentifierAsRestorationIdentifier="YES" id="mjS-5n-bWb" customClass="StaffNameListSetting" customModule="masamon" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Xyw-VS-ho8"/>
                         <viewControllerLayoutGuide type="bottom" id="LtR-s6-PsY"/>
@@ -131,12 +131,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kN5-E3-cGM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1300.5" y="1222.5"/>
+            <point key="canvasLocation" x="1716.5" y="1217.5"/>
         </scene>
-        <!--User Setting-->
+        <!--時給登録-->
         <scene sceneID="V1x-uh-v1g">
             <objects>
-                <viewController storyboardIdentifier="UserSetting" useStoryboardIdentifierAsRestorationIdentifier="YES" id="tsi-6b-VUl" customClass="UserSetting" customModule="masamon" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HourlyWageSetting" title="時給登録" useStoryboardIdentifierAsRestorationIdentifier="YES" id="tsi-6b-VUl" customClass="HourlyWageSetting" customModule="masamon" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="64P-wR-0Tu"/>
                         <viewControllerLayoutGuide type="bottom" id="1cZ-Jy-mkv"/>
@@ -152,103 +152,73 @@
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                         <subviews>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ngr-tK-qPC">
-                                                <rect key="frame" x="96" y="344" width="97" height="30"/>
+                                                <rect key="frame" x="96" y="296" width="97" height="30"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WZn-fS-lGq">
-                                                <rect key="frame" x="96" y="118" width="97" height="30"/>
+                                                <rect key="frame" x="96" y="70" width="97" height="30"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="円" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u86-4h-TUk">
-                                                <rect key="frame" x="201" y="192" width="17" height="21"/>
+                                                <rect key="frame" x="201" y="144" width="17" height="21"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="円" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nfq-hy-qlp">
-                                                <rect key="frame" x="201" y="358" width="17" height="21"/>
+                                                <rect key="frame" x="201" y="310" width="17" height="21"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WPM-wm-Uok">
-                                                <rect key="frame" x="256" y="118" width="97" height="30"/>
+                                                <rect key="frame" x="256" y="70" width="97" height="30"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="〜" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hXm-ec-T7f">
-                                                <rect key="frame" x="217" y="122" width="16" height="21"/>
+                                                <rect key="frame" x="217" y="74" width="16" height="21"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sF4-8Z-uh9">
-                                                <rect key="frame" x="96" y="289" width="97" height="30"/>
+                                                <rect key="frame" x="96" y="241" width="97" height="30"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qyL-Wo-9ko">
-                                                <rect key="frame" x="256" y="289" width="97" height="30"/>
+                                                <rect key="frame" x="256" y="241" width="97" height="30"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="〜" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AS8-cn-VhB">
-                                                <rect key="frame" x="217" y="293" width="16" height="21"/>
+                                                <rect key="frame" x="217" y="245" width="16" height="21"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="日中" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hAo-nH-gSY">
-                                                <rect key="frame" x="22" y="74" width="47" height="34"/>
-                                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="シフト関連" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vEC-Dx-Cmf">
-                                                <rect key="frame" x="22" y="419" width="85" height="34"/>
+                                                <rect key="frame" x="22" y="26" width="47" height="34"/>
                                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5om-Ih-YdK">
-                                                <rect key="frame" x="96" y="178" width="97" height="30"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
-                                            </textField>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="U9q-ef-La6">
-                                                <rect key="frame" x="96" y="519" width="183" height="30"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
-                                            </textField>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0qy-ZU-SZE">
-                                                <rect key="frame" x="96" y="466" width="183" height="30"/>
+                                                <rect key="frame" x="96" y="130" width="97" height="30"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="深夜" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gYu-Cf-9gZ">
-                                                <rect key="frame" x="22" y="247" width="47" height="34"/>
+                                                <rect key="frame" x="22" y="199" width="47" height="34"/>
                                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bZX-C7-TjX">
-                                                <rect key="frame" x="0.0" y="18" width="375" height="44"/>
-                                                <items>
-                                                    <navigationItem title="ユーザ設定" id="sel-8e-IeJ">
-                                                        <barButtonItem key="leftBarButtonItem" systemItem="stop" id="NB4-M0-RFK">
-                                                            <color key="tintColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                                            <connections>
-                                                                <action selector="TapBackButton:" destination="tsi-6b-VUl" id="XjZ-AT-WCB"/>
-                                                            </connections>
-                                                        </barButtonItem>
-                                                    </navigationItem>
-                                                </items>
-                                            </navigationBar>
                                         </subviews>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     </view>
@@ -282,18 +252,54 @@
                         <outlet property="TimeFrom2" destination="sF4-8Z-uh9" id="4c2-Uk-1uK"/>
                         <outlet property="TimeTo1" destination="WPM-wm-Uok" id="N7e-SM-vF9"/>
                         <outlet property="TimeTo2" destination="qyL-Wo-9ko" id="Gzk-BG-9D0"/>
-                        <outlet property="staffnumbertextfield" destination="U9q-ef-La6" id="pr5-dw-GDJ"/>
-                        <outlet property="usernametextfield" destination="0qy-ZU-SZE" id="YO3-3J-f2K"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ObL-QC-7fR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="864.5" y="1222.5"/>
         </scene>
-        <!--Shift Name List Setting-->
+        <!--Shift Import Setting-->
+        <scene sceneID="eo9-Qa-olU">
+            <objects>
+                <viewController storyboardIdentifier="ShiftImportSetting" useStoryboardIdentifierAsRestorationIdentifier="YES" id="xbb-ml-PSM" customClass="ShiftImportSetting" customModule="masamon" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="LrE-q1-0fx"/>
+                        <viewControllerLayoutGuide type="bottom" id="IH0-7c-fWL"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="sdM-j8-egG">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="シフト関連" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xXE-4z-Vel">
+                                <rect key="frame" x="20" y="83" width="85" height="34"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sdL-i0-6Ci">
+                                <rect key="frame" x="96" y="201" width="183" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ptf-yc-f6W">
+                                <rect key="frame" x="96" y="148" width="183" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oQ8-Sj-PGi" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1280.5" y="1222.5"/>
+        </scene>
+        <!--シフト名の一覧-->
         <scene sceneID="cTI-hC-uKQ">
             <objects>
-                <viewController storyboardIdentifier="ShiftNameListSetting" useStoryboardIdentifierAsRestorationIdentifier="YES" id="5ce-dN-Wqe" customClass="ShiftNameListSetting" customModule="masamon" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ShiftNameListSetting" title="シフト名の一覧" useStoryboardIdentifierAsRestorationIdentifier="YES" id="5ce-dN-Wqe" customClass="ShiftNameListSetting" customModule="masamon" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="say-5X-qse"/>
                         <viewControllerLayoutGuide type="bottom" id="YyV-IH-O6u"/>
@@ -335,12 +341,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Z5Q-1k-9uQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1716.5" y="1222.5"/>
+            <point key="canvasLocation" x="2132.5" y="1217.5"/>
         </scene>
-        <!--Shift List Setting-->
+        <!--取込み済シフト一覧-->
         <scene sceneID="026-gx-K7L">
             <objects>
-                <viewController storyboardIdentifier="ShiftListSetting" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Zya-Cs-PqC" customClass="ShiftListSetting" customModule="masamon" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ShiftListSetting" title="取込み済シフト一覧" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Zya-Cs-PqC" customClass="ShiftListSetting" customModule="masamon" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="4C5-l6-MZL"/>
                         <viewControllerLayoutGuide type="bottom" id="IvQ-dO-BEP"/>
@@ -376,9 +382,9 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x3o-PS-DTt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2138.5" y="1222.5"/>
+            <point key="canvasLocation" x="2554.5" y="1217.5"/>
         </scene>
-        <!--各種設定一覧-->
+        <!--各種設定-->
         <scene sceneID="R5N-ZT-HGi">
             <objects>
                 <viewController storyboardIdentifier="Setting" useStoryboardIdentifierAsRestorationIdentifier="YES" id="wxH-3x-qaL" customClass="Setting" customModule="masamon" customModuleProvider="target" sceneMemberID="viewController">
@@ -403,7 +409,7 @@
                             </tableView>
                         </subviews>
                     </view>
-                    <navigationItem key="navigationItem" title="各種設定一覧" id="5cE-cd-a7V"/>
+                    <navigationItem key="navigationItem" title="各種設定" id="5cE-cd-a7V"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="tableview" destination="JgV-Mm-oXu" id="taz-hG-QpA"/>
@@ -643,11 +649,11 @@
             </objects>
             <point key="canvasLocation" x="277.5" y="1972.5"/>
         </scene>
-        <!--各種設定一覧-->
+        <!--各種設定-->
         <scene sceneID="3h4-eC-yQr">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="aO0-ag-Fki" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="各種設定一覧" image="tabbarsetting" id="R4Z-ZK-RVK"/>
+                    <tabBarItem key="tabBarItem" title="各種設定" image="tabbarsetting" id="R4Z-ZK-RVK"/>
                     <toolbarItems/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="zHA-Xo-ntL">
