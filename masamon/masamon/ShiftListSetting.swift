@@ -1,5 +1,5 @@
 //
-//  ShiftList.swift
+//  ShiftListSetting.swift
 //  masamon
 //
 //  Created by 岩見建汰 on 2016/01/31.
@@ -45,11 +45,6 @@ class ShiftListSetting: UIViewController, UITableViewDataSource, UITableViewDele
     
     // セルに表示するテキスト
     var texts: [ShiftDB] = []
-    
-    //戻るボタンをタップしたとき
-    @IBAction func TapBackButton(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: nil)
-    }
     
     let sections = ["最新順"]
     

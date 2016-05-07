@@ -17,13 +17,18 @@ class Setting: UIViewController, UITableViewDataSource, UITableViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //ナビゲーションバーの色などを設定する
+        self.navigationController!.navigationBar.barTintColor = UIColor.blackColor()
+        self.navigationController!.navigationBar.tintColor = UIColor.whiteColor()
+        self.navigationController!.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
+        
         tableview.delegate = self
         tableview.dataSource = self
         tableview.scrollEnabled = false
         
         //tableviewの下の余白部分を埋める処理
         let spaceview = UIView()
-        let spaceview_y:CGFloat = 404
+        let spaceview_y:CGFloat = 418
         spaceview.backgroundColor = UIColor.hex("FFFFFF", alpha: 0.9)
         spaceview.frame = CGRectMake(0, spaceview_y, self.view.frame.width, self.view.frame.height - spaceview_y)
         self.view.addSubview(spaceview)
@@ -77,8 +82,11 @@ class Setting: UIViewController, UITableViewDataSource, UITableViewDelegate {
         
         var screen_name = ""
         switch indexPath.row {
-        case 0,1:
-            screen_name = "UserSetting"
+        case 0:
+            screen_name = "HourlyWageSetting"
+        
+        case 1:
+            screen_name = "ShiftImportSetting"
             
         case 3:
             screen_name = "StaffNameListSetting"
@@ -94,7 +102,8 @@ class Setting: UIViewController, UITableViewDataSource, UITableViewDelegate {
         
         let targetViewController = self.storyboard!.instantiateViewControllerWithIdentifier(screen_name)
         targetViewController.modalTransitionStyle = UIModalTransitionStyle.FlipHorizontal
-        self.presentViewController( targetViewController, animated: true, completion: nil)
+        
+        self.navigationController!.pushViewController(targetViewController, animated: true)
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
 
