@@ -64,6 +64,8 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
         pickerviewtoolBar.setItems([flexSpace,pickerdoneButton], animated: false)
         pickerviewtoolBar.userInteractionEnabled = true
         
+        let add = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(ShiftNameListSetting.TapPlusButton(_:)))
+        navigationItem.rightBarButtonItems = [add]
     }
     
     
@@ -290,15 +292,9 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
     
     
     //プラスボタンを押したとき
-    @IBAction func TapPlusButton(sender: AnyObject) {
+    func TapPlusButton(sender: AnyObject) {
         self.alert("シフト名を新規追加します", messagetext: "追加するシフト名の情報を入力して下さい", section: 0, row: 0, flag: 2)
     }
-    
-    //戻るボタンを押したとき
-    @IBAction func TapBackButton(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: nil)
-    }
-    
     
     //pickerに表示する列数を返すデータソースメソッド.
     func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
