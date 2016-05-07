@@ -122,7 +122,7 @@
                                 </items>
                             </navigationBar>
                         </subviews>
-                        <color key="backgroundColor" red="0.098039217289999994" green="0.098039217289999994" blue="0.098039217289999994" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
@@ -570,10 +570,10 @@
             </objects>
             <point key="canvasLocation" x="-194.5" y="477.5"/>
         </scene>
-        <!--シフト取り込み一覧-->
+        <!--ファイルの閲覧-->
         <scene sceneID="Wco-XA-FuF">
             <objects>
-                <viewController storyboardIdentifier="ShiftGalleryTable" useStoryboardIdentifierAsRestorationIdentifier="YES" id="FTR-Tl-LZ9" customClass="ShiftGalleryTable" customModule="masamon" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ShiftGalleryTable" useStoryboardIdentifierAsRestorationIdentifier="YES" id="FTR-Tl-LZ9" customClass="FileBrowseSelect" customModule="masamon" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="wgt-wu-fO2"/>
                         <viewControllerLayoutGuide type="bottom" id="gO1-af-gdb"/>
@@ -582,45 +582,66 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text=" ファイルの閲覧" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xK8-Ck-yp1">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="54"/>
+                                <color key="backgroundColor" red="0.098039217289999994" green="0.098039217289999994" blue="0.098039217289999994" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="rDp-Pp-js4">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="540"/>
+                                <rect key="frame" x="0.0" y="53" width="375" height="565"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <label key="tableFooterView" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" シフト取り込み一覧" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="o26-Rh-Obf">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="54"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <color key="backgroundColor" red="0.098039217289999994" green="0.098039217289999994" blue="0.098039217289999994" alpha="1" colorSpace="calibratedRGB"/>
-                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
                             </tableView>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5OY-FG-mzQ">
-                                <rect key="frame" x="0.0" y="542" width="377" height="125"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JNH-RI-VOR">
-                                        <rect key="frame" x="152" y="13" width="74" height="30"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                        <state key="normal" title="表示"/>
-                                        <connections>
-                                            <action selector="TapShowButton:" destination="FTR-Tl-LZ9" eventType="touchUpInside" id="VSA-QX-Hta"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="シフト取り込み一覧" image="tabbarshiftimport" id="hRS-Co-C4b"/>
+                    <tabBarItem key="tabBarItem" title="ファイルの閲覧" image="tabbarshiftimport" id="hRS-Co-C4b"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
-                        <outlet property="ButtomView" destination="5OY-FG-mzQ" id="57r-cW-5hc"/>
-                        <outlet property="tableview" destination="rDp-Pp-js4" id="1i7-lo-FcR"/>
+                        <outlet property="tableview" destination="rDp-Pp-js4" id="Dw9-PX-yFn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cV5-Fo-dKS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-194.5" y="1972.5"/>
+        </scene>
+        <!--File Browse-->
+        <scene sceneID="ODa-sN-eYe">
+            <objects>
+                <viewController storyboardIdentifier="FileBrowse" useStoryboardIdentifierAsRestorationIdentifier="YES" id="nts-1T-IOa" customClass="FileBrowse" customModule="masamon" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="7Mc-98-92f"/>
+                        <viewControllerLayoutGuide type="bottom" id="8Ep-9H-NJx"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Ga5-OR-QNg">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="G69-H5-8xj">
+                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                                <items>
+                                    <navigationItem title="ファイル名ほげほげ" id="QA3-WC-CBS">
+                                        <barButtonItem key="leftBarButtonItem" systemItem="stop" id="2jm-Vi-iKb">
+                                            <color key="tintColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                            <connections>
+                                                <action selector="TapBackButton:" destination="nts-1T-IOa" id="Ye1-C3-o7r"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                        </subviews>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="navigationbar" destination="G69-H5-8xj" id="i9q-u2-L4Q"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cdZ-h7-h1O" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="277.5" y="1972.5"/>
         </scene>
     </scenes>
     <resources>

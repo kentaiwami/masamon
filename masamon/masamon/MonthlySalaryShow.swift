@@ -46,6 +46,17 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     override func viewDidLoad() {
         super.viewDidLoad()
         
+//        //クラッシュ等で参照されずに残ってしまったファイルを手動で削除する(保守用)
+//        let Libralypath = NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0] as String
+//        let filepath = Libralypath + "/" + ".pdf"
+//
+//        let filemanager:NSFileManager = NSFileManager()
+//        do{
+//            try filemanager.removeItemAtPath(filepath)
+//        }catch{
+//            print(error)
+//        }
+
         self.setupShiftLabel()      //シフトを表示するラベルを設置する
         
         self.setupTapGesture()      //タップを検出するジェスチャーを追加
