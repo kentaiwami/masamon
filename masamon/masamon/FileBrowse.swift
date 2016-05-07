@@ -13,8 +13,6 @@ class FileBrowse: UIViewController, QLPreviewControllerDataSource{
 
     let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得
     
-    @IBOutlet weak var navigationbar: UINavigationBar!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -27,7 +25,7 @@ class FileBrowse: UIViewController, QLPreviewControllerDataSource{
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        navigationbar.topItem?.title = appDelegate.selectedcellname
+        self.title = appDelegate.selectedcellname
     }
     
     

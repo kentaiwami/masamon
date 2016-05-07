@@ -26,6 +26,11 @@ class FileBrowseSelect: UIViewController, UITableViewDataSource, UITableViewDele
         
         SetShiftListArray()
         
+        //ナビゲーションバーの色などを設定する
+        self.navigationController!.navigationBar.barTintColor = UIColor.blackColor()
+        self.navigationController!.navigationBar.tintColor = UIColor.whiteColor()
+        self.navigationController!.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -82,8 +87,7 @@ class FileBrowseSelect: UIViewController, UITableViewDataSource, UITableViewDele
         appDelegate.selectedcellname = shiftdbrecord.shiftimportname
         
         let targetViewController = self.storyboard!.instantiateViewControllerWithIdentifier("FileBrowse")
-        targetViewController.modalTransitionStyle = UIModalTransitionStyle.FlipHorizontal
-        self.presentViewController( targetViewController, animated: true, completion: nil)
+        self.navigationController!.pushViewController(targetViewController, animated: true)
 
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
