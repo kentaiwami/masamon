@@ -45,12 +45,7 @@ class ShiftListSetting: UIViewController, UITableViewDataSource, UITableViewDele
     
     // セルに表示するテキスト
     var texts: [ShiftDB] = []
-    
-    //戻るボタンをタップしたとき
-    @IBAction func TapBackButton(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: nil)
-    }
-    
+        
     let sections = ["最新順"]
     
     //セクションの数を返す.
