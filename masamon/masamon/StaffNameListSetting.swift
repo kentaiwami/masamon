@@ -43,19 +43,17 @@ class StaffNameListSetting: UIViewController, UITableViewDataSource, UITableView
         }
         
         self.table.reloadData()
+        
+        let add = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(StaffNameListSetting.TapPlusButton(_:)))
+        navigationItem.rightBarButtonItems = [add]
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
-    //戻るボタンを押したとき
-    @IBAction func TapBackButton(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: nil)
-    }
-    
     //プラスボタンを押したとき
-    @IBAction func TapPlusButton(sender: AnyObject) {
+    func TapPlusButton(sender: UIButton) {
         self.alert("スタッフ名を新規追加します", messagetext: "追加するスタッフ名を入力して下さい", index: DBmethod().DBRecordCount(StaffNameDB), flag: 2)
     }
     
