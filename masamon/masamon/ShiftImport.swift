@@ -206,18 +206,10 @@ class ShiftImport: UIViewController,UITextFieldDelegate,QLPreviewControllerDataS
     //プレビューで表示するファイルの設定
     func previewController(controller: QLPreviewController, previewItemAtIndex index: Int) -> QLPreviewItem{
         
-        if DBmethod().DBRecordCount(ShiftImportHistoryDB) == 0 {
-            let mainbundle = NSBundle.mainBundle()
-            let url = mainbundle.pathForResource("no_data", ofType: "png")!
-            let doc = NSURL(fileURLWithPath: url)
-            return doc
-            
-        }else{
-            let shiftimporthistorylast = DBmethod().ShiftImportHistoryDBLastGet()
-            let url = Libralypath + "/" + shiftimporthistorylast.name
-            let doc = NSURL(fileURLWithPath: url)
-            return doc
-        }
+        let shiftimporthistorylast = DBmethod().ShiftImportHistoryDBLastGet()
+        let url = Libralypath + "/" + shiftimporthistorylast.name
+        let doc = NSURL(fileURLWithPath: url)
+        return doc
     }
     
     func FileSaveAndMove(Inboxpath: String, update: Bool){
