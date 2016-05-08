@@ -12,7 +12,7 @@ import QuickLook
 class ShiftImport: UIViewController,UITextFieldDelegate,QLPreviewControllerDataSource{
     
     @IBOutlet weak var filenamefield: UITextField!
-    @IBOutlet weak var lasttimeimportlabel: UILabel!
+    @IBOutlet weak var quickfilelabel: UILabel!
     
     let filemanager:NSFileManager = NSFileManager()
     let documentspath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
@@ -24,9 +24,6 @@ class ShiftImport: UIViewController,UITextFieldDelegate,QLPreviewControllerDataS
         super.viewDidLoad()
         
         self.view.backgroundColor = UIColor(patternImage: UIImage(named: "../images/SIbackground.png")!)
-
-        //蝶々を設置
-        setbutterfly()
         
         //テキストフィールドの設定
         filenamefield.delegate = self
@@ -41,6 +38,8 @@ class ShiftImport: UIViewController,UITextFieldDelegate,QLPreviewControllerDataS
         ql.dataSource  = self
         ql.view.frame = CGRectMake(0, self.view.frame.height/2-70, self.view.frame.width, 400)
         self.view.addSubview(ql.view)
+        
+        quickfilelabel.text = "取り込み予定のファイル"
     }
     
     override func didReceiveMemoryWarning() {
@@ -198,22 +197,6 @@ class ShiftImport: UIViewController,UITextFieldDelegate,QLPreviewControllerDataS
         ShiftImportHistoryDBRecord.name = importname
         DBmethod().AddandUpdate(ShiftImportHistoryDBRecord,update: true)
     }
-
-    func setbutterfly(){
-        //蝶々の設置
-            let view = UIImageView()
-            let image = UIImage(named: "../images/butterfly1.png")
-            view.image = image
-            view.frame = CGRectMake(0, 0, 100, 100)
-            view.layer.position = CGPoint(x: self.view.frame.width-50, y: self.view.frame.height/2-120)
-            view.contentMode = UIViewContentMode.ScaleAspectFit
-            // radianで回転角度を指定(30度)する.
-            let angle:CGFloat = CGFloat((30 * M_PI) / 180.0)
-            
-            // 回転用のアフィン行列を生成する.
-            view.transform = CGAffineTransformMakeRotation(angle)
-            self.view.addSubview(view)
-    }
     
     //プレビューでの表示数
     func numberOfPreviewItemsInPreviewController(controller: QLPreviewController) -> Int{
@@ -222,21 +205,14 @@ class ShiftImport: UIViewController,UITextFieldDelegate,QLPreviewControllerDataS
     
     //プレビューで表示するファイルの設定
     func previewController(controller: QLPreviewController, previewItemAtIndex index: Int) -> QLPreviewItem{
-
-        if DBmethod().DBRecordCount(ShiftImportHistoryDB) == 0 {
-            lasttimeimportlabel.text = "前回の取り込み: なし"
-            let mainbundle = NSBundle.mainBundle()
-            let url = mainbundle.pathForResource("no_data", ofType: "png")!
-            let doc = NSURL(fileURLWithPath: url)
-            return doc
-            
-        }else{
-            let shiftimporthistorylast = DBmethod().ShiftImportHistoryDBLastGet()
-            lasttimeimportlabel.text = "前回の取り込み：「" + shiftimporthistorylast.name + "」"
-            let url = Libralypath + "/" + shiftimporthistorylast.name
-            let doc = NSURL(fileURLWithPath: url)
-            return doc
-        }
+        
+        //他アプリからコピーしてきたばかりのファイルを参照
+        let documentspath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
+        let Inboxpath = documentspath + "/Inbox/"       //Inboxまでのパス
+        let url = Inboxpath + filenamefield.text!
+        
+        let doc = NSURL(fileURLWithPath: url)
+        return doc
     }
     
     func FileSaveAndMove(Inboxpath: String, update: Bool){

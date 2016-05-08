@@ -398,7 +398,7 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="filenamefield" destination="gm6-rn-UNB" id="oZA-LR-93H"/>
-                        <outlet property="lasttimeimportlabel" destination="dN9-mg-ia7" id="gWr-62-swc"/>
+                        <outlet property="quickfilelabel" destination="dN9-mg-ia7" id="mz9-gk-Ou8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="O39-ht-nAe" userLabel="First Responder" sceneMemberID="firstResponder"/>
