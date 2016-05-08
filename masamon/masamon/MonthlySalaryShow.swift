@@ -47,9 +47,11 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         super.viewDidLoad()
         
 //        //クラッシュ等で参照されずに残ってしまったファイルを手動で削除する(保守用)
-//        let Libralypath = NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0] as String
-//        let filepath = Libralypath + "/" + ".pdf"
-//
+//        let documentspath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
+//        let Inboxpath = documentspath + "/Inbox/"       //Inboxまでのパス
+////        let Libralypath = NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0] as String
+//        let filepath = Inboxpath  + ".pdf"
+////
 //        let filemanager:NSFileManager = NSFileManager()
 //        do{
 //            try filemanager.removeItemAtPath(filepath)
