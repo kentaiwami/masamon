@@ -206,8 +206,11 @@ class ShiftImport: UIViewController,UITextFieldDelegate,QLPreviewControllerDataS
     //プレビューで表示するファイルの設定
     func previewController(controller: QLPreviewController, previewItemAtIndex index: Int) -> QLPreviewItem{
         
-        let shiftimporthistorylast = DBmethod().ShiftImportHistoryDBLastGet()
-        let url = Libralypath + "/" + shiftimporthistorylast.name
+        //他アプリからコピーしてきたばかりのファイルを参照
+        let documentspath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
+        let Inboxpath = documentspath + "/Inbox/"       //Inboxまでのパス
+        let url = Inboxpath + filenamefield.text!
+        
         let doc = NSURL(fileURLWithPath: url)
         return doc
     }
