@@ -12,7 +12,7 @@ import QuickLook
 class ShiftImport: UIViewController,UITextFieldDelegate,QLPreviewControllerDataSource{
     
     @IBOutlet weak var filenamefield: UITextField!
-    @IBOutlet weak var lasttimeimportlabel: UILabel!
+    @IBOutlet weak var quickfilelabel: UILabel!
     
     let filemanager:NSFileManager = NSFileManager()
     let documentspath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
@@ -38,6 +38,8 @@ class ShiftImport: UIViewController,UITextFieldDelegate,QLPreviewControllerDataS
         ql.dataSource  = self
         ql.view.frame = CGRectMake(0, self.view.frame.height/2-70, self.view.frame.width, 400)
         self.view.addSubview(ql.view)
+        
+        quickfilelabel.text = "取り込み予定のファイル"
     }
     
     override func didReceiveMemoryWarning() {
@@ -203,9 +205,8 @@ class ShiftImport: UIViewController,UITextFieldDelegate,QLPreviewControllerDataS
     
     //プレビューで表示するファイルの設定
     func previewController(controller: QLPreviewController, previewItemAtIndex index: Int) -> QLPreviewItem{
-
+        
         if DBmethod().DBRecordCount(ShiftImportHistoryDB) == 0 {
-            lasttimeimportlabel.text = "前回の取り込み: なし"
             let mainbundle = NSBundle.mainBundle()
             let url = mainbundle.pathForResource("no_data", ofType: "png")!
             let doc = NSURL(fileURLWithPath: url)
@@ -213,7 +214,6 @@ class ShiftImport: UIViewController,UITextFieldDelegate,QLPreviewControllerDataS
             
         }else{
             let shiftimporthistorylast = DBmethod().ShiftImportHistoryDBLastGet()
-            lasttimeimportlabel.text = "前回の取り込み：「" + shiftimporthistorylast.name + "」"
             let url = Libralypath + "/" + shiftimporthistorylast.name
             let doc = NSURL(fileURLWithPath: url)
             return doc
