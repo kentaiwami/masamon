@@ -164,7 +164,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         let today = self.currentnsdate
         let date = CommonMethod().ReturnYearMonthDayWeekday(today)         //日付を西暦,月,日,曜日に分けて取得
         self.ShowAllData(CommonMethod().Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day, arraynumber: 1)           //データ表示へ分けた日付を渡す
-        CalenderLabel.text = "\(date.year)年\(date.month)月\(date.day)日 \(self.ReturnWeekday(date.weekday))曜日"
+        self.SetCalenderLabel(date.year, month: date.month, day: date.day, weekday: date.weekday)
         
         appDelegate.screennumber = 0
     }
@@ -210,7 +210,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                         let today = self.currentnsdate
                         let date = CommonMethod().ReturnYearMonthDayWeekday(today)
                         self.ShowAllData(CommonMethod().Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day, arraynumber: 1)
-                        self.CalenderLabel.text = "\(date.year)年\(date.month)月\(date.day)日 \(self.ReturnWeekday(date.weekday))曜日"
+                        self.SetCalenderLabel(date.year, month: date.month, day: date.day, weekday: date.weekday)
                         
                         if self.appDelegate.errorshiftnamexlsx.count != 0 {  //新規シフト名がある場合
                             if self.staffshiftcountflag {
@@ -272,7 +272,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                         let today = self.currentnsdate
                         let date = CommonMethod().ReturnYearMonthDayWeekday(today)
                         self.ShowAllData(CommonMethod().Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day, arraynumber: 1)
-                        self.CalenderLabel.text = "\(date.year)年\(date.month)月\(date.day)日 \(self.ReturnWeekday(date.weekday))曜日"
+                        self.SetCalenderLabel(date.year, month: date.month, day: date.day, weekday: date.weekday)
                         
                     })
                 }
