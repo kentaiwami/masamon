@@ -970,8 +970,8 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                 button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
             }
             
-            //今日の日付と一致するボタンがある場合は文字色を白にする
-            if todaysplitday.day == Int(buttontilearray[i]) {
+            //今日の年月日と一致するボタンがある場合は文字色を白にする
+            if todaysplitday.year == currentsplitdate.year && todaysplitday.month == currentsplitdate.month && todaysplitday.day == Int(buttontilearray[i]) {
                 button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
             }
             
