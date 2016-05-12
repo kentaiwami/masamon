@@ -33,6 +33,8 @@ class XLSXmethod: UIViewController {
             spreadsheet = BRAOfficeDocumentPackage.open(documentPath)
             worksheet = spreadsheet.workbook.worksheets[0] as! BRAWorksheet
             P1String = worksheet.cellForCellReference("P1").stringValue()
+            P1String = P1String.hankakuOnly
+            
             flag = false
             return (worksheet,P1String)
         }else{
@@ -199,7 +201,8 @@ class XLSXmethod: UIViewController {
         
         //F列からユーザ名と合致する箇所を探す
         for i in 0 ..< DBmethod().StaffNumberGet(){
-            let nowcell: String = worksheet.sheet.cellForCellReference(staffcellposition[i]).stringValue()
+            var nowcell: String = worksheet.sheet.cellForCellReference(staffcellposition[i]).stringValue()
+            nowcell = nowcell.hankakuOnly
             
             if nowcell == username {
                 userposition = staffcellposition[i]
@@ -210,7 +213,8 @@ class XLSXmethod: UIViewController {
         //1クール分行う
         for i in 0 ..< monthrange.length{
             let replaceday = userposition.stringByReplacingOccurrencesOfString("F", withString: cellrow[i])
-            let dayshift: String = worksheet.sheet.cellForCellReference(replaceday).stringValue()
+            var dayshift: String = worksheet.sheet.cellForCellReference(replaceday).stringValue()
+            dayshift = dayshift.hankakuOnly
             
             
             //含まれていない場合は追加
@@ -272,8 +276,11 @@ class XLSXmethod: UIViewController {
             let nowstaff = staffcellpositionarray[i]
             let replaceday = nowstaff.stringByReplacingOccurrencesOfString("F", withString: cellrow[day])
             
-            let dayshift: String = worksheet.cellForCellReference(replaceday).stringValue()
-            let staffname: String = worksheet.cellForCellReference(nowstaff).stringValue()
+            var dayshift: String = worksheet.cellForCellReference(replaceday).stringValue()
+            var staffname: String = worksheet.cellForCellReference(nowstaff).stringValue()
+            
+            dayshift = dayshift.hankakuOnly
+            staffname = staffname.hankakuOnly
             
             //Holiday以外なら記録
             if self.SearchContainsHolidayArray(dayshift) == false {
@@ -318,7 +325,8 @@ class XLSXmethod: UIViewController {
         let worksheet = self.SetXLSX()
         
         for i in 0 ..< staffpositionarray.count{
-            let staffname: String = worksheet.sheet.cellForCellReference(staffpositionarray[i]).stringValue()
+            var staffname: String = worksheet.sheet.cellForCellReference(staffpositionarray[i]).stringValue()
+            staffname = staffname.hankakuOnly
             
             let array = CommonMethod().IncludeShiftNameInStaffName(staffname)
             
