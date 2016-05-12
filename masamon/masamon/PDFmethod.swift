@@ -123,6 +123,9 @@ class PDFmethod: UIViewController {
             staffarraytmp = staffarraytmp.stringByReplacingOccurrencesOfString(" ", withString: "")
             staffarraytmp = staffarraytmp.stringByReplacingOccurrencesOfString("　", withString: "")
             
+            //全角を半角に変更して上書きする
+            //TODO: メソッドへstaffarraytmpを渡す
+            //TODO: 返り値をstaffarraytmpへ入れる
             
             //スタッフ名の抽出
             staffname = self.GetStaffName(staffarraytmp, i: i)
