@@ -33,6 +33,8 @@ class XLSXmethod: UIViewController {
             spreadsheet = BRAOfficeDocumentPackage.open(documentPath)
             worksheet = spreadsheet.workbook.worksheets[0] as! BRAWorksheet
             P1String = worksheet.cellForCellReference("P1").stringValue()
+            P1String = P1String.hankakuOnly
+            
             flag = false
             return (worksheet,P1String)
         }else{
