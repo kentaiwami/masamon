@@ -105,7 +105,7 @@ class PDFmethod: UIViewController {
         }
         
         //スタッフの人数分(配列の最後まで)繰り返す
-        //        for i in 10..<11 {
+        //                for i in 4..<5 {
         for i in 1 ..< staffarray.count{
             
             var staffname = ""
@@ -129,6 +129,7 @@ class PDFmethod: UIViewController {
             //スタッフ名の抽出
             staffname = self.GetStaffName(staffarraytmp, i: i)
             
+            print(staffname)
             //スキップされたスタッフは取り込みを行わない
             if(appDelegate.skipstaff.contains(staffname)){
                 //ループを抜けて次のループに移る
@@ -138,6 +139,7 @@ class PDFmethod: UIViewController {
                  　エラーでなければシフトの出現場所を配列に格納していく
                  */
                 let removem = staffname.stringByReplacingOccurrencesOfString("M", withString: "")
+                
                 if(removem.characters.count <= 1 || removem.characters.count >= 4){
                     appDelegate.errorstaffnamepdf.append(staffarraytmp)
                 }else{
@@ -387,25 +389,37 @@ class PDFmethod: UIViewController {
                 break
             }
             
-            //勤務シフト体制にある文字が検出されたらループを抜けるパターン
-            for i in 0 ..< shiftsystemnametopcharacter.count{
-                if(String(getcharacterstaffname).containsString(shiftsystemnametopcharacter[i])){
-                    return staffname
+            //マネージャーの場合はMが出るまで
+            if i >= 2 && i <= 4{
+                
+                if(String(getcharacterstaffname).containsString("M")){
+                    //                    print(staffname)
+                    return staffname + "M"
+                }
+                
+                //マネージャー以外の場合は以下のパターン
+            }else {
+                //勤務シフト体制にある文字が検出されたらループを抜けるパターン
+                for i in 0 ..< shiftsystemnametopcharacter.count{
+                    if(String(getcharacterstaffname).containsString(shiftsystemnametopcharacter[i])){
+                        return staffname
+                    }
+                }
+                
+                //休暇シフト体制にある文字が検出されたらループを抜けるパターン
+                for i in 0 ..< holidaynametopcharacter.count{
+                    if(String(getcharacterstaffname).containsString(holidaynametopcharacter[i])){
+                        return staffname
+                    }
                 }
             }
             
-            //休暇シフト体制にある文字が検出されたらループを抜けるパターン
-            for i in 0 ..< holidaynametopcharacter.count{
-                if(String(getcharacterstaffname).containsString(holidaynametopcharacter[i])){
-                    return staffname
-                }
-            }
             
             staffname = staffname + String(getcharacterstaffname)
             position += 1
             getcharacterstaffname = stafftext[stafftext.startIndex.advancedBy(position)]
         }
-        
+        //        print(staffname)
         return staffname
     }
     
@@ -445,8 +459,8 @@ class PDFmethod: UIViewController {
         var removedshiftstring = ""
         
         removedshiftstring = staffarraysstring.stringByReplacingOccurrencesOfString(shiftname, withString: "")
-        removedshiftstring = removedshiftstring.stringByReplacingOccurrencesOfString("M", withString: "")
-        removedshiftstring = removedshiftstring.stringByReplacingOccurrencesOfString("カ", withString: "")
+        //        removedshiftstring = removedshiftstring.stringByReplacingOccurrencesOfString("M", withString: "")
+        //        removedshiftstring = removedshiftstring.stringByReplacingOccurrencesOfString("カ", withString: "")
         
         return removedshiftstring
     }
