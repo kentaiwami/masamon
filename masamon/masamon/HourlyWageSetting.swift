@@ -332,10 +332,9 @@ class HourlyWageSetting: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         SetText()
     }
     
-    //TODO: UserNameDBにレコードがある時に時給設定を表示しようとすると落ちるので修正
     func SetText(){
         //既に登録されていたら登録内容を表示する
-        if DBmethod().DBRecordCount(UserNameDB) == 0 {
+        if DBmethod().DBRecordCount(HourlyPayDB) == 0 {
             TimeFrom1.placeholder = "no data"
             TimeFrom2.placeholder = "no data"
             TimeTo1.placeholder = "no data"

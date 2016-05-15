@@ -50,7 +50,7 @@ class ShiftImport: UIViewController,UITextFieldDelegate,QLPreviewControllerDataS
     @IBAction func xlsximport(sender: AnyObject) {
         
         //設定が登録されていない場合
-        if DBmethod().DBRecordCount(UserNameDB) == 0 {
+        if DBmethod().DBRecordCount(UserNameDB) == 0 || DBmethod().DBRecordCount(HourlyPayDB) == 0 {
             let alertController = UIAlertController(title: "取り込みエラー", message: "先に設定画面で情報の登録をして下さい", preferredStyle: .Alert)
             
             let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)

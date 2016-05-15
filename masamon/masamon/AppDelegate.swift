@@ -74,7 +74,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         //シフト体制データ
-        let shiftnamepattern = ["早","早Ｍ","早カ","はや","中","中2","中3","遅","遅Ｍ","遅カ","公","夏","有"]
+        let shiftnamepattern = ["早","早M","早カ","はや","中","中2","中3","遅","遅M","遅カ","公","夏","有"]
         let shiftstartpattern = [8.0,8.0,8.0,8.0,12.0,13.5,14.5,16.0,16.0,16.0,99.9,99.9,99.9]
         let shiftendpattern = [16.5,16.5,16.5,16.5,20.5,22.0,23.0,24.5,24.5,24.5,99.9,99.9,99.9]
 
