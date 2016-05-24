@@ -234,36 +234,61 @@ class ShiftListSetting: UIViewController, UITableViewDataSource, UITableViewDele
                 
                 var filename = ""
                 
-                //ShiftDetailDBレコードの削除
-                let shiftdbrecord = DBmethod().SearchShiftDB(self.texts[index].shiftimportname)
-                let shiftdetailarray = shiftdbrecord.shiftdetail
+                //ShiftDBの穴埋めをするために基準となるidを記録
+                let shiftdbpivot_id = self.texts[index].id
                 
-                filename = shiftdbrecord.shiftimportname
-                DBmethod().DeleteShiftDetailDBRecords(shiftdetailarray)
+                //ShiftDetailの基準を見つけるための準備
+                let shiftdb_year = self.texts[index].year
+                let shiftdb_month = self.texts[index].month
                 
-                //ShiftDBレコードの削除
-                DBmethod().DeleteRecord(self.texts[index])
+                //年月をもとに基準となるidを取り出す
+                let shiftdetailresults = DBmethod().TheDayStaffGet(shiftdb_year, month: shiftdb_month-1, date: 11)
+                
+                if shiftdetailresults != nil {
+                    if shiftdetailresults!.count != 0 {
+                        let shiftdetaildbpivot_id = shiftdetailresults![0].id
 
-                //ShiftDetailDBレコードのソート
-                DBmethod().ShiftDetailDBSort()
+                        //ShiftDetailDBレコードの削除
+                        let shiftdbrecord = DBmethod().SearchShiftDB(self.texts[index].shiftimportname)
+                        let shiftdetailarray = shiftdbrecord.shiftdetail
+                        let deleterecordcount = shiftdetailarray.count
+                        filename = shiftdbrecord.shiftimportname
+                        
+                        DBmethod().DeleteShiftDetailDBRecords(shiftdetailarray)
+                        
+                        //ShiftDBレコードの削除
+                        DBmethod().DeleteRecord(self.texts[index])
+                        
+                        //ShiftDetailDBレコードのソート
+                        DBmethod().ShiftDetailDBSort()
+                        
+                        //ShiftDBレコードのソート
+                        DBmethod().ShiftDBSort()
+                        
+                        //TODO: 穴埋め
+                        DBmethod().ShiftDBFillHole(shiftdbpivot_id)
+                        DBmethod().ShiftDetailDBFillHole(shiftdetaildbpivot_id, deleterecords: deleterecordcount)
 
-                //ShiftDBレコードのソート
-                DBmethod().ShiftDBSort()
-                
-                //TODO: ソート終了後に関連づけを行う
-                
-                
-                //ファイルの削除
-                let Libralypath = NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0] as String
-                let filepath = Libralypath + "/" + filename
+                        //TODO: 関連づけ
 
-                let filemanager:NSFileManager = NSFileManager()
-                do{
-                    try filemanager.removeItemAtPath(filepath)
-                }catch{
-                    print(error)
+                        
+                        //ファイルの削除
+                        let Libralypath = NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0] as String
+                        let filepath = Libralypath + "/" + filename
+                        
+                        let filemanager:NSFileManager = NSFileManager()
+                        do{
+                            try filemanager.removeItemAtPath(filepath)
+                        }catch{
+                            print(error)
+                        }
+
+                    }else{
+                        self.ShowDeleteError(self.texts[index].shiftimportname)
+                    }
+                }else{
+                    self.ShowDeleteError(self.texts[index].shiftimportname)
                 }
-                
                 
                 self.RefreshData()
             })
@@ -278,5 +303,16 @@ class ShiftListSetting: UIViewController, UITableViewDataSource, UITableViewDele
         alert.addAction(Back)
         
         self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    //削除エラーを表示するアラート
+    func ShowDeleteError(importname: String){
+        let alertController = UIAlertController(title: "削除エラー", message: importname+"の削除に失敗しました", preferredStyle: .Alert)
+        
+        let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        alertController.addAction(defaultAction)
+        
+        presentViewController(alertController, animated: true, completion: nil)
+
     }
 }

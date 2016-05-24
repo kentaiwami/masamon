@@ -119,6 +119,42 @@ class DBmethod: UIViewController {
         }
     }
     
+    //ShiftDBの虫食い状態を直す
+    func ShiftDBFillHole(id: Int){
+        do{
+            let realm = try Realm()
+            let count = DBmethod().DBRecordCount(ShiftDB)
+            var copyrecordarray: [ShiftDB] = []
+            
+            //ユーザが削除したレコード以降のレコードの情報をコピーして削除する
+            for i in id ..< count{
+                let record = realm.objects(ShiftDB).filter("id = %@",i+1)[0]
+                
+                let copyrecord = ShiftDB()
+                copyrecord.id = record.id
+                copyrecord.year = record.year
+                copyrecord.month = record.month
+                copyrecord.shiftimportname = record.shiftimportname
+                copyrecord.shiftimportpath = record.shiftimportpath
+                copyrecord.salaly = record.salaly
+                
+                copyrecordarray.append(copyrecord)
+                
+                DBmethod().DeleteRecord(record)
+            }
+            
+            //コピーしたレコードのidをずらしてデータベースへ追加する
+            for i in 0..<copyrecordarray.count {
+                copyrecordarray[i].id = id + i
+                DBmethod().AddandUpdate(copyrecordarray[i], update: true)
+            }
+            
+        }catch{
+            //Error
+        }
+    }
+
+    
     //ShiftDBのソートを行う
     func ShiftDBSort(){
         let realm = try! Realm()
@@ -445,6 +481,42 @@ class DBmethod: UIViewController {
             //Error
         }
     }
+    
+    //ShiftDetailDBの虫食い状態を直す
+    func ShiftDetailDBFillHole(id: Int, deleterecords: Int){
+        do{
+            let realm = try Realm()
+            let count = DBmethod().DBRecordCount(ShiftDetailDB)
+            var copyrecordarray: [ShiftDetailDB] = []
+            
+            //ユーザが削除したレコード以降のレコードの情報をコピーして削除する
+            for i in id ..< count{
+                let record = realm.objects(ShiftDetailDB).filter("id = %@",i+deleterecords)[0]
+                
+                let copyrecord = ShiftDetailDB()
+
+                copyrecord.id = record.id
+                copyrecord.year = record.year
+                copyrecord.month = record.month
+                copyrecord.day = record.day
+                copyrecord.staff = record.staff
+                
+                copyrecordarray.append(copyrecord)
+                
+                DBmethod().DeleteRecord(record)
+            }
+            
+            //コピーしたレコードのidをずらしてデータベースへ追加する
+            for i in 0..<copyrecordarray.count {
+                copyrecordarray[i].id = id + i
+                DBmethod().AddandUpdate(copyrecordarray[i], update: true)
+            }
+            
+        }catch{
+            //Error
+        }
+    }
+
 
     
     
