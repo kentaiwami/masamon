@@ -264,19 +264,30 @@ class DBmethod: UIViewController {
         do{
             let realm = try Realm()
             let count = DBmethod().DBRecordCount(ShiftSystemDB)
+            var copyrecordarray: [ShiftSystemDB] = []
             
+            //ユーザが削除したレコード以降のレコードの情報をコピーして削除する
             for i in id ..< count{
-                let nextrecord = realm.objects(ShiftSystemDB).filter("id = %@",i+1)[0]
+                let record = realm.objects(ShiftSystemDB).filter("id = %@",i+1)[0]
                 
-                let newrecord = ShiftSystemDB()
-                newrecord.id = nextrecord.id - 1
-                newrecord.name = nextrecord.name
-                newrecord.groupid = nextrecord.groupid
-                newrecord.starttime = nextrecord.starttime
-                newrecord.endtime = nextrecord.endtime
+                let copyrecord = ShiftSystemDB()
+                copyrecord.id = record.id
+                copyrecord.name = record.name
+                copyrecord.groupid = record.groupid
+                copyrecord.starttime = record.starttime
+                copyrecord.endtime = record.endtime
                 
-                DBmethod().AddandUpdate(newrecord, update: true)
+                copyrecordarray.append(copyrecord)
+                
+                DBmethod().DeleteRecord(record)
             }
+            
+            //コピーしたレコードのidをずらしてデータベースへ追加する
+            for i in 0..<copyrecordarray.count {
+                copyrecordarray[i].id = id + i
+                DBmethod().AddandUpdate(copyrecordarray[i], update: true)
+            }
+
         }catch{
             //Error
         }
