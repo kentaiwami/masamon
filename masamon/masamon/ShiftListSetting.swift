@@ -243,6 +243,15 @@ class ShiftListSetting: UIViewController, UITableViewDataSource, UITableViewDele
                 
                 //ShiftDBレコードの削除
                 DBmethod().DeleteRecord(self.texts[index])
+
+                //ShiftDetailDBレコードのソート
+                DBmethod().ShiftDetailDBSort()
+
+                //ShiftDBレコードのソート
+                DBmethod().ShiftDBSort()
+                
+                //TODO: ソート終了後に関連づけを行う
+                
                 
                 //ファイルの削除
                 let Libralypath = NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0] as String

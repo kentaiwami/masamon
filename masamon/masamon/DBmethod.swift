@@ -137,10 +137,6 @@ class DBmethod: UIViewController {
             tmprecord.shiftimportname = sortedresults[i].shiftimportname
             tmprecord.shiftimportpath = sortedresults[i].shiftimportpath
             
-            for j in 0..<sortedresults[i].shiftdetail.count {
-                tmprecord.shiftdetail.append(sortedresults[i].shiftdetail[j])
-            }
-            
             tmparray.append(tmprecord)
         }
         
@@ -432,7 +428,7 @@ class DBmethod: UIViewController {
             tmprecord.month = sortedresults[i].month
             tmprecord.day = sortedresults[i].day
             tmprecord.staff = sortedresults[i].staff
-            tmprecord.shiftDBrelationship = sortedresults[i].shiftDBrelationship
+            
             tmparray.append(tmprecord)
         }
         
