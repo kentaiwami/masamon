@@ -108,7 +108,7 @@ class DBmethod: UIViewController {
         return shiftdb
     }
     
-    //ShifDBのレコードを配列にして返す
+    //ShiftDBのレコードを配列にして返す
     func GetShiftDBAllRecordArray() -> Results<ShiftDB>?{
         let realm = try! Realm()
         
@@ -118,6 +118,46 @@ class DBmethod: UIViewController {
             return nil
         }
     }
+    
+    //ShiftDBのソートを行う
+    func ShiftDBSort(){
+        let realm = try! Realm()
+        
+        let sortedresults = realm.objects(ShiftDB).sorted("id")         //ソート後の結果を取得
+        let nonsortedresults = realm.objects(ShiftDB)                   //ソート前の結果を取得
+        
+        var tmparray: [ShiftDB] = []
+        
+        //ソート後のレコード内容を作業用配列に入れる
+        for i in 0 ..< sortedresults.count{
+            let tmprecord = ShiftDB()
+            tmprecord.id = sortedresults[i].id
+            tmprecord.year = sortedresults[i].year
+            tmprecord.month = sortedresults[i].month
+            tmprecord.shiftimportname = sortedresults[i].shiftimportname
+            tmprecord.shiftimportpath = sortedresults[i].shiftimportpath
+            
+            for j in 0..<sortedresults[i].shiftdetail.count {
+                tmprecord.shiftdetail.append(sortedresults[i].shiftdetail[j])
+            }
+            
+            tmparray.append(tmprecord)
+        }
+        
+        //順序がおかしいレコードを全て削除した後に、ソート済みのレコードを書き込む
+        do{
+            try realm.write({ () -> Void in
+                realm.delete(nonsortedresults)
+                for i in 0 ..< tmparray.count{
+                    realm.add(tmparray[i], update: true)
+                }
+            })
+            
+        }catch{
+            //Error
+        }
+    }
+
     
     
     /****************HourlyPayDB関連メソッド*************/
@@ -370,6 +410,41 @@ class DBmethod: UIViewController {
             try realm.write {
                 realm.delete(objects)
             }
+        }catch{
+            //Error
+        }
+    }
+    
+    //ShiftDetailDBのソートを行う
+    func ShiftDetailDBSort(){
+        let realm = try! Realm()
+        
+        let sortedresults = realm.objects(ShiftDetailDB).sorted("id")         //ソート後の結果を取得
+        let nonsortedresults = realm.objects(ShiftDetailDB)                   //ソート前の結果を取得
+        
+        var tmparray: [ShiftDetailDB] = []
+        
+        //ソート後のレコード内容を作業用配列に入れる
+        for i in 0 ..< sortedresults.count{
+            let tmprecord = ShiftDetailDB()
+            tmprecord.id = sortedresults[i].id
+            tmprecord.year = sortedresults[i].year
+            tmprecord.month = sortedresults[i].month
+            tmprecord.day = sortedresults[i].day
+            tmprecord.staff = sortedresults[i].staff
+            tmprecord.shiftDBrelationship = sortedresults[i].shiftDBrelationship
+            tmparray.append(tmprecord)
+        }
+        
+        //順序がおかしいレコードを全て削除した後に、ソート済みのレコードを書き込む
+        do{
+            try realm.write({ () -> Void in
+                realm.delete(nonsortedresults)
+                for i in 0 ..< tmparray.count{
+                    realm.add(tmparray[i], update: true)
+                }
+            })
+            
         }catch{
             //Error
         }
