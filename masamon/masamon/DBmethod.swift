@@ -14,7 +14,7 @@ class DBmethod: UIViewController {
 
     
     /****************データベース全般メソッド*************/
-     
+    
     //データベースへの追加(ID重複の場合は上書き)
     func AddandUpdate(record: Object, update: Bool){
         do{
@@ -68,6 +68,23 @@ class DBmethod: UIViewController {
     
     /****************ShiftDB関連メソッド*************/
 
+    //ShiftDBのリレーションシップリストをUpdateする
+    func ShiftDB_relationshipUpdate(importname: String, array: [ShiftDetailDB]){
+        
+        //配列で渡されるのでListへ変換する
+        let list = List(array)
+        
+        do{
+            let realm = try Realm()
+            try realm.write{
+                realm.create(ShiftDB.self, value: ["shiftimportname":importname, "shiftdetail":list], update: true)
+            }
+        }catch{
+            //Error
+            print(ErrorType)
+        }
+    }
+
     //レコードのIDを受け取って名前を返す
     func ShiftDBGet(id: Int) -> String{
         var shiftimportname = ""
@@ -96,6 +113,13 @@ class DBmethod: UIViewController {
         saraly = realm.objects(ShiftDB).filter("id = %@", id)[0].salaly
         
         return saraly
+    }
+    
+    //id受け取ってレコードを返す
+    func GetShiftDBRecordByID(id: Int) -> ShiftDB{
+        let realm = try! Realm()
+        let record = realm.objects(ShiftDB).filter("id = %@",id)[0]
+        return record
     }
     
     //受け取った文字列をShiftDBから検索し、該当するレコードを返す
@@ -170,6 +194,7 @@ class DBmethod: UIViewController {
             tmprecord.id = sortedresults[i].id
             tmprecord.year = sortedresults[i].year
             tmprecord.month = sortedresults[i].month
+            tmprecord.salaly = sortedresults[i].salaly
             tmprecord.shiftimportname = sortedresults[i].shiftimportname
             tmprecord.shiftimportpath = sortedresults[i].shiftimportpath
             
@@ -419,6 +444,27 @@ class DBmethod: UIViewController {
     
     /****************ShiftDetailDB関連メソッド*************/
     
+    //受け取ったidに対応するShiftDetailDBのレコードを返す
+    func GetShiftDetailDBRecordByID(id: Int) -> ShiftDetailDB{
+        let realm = try! Realm()
+        let record = realm.objects(ShiftDetailDB).filter("id = %@",id)[0]
+        
+        return record
+    }
+    
+    //ShiftDetailDBのリレーションシップをUpdateする
+    func ShiftDetaiDB_relationshipUpdate(id: Int, record: ShiftDB){
+        do{
+            let realm = try Realm()
+            try realm.write{
+                realm.create(ShiftDetailDB.self, value: ["id":id, "shiftDBrelationship":record], update: true)
+            }
+        }catch{
+            //Error
+        }
+    }
+
+    
     //year,month,dateを受け取ってその日のレコードを返す
     func TheDayStaffGet(year: Int, month: Int, date: Int) -> Results<ShiftDetailDB>?{
         
@@ -516,8 +562,6 @@ class DBmethod: UIViewController {
             //Error
         }
     }
-
-
     
     
     /****************StaffNameDB関連メソッド*************/

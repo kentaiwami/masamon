@@ -265,11 +265,45 @@ class ShiftListSetting: UIViewController, UITableViewDataSource, UITableViewDele
                         //ShiftDBレコードのソート
                         DBmethod().ShiftDBSort()
                         
-                        //TODO: 穴埋め
+                        //穴埋め
                         DBmethod().ShiftDBFillHole(shiftdbpivot_id)
                         DBmethod().ShiftDetailDBFillHole(shiftdetaildbpivot_id, deleterecords: deleterecordcount)
 
-                        //TODO: 関連づけ
+                        //関連づけ
+                        var shiftdb_id_count = 0
+                        var shiftdetaildb_array: [ShiftDetailDB] = []
+                        var shiftdetail_recordcount = 0
+                        
+                        for i in 0..<DBmethod().DBRecordCount(ShiftDetailDB) {
+                            
+                            let shitdb_record = DBmethod().GetShiftDBRecordByID(shiftdb_id_count)
+                            
+                            //shiftdb_recordの年月を持ってきて何日まであるかを把握
+                            let shiftrange = CommonMethod().GetShiftCoursMonthRange(shitdb_record.year, shiftstartmonth: shitdb_record.month-1)
+                            
+                            
+                            
+                            //ShiftDetailDBのrelationshipを更新する
+                            DBmethod().ShiftDetaiDB_relationshipUpdate(i, record: shitdb_record)
+                            
+                            //リレーションシップを更新した後のShiftDetailDBのレコードを取得
+                            let shiftdetaildb_record = DBmethod().GetShiftDetailDBRecordByID(i)
+                            
+                            shiftdetaildb_array.append(shiftdetaildb_record)
+
+                            shiftdetail_recordcount += 1
+
+                            //処理済みのshiftdetailレコード数とクールの日数数が一致(当該クールのshiftdetailレコードを全て処理したら)
+                            if shiftdetail_recordcount == shiftrange.length {
+                                //ShiftDBのListにShiftDetaiDBListを更新する
+                                let shiftimportname = DBmethod().ShiftDBGet(shiftdb_id_count)
+                                DBmethod().ShiftDB_relationshipUpdate(shiftimportname, array: shiftdetaildb_array)
+                                
+                                shiftdb_id_count += 1
+                                shiftdetail_recordcount = 0
+                                shiftdetaildb_array.removeAll()
+                            }
+                        }
 
                         
                         //ファイルの削除
