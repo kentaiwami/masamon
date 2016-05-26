@@ -69,17 +69,6 @@ class FilePathTmpDB: Object{
     }
 }
 
-//取り込んだシフトの履歴を保存する
-class ShiftImportHistoryDB: Object {
-    dynamic var id = 0
-    dynamic var name = ""
-    dynamic var date = ""
-    
-    override class func primaryKey() -> String {
-        return "id"
-    }
-}
-
 //シフト体制を保存
 class ShiftSystemDB: Object{
     dynamic var id = 0

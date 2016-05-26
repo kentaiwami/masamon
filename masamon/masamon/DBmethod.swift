@@ -253,27 +253,6 @@ class DBmethod: UIViewController {
     }
     
     
-    /****************ShiftImportHistoryDB関連メソッド*************/
-
-    //インポート履歴の最後を返す(最新の取り込み)
-    func ShiftImportHistoryDBLastGet() -> ShiftImportHistoryDB{
-        var shiftimporthistorylast = ShiftImportHistoryDB()
-        
-        let realm = try! Realm()
-        shiftimporthistorylast = (realm.objects(ShiftImportHistoryDB).last)!
-        
-        return shiftimporthistorylast
-    }
-    
-    
-    //インポート履歴を配列で返す
-    func ShiftImportHistoryDBGet() -> Results<ShiftImportHistoryDB>{
-        let realm = try! Realm()
-        return realm.objects(ShiftImportHistoryDB)
-    }
-    
-    
-    
     /****************UserNameDB関連メソッド*************/
 
     //登録したユーザ名を返す

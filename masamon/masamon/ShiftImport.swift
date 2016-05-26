@@ -179,25 +179,6 @@ class ShiftImport: UIViewController,UITextFieldDelegate,QLPreviewControllerDataS
         return true
     }
     
-    //取り込み履歴を追加する
-    func ShiftImportHistoryDBadd(importdate: NSDate, importname: String){
-        //日付のフォーマットを設定
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.locale = NSLocale(localeIdentifier: "ja_JP")
-        dateFormatter.dateFormat = "yyyy/MM/dd"
-        
-        //取り込み履歴へのレコード追加
-        let ShiftImportHistoryDBRecord = ShiftImportHistoryDB()
-        if DBmethod().DBRecordCount(ShiftImportHistoryDB) == 0 {
-            ShiftImportHistoryDBRecord.id = 0
-        }else{
-            ShiftImportHistoryDBRecord.id = DBmethod().DBRecordCount(ShiftImportHistoryDB)
-        }
-        ShiftImportHistoryDBRecord.date = dateFormatter.stringFromDate(importdate)
-        ShiftImportHistoryDBRecord.name = importname
-        DBmethod().AddandUpdate(ShiftImportHistoryDBRecord,update: true)
-    }
-    
     //プレビューでの表示数
     func numberOfPreviewItemsInPreviewController(controller: QLPreviewController) -> Int{
         return 1
@@ -233,9 +214,5 @@ class ShiftImport: UIViewController,UITextFieldDelegate,QLPreviewControllerDataS
         filepathrecord.id = 0
         filepathrecord.path = self.Libralypath+"/"+self.filenamefield.text!
         DBmethod().AddandUpdate(filepathrecord,update: true)
-        
-        self.ShiftImportHistoryDBadd(NSDate(), importname: self.filenamefield.text!)
-
-
     }
 }
