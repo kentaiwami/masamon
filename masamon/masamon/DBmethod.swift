@@ -14,7 +14,7 @@ class DBmethod: UIViewController {
 
     
     /****************データベース全般メソッド*************/
-     
+    
     //データベースへの追加(ID重複の場合は上書き)
     func AddandUpdate(record: Object, update: Bool){
         do{
@@ -68,6 +68,23 @@ class DBmethod: UIViewController {
     
     /****************ShiftDB関連メソッド*************/
 
+    //ShiftDBのリレーションシップリストをUpdateする
+    func ShiftDB_relationshipUpdate(importname: String, array: [ShiftDetailDB]){
+        
+        //配列で渡されるのでListへ変換する
+        let list = List(array)
+        
+        do{
+            let realm = try Realm()
+            try realm.write{
+                realm.create(ShiftDB.self, value: ["shiftimportname":importname, "shiftdetail":list], update: true)
+            }
+        }catch{
+            //Error
+            print(ErrorType)
+        }
+    }
+
     //レコードのIDを受け取って名前を返す
     func ShiftDBGet(id: Int) -> String{
         var shiftimportname = ""
@@ -98,6 +115,13 @@ class DBmethod: UIViewController {
         return saraly
     }
     
+    //id受け取ってレコードを返す
+    func GetShiftDBRecordByID(id: Int) -> ShiftDB{
+        let realm = try! Realm()
+        let record = realm.objects(ShiftDB).filter("id = %@",id)[0]
+        return record
+    }
+    
     //受け取った文字列をShiftDBから検索し、該当するレコードを返す
     func SearchShiftDB(importname: String) -> ShiftDB{
         var shiftdb = ShiftDB()
@@ -108,7 +132,7 @@ class DBmethod: UIViewController {
         return shiftdb
     }
     
-    //ShifDBのレコードを配列にして返す
+    //ShiftDBのレコードを配列にして返す
     func GetShiftDBAllRecordArray() -> Results<ShiftDB>?{
         let realm = try! Realm()
         
@@ -118,6 +142,79 @@ class DBmethod: UIViewController {
             return nil
         }
     }
+    
+    //ShiftDBの虫食い状態を直す
+    func ShiftDBFillHole(id: Int){
+        do{
+            let realm = try Realm()
+            let count = DBmethod().DBRecordCount(ShiftDB)
+            var copyrecordarray: [ShiftDB] = []
+            
+            //ユーザが削除したレコード以降のレコードの情報をコピーして削除する
+            for i in id ..< count{
+                let record = realm.objects(ShiftDB).filter("id = %@",i+1)[0]
+                
+                let copyrecord = ShiftDB()
+                copyrecord.id = record.id
+                copyrecord.year = record.year
+                copyrecord.month = record.month
+                copyrecord.shiftimportname = record.shiftimportname
+                copyrecord.shiftimportpath = record.shiftimportpath
+                copyrecord.salaly = record.salaly
+                
+                copyrecordarray.append(copyrecord)
+                
+                DBmethod().DeleteRecord(record)
+            }
+            
+            //コピーしたレコードのidをずらしてデータベースへ追加する
+            for i in 0..<copyrecordarray.count {
+                copyrecordarray[i].id = id + i
+                DBmethod().AddandUpdate(copyrecordarray[i], update: true)
+            }
+            
+        }catch{
+            //Error
+        }
+    }
+
+    
+    //ShiftDBのソートを行う
+    func ShiftDBSort(){
+        let realm = try! Realm()
+        
+        let sortedresults = realm.objects(ShiftDB).sorted("id")         //ソート後の結果を取得
+        let nonsortedresults = realm.objects(ShiftDB)                   //ソート前の結果を取得
+        
+        var tmparray: [ShiftDB] = []
+        
+        //ソート後のレコード内容を作業用配列に入れる
+        for i in 0 ..< sortedresults.count{
+            let tmprecord = ShiftDB()
+            tmprecord.id = sortedresults[i].id
+            tmprecord.year = sortedresults[i].year
+            tmprecord.month = sortedresults[i].month
+            tmprecord.salaly = sortedresults[i].salaly
+            tmprecord.shiftimportname = sortedresults[i].shiftimportname
+            tmprecord.shiftimportpath = sortedresults[i].shiftimportpath
+            
+            tmparray.append(tmprecord)
+        }
+        
+        //順序がおかしいレコードを全て削除した後に、ソート済みのレコードを書き込む
+        do{
+            try realm.write({ () -> Void in
+                realm.delete(nonsortedresults)
+                for i in 0 ..< tmparray.count{
+                    realm.add(tmparray[i], update: true)
+                }
+            })
+            
+        }catch{
+            //Error
+        }
+    }
+
     
     
     /****************HourlyPayDB関連メソッド*************/
@@ -264,19 +361,30 @@ class DBmethod: UIViewController {
         do{
             let realm = try Realm()
             let count = DBmethod().DBRecordCount(ShiftSystemDB)
+            var copyrecordarray: [ShiftSystemDB] = []
             
+            //ユーザが削除したレコード以降のレコードの情報をコピーして削除する
             for i in id ..< count{
-                let nextrecord = realm.objects(ShiftSystemDB).filter("id = %@",i+1)[0]
+                let record = realm.objects(ShiftSystemDB).filter("id = %@",i+1)[0]
                 
-                let newrecord = ShiftSystemDB()
-                newrecord.id = nextrecord.id - 1
-                newrecord.name = nextrecord.name
-                newrecord.groupid = nextrecord.groupid
-                newrecord.starttime = nextrecord.starttime
-                newrecord.endtime = nextrecord.endtime
+                let copyrecord = ShiftSystemDB()
+                copyrecord.id = record.id
+                copyrecord.name = record.name
+                copyrecord.groupid = record.groupid
+                copyrecord.starttime = record.starttime
+                copyrecord.endtime = record.endtime
                 
-                DBmethod().AddandUpdate(newrecord, update: true)
+                copyrecordarray.append(copyrecord)
+                
+                DBmethod().DeleteRecord(record)
             }
+            
+            //コピーしたレコードのidをずらしてデータベースへ追加する
+            for i in 0..<copyrecordarray.count {
+                copyrecordarray[i].id = id + i
+                DBmethod().AddandUpdate(copyrecordarray[i], update: true)
+            }
+
         }catch{
             //Error
         }
@@ -336,6 +444,27 @@ class DBmethod: UIViewController {
     
     /****************ShiftDetailDB関連メソッド*************/
     
+    //受け取ったidに対応するShiftDetailDBのレコードを返す
+    func GetShiftDetailDBRecordByID(id: Int) -> ShiftDetailDB{
+        let realm = try! Realm()
+        let record = realm.objects(ShiftDetailDB).filter("id = %@",id)[0]
+        
+        return record
+    }
+    
+    //ShiftDetailDBのリレーションシップをUpdateする
+    func ShiftDetaiDB_relationshipUpdate(id: Int, record: ShiftDB){
+        do{
+            let realm = try Realm()
+            try realm.write{
+                realm.create(ShiftDetailDB.self, value: ["id":id, "shiftDBrelationship":record], update: true)
+            }
+        }catch{
+            //Error
+        }
+    }
+
+    
     //year,month,dateを受け取ってその日のレコードを返す
     func TheDayStaffGet(year: Int, month: Int, date: Int) -> Results<ShiftDetailDB>?{
         
@@ -363,7 +492,76 @@ class DBmethod: UIViewController {
             //Error
         }
     }
+    
+    //ShiftDetailDBのソートを行う
+    func ShiftDetailDBSort(){
+        let realm = try! Realm()
+        
+        let sortedresults = realm.objects(ShiftDetailDB).sorted("id")         //ソート後の結果を取得
+        let nonsortedresults = realm.objects(ShiftDetailDB)                   //ソート前の結果を取得
+        
+        var tmparray: [ShiftDetailDB] = []
+        
+        //ソート後のレコード内容を作業用配列に入れる
+        for i in 0 ..< sortedresults.count{
+            let tmprecord = ShiftDetailDB()
+            tmprecord.id = sortedresults[i].id
+            tmprecord.year = sortedresults[i].year
+            tmprecord.month = sortedresults[i].month
+            tmprecord.day = sortedresults[i].day
+            tmprecord.staff = sortedresults[i].staff
+            
+            tmparray.append(tmprecord)
+        }
+        
+        //順序がおかしいレコードを全て削除した後に、ソート済みのレコードを書き込む
+        do{
+            try realm.write({ () -> Void in
+                realm.delete(nonsortedresults)
+                for i in 0 ..< tmparray.count{
+                    realm.add(tmparray[i], update: true)
+                }
+            })
+            
+        }catch{
+            //Error
+        }
+    }
+    
+    //ShiftDetailDBの虫食い状態を直す
+    func ShiftDetailDBFillHole(id: Int, deleterecords: Int){
+        do{
+            let realm = try Realm()
+            let count = DBmethod().DBRecordCount(ShiftDetailDB)
+            var copyrecordarray: [ShiftDetailDB] = []
+            
+            //ユーザが削除したレコード以降のレコードの情報をコピーして削除する
+            for i in id ..< count{
+                let record = realm.objects(ShiftDetailDB).filter("id = %@",i+deleterecords)[0]
+                
+                let copyrecord = ShiftDetailDB()
 
+                copyrecord.id = record.id
+                copyrecord.year = record.year
+                copyrecord.month = record.month
+                copyrecord.day = record.day
+                copyrecord.staff = record.staff
+                
+                copyrecordarray.append(copyrecord)
+                
+                DBmethod().DeleteRecord(record)
+            }
+            
+            //コピーしたレコードのidをずらしてデータベースへ追加する
+            for i in 0..<copyrecordarray.count {
+                copyrecordarray[i].id = id + i
+                DBmethod().AddandUpdate(copyrecordarray[i], update: true)
+            }
+            
+        }catch{
+            //Error
+        }
+    }
     
     
     /****************StaffNameDB関連メソッド*************/

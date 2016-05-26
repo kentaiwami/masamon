@@ -58,6 +58,30 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
 //        }catch{
 //            print(error)
 //        }
+        
+        //何回もテストするので楽にするため
+//        let AAA = HourlyPayDB()
+//        AAA.id = 0
+//        AAA.timefrom = 4.5
+//        AAA.timeto = 10.0
+//        AAA.pay = 100
+//        let AAA1 = HourlyPayDB()
+//        AAA1.id = 1
+//        AAA1.timefrom = 4.5
+//        AAA1.timeto = 10.0
+//        AAA1.pay = 200
+//        let AAA2 = UserNameDB()
+//        AAA2.id = 0
+//        AAA2.name = "Aさん"
+//        let AAA3 = StaffNumberDB()
+//        AAA3.id = 0
+//        AAA3.number = 27
+//        
+//        DBmethod().AddandUpdate(AAA, update: true)
+//        DBmethod().AddandUpdate(AAA1, update: true)
+//        DBmethod().AddandUpdate(AAA2, update: true)
+//        DBmethod().AddandUpdate(AAA3, update: true)
+
 
         self.setupShiftLabel()      //シフトを表示するラベルを設置する
         

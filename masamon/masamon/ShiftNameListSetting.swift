@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableViewDelegate, UIPickerViewDelegate, UIPickerViewDataSource,UITextFieldDelegate{
     
@@ -230,9 +231,7 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
                 DBmethod().DeleteRecord(self.records[section][row])
                 DBmethod().ShiftSystemDBSort()
                 DBmethod().ShiftSystemDBFillHole(pivot)
-                DBmethod().ShiftSystemDBSort()
 
-                
                 self.RefreshData()
             })
             alert.addAction(Action)

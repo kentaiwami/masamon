@@ -234,27 +234,95 @@ class ShiftListSetting: UIViewController, UITableViewDataSource, UITableViewDele
                 
                 var filename = ""
                 
-                //ShiftDetailDBレコードの削除
-                let shiftdbrecord = DBmethod().SearchShiftDB(self.texts[index].shiftimportname)
-                let shiftdetailarray = shiftdbrecord.shiftdetail
+                //ShiftDBの穴埋めをするために基準となるidを記録
+                let shiftdbpivot_id = self.texts[index].id
                 
-                filename = shiftdbrecord.shiftimportname
-                DBmethod().DeleteShiftDetailDBRecords(shiftdetailarray)
+                //ShiftDetailの基準を見つけるための準備
+                let shiftdb_year = self.texts[index].year
+                let shiftdb_month = self.texts[index].month
                 
-                //ShiftDBレコードの削除
-                DBmethod().DeleteRecord(self.texts[index])
+                //年月をもとに基準となるidを取り出す
+                let shiftdetailresults = DBmethod().TheDayStaffGet(shiftdb_year, month: shiftdb_month-1, date: 11)
                 
-                //ファイルの削除
-                let Libralypath = NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0] as String
-                let filepath = Libralypath + "/" + filename
+                if shiftdetailresults != nil {
+                    if shiftdetailresults!.count != 0 {
+                        let shiftdetaildbpivot_id = shiftdetailresults![0].id
 
-                let filemanager:NSFileManager = NSFileManager()
-                do{
-                    try filemanager.removeItemAtPath(filepath)
-                }catch{
-                    print(error)
+                        //ShiftDetailDBレコードの削除
+                        let shiftdbrecord = DBmethod().SearchShiftDB(self.texts[index].shiftimportname)
+                        let shiftdetailarray = shiftdbrecord.shiftdetail
+                        let deleterecordcount = shiftdetailarray.count
+                        filename = shiftdbrecord.shiftimportname
+                        
+                        DBmethod().DeleteShiftDetailDBRecords(shiftdetailarray)
+                        
+                        //ShiftDBレコードの削除
+                        DBmethod().DeleteRecord(self.texts[index])
+                        
+                        //ShiftDetailDBレコードのソート
+                        DBmethod().ShiftDetailDBSort()
+                        
+                        //ShiftDBレコードのソート
+                        DBmethod().ShiftDBSort()
+                        
+                        //穴埋め
+                        DBmethod().ShiftDBFillHole(shiftdbpivot_id)
+                        DBmethod().ShiftDetailDBFillHole(shiftdetaildbpivot_id, deleterecords: deleterecordcount)
+
+                        //関連づけ
+                        var shiftdb_id_count = 0
+                        var shiftdetaildb_array: [ShiftDetailDB] = []
+                        var shiftdetail_recordcount = 0
+                        
+                        for i in 0..<DBmethod().DBRecordCount(ShiftDetailDB) {
+                            
+                            let shitdb_record = DBmethod().GetShiftDBRecordByID(shiftdb_id_count)
+                            
+                            //shiftdb_recordの年月を持ってきて何日まであるかを把握
+                            let shiftrange = CommonMethod().GetShiftCoursMonthRange(shitdb_record.year, shiftstartmonth: shitdb_record.month-1)
+                            
+                            
+                            
+                            //ShiftDetailDBのrelationshipを更新する
+                            DBmethod().ShiftDetaiDB_relationshipUpdate(i, record: shitdb_record)
+                            
+                            //リレーションシップを更新した後のShiftDetailDBのレコードを取得
+                            let shiftdetaildb_record = DBmethod().GetShiftDetailDBRecordByID(i)
+                            
+                            shiftdetaildb_array.append(shiftdetaildb_record)
+
+                            shiftdetail_recordcount += 1
+
+                            //処理済みのshiftdetailレコード数とクールの日数数が一致(当該クールのshiftdetailレコードを全て処理したら)
+                            if shiftdetail_recordcount == shiftrange.length {
+                                //ShiftDBのListにShiftDetaiDBListを更新する
+                                let shiftimportname = DBmethod().ShiftDBGet(shiftdb_id_count)
+                                DBmethod().ShiftDB_relationshipUpdate(shiftimportname, array: shiftdetaildb_array)
+                                
+                                shiftdb_id_count += 1
+                                shiftdetail_recordcount = 0
+                                shiftdetaildb_array.removeAll()
+                            }
+                        }
+
+                        
+                        //ファイルの削除
+                        let Libralypath = NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0] as String
+                        let filepath = Libralypath + "/" + filename
+                        
+                        let filemanager:NSFileManager = NSFileManager()
+                        do{
+                            try filemanager.removeItemAtPath(filepath)
+                        }catch{
+                            print(error)
+                        }
+
+                    }else{
+                        self.ShowDeleteError(self.texts[index].shiftimportname)
+                    }
+                }else{
+                    self.ShowDeleteError(self.texts[index].shiftimportname)
                 }
-                
                 
                 self.RefreshData()
             })
@@ -269,5 +337,16 @@ class ShiftListSetting: UIViewController, UITableViewDataSource, UITableViewDele
         alert.addAction(Back)
         
         self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    //削除エラーを表示するアラート
+    func ShowDeleteError(importname: String){
+        let alertController = UIAlertController(title: "削除エラー", message: importname+"の削除に失敗しました", preferredStyle: .Alert)
+        
+        let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        alertController.addAction(defaultAction)
+        
+        presentViewController(alertController, animated: true, completion: nil)
+
     }
 }
