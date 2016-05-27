@@ -238,8 +238,13 @@ class ShiftListSetting: UIViewController, UITableViewDataSource, UITableViewDele
                 let shiftdbpivot_id = self.texts[index].id
                 
                 //ShiftDetailの基準を見つけるための準備
-                let shiftdb_year = self.texts[index].year
+                var shiftdb_year = self.texts[index].year
                 let shiftdb_month = self.texts[index].month
+
+                //ShiftDBに記録されている月が1,2,3月の場合はyearを1つ増やしてShiftDetailDBとの整合性を取る
+                if shiftdb_month == 1 || shiftdb_month == 2 || shiftdb_month == 3 {
+                    shiftdb_year += 1
+                }
                 
                 //年月をもとに基準となるidを取り出す
                 let shiftdetailresults = DBmethod().TheDayStaffGet(shiftdb_year, month: shiftdb_month-1, date: 11)
@@ -274,15 +279,16 @@ class ShiftListSetting: UIViewController, UITableViewDataSource, UITableViewDele
                         var shiftdetaildb_array: [ShiftDetailDB] = []
                         var shiftdetail_recordcount = 0
                         
+                        //ShiftDetailDB内の11日であるレコードを配列で取得
+                        let shiftdetaildb_day_array = DBmethod().GetShiftDetailDBRecordByDay(11)
+                        
                         for i in 0..<DBmethod().DBRecordCount(ShiftDetailDB) {
                             
                             let shitdb_record = DBmethod().GetShiftDBRecordByID(shiftdb_id_count)
                             
                             //shiftdb_recordの年月を持ってきて何日まであるかを把握
-                            let shiftrange = CommonMethod().GetShiftCoursMonthRange(shitdb_record.year, shiftstartmonth: shitdb_record.month-1)
-                            
-                            
-                            
+                            let shiftrange = CommonMethod().GetShiftCoursMonthRange(shiftdetaildb_day_array[shiftdb_id_count].year, shiftstartmonth: shiftdetaildb_day_array[shiftdb_id_count].month)
+
                             //ShiftDetailDBのrelationshipを更新する
                             DBmethod().ShiftDetaiDB_relationshipUpdate(i, record: shitdb_record)
                             
