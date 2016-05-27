@@ -64,6 +64,7 @@ class CommonMethod: UIViewController {
 
         //スペースがあった場合は削除
         P1String = P1String.stringByReplacingOccurrencesOfString(" ", withString: "")
+        P1String = P1String.stringByReplacingOccurrencesOfString("　", withString: "")
         
         //平成何年かを取得
         let P1NSString = P1String as NSString
