@@ -160,13 +160,14 @@ class PDFmethod: UIViewController {
                     //シフト体制の分だけループを回し、各ループでスタッフ1人分のシフト出現場所を記録する
                     var staffarraytmpnsstring = staffarraytmp as NSString
                     for i in 0 ..< DBmethod().DBRecordCount(ShiftSystemDB){
-                        //TODO: ここで落ちるので修正
+                        //TODO: 落ちる原因は不明
+                        
+                        //降順に並び替えたシフト体制名でDBへ問い合わせをしてレコードを取得する
                         let shiftsystemrecord = DBmethod().SearchShiftSystem(desc_shiftname[i])
+                        
                         if shiftsystemrecord != nil {
-                            let shiftname = DBmethod().ShiftSystemNameGet(shiftsystemrecord![0].id)
-                            let results = self.GetShiftPositionArray(staffarraytmpnsstring, shiftname: shiftname.name)
-                            
-                            shiftlocationarray[shiftname.groupid] += results.positionarray
+                            let results = self.GetShiftPositionArray(staffarraytmpnsstring, shiftname: shiftsystemrecord![0].name)
+                            shiftlocationarray[shiftsystemrecord![0].groupid] += results.positionarray
                             staffarraytmpnsstring = results.replacementstring
                         }
                     }
