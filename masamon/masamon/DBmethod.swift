@@ -423,6 +423,14 @@ class DBmethod: UIViewController {
     
     /****************ShiftDetailDB関連メソッド*************/
     
+    //受け取った日付に該当するレコードを配列にして返す
+    func GetShiftDetailDBRecordByDay(day: Int) -> Results<ShiftDetailDB> {
+        let realm = try! Realm()
+        let results = realm.objects(ShiftDetailDB).filter("day = %@",day)
+        
+        return results
+    }
+    
     //受け取ったidに対応するShiftDetailDBのレコードを返す
     func GetShiftDetailDBRecordByID(id: Int) -> ShiftDetailDB{
         let realm = try! Realm()

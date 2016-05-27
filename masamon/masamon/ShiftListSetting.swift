@@ -274,12 +274,16 @@ class ShiftListSetting: UIViewController, UITableViewDataSource, UITableViewDele
                         var shiftdetaildb_array: [ShiftDetailDB] = []
                         var shiftdetail_recordcount = 0
                         
+                        //TODO: ShiftDetailDB内の11日であるレコードを配列で取得？
+                        
+                        
                         for i in 0..<DBmethod().DBRecordCount(ShiftDetailDB) {
                             
                             let shitdb_record = DBmethod().GetShiftDBRecordByID(shiftdb_id_count)
                             
                             //shiftdb_recordの年月を持ってきて何日まであるかを把握
-                            let shiftrange = CommonMethod().GetShiftCoursMonthRange(shitdb_record.year, shiftstartmonth: shitdb_record.month-1)
+                            //TODO: 配列[shiftdb_id_count]でアクセス？
+//                            let shiftrange = CommonMethod().GetShiftCoursMonthRange(shitdb_record.year, shiftstartmonth: shitdb_record.month-1)
                             
                             
                             
