@@ -13,6 +13,7 @@ class ShiftImport: UIViewController,UITextFieldDelegate,QLPreviewControllerDataS
     
     @IBOutlet weak var filenamefield: UITextField!
     @IBOutlet weak var quickfilelabel: UILabel!
+    @IBOutlet weak var StaffNumberLabel: UILabel!
     
     let filemanager:NSFileManager = NSFileManager()
     let documentspath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
@@ -36,10 +37,11 @@ class ShiftImport: UIViewController,UITextFieldDelegate,QLPreviewControllerDataS
         //QLpreviewを表示させる
         let ql = QLPreviewController()
         ql.dataSource  = self
-        ql.view.frame = CGRectMake(0, self.view.frame.height/2-70, self.view.frame.width, 400)
+        ql.view.frame = CGRectMake(0, self.view.frame.height/2, self.view.frame.width, 400)
         self.view.addSubview(ql.view)
         
         quickfilelabel.text = "取り込み予定のファイル"
+        StaffNumberLabel.text = "スタッフ人数"
     }
     
     override func didReceiveMemoryWarning() {
