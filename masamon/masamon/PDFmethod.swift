@@ -338,11 +338,12 @@ class PDFmethod: UIViewController {
     func GetStaffName(stafftext: String, i: Int) -> String{
         
         //もし、データベースに登録しているスタッフ名があった場合はそれを返す
+        //店長(i=1)，役職以外のスタッフ(i > 4)の場合のみ登録されているスタッフ名を返す
         if(DBmethod().StaffNameArrayGet() != nil){
             let staffnamearray = DBmethod().StaffNameArrayGet()
-            for i in 0 ..< staffnamearray!.count{
-                if(stafftext.containsString(staffnamearray![i])){
-                    return staffnamearray![i]
+            for j in 0 ..< staffnamearray!.count{
+                if(stafftext.containsString(staffnamearray![j]) && (i == 1 || i > 4)){
+                    return staffnamearray![j]
                 }
             }
         }
