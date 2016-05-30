@@ -342,8 +342,26 @@ class PDFmethod: UIViewController {
         if(DBmethod().StaffNameArrayGet() != nil){
             let staffnamearray = DBmethod().StaffNameArrayGet()
             for j in 0 ..< staffnamearray!.count{
-                if(stafftext.containsString(staffnamearray![j]) && (i == 1 || i > 4)){
-                    return staffnamearray![j]
+                if(stafftext.containsString(staffnamearray![j])){
+                    
+                    //登録しているスタッフ名にMが含まれている＆stafftextがマネージャーの分なら(DB：AさんM，シフト：AさんMMT*)
+                    if staffnamearray![j].containsString("M") == true && i >= 2 && i <= 4{
+                        return staffnamearray![j]
+                        
+                    //登録しているスタッフ名にMが含まれている＆stafftextがマネージャー以外なら(DB：AさんM，シフト：AさんMT*)
+                    }else if staffnamearray![j].containsString("M") == true && !(i >= 2 && i <= 4) {
+                        var ABC = staffnamearray![j]
+                        ABC = ABC.stringByReplacingOccurrencesOfString("M", withString: "")
+                        return ABC
+                    
+                    //登録しているスタッフ名にMが含まれていない＆stafftextがマネージャーの分なら(DB：Aさん，シフト：AさんMMT*)
+                    }else if staffnamearray![j].containsString("M") == false && i >= 2 && i <= 4 {
+                        return staffnamearray![j] + "M"
+                    
+                    //登録しているスタッフ名にMが含まれていない＆stafftextがマネージャー以外なら(DB：Aさん，シフト：AさんMT*)
+                    }else if staffnamearray![j].containsString("M") == false && !(i >= 2 && i <= 4) {
+                        return staffnamearray![j]
+                    }
                 }
             }
         }
