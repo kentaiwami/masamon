@@ -411,6 +411,7 @@
                         <outlet property="StaffNumberLabel" destination="XJb-8I-PNa" id="N0D-3P-FqH"/>
                         <outlet property="filenamefield" destination="gm6-rn-UNB" id="oZA-LR-93H"/>
                         <outlet property="quickfilelabel" destination="dN9-mg-ia7" id="mz9-gk-Ou8"/>
+                        <outlet property="staffnumberfield" destination="bxx-Zd-HDS" id="eG5-3c-8iX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="O39-ht-nAe" userLabel="First Responder" sceneMemberID="firstResponder"/>

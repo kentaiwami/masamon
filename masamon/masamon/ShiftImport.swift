@@ -12,6 +12,7 @@ import QuickLook
 class ShiftImport: UIViewController,UITextFieldDelegate,QLPreviewControllerDataSource{
     
     @IBOutlet weak var filenamefield: UITextField!
+    @IBOutlet weak var staffnumberfield: UITextField!
     @IBOutlet weak var quickfilelabel: UILabel!
     @IBOutlet weak var StaffNumberLabel: UILabel!
     
@@ -29,10 +30,28 @@ class ShiftImport: UIViewController,UITextFieldDelegate,QLPreviewControllerDataS
         //テキストフィールドの設定
         filenamefield.delegate = self
         filenamefield.returnKeyType = .Done
+        staffnumberfield.delegate = self
+        staffnumberfield.returnKeyType = .Done
+        staffnumberfield.keyboardType = .NumberPad
         
         if DBmethod().FilePathTmpGet() != "" {
             filenamefield.text = DBmethod().FilePathTmpGet().lastPathComponent
         }
+        
+        if DBmethod().DBRecordCount(StaffNumberDB) != 0 {
+            staffnumberfield.text = String(DBmethod().StaffNumberGet())
+        }
+        
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
+        let salalyButton = UIBarButtonItem(title: "保存", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(ShiftImport.TapDoneButton(_:)))
+
+        let numberpadtoolBar = UIToolbar()
+        numberpadtoolBar.barStyle = UIBarStyle.Default
+        numberpadtoolBar.translucent = true
+        numberpadtoolBar.sizeToFit()
+        numberpadtoolBar.setItems([flexSpace,salalyButton], animated: false)
+        numberpadtoolBar.userInteractionEnabled = true
+        staffnumberfield.inputAccessoryView = numberpadtoolBar
         
         //QLpreviewを表示させる
         let ql = QLPreviewController()
@@ -216,5 +235,17 @@ class ShiftImport: UIViewController,UITextFieldDelegate,QLPreviewControllerDataS
         filepathrecord.id = 0
         filepathrecord.path = self.Libralypath+"/"+self.filenamefield.text!
         DBmethod().AddandUpdate(filepathrecord,update: true)
+    }
+    
+    func TapDoneButton(sender: UIButton){
+        //スタッフ人数に値が入っていれば上書きする
+        if staffnumberfield.text != "" {
+            let staffnumberrecord = StaffNumberDB()
+            staffnumberrecord.id = 0
+            staffnumberrecord.number = Int(staffnumberfield.text!)!
+            DBmethod().AddandUpdate(staffnumberrecord, update: true)
+        }
+
+        staffnumberfield.resignFirstResponder()
     }
 }
