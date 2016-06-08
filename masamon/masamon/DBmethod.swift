@@ -41,18 +41,6 @@ class DBmethod: UIViewController {
         }
     }
     
-    
-    //データベースのパスを表示
-    func ShowDBpass(){
-        do{
-            print(try Realm().path)
-        }catch{
-            print("ShowDBpassError")
-        }
-        
-    }
-    
-    
     //指定したDBのレコード数を返す
     func DBRecordCount(DBName: Object.Type) -> Int {
         var dbrecordcount = 0
