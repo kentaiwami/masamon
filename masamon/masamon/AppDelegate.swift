@@ -114,6 +114,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 ShiftSystemRecord.name = shiftnamepattern[i]
                 ShiftSystemRecord.starttime = shiftstartpattern[i]
                 ShiftSystemRecord.endtime = shiftendpattern[i]
+                
+                if shiftnamepattern[i].containsString("M") {
+                    ShiftSystemRecord.manager = true
+                }else{
+                    ShiftSystemRecord.manager = false
+                }
+                
                 DBmethod().AddandUpdate(ShiftSystemRecord, update: true)
             }
         }
