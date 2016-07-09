@@ -42,7 +42,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     var CalenderLabel = UILabel()
     
     let shiftarray = [" 早番："," 中1："," 中2："," 中3："," 遅番："," その他："]
-    let shitmanagerarray = ["マネージャー専用", "それ以外"]
+    let shitmanagerarray = ["マネージャーのみ", "それ以外"]
 
     var ShiftLabelArray: [[UILabel]] = []
     
@@ -63,27 +63,27 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
 //        }
         
         //何回もテストするので楽にするため
-        let AAA = HourlyPayDB()
-        AAA.id = 0
-        AAA.timefrom = 4.5
-        AAA.timeto = 10.0
-        AAA.pay = 100
-        let AAA1 = HourlyPayDB()
-        AAA1.id = 1
-        AAA1.timefrom = 4.5
-        AAA1.timeto = 10.0
-        AAA1.pay = 200
-        let AAA2 = UserNameDB()
-        AAA2.id = 0
-        AAA2.name = "近江谷"
-        let AAA3 = StaffNumberDB()
-        AAA3.id = 0
-        AAA3.number = 22
-//
-        DBmethod().AddandUpdate(AAA, update: true)
-        DBmethod().AddandUpdate(AAA1, update: true)
-        DBmethod().AddandUpdate(AAA2, update: true)
-        DBmethod().AddandUpdate(AAA3, update: true)
+//        let AAA = HourlyPayDB()
+//        AAA.id = 0
+//        AAA.timefrom = 4.5
+//        AAA.timeto = 10.0
+//        AAA.pay = 100
+//        let AAA1 = HourlyPayDB()
+//        AAA1.id = 1
+//        AAA1.timefrom = 4.5
+//        AAA1.timeto = 10.0
+//        AAA1.pay = 200
+//        let AAA2 = UserNameDB()
+//        AAA2.id = 0
+//        AAA2.name = "Aさん"
+//        let AAA3 = StaffNumberDB()
+//        AAA3.id = 0
+//        AAA3.number = 22
+
+//        DBmethod().AddandUpdate(AAA, update: true)
+//        DBmethod().AddandUpdate(AAA1, update: true)
+//        DBmethod().AddandUpdate(AAA2, update: true)
+//        DBmethod().AddandUpdate(AAA3, update: true)
 
 
         self.setupShiftLabel()      //シフトを表示するラベルを設置する
@@ -916,7 +916,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             shifttimeUIPicker.selectRow(shiftstarttimeselectrow, inComponent: 0, animated: true)
             shifttimeUIPicker.selectRow(shiftendtimeselectrow, inComponent: 2, animated: true)
             textField.text = time[shiftstarttimeselectrow] + " " + wavyline[0] + " " + time[shiftendtimeselectrow]
-        }else if textField.tag == 3 {       //マネージャー専用選択
+        }else if textField.tag == 4 {       //マネージャー専用選択
             shiftmanagerUIPicker.selectRow(shiftmanagerselectrow, inComponent: 0, animated: true)
             textField.text = shitmanagerarray[shiftmanagerselectrow]
         }
