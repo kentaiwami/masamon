@@ -187,15 +187,15 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
                         }
                         
                         if textflag {
-                            
+                            //TODO: あとで修正
                             //新規レコードの作成
-                            let newrecord = CommonMethod().CreateShiftSystemDBRecord(self.records[section][row].id,shiftname: textFields![0].text!, shiftgroup: textFields![1].text!, shifttime: textFields![2].text!, shiftstarttimerow: self.shiftstarttimeselectrow, shiftendtimerow: self.shiftendtimeselectrow)
-                            
-                            //編集前のレコードを削除
-                            DBmethod().DeleteRecord(self.records[section][row])
-                            
-                            //編集後のレコードを追加
-                            DBmethod().AddandUpdate(newrecord, update: true)
+//                            let newrecord = CommonMethod().CreateShiftSystemDBRecord(self.records[section][row].id,shiftname: textFields![0].text!, shiftgroup: textFields![1].text!, shifttime: textFields![2].text!, shiftstarttimerow: self.shiftstarttimeselectrow, shiftendtimerow: self.shiftendtimeselectrow)
+//                            
+//                            //編集前のレコードを削除
+//                            DBmethod().DeleteRecord(self.records[section][row])
+//                            
+//                            //編集後のレコードを追加
+//                            DBmethod().AddandUpdate(newrecord, update: true)
                             
                             //ソートする
                             DBmethod().ShiftSystemDBSort()
@@ -253,9 +253,10 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
                     }
 
                     if textflag {
-                        let newrecord = CommonMethod().CreateShiftSystemDBRecord(DBmethod().DBRecordCount(ShiftSystemDB),shiftname: textFields![0].text!, shiftgroup: textFields![1].text!, shifttime: textFields![2].text!, shiftstarttimerow: self.shiftstarttimeselectrow, shiftendtimerow: self.shiftendtimeselectrow)
-                        
-                        DBmethod().AddandUpdate(newrecord, update: true)
+                        //TODO: あとで修正
+//                        let newrecord = CommonMethod().CreateShiftSystemDBRecord(DBmethod().DBRecordCount(ShiftSystemDB),shiftname: textFields![0].text!, shiftgroup: textFields![1].text!, shifttime: textFields![2].text!, shiftstarttimerow: self.shiftstarttimeselectrow, shiftendtimerow: self.shiftendtimeselectrow)
+//                        
+//                        DBmethod().AddandUpdate(newrecord, update: true)
                     }
                 }
                 

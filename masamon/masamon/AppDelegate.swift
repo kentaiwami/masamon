@@ -115,7 +115,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 ShiftSystemRecord.starttime = shiftstartpattern[i]
                 ShiftSystemRecord.endtime = shiftendpattern[i]
                 
-                if shiftnamepattern[i].containsString("M") {
+                if i == 1 || i == 8 {
                     ShiftSystemRecord.manager = true
                 }else{
                     ShiftSystemRecord.manager = false
