@@ -350,9 +350,9 @@ class PDFmethod: UIViewController {
                         
                     //登録しているスタッフ名にMが含まれている＆stafftextがマネージャー以外なら(DB：AさんM，シフト：AさんMT*)
                     }else if staffnamearray![j].containsString("M") == true && !(i >= 2 && i <= 4) {
-                        var ABC = staffnamearray![j]
-                        ABC = ABC.stringByReplacingOccurrencesOfString("M", withString: "")
-                        return ABC
+                        var removem_staffname = staffnamearray![j]
+                        removem_staffname = removem_staffname.stringByReplacingOccurrencesOfString("M", withString: "")
+                        return removem_staffname
                     
                     //登録しているスタッフ名にMが含まれていない＆stafftextがマネージャーの分なら(DB：Aさん，シフト：AさんMMT*)
                     }else if staffnamearray![j].containsString("M") == false && i >= 2 && i <= 4 {
