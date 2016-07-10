@@ -60,6 +60,9 @@ class CalenderViewController: UIViewController {
     
     override func viewDidAppear(animated: Bool) {
         appDelegate.screennumber = 1
+        removeCalendarButtonObject()
+        CalenderViewDidLoad()
+        setupTapGesture()
     }
     
     override func didReceiveMemoryWarning() {

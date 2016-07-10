@@ -154,12 +154,18 @@ class PDFmethod: UIViewController {
                     }
                     
                     //シフト体制を文字列の長さ順に並び替えて配列に記録する
-                    let shiftsystemnamearray = DBmethod().ShiftSystemNameArrayGet()
-                    let desc_shiftname = self.GetDescStringArray(shiftsystemnamearray)
+                    var shiftsystemarray: [String] = []
+                    if staffname.containsString("M") {
+                        shiftsystemarray = DBmethod().ShiftSystemNameArrayGet()
+                    }else{
+                        shiftsystemarray = DBmethod().ShiftSystemNoManagerNameArrayGet()
+                    }
+                    
+                    let desc_shiftname = self.GetDescStringArray(shiftsystemarray)
                     
                     //シフト体制の分だけループを回し、各ループでスタッフ1人分のシフト出現場所を記録する
                     var staffarraytmpnsstring = staffarraytmp as NSString
-                    for i in 0 ..< DBmethod().DBRecordCount(ShiftSystemDB){
+                    for i in 0 ..< desc_shiftname.count {
                         //TODO: 落ちる原因は不明
                         
                         //降順に並び替えたシフト体制名でDBへ問い合わせをしてレコードを取得する

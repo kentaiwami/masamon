@@ -31,15 +31,18 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     let shiftgroupname = CommonMethod().GetShiftGroupName()
     var shiftgroupnameUIPicker: UIPickerView = UIPickerView()
     var shifttimeUIPicker: UIPickerView = UIPickerView()
+    var shiftmanagerUIPicker: UIPickerView = UIPickerView()
     var pickerviewtoolBar = UIToolbar()
     var pickerdoneButton = UIBarButtonItem()
     
     var shiftgroupnametextfield = UITextField()
     var shifttimetextfield = UITextField()
+    var shiftmanagertextfield = UITextField()
     
     var CalenderLabel = UILabel()
     
     let shiftarray = [" 早番："," 中1："," 中2："," 中3："," 遅番："," その他："]
+    let shitmanagerarray = ["マネージャーのみ", "それ以外"]
 
     var ShiftLabelArray: [[UILabel]] = []
     
@@ -75,8 +78,8 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
 //        AAA2.name = "Aさん"
 //        let AAA3 = StaffNumberDB()
 //        AAA3.id = 0
-//        AAA3.number = 27
-//        
+//        AAA3.number = 22
+
 //        DBmethod().AddandUpdate(AAA, update: true)
 //        DBmethod().AddandUpdate(AAA1, update: true)
 //        DBmethod().AddandUpdate(AAA2, update: true)
@@ -107,6 +110,12 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         shifttimeUIPicker.dataSource = self
         shifttimeUIPicker.tag = 3
         
+        //シフトがマネージャー専用かを選択するpickerview
+        shiftmanagerUIPicker.frame = CGRectMake(0,0,self.view.bounds.width/2+20, 200.0)
+        shiftmanagerUIPicker.delegate = self
+        shiftmanagerUIPicker.dataSource = self
+        shiftmanagerUIPicker.tag = 4
+
         //pickerviewに表示するツールバー
         pickerviewtoolBar.barStyle = UIBarStyle.Default
         pickerviewtoolBar.translucent = true
@@ -396,7 +405,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                                                             
                                                             if flag {   //テキストフィールドに値が全て入っている場合
                                                                 
-                                                                let newrecord = CommonMethod().CreateShiftSystemDBRecord(DBmethod().DBRecordCount(ShiftSystemDB),shiftname: textFields![0].text!, shiftgroup: textFields![1].text!, shifttime: textFields![2].text!, shiftstarttimerow: self.shiftstarttimeselectrow,shiftendtimerow: self.shiftendtimeselectrow)
+                                                                let newrecord = CommonMethod().CreateShiftSystemDBRecord(DBmethod().DBRecordCount(ShiftSystemDB),shiftname: textFields![0].text!, shiftgroup: textFields![1].text!, shifttime: textFields![2].text!, shiftstarttimerow: self.shiftstarttimeselectrow,shiftendtimerow: self.shiftendtimeselectrow, shiftmanager: textFields![3].text!)
                                                                 DBmethod().AddandUpdate(newrecord, update: true)
                                                                 
                                                                 self.savedata()
@@ -447,6 +456,9 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         //シフト時間の選択内容を入れるテキストフィールドを追加
         alert.addTextFieldWithConfigurationHandler(configurationshifttimeTextField)
         
+        //シフト名がマネージャー専用かを選択するためのテキストフィールドを追加
+        alert.addTextFieldWithConfigurationHandler(configurationshiftmanagerTextField)
+        
         
         self.presentViewController(alert, animated: true, completion: nil)
     }
@@ -480,7 +492,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                                                             
                                                             if flag {   //テキストフィールドに値が全て入っている場合
                                                                 
-                                                                let newrecord = CommonMethod().CreateShiftSystemDBRecord(DBmethod().DBRecordCount(ShiftSystemDB),shiftname: textFields![0].text!, shiftgroup: textFields![1].text!, shifttime: textFields![2].text!, shiftstarttimerow: self.shiftstarttimeselectrow,shiftendtimerow: self.shiftendtimeselectrow)
+                                                                let newrecord = CommonMethod().CreateShiftSystemDBRecord(DBmethod().DBRecordCount(ShiftSystemDB),shiftname: textFields![0].text!, shiftgroup: textFields![1].text!, shifttime: textFields![2].text!, shiftstarttimerow: self.shiftstarttimeselectrow,shiftendtimerow: self.shiftendtimeselectrow, shiftmanager: textFields![3].text!)
                                                                 DBmethod().AddandUpdate(newrecord, update: true)
                                                                 
                                                                 self.savedata()
@@ -505,6 +517,9 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         
         //シフト時間の選択内容を入れるテキストフィールドを追加
         alert.addTextFieldWithConfigurationHandler(configurationshifttimeTextField)
+        
+        //シフト名がマネージャー専用かを選択するためのテキストフィールドを追加
+        alert.addTextFieldWithConfigurationHandler(configurationshiftmanagerTextField)
         
         self.presentViewController(alert, animated: true, completion: nil)
     }
@@ -550,7 +565,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         }else if pickerView.tag == 2 {
             let attributedString = NSAttributedString(string: shiftgroupname[row] , attributes: [NSForegroundColorAttributeName : UIColor.blackColor()])
             return attributedString
-        }else{
+        }else if pickerView.tag == 3{
             if component == 0 {
                 let attributedString = NSAttributedString(string: time[row] , attributes: [NSForegroundColorAttributeName : UIColor.blackColor()])
                 return attributedString
@@ -561,13 +576,16 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                 let attributedString = NSAttributedString(string: time[row] , attributes: [NSForegroundColorAttributeName : UIColor.blackColor()])
                 return attributedString
             }
+        }else{
+            let attributedString = NSAttributedString(string: shitmanagerarray[row] , attributes: [NSForegroundColorAttributeName : UIColor.blackColor()])
+            return attributedString
         }
     }
     
     //表示列
     func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
         
-        if pickerView.tag == 1 || pickerView.tag == 2 {
+        if pickerView.tag == 1 || pickerView.tag == 2 || pickerView.tag == 4 {
             return 1
         }else{
             return 3
@@ -582,7 +600,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         }else if pickerView.tag == 2 {
             pickerdoneButton.tag = 2
             return shiftgroupname.count
-        }else{
+        }else if pickerView.tag == 3 {
             pickerdoneButton.tag = 3
             if component == 0 {
                 return time.count
@@ -591,6 +609,9 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             }else{
                 return time.count
             }
+        }else{
+            pickerdoneButton.tag = 4
+            return shitmanagerarray.count
         }
     }
     
@@ -622,6 +643,10 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             pickerdoneButton.tag = 3
             
             shifttimetextfield.text = starttime + " " + wavyline[0] + " " + endtime
+        }else if pickerView.tag == 4 {
+            shiftmanagertextfield.text = shitmanagerarray[row]
+            pickerdoneButton.tag = 4
+            shiftmanagerselectrow = row
         }
     }
     
@@ -839,6 +864,9 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             shifttimetextfield.becomeFirstResponder()
         }else if sender.tag == 3 {      //シフト時間の完了ボタン
             shifttimetextfield.resignFirstResponder()
+            shiftmanagertextfield.becomeFirstResponder()
+        }else if sender.tag == 4 {      //マネージャー専用の完了ボタン
+            shiftmanagertextfield.resignFirstResponder()
         }
     }
     
@@ -862,10 +890,21 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         shifttimetextfield = textField
     }
     
+    //シフトがマネージャー専用かを選択するテキストフィールドの設定をする
+    func configurationshiftmanagerTextField(textField: UITextField!){
+        textField.placeholder = "マネージャー専用かを入力"
+        textField.inputView = self.shiftmanagerUIPicker
+        textField.inputAccessoryView = self.pickerviewtoolBar
+        textField.tag = 4
+        textField.delegate = self
+        shiftmanagertextfield = textField
+    }
+    
     //シフトグループ,シフト時間(開始),シフト時間(終了)の選択箇所を記録する変数
     var shiftgroupselectrow = 0
     var shiftstarttimeselectrow = 0
     var shiftendtimeselectrow = 0
+    var shiftmanagerselectrow = 0
     
     //textfieldがタップされた時
     func textFieldDidBeginEditing(textField: UITextField) {
@@ -877,6 +916,9 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             shifttimeUIPicker.selectRow(shiftstarttimeselectrow, inComponent: 0, animated: true)
             shifttimeUIPicker.selectRow(shiftendtimeselectrow, inComponent: 2, animated: true)
             textField.text = time[shiftstarttimeselectrow] + " " + wavyline[0] + " " + time[shiftendtimeselectrow]
+        }else if textField.tag == 4 {       //マネージャー専用選択
+            shiftmanagerUIPicker.selectRow(shiftmanagerselectrow, inComponent: 0, animated: true)
+            textField.text = shitmanagerarray[shiftmanagerselectrow]
         }
     }
     

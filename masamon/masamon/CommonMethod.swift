@@ -149,11 +149,12 @@ class CommonMethod: UIViewController {
     }
     
     //受け取ったテキストからShiftSystemDBのレコードを生成して返す関数
-    func CreateShiftSystemDBRecord(id: Int, shiftname: String, shiftgroup: String, shifttime: String, shiftstarttimerow: Int, shiftendtimerow: Int) -> ShiftSystemDB{
+    func CreateShiftSystemDBRecord(id: Int, shiftname: String, shiftgroup: String, shifttime: String, shiftstarttimerow: Int, shiftendtimerow: Int, shiftmanager: String) -> ShiftSystemDB{
         let record = ShiftSystemDB()
         var gid = 0
         var start = 0.0
         var end = 0.0
+        var manager = false
         
         switch(shiftgroup){
         case "早番":
@@ -190,11 +191,19 @@ class CommonMethod: UIViewController {
             end = Double(shiftendtimerow) - (Double(shiftendtimerow) * 0.5) + 0.5
         }
         
+        //マネージャー専用かを判断
+        if shiftmanager.containsString("それ以外") {
+            manager = false
+        }else{
+            manager = true
+        }
+        
         record.id = id
         record.name = shiftname
         record.groupid = gid
         record.starttime = start
         record.endtime = end
+        record.manager = manager
         
         return record
     }
