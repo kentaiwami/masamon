@@ -140,7 +140,7 @@ class PDFmethod: UIViewController {
                  */
                 let removem = staffname.stringByReplacingOccurrencesOfString("M", withString: "")
                 
-                if(removem.characters.count <= 1 || removem.characters.count >= 4){
+                if(removem.characters.count == 0 || removem.characters.count >= 7){
                     appDelegate.errorstaffnamepdf.append(staffarraytmp)
                 }else{
                     //スタッフ名を正しく認識しているがエラーとして記録されている場合は削除する
