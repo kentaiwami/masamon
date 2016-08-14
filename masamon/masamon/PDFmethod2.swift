@@ -8,8 +8,8 @@
 
 import UIKit
 
-//pdfから抽出したテキスト情報を格納するクラス
-class CharInfo {
+//pdfから抽出したテキスト情報を格納する構造体
+struct CharInfo {
     var text = ""
     var x = 0.0
     var y = 0.0
@@ -18,35 +18,41 @@ class CharInfo {
 
 class PDFmethod2 {
     
+    let tolerance = 3.0                         //同じ行と判定させるための許容誤差
+    
     /****************************実行用のメソッド******************************/
     func RunPDFmethod() {
         let charinfoArray = GetPDFGlyphInfo()
         var sorted = SortcharinfoArray(charinfoArray)
         
-        
-        
+        //各配列のY座標の平均値を求める
+        var YaverageArray: [Double] = []
         for i in 0..<sorted.count {
-            let ABC = sorted[i][0]
-            print(String(ABC.y) + ": ", terminator: "")
-            for j in 0..<sorted[i].count {
-                let hoge = sorted[i][j]
-                print(String(hoge.text), terminator: "")
-            }
-            print("****************")
+            YaverageArray.append(Get_Y_Average(sorted[i]))
         }
         
+        let unioned = UnionArrayByY(YaverageArray, charinfo: sorted)
+        
+        
+        //        for i in 0..<sorted.count {
+        //            let ABC = sorted[i][0]
+        //            print(String(ABC.y) + ": ", terminator: "")
+        //            for j in 0..<sorted[i].count {
+        //                let hoge = sorted[i][j]
+        //                print(String(hoge.text), terminator: "")
+        //            }
+        //            print("****************")
+        //        }
+        
     }
-
+    
     
     /****************************pdfのテキスト情報を2次元配列に行ごとに格納する******************************/
-    
-    let tolerance = 3.0                         //同じ行と判定させるための許容誤差
-
     func GetPDFGlyphInfo() -> [[CharInfo]] {
         var charinfoArray: [[CharInfo]] = []
         var prev_y = -99.99
         var currentArrayIndex = -1
-
+        
         let path: NSString
         //path = DBmethod().FilePathTmpGet()
         path = NSBundle.mainBundle().pathForResource("8.11〜", ofType: "pdf")!
@@ -58,11 +64,11 @@ class PDFmethod2 {
         
         //全テキストを検査するループ
         while(text != nil && text.characters.count > 0){
-//            print("[" + text + "]")
+            //            print("[" + text + "]")
             while(tet.get_char_info(page) > 0){
-//                print("size=" + String(tet.fontsize()) + " x=" + String(tet.x()) + " y=" + String(tet.y()))
+                //                print("size=" + String(tet.fontsize()) + " x=" + String(tet.x()) + " y=" + String(tet.y()))
                 
-                let charinfo = CharInfo()
+                var charinfo = CharInfo()
                 charinfo.text = text
                 charinfo.size = tet.fontsize()
                 charinfo.x = tet.x()
@@ -75,7 +81,7 @@ class PDFmethod2 {
                 }
                 
                 charinfoArray[currentArrayIndex].append(charinfo)
-
+                
             }
             text = tet.get_text(page)
         }
@@ -99,5 +105,57 @@ class PDFmethod2 {
         
         return sorted
     }
-
+    
+    
+    /****************************引数で渡された配列のy座標の平均を求めて返す関数******************************/
+    func Get_Y_Average(charinfo: [CharInfo]) -> Double {
+        var sum = 0.0
+        for i in 0..<charinfo.count {
+            sum += charinfo[i].y
+        }
+        
+        return (sum/Double(charinfo.count))
+    }
+    
+    
+    /****************************平均値の配列をもとに誤差許容範囲内同士の配列を結合する関数******************************/
+    func UnionArrayByY(aveArray: [Double], charinfo: [[CharInfo]]) {
+        var pivot_index = 0
+        var pivot = 0.0
+        
+        var grouping: [[Int]] = [[]]
+        var grouping_index = 0
+        
+        //aveArrayの値が近いもの同士を記録する
+        for i in 0..<charinfo.count - 1 {
+            pivot = aveArray[pivot_index]
+            if (pivot-tolerance...pivot+tolerance ~= aveArray[i+1]) {
+                grouping[grouping_index].append(i)
+                grouping[grouping_index].append(i+1)
+            }else {
+                pivot_index = i+1
+                grouping_index += 1
+                grouping.append([])
+            }
+        }
+        
+        //グループ化した配列内の空配列を削除する
+        for i in (0..<grouping.count).reverse() {
+            if grouping[i].isEmpty {
+                grouping.removeAtIndex(i)
+            }
+        }
+    }
+    
+    //テスト用関数
+    func ShowcharinfoArray(charinfo: [[CharInfo]]) {
+        for i in 0..<charinfo.count {
+            print(String(i) + ": ", terminator: "")
+            for j in 0..<charinfo[i].count {
+                let hoge = charinfo[i][j]
+                print(hoge.text, terminator: "")
+            }
+            print("")
+        }
+    }
 }
