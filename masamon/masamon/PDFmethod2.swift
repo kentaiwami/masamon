@@ -46,7 +46,7 @@ class PDFmethod2 {
         
         let path: NSString
         //path = DBmethod().FilePathTmpGet()
-        path = NSBundle.mainBundle().pathForResource("7.11〜", ofType: "pdf")!
+        path = NSBundle.mainBundle().pathForResource("8.11〜", ofType: "pdf")!
         
         let tet = TET()
         let document = tet.open_document(path as String, optlist: "")
@@ -115,8 +115,13 @@ class PDFmethod2 {
             
         }
         
-        //重複と判断された配列の添字をもとに削除する
-        for i in 0..<matchArray.count {
+        //matchArray内の重複を削除
+        let orderedSet = NSOrderedSet(array: matchArray)
+        let removedArray = orderedSet.array as! [Int]
+        matchArray = removedArray
+        
+        //重複と判断されたcharinfoArrayの添字をもとに削除する
+        for i in (0..<matchArray.count).reverse() {
             removedcharinfoArray.removeAtIndex(matchArray[i])
         }
         
@@ -170,11 +175,19 @@ class PDFmethod2 {
             }
         }
         
-        //グループ化した配列内の空配列を削除する
+        //grouping内の空配列を削除する
         for i in (0..<grouping.count).reverse() {
             if grouping[i].isEmpty {
                 grouping.removeAtIndex(i)
             }
+        }
+        
+        //grouping内で重複している要素を削除
+        for i in 0..<grouping.count {
+            let groupingArray = grouping[i]
+            let orderedSet = NSOrderedSet(array: groupingArray)
+            let removedArray = orderedSet.array as! [Int]
+            grouping[i] = removedArray
         }
     }
     
