@@ -104,7 +104,7 @@ class PDFmethod2 {
                             break
                         }
                     }
-                    
+                    //TODO: テキスト完全一致の他にy座標の値がほぼ等しいかを判断させる
                     //テキストが全て一致したかを判断する
                     if match_count == charinfoArray[i].count {
                         matchArray.append(j)
