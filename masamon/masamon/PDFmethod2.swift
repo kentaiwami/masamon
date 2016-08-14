@@ -18,9 +18,11 @@ class CharInfo {
 
 class PDFmethod2 {
     
-    let tolerance = 3.0                         //同じ行と判定させるための許容誤差
     
     /****************************pdfのテキスト情報を2次元配列に行ごとに格納する******************************/
+    
+    let tolerance = 3.0                         //同じ行と判定させるための許容誤差
+
     func GetPDFGlyphInfo() -> [[CharInfo]] {
         var charinfoArray: [[CharInfo]] = []
         var prev_y = -99.99
