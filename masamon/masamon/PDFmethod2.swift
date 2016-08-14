@@ -23,8 +23,11 @@ class PDFmethod2 {
     /****************************実行用のメソッド******************************/
     func RunPDFmethod() {
         let charinfoArray = GetPDFGlyphInfo()
-        var sorted = SortcharinfoArray(charinfoArray)
         
+        let removed = RemoveOverlapArray(charinfoArray)
+        var sorted = SortcharinfoArray(removed)
+//        ShowcharinfoArray(sorted)
+
         //各配列のY座標の平均値を求める
         var YaverageArray: [Double] = []
         for i in 0..<sorted.count {
@@ -32,18 +35,6 @@ class PDFmethod2 {
         }
         
         let unioned = UnionArrayByY(YaverageArray, charinfo: sorted)
-        
-        
-        //        for i in 0..<sorted.count {
-        //            let ABC = sorted[i][0]
-        //            print(String(ABC.y) + ": ", terminator: "")
-        //            for j in 0..<sorted[i].count {
-        //                let hoge = sorted[i][j]
-        //                print(String(hoge.text), terminator: "")
-        //            }
-        //            print("****************")
-        //        }
-        
     }
     
     
@@ -55,7 +46,7 @@ class PDFmethod2 {
         
         let path: NSString
         //path = DBmethod().FilePathTmpGet()
-        path = NSBundle.mainBundle().pathForResource("8.11〜", ofType: "pdf")!
+        path = NSBundle.mainBundle().pathForResource("7.11〜", ofType: "pdf")!
         
         let tet = TET()
         let document = tet.open_document(path as String, optlist: "")
@@ -90,6 +81,46 @@ class PDFmethod2 {
         tet.close_document(document)
         
         return charinfoArray
+    }
+    
+    
+    /****************************内容が重複している配列を削除する******************************/
+    func RemoveOverlapArray(charinfoArray: [[CharInfo]]) -> [[CharInfo]] {
+        
+        var removedcharinfoArray = charinfoArray
+        var matchArray: [Int] = []
+        var match_count = 0
+        
+        //内容が重複している配列の中身を検出する
+        for i in 0..<charinfoArray.count - 1 {
+            for j in i+1..<charinfoArray.count {
+                if charinfoArray[i].count == charinfoArray[j].count {
+                    for k in 0..<charinfoArray[i].count {
+                        let charinfo1 = charinfoArray[i][k]
+                        let charinfo2 = charinfoArray[j][k]
+                        if charinfo1.text == charinfo2.text {
+                            match_count += 1
+                        }else {
+                            break
+                        }
+                    }
+                    
+                    //テキストが全て一致したかを判断する
+                    if match_count == charinfoArray[i].count {
+                        matchArray.append(j)
+                    }
+                    match_count = 0
+                }
+            }
+            
+        }
+        
+        //重複と判断された配列の添字をもとに削除する
+        for i in 0..<matchArray.count {
+            removedcharinfoArray.removeAtIndex(matchArray[i])
+        }
+        
+        return removedcharinfoArray
     }
     
     
@@ -152,8 +183,8 @@ class PDFmethod2 {
         for i in 0..<charinfo.count {
             print(String(i) + ": ", terminator: "")
             for j in 0..<charinfo[i].count {
-                let hoge = charinfo[i][j]
-                print(hoge.text, terminator: "")
+                let charinfo = charinfo[i][j]
+                print(charinfo.text, terminator: "")
             }
             print("")
         }
