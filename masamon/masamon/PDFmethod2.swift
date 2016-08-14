@@ -21,6 +21,20 @@ class PDFmethod2 {
     /****************************実行用のメソッド******************************/
     func RunPDFmethod() {
         let charinfoArray = GetPDFGlyphInfo()
+        var sorted = SortcharinfoArray(charinfoArray)
+        
+        
+        
+        for i in 0..<sorted.count {
+            let ABC = sorted[i][0]
+            print(String(ABC.y) + ": ", terminator: "")
+            for j in 0..<sorted[i].count {
+                let hoge = sorted[i][j]
+                print(String(hoge.text), terminator: "")
+            }
+            print("****************")
+        }
+        
     }
 
     
@@ -35,7 +49,7 @@ class PDFmethod2 {
 
         let path: NSString
         //path = DBmethod().FilePathTmpGet()
-        path = NSBundle.mainBundle().pathForResource("7.11〜", ofType: "pdf")!
+        path = NSBundle.mainBundle().pathForResource("8.11〜", ofType: "pdf")!
         
         let tet = TET()
         let document = tet.open_document(path as String, optlist: "")
@@ -71,4 +85,19 @@ class PDFmethod2 {
         
         return charinfoArray
     }
+    
+    
+    /****************************xは昇順，yはテキストの上から順番に並び替える******************************/
+    func SortcharinfoArray(charinfo: [[CharInfo]]) -> [[CharInfo]] {
+        var sorted = charinfo
+        
+        sorted.sortInPlace { $0[0].y > $1[0].y }
+        
+        for i in 0..<sorted.count {
+            sorted[i].sortInPlace { $0.x < $1.x }
+        }
+        
+        return sorted
+    }
+
 }
