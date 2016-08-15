@@ -26,7 +26,6 @@ class PDFmethod2 {
         
         let removed = RemoveOverlapArray(charinfoArray)
         var sorted = SortcharinfoArray(removed)
-//        ShowcharinfoArray(sorted)
 
         //各配列のY座標の平均値を求める
         var YaverageArray: [Double] = []
@@ -35,6 +34,9 @@ class PDFmethod2 {
         }
         
         let unioned = UnionArrayByY(YaverageArray, charinfo: sorted)
+        
+        ShowcharinfoArray(unioned)
+        
     }
     
     
@@ -55,9 +57,7 @@ class PDFmethod2 {
         
         //全テキストを検査するループ
         while(text != nil && text.characters.count > 0){
-            //            print("[" + text + "]")
             while(tet.get_char_info(page) > 0){
-                //                print("size=" + String(tet.fontsize()) + " x=" + String(tet.x()) + " y=" + String(tet.y()))
                 
                 var charinfo = CharInfo()
                 charinfo.text = text
