@@ -8,7 +8,9 @@
 
 import UIKit
 
-//pdfから抽出したテキスト情報を格納する構造体
+/**
+ *  pdfから抽出したテキスト情報を格納する構造体
+ */
 struct CharInfo {
     var text = ""
     var x = 0.0
@@ -20,7 +22,9 @@ class PDFmethod2 {
     
     let tolerance = 3.0                         //同じ行と判定させるための許容誤差
     
-    /****************************実行用のメソッド******************************/
+    /**
+     実行用のメソッド
+     */
     func RunPDFmethod() {
         let charinfoArray = GetPDFGlyphInfo()
         
@@ -35,12 +39,14 @@ class PDFmethod2 {
         
         let unioned = UnionArrayByY(YaverageArray, charinfo: sorted)
         
-        ShowcharinfoArray(unioned)
-        
+        ShowAllcharinfoArray(unioned)
     }
     
-    
-    /****************************pdfのテキスト情報を2次元配列に行ごとに格納する******************************/
+    /**
+     pdfのテキスト情報を2次元配列に行ごとに格納する
+     
+     - returns: y座標が近似しているCharInfo同士を2次元配列に格納したもの
+     */
     func GetPDFGlyphInfo() -> [[CharInfo]] {
         var charinfoArray: [[CharInfo]] = []
         var prev_y = -99.99
@@ -84,7 +90,14 @@ class PDFmethod2 {
     }
     
     
-    /****************************内容が重複している配列を削除する******************************/
+    
+    /**
+     内容が重複している配列を削除する
+     
+     - parameter charinfoArray: CharInfoを格納した2次元配列
+     
+     - returns: テキストは完全一致,y座標は近似している配列(余分に存在する配列)を削除した配列
+     */
     func RemoveOverlapArray(charinfoArray: [[CharInfo]]) -> [[CharInfo]] {
         
         var removedcharinfoArray = charinfoArray
@@ -92,7 +105,7 @@ class PDFmethod2 {
         var matchValueArray: [Int] = []             //比較対象先(添字が大きい)
         var match_count = 0
         
-        //内容が重複している配列の中身を検出する
+        //テキストが重複している配列の中身を検出する
         for i in 0..<charinfoArray.count - 1 {
             for j in i+1..<charinfoArray.count {
                 if charinfoArray[i].count == charinfoArray[j].count {
@@ -143,7 +156,13 @@ class PDFmethod2 {
     }
     
     
-    /****************************xは昇順，yはテキストの上から順番に並び替える******************************/
+    /**
+     xは昇順，y座標は降順(PDFテキストの上から順)に並び替える
+     
+     - parameter charinfo: ソートを行いたいCharInfoが格納された2次元配列
+     
+     - returns: ソート後のCharInfoが格納された2次元配列
+     */
     func SortcharinfoArray(charinfo: [[CharInfo]]) -> [[CharInfo]] {
         var sorted = charinfo
         
@@ -157,7 +176,13 @@ class PDFmethod2 {
     }
     
     
-    /****************************引数で渡された配列のy座標の平均を求めて返す関数******************************/
+    /**
+     引数で渡された配列のy座標の平均を求めて返す
+     
+     - parameter charinfo: y座標の平均を求めたいCharInfoが格納された1次元配列
+     
+     - returns: y座標の平均値
+     */
     func Get_Y_Average(charinfo: [CharInfo]) -> Double {
         var sum = 0.0
         for i in 0..<charinfo.count {
@@ -168,7 +193,14 @@ class PDFmethod2 {
     }
     
     
-    /****************************平均値の配列をもとに誤差許容範囲内同士の配列を結合する関数******************************/
+    /**
+     平均値の配列をもとに誤差許容範囲内同士の配列を結合する関数
+     
+     - parameter aveArray: 平均値が格納された1次元配列(aveArray[i]の値はcharinfo[i]の平均値)
+     - parameter charinfo: CharInfoが格納された2次元配列
+     
+     - returns: y座標が近似している配列を結合した2次元配列
+     */
     func UnionArrayByY(aveArray: [Double], charinfo: [[CharInfo]]) -> [[CharInfo]]{
         var unionedArray = charinfo
         var pivot_index = 0
@@ -221,8 +253,15 @@ class PDFmethod2 {
         return unionedArray
     }
     
-    //テスト用関数
-    func ShowcharinfoArray(charinfo: [[CharInfo]]) {
+    
+    
+
+    /**
+     CharInfoのテキストをわかりやすく表示するテスト関数
+     
+     - parameter charinfo: 表示したいCharInfoが格納された2次元配列
+     */
+    func ShowAllcharinfoArray(charinfo: [[CharInfo]]) {
         for i in 0..<charinfo.count {
             print(String(i) + ": ", terminator: "")
             for j in 0..<charinfo[i].count {
