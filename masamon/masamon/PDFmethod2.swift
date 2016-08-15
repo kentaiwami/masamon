@@ -169,7 +169,8 @@ class PDFmethod2 {
     
     
     /****************************平均値の配列をもとに誤差許容範囲内同士の配列を結合する関数******************************/
-    func UnionArrayByY(aveArray: [Double], charinfo: [[CharInfo]]) {
+    func UnionArrayByY(aveArray: [Double], charinfo: [[CharInfo]]) -> [[CharInfo]]{
+        var unionedArray = charinfo
         var pivot_index = 0
         var pivot = 0.0
         
@@ -203,6 +204,22 @@ class PDFmethod2 {
             let removedArray = orderedSet.array as! [Int]
             grouping[i] = removedArray
         }
+        
+        //groupingをもとにunionedArrayの配列同士を結合する
+        for i in (0..<grouping.count).reverse() {
+            for j in (0..<grouping[i].count - 1).reverse() {
+                let index1 = grouping[i][j]
+                let index2 = grouping[i][j+1]
+                print(String(index1) + " " + String(index2))
+                unionedArray[index1] += unionedArray[index2]
+                unionedArray.removeAtIndex(index2)
+            }
+        }
+        
+        //順番を整える
+        unionedArray = SortcharinfoArray(unionedArray)
+        
+        return unionedArray
     }
     
     //テスト用関数
