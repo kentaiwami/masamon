@@ -88,7 +88,8 @@ class PDFmethod2 {
     func RemoveOverlapArray(charinfoArray: [[CharInfo]]) -> [[CharInfo]] {
         
         var removedcharinfoArray = charinfoArray
-        var matchArray: [Int] = []
+        var matchKeyArray: [Int] = []               //比較対象元(添字が小さい)
+        var matchValueArray: [Int] = []             //比較対象先(添字が大きい)
         var match_count = 0
         
         //内容が重複している配列の中身を検出する
@@ -104,25 +105,38 @@ class PDFmethod2 {
                             break
                         }
                     }
-                    //TODO: テキスト完全一致の他にy座標の値がほぼ等しいかを判断させる
+
                     //テキストが全て一致したかを判断する
                     if match_count == charinfoArray[i].count {
-                        matchArray.append(j)
+                        matchKeyArray.append(i)
+                        matchValueArray.append(j)
                     }
                     match_count = 0
                 }
             }
-            
         }
         
-        //matchArray内の重複を削除
-        let orderedSet = NSOrderedSet(array: matchArray)
+        //matchkey,value配列からY座標の平均値が全く異なるものを外す処理
+        for i in (0..<matchKeyArray.count).reverse() {
+            let key_Yave = Get_Y_Average(charinfoArray[matchKeyArray[i]])
+            let value_Yave = Get_Y_Average(charinfoArray[matchValueArray[i]])
+            
+            //テキストは完全一致でもY座標が近似でない場合
+            if !(value_Yave-tolerance...value_Yave+tolerance ~= key_Yave) {
+                matchKeyArray.removeAtIndex(i)
+                matchValueArray.removeAtIndex(i)
+            }
+        }
+        
+        //matchValueArray内の重複を削除
+        let orderedSet = NSOrderedSet(array: matchValueArray)
         let removedArray = orderedSet.array as! [Int]
-        matchArray = removedArray
+        matchValueArray = removedArray
+        
         
         //重複と判断されたcharinfoArrayの添字をもとに削除する
-        for i in (0..<matchArray.count).reverse() {
-            removedcharinfoArray.removeAtIndex(matchArray[i])
+        for i in (0..<matchValueArray.count).reverse() {
+            removedcharinfoArray.removeAtIndex(matchValueArray[i])
         }
         
         return removedcharinfoArray
