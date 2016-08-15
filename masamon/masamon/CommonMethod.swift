@@ -11,12 +11,22 @@ import RealmSwift
 
 class CommonMethod: UIViewController {
 
+    /**
+     指定なしを含む30分ごとの時間を返す
+     
+     - returns: 指定なしと時間が格納されたArray
+     */
     func GetTimeNotSpecifiedVer() -> Array<String>{
         let time: [String] = ["指定なし","1:00","1:30","2:00","2:30","3:00","3:30","4:00","4:30","5:00","5:30","6:00","6:30","7:00","7:30","8:00","8:30","9:00","9:30","10:00","10:30","11:00","11:30","12:00","12:30","13:00","13:30","14:00","14:30","15:00","15:30","16:00","16:30","17:00","17:30","18:00","18:30","19:00","19:30","20:00","20:30","21:00","21:30","22:00","22:30","23:00","23:30","24:00","24:30"]
 
         return time
     }
     
+    /**
+     30分ごとの時間を返す
+     
+     - returns: 時間が格納されたArray
+     */
     func GetTime() -> Array<String>{
         let time: [String] = ["1:00","1:30","2:00","2:30","3:00","3:30","4:00","4:30","5:00","5:30","6:00","6:30","7:00","7:30","8:00","8:30","9:00","9:30","10:00","10:30","11:00","11:30","12:00","12:30","13:00","13:30","14:00","14:30","15:00","15:30","16:00","16:30","17:00","17:30","18:00","18:30","19:00","19:30","20:00","20:30","21:00","21:30","22:00","22:30","23:00","23:30","24:00","24:30"]
         
@@ -24,19 +34,37 @@ class CommonMethod: UIViewController {
 
     }
     
+    /**
+     シフトのグループ名を返す
+     
+     - returns: シフトのグループ名が格納されたArray
+     */
     func GetShiftGroupName() -> Array<String>{
         let shiftgroupname: [String] = ["早番","中1","中2","中3","遅番","その他","休み"]
         
         return shiftgroupname
     }
     
+    /**
+     シフトのグループ名と時間を返す
+     
+     - returns: シフトのグループ名と時間が格納されたArray
+     */
     func GetShiftGroupNameAndTime() -> Array<String>{
         let shiftgroupnameandtime: [String] = ["早番   8:00 〜 16:30","中1   12:00 〜 20:30","中2   13:30 〜 22:00","中3   14:30 〜 23:00","遅番   16:00 〜 24:30","その他","休み"]
         
         return shiftgroupnameandtime
     }
 
-    //西暦を和暦に、和暦を西暦に変換して返す関数
+
+    /**
+     西暦を和暦に、和暦を西暦に変換して返す
+     
+     - parameter year:     西暦or和暦
+     - parameter calender: 変換処理を判断するための文字列
+     
+     - returns: <#return value description#>
+     */
     func Changecalendar(year: Int, calender: String) -> Int{
         if calender == "JP" {   //和暦から西暦
             let yeartemp = String(year - 12)
@@ -49,15 +77,19 @@ class CommonMethod: UIViewController {
         }
     }
     
-    /*
-    引き数： 平成yy年度 mm月度 ****というテキスト
-    返り値：
-    year                    => そのシフトの年
-    startcoursmonth         =>シフト開始月
-    startcoursmonthyear     =>シフト開始月の年
-    endcoursmonth           =>シフト終了月
-    endcoursmonthyear       =>シフト終了月の年
-    */
+    
+    /**
+     平成xx年度〜が記述されている文字列を受け取って，シフトの開始・終了年月を判断する
+     
+     - parameter P1: 平成yy年度 mm月度 ****というテキスト
+     
+     - returns: year                シフトの年
+                startcoursmonth     シフト開始月
+                startcoursmonthyear シフト開始月の年
+                endcoursmonth       シフト終了月
+                endcoursmonthyear   シフト終了月の年
+
+     */
     func JudgeYearAndMonth( P1: String) -> (year: Int, startcoursmonth: Int, startcoursmonthyear: Int, endcoursmonth: Int, endcoursmonthyear: Int){
         
         var P1String = P1
@@ -111,7 +143,14 @@ class CommonMethod: UIViewController {
         }
     }
     
-    //スタッフ名に含まれているシフト体制を検索して結果を返す関数
+
+    /**
+     スタッフ名に含まれているシフト体制を検索して結果を返す
+     
+     - parameter staffname: スタッフ名
+     
+     - returns: シフトのグループidを格納したArray
+     */
     func IncludeShiftNameInStaffName( staffname: String) -> Array<Int>{
         
         let shiftarray = DBmethod().ShiftSystemAllRecordGet()
@@ -148,7 +187,20 @@ class CommonMethod: UIViewController {
         return groupidarray
     }
     
-    //受け取ったテキストからShiftSystemDBのレコードを生成して返す関数
+
+    /**
+     受け取ったテキストからShiftSystemDBのレコードを生成して返す関数
+     
+     - parameter id:                id
+     - parameter shiftname:         シフト体制名
+     - parameter shiftgroup:        シフトグループ
+     - parameter shifttime:         シフトの時間
+     - parameter shiftstarttimerow: シフト開始時間のpickerviewが何行目か
+     - parameter shiftendtimerow:   シフト終了時間のpickerviewが何行目か
+     - parameter shiftmanager:      シフトがマネージャー専用かどうか
+     
+     - returns: 生成したShiftSystemDBレコード
+     */
     func CreateShiftSystemDBRecord(id: Int, shiftname: String, shiftgroup: String, shifttime: String, shiftstarttimerow: Int, shiftendtimerow: Int, shiftmanager: String) -> ShiftSystemDB{
         let record = ShiftSystemDB()
         var gid = 0
@@ -208,7 +260,15 @@ class CommonMethod: UIViewController {
         return record
     }
     
-    //1クールのシフト範囲を返す関数
+
+    /**
+     1クールのシフト範囲を返す
+     
+     - parameter shiftstartyear:  シフトの開始年
+     - parameter shiftstartmonth: シフトの開始月
+     
+     - returns: シフト範囲
+     */
     func GetShiftCoursMonthRange(shiftstartyear: Int, shiftstartmonth: Int) -> NSRange{
         let shiftnsdate = self.CreateNSDate(CommonMethod().Changecalendar(shiftstartyear, calender: "JP"), month: shiftstartmonth, day: 1)
         let c = NSCalendar.currentCalendar()
@@ -217,7 +277,16 @@ class CommonMethod: UIViewController {
         return monthrange
     }
     
-    //年,月,日からNSDateを生成する
+
+    /**
+     年,月,日からNSDateを生成する
+     
+     - parameter year:  年
+     - parameter month: 月
+     - parameter day:   日
+     
+     - returns: 生成したNSDate
+     */
     func CreateNSDate(year : Int, month : Int, day : Int) -> NSDate {
         let comp = NSDateComponents()
         comp.year = year
@@ -229,7 +298,14 @@ class CommonMethod: UIViewController {
         return date!
     }
 
-    //受け取ったNSDateを年(西暦),月,日,曜日に分けて返す
+
+    /**
+     受け取ったNSDateを年(西暦),月,日,曜日に分けて返す
+     
+     - parameter date: NSdate型のデータ
+     
+     - returns: 年,月,日,曜日
+     */
     func ReturnYearMonthDayWeekday(date : NSDate) -> (year: Int, month: Int, day: Int, weekday: Int) {
         let calendar = NSCalendar.currentCalendar()
         let comp : NSDateComponents = calendar.components(
