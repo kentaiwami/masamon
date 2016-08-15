@@ -210,7 +210,6 @@ class PDFmethod2 {
             for j in (0..<grouping[i].count - 1).reverse() {
                 let index1 = grouping[i][j]
                 let index2 = grouping[i][j+1]
-                print(String(index1) + " " + String(index2))
                 unionedArray[index1] += unionedArray[index2]
                 unionedArray.removeAtIndex(index2)
             }
