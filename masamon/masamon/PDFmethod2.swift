@@ -28,8 +28,8 @@ class PDFmethod2 {
     func RunPDFmethod() {
         let charinfoArray = GetPDFGlyphInfo()
         
-        let removed = RemoveOverlapArray(charinfoArray)
-        var sorted = SortcharinfoArray(removed)
+        let removed_overlap = RemoveOverlapArray(charinfoArray)
+        var sorted = SortcharinfoArray(removed_overlap)
 
         //各配列のY座標の平均値を求める
         var YaverageArray: [Double] = []
@@ -38,6 +38,11 @@ class PDFmethod2 {
         }
         
         let unioned = UnionArrayByY(YaverageArray, charinfo: sorted)
+        
+        //最後のスタッフ以降の行は取り除く
+        //途中に入っているいらない行も取り除く
+        //平成より上の行は取り除く
+        let removed_unnecessary = RemoveUnnecessaryLines(unioned)
         
         ShowAllcharinfoArray(unioned)
     }
@@ -270,5 +275,18 @@ class PDFmethod2 {
             }
             print("")
         }
+    }
+    
+    /**
+     不要な行の削除をする
+     
+     - parameter charinfo: 不要な行が含まれたCharInfoを格納している2次元配列
+     
+     - returns: 不要な行を削除したCharInfoを格納している2次元配列
+     */
+    func RemoveUnnecessaryLines(charinfo: [[CharInfo]]) -> [[CharInfo]] {
+        var removed = charinfo
+        
+        return removed
     }
 }
