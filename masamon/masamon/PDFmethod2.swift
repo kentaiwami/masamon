@@ -18,7 +18,7 @@ struct CharInfo {
     var size = 0.0
 }
 
-class PDFmethod2 {
+class PDFmethod2: UIViewController {
     
     let tolerance = 3.0                         //同じ行と判定させるための許容誤差
     
@@ -39,12 +39,7 @@ class PDFmethod2 {
         
         let unioned = UnionArrayByY(YaverageArray, charinfo: sorted)
         
-        //最後のスタッフ以降の行は取り除く
-        //途中に入っているいらない行も取り除く
-        //平成より上の行は取り除く
         let removed_unnecessary = RemoveUnnecessaryLines(unioned)
-        
-        ShowAllcharinfoArray(unioned)
     }
     
     /**
@@ -71,7 +66,8 @@ class PDFmethod2 {
             while(tet.get_char_info(page) > 0){
                 
                 var charinfo = CharInfo()
-                charinfo.text = text
+                charinfo.text = text.hankakuOnly
+                charinfo.text = ReplaceHankakuSymbol(charinfo.text)
                 charinfo.size = tet.fontsize()
                 charinfo.x = tet.x()
                 charinfo.y = tet.y()
@@ -95,6 +91,23 @@ class PDFmethod2 {
     }
     
     
+    /**
+     
+     - parameter text: 全角記号を半角記号に置き換える
+     
+     - returns: 半角記号に置き換えた後の文字列
+     */
+    func ReplaceHankakuSymbol(text: String) -> String {
+        let pattern_zenkaku = ["（", "）", "／"]
+        let pattern_hankaku = ["(", ")", "/"]
+
+        var hankaku_text = text
+        for i in 0..<pattern_hankaku.count {
+            hankaku_text = hankaku_text.stringByReplacingOccurrencesOfString(pattern_zenkaku[i], withString: pattern_hankaku[i])
+        }
+        
+        return hankaku_text
+    }
     
     /**
      内容が重複している配列を削除する
@@ -258,8 +271,6 @@ class PDFmethod2 {
         return unionedArray
     }
     
-    
-    
 
     /**
      CharInfoのテキストをわかりやすく表示するテスト関数
@@ -277,6 +288,24 @@ class PDFmethod2 {
         }
     }
     
+    
+    /**
+     CharInfoの1オブジェクトを受け取ってテキストを結合した文字列を取得する
+     
+     - parameter charinfo: 結合した文字列を取得したいCharInfoオブジェクト
+     
+     - returns: 結合した文字列
+     */
+    func GetLineText(charinfo: [CharInfo]) -> String {
+        var linetext = ""
+        for i in 0..<charinfo.count {
+            linetext += charinfo[i].text
+        }
+        
+        return linetext
+    }
+    
+    
     /**
      不要な行の削除をする
      
@@ -286,6 +315,64 @@ class PDFmethod2 {
      */
     func RemoveUnnecessaryLines(charinfo: [[CharInfo]]) -> [[CharInfo]] {
         var removed = charinfo
+        var pivot_index = 0
+        
+        //平成xx年度の行を見つける
+        for i in 0..<charinfo.count {
+            let linetext = GetLineText(charinfo[i])
+            
+            if linetext.containsString("平成") {
+                pivot_index = i
+                break
+            }
+        }
+        
+        //平成xx年度の行より上の行を取り除く
+        for i in (0..<pivot_index).reverse() {
+            removed.removeAtIndex(i)
+        }
+        
+        //スタッフ名が含まれている行を記録する
+        let staffnameArray = DBmethod().StaffNameArrayGet()
+        if staffnameArray == nil {
+            //アラート表示
+            let alert: UIAlertController = UIAlertController(title: "スタッフ登録エラー", message: "設定画面でスタッフを登録して下さい", preferredStyle:  UIAlertControllerStyle.Alert)
+            let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler:{
+                (action: UIAlertAction!) -> Void in
+                print("OK")
+            })
+            
+            alert.addAction(defaultAction)
+            
+            self.presentViewController(alert, animated: true, completion: nil)
+        }else {
+            //各行にスタッフ名が含まれているかを検索
+            var contains_staffname_line:[Int] = []
+            for i in 0..<removed.count {
+                let linetext = GetLineText(removed[i])
+                
+                for j in 0..<staffnameArray!.count {
+                    if linetext.containsString(staffnameArray![j]) {
+                        contains_staffname_line.append(i)
+                        break
+                    }
+                }
+            }
+            
+            //スタッフ名が含まれていない行を削除
+            for i in (1..<removed.count).reverse() {
+                if contains_staffname_line.indexOf(i) == nil {
+                    removed.removeAtIndex(i)
+                }
+            }
+            
+            //先頭文字が数字でない行を削除
+            for i in (1..<removed.count).reverse() {
+                if Int(removed[i][0].text) == nil {
+                    removed.removeAtIndex(i)
+                }
+            }
+        }
         
         return removed
     }
