@@ -416,7 +416,7 @@ class PDFmethod2: UIViewController {
     
     
     /**
-     全スタッフ分の1ごとのシフトを取得する
+     全スタッフ分の1日ごとのシフトを取得する
      
      - parameter charinfo: 平成xx年度とスタッフのシフトが記述された行が格納されたcharinfo2次元配列
      
