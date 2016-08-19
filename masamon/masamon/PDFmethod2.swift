@@ -39,7 +39,12 @@ class PDFmethod2: UIViewController {
         
         let unioned = UnionArrayByY(YaverageArray, charinfo: sorted)
         
-        let removed_unnecessary = RemoveUnnecessaryLines(unioned)
+        //スタッフ名が登録されている場合のみ処理を進める
+        if CheckStaffNameDB() == true {
+            let removed_unnecessary = RemoveUnnecessaryLines(unioned)
+            
+            GetSplitShiftAllStaffByDay(removed_unnecessary)
+        }
     }
     
     /**
@@ -334,49 +339,60 @@ class PDFmethod2: UIViewController {
         
         //スタッフ名が含まれている行を記録する
         let staffnameArray = DBmethod().StaffNameArrayGet()
-        if staffnameArray == nil {
+        
+        //各行にスタッフ名が含まれているかを検索
+        var contains_staffname_line:[Int] = []
+        for i in 0..<removed.count {
+            let linetext = GetLineText(removed[i])
+            
+            for j in 0..<staffnameArray!.count {
+                if linetext.containsString(staffnameArray![j]) {
+                    contains_staffname_line.append(i)
+                    break
+                }
+            }
+        }
+        
+        //スタッフ名が含まれていない行を削除
+        for i in (1..<removed.count).reverse() {
+            if contains_staffname_line.indexOf(i) == nil {
+                removed.removeAtIndex(i)
+            }
+        }
+        
+        //先頭文字が数字でない行を削除
+        for i in (1..<removed.count).reverse() {
+            if Int(removed[i][0].text) == nil {
+                removed.removeAtIndex(i)
+            }
+        }
+        
+        
+        return removed
+    }
+    
+    /**
+     スタッフがデータベースに登録されているかチェック
+     
+     - returns: 1名でも登録されていたらtrue、未登録ならfalse
+     */
+    func CheckStaffNameDB() -> Bool {
+        let number_of_people = DBmethod().StaffNameAllRecordGet()
+        if number_of_people != nil {
+            return true
+        }else{
             //アラート表示
-            let alert: UIAlertController = UIAlertController(title: "スタッフ登録エラー", message: "設定画面でスタッフを登録して下さい", preferredStyle:  UIAlertControllerStyle.Alert)
+            let alert: UIAlertController = UIAlertController(title: "取り込みエラー", message: "設定画面でスタッフを登録して下さい", preferredStyle:  UIAlertControllerStyle.Alert)
             let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler:{
                 (action: UIAlertAction!) -> Void in
-                print("OK")
             })
             
             alert.addAction(defaultAction)
             
             self.presentViewController(alert, animated: true, completion: nil)
-        }else {
-            //各行にスタッフ名が含まれているかを検索
-            var contains_staffname_line:[Int] = []
-            for i in 0..<removed.count {
-                let linetext = GetLineText(removed[i])
-                
-                for j in 0..<staffnameArray!.count {
-                    if linetext.containsString(staffnameArray![j]) {
-                        contains_staffname_line.append(i)
-                        break
-                    }
-                }
-            }
-            
-            //スタッフ名が含まれていない行を削除
-            for i in (1..<removed.count).reverse() {
-                if contains_staffname_line.indexOf(i) == nil {
-                    removed.removeAtIndex(i)
-                }
-            }
-            
-            //先頭文字が数字でない行を削除
-            for i in (1..<removed.count).reverse() {
-                if Int(removed[i][0].text) == nil {
-                    removed.removeAtIndex(i)
-                }
-            }
+            return false
         }
-        
-        return removed
     }
-    
     
     /**
      1クールが何日あるか、取り込んだシフトの年月を取得する
@@ -396,5 +412,51 @@ class PDFmethod2: UIViewController {
         let monthrange = CommonMethod().GetShiftCoursMonthRange(shiftyearandmonth.startcoursmonthyear, shiftstartmonth: shiftyearandmonth.startcoursmonth)
         let length = monthrange.length
         return (shiftyearandmonth,length)
+    }
+    
+    
+    /**
+     全スタッフ分の1ごとのシフトを取得する
+     
+     - parameter charinfo: 平成xx年度とスタッフのシフトが記述された行が格納されたcharinfo2次元配列
+     
+     - returns: スタッフごとにシフト名を格納したString2次元配列
+     */
+    func GetSplitShiftAllStaffByDay(charinfo: [[CharInfo]]) -> [[String]]{
+        var splitdayshift: [[String]] = []
+        
+        let staffnumber = DBmethod().StaffNumberGet()
+        let staffnameDBArray = DBmethod().StaffNameArrayGet()
+
+        //登録したスタッフの人数分だけループする
+        for i in 1...staffnumber {
+            var staffname = ""
+            let one_person_charinfo = charinfo[i]
+            let one_person_textline = GetLineText(one_person_charinfo)
+            
+            //名前検索
+            for j in 0..<staffnameDBArray!.count {
+                if one_person_textline.containsString(staffnameDBArray![j]) == true {
+                    staffname = staffnameDBArray![j]
+                    break
+                }
+            }
+            
+            //シフト文字の始まりの場所を記録する
+            var shift_start = 0
+            let staffname_end_char = staffname[staffname.endIndex.predecessor()]
+            for j in 0..<one_person_charinfo.count {
+                let text = one_person_charinfo[j].text
+                
+                if text == String(staffname_end_char) {
+                    shift_start = j+1
+                    break
+                }
+            }
+            
+            //TODO: ここからx座標をもとに判断していく
+        }
+        
+        return splitdayshift
     }
 }
