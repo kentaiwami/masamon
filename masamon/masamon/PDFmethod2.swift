@@ -376,4 +376,25 @@ class PDFmethod2: UIViewController {
         
         return removed
     }
+    
+    
+    /**
+     1クールが何日あるか、取り込んだシフトの年月を取得する
+     
+     - parameter text: 平成xx年度が記述された文字列
+     
+     - returns: year:                  シフトの年度(和暦)
+                startcoursmonth:       10日〜30日(31日)までの月
+                startcoursmonthyear:   10日〜30日(31日)までの年(和暦)
+                endcoursmonth:         1日〜10日までの月
+                endcoursmonthyear:     1日〜10日までの年(和暦)
+                length:                1クールの日数
+     */
+    func GetShiftYearMonth(text: String) -> ((year: Int, startcoursmonth: Int, startcoursmonthyear: Int, endcoursmonth: Int, endcoursmonthyear: Int), length: Int){
+        //1クールが全部で何日間あるかを判断するため
+        let shiftyearandmonth = CommonMethod().JudgeYearAndMonth(text)
+        let monthrange = CommonMethod().GetShiftCoursMonthRange(shiftyearandmonth.startcoursmonthyear, shiftstartmonth: shiftyearandmonth.startcoursmonth)
+        let length = monthrange.length
+        return (shiftyearandmonth,length)
+    }
 }
