@@ -38,7 +38,8 @@ class PDFmethod2: UIViewController {
         }
         
         let unioned = UnionArrayByY(YaverageArray, charinfo: sorted)
-        
+        let days_charinfo = GetDaysCharInfo(unioned)
+
         //スタッフ名が登録されている場合のみ処理を進める
         if CheckStaffNameDB() == true {
             var removed_unnecessary = RemoveUnnecessaryLines(unioned)
@@ -309,6 +310,34 @@ class PDFmethod2: UIViewController {
         }
         
         return linetext
+    }
+    
+    
+    /**
+     日付だけが記述されている行を取り出す
+     
+     - parameter charinfo: 同じ行の結合が完了したcharinfo2次元配列
+     
+     - returns: 日付が記述されているcharinfo1次元配列
+     */
+    func GetDaysCharInfo(charinfoArray: [[CharInfo]]) -> [CharInfo] {
+        for i in 0..<charinfoArray.count {
+            var count = 0
+            for j in 0..<charinfoArray[i].count {
+                let charinfo = charinfoArray[i][j]
+                if Int(charinfo.text) == nil {
+                    break
+                }else{
+                    count += 1
+                }
+                
+                if count == charinfoArray[i].count {
+                    return charinfoArray[i]
+                }
+            }
+        }
+        
+        return charinfoArray[0]
     }
     
     
