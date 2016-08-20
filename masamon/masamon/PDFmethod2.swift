@@ -43,9 +43,10 @@ class PDFmethod2: UIViewController {
         //スタッフ名が登録されている場合のみ処理を進める
         if CheckStaffNameDB() == true {
             var removed_unnecessary = RemoveUnnecessaryLines(unioned)
+            
             let shiftyearmonth = GetShiftYearMonth(GetLineText(removed_unnecessary[0]))
             removed_unnecessary.removeAtIndex(0)
-            GetSplitShiftAllStaffByDay(removed_unnecessary)
+            GetSplitShiftAllStaffByDay(removed_unnecessary, days: days_charinfo)
         }
     }
     
@@ -446,11 +447,12 @@ class PDFmethod2: UIViewController {
     /**
      全スタッフ分の1日ごとのシフトを取得する
      
-     - parameter charinfo: 平成xx年度とスタッフのシフトが記述された行が格納されたcharinfo2次元配列
+     - parameter charinfo: スタッフのシフトが記述された行が格納されたcharinfo2次元配列
+     - parameter days: 日付の行が格納されたcharinfo1次元配列
      
      - returns: スタッフごとにシフト名を格納したString2次元配列
      */
-    func GetSplitShiftAllStaffByDay(charinfo: [[CharInfo]]) -> [[String]]{
+    func GetSplitShiftAllStaffByDay(charinfo: [[CharInfo]], days:[CharInfo]) -> [[String]]{
         var splitdayshift: [[String]] = []
         
         let staffnumber = DBmethod().StaffNumberGet()
