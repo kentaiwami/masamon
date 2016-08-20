@@ -51,7 +51,10 @@ class PDFmethod2: UIViewController {
             removed_unnecessary.removeAtIndex(0)
             
             let limitArray = GetLimitArray(days_charinfo, length: shiftyearmonth.length)
-            GetSplitShiftAllStaffByDay(removed_unnecessary, limit: limitArray)
+            let splitshiftArray = GetSplitShiftAllStaffByDay(removed_unnecessary, limit: limitArray)
+            
+            let coordinated = CoordinateMergedCell(removed_unnecessary, splitshift: splitshiftArray)
+            
         }
     }
     
@@ -545,11 +548,40 @@ class PDFmethod2: UIViewController {
                 splitdayshift[i].append(oneday_shift)
 //                splitdayshift[0].append(oneday_shift)
             }
-            print(staffname)
-            print(splitdayshift[i])
-            print("**********************")
-
+//            print(staffname)
+//            print(splitdayshift[i])
+//            print("**********************")
         }
         return splitdayshift
+    }
+    
+    
+    /**
+     結合されたセルを判定して、配列に内容を反映させる
+     ex.) 配列が"遅","研","修"となっており、研修が結合されている場合は"遅","研修","研修"に修正する
+     
+     - parameter charinfo:   CharInfoが格納された2次元配列
+     - parameter splitshift: 1日ごとのシフトに分割したString2次元配列
+     
+     - returns: 結合修正済みの2次元配列
+     */
+    func CoordinateMergedCell(charinfo: [[CharInfo]], splitshift: [[String]]) -> [[String]] {
+        var coordinatedArray = splitshift
+        
+        //        for i in 0..<charinfo.count {
+        //            let test1 = charinfo[i]
+        //            for j in 0..<test1.count - 1 {
+        //                let ABC = test1[j+1].x - test1[j].x
+        //                if ABC > 20.0 {
+        //                    let t1 = test1[j+1].text
+        //                    let t = test1[j].text
+        //                    print(GetLineText(charinfo[i]))
+        //                    print(t + " " + t1 + " " + String(ABC))
+        //                    print("")
+        //                }
+        //            }
+        //        }
+
+        return coordinatedArray
     }
 }
