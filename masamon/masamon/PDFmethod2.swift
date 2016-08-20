@@ -41,8 +41,9 @@ class PDFmethod2: UIViewController {
         
         //スタッフ名が登録されている場合のみ処理を進める
         if CheckStaffNameDB() == true {
-            let removed_unnecessary = RemoveUnnecessaryLines(unioned)
-            
+            var removed_unnecessary = RemoveUnnecessaryLines(unioned)
+            let shiftyearmonth = GetShiftYearMonth(GetLineText(removed_unnecessary[0]))
+            removed_unnecessary.removeAtIndex(0)
             GetSplitShiftAllStaffByDay(removed_unnecessary)
         }
     }
@@ -337,10 +338,8 @@ class PDFmethod2: UIViewController {
             removed.removeAtIndex(i)
         }
         
-        //スタッフ名が含まれている行を記録する
+        //各行にスタッフ名が含まれているかを検索して記録する
         let staffnameArray = DBmethod().StaffNameArrayGet()
-        
-        //各行にスタッフ名が含まれているかを検索
         var contains_staffname_line:[Int] = []
         for i in 0..<removed.count {
             let linetext = GetLineText(removed[i])
@@ -429,7 +428,7 @@ class PDFmethod2: UIViewController {
         let staffnameDBArray = DBmethod().StaffNameArrayGet()
 
         //登録したスタッフの人数分だけループする
-        for i in 1...staffnumber {
+        for i in 0..<staffnumber {
             var staffname = ""
             let one_person_charinfo = charinfo[i]
             let one_person_textline = GetLineText(one_person_charinfo)
@@ -454,7 +453,11 @@ class PDFmethod2: UIViewController {
                 }
             }
             
-            //TODO: ここからx座標をもとに判断していく
+            for j in 0..<one_person_charinfo.count {
+                print(one_person_charinfo[j].text + " " + String(one_person_charinfo[j].x))
+            }
+            
+            print("******************************")
         }
         
         return splitdayshift
