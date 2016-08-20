@@ -50,8 +50,7 @@ class PDFmethod2: UIViewController {
             removed_unnecessary.removeAtIndex(0)
             
             let limitArray = GetLimitArray(days_charinfo, length: shiftyearmonth.length)
-            print(limitArray)
-            //GetSplitShiftAllStaffByDay(removed_unnecessary, limit: limitArray)
+            GetSplitShiftAllStaffByDay(removed_unnecessary, limit: limitArray)
         }
     }
     
@@ -500,6 +499,7 @@ class PDFmethod2: UIViewController {
 
         //登録したスタッフの人数分だけループする
         for i in 0..<staffnumber {
+            splitdayshift.append([])
             var staffname = ""
             let one_person_charinfo = charinfo[i]
             let one_person_textline = GetLineText(one_person_charinfo)
@@ -523,8 +523,35 @@ class PDFmethod2: UIViewController {
                     break
                 }
             }
+            
+            //リミット値を参考に1ごとのシフトを抽出する
+            var current_shift_index = shift_start
+            for j in 0..<limit.count {
+                let limit_x = limit[j]
+                var current_shift_x = one_person_charinfo[current_shift_index].x
+                var current_shift_text = one_person_charinfo[current_shift_index].text
+                var oneday_shift = ""
+                
+                while current_shift_x <= limit_x {
+                    oneday_shift += current_shift_text
+                    
+                    current_shift_index += 1
+                    current_shift_x = one_person_charinfo[current_shift_index].x
+                    current_shift_text = one_person_charinfo[current_shift_index].text
+                }
+                
+                splitdayshift[i].append(oneday_shift)
+                
+            }
+            
         }
-        
+//        let TEST = 3
+//        print(splitdayshift[TEST])
+//        print(splitdayshift[TEST].count)
+//        for i in 0..<charinfo[3].count {
+//            print(charinfo[3][i].text + " " + String(charinfo[3][i].x))
+//        }
+//        print(limit[13])
         return splitdayshift
     }
 }
