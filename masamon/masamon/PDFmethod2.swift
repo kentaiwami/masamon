@@ -41,7 +41,7 @@ class PDFmethod2: UIViewController {
                 YaverageArray.append(Get_Y_Average(sorted[i]))
             }
             
-            let unioned = UnionArrayByY(YaverageArray, charinfo: sorted)
+            let unioned = UnionArrayByY(YaverageArray, charinfoArrays: sorted)
             
             let days_charinfo = GetDaysCharInfo(unioned)
             
@@ -128,24 +128,24 @@ class PDFmethod2: UIViewController {
     /**
      内容が重複している配列を削除する
      
-     - parameter charinfoArray: CharInfoを格納した2次元配列
+     - parameter charinfoArrays: CharInfoを格納した2次元配列
      
      - returns: テキストは完全一致,y座標は近似している配列(余分に存在する配列)を削除した配列
      */
-    func RemoveOverlapArray(charinfoArray: [[CharInfo]]) -> [[CharInfo]] {
+    func RemoveOverlapArray(charinfoArrays: [[CharInfo]]) -> [[CharInfo]] {
         
-        var removedcharinfoArray = charinfoArray
+        var removedcharinfoArray = charinfoArrays
         var matchKeyArray: [Int] = []               //比較対象元(添字が小さい)
         var matchValueArray: [Int] = []             //比較対象先(添字が大きい)
         var match_count = 0
         
         //テキストが重複している配列の中身を検出する
-        for i in 0..<charinfoArray.count - 1 {
-            for j in i+1..<charinfoArray.count {
-                if charinfoArray[i].count == charinfoArray[j].count {
-                    for k in 0..<charinfoArray[i].count {
-                        let charinfo1 = charinfoArray[i][k]
-                        let charinfo2 = charinfoArray[j][k]
+        for i in 0..<charinfoArrays.count - 1 {
+            for j in i+1..<charinfoArrays.count {
+                if charinfoArrays[i].count == charinfoArrays[j].count {
+                    for k in 0..<charinfoArrays[i].count {
+                        let charinfo1 = charinfoArrays[i][k]
+                        let charinfo2 = charinfoArrays[j][k]
                         if charinfo1.text == charinfo2.text {
                             match_count += 1
                         }else {
@@ -154,7 +154,7 @@ class PDFmethod2: UIViewController {
                     }
 
                     //テキストが全て一致したかを判断する
-                    if match_count == charinfoArray[i].count {
+                    if match_count == charinfoArrays[i].count {
                         matchKeyArray.append(i)
                         matchValueArray.append(j)
                     }
@@ -165,8 +165,8 @@ class PDFmethod2: UIViewController {
         
         //matchkey,value配列からY座標の平均値が全く異なるものを外す処理
         for i in (0..<matchKeyArray.count).reverse() {
-            let key_Yave = Get_Y_Average(charinfoArray[matchKeyArray[i]])
-            let value_Yave = Get_Y_Average(charinfoArray[matchValueArray[i]])
+            let key_Yave = Get_Y_Average(charinfoArrays[matchKeyArray[i]])
+            let value_Yave = Get_Y_Average(charinfoArrays[matchValueArray[i]])
             
             //テキストは完全一致でもY座標が近似でない場合
             if !(value_Yave-tolerance_y...value_Yave+tolerance_y ~= key_Yave) {
@@ -193,12 +193,12 @@ class PDFmethod2: UIViewController {
     /**
      xは昇順，y座標は降順(PDFテキストの上から順)に並び替える
      
-     - parameter charinfo: ソートを行いたいCharInfoが格納された2次元配列
+     - parameter charinfoArrays: ソートを行いたいCharInfoが格納された2次元配列
      
      - returns: ソート後のCharInfoが格納された2次元配列
      */
-    func SortcharinfoArray(charinfo: [[CharInfo]]) -> [[CharInfo]] {
-        var sorted = charinfo
+    func SortcharinfoArray(charinfoArrays: [[CharInfo]]) -> [[CharInfo]] {
+        var sorted = charinfoArrays
         
         sorted.sortInPlace { $0[0].y > $1[0].y }
         
@@ -213,17 +213,17 @@ class PDFmethod2: UIViewController {
     /**
      引数で渡された配列のy座標の平均を求めて返す
      
-     - parameter charinfo: y座標の平均を求めたいCharInfoが格納された1次元配列
+     - parameter charinfoArray: y座標の平均を求めたいCharInfoが格納された1次元配列
      
      - returns: y座標の平均値
      */
-    func Get_Y_Average(charinfo: [CharInfo]) -> Double {
+    func Get_Y_Average(charinfoArray: [CharInfo]) -> Double {
         var sum = 0.0
-        for i in 0..<charinfo.count {
-            sum += charinfo[i].y
+        for i in 0..<charinfoArray.count {
+            sum += charinfoArray[i].y
         }
         
-        return (sum/Double(charinfo.count))
+        return (sum/Double(charinfoArray.count))
     }
     
     
@@ -231,12 +231,12 @@ class PDFmethod2: UIViewController {
      平均値の配列をもとに誤差許容範囲内同士の配列を結合する関数
      
      - parameter aveArray: 平均値が格納された1次元配列(aveArray[i]の値はcharinfo[i]の平均値)
-     - parameter charinfo: CharInfoが格納された2次元配列
+     - parameter charinfoArrays: CharInfoが格納された2次元配列
      
      - returns: y座標が近似している配列を結合した2次元配列
      */
-    func UnionArrayByY(aveArray: [Double], charinfo: [[CharInfo]]) -> [[CharInfo]]{
-        var unionedArray = charinfo
+    func UnionArrayByY(aveArray: [Double], charinfoArrays: [[CharInfo]]) -> [[CharInfo]]{
+        var unionedArray = charinfoArrays
         var pivot_index = 0
         var pivot = 0.0
         
@@ -244,7 +244,7 @@ class PDFmethod2: UIViewController {
         var grouping_index = 0
         
         //aveArrayの値が近いもの同士を記録する
-        for i in 0..<charinfo.count - 1 {
+        for i in 0..<charinfoArrays.count - 1 {
             pivot = aveArray[pivot_index]
             if (pivot-tolerance_y...pivot+tolerance_y ~= aveArray[i+1]) {
                 grouping[grouping_index].append(i)
@@ -291,13 +291,13 @@ class PDFmethod2: UIViewController {
     /**
      CharInfoのテキストをわかりやすく表示するテスト関数
      
-     - parameter charinfo: 表示したいCharInfoが格納された2次元配列
+     - parameter charinfoArrays: 表示したいCharInfoが格納された2次元配列
      */
-    func ShowAllcharinfoArray(charinfo: [[CharInfo]]) {
-        for i in 0..<charinfo.count {
+    func ShowAllcharinfoArray(charinfoArrays: [[CharInfo]]) {
+        for i in 0..<charinfoArrays.count {
             print(String(i) + ": ", terminator: "")
-            for j in 0..<charinfo[i].count {
-                let charinfo = charinfo[i][j]
+            for j in 0..<charinfoArrays[i].count {
+                let charinfo = charinfoArrays[i][j]
                 print(charinfo.text, terminator: "")
             }
             print("")
@@ -308,14 +308,14 @@ class PDFmethod2: UIViewController {
     /**
      CharInfoの1オブジェクトを受け取ってテキストを結合した文字列を取得する
      
-     - parameter charinfo: 結合した文字列を取得したいCharInfoオブジェクト
+     - parameter charinfoArray: 結合した文字列を取得したいCharInfoオブジェクト
      
      - returns: 結合した文字列
      */
-    func GetLineText(charinfo: [CharInfo]) -> String {
+    func GetLineText(charinfoArray: [CharInfo]) -> String {
         var linetext = ""
-        for i in 0..<charinfo.count {
-            linetext += charinfo[i].text
+        for i in 0..<charinfoArray.count {
+            linetext += charinfoArray[i].text
         }
         
         return linetext
@@ -325,45 +325,45 @@ class PDFmethod2: UIViewController {
     /**
      日付だけが記述されている行を取り出す
      
-     - parameter charinfo: 同じ行の結合が完了したcharinfo2次元配列
+     - parameter charinfoArrays: 同じ行の結合が完了したcharinfo2次元配列
      
      - returns: 日付が記述されているcharinfo1次元配列
      */
-    func GetDaysCharInfo(charinfoArray: [[CharInfo]]) -> [CharInfo] {
-        for i in 0..<charinfoArray.count {
+    func GetDaysCharInfo(charinfoArrays: [[CharInfo]]) -> [CharInfo] {
+        for i in 0..<charinfoArrays.count {
             var count = 0
-            for j in 0..<charinfoArray[i].count {
-                let charinfo = charinfoArray[i][j]
+            for j in 0..<charinfoArrays[i].count {
+                let charinfo = charinfoArrays[i][j]
                 if Int(charinfo.text) == nil {
                     break
                 }else{
                     count += 1
                 }
                 
-                if count == charinfoArray[i].count {
-                    return charinfoArray[i]
+                if count == charinfoArrays[i].count {
+                    return charinfoArrays[i]
                 }
             }
         }
         
-        return charinfoArray[0]
+        return charinfoArrays[0]
     }
     
     
     /**
      不要な行の削除をする
      
-     - parameter charinfo: 不要な行が含まれたCharInfoを格納している2次元配列
+     - parameter charinfoArrays: 不要な行が含まれたCharInfoを格納している2次元配列
      
      - returns: 不要な行を削除したCharInfoを格納している2次元配列
      */
-    func RemoveUnnecessaryLines(charinfo: [[CharInfo]]) -> [[CharInfo]] {
-        var removed = charinfo
+    func RemoveUnnecessaryLines(charinfoArrays: [[CharInfo]]) -> [[CharInfo]] {
+        var removed = charinfoArrays
         var pivot_index = 0
         
         //平成xx年度の行を見つける
-        for i in 0..<charinfo.count {
-            let linetext = GetLineText(charinfo[i])
+        for i in 0..<charinfoArrays.count {
+            let linetext = GetLineText(charinfoArrays[i])
             
             if linetext.containsString("平成") {
                 pivot_index = i
@@ -455,11 +455,11 @@ class PDFmethod2: UIViewController {
     /**
      1日ごとのリミット配列を取得する
      
-     - parameter days: 日付のCharInfoが格納された1次元配列
+     - parameter charinfodaysArray: 日付のCharInfoが格納された1次元配列
      - parameter length: 1クールの最大日数
      - returns: 1日ごとのリミット値(x座標)が格納されたDouble1次元配列
      */
-    func GetLimitArray(days: [CharInfo], length: Int) -> [Double] {
+    func GetLimitArray(charinfodaysArray: [CharInfo], length: Int) -> [Double] {
         var limitArray:[Double] = []
         var day = 11
         var index = -1
@@ -468,11 +468,11 @@ class PDFmethod2: UIViewController {
             switch day {
             case 10...length:
                 index += 2
-                limitArray.append(days[index].x)
+                limitArray.append(charinfodaysArray[index].x)
                 
             case 1...9:
                 index += 1
-                limitArray.append(days[index].x)
+                limitArray.append(charinfodaysArray[index].x)
             default:
                 break
             }
@@ -490,12 +490,12 @@ class PDFmethod2: UIViewController {
     /**
      全スタッフ分の1日ごとのシフトを取得する
      
-     - parameter charinfo: スタッフのシフトが記述された行が格納されたcharinfo2次元配列
+     - parameter charinfoArrays: スタッフのシフトが記述された行が格納されたcharinfo2次元配列
      - parameter limit: 1日ごとのx座標のリミット値が格納されたDouble次元配列
      
      - returns: スタッフごとにシフト名を格納したString2次元配列
      */
-    func GetSplitShiftAllStaffByDay(charinfo: [[CharInfo]], limit:[Double]) -> [[String]]{
+    func GetSplitShiftAllStaffByDay(charinfoArrays: [[CharInfo]], limit:[Double]) -> [[String]]{
         var splitdayshift: [[String]] = []
         
         let staffnumber = DBmethod().StaffNumberGet()
@@ -506,7 +506,7 @@ class PDFmethod2: UIViewController {
         for i in 0..<staffnumber {
             splitdayshift.append([])
             var staffname = ""
-            let one_person_charinfo = charinfo[i]
+            let one_person_charinfo = charinfoArrays[i]
             let one_person_textline = GetLineText(one_person_charinfo)
             
             //名前検索
@@ -560,12 +560,12 @@ class PDFmethod2: UIViewController {
      結合されたセルを判定して、配列に内容を反映させる
      ex.) 配列が"遅","研","修"となっており、研修が結合されている場合は"遅","研修","研修"に修正する
      
-     - parameter charinfo:   CharInfoが格納された2次元配列
+     - parameter charinfoArrays:   CharInfoが格納された2次元配列
      - parameter splitshift: 1日ごとのシフトに分割したString2次元配列
      
      - returns: 結合修正済みの2次元配列
      */
-    func CoordinateMergedCell(charinfo: [[CharInfo]], splitshift: [[String]]) -> [[String]] {
+    func CoordinateMergedCell(charinfoArrays: [[CharInfo]], splitshift: [[String]]) -> [[String]] {
         var coordinatedArray = splitshift
         
         //        for i in 0..<charinfo.count {
