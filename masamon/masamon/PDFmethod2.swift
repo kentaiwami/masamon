@@ -20,7 +20,8 @@ struct CharInfo {
 
 class PDFmethod2: UIViewController {
     
-    let tolerance = 3.0                         //同じ行と判定させるための許容誤差
+    let tolerance_y = 3.0                         //同じ行と判定させるための許容誤差
+    let tolerance_x = 7.0
     
     /**
      実行用のメソッド
@@ -84,7 +85,7 @@ class PDFmethod2: UIViewController {
                 charinfo.x = tet.x()
                 charinfo.y = tet.y()
                 
-                if !(prev_y-tolerance...prev_y+tolerance ~= tet.y()) {
+                if !(prev_y-tolerance_y...prev_y+tolerance_y ~= tet.y()) {
                     prev_y = tet.y()
                     charinfoArray.append([])
                     currentArrayIndex += 1
@@ -165,7 +166,7 @@ class PDFmethod2: UIViewController {
             let value_Yave = Get_Y_Average(charinfoArray[matchValueArray[i]])
             
             //テキストは完全一致でもY座標が近似でない場合
-            if !(value_Yave-tolerance...value_Yave+tolerance ~= key_Yave) {
+            if !(value_Yave-tolerance_y...value_Yave+tolerance_y ~= key_Yave) {
                 matchKeyArray.removeAtIndex(i)
                 matchValueArray.removeAtIndex(i)
             }
@@ -242,7 +243,7 @@ class PDFmethod2: UIViewController {
         //aveArrayの値が近いもの同士を記録する
         for i in 0..<charinfo.count - 1 {
             pivot = aveArray[pivot_index]
-            if (pivot-tolerance...pivot+tolerance ~= aveArray[i+1]) {
+            if (pivot-tolerance_y...pivot+tolerance_y ~= aveArray[i+1]) {
                 grouping[grouping_index].append(i)
                 grouping[grouping_index].append(i+1)
             }else {
@@ -498,6 +499,7 @@ class PDFmethod2: UIViewController {
         let staffnameDBArray = DBmethod().StaffNameArrayGet()
 
         //登録したスタッフの人数分だけループする
+//        for i in 22..<23 {
         for i in 0..<staffnumber {
             splitdayshift.append([])
             var staffname = ""
@@ -524,7 +526,7 @@ class PDFmethod2: UIViewController {
                 }
             }
             
-            //リミット値を参考に1ごとのシフトを抽出する
+            //リミット値を参考に1日ごとのシフトを抽出する
             var current_shift_index = shift_start
             for j in 0..<limit.count {
                 let limit_x = limit[j]
@@ -532,7 +534,7 @@ class PDFmethod2: UIViewController {
                 var current_shift_text = one_person_charinfo[current_shift_index].text
                 var oneday_shift = ""
                 
-                while current_shift_x <= limit_x {
+                while current_shift_x <= limit_x + tolerance_x {
                     oneday_shift += current_shift_text
                     
                     current_shift_index += 1
@@ -541,17 +543,13 @@ class PDFmethod2: UIViewController {
                 }
                 
                 splitdayshift[i].append(oneday_shift)
-                
+//                splitdayshift[0].append(oneday_shift)
             }
-            
+            print(staffname)
+            print(splitdayshift[i])
+            print("**********************")
+
         }
-//        let TEST = 3
-//        print(splitdayshift[TEST])
-//        print(splitdayshift[TEST].count)
-//        for i in 0..<charinfo[3].count {
-//            print(charinfo[3][i].text + " " + String(charinfo[3][i].x))
-//        }
-//        print(limit[13])
         return splitdayshift
     }
 }
