@@ -26,27 +26,32 @@ class PDFmethod2: UIViewController {
      実行用のメソッド
      */
     func RunPDFmethod() {
-        let charinfoArray = GetPDFGlyphInfo()
-        
-        let removed_overlap = RemoveOverlapArray(charinfoArray)
-        var sorted = SortcharinfoArray(removed_overlap)
-
-        //各配列のY座標の平均値を求める
-        var YaverageArray: [Double] = []
-        for i in 0..<sorted.count {
-            YaverageArray.append(Get_Y_Average(sorted[i]))
-        }
-        
-        let unioned = UnionArrayByY(YaverageArray, charinfo: sorted)
-        let days_charinfo = GetDaysCharInfo(unioned)
-
         //スタッフ名が登録されている場合のみ処理を進める
         if CheckStaffNameDB() == true {
+            
+            let charinfoArray = GetPDFGlyphInfo()
+            
+            let removed_overlap = RemoveOverlapArray(charinfoArray)
+            var sorted = SortcharinfoArray(removed_overlap)
+            
+            //各配列のY座標の平均値を求める
+            var YaverageArray: [Double] = []
+            for i in 0..<sorted.count {
+                YaverageArray.append(Get_Y_Average(sorted[i]))
+            }
+            
+            let unioned = UnionArrayByY(YaverageArray, charinfo: sorted)
+            
+            let days_charinfo = GetDaysCharInfo(unioned)
+            
             var removed_unnecessary = RemoveUnnecessaryLines(unioned)
             
             let shiftyearmonth = GetShiftYearMonth(GetLineText(removed_unnecessary[0]))
             removed_unnecessary.removeAtIndex(0)
-            GetSplitShiftAllStaffByDay(removed_unnecessary, days: days_charinfo)
+            
+            let limitArray = GetLimitArray(days_charinfo, length: shiftyearmonth.length)
+            print(limitArray)
+            //GetSplitShiftAllStaffByDay(removed_unnecessary, limit: limitArray)
         }
     }
     
@@ -445,14 +450,49 @@ class PDFmethod2: UIViewController {
     
     
     /**
+     1日ごとのリミット配列を取得する
+     
+     - parameter days: 日付のCharInfoが格納された1次元配列
+     - parameter length: 1クールの最大日数
+     - returns: 1日ごとのリミット値(x座標)が格納されたDouble1次元配列
+     */
+    func GetLimitArray(days: [CharInfo], length: Int) -> [Double] {
+        var limitArray:[Double] = []
+        var day = 11
+        var index = -1
+        
+        for _ in 0..<length {
+            switch day {
+            case 10...length:
+                index += 2
+                limitArray.append(days[index].x)
+                
+            case 1...9:
+                index += 1
+                limitArray.append(days[index].x)
+            default:
+                break
+            }
+            
+            if day < length {
+                day += 1
+            }else{
+                day = 1
+            }
+        }
+        
+        return limitArray
+    }
+    
+    /**
      全スタッフ分の1日ごとのシフトを取得する
      
      - parameter charinfo: スタッフのシフトが記述された行が格納されたcharinfo2次元配列
-     - parameter days: 日付の行が格納されたcharinfo1次元配列
+     - parameter limit: 1日ごとのx座標のリミット値が格納されたDouble次元配列
      
      - returns: スタッフごとにシフト名を格納したString2次元配列
      */
-    func GetSplitShiftAllStaffByDay(charinfo: [[CharInfo]], days:[CharInfo]) -> [[String]]{
+    func GetSplitShiftAllStaffByDay(charinfo: [[CharInfo]], limit:[Double]) -> [[String]]{
         var splitdayshift: [[String]] = []
         
         let staffnumber = DBmethod().StaffNumberGet()
@@ -483,12 +523,6 @@ class PDFmethod2: UIViewController {
                     break
                 }
             }
-            
-            for j in 0..<one_person_charinfo.count {
-                print(one_person_charinfo[j].text + " " + String(one_person_charinfo[j].x))
-            }
-            
-            print("******************************")
         }
         
         return splitdayshift
