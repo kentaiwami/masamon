@@ -18,11 +18,21 @@ struct CharInfo {
     var size = 0.0
 }
 
+/**
+ *  1日分のシフト名とx座標を格納する構造体
+ */
+struct OneDayShift {
+    var text = ""
+    var x = 0.0
+}
+
+
 class PDFmethod2: UIViewController {
     
     let tolerance_y = 3.0                         //同じ行と判定させるための許容誤差
-    let tolerance_x = 7.0
+    let tolerance_x = 7.0       //1日ごとのリミット値の許容誤差
     
+    let tolerance_onedayshift_x = 10.0     //x座標が近いOneDayShift同士の許容誤差
     /**
      実行用のメソッド
      */
@@ -53,8 +63,7 @@ class PDFmethod2: UIViewController {
             let limitArray = GetLimitArray(days_charinfo, length: shiftyearmonth.length)
             let splitshiftArray = GetSplitShiftAllStaffByDay(removed_unnecessary, limit: limitArray)
             
-            let coordinated = CoordinateMergedCell(removed_unnecessary, splitshift: splitshiftArray)
-            
+            let coordinated = CoordinateMergedCell(removed_unnecessary, splitshiftArrays: splitshiftArray)
         }
     }
     
@@ -495,14 +504,13 @@ class PDFmethod2: UIViewController {
      
      - returns: スタッフごとにシフト名を格納したString2次元配列
      */
-    func GetSplitShiftAllStaffByDay(charinfoArrays: [[CharInfo]], limit:[Double]) -> [[String]]{
-        var splitdayshift: [[String]] = []
+    func GetSplitShiftAllStaffByDay(charinfoArrays: [[CharInfo]], limit:[Double]) -> [[OneDayShift]]{
+        var splitdayshift: [[OneDayShift]] = []
         
         let staffnumber = DBmethod().StaffNumberGet()
         let staffnameDBArray = DBmethod().StaffNameArrayGet()
 
         //登録したスタッフの人数分だけループする
-//        for i in 22..<23 {
         for i in 0..<staffnumber {
             splitdayshift.append([])
             var staffname = ""
@@ -535,53 +543,111 @@ class PDFmethod2: UIViewController {
                 let limit_x = limit[j]
                 var current_shift_x = one_person_charinfo[current_shift_index].x
                 var current_shift_text = one_person_charinfo[current_shift_index].text
-                var oneday_shift = ""
+                var onedayshifttext = ""
+                var sum_x = 0.0
                 
+                //1日ごとのリミット値を超えない限り文字を連結する
                 while current_shift_x <= limit_x + tolerance_x {
-                    oneday_shift += current_shift_text
+                    onedayshifttext += current_shift_text
+                    sum_x += current_shift_x
                     
                     current_shift_index += 1
                     current_shift_x = one_person_charinfo[current_shift_index].x
                     current_shift_text = one_person_charinfo[current_shift_index].text
                 }
                 
-                splitdayshift[i].append(oneday_shift)
-//                splitdayshift[0].append(oneday_shift)
+                //連結した文字が複数の場合はx座標を平均値にする
+                let ave_x = sum_x/Double(onedayshifttext.characters.count)
+                
+                var onedayshift = OneDayShift()
+                onedayshift.text = onedayshifttext
+                onedayshift.x = ave_x
+                splitdayshift[i].append(onedayshift)
             }
-//            print(staffname)
-//            print(splitdayshift[i])
-//            print("**********************")
         }
         return splitdayshift
     }
     
     
     /**
+     OneDayShiftが等しいかを確認する
+     
+     - parameter obj1: 比較するOneDayShiftオブジェクト
+     - parameter obj2: 比較するOneDayShiftオブジェクト
+     
+     - returns: 等しいならtrue、等しくないならfalse
+     */
+    func EqualOneDayShift(obj1: OneDayShift, obj2: OneDayShift) -> Bool {
+        if (obj1.text == obj2.text) && (obj1.x == obj2.x) {
+            return true
+        }else {
+            return false
+        }
+    }
+    
+    /**
      結合されたセルを判定して、配列に内容を反映させる
      ex.) 配列が"遅","研","修"となっており、研修が結合されている場合は"遅","研修","研修"に修正する
      
      - parameter charinfoArrays:   CharInfoが格納された2次元配列
-     - parameter splitshift: 1日ごとのシフトに分割したString2次元配列
+     - parameter splitshift: 1日ごとのシフトに分割したOneDayShift2次元配列
      
      - returns: 結合修正済みの2次元配列
      */
-    func CoordinateMergedCell(charinfoArrays: [[CharInfo]], splitshift: [[String]]) -> [[String]] {
-        var coordinatedArray = splitshift
+    func CoordinateMergedCell(charinfoArrays: [[CharInfo]], splitshiftArrays: [[OneDayShift]]) -> [[String]] {
+        var splitshiftArrays = splitshiftArrays
+        let coordinatedArray:[[String]] = []
+        var current_onedayshiftArray:[OneDayShift] = []
+        var next_onedayshiftArray:[OneDayShift] = []
         
-        //        for i in 0..<charinfo.count {
-        //            let test1 = charinfo[i]
-        //            for j in 0..<test1.count - 1 {
-        //                let ABC = test1[j+1].x - test1[j].x
-        //                if ABC > 20.0 {
-        //                    let t1 = test1[j+1].text
-        //                    let t = test1[j].text
-        //                    print(GetLineText(charinfo[i]))
-        //                    print(t + " " + t1 + " " + String(ABC))
-        //                    print("")
-        //                }
-        //            }
-        //        }
-
+        for i in 0..<splitshiftArrays.count {
+            //x座標が近いonedayshift同士を記録する
+            for j in 0..<splitshiftArrays[i].count - 1 {
+                let oneday_next = splitshiftArrays[i][j+1]
+                let oneday_current = splitshiftArrays[i][j]
+                
+                if oneday_next.x - oneday_current.x < tolerance_onedayshift_x {
+                    current_onedayshiftArray.append(oneday_current)
+                    next_onedayshiftArray.append(oneday_next)
+                }
+            }
+            
+            //x座標が近いと判断されたOneDayShiftオブジェクトを削除＆削除位置を記録する
+            var current_obj_index = -1
+            var next_obj_index = -1
+            for j in 0..<next_onedayshiftArray.count {
+                let current_obj = current_onedayshiftArray[j]
+                let next_obj = next_onedayshiftArray[j]
+                
+                for k in (0..<splitshiftArrays[i].count).reverse() {
+                    if EqualOneDayShift(current_obj, obj2: splitshiftArrays[i][k]) {
+                        current_obj_index = k
+                    }
+                    
+                    if EqualOneDayShift(next_obj, obj2: splitshiftArrays[i][k]) {
+                        next_obj_index = k
+                    }
+                    
+                    if current_obj_index != -1 && next_obj_index != -1 {
+                        splitshiftArrays[i].removeAtIndex(next_obj_index)
+                        splitshiftArrays[i].removeAtIndex(current_obj_index)
+                        break
+                    }
+                }
+                
+                //削除したOneDayShiftを結合して挿入する
+                let combine_text = current_obj.text + next_obj.text
+                let ave_x = (current_obj.x + next_obj.x)/2.0
+                var new_onedayshift = OneDayShift()
+                new_onedayshift.text = combine_text
+                new_onedayshift.x = ave_x
+                splitshiftArrays[i].insert(new_onedayshift, atIndex: current_obj_index)
+                splitshiftArrays[i].insert(new_onedayshift, atIndex: next_obj_index)
+            }
+            current_onedayshiftArray.removeAll()
+            next_onedayshiftArray.removeAll()
+        }
+        
         return coordinatedArray
     }
 }
