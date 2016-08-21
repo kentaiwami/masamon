@@ -510,17 +510,12 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     /**
      pickerViewの表示列を設定
      
-     - parameter pickerView: 対象となるpickerView
+     - parameter pickerView: シフトグループを選択させるpickerView
      
      - returns: 表示する列の数
      */
     func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
-        
-        if pickerView.tag == 1 || pickerView.tag == 2 || pickerView.tag == 4 {
-            return 1
-        }else{
-            return 3
-        }
+        return 1
     }
     
     //表示個数
