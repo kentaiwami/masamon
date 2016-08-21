@@ -751,7 +751,13 @@ class PDFmethod: UIViewController {
     }
     
     
-    
+    /**
+     データベースへ取り込んだシフトを格納する
+     
+     - parameter update:     上書きならtrue、新規ならfalse
+     - parameter importname: 取り込み時のファイル名+拡張子
+     - parameter importpath: 取り込んだファイルのフルパス
+     */
     func RegistDataBase(update: Bool, importname: String, importpath: String) {
         var date = 11
         var flag = 0
@@ -857,7 +863,12 @@ class PDFmethod: UIViewController {
         }
     }
     
-    //入力したユーザ名の月給を計算して結果を記録する
+    
+    /**
+     入力したユーザ名の月給を計算して結果をデータベースへ格納する
+     
+     - parameter importname: 取り込み時のファイル名+拡張子
+     */
     func UserMonthlySalaryRegist(importname: String){
         var usershift:[String] = []
         
