@@ -511,7 +511,8 @@ class PDFmethod: UIViewController {
         let staffnameDBArray = DBmethod().StaffNameArrayGet()
 
         //登録したスタッフの人数分だけループする
-        for i in 0..<staffnumber {
+       
+        for i in 0..<staffnumber - 1 {
             splitdayshift.append([])
             var staffname = ""
             let one_person_charinfo = charinfoArrays[i]
