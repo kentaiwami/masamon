@@ -15,13 +15,14 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
     
     var shiftgroupnameUIPicker: UIPickerView = UIPickerView()
     var shifttimeUIPicker: UIPickerView = UIPickerView()
-    var shiftmanagerUIPicker: UIPickerView = UIPickerView()
+
     var pickerviewtoolBar = UIToolbar()
     var pickerdoneButton = UIBarButtonItem()
+    
     let shiftgroupname = CommonMethod().GetShiftGroupName()
+    
     var shiftgroupnametextfield = UITextField()
     var shifttimetextfield = UITextField()
-    var shiftmanagertextfield = UITextField()
 
     var starttime = ""
     var endtime = ""
@@ -54,12 +55,6 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
         shifttimeUIPicker.delegate = self
         shifttimeUIPicker.dataSource = self
         shifttimeUIPicker.tag = 3
-        
-        //シフトがマネージャー専用かを選択するpickerview
-        shiftmanagerUIPicker.frame = CGRectMake(0,0,self.view.bounds.width/2+20, 200.0)
-        shiftmanagerUIPicker.delegate = self
-        shiftmanagerUIPicker.dataSource = self
-        shiftmanagerUIPicker.tag = 4
         
         //pickerviewに表示するツールバー
         pickerviewtoolBar.barStyle = UIBarStyle.Default
@@ -196,7 +191,7 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
                         
                         if textflag {
                             //新規レコードの作成
-                            let newrecord = CommonMethod().CreateShiftSystemDBRecord(self.records[section][row].id,shiftname: textFields![0].text!, shiftgroup: textFields![1].text!, shifttime: textFields![2].text!, shiftstarttimerow: self.shiftstarttimeselectrow, shiftendtimerow: self.shiftendtimeselectrow, shiftmanager: textFields![3].text!)
+                            let newrecord = CommonMethod().CreateShiftSystemDBRecord(self.records[section][row].id,shiftname: textFields![0].text!, shiftgroup: textFields![1].text!, shifttime: textFields![2].text!, shiftstarttimerow: self.shiftstarttimeselectrow, shiftendtimerow: self.shiftendtimeselectrow)
 
                             //編集前のレコードを削除
                             DBmethod().DeleteRecord(self.records[section][row])
@@ -260,7 +255,7 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
                     }
 
                     if textflag {
-                        let newrecord = CommonMethod().CreateShiftSystemDBRecord(DBmethod().DBRecordCount(ShiftSystemDB),shiftname: textFields![0].text!, shiftgroup: textFields![1].text!, shifttime: textFields![2].text!, shiftstarttimerow: self.shiftstarttimeselectrow, shiftendtimerow: self.shiftendtimeselectrow, shiftmanager: textFields![3].text!)
+                        let newrecord = CommonMethod().CreateShiftSystemDBRecord(DBmethod().DBRecordCount(ShiftSystemDB),shiftname: textFields![0].text!, shiftgroup: textFields![1].text!, shifttime: textFields![2].text!, shiftstarttimerow: self.shiftstarttimeselectrow, shiftendtimerow: self.shiftendtimeselectrow)
 
                         DBmethod().AddandUpdate(newrecord, update: true)
                     }
@@ -280,10 +275,6 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
             
             //シフト時間の選択内容を入れるテキストフィールドを追加
             alert.addTextFieldWithConfigurationHandler(configurationshifttimeTextField)
-            
-            //シフト名がマネージャー専用かを選択するためのテキストフィールドを追加
-            alert.addTextFieldWithConfigurationHandler(configurationshiftmanagerTextField)
-            
             
             alert.addAction(Action)
             
@@ -329,8 +320,7 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
                 return time.count
             }
         }else{
-            pickerdoneButton.tag = 4
-            return shitmanagerarray.count
+            return 0
         }
     }
     
@@ -345,7 +335,7 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
                 return wavyline[row]
             }
         }else{
-            return self.shitmanagerarray[row]
+            return ""
         }
     }
     
@@ -353,7 +343,6 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
     var shiftgroupselectrow = 0
     var shiftstarttimeselectrow = 0
     var shiftendtimeselectrow = 0
-    var shiftmanagerselectrow = 0
     
     //pickerが選択されたとき
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
@@ -374,10 +363,6 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
             pickerdoneButton.tag = 3
             
             shifttimetextfield.text = starttime + " " + wavyline[0] + " " + endtime
-        }else if pickerView.tag == 4 {
-            shiftmanagertextfield.text = shitmanagerarray[row]
-            pickerdoneButton.tag = 4
-            shiftmanagerselectrow = row
         }
     }
     
@@ -401,16 +386,6 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
         shifttimetextfield = textField
     }
     
-    //シフトがマネージャー専用かを選択するテキストフィールドの設定をする
-    func configurationshiftmanagerTextField(textField: UITextField!){
-        textField.placeholder = "マネージャー専用かを入力"
-        textField.inputView = self.shiftmanagerUIPicker
-        textField.inputAccessoryView = self.pickerviewtoolBar
-        textField.tag = 4
-        textField.delegate = self
-        shiftmanagertextfield = textField
-    }
-    
     //ツールバーの完了ボタンを押した時の関数
     func donePicker(sender:UIButton){
         
@@ -419,13 +394,9 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
             shifttimetextfield.becomeFirstResponder()
         }else if sender.tag == 3 {      //シフト時間の完了ボタン
             shifttimetextfield.resignFirstResponder()
-            shiftmanagertextfield.becomeFirstResponder()
-        }else if sender.tag == 4 {      //マネージャー専用の完了ボタン
-            shiftmanagertextfield.resignFirstResponder()
         }
     }
     
-    let shitmanagerarray = ["マネージャーのみ", "それ以外"]
     //textfieldがタップされた時
     func textFieldDidBeginEditing(textField: UITextField) {
         if textField.tag == 1 {             //シフトグループ選択
@@ -436,9 +407,6 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
             shifttimeUIPicker.selectRow(shiftstarttimeselectrow, inComponent: 0, animated: true)
             shifttimeUIPicker.selectRow(shiftendtimeselectrow, inComponent: 2, animated: true)
             textField.text = time[shiftstarttimeselectrow] + " " + wavyline[0] + " " + time[shiftendtimeselectrow]
-        }else if textField.tag == 4 {       //マネージャー専用選択
-            shiftmanagerUIPicker.selectRow(shiftmanagerselectrow, inComponent: 0, animated: true)
-            textField.text = shitmanagerarray[shiftmanagerselectrow]
         }
     }
 

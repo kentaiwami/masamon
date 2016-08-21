@@ -197,16 +197,14 @@ class CommonMethod: UIViewController {
      - parameter shifttime:         シフトの時間
      - parameter shiftstarttimerow: シフト開始時間のpickerviewが何行目か
      - parameter shiftendtimerow:   シフト終了時間のpickerviewが何行目か
-     - parameter shiftmanager:      シフトがマネージャー専用かどうか
      
      - returns: 生成したShiftSystemDBレコード
      */
-    func CreateShiftSystemDBRecord(id: Int, shiftname: String, shiftgroup: String, shifttime: String, shiftstarttimerow: Int, shiftendtimerow: Int, shiftmanager: String) -> ShiftSystemDB{
+    func CreateShiftSystemDBRecord(id: Int, shiftname: String, shiftgroup: String, shifttime: String, shiftstarttimerow: Int, shiftendtimerow: Int) -> ShiftSystemDB{
         let record = ShiftSystemDB()
         var gid = 0
         var start = 0.0
         var end = 0.0
-        var manager = false
         
         switch(shiftgroup){
         case "早番":
@@ -241,13 +239,6 @@ class CommonMethod: UIViewController {
         }else{
             start = Double(shiftstarttimerow) - (Double(shiftstarttimerow) * 0.5) + 0.5
             end = Double(shiftendtimerow) - (Double(shiftendtimerow) * 0.5) + 0.5
-        }
-        
-        //マネージャー専用かを判断
-        if shiftmanager.containsString("それ以外") {
-            manager = false
-        }else{
-            manager = true
         }
         
         record.id = id
