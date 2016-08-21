@@ -596,7 +596,7 @@ class PDFmethod2: UIViewController {
      */
     func CoordinateMergedCell(charinfoArrays: [[CharInfo]], splitshiftArrays: [[OneDayShift]]) -> [[String]] {
         var splitshiftArrays = splitshiftArrays
-        let coordinatedArray:[[String]] = []
+        var coordinatedArray:[[String]] = []
         var current_onedayshiftArray:[OneDayShift] = []
         var next_onedayshiftArray:[OneDayShift] = []
         
@@ -646,6 +646,15 @@ class PDFmethod2: UIViewController {
             }
             current_onedayshiftArray.removeAll()
             next_onedayshiftArray.removeAll()
+        }
+        
+        //Stringの2次元配列に格納する
+        for i in 0..<splitshiftArrays.count {
+            coordinatedArray.append([])
+            for j in 0..<splitshiftArrays[i].count {
+                let splitshift = splitshiftArrays[i][j]
+                coordinatedArray[i].append(splitshift.text)
+            }
         }
         
         return coordinatedArray
