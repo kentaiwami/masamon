@@ -49,14 +49,14 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let staffname = ["店長","長谷川M","岩渕M","伊藤M","横尾","長谷川","佐々木(浩)","佐々木(聡)","佐藤","廣島","一藤","伊藤","堀下","須藤","戸倉","近江谷","小林","山上","山岸","對馬","小坂","森","赤間","田中","佐々木","上見"]
-            for i in 0..<staffname.count {
-            let ABC = StaffNameDB()
-            ABC.id = i
-            ABC.name = staffname[i]
-            DBmethod().AddandUpdate(ABC, update: true)
-            }
-        PDFmethod2().RunPDFmethod()
+//        let staffname = ["店長","長谷川M","岩渕M","伊藤M","横尾","長谷川","佐々木(浩)","佐々木(聡)","佐藤","廣島","一藤","伊藤","堀下","須藤","戸倉","近江谷","小林","山上","山岸","對馬","小坂","森","赤間","田中","佐々木","上見"]
+//            for i in 0..<staffname.count {
+//            let ABC = StaffNameDB()
+//            ABC.id = i
+//            ABC.name = staffname[i]
+//            DBmethod().AddandUpdate(ABC, update: true)
+//            }
+
 //        //クラッシュ等で参照されずに残ってしまったファイルを手動で削除する(保守用)
 //        let documentspath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
 //        let Inboxpath = documentspath + "/Inbox/"       //Inboxまでのパス
@@ -274,36 +274,21 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         }else{
             progress.show(style: OrangeClearStyle())
             dispatch_async_global{
-                
+
                 //PDF内のデータをテキスト配列に格納＆エラーのチェック
-                var pdfalltextarray: [String] = []
-                pdfalltextarray = PDFmethod().AllTextGet()
-                let pdfdata = PDFmethod().SplitDayShiftGet(pdfalltextarray)
-                
-                
-                //エラーがない場合はデータベースへ書き込みを行う
-                if self.appDelegate.errorstaffnamepdf.count == 0 && self.appDelegate.errorshiftnamepdf.count == 0 {
-                    PDFmethod().RegistDataBase(pdfdata.shiftarray, shiftcours: pdfdata.shiftcours, importname: self.appDelegate.filename, importpath: self.Libralypath+"/"+self.appDelegate.filename,update: self.appDelegate.update)
-                    PDFmethod().UserMonthlySalaryRegist(pdfdata.shiftarray, shiftcours: pdfdata.shiftcours,importname: self.appDelegate.filename)
-                }
+                let pdfmethod = PDFmethod2()
+                pdfmethod.RunPDFmethod()
                 
                 self.dispatch_async_main{
                     self.progress.dismiss({ () -> Void in
-                        
-                        if self.appDelegate.errorstaffnamepdf.count != 0 {  //スタッフ名認識エラーがある場合
-                            if self.staffnamecountflag {
-                                self.appDelegate.errorstaffnamefastcount = self.appDelegate.errorstaffnamepdf.count
-                                self.staffnamecountflag = false
-                            }
-                            self.StaffNameErrorAlertShowPDF()
-                        }else{
-                            if self.appDelegate.errorshiftnamepdf.count != 0 {  //シフト認識エラーがある場合
-                                if self.staffshiftcountflag {
-                                    self.appDelegate.errorshiftnamefastcount = self.appDelegate.errorshiftnamepdf.count
-                                    self.staffshiftcountflag = false
-                                }
-                                self.StaffShiftErrorAlertShowPDF()
-                            }
+                    
+                        if self.appDelegate.unknownshiftname.count != 0 {  //シフト認識エラーがある場合
+                            self.StaffShiftErrorAlertShowPDF()
+                            
+                        //未登録のシフト名がない場合はデータベースへ書き込みを行う
+                        } else {
+                            pdfmethod.RegistDataBase(self.appDelegate.update, importname: self.appDelegate.filename, importpath: self.Libralypath+"/"+self.appDelegate.filename)
+                            pdfmethod.UserMonthlySalaryRegist(self.appDelegate.filename)
                         }
                         
                         /*pickerview,label,シフトの表示を更新する*/
@@ -396,16 +381,10 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
      PDFでシフト認識エラーがある場合に表示してデータ入力をさせるためのアラート
      */
     func StaffShiftErrorAlertShowPDF(){
-        
-        let index = self.appDelegate.errorshiftnamepdf.startIndex.advancedBy(0)
-        let keys = self.appDelegate.errorshiftnamepdf.keys[index]
-        let values = self.appDelegate.errorshiftnamepdf.values[index]
-        
         var flag = false
-        let donecount = appDelegate.errorshiftnamefastcount - appDelegate.errorshiftnamepdf.count
         
-        let alert:UIAlertController = UIAlertController(title:"\(donecount+1)/\(appDelegate.errorshiftnamefastcount)人" + "\n" + keys+"さんのシフトが取り込めません",
-                                                        message: values + "\n\n" + "<シフトの名前> \n 例) 出勤 \n",
+        let alert:UIAlertController = UIAlertController(title:"\(appDelegate.unknownshiftname[0])が未登録です",
+                                                        message:"シフトのグループを選択してください",
                                                         preferredStyle: UIAlertControllerStyle.Alert)
         
         let addAction:UIAlertAction = UIAlertAction(title: "追加",
@@ -439,9 +418,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         let skipAction:UIAlertAction = UIAlertAction(title: "スキップ",
                                                      style: UIAlertActionStyle.Destructive,
                                                      handler:{
-                                                        (action:UIAlertAction!) -> Void in
-                                                        self.appDelegate.skipstaff.append(keys)
-                                                        
+                                                        (action:UIAlertAction!) -> Void in                                                        
                                                         self.savedata()
         })
         
@@ -465,7 +442,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         
         //シフト名入力用のtextfieldを追加
         alert.addTextFieldWithConfigurationHandler({(text:UITextField!) -> Void in
-            text.placeholder = "シフトの名前を入力"
+            text.text = self.appDelegate.unknownshiftname[0]
             text.returnKeyType = .Next
             text.tag = 0
             text.delegate = self

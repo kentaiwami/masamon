@@ -36,6 +36,13 @@ class PDFmethod2: UIViewController {
     let tolerance_x = 7.0       //1日ごとのリミット値の許容誤差
     
     let tolerance_onedayshift_x = 10.0     //x座標が近いOneDayShift同士の許容誤差
+    
+    //出勤スタッフをスタッフ名：シフト名でまとめた配列
+    var dayattendanceArray:[String] = []
+    
+    //シフトの年月
+    var shiftyearmonth:(year: Int, startcoursmonth: Int, startcoursmonthyear: Int, endcoursmonth: Int, endcoursmonthyear: Int) = (0,0,0,0,0)
+    
     /**
      実行用のメソッド
      */
@@ -74,13 +81,9 @@ class PDFmethod2: UIViewController {
             
             appDelegate.unknownshiftname = CheckUnknownShiftName(coordinated)
 
-            let dayattendanceArray = GetTheDayStaffAttendance(staffnameArray, splitshiftArrays: coordinated)
+            dayattendanceArray = GetTheDayStaffAttendance(staffnameArray, splitshiftArrays: coordinated)
             
-            let shiftyearmonth = shiftyearmonthAndlength.0
-            
-            //MARK: test
-            //RegistDataBase(dayattendanceArray, yearmonth: shiftyearmonth, update: false, importname: "test", importpath: "test")
-            appDelegate.unknownshiftname = []
+            shiftyearmonth = shiftyearmonthAndlength.0
         }
     }
     
@@ -95,8 +98,8 @@ class PDFmethod2: UIViewController {
         var currentArrayIndex = -1
         
         let path: NSString
-        //path = DBmethod().FilePathTmpGet()
-        path = NSBundle.mainBundle().pathForResource("8.11〜", ofType: "pdf")!
+        path = DBmethod().FilePathTmpGet()
+//        path = NSBundle.mainBundle().pathForResource("8.11〜", ofType: "pdf")!
         
         let tet = TET()
         let document = tet.open_document(path as String, optlist: "")
@@ -679,6 +682,8 @@ class PDFmethod2: UIViewController {
             }
         }
         
+        unknown_shiftArray.removeObject("")
+        
         return unknown_shiftArray
     }
     
@@ -714,18 +719,18 @@ class PDFmethod2: UIViewController {
         return splitattendanceArray
     }
     
-    func RegistDataBase(attendanceArray: [String], yearmonth:(year: Int, startcoursmonth: Int, startcoursmonthyear: Int, endcoursmonth: Int, endcoursmonthyear: Int), update: Bool, importname: String, importpath: String) {
+    func RegistDataBase(update: Bool, importname: String, importpath: String) {
         var date = 11
         var flag = 0
         var shiftdetailarray = List<ShiftDetailDB>()
 
         //1クールが全部で何日間あるかを判断するため
-        let monthrange = CommonMethod().GetShiftCoursMonthRange(yearmonth.startcoursmonthyear, shiftstartmonth: yearmonth.startcoursmonth)
+        let monthrange = CommonMethod().GetShiftCoursMonthRange(shiftyearmonth.startcoursmonthyear, shiftstartmonth: shiftyearmonth.startcoursmonth)
         
         var shiftdetaildbrecordcount = DBmethod().DBRecordCount(ShiftDetailDB)
         let shiftdbrecordcount = DBmethod().DBRecordCount(ShiftDB)
         
-        for i in 0 ..< attendanceArray.count{
+        for i in 0 ..< dayattendanceArray.count{
             let shiftdbrecord = ShiftDB()
             let shiftdetaildbrecord = ShiftDetailDB()
             
@@ -741,8 +746,8 @@ class PDFmethod2: UIViewController {
                 
                 switch(flag){
                 case 0:         //11日〜30(31)日までの場合
-                    shiftdetaildbrecord.year = yearmonth.startcoursmonthyear
-                    shiftdetaildbrecord.month = yearmonth.startcoursmonth
+                    shiftdetaildbrecord.year = shiftyearmonth.startcoursmonthyear
+                    shiftdetaildbrecord.month = shiftyearmonth.startcoursmonth
                     date += 1
                     
                     if(date > monthrange.length){
@@ -751,8 +756,8 @@ class PDFmethod2: UIViewController {
                     }
                     
                 case 1:         //11日〜月末日までの場合
-                    shiftdetaildbrecord.year = yearmonth.endcoursmonthyear
-                    shiftdetaildbrecord.month = yearmonth.endcoursmonth
+                    shiftdetaildbrecord.year = shiftyearmonth.endcoursmonthyear
+                    shiftdetaildbrecord.month = shiftyearmonth.endcoursmonth
                     date += 1
                     
                 default:
@@ -760,7 +765,7 @@ class PDFmethod2: UIViewController {
                 }
                 
                 
-                shiftdetaildbrecord.staff = attendanceArray[i]
+                shiftdetaildbrecord.staff = dayattendanceArray[i]
                 shiftdetaildbrecord.shiftDBrelationship = DBmethod().SearchShiftDB(importname)
                 
                 DBmethod().AddandUpdate(shiftdetaildbrecord, update: true)
@@ -782,8 +787,8 @@ class PDFmethod2: UIViewController {
                 
                 switch(flag){
                 case 0:         //11日〜月末日までの場合
-                    shiftdetaildbrecord.year = yearmonth.startcoursmonthyear
-                    shiftdetaildbrecord.month = yearmonth.startcoursmonth
+                    shiftdetaildbrecord.year = shiftyearmonth.startcoursmonthyear
+                    shiftdetaildbrecord.month = shiftyearmonth.startcoursmonth
                     date += 1
                     
                     if(date > monthrange.length){
@@ -792,15 +797,15 @@ class PDFmethod2: UIViewController {
                     }
                     
                 case 1:         //1日〜10日までの場合
-                    shiftdetaildbrecord.year = yearmonth.endcoursmonthyear
-                    shiftdetaildbrecord.month = yearmonth.endcoursmonth
+                    shiftdetaildbrecord.year = shiftyearmonth.endcoursmonthyear
+                    shiftdetaildbrecord.month = shiftyearmonth.endcoursmonth
                     date += 1
                     
                 default:
                     break
                 }
                 
-                shiftdetaildbrecord.staff = attendanceArray[i]
+                shiftdetaildbrecord.staff = dayattendanceArray[i]
                 shiftdetaildbrecord.shiftDBrelationship = shiftdbrecord
                 
                 //すでに記録してあるListを取得して後ろに現在の記録を追加する
@@ -817,5 +822,72 @@ class PDFmethod2: UIViewController {
             }
             
         }
+    }
+    
+    //入力したユーザ名の月給を計算して結果を記録する
+    func UserMonthlySalaryRegist(importname: String){
+        var usershift:[String] = []
+        
+        let username = DBmethod().UserNameGet()
+        let holiday = DBmethod().ShiftSystemNameArrayGetByGroudid(6)      //休暇のシフト体制を取得
+        
+        //1クール分行う
+        for i in 0 ..< dayattendanceArray.count{
+            
+            var dayshift = ""
+            
+            let nsstring = dayattendanceArray[i] as NSString
+            if(nsstring.containsString(username)){
+                
+                let userlocation = nsstring.rangeOfString(username).location
+                
+                var index = dayattendanceArray[i].startIndex.advancedBy(userlocation + username.characters.count + 1)
+                
+                while(String(dayattendanceArray[i][index]) != ","){
+                    dayshift += String(dayattendanceArray[i][index])
+                    index = index.successor()
+                }
+                
+                if(holiday.contains(dayshift) == false){      //holiday以外なら
+                    usershift.append(dayshift)
+                }
+            }
+        }
+        
+        //月給の計算をする
+        var monthlysalary = 0.0
+        let houlypayrecord = DBmethod().HourlyPayRecordGet()
+        
+        for i in 0 ..< usershift.count{
+            
+            let shiftsystem = DBmethod().SearchShiftSystem(usershift[i])
+            if(shiftsystem![0].endtime <= houlypayrecord[0].timeto){
+                monthlysalary = monthlysalary + (shiftsystem![0].endtime - shiftsystem![0].starttime - 1) * Double(houlypayrecord[0].pay)
+            }else{
+                //22時以降の給与を先に計算
+                let latertime = shiftsystem![0].endtime - houlypayrecord[0].timeto
+                monthlysalary = monthlysalary + latertime * Double(houlypayrecord[1].pay)
+                
+                monthlysalary = monthlysalary + (shiftsystem![0].endtime - latertime - shiftsystem![0].starttime - 1) * Double(houlypayrecord[0].pay)
+            }
+        }
+        
+        //データベースへ記録上書き登録
+        let newshiftdbsalalyadd = ShiftDB()                                 //月給を追加するための新規インスタンス
+        let oldshiftdbsalalynone = DBmethod().SearchShiftDB(importname)     //月給がデフォルト値で登録されているShiftDBオブジェクト
+        
+        newshiftdbsalalyadd.id = oldshiftdbsalalynone.id
+        
+        for i in 0 ..< oldshiftdbsalalynone.shiftdetail.count{
+            newshiftdbsalalyadd.shiftdetail.append(oldshiftdbsalalynone.shiftdetail[i])
+        }
+        
+        newshiftdbsalalyadd.shiftimportname = oldshiftdbsalalynone.shiftimportname
+        newshiftdbsalalyadd.shiftimportpath = oldshiftdbsalalynone.shiftimportpath
+        newshiftdbsalalyadd.salaly = Int(monthlysalary)
+        newshiftdbsalalyadd.year = shiftyearmonth.year
+        newshiftdbsalalyadd.month = shiftyearmonth.endcoursmonth
+        
+        DBmethod().AddandUpdate(newshiftdbsalalyadd, update: true)
     }
 }
