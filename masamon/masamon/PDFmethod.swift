@@ -87,7 +87,9 @@ class PDFmethod: UIViewController {
 
         //2回目(スキップするとこっちを実行)
         }else {
-            coordinated = ReplaceSkipShiftName(coordinated)
+            if appDelegate.skipshiftname != "" {
+                coordinated = ReplaceSkipShiftName(coordinated)
+            }
             appDelegate.unknownshiftname = CheckUnknownShiftName(coordinated)
             dayattendanceArray = GetTheDayStaffAttendance(staffnameArray, splitshiftArrays: coordinated)
         }
