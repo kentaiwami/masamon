@@ -26,17 +26,13 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     
     var currentnsdate = NSDate()        //MonthlySalaryShowがデータ表示している日付を管理
     
-    let wavyline: [String] = ["〜"]
-    let time = CommonMethod().GetTimeNotSpecifiedVer()
     let shiftgroupname = CommonMethod().GetShiftGroupName()
     var shiftgroupnameUIPicker: UIPickerView = UIPickerView()
-    var shifttimeUIPicker: UIPickerView = UIPickerView()
 
     var pickerviewtoolBar = UIToolbar()
     var pickerdoneButton = UIBarButtonItem()
     
     var shiftgroupnametextfield = UITextField()
-    var shifttimetextfield = UITextField()
     
     var CalenderLabel = UILabel()
     
@@ -100,21 +96,11 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         
         self.SetupDayButton(0)      //1週間分の日付を表示するボタンを設置する
         
-        //シフト時間を選択して表示するテキストフィールドのデフォルト表示を指定
-        starttime = time[0]
-        endtime = time[0]
-        
         //シフトグループを選択するpickerview
         shiftgroupnameUIPicker.frame = CGRectMake(0,0,self.view.bounds.width/2+20, 200.0)
         shiftgroupnameUIPicker.delegate = self
         shiftgroupnameUIPicker.dataSource = self
         shiftgroupnameUIPicker.tag = 2
-        
-        //シフト時間を選択するpickerview
-        shifttimeUIPicker.frame = CGRectMake(0,0,self.view.bounds.width/2+20, 200.0)
-        shifttimeUIPicker.delegate = self
-        shifttimeUIPicker.dataSource = self
-        shifttimeUIPicker.tag = 3
         
         //pickerviewに表示するツールバー
         pickerviewtoolBar.barStyle = UIBarStyle.Default
@@ -452,10 +438,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         
         //シフトグループの選択内容を入れるテキストフィールドを追加
         alert.addTextFieldWithConfigurationHandler(configurationshiftgroupnameTextField)
-        
-        //シフト時間の選択内容を入れるテキストフィールドを追加
-        alert.addTextFieldWithConfigurationHandler(configurationshifttimeTextField)
-        
+                
         self.presentViewController(alert, animated: true, completion: nil)
     }
     
@@ -512,9 +495,6 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         
         //シフトグループの選択内容を入れるテキストフィールドを追加
         alert.addTextFieldWithConfigurationHandler(configurationshiftgroupnameTextField)
-        
-        //シフト時間の選択内容を入れるテキストフィールドを追加
-        alert.addTextFieldWithConfigurationHandler(configurationshifttimeTextField)
         
         self.presentViewController(alert, animated: true, completion: nil)
     }
@@ -583,20 +563,9 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         if pickerView.tag == 1 {
             let attributedString = NSAttributedString(string: shiftlist[row] as! String, attributes: [NSForegroundColorAttributeName : UIColor.whiteColor()])
             return attributedString
-        }else if pickerView.tag == 2 {
+        }else {
             let attributedString = NSAttributedString(string: shiftgroupname[row] , attributes: [NSForegroundColorAttributeName : UIColor.blackColor()])
             return attributedString
-        }else{
-            if component == 0 {
-                let attributedString = NSAttributedString(string: time[row] , attributes: [NSForegroundColorAttributeName : UIColor.blackColor()])
-                return attributedString
-            }else if component == 1 {
-                let attributedString = NSAttributedString(string: wavyline[row] , attributes: [NSForegroundColorAttributeName : UIColor.blackColor()])
-                return attributedString
-            }else{
-                let attributedString = NSAttributedString(string: time[row] , attributes: [NSForegroundColorAttributeName : UIColor.blackColor()])
-                return attributedString
-            }
         }
     }
     
@@ -630,24 +599,11 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         
         if pickerView.tag == 1 {
             return shiftlist.count
-        }else if pickerView.tag == 2 {
+        }else {
             pickerdoneButton.tag = 2
             return shiftgroupname.count
-        }else{
-            pickerdoneButton.tag = 3
-            if component == 0 {
-                return time.count
-            }else if component == 1 {
-                return wavyline.count
-            }else{
-                return time.count
-            }
         }
     }
-    
-    var starttime = ""
-    var endtime = ""
-    
 
     /**
      pickerViewを選択した際に動作
@@ -913,9 +869,6 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         
         if sender.tag == 2 {            //シフトグループの完了ボタン
             shiftgroupnametextfield.resignFirstResponder()
-            shifttimetextfield.becomeFirstResponder()
-        }else if sender.tag == 3 {      //シフト時間の完了ボタン
-            shifttimetextfield.resignFirstResponder()
         }
     }
     
@@ -932,21 +885,6 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         textField.tag = 1
         textField.delegate = self
         shiftgroupnametextfield = textField
-    }
-    
-
-    /**
-     シフトの時間を入れるテキストフィールドの設定
-     
-     - parameter textField: 対象となるtextField
-     */
-    func configurationshifttimeTextField(textField: UITextField!){
-        textField.placeholder = "シフトの時間を入力"
-        textField.inputView = self.shifttimeUIPicker
-        textField.inputAccessoryView = self.pickerviewtoolBar
-        textField.tag = 2
-        textField.delegate = self
-        shifttimetextfield = textField
     }
     
     //シフトグループの選択箇所を記録する変数
