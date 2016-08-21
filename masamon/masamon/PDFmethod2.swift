@@ -672,4 +672,17 @@ class PDFmethod2: UIViewController {
         
         return unknown_shiftArray
     }
+    
+    
+    /**
+     その日出勤するスタッフを、スタッフ名:シフト名……のように配列に格納する
+     
+     - parameter staffnameArray:   取り込んだPDFファイルに出現するスタッフ名が格納されたString1次元配列
+     - parameter splitshiftArrays: 1日ごとに分けたシフト名が格納されたString2次元配列
+     
+     - returns: 日にちごとに分けたその日出勤するスタッフごとにまとめた2次元配列
+     */
+    func aa(staffnameArray: [String], splitshiftArrays: [[String]]) -> [[String]] {
+        <#function body#>
+    }
 }
