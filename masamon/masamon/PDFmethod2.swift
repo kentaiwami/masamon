@@ -64,6 +64,11 @@ class PDFmethod2: UIViewController {
             let splitshiftArray = GetSplitShiftAllStaffByDay(removed_unnecessary, limit: limitArray)
             
             let coordinated = CoordinateMergedCell(removed_unnecessary, splitshiftArrays: splitshiftArray)
+            
+            for i in 0..<coordinated.count {
+                print(String(i+1) + ": ", terminator:"")
+                print(coordinated[i])
+            }
         }
     }
     
