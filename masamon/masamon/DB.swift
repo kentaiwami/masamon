@@ -76,7 +76,6 @@ class ShiftSystemDB: Object{
     dynamic var name = ""           //何番か記録
     dynamic var starttime = 0.0     //勤務開始時間
     dynamic var endtime = 0.0       //勤務終了時間
-    dynamic var manager = false     //マネージャーにだけ使用するシフト体制名か
     
     override class func primaryKey() -> String {
         return "id"

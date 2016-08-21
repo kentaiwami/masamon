@@ -255,7 +255,6 @@ class CommonMethod: UIViewController {
         record.groupid = gid
         record.starttime = start
         record.endtime = end
-        record.manager = manager
         
         return record
     }
