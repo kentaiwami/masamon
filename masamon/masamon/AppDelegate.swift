@@ -35,6 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     /*MonthlySalaryShowとXLSXmethodで使用*/
     var errorshiftnamexlsx: [String] = []       //新規シフト体制名が含まれていた場合に格納する
     
+    var unknownshiftname: [String] = []
     
     /*各画面で使用*/
     var screennumber = 0    //シフト：0, カレンダー：1, 設定：2,　履歴：3
