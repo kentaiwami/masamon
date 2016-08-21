@@ -49,13 +49,13 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let staffname = ["店長","長谷川M","岩渕M","伊藤M","横尾","長谷川","佐々木(浩)","佐々木(聡)","佐藤","廣島","一藤","伊藤","堀下","須藤","戸倉","近江谷","小林","山上","山岸","對馬","小坂","森","赤間","田中","佐々木","上見"]
-            for i in 0..<staffname.count {
-            let ABC = StaffNameDB()
-            ABC.id = i
-            ABC.name = staffname[i]
-            DBmethod().AddandUpdate(ABC, update: true)
-            }
+//        let staffname = ["店長","長谷川M","岩渕M","伊藤M","横尾","長谷川","佐々木(浩)","佐々木(聡)","佐藤","廣島","一藤","伊藤","堀下","須藤","戸倉","近江谷","小林","山上","山岸","對馬","小坂","森","赤間","田中","佐々木","上見"]
+//            for i in 0..<staffname.count {
+//            let ABC = StaffNameDB()
+//            ABC.id = i
+//            ABC.name = staffname[i]
+//            DBmethod().AddandUpdate(ABC, update: true)
+//            }
 
 //        //クラッシュ等で参照されずに残ってしまったファイルを手動で削除する(保守用)
 //        let documentspath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
@@ -272,42 +272,52 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             }
             //取り込みがPDFの場合
         }else{
-            progress.show(style: OrangeClearStyle())
-            dispatch_async_global{
-
-                //PDF内のデータをテキスト配列に格納＆エラーのチェック
-                let pdfmethod = PDFmethod2()
-                pdfmethod.RunPDFmethod()
+            //スタッフが登録されていない場合はエラーアラートを出す
+            if DBmethod().DBRecordCount(StaffNameDB) == 0 {
+                let alert: UIAlertController = UIAlertController(title: "取り込みエラー", message: "スタッフを1名以上登録してください", preferredStyle:  UIAlertControllerStyle.Alert)
+                let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
                 
-                self.dispatch_async_main{
-                    self.progress.dismiss({ () -> Void in
+                alert.addAction(defaultAction)
+                
+                presentViewController(alert, animated: true, completion: nil)
+            }else {
+                progress.show(style: OrangeClearStyle())
+                dispatch_async_global{
                     
-                        if self.appDelegate.unknownshiftname.count != 0 {  //シフト認識エラーがある場合
-                            self.StaffShiftErrorAlertShowPDF()
+                    //PDF内のデータをテキスト配列に格納＆エラーのチェック
+                    let pdfmethod = PDFmethod2()
+                    pdfmethod.RunPDFmethod()
+                    
+                    self.dispatch_async_main{
+                        self.progress.dismiss({ () -> Void in
                             
-                        //未登録のシフト名がない場合はデータベースへ書き込みを行う
-                        } else {
-                            pdfmethod.RegistDataBase(self.appDelegate.update, importname: self.appDelegate.filename, importpath: self.Libralypath+"/"+self.appDelegate.filename)
-                            pdfmethod.UserMonthlySalaryRegist(self.appDelegate.filename)
-                        }
-                        
-                        /*pickerview,label,シフトの表示を更新する*/
-                        self.shiftlist.removeAllObjects()
-                        if DBmethod().DBRecordCount(ShiftDB) != 0 {
-                            for i in (0 ... DBmethod().DBRecordCount(ShiftDB)-1).reverse(){
-                                self.shiftlist.addObject(DBmethod().ShiftDBGet(i))
+                            if self.appDelegate.unknownshiftname.count != 0 {  //シフト認識エラーがある場合
+                                self.StaffShiftErrorAlertShowPDF()
+                                
+                                //未登録のシフト名がない場合はデータベースへ書き込みを行う
+                            } else {
+                                pdfmethod.RegistDataBase(self.appDelegate.update, importname: self.appDelegate.filename, importpath: self.Libralypath+"/"+self.appDelegate.filename)
+                                pdfmethod.UserMonthlySalaryRegist(self.appDelegate.filename)
                             }
-                            self.SaralyLabel.text = self.GetCommaSalalyString(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB)-1))
-                        }
-                        
-                        self.onecourspicker.reloadAllComponents()
-                        
-                        let today = self.currentnsdate
-                        let date = CommonMethod().ReturnYearMonthDayWeekday(today)
-                        self.ShowAllData(CommonMethod().Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day, arraynumber: 1)
-                        self.SetCalenderLabel(date.year, month: date.month, day: date.day, weekday: date.weekday)
-                        
-                    })
+                            
+                            /*pickerview,label,シフトの表示を更新する*/
+                            self.shiftlist.removeAllObjects()
+                            if DBmethod().DBRecordCount(ShiftDB) != 0 {
+                                for i in (0 ... DBmethod().DBRecordCount(ShiftDB)-1).reverse(){
+                                    self.shiftlist.addObject(DBmethod().ShiftDBGet(i))
+                                }
+                                self.SaralyLabel.text = self.GetCommaSalalyString(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB)-1))
+                            }
+                            
+                            self.onecourspicker.reloadAllComponents()
+                            
+                            let today = self.currentnsdate
+                            let date = CommonMethod().ReturnYearMonthDayWeekday(today)
+                            self.ShowAllData(CommonMethod().Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day, arraynumber: 1)
+                            self.SetCalenderLabel(date.year, month: date.month, day: date.day, weekday: date.weekday)
+                            
+                        })
+                    }
                 }
             }
         }
