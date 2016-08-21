@@ -263,7 +263,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                 dispatch_async_global{
                     
                     //PDF内のデータをテキスト配列に格納＆エラーのチェック
-                    let pdfmethod = PDFmethod2()
+                    let pdfmethod = PDFmethod()
                     pdfmethod.RunPDFmethod()
                     
                     self.dispatch_async_main{

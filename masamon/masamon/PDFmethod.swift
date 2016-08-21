@@ -1,924 +1,893 @@
-////
-////  PDFmethod.swift
-////  masamon
-////
-////  Created by 岩見建汰 on 2016/01/08.
-////  Copyright © 2016年 Kenta. All rights reserved.
-////
 //
-//import UIKit
-//import RealmSwift
+//  PDFmethod.swift
+//  masamon
 //
-//class PDFmethod: UIViewController {
-//    
-//    let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得
-//    
-//    //PDF内にある年月とスタッフのシフトを全て抽出する
-//    func AllTextGet() -> Array<String>{
-//        
-//        var pdftextarray: [String] = []
-//        var lineIndex = 1
-//        
-//        let path: NSString
-//        path = DBmethod().FilePathTmpGet()
-//        
-//        let tet = TET()
-//        
-//        let document = tet.open_document(path as String, optlist: "")
-//        let page = tet.open_page(document, pagenumber: 1, optlist: "granularity=page")
-//        let pdftext = tet.get_text(page)
-//        
-//        tet.close_page(page)
-//        tet.close_document(document)
-//        
-//        //"平成"が出るまで1行ずつ読み飛ばしをする
-//        pdftext.enumerateLines{
-//            line, stop in
-//            
-//            let judgeheisei = line.substringToIndex(line.startIndex.successor().successor())
-//            
-//            if(judgeheisei == "平成"){
-//                pdftextarray.append(line)
-//                stop = true
-//            }
-//            
-//            lineIndex += 1
-//        }
-//        
-//        //"店長"が出るまで1行ずつ読み飛ばしをする
-//        var nowIndex = 1
-//        
-//        pdftext.enumerateLines{
-//            line, stop in
-//            
-//            if(nowIndex < lineIndex){      //平成を見つけた行まで進める
-//                nowIndex += 1
-//            }else{
-//                if((line.rangeOfString("店長")) != nil){
-//                    pdftextarray.append(line)
-//                    lineIndex = nowIndex
-//                    stop = true
-//                }else{
-//                    nowIndex += 1
-//                }
-//            }
-//        }
-//        
-//        //スタッフの行を読み取る
-//        nowIndex = 0
-//        var staffcount = 0
-//        
-//        pdftext.enumerateLines{
-//            line, stop in
-//            
-//            if(nowIndex < lineIndex){      //店長を見つけた行まで進める
-//                nowIndex += 1
-//            }else{
-//                let judgehtopcharacter = line.substringToIndex(line.startIndex.successor())
-//                
-//                if(Int(judgehtopcharacter) != nil){         //先頭文字が数値の場合のみ
-//                    pdftextarray.append(line)
-//                    staffcount += 1
-//                }
-//            }
-//        }
-//        
-//        return pdftextarray
-//    }
-//    
-//    //スタッフのシフトを日にちごとに分けたArrayを返す
-//    func SplitDayShiftGet( staffarray: Array<String>) -> (shiftarray: Array<String>, shiftcours: (Int,Int,Int,Int,Int)){
-//        
-//        //データを削除して初期化する
-//        appDelegate.errorstaffnamepdf.removeAll()
-//        appDelegate.errorshiftnamepdf.removeAll()
-//        
-//        var dayshiftarray: [String] = []        //1日ごとのシフトを記録
-//        
-//        //1クールが全部で何日間あるかを判断するため
-//        let shiftyearandmonth = CommonMethod().JudgeYearAndMonth(staffarray[0])
-//        let monthrange = CommonMethod().GetShiftCoursMonthRange(shiftyearandmonth.startcoursmonthyear, shiftstartmonth: shiftyearandmonth.startcoursmonth)
-//        
-//        //先に空要素を1クール分追加しておく
-//        for _ in 0 ..< monthrange.length{
-//            dayshiftarray.append("")
-//        }
-//        
-//        //スタッフの人数分(配列の最後まで)繰り返す
-//        //                for i in 4..<5 {
-//        for i in 1 ..< staffarray.count{
-//            
-//            var staffname = ""
-//            var staffarraytmp = ""
-//            
-//            staffarraytmp = staffarray[i]
-//            
-//            //シフトの出現場所を記録する2次元配列の初期化
-//            var shiftlocationarray: [[Int]] = []
-//            for _ in 0 ..< 7{
-//                shiftlocationarray.append([])
-//            }
-//            
-//            //受け取った1名分のテキスト(1行)からスペースを削除する
-//            staffarraytmp = staffarraytmp.stringByReplacingOccurrencesOfString(" ", withString: "")
-//            staffarraytmp = staffarraytmp.stringByReplacingOccurrencesOfString("　", withString: "")
-//            
-//            //全角を半角に変更して上書きする
-//            staffarraytmp = staffarraytmp.hankakuOnly
-//            
-//            //スタッフ名の抽出
-//            staffname = self.GetStaffName(staffarraytmp, i: i)
-//            
-//            print(staffname)
-//            //スキップされたスタッフは取り込みを行わない
-//            if(appDelegate.skipstaff.contains(staffname)){
-//                //ループを抜けて次のループに移る
-//            }else{
-//                
-//                /*抽出したスタッフ名(マネージャーのMは除く)が1文字以下or4文字以上ならエラーとして記録
-//                 　エラーでなければシフトの出現場所を配列に格納していく
-//                 */
-//                let removem = staffname.stringByReplacingOccurrencesOfString("M", withString: "")
-//                
-//                if(removem.characters.count == 0 || removem.characters.count >= 7){
-//                    appDelegate.errorstaffnamepdf.append(staffarraytmp)
-//                }else{
-//                    //スタッフ名を正しく認識しているがエラーとして記録されている場合は削除する
-//                    for i in 0 ..< appDelegate.errorstaffnamepdf.count{
-//                        let errorstaffnametext = appDelegate.errorstaffnamepdf[i]
-//                        
-//                        if(errorstaffnametext.containsString(staffname)){
-//                            appDelegate.errorstaffnamepdf.removeAtIndex(i)
-//                            break
-//                        }
-//                    }
-//                    
-//                    //シフト体制を文字列の長さ順に並び替えて配列に記録する
-//                    var shiftsystemarray: [String] = []
-//                    if staffname.containsString("M") {
-//                        shiftsystemarray = DBmethod().ShiftSystemNameArrayGet()
-//                    }else{
-//                        shiftsystemarray = DBmethod().ShiftSystemNoManagerNameArrayGet()
-//                    }
-//                    
-//                    let desc_shiftname = self.GetDescStringArray(shiftsystemarray)
-//                    
-//                    //シフト体制の分だけループを回し、各ループでスタッフ1人分のシフト出現場所を記録する
-//                    var staffarraytmpnsstring = staffarraytmp as NSString
-//                    for i in 0 ..< desc_shiftname.count {
-//                        //TODO: 落ちる原因は不明
-//                        
-//                        //降順に並び替えたシフト体制名でDBへ問い合わせをしてレコードを取得する
-//                        let shiftsystemrecord = DBmethod().SearchShiftSystem(desc_shiftname[i])
-//                        
-//                        if shiftsystemrecord != nil {
-//                            let results = self.GetShiftPositionArray(staffarraytmpnsstring, shiftname: shiftsystemrecord![0].name)
-//                            shiftlocationarray[shiftsystemrecord![0].groupid] += results.positionarray
-//                            staffarraytmpnsstring = results.replacementstring
-//                        }
-//                    }
-//                }
-//                
-//                
-//                //重複した要素を削除する
-//                for i in 0 ..< shiftlocationarray.count{
-//                    shiftlocationarray[i] = self.GetRemoveOverlapElementArray(shiftlocationarray[i])
-//                }
-//                
-//                
-//                //配列をまたがって重複している要素を削除する
-//                for i in 0 ..< shiftlocationarray.count{
-//                    let resultsarray = self.GetRemoveOverlapElementAnotherArray(shiftlocationarray)
-//                    shiftlocationarray[i] = resultsarray[i]
-//                }
-//                
-//                //要素を昇順でソートする
-//                for i in 0 ..< shiftlocationarray.count{
-//                    shiftlocationarray[i] = shiftlocationarray[i].sort()
-//                }
-//                
-//                //スタッフ名にシフト名が含まれている場合に、カウントされてしまうため要素を削除する
-//                let includeshiftnamearray = CommonMethod().IncludeShiftNameInStaffName(staffname)
-//                if(includeshiftnamearray.count != 0){
-//                    
-//                    for i in 0 ..< includeshiftnamearray.count{
-//                        if(shiftlocationarray[includeshiftnamearray[i]].count != 0){
-//                            shiftlocationarray[includeshiftnamearray[i]].removeAtIndex(0)
-//                        }
-//                    }
-//                    
-//                }
-//                
-//                //1クール分のシフト文字以外のシフト名をカウントしてしまうので、範囲外の要素を削除する
-//                var index = staffarraytmp.startIndex
-//                var numeralcount = 0
-//                var removeflag = false
-//                
-//                while(index != staffarraytmp.endIndex.predecessor()){
-//                    
-//                    if(Int(String(staffarraytmp[index])) != nil){
-//                        numeralcount += 1
-//                    }else{
-//                        numeralcount = 0
-//                    }
-//                    
-//                    //数値の連続が5回以上なら数列として判断する
-//                    if(numeralcount >= 5){
-//                        index = index.advancedBy(-4)
-//                        removeflag = true
-//                        break
-//                    }
-//                    
-//                    index = index.successor()
-//                }
-//                
-//                
-//                if(removeflag){
-//                    for i in 0 ..< shiftlocationarray.count{
-//                        shiftlocationarray[i] = self.RemoveElementThanPivotIndex(shiftlocationarray[i], pivotindex: index, text: staffarraytmp)
-//                    }
-//                }
-//                
-//                
-//                //要素数を比較して正しくシフト体制を認識できているかチェックする
-//                var count = 0
-//                for i in 0 ..< shiftlocationarray.count{
-//                    count += shiftlocationarray[i].count
-//                }
-//                
-//                if(count == monthrange.length){
-//                    
-//                    //正しく取り込めているが、シフト認識エラーとして記録されて残っている要素があれば削除する
-//                    if let _ = appDelegate.errorshiftnamepdf[staffname] {
-//                        appDelegate.errorshiftnamepdf.removeValueForKey(staffname)
-//                    }
-//                    
-//                    
-//                    //各配列に識別子を追加する
-//                    for i in 0 ..< shiftlocationarray.count{
-//                        shiftlocationarray[i].append(99999)
-//                    }
-//                    
-//                    //日付分のループを開始
-//                    for i in 0 ..< monthrange.length{
-//                        
-//                        //シフトの位置が一番小さい値とそのシフト区分を取得する
-//                        let dayshift = self.GetMinShiftPositionAndGroup(shiftlocationarray)
-//                        
-//                        //シフトの名前をテキストから取得する
-//                        let staffshift = self.GetShiftNameFromOneLineText(staffarraytmp, sg: dayshift.shiftgroup, sp: dayshift.shiftposition)
-//                        
-//                        switch(dayshift.shiftgroup){
-//                        case "早":
-//                            shiftlocationarray[0].removeAtIndex(0)
-//                            
-//                        case "中1":
-//                            shiftlocationarray[1].removeAtIndex(0)
-//                            
-//                        case "中2":
-//                            shiftlocationarray[2].removeAtIndex(0)
-//                            
-//                        case "中3":
-//                            shiftlocationarray[3].removeAtIndex(0)
-//                            
-//                        case "遅":
-//                            shiftlocationarray[4].removeAtIndex(0)
-//                            
-//                        case "他":
-//                            shiftlocationarray[5].removeAtIndex(0)
-//                            
-//                        case "休":
-//                            shiftlocationarray[6].removeAtIndex(0)
-//                            
-//                        default:
-//                            break
-//                        }
-//                        
-//                        let holidayarray = DBmethod().ShiftSystemNameArrayGetByGroudid(6)
-//                        if(staffshift != ""){
-//                            if(holidayarray.contains(staffshift) == false){
-//                                dayshiftarray[i] += staffname + ":" + staffshift + ","
-//                            }
-//                        }
-//                    }
-//                    
-//                    //認識できないシフト名があった場合
-//                }else{
-//                    
-//                    let successshiftnamearray = self.GetWillRemoveShiftName(shiftlocationarray)
-//                    var messagetext = staffarraytmp
-//                    
-//                    for i in 0 ..< successshiftnamearray.count{
-//                        messagetext = self.GetRemoveSetShiftName(messagetext, shiftname: successshiftnamearray[i])
-//                    }
-//                    
-//                    appDelegate.errorshiftnamepdf[staffname] = messagetext
-//                }
-//            }
-//        }
-//        
-//        //        let file_name = "TEST.txt"
-//        //        let text = dayshiftarray[0]
-//        //
-//        //        if let dir : NSString = NSSearchPathForDirectoriesInDomains( NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.AllDomainsMask, true ).first {
-//        //
-//        //            let path_file_name = dir.stringByAppendingPathComponent(file_name)
-//        //
-//        //            do {
-//        //
-//        //                try text.writeToFile(path_file_name, atomically: false, encoding: NSUTF8StringEncoding )
-//        //
-//        //            } catch {
-//        //                //エラー処理
-//        //            }
-//        //        }
-//        
-//        return (dayshiftarray,shiftyearandmonth)
-//    }
-//    
-//    
-//    /*スタッフ1人分のテキストを受け取ってスタッフ名のみを返す関数
-//     stafftext => スタッフ名とシフトが記述されているテキスト
-//     i         => ループの回数(stafftextの先頭についている数値)
-//     */
-//    func GetStaffName(stafftext: String, i: Int) -> String{
-//        
-//        //もし、データベースに登録しているスタッフ名があった場合はそれを返す
-//        //店長(i=1)，役職以外のスタッフ(i > 4)の場合のみ登録されているスタッフ名を返す
-//        if(DBmethod().StaffNameArrayGet() != nil){
-//            let staffnamearray = DBmethod().StaffNameArrayGet()
-//            for j in 0 ..< staffnamearray!.count{
-//                if(stafftext.containsString(staffnamearray![j])){
-//                    
-//                    //登録しているスタッフ名にMが含まれている＆stafftextがマネージャーの分なら(DB：AさんM，シフト：AさんMMT*)
-//                    if staffnamearray![j].containsString("M") == true && i >= 2 && i <= 4{
-//                        return staffnamearray![j]
-//                        
-//                    //登録しているスタッフ名にMが含まれている＆stafftextがマネージャー以外なら(DB：AさんM，シフト：AさんMT*)
-//                    }else if staffnamearray![j].containsString("M") == true && !(i >= 2 && i <= 4) {
-//                        var removem_staffname = staffnamearray![j]
-//                        removem_staffname = removem_staffname.stringByReplacingOccurrencesOfString("M", withString: "")
-//                        return removem_staffname
-//                    
-//                    //登録しているスタッフ名にMが含まれていない＆stafftextがマネージャーの分なら(DB：Aさん，シフト：AさんMMT*)
-//                    }else if staffnamearray![j].containsString("M") == false && i >= 2 && i <= 4 {
-//                        return staffnamearray![j] + "M"
-//                    
-//                    //登録しているスタッフ名にMが含まれていない＆stafftextがマネージャー以外なら(DB：Aさん，シフト：AさんMT*)
-//                    }else if staffnamearray![j].containsString("M") == false && !(i >= 2 && i <= 4) {
-//                        return staffnamearray![j]
-//                    }
-//                }
-//            }
-//        }
-//        
-//        
-//        var staffname = ""
-//        var position = 0
-//        let holidaynamearray: [String] = DBmethod().ShiftSystemNameArrayGetByGroudid(6)
-//        var holidaynametopcharacter: [String] = []
-//        let shiftsystemnamearray: [String] = DBmethod().ShiftSystemNameArrayGet()
-//        var shiftsystemnametopcharacter: [String] = []
-//        
-//        //勤務シフト名の先頭文字だけを取り出すループ処理
-//        for i in 0 ..< shiftsystemnamearray.count{
-//            let startindex = shiftsystemnamearray[i].startIndex
-//            let shiftsystemnametmp = shiftsystemnamearray[i]
-//            let topcharactertmp = shiftsystemnametmp[startindex]
-//            
-//            shiftsystemnametopcharacter.append(String(topcharactertmp))
-//        }
-//        
-//        //休暇のシフト名の先頭文字だけを取り出すループ処理
-//        for i in 0 ..< holidaynamearray.count{
-//            let startindex = holidaynamearray[i].startIndex
-//            let holidaynametmp = holidaynamearray[i]
-//            let topcharactertmp = holidaynametmp[startindex]
-//            
-//            holidaynametopcharacter.append(String(topcharactertmp))
-//        }
-//        
-//        //スタッフ名の読み込みを開始する場所を決定
-//        if(i <= 9){
-//            position = 1
-//        }else{
-//            position = 2
-//        }
-//        
-//        //スタッフ名の抽出(シフト体制に含まれる文字が出るまで)
-//        var getcharacterstaffname = stafftext[stafftext.startIndex.advancedBy(position)]
-//        
-//        while(DBmethod().SearchShiftSystem(String(getcharacterstaffname)) == nil){
-//            let character = stafftext.startIndex.advancedBy(position)
-//            
-//            if(character == stafftext.endIndex.predecessor()){
-//                break
-//            }
-//            
-//            //マネージャーの場合はMが出るまで
-//            if i >= 2 && i <= 4{
-//                
-//                if(String(getcharacterstaffname).containsString("M")){
-//                    //                    print(staffname)
-//                    return staffname + "M"
-//                }
-//                
-//                //マネージャー以外の場合は以下のパターン
-//            }else {
-//                //勤務シフト体制にある文字が検出されたらループを抜けるパターン
-//                for i in 0 ..< shiftsystemnametopcharacter.count{
-//                    if(String(getcharacterstaffname).containsString(shiftsystemnametopcharacter[i])){
-//                        return staffname
-//                    }
-//                }
-//                
-//                //休暇シフト体制にある文字が検出されたらループを抜けるパターン
-//                for i in 0 ..< holidaynametopcharacter.count{
-//                    if(String(getcharacterstaffname).containsString(holidaynametopcharacter[i])){
-//                        return staffname
-//                    }
-//                }
-//            }
-//            
-//            
-//            staffname = staffname + String(getcharacterstaffname)
-//            position += 1
-//            getcharacterstaffname = stafftext[stafftext.startIndex.advancedBy(position)]
-//        }
-//        //        print(staffname)
-//        return staffname
-//    }
-//    
-//    //受け取ったシフト体制の場所を配列にして返す関数
-//    func GetShiftPositionArray(staffarraysstring: NSString, shiftname: String) -> (positionarray: Array<Int>, replacementstring: NSString){
-//        var staffstring = staffarraysstring
-//        var shiftnamelocation: [Int] = []
-//        let searchrange = NSMakeRange(0, staffstring.length)
-//        var searchresult = staffstring.rangeOfString(shiftname, options: NSStringCompareOptions.CaseInsensitiveSearch, range: searchrange)
-//        let number = shiftname.characters.count
-//        
-//        while(searchresult.location != NSNotFound){
-//            if(searchresult.location != NSNotFound){
-//                
-//                shiftnamelocation.append(searchresult.location)
-//                
-//                let replaceStartIndex = (staffstring as String).startIndex.advancedBy(searchresult.location)
-//                let replaceEndIndex = replaceStartIndex.advancedBy(number)
-//                var replacestring = ""
-//                
-//                for _ in 0..<number {
-//                    replacestring += "鬱"
-//                }
-//                
-//                let replacedstring = (staffstring as String).stringByReplacingCharactersInRange(replaceStartIndex..<replaceEndIndex, withString: replacestring)
-//                staffstring = replacedstring as NSString
-//                
-//                searchresult = staffstring.rangeOfString(shiftname, options: NSStringCompareOptions.CaseInsensitiveSearch, range: searchrange)
-//            }
-//        }
-//        
-//        return (shiftnamelocation,staffstring)
-//    }
-//    
-//    //指定したシフト体制を削除した文字列を返す関数
-//    func GetRemoveSetShiftName(staffarraysstring: NSString, shiftname: String) -> String{
-//        var removedshiftstring = ""
-//        
-//        removedshiftstring = staffarraysstring.stringByReplacingOccurrencesOfString(shiftname, withString: "")
-//        //        removedshiftstring = removedshiftstring.stringByReplacingOccurrencesOfString("M", withString: "")
-//        //        removedshiftstring = removedshiftstring.stringByReplacingOccurrencesOfString("カ", withString: "")
-//        
-//        return removedshiftstring
-//    }
-//    
-//    //受け取った数値の中で一番小さい値とシフト区分を返す関数
-//    func GetMinShiftPositionAndGroup(array: [[Int]]) -> (shiftgroup: String, shiftposition: Int){
-//        var sg = ""
-//        var sp = 0
-//        
-//        let dict: [String:Int] = ["早":array[0][0], "中1":array[1][0], "中2":array[2][0], "中3":array[3][0], "遅": array[4][0], "他":array[5][0], "休":array[6][0]]
-//        
-//        var values : Array = Array(dict.values)
-//        values = values.sort()
-//        
-//        for (key, value) in dict {
-//            
-//            if(values[0] == value){
-//                sg = key
-//                sp = value
-//                break
-//            }
-//        }
-//        
-//        return (sg, sp)
-//    }
-//    
-//    //受け取ったスタッフ1行分のテキストと位置情報からシフト名を取り出す関数
-//    func GetShiftNameFromOneLineText(text: String, sg: String, sp: Int) -> String{
-//        
-//        var result = ""
-//        var shiftnamearray: [String] = []
-//        var character = text[text.startIndex.advancedBy(sp)]
-//        
-//        //シフト区分によって比較対象にする配列の内容を変える処理
-//        switch(sg){
-//        case "早":
-//            let dbarray = DBmethod().ShiftSystemRecordArrayGetByGroudid(0)
-//            for i in 0 ..< dbarray.count{
-//                shiftnamearray.append(dbarray[i].name)
-//            }
-//            
-//        case "中1":
-//            let dbarray = DBmethod().ShiftSystemRecordArrayGetByGroudid(1)
-//            for i in 0 ..< dbarray.count{
-//                shiftnamearray.append(dbarray[i].name)
-//            }
-//            
-//        case "中2":
-//            let dbarray = DBmethod().ShiftSystemRecordArrayGetByGroudid(2)
-//            for i in 0 ..< dbarray.count{
-//                shiftnamearray.append(dbarray[i].name)
-//            }
-//            
-//        case "中3":
-//            let dbarray = DBmethod().ShiftSystemRecordArrayGetByGroudid(3)
-//            for i in 0 ..< dbarray.count{
-//                shiftnamearray.append(dbarray[i].name)
-//            }
-//            
-//        case "遅":
-//            let dbarray = DBmethod().ShiftSystemRecordArrayGetByGroudid(4)
-//            for i in 0 ..< dbarray.count{
-//                shiftnamearray.append(dbarray[i].name)
-//            }
-//            
-//        case "他":
-//            let dbarray = DBmethod().ShiftSystemRecordArrayGetByGroudid(5)
-//            for i in 0 ..< dbarray.count{
-//                shiftnamearray.append(dbarray[i].name)
-//            }
-//            
-//        case "休":
-//            let dbarray = DBmethod().ShiftSystemRecordArrayGetByGroudid(6)
-//            for i in 0 ..< dbarray.count{
-//                shiftnamearray.append(dbarray[i].name)
-//            }
-//            
-//        default:
-//            break
-//        }
-//        
-//        var position_sp = sp
-//        for i in 0 ..< shiftnamearray.count{
-//            
-//            let tmp = shiftnamearray[i]
-//            var dbindex = tmp.startIndex
-//            
-//            while(dbindex != shiftnamearray[i].endIndex){
-//                
-//                if(tmp[dbindex] == character){
-//                    result += String(tmp[dbindex])
-//                    dbindex = dbindex.successor()
-//                    position_sp += 1
-//                    character = text[text.startIndex.advancedBy(position_sp)]
-//                }else{
-//                    result = ""
-//                    break
-//                }
-//            }
-//            
-//            if(result.characters.count == tmp.characters.count){
-//                return result
-//            }
-//        }
-//        
-//        return result
-//    }
-//    
-//    //受け取った配列の重複要素を削除した配列を返す
-//    func GetRemoveOverlapElementArray(array: Array<Int>) -> Array<Int>{
-//        let set = NSOrderedSet(array: array)
-//        let result = set.array as! [Int]
-//        
-//        return result
-//    }
-//    
-//    //文字列配列を文字列の多い順にソートして返す関数
-//    func GetDescStringArray(array: Array<String>) -> Array<String> {
-//        var dict: [String:Int] = [:]
-//        
-//        //文字列をkey、文字数をvalueとしてdictに保存していく
-//        for i in 0..<array.count {
-//            dict[array[i]] = array[i].characters.count
-//        }
-//        
-//        //dict内のvalueを取り出して、降順にソートする
-//        var sortedvalues : Array = Array(dict.values)
-//        sortedvalues = sortedvalues.sort().reverse()
-//        
-//        //文字数と一致するvalueを持っているkeyを配列に格納していく
-//        var sortedkeyarray: [String] = []
-//        for i in 0..<sortedvalues.count {
-//            for (key, value) in dict {
-//                if value == sortedvalues[i] {
-//                    sortedkeyarray.append(key)
-//                    dict[key] = nil
-//                    break
-//                }
-//            }
-//        }
-//        return sortedkeyarray
-//    }
-//    
-//    //各配列の要素数を受け取り、要素数が1以上のシフトグループのシフト文字を配列にして返す
-//    func GetWillRemoveShiftName(array: [[Int]]) -> Array<String>{
-//        var removeshiftnamearray: [String] = []
-//        
-//        for i in 0 ..< array.count{
-//            let count = array[i].count
-//            
-//            if(count != 0){
-//                let shiftarraytmp = DBmethod().ShiftSystemRecordArrayGetByGroudid(i)    //シフト体制をグループidで取得する
-//                var shiftnamearray: [String] = []
-//                
-//                //シフトの名前を配列に格納していく
-//                for j in 0..<shiftarraytmp.count {
-//                    shiftnamearray.append(shiftarraytmp[j].name)
-//                }
-//                
-//                //文字列が長い順に並び替える
-//                let desc_shiftnamearray = self.GetDescStringArray(shiftnamearray)
-//                
-//                
-//                for k in 0 ..< desc_shiftnamearray.count{
-//                    removeshiftnamearray.append(desc_shiftnamearray[k])
-//                }
-//            }
-//        }
-//        
-//        return removeshiftnamearray
-//    }
-//    
-//    
-//    //配列をまたがって重複している要素を削除する関数
-//    func GetRemoveOverlapElementAnotherArray(array: [[Int]]) -> ([Array<Int>]){
-//        
-//        var dict: [Int:Array<Int>] = [0:array[0], 1:array[1], 2:array[2], 3:array[3], 4: array[4], 5:array[5], 6:array[6]]
-//        
-//        let shiftsystemarray = DBmethod().ShiftSystemAllRecordGet()
-//        
-//        for i in 0 ..< DBmethod().DBRecordCount(ShiftSystemDB){
-//            
-//            let Record = DBmethod().ShiftSystemNameGet(i)
-//            
-//            for j in 0 ..< shiftsystemarray.count{
-//                
-//                if(shiftsystemarray[j].groupid != Record.groupid){
-//                    if(shiftsystemarray[j].name.characters.count > Record.name.characters.count){
-//                        if(shiftsystemarray[j].name.containsString(Record.name)){
-//                            let result = self.RemoveIntersectArrayToArray(dict[Record.groupid]!, comparisonarray: dict[shiftsystemarray[j].groupid]!)
-//                            dict.updateValue(result, forKey: Record.groupid)
-//                        }
-//                    }else{
-//                        if(Record.name.containsString(shiftsystemarray[j].name)){
-//                            let result = self.RemoveIntersectArrayToArray(dict[shiftsystemarray[j].groupid]!, comparisonarray: dict[Record.groupid]!)
-//                            dict.updateValue(result, forKey: shiftsystemarray[j].groupid)
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//        
-//        var results: [Array<Int>] = []
-//        for i in 0 ..< array.count{
-//            results.append(dict[i]!)
-//        }
-//        
-//        return results
-//    }
-//    
-//    
-//    /*受け取った配列同士の重複を調べて処理後の配列を返す関数
-//     removedarray    => 文字数が少なく、要素が削除される側の配列
-//     comparisonarray => 文字数が多く、要素の削除のための比較用になる配列
-//     */
-//    func RemoveIntersectArrayToArray( removedarray: Array<Int>, comparisonarray: Array<Int>) -> Array<Int>{
-//        
-//        let setarray = Set(removedarray).intersect(comparisonarray)
-//        
-//        var resultsarray = removedarray
-//        for i in 0 ..< setarray.count{
-//            resultsarray.removeObject(setarray[setarray.startIndex.advancedBy(i)])
-//        }
-//        
-//        return resultsarray
-//    }
-//    
-//    //受け取ったpivotindexよりも大きいindexの要素は削除する関数
-//    func RemoveElementThanPivotIndex( array: Array<Int>, pivotindex: String.CharacterView.Index, text: String) -> Array<Int>{
-//        
-//        let index = text.startIndex
-//        var removeelement: [Int] = []
-//        
-//        for i in 0 ..< array.count{
-//            if(index.advancedBy(array[i]) >= pivotindex){
-//                removeelement.append(array[i])
-//            }
-//        }
-//        
-//        var resultsarray = array
-//        
-//        for i in 0 ..< removeelement.count{
-//            resultsarray.removeObject(removeelement[i])
-//        }
-//        
-//        return resultsarray
-//    }
-//    
-//    //データベースへ記録する関数
-//    func RegistDataBase(shiftarray: Array<String>, shiftcours: (y: Int,sm: Int,sy: Int,em: Int, ey: Int), importname: String, importpath: String, update: Bool){
-//        
-//        var date = 11
-//        var flag = 0
-//        var shiftdetailarray = List<ShiftDetailDB>()
-//        
-//        //1クールが全部で何日間あるかを判断するため
-//        let monthrange = CommonMethod().GetShiftCoursMonthRange(shiftcours.sy, shiftstartmonth: shiftcours.sm)
-//        
-//        var shiftdetaildbrecordcount = DBmethod().DBRecordCount(ShiftDetailDB)
-//        let shiftdbrecordcount = DBmethod().DBRecordCount(ShiftDB)
-//        
-//        if(appDelegate.errorshiftnamepdf.count == 0){
-//            
-//            for i in 0 ..< shiftarray.count{
-//                let shiftdbrecord = ShiftDB()
-//                let shiftdetaildbrecord = ShiftDetailDB()
-//                
-//                if(update){
-//                    let existshiftdb = DBmethod().SearchShiftDB(importname)
-//                    
-//                    shiftdbrecord.id = existshiftdb.id        //取り込みが上書きの場合は使われているidをそのまま使う
-//                    shiftdbrecord.year = existshiftdb.year
-//                    shiftdbrecord.month = existshiftdb.month
-//                    
-//                    shiftdetaildbrecord.id = existshiftdb.shiftdetail[i].id
-//                    shiftdetaildbrecord.day = existshiftdb.shiftdetail[i].day
-//                    
-//                    switch(flag){
-//                    case 0:         //11日〜30(31)日までの場合
-//                        shiftdetaildbrecord.year = shiftcours.sy
-//                        shiftdetaildbrecord.month = shiftcours.sm
-//                        date += 1
-//                        
-//                        if(date > monthrange.length){
-//                            date = 1
-//                            flag = 1
-//                        }
-//                        
-//                    case 1:         //11日〜月末日までの場合
-//                        shiftdetaildbrecord.year = shiftcours.ey
-//                        shiftdetaildbrecord.month = shiftcours.em
-//                        date += 1
-//                        
-//                    default:
-//                        break
-//                    }
-//                    
-//                    
-//                    shiftdetaildbrecord.staff = shiftarray[i]
-//                    shiftdetaildbrecord.shiftDBrelationship = DBmethod().SearchShiftDB(importname)
-//                    
-//                    //エラーがない時のみ記録を行う
-//                    if(appDelegate.errorshiftnamepdf.count == 0){
-//                        //                        print(String(shiftdetaildbrecord.year) + "  " + String(shiftdetaildbrecord.month))
-//                        
-//                        DBmethod().AddandUpdate(shiftdetaildbrecord, update: true)
-//                    }
-//                    
-//                }else{
-//                    
-//                    shiftdbrecord.id = shiftdbrecordcount
-//                    
-//                    shiftdbrecord.year = 0
-//                    shiftdbrecord.month = 0
-//                    shiftdbrecord.shiftimportname = importname
-//                    shiftdbrecord.shiftimportpath = importpath
-//                    shiftdbrecord.salaly = 0
-//                    
-//                    shiftdetaildbrecord.id = shiftdetaildbrecordcount
-//                    shiftdetaildbrecordcount += 1
-//                    
-//                    shiftdetaildbrecord.day = date
-//                    
-//                    switch(flag){
-//                    case 0:         //11日〜月末日までの場合
-//                        shiftdetaildbrecord.year = shiftcours.sy
-//                        shiftdetaildbrecord.month = shiftcours.sm
-//                        date += 1
-//                        
-//                        if(date > monthrange.length){
-//                            date = 1
-//                            flag = 1
-//                        }
-//                        
-//                    case 1:         //1日〜10日までの場合
-//                        shiftdetaildbrecord.year = shiftcours.ey
-//                        shiftdetaildbrecord.month = shiftcours.em
-//                        date += 1
-//                        
-//                    default:
-//                        break
-//                    }
-//                    
-//                    shiftdetaildbrecord.staff = shiftarray[i]
-//                    shiftdetaildbrecord.shiftDBrelationship = shiftdbrecord
-//                    
-//                    //すでに記録してあるListを取得して後ろに現在の記録を追加する
-//                    for i in 0 ..< shiftdetailarray.count{
-//                        shiftdbrecord.shiftdetail.append(shiftdetailarray[i])
-//                    }
-//                    shiftdbrecord.shiftdetail.append(shiftdetaildbrecord)
-//                    
-//                    let ID = shiftdbrecord.id
-//                    
-//                    //エラーがない場合のみ記録を行う
-//                    if(appDelegate.errorstaffnamepdf.count == 0 && appDelegate.errorshiftnamepdf.count == 0){
-//                        DBmethod().AddandUpdate(shiftdbrecord, update: true)
-//                        DBmethod().AddandUpdate(shiftdetaildbrecord, update: true)
-//                        shiftdetailarray = DBmethod().ShiftDBRelationArrayGet(ID)
-//                    }
-//                }
-//                
-//            }
-//        }
-//    }
-//    
-//    //入力したユーザ名の月給を計算して結果を記録する
-//    func UserMonthlySalaryRegist(shiftarray: Array<String>, shiftcours: (y: Int,sm: Int,sy: Int,em: Int, ey: Int), importname: String){
-//        var usershift:[String] = []
-//        
-//        let username = DBmethod().UserNameGet()
-//        let holiday = DBmethod().ShiftSystemNameArrayGetByGroudid(6)      //休暇のシフト体制を取得
-//        
-//        //1クール分行う
-//        for i in 0 ..< shiftarray.count{
-//            
-//            var dayshift = ""
-//            
-//            let nsstring = shiftarray[i] as NSString
-//            if(nsstring.containsString(username)){
-//                
-//                let userlocation = nsstring.rangeOfString(username).location
-//                
-//                var index = shiftarray[i].startIndex.advancedBy(userlocation + username.characters.count + 1)
-//                
-//                while(String(shiftarray[i][index]) != ","){
-//                    dayshift += String(shiftarray[i][index])
-//                    index = index.successor()
-//                }
-//                
-//                if(holiday.contains(dayshift) == false){      //holiday以外なら
-//                    usershift.append(dayshift)
-//                }
-//            }
-//        }
-//        
-//        //月給の計算をする
-//        var monthlysalary = 0.0
-//        let houlypayrecord = DBmethod().HourlyPayRecordGet()
-//        
-//        for i in 0 ..< usershift.count{
-//            
-//            let shiftsystem = DBmethod().SearchShiftSystem(usershift[i])
-//            if(shiftsystem![0].endtime <= houlypayrecord[0].timeto){
-//                monthlysalary = monthlysalary + (shiftsystem![0].endtime - shiftsystem![0].starttime - 1) * Double(houlypayrecord[0].pay)
-//            }else{
-//                //22時以降の給与を先に計算
-//                let latertime = shiftsystem![0].endtime - houlypayrecord[0].timeto
-//                monthlysalary = monthlysalary + latertime * Double(houlypayrecord[1].pay)
-//                
-//                monthlysalary = monthlysalary + (shiftsystem![0].endtime - latertime - shiftsystem![0].starttime - 1) * Double(houlypayrecord[0].pay)
-//            }
-//        }
-//        
-//        //データベースへ記録上書き登録
-//        let newshiftdbsalalyadd = ShiftDB()                                 //月給を追加するための新規インスタンス
-//        let oldshiftdbsalalynone = DBmethod().SearchShiftDB(importname)     //月給がデフォルト値で登録されているShiftDBオブジェクト
-//        
-//        newshiftdbsalalyadd.id = oldshiftdbsalalynone.id
-//        
-//        for i in 0 ..< oldshiftdbsalalynone.shiftdetail.count{
-//            newshiftdbsalalyadd.shiftdetail.append(oldshiftdbsalalynone.shiftdetail[i])
-//        }
-//        
-//        newshiftdbsalalyadd.shiftimportname = oldshiftdbsalalynone.shiftimportname
-//        newshiftdbsalalyadd.shiftimportpath = oldshiftdbsalalynone.shiftimportpath
-//        newshiftdbsalalyadd.salaly = Int(monthlysalary)
-//        newshiftdbsalalyadd.year = shiftcours.y
-//        newshiftdbsalalyadd.month = shiftcours.em
-//        
-//        DBmethod().AddandUpdate(newshiftdbsalalyadd, update: true)
-//    }
-//    
-//}
+//  Created by 岩見建汰 on 2016/08/13.
+//  Copyright © 2016年 Kenta. All rights reserved.
 //
+
+import UIKit
+import RealmSwift
+
+/**
+ *  pdfから抽出したテキスト情報を格納する構造体
+ */
+struct CharInfo {
+    var text = ""
+    var x = 0.0
+    var y = 0.0
+    var size = 0.0
+}
+
+/**
+ *  1日分のシフト名とx座標を格納する構造体
+ */
+struct OneDayShift {
+    var text = ""
+    var x = 0.0
+}
+
+
+class PDFmethod: UIViewController {
+    
+    let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+
+    let tolerance_y = 3.0                         //同じ行と判定させるための許容誤差
+    let tolerance_x = 7.0       //1日ごとのリミット値の許容誤差
+    
+    let tolerance_onedayshift_x = 10.0     //x座標が近いOneDayShift同士の許容誤差
+    
+    //出勤スタッフをスタッフ名：シフト名でまとめた配列
+    var dayattendanceArray:[String] = []
+    
+    //シフトの年月
+    var shiftyearmonth:(year: Int, startcoursmonth: Int, startcoursmonthyear: Int, endcoursmonth: Int, endcoursmonthyear: Int) = (0,0,0,0,0)
+    
+    /**
+     実行用のメソッド
+     */
+    func RunPDFmethod() {
+        //スタッフ名が登録されている場合のみ処理を進める
+        let staffnameDB_count = DBmethod().DBRecordCount(StaffNameDB)
+        
+        if staffnameDB_count != 0 {
+            
+            let charinfoArray = GetPDFGlyphInfo()
+            
+            let removed_overlap = RemoveOverlapArray(charinfoArray)
+            var sorted = SortcharinfoArray(removed_overlap)
+            
+            //各配列のY座標の平均値を求める
+            var YaverageArray: [Double] = []
+            for i in 0..<sorted.count {
+                YaverageArray.append(Get_Y_Average(sorted[i]))
+            }
+            
+            let unioned = UnionArrayByY(YaverageArray, charinfoArrays: sorted)
+            
+            let days_charinfo = GetDaysCharInfo(unioned)
+            
+            var removed_unnecessary = RemoveUnnecessaryLines(unioned)
+            
+            let shiftyearmonthAndlength = GetShiftYearMonth(GetLineText(removed_unnecessary[0]))
+            removed_unnecessary.removeAtIndex(0)
+            
+            let limitArray = GetLimitArray(days_charinfo, length: shiftyearmonthAndlength.length)
+            let results_GetSplitShiftAllStaffByDay = GetSplitShiftAllStaffByDay(removed_unnecessary, limit: limitArray)
+            
+            let staffnameArray = results_GetSplitShiftAllStaffByDay.staffnameArray
+            
+            let coordinated = CoordinateMergedCell(removed_unnecessary, splitshiftArrays: results_GetSplitShiftAllStaffByDay.onedayshiftArrays)
+            
+            appDelegate.unknownshiftname = CheckUnknownShiftName(coordinated)
+
+            dayattendanceArray = GetTheDayStaffAttendance(staffnameArray, splitshiftArrays: coordinated)
+            
+            shiftyearmonth = shiftyearmonthAndlength.0
+        }
+    }
+    
+    /**
+     pdfのテキスト情報を2次元配列に行ごとに格納する
+     
+     - returns: y座標が近似しているCharInfo同士を2次元配列に格納したもの
+     */
+    func GetPDFGlyphInfo() -> [[CharInfo]] {
+        var charinfoArray: [[CharInfo]] = []
+        var prev_y = -99.99
+        var currentArrayIndex = -1
+        
+        let path: NSString
+        path = DBmethod().FilePathTmpGet()
+//        path = NSBundle.mainBundle().pathForResource("8.11〜", ofType: "pdf")!
+        
+        let tet = TET()
+        let document = tet.open_document(path as String, optlist: "")
+        let page = tet.open_page(document, pagenumber: 1, optlist: "granularity=glyph")
+        var text = tet.get_text(page)
+        
+        //全テキストを検査するループ
+        while(text != nil && text.characters.count > 0){
+            while(tet.get_char_info(page) > 0){
+                
+                var charinfo = CharInfo()
+                charinfo.text = text.hankakuOnly
+                charinfo.text = ReplaceHankakuSymbol(charinfo.text)
+                charinfo.size = tet.fontsize()
+                charinfo.x = tet.x()
+                charinfo.y = tet.y()
+                
+                if !(prev_y-tolerance_y...prev_y+tolerance_y ~= tet.y()) {
+                    prev_y = tet.y()
+                    charinfoArray.append([])
+                    currentArrayIndex += 1
+                }
+                
+                charinfoArray[currentArrayIndex].append(charinfo)
+                
+            }
+            text = tet.get_text(page)
+        }
+        
+        tet.close_page(page)
+        tet.close_document(document)
+        
+        return charinfoArray
+    }
+    
+    
+    /**
+     
+     - parameter text: 全角記号を半角記号に置き換える
+     
+     - returns: 半角記号に置き換えた後の文字列
+     */
+    func ReplaceHankakuSymbol(text: String) -> String {
+        let pattern_zenkaku = ["（", "）", "／"]
+        let pattern_hankaku = ["(", ")", "/"]
+
+        var hankaku_text = text
+        for i in 0..<pattern_hankaku.count {
+            hankaku_text = hankaku_text.stringByReplacingOccurrencesOfString(pattern_zenkaku[i], withString: pattern_hankaku[i])
+        }
+        
+        return hankaku_text
+    }
+    
+    /**
+     内容が重複している配列を削除する
+     
+     - parameter charinfoArrays: CharInfoを格納した2次元配列
+     
+     - returns: テキストは完全一致,y座標は近似している配列(余分に存在する配列)を削除した配列
+     */
+    func RemoveOverlapArray(charinfoArrays: [[CharInfo]]) -> [[CharInfo]] {
+        
+        var removedcharinfoArray = charinfoArrays
+        var matchKeyArray: [Int] = []               //比較対象元(添字が小さい)
+        var matchValueArray: [Int] = []             //比較対象先(添字が大きい)
+        var match_count = 0
+        
+        //テキストが重複している配列の中身を検出する
+        for i in 0..<charinfoArrays.count - 1 {
+            for j in i+1..<charinfoArrays.count {
+                if charinfoArrays[i].count == charinfoArrays[j].count {
+                    for k in 0..<charinfoArrays[i].count {
+                        let charinfo1 = charinfoArrays[i][k]
+                        let charinfo2 = charinfoArrays[j][k]
+                        if charinfo1.text == charinfo2.text {
+                            match_count += 1
+                        }else {
+                            break
+                        }
+                    }
+
+                    //テキストが全て一致したかを判断する
+                    if match_count == charinfoArrays[i].count {
+                        matchKeyArray.append(i)
+                        matchValueArray.append(j)
+                    }
+                    match_count = 0
+                }
+            }
+        }
+        
+        //matchkey,value配列からY座標の平均値が全く異なるものを外す処理
+        for i in (0..<matchKeyArray.count).reverse() {
+            let key_Yave = Get_Y_Average(charinfoArrays[matchKeyArray[i]])
+            let value_Yave = Get_Y_Average(charinfoArrays[matchValueArray[i]])
+            
+            //テキストは完全一致でもY座標が近似でない場合
+            if !(value_Yave-tolerance_y...value_Yave+tolerance_y ~= key_Yave) {
+                matchKeyArray.removeAtIndex(i)
+                matchValueArray.removeAtIndex(i)
+            }
+        }
+        
+        //matchValueArray内の重複を削除
+        let orderedSet = NSOrderedSet(array: matchValueArray)
+        let removedArray = orderedSet.array as! [Int]
+        matchValueArray = removedArray
+        
+        
+        //重複と判断されたcharinfoArrayの添字をもとに削除する
+        for i in (0..<matchValueArray.count).reverse() {
+            removedcharinfoArray.removeAtIndex(matchValueArray[i])
+        }
+        
+        return removedcharinfoArray
+    }
+    
+    
+    /**
+     xは昇順，y座標は降順(PDFテキストの上から順)に並び替える
+     
+     - parameter charinfoArrays: ソートを行いたいCharInfoが格納された2次元配列
+     
+     - returns: ソート後のCharInfoが格納された2次元配列
+     */
+    func SortcharinfoArray(charinfoArrays: [[CharInfo]]) -> [[CharInfo]] {
+        var sorted = charinfoArrays
+        
+        sorted.sortInPlace { $0[0].y > $1[0].y }
+        
+        for i in 0..<sorted.count {
+            sorted[i].sortInPlace { $0.x < $1.x }
+        }
+        
+        return sorted
+    }
+    
+    
+    /**
+     引数で渡された配列のy座標の平均を求めて返す
+     
+     - parameter charinfoArray: y座標の平均を求めたいCharInfoが格納された1次元配列
+     
+     - returns: y座標の平均値
+     */
+    func Get_Y_Average(charinfoArray: [CharInfo]) -> Double {
+        var sum = 0.0
+        for i in 0..<charinfoArray.count {
+            sum += charinfoArray[i].y
+        }
+        
+        return (sum/Double(charinfoArray.count))
+    }
+    
+    
+    /**
+     平均値の配列をもとに誤差許容範囲内同士の配列を結合する関数
+     
+     - parameter aveArray: 平均値が格納された1次元配列(aveArray[i]の値はcharinfo[i]の平均値)
+     - parameter charinfoArrays: CharInfoが格納された2次元配列
+     
+     - returns: y座標が近似している配列を結合した2次元配列
+     */
+    func UnionArrayByY(aveArray: [Double], charinfoArrays: [[CharInfo]]) -> [[CharInfo]]{
+        var unionedArray = charinfoArrays
+        var pivot_index = 0
+        var pivot = 0.0
+        
+        var grouping: [[Int]] = [[]]
+        var grouping_index = 0
+        
+        //aveArrayの値が近いもの同士を記録する
+        for i in 0..<charinfoArrays.count - 1 {
+            pivot = aveArray[pivot_index]
+            if (pivot-tolerance_y...pivot+tolerance_y ~= aveArray[i+1]) {
+                grouping[grouping_index].append(i)
+                grouping[grouping_index].append(i+1)
+            }else {
+                pivot_index = i+1
+                grouping_index += 1
+                grouping.append([])
+            }
+        }
+        
+        //grouping内の空配列を削除する
+        for i in (0..<grouping.count).reverse() {
+            if grouping[i].isEmpty {
+                grouping.removeAtIndex(i)
+            }
+        }
+        
+        //grouping内で重複している要素を削除
+        for i in 0..<grouping.count {
+            let groupingArray = grouping[i]
+            let orderedSet = NSOrderedSet(array: groupingArray)
+            let removedArray = orderedSet.array as! [Int]
+            grouping[i] = removedArray
+        }
+        
+        //groupingをもとにunionedArrayの配列同士を結合する
+        for i in (0..<grouping.count).reverse() {
+            for j in (0..<grouping[i].count - 1).reverse() {
+                let index1 = grouping[i][j]
+                let index2 = grouping[i][j+1]
+                unionedArray[index1] += unionedArray[index2]
+                unionedArray.removeAtIndex(index2)
+            }
+        }
+        
+        //順番を整える
+        unionedArray = SortcharinfoArray(unionedArray)
+        
+        return unionedArray
+    }
+    
+
+    /**
+     CharInfoのテキストをわかりやすく表示するテスト関数
+     
+     - parameter charinfoArrays: 表示したいCharInfoが格納された2次元配列
+     */
+    func ShowAllcharinfoArray(charinfoArrays: [[CharInfo]]) {
+        for i in 0..<charinfoArrays.count {
+            print(String(i) + ": ", terminator: "")
+            for j in 0..<charinfoArrays[i].count {
+                let charinfo = charinfoArrays[i][j]
+                print(charinfo.text, terminator: "")
+            }
+            print("")
+        }
+    }
+    
+    
+    /**
+     CharInfoの1オブジェクトを受け取ってテキストを結合した文字列を取得する
+     
+     - parameter charinfoArray: 結合した文字列を取得したいCharInfoオブジェクト
+     
+     - returns: 結合した文字列
+     */
+    func GetLineText(charinfoArray: [CharInfo]) -> String {
+        var linetext = ""
+        for i in 0..<charinfoArray.count {
+            linetext += charinfoArray[i].text
+        }
+        
+        return linetext
+    }
+    
+    
+    /**
+     日付だけが記述されている行を取り出す
+     
+     - parameter charinfoArrays: 同じ行の結合が完了したcharinfo2次元配列
+     
+     - returns: 日付が記述されているcharinfo1次元配列
+     */
+    func GetDaysCharInfo(charinfoArrays: [[CharInfo]]) -> [CharInfo] {
+        for i in 0..<charinfoArrays.count {
+            var count = 0
+            for j in 0..<charinfoArrays[i].count {
+                let charinfo = charinfoArrays[i][j]
+                if Int(charinfo.text) == nil {
+                    break
+                }else{
+                    count += 1
+                }
+                
+                if count == charinfoArrays[i].count {
+                    return charinfoArrays[i]
+                }
+            }
+        }
+        
+        return charinfoArrays[0]
+    }
+    
+    
+    /**
+     不要な行の削除をする
+     
+     - parameter charinfoArrays: 不要な行が含まれたCharInfoを格納している2次元配列
+     
+     - returns: 不要な行を削除したCharInfoを格納している2次元配列
+     */
+    func RemoveUnnecessaryLines(charinfoArrays: [[CharInfo]]) -> [[CharInfo]] {
+        var removed = charinfoArrays
+        var pivot_index = 0
+        
+        //平成xx年度の行を見つける
+        for i in 0..<charinfoArrays.count {
+            let linetext = GetLineText(charinfoArrays[i])
+            
+            if linetext.containsString("平成") {
+                pivot_index = i
+                break
+            }
+        }
+        
+        //平成xx年度の行より上の行を取り除く
+        for i in (0..<pivot_index).reverse() {
+            removed.removeAtIndex(i)
+        }
+        
+        //各行にスタッフ名が含まれているかを検索して記録する
+        let staffnameArray = DBmethod().StaffNameArrayGet()
+        var contains_staffname_line:[Int] = []
+        for i in 0..<removed.count {
+            let linetext = GetLineText(removed[i])
+            
+            for j in 0..<staffnameArray!.count {
+                if linetext.containsString(staffnameArray![j]) {
+                    contains_staffname_line.append(i)
+                    break
+                }
+            }
+        }
+        
+        //スタッフ名が含まれていない行を削除
+        for i in (1..<removed.count).reverse() {
+            if contains_staffname_line.indexOf(i) == nil {
+                removed.removeAtIndex(i)
+            }
+        }
+        
+        //先頭文字が数字でない行を削除
+        for i in (1..<removed.count).reverse() {
+            if Int(removed[i][0].text) == nil {
+                removed.removeAtIndex(i)
+            }
+        }
+        
+        
+        return removed
+    }
+    
+    
+    /**
+     1クールが何日あるか、取り込んだシフトの年月を取得する
+     
+     - parameter text: 平成xx年度が記述された文字列
+     
+     - returns: year:                  シフトの年度(和暦)
+                startcoursmonth:       10日〜30日(31日)までの月
+                startcoursmonthyear:   10日〜30日(31日)までの年(和暦)
+                endcoursmonth:         1日〜10日までの月
+                endcoursmonthyear:     1日〜10日までの年(和暦)
+                length:                1クールの日数
+     */
+    func GetShiftYearMonth(text: String) -> ((year: Int, startcoursmonth: Int, startcoursmonthyear: Int, endcoursmonth: Int, endcoursmonthyear: Int), length: Int){
+        //1クールが全部で何日間あるかを判断するため
+        let shiftyearandmonth = CommonMethod().JudgeYearAndMonth(text)
+        let monthrange = CommonMethod().GetShiftCoursMonthRange(shiftyearandmonth.startcoursmonthyear, shiftstartmonth: shiftyearandmonth.startcoursmonth)
+        let length = monthrange.length
+        return (shiftyearandmonth,length)
+    }
+    
+    
+    /**
+     1日ごとのリミット配列を取得する
+     
+     - parameter charinfodaysArray: 日付のCharInfoが格納された1次元配列
+     - parameter length: 1クールの最大日数
+     - returns: 1日ごとのリミット値(x座標)が格納されたDouble1次元配列
+     */
+    func GetLimitArray(charinfodaysArray: [CharInfo], length: Int) -> [Double] {
+        var limitArray:[Double] = []
+        var day = 11
+        var index = -1
+        
+        for _ in 0..<length {
+            switch day {
+            case 10...length:
+                index += 2
+                limitArray.append(charinfodaysArray[index].x)
+                
+            case 1...9:
+                index += 1
+                limitArray.append(charinfodaysArray[index].x)
+            default:
+                break
+            }
+            
+            if day < length {
+                day += 1
+            }else{
+                day = 1
+            }
+        }
+        
+        return limitArray
+    }
+    
+    /**
+     全スタッフ分の1日ごとのシフトを取得する
+     
+     - parameter charinfoArrays: スタッフのシフトが記述された行が格納されたcharinfo2次元配列
+     - parameter limit: 1日ごとのx座標のリミット値が格納されたDouble次元配列
+     
+     - returns: スタッフごとにシフト名を格納したOneDayShift2次元配列
+                シフトに出現するスタッフ名を格納したString1次元配列
+     */
+    func GetSplitShiftAllStaffByDay(charinfoArrays: [[CharInfo]], limit:[Double]) -> (onedayshiftArrays: [[OneDayShift]], staffnameArray: [String]) {
+        var splitdayshift: [[OneDayShift]] = []
+        var staffnameArray: [String] = []
+        
+        let staffnumber = DBmethod().StaffNumberGet()
+        let staffnameDBArray = DBmethod().StaffNameArrayGet()
+
+        //登録したスタッフの人数分だけループする
+        for i in 0..<staffnumber {
+            splitdayshift.append([])
+            var staffname = ""
+            let one_person_charinfo = charinfoArrays[i]
+            let one_person_textline = GetLineText(one_person_charinfo)
+            
+            //名前検索
+            for j in 0..<staffnameDBArray!.count {
+                if one_person_textline.containsString(staffnameDBArray![j]) == true {
+                    staffname = staffnameDBArray![j]
+                    staffnameArray.append(staffname)
+                    break
+                }
+            }
+            
+            //シフト文字の始まりの場所を記録する
+            var shift_start = 0
+            let staffname_end_char = staffname[staffname.endIndex.predecessor()]
+            for j in 0..<one_person_charinfo.count {
+                let text = one_person_charinfo[j].text
+                
+                if text == String(staffname_end_char) {
+                    shift_start = j+1
+                    break
+                }
+            }
+            
+            //リミット値を参考に1日ごとのシフトを抽出する
+            var current_shift_index = shift_start
+            for j in 0..<limit.count {
+                let limit_x = limit[j]
+                var current_shift_x = one_person_charinfo[current_shift_index].x
+                var current_shift_text = one_person_charinfo[current_shift_index].text
+                var onedayshifttext = ""
+                var sum_x = 0.0
+                
+                //1日ごとのリミット値を超えない限り文字を連結する
+                while current_shift_x <= limit_x + tolerance_x {
+                    onedayshifttext += current_shift_text
+                    sum_x += current_shift_x
+                    
+                    current_shift_index += 1
+                    current_shift_x = one_person_charinfo[current_shift_index].x
+                    current_shift_text = one_person_charinfo[current_shift_index].text
+                }
+                
+                //連結した文字が複数の場合はx座標を平均値にする
+                let ave_x = sum_x/Double(onedayshifttext.characters.count)
+                
+                var onedayshift = OneDayShift()
+                onedayshift.text = onedayshifttext
+                onedayshift.x = ave_x
+                splitdayshift[i].append(onedayshift)
+            }
+        }
+        return (splitdayshift,staffnameArray)
+    }
+    
+    
+    /**
+     OneDayShiftが等しいかを確認する
+     
+     - parameter obj1: 比較するOneDayShiftオブジェクト
+     - parameter obj2: 比較するOneDayShiftオブジェクト
+     
+     - returns: 等しいならtrue、等しくないならfalse
+     */
+    func EqualOneDayShift(obj1: OneDayShift, obj2: OneDayShift) -> Bool {
+        if (obj1.text == obj2.text) && (obj1.x == obj2.x) {
+            return true
+        }else {
+            return false
+        }
+    }
+    
+    /**
+     結合されたセルを判定して、配列に内容を反映させる
+     ex.) 配列が"遅","研","修"となっており、研修が結合されている場合は"遅","研修","研修"に修正する
+     
+     - parameter charinfoArrays:   CharInfoが格納された2次元配列
+     - parameter splitshift: 1日ごとのシフトに分割したOneDayShift2次元配列
+     
+     - returns: 結合修正済みの2次元配列
+     */
+    func CoordinateMergedCell(charinfoArrays: [[CharInfo]], splitshiftArrays: [[OneDayShift]]) -> [[String]] {
+        var splitshiftArrays = splitshiftArrays
+        var coordinatedArray:[[String]] = []
+        var current_onedayshiftArray:[OneDayShift] = []
+        var next_onedayshiftArray:[OneDayShift] = []
+        
+        for i in 0..<splitshiftArrays.count {
+            //x座標が近いonedayshift同士を記録する
+            for j in 0..<splitshiftArrays[i].count - 1 {
+                let oneday_next = splitshiftArrays[i][j+1]
+                let oneday_current = splitshiftArrays[i][j]
+                
+                if oneday_next.x - oneday_current.x < tolerance_onedayshift_x {
+                    current_onedayshiftArray.append(oneday_current)
+                    next_onedayshiftArray.append(oneday_next)
+                }
+            }
+            
+            //x座標が近いと判断されたOneDayShiftオブジェクトを削除＆削除位置を記録する
+            var current_obj_index = -1
+            var next_obj_index = -1
+            for j in 0..<next_onedayshiftArray.count {
+                let current_obj = current_onedayshiftArray[j]
+                let next_obj = next_onedayshiftArray[j]
+                
+                for k in (0..<splitshiftArrays[i].count).reverse() {
+                    if EqualOneDayShift(current_obj, obj2: splitshiftArrays[i][k]) {
+                        current_obj_index = k
+                    }
+                    
+                    if EqualOneDayShift(next_obj, obj2: splitshiftArrays[i][k]) {
+                        next_obj_index = k
+                    }
+                    
+                    if current_obj_index != -1 && next_obj_index != -1 {
+                        splitshiftArrays[i].removeAtIndex(next_obj_index)
+                        splitshiftArrays[i].removeAtIndex(current_obj_index)
+                        break
+                    }
+                }
+                
+                //削除したOneDayShiftを結合して挿入する
+                let combine_text = current_obj.text + next_obj.text
+                let ave_x = (current_obj.x + next_obj.x)/2.0
+                var new_onedayshift = OneDayShift()
+                new_onedayshift.text = combine_text
+                new_onedayshift.x = ave_x
+                splitshiftArrays[i].insert(new_onedayshift, atIndex: current_obj_index)
+                splitshiftArrays[i].insert(new_onedayshift, atIndex: next_obj_index)
+            }
+            current_onedayshiftArray.removeAll()
+            next_onedayshiftArray.removeAll()
+        }
+        
+        //Stringの2次元配列に格納する
+        for i in 0..<splitshiftArrays.count {
+            coordinatedArray.append([])
+            for j in 0..<splitshiftArrays[i].count {
+                let splitshift = splitshiftArrays[i][j]
+                coordinatedArray[i].append(splitshift.text)
+            }
+        }
+        
+        return coordinatedArray
+    }
+    
+    
+    /**
+     データベースに登録されていないシフト名を1次元配列で返す
+     
+     - parameter splitshiftArrays: 1日ごとスタッフごとに分割されたシフトを格納した2次元配列
+     
+     - returns: 登録されていないシフト名を格納した1次元配列
+     */
+    func CheckUnknownShiftName(splitshiftArrays: [[String]]) -> [String] {
+        var unknown_shiftArray:[String] = []
+        
+        for i in 0..<splitshiftArrays.count {
+            for j in 0..<splitshiftArrays[i].count {
+                let search_result = DBmethod().SearchShiftSystem(splitshiftArrays[i][j])
+                
+                if search_result == nil && unknown_shiftArray.indexOf(splitshiftArrays[i][j]) == nil {
+                    unknown_shiftArray.append(splitshiftArrays[i][j])
+                }
+            }
+        }
+        
+        unknown_shiftArray.removeObject("")
+        
+        return unknown_shiftArray
+    }
+    
+    
+    /**
+     その日出勤するスタッフを、スタッフ名:シフト名……のように配列に格納する
+     
+     - parameter staffnameArray:   取り込んだPDFファイルに出現するスタッフ名が格納されたString1次元配列
+     - parameter splitshiftArrays: 1日ごとに分けたシフト名が格納されたString2次元配列
+     
+     - returns: 日にちごとに分けたその日出勤するスタッフごとにまとめた1次元配列
+     */
+    func GetTheDayStaffAttendance(staffnameArray: [String], splitshiftArrays: [[String]]) -> [String] {
+        var splitattendanceArray :[String] = []
+        var dayshift = ""
+        
+        //splitshiftArraysを[i][j]と[i+1][j][1+2][j]と縦方向に同時にアクセス
+        for i in 0..<splitshiftArrays[0].count {
+            for j in 0..<splitshiftArrays.count {
+                let staffshift = splitshiftArrays[j][i]
+                let staffname = staffnameArray[j]
+                let holidayarray = DBmethod().ShiftSystemNameArrayGetByGroudid(6)
+                if(staffshift != ""){
+                    if(holidayarray.contains(staffshift) == false){
+                        dayshift += staffname + ":" + staffshift + ","
+                    }
+                }
+            }
+            splitattendanceArray.append(dayshift)
+            dayshift = ""
+        }
+        
+        return splitattendanceArray
+    }
+    
+    func RegistDataBase(update: Bool, importname: String, importpath: String) {
+        var date = 11
+        var flag = 0
+        var shiftdetailarray = List<ShiftDetailDB>()
+
+        //1クールが全部で何日間あるかを判断するため
+        let monthrange = CommonMethod().GetShiftCoursMonthRange(shiftyearmonth.startcoursmonthyear, shiftstartmonth: shiftyearmonth.startcoursmonth)
+        
+        var shiftdetaildbrecordcount = DBmethod().DBRecordCount(ShiftDetailDB)
+        let shiftdbrecordcount = DBmethod().DBRecordCount(ShiftDB)
+        
+        for i in 0 ..< dayattendanceArray.count{
+            let shiftdbrecord = ShiftDB()
+            let shiftdetaildbrecord = ShiftDetailDB()
+            
+            if update {
+                let existshiftdb = DBmethod().SearchShiftDB(importname)
+                
+                shiftdbrecord.id = existshiftdb.id        //取り込みが上書きの場合は使われているidをそのまま使う
+                shiftdbrecord.year = existshiftdb.year
+                shiftdbrecord.month = existshiftdb.month
+                
+                shiftdetaildbrecord.id = existshiftdb.shiftdetail[i].id
+                shiftdetaildbrecord.day = existshiftdb.shiftdetail[i].day
+                
+                switch(flag){
+                case 0:         //11日〜30(31)日までの場合
+                    shiftdetaildbrecord.year = shiftyearmonth.startcoursmonthyear
+                    shiftdetaildbrecord.month = shiftyearmonth.startcoursmonth
+                    date += 1
+                    
+                    if(date > monthrange.length){
+                        date = 1
+                        flag = 1
+                    }
+                    
+                case 1:         //11日〜月末日までの場合
+                    shiftdetaildbrecord.year = shiftyearmonth.endcoursmonthyear
+                    shiftdetaildbrecord.month = shiftyearmonth.endcoursmonth
+                    date += 1
+                    
+                default:
+                    break
+                }
+                
+                
+                shiftdetaildbrecord.staff = dayattendanceArray[i]
+                shiftdetaildbrecord.shiftDBrelationship = DBmethod().SearchShiftDB(importname)
+                
+                DBmethod().AddandUpdate(shiftdetaildbrecord, update: true)
+                
+            }else{
+                
+                shiftdbrecord.id = shiftdbrecordcount
+                
+                shiftdbrecord.year = 0
+                shiftdbrecord.month = 0
+                shiftdbrecord.shiftimportname = importname
+                shiftdbrecord.shiftimportpath = importpath
+                shiftdbrecord.salaly = 0
+                
+                shiftdetaildbrecord.id = shiftdetaildbrecordcount
+                shiftdetaildbrecordcount += 1
+                
+                shiftdetaildbrecord.day = date
+                
+                switch(flag){
+                case 0:         //11日〜月末日までの場合
+                    shiftdetaildbrecord.year = shiftyearmonth.startcoursmonthyear
+                    shiftdetaildbrecord.month = shiftyearmonth.startcoursmonth
+                    date += 1
+                    
+                    if(date > monthrange.length){
+                        date = 1
+                        flag = 1
+                    }
+                    
+                case 1:         //1日〜10日までの場合
+                    shiftdetaildbrecord.year = shiftyearmonth.endcoursmonthyear
+                    shiftdetaildbrecord.month = shiftyearmonth.endcoursmonth
+                    date += 1
+                    
+                default:
+                    break
+                }
+                
+                shiftdetaildbrecord.staff = dayattendanceArray[i]
+                shiftdetaildbrecord.shiftDBrelationship = shiftdbrecord
+                
+                //すでに記録してあるListを取得して後ろに現在の記録を追加する
+                for i in 0 ..< shiftdetailarray.count{
+                    shiftdbrecord.shiftdetail.append(shiftdetailarray[i])
+                }
+                shiftdbrecord.shiftdetail.append(shiftdetaildbrecord)
+                
+                let ID = shiftdbrecord.id
+                
+                DBmethod().AddandUpdate(shiftdbrecord, update: true)
+                DBmethod().AddandUpdate(shiftdetaildbrecord, update: true)
+                shiftdetailarray = DBmethod().ShiftDBRelationArrayGet(ID)
+            }
+            
+        }
+    }
+    
+    //入力したユーザ名の月給を計算して結果を記録する
+    func UserMonthlySalaryRegist(importname: String){
+        var usershift:[String] = []
+        
+        let username = DBmethod().UserNameGet()
+        let holiday = DBmethod().ShiftSystemNameArrayGetByGroudid(6)      //休暇のシフト体制を取得
+        
+        //1クール分行う
+        for i in 0 ..< dayattendanceArray.count{
+            
+            var dayshift = ""
+            
+            let nsstring = dayattendanceArray[i] as NSString
+            if(nsstring.containsString(username)){
+                
+                let userlocation = nsstring.rangeOfString(username).location
+                
+                var index = dayattendanceArray[i].startIndex.advancedBy(userlocation + username.characters.count + 1)
+                
+                while(String(dayattendanceArray[i][index]) != ","){
+                    dayshift += String(dayattendanceArray[i][index])
+                    index = index.successor()
+                }
+                
+                if(holiday.contains(dayshift) == false){      //holiday以外なら
+                    usershift.append(dayshift)
+                }
+            }
+        }
+        
+        //月給の計算をする
+        var monthlysalary = 0.0
+        let houlypayrecord = DBmethod().HourlyPayRecordGet()
+        
+        for i in 0 ..< usershift.count{
+            
+            let shiftsystem = DBmethod().SearchShiftSystem(usershift[i])
+            if(shiftsystem![0].endtime <= houlypayrecord[0].timeto){
+                monthlysalary = monthlysalary + (shiftsystem![0].endtime - shiftsystem![0].starttime - 1) * Double(houlypayrecord[0].pay)
+            }else{
+                //22時以降の給与を先に計算
+                let latertime = shiftsystem![0].endtime - houlypayrecord[0].timeto
+                monthlysalary = monthlysalary + latertime * Double(houlypayrecord[1].pay)
+                
+                monthlysalary = monthlysalary + (shiftsystem![0].endtime - latertime - shiftsystem![0].starttime - 1) * Double(houlypayrecord[0].pay)
+            }
+        }
+        
+        //データベースへ記録上書き登録
+        let newshiftdbsalalyadd = ShiftDB()                                 //月給を追加するための新規インスタンス
+        let oldshiftdbsalalynone = DBmethod().SearchShiftDB(importname)     //月給がデフォルト値で登録されているShiftDBオブジェクト
+        
+        newshiftdbsalalyadd.id = oldshiftdbsalalynone.id
+        
+        for i in 0 ..< oldshiftdbsalalynone.shiftdetail.count{
+            newshiftdbsalalyadd.shiftdetail.append(oldshiftdbsalalynone.shiftdetail[i])
+        }
+        
+        newshiftdbsalalyadd.shiftimportname = oldshiftdbsalalynone.shiftimportname
+        newshiftdbsalalyadd.shiftimportpath = oldshiftdbsalalynone.shiftimportpath
+        newshiftdbsalalyadd.salaly = Int(monthlysalary)
+        newshiftdbsalalyadd.year = shiftyearmonth.year
+        newshiftdbsalalyadd.month = shiftyearmonth.endcoursmonth
+        
+        DBmethod().AddandUpdate(newshiftdbsalalyadd, update: true)
+    }
+}
