@@ -14,7 +14,6 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
     @IBOutlet weak var table: UITableView!
     
     var shiftgroupnameUIPicker: UIPickerView = UIPickerView()
-    var shifttimeUIPicker: UIPickerView = UIPickerView()
 
     var pickerviewtoolBar = UIToolbar()
     var pickerdoneButton = UIBarButtonItem()
@@ -22,13 +21,9 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
     let shiftgroupname = CommonMethod().GetShiftGroupName()
     
     var shiftgroupnametextfield = UITextField()
-    var shifttimetextfield = UITextField()
 
     var starttime = ""
     var endtime = ""
-    let wavyline: [String] = ["〜"]
-    
-    let time = CommonMethod().GetTimeNotSpecifiedVer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,21 +35,11 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
         
         self.RefreshData()
         
-        //シフト時間を選択して表示するテキストフィールドのデフォルト表示を指定
-        starttime = time[0]
-        endtime = time[0]
-        
         //シフトグループを選択するpickerview
         shiftgroupnameUIPicker.frame = CGRectMake(0,0,self.view.bounds.width/2+20, 200.0)
         shiftgroupnameUIPicker.delegate = self
         shiftgroupnameUIPicker.dataSource = self
         shiftgroupnameUIPicker.tag = 2
-        
-        //シフト時間を選択するpickerview
-        shifttimeUIPicker.frame = CGRectMake(0,0,self.view.bounds.width/2+20, 200.0)
-        shifttimeUIPicker.delegate = self
-        shifttimeUIPicker.dataSource = self
-        shifttimeUIPicker.tag = 3
         
         //pickerviewに表示するツールバー
         pickerviewtoolBar.barStyle = UIBarStyle.Default
@@ -191,7 +176,7 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
                         
                         if textflag {
                             //新規レコードの作成
-                            let newrecord = CommonMethod().CreateShiftSystemDBRecord(self.records[section][row].id,shiftname: textFields![0].text!, shiftgroup: textFields![1].text!, shifttime: textFields![2].text!, shiftstarttimerow: self.shiftstarttimeselectrow, shiftendtimerow: self.shiftendtimeselectrow)
+                            let newrecord = CommonMethod().CreateShiftSystemDBRecord(self.records[section][row].id,shiftname: textFields![0].text!, shiftgroup: textFields![1].text!)
 
                             //編集前のレコードを削除
                             DBmethod().DeleteRecord(self.records[section][row])
@@ -218,10 +203,7 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
             
             //シフトグループの選択内容を入れるテキストフィールドを追加
             alert.addTextFieldWithConfigurationHandler(configurationshiftgroupnameTextField)
-            
-            //シフト時間の選択内容を入れるテキストフィールドを追加
-            alert.addTextFieldWithConfigurationHandler(configurationshifttimeTextField)
-            
+                        
         case 1:
             buttontitle = "削除する"
             
@@ -255,7 +237,7 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
                     }
 
                     if textflag {
-                        let newrecord = CommonMethod().CreateShiftSystemDBRecord(DBmethod().DBRecordCount(ShiftSystemDB),shiftname: textFields![0].text!, shiftgroup: textFields![1].text!, shifttime: textFields![2].text!, shiftstarttimerow: self.shiftstarttimeselectrow, shiftendtimerow: self.shiftendtimeselectrow)
+                        let newrecord = CommonMethod().CreateShiftSystemDBRecord(DBmethod().DBRecordCount(ShiftSystemDB),shiftname: textFields![0].text!, shiftgroup: textFields![1].text!)
 
                         DBmethod().AddandUpdate(newrecord, update: true)
                     }
@@ -272,9 +254,6 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
             
             //シフトグループの選択内容を入れるテキストフィールドを追加
             alert.addTextFieldWithConfigurationHandler(configurationshiftgroupnameTextField)
-            
-            //シフト時間の選択内容を入れるテキストフィールドを追加
-            alert.addTextFieldWithConfigurationHandler(configurationshifttimeTextField)
             
             alert.addAction(Action)
             
@@ -307,63 +286,23 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
     
     //pickerに表示する行数を返すデータソースメソッド.
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        if pickerView.tag == 2 {
-            pickerdoneButton.tag = 2
-            return shiftgroupname.count
-        }else if pickerView.tag == 3 {
-            pickerdoneButton.tag = 3
-            if component == 0 {
-                return time.count
-            }else if component == 1 {
-                return wavyline.count
-            }else{
-                return time.count
-            }
-        }else{
-            return 0
-        }
+        pickerdoneButton.tag = 2
+        return shiftgroupname.count
     }
     
     //pickerに表示する値を返すデリゲートメソッド.
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        if pickerView.tag == 2 {
-            return shiftgroupname[row]
-        }else if pickerView.tag == 3 {
-            if component == 0 || component == 2 {
-                return time[row]
-            }else{
-                return wavyline[row]
-            }
-        }else{
-            return ""
-        }
+        return shiftgroupname[row]
     }
     
-    //シフトグループ,シフト時間(開始),シフト時間(終了)の選択箇所を記録する変数
+    //シフトグループの選択箇所を記録する変数
     var shiftgroupselectrow = 0
-    var shiftstarttimeselectrow = 0
-    var shiftendtimeselectrow = 0
     
     //pickerが選択されたとき
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        if pickerView.tag == 2 {      //シフトグループ選択
-            shiftgroupnametextfield.text = shiftgroupname[row]
-            pickerdoneButton.tag = 2
-            shiftgroupselectrow = row
-            
-        }else if pickerView.tag == 3 {      //シフト時間選択
-            
-            if component == 0 {
-                starttime = time[row]
-                shiftstarttimeselectrow = row
-            }else if component == 2 {
-                endtime = time[row]
-                shiftendtimeselectrow = row
-            }
-            pickerdoneButton.tag = 3
-            
-            shifttimetextfield.text = starttime + " " + wavyline[0] + " " + endtime
-        }
+        shiftgroupnametextfield.text = shiftgroupname[row]
+        pickerdoneButton.tag = 2
+        shiftgroupselectrow = row
     }
     
     //シフトのグループを入れるテキストフィールドの設定をする
@@ -376,39 +315,15 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
         shiftgroupnametextfield = textField
     }
     
-    //シフトの時間を入れるテキストフィールドの設定をする
-    func configurationshifttimeTextField(textField: UITextField!){
-        textField.placeholder = "シフトの時間を入力"
-        textField.inputView = self.shifttimeUIPicker
-        textField.inputAccessoryView = self.pickerviewtoolBar
-        textField.tag = 2
-        textField.delegate = self
-        shifttimetextfield = textField
-    }
-    
     //ツールバーの完了ボタンを押した時の関数
     func donePicker(sender:UIButton){
-        
-        if sender.tag == 2 {            //シフトグループの完了ボタン
-            shiftgroupnametextfield.resignFirstResponder()
-            shifttimetextfield.becomeFirstResponder()
-        }else if sender.tag == 3 {      //シフト時間の完了ボタン
-            shifttimetextfield.resignFirstResponder()
-        }
+        shiftgroupnametextfield.resignFirstResponder()
     }
     
     //textfieldがタップされた時
     func textFieldDidBeginEditing(textField: UITextField) {
-        if textField.tag == 1 {             //シフトグループ選択
-            shiftgroupnameUIPicker.selectRow(shiftgroupselectrow, inComponent: 0, animated: true)
-            textField.text = shiftgroupname[shiftgroupselectrow]
-            
-        }else if textField.tag == 2 {       //シフト時間選択
-            shifttimeUIPicker.selectRow(shiftstarttimeselectrow, inComponent: 0, animated: true)
-            shifttimeUIPicker.selectRow(shiftendtimeselectrow, inComponent: 2, animated: true)
-            textField.text = time[shiftstarttimeselectrow] + " " + wavyline[0] + " " + time[shiftendtimeselectrow]
-        }
+        shiftgroupnameUIPicker.selectRow(shiftgroupselectrow, inComponent: 0, animated: true)
+        textField.text = shiftgroupname[shiftgroupselectrow]
     }
-
     
 }

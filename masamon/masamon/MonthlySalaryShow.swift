@@ -407,7 +407,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                                                             
                                                             if flag {   //テキストフィールドに値が全て入っている場合
                                                                 
-                                                                let newrecord = CommonMethod().CreateShiftSystemDBRecord(DBmethod().DBRecordCount(ShiftSystemDB),shiftname: textFields![0].text!, shiftgroup: textFields![1].text!, shifttime: textFields![2].text!, shiftstarttimerow: self.shiftstarttimeselectrow,shiftendtimerow: self.shiftendtimeselectrow)
+                                                                let newrecord = CommonMethod().CreateShiftSystemDBRecord(DBmethod().DBRecordCount(ShiftSystemDB),shiftname: textFields![0].text!, shiftgroup: textFields![1].text!)
                                                                 DBmethod().AddandUpdate(newrecord, update: true)
                                                                 
                                                                 self.savedata()
@@ -490,7 +490,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                                                             
                                                             if flag {   //テキストフィールドに値が全て入っている場合
                                                                 
-                                                                let newrecord = CommonMethod().CreateShiftSystemDBRecord(DBmethod().DBRecordCount(ShiftSystemDB),shiftname: textFields![0].text!, shiftgroup: textFields![1].text!, shifttime: textFields![2].text!, shiftstarttimerow: self.shiftstarttimeselectrow,shiftendtimerow: self.shiftendtimeselectrow)
+                                                                let newrecord = CommonMethod().CreateShiftSystemDBRecord(DBmethod().DBRecordCount(ShiftSystemDB),shiftname: textFields![0].text!, shiftgroup: textFields![1].text!)
                                                                 DBmethod().AddandUpdate(newrecord, update: true)
                                                                 
                                                                 self.savedata()
@@ -667,19 +667,6 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             shiftgroupnametextfield.text = shiftgroupname[row]
             pickerdoneButton.tag = 2
             shiftgroupselectrow = row
-            
-        }else if pickerView.tag == 3 {      //シフト時間選択
-            
-            if component == 0 {
-                starttime = time[row]
-                shiftstarttimeselectrow = row
-            }else if component == 2 {
-                endtime = time[row]
-                shiftendtimeselectrow = row
-            }
-            pickerdoneButton.tag = 3
-            
-            shifttimetextfield.text = starttime + " " + wavyline[0] + " " + endtime
         }
     }
     
@@ -962,10 +949,8 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         shifttimetextfield = textField
     }
     
-    //シフトグループ,シフト時間(開始),シフト時間(終了)の選択箇所を記録する変数
+    //シフトグループの選択箇所を記録する変数
     var shiftgroupselectrow = 0
-    var shiftstarttimeselectrow = 0
-    var shiftendtimeselectrow = 0
 
     /**
      textfieldがタップされた時に動作
@@ -973,15 +958,8 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
      - parameter textField: タップされたtextField
      */
     func textFieldDidBeginEditing(textField: UITextField) {
-        if textField.tag == 1 {             //シフトグループ選択
-            shiftgroupnameUIPicker.selectRow(shiftgroupselectrow, inComponent: 0, animated: true)
-            textField.text = shiftgroupname[shiftgroupselectrow]
-            
-        }else if textField.tag == 2 {       //シフト時間選択
-            shifttimeUIPicker.selectRow(shiftstarttimeselectrow, inComponent: 0, animated: true)
-            shifttimeUIPicker.selectRow(shiftendtimeselectrow, inComponent: 2, animated: true)
-            textField.text = time[shiftstarttimeselectrow] + " " + wavyline[0] + " " + time[shiftendtimeselectrow]
-        }
+        shiftgroupnameUIPicker.selectRow(shiftgroupselectrow, inComponent: 0, animated: true)
+        textField.text = shiftgroupname[shiftgroupselectrow]
     }
     
     /**
