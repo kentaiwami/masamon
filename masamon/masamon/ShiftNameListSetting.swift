@@ -116,7 +116,13 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
     //セルの削除を許可
     func tableView(tableView: UITableView,canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool
     {
-        return true
+        let cellname = self.records[indexPath.section][indexPath.row].name
+        
+        if cellname == "不明" {
+            return false
+        }else {
+            return true
+        }
     }
     
     //セルを横スクロールした際に表示されるアクションを管理するメソッド
