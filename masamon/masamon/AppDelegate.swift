@@ -70,7 +70,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         //シフト体制データ
-        let shiftnamepattern = ["早","早M","早カ","はや","中","中2","中3","遅","遅M","遅カ","公","夏","有"]
+        let shiftnamepattern = ["早","早M","早カ","はや","中","中2","中3","遅","遅M","遅カ","公","夏","有","不明"]
 
         if DBmethod().DBRecordCount(ShiftSystemDB) == 0 {
             for i in 0 ..< shiftnamepattern.count{
@@ -109,10 +109,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     ShiftSystemRecord.endtime = 24.5
                     
                 //休み
-                default:
+                case 10...12:
                     gid = 6
                     ShiftSystemRecord.starttime = 0.0
                     ShiftSystemRecord.endtime = 0.0
+                    
+                //その他
+                default:
+                    gid = 5
+                    ShiftSystemRecord.starttime = 0.0
+                    ShiftSystemRecord.endtime = 0.0
+                    break
                 }
                 
                 ShiftSystemRecord.id = i
