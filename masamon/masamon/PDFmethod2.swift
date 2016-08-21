@@ -38,7 +38,9 @@ class PDFmethod2: UIViewController {
      */
     func RunPDFmethod() {
         //スタッフ名が登録されている場合のみ処理を進める
-        if CheckStaffNameDB() == true {
+        let staffnameDB_count = DBmethod().DBRecordCount(StaffNameDB)
+        
+        if staffnameDB_count != 0 {
             
             let charinfoArray = GetPDFGlyphInfo()
             
@@ -422,28 +424,6 @@ class PDFmethod2: UIViewController {
         return removed
     }
     
-    /**
-     スタッフがデータベースに登録されているかチェック
-     
-     - returns: 1名でも登録されていたらtrue、未登録ならfalse
-     */
-    func CheckStaffNameDB() -> Bool {
-        let number_of_people = DBmethod().StaffNameAllRecordGet()
-        if number_of_people != nil {
-            return true
-        }else{
-            //アラート表示
-            let alert: UIAlertController = UIAlertController(title: "取り込みエラー", message: "設定画面でスタッフを登録して下さい", preferredStyle:  UIAlertControllerStyle.Alert)
-            let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler:{
-                (action: UIAlertAction!) -> Void in
-            })
-            
-            alert.addAction(defaultAction)
-            
-            self.presentViewController(alert, animated: true, completion: nil)
-            return false
-        }
-    }
     
     /**
      1クールが何日あるか、取り込んだシフトの年月を取得する
