@@ -50,6 +50,7 @@
 		379A2E051C1FDFFC00751425 /* CustomUICollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379A2E041C1FDFFC00751425 /* CustomUICollectionViewCell.swift */; };
 		37A597261CD57F0A00D43D35 /* LaunchScreenImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 37A597251CD57F0A00D43D35 /* LaunchScreenImage.png */; };
 		37A6F9BE1CDE66FA004863FE /* ShiftImportSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A6F9BD1CDE66FA004863FE /* ShiftImportSetting.swift */; };
+		37A76F9B1D6A28AA00ED7AEA /* Maintenance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A76F9A1D6A28AA00ED7AEA /* Maintenance.swift */; };
 		37C8B2401CD4E29D001E3766 /* OriginUITabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C8B23F1CD4E29D001E3766 /* OriginUITabBarController.swift */; };
 		37D4B3101BE0F59900F06759 /* HourlyWageSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D4B30F1BE0F59900F06759 /* HourlyWageSetting.swift */; };
 		37DD8EFF1C1C29FF007C0E6C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 370ACDFE1BDF486700AB73EB /* Main.storyboard */; };
@@ -163,6 +164,7 @@
 		379A2E041C1FDFFC00751425 /* CustomUICollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomUICollectionViewCell.swift; sourceTree = "<group>"; };
 		37A597251CD57F0A00D43D35 /* LaunchScreenImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LaunchScreenImage.png; sourceTree = "<group>"; };
 		37A6F9BD1CDE66FA004863FE /* ShiftImportSetting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShiftImportSetting.swift; sourceTree = "<group>"; };
+		37A76F9A1D6A28AA00ED7AEA /* Maintenance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Maintenance.swift; sourceTree = "<group>"; };
 		37C8B23F1CD4E29D001E3766 /* OriginUITabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OriginUITabBarController.swift; sourceTree = "<group>"; };
 		37CB96FE1C40569400171B76 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
 		37CB96FF1C40569400171B76 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
@@ -243,6 +245,7 @@
 				37C8B23F1CD4E29D001E3766 /* OriginUITabBarController.swift */,
 				374090BF1C78641E00B01DC4 /* VideoViewController.swift */,
 				370ACDFC1BDF486700AB73EB /* MonthlySalaryShow.swift */,
+				37A76F9A1D6A28AA00ED7AEA /* Maintenance.swift */,
 				3721B1161C51499D0002A373 /* CommonMethod.swift */,
 				3726B3991C30009700F22F34 /* CalenderViewController.swift */,
 				376C92D51BE695D000D45FC2 /* extentions.swift */,
@@ -514,6 +517,7 @@
 				370ACE441BDF573500AB73EB /* DB.swift in Sources */,
 				373C10EF1C5E04D10082CB8E /* ShiftNameListSetting.swift in Sources */,
 				379A2E051C1FDFFC00751425 /* CustomUICollectionViewCell.swift in Sources */,
+				37A76F9B1D6A28AA00ED7AEA /* Maintenance.swift in Sources */,
 				371432A81BE98F060088CDCC /* ShiftImport.swift in Sources */,
 				37D4B3101BE0F59900F06759 /* HourlyWageSetting.swift in Sources */,
 				373C10F11C5E05010082CB8E /* ShiftListSetting.swift in Sources */,
