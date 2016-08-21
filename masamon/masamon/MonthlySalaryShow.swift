@@ -49,7 +49,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        PDFmethod2().RunPDFmethod()
+        PDFmethod2().RunPDFmethod()
         
 //        //クラッシュ等で参照されずに残ってしまったファイルを手動で削除する(保守用)
 //        let documentspath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String

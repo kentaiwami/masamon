@@ -63,14 +63,15 @@ class PDFmethod2: UIViewController {
             removed_unnecessary.removeAtIndex(0)
             
             let limitArray = GetLimitArray(days_charinfo, length: shiftyearmonth.length)
-            let splitshiftArray = GetSplitShiftAllStaffByDay(removed_unnecessary, limit: limitArray)
+            let results_GetSplitShiftAllStaffByDay = GetSplitShiftAllStaffByDay(removed_unnecessary, limit: limitArray)
             
-            let coordinated = CoordinateMergedCell(removed_unnecessary, splitshiftArrays: splitshiftArray)
-            
-            for i in 0..<coordinated.count {
-                print(String(i+1) + ": ", terminator:"")
-                print(coordinated[i])
-            }
+            let coordinated = CoordinateMergedCell(removed_unnecessary, splitshiftArrays: results_GetSplitShiftAllStaffByDay.onedayshiftArrays)
+
+            //            for i in 0..<coordinated.count {
+//                print(String(i+1) + ": ", terminator:"")
+//                print(coordinated[i])
+//            }
+            //print(removed_results.staffname)
         }
     }
     
@@ -487,10 +488,12 @@ class PDFmethod2: UIViewController {
      - parameter charinfoArrays: スタッフのシフトが記述された行が格納されたcharinfo2次元配列
      - parameter limit: 1日ごとのx座標のリミット値が格納されたDouble次元配列
      
-     - returns: スタッフごとにシフト名を格納したString2次元配列
+     - returns: スタッフごとにシフト名を格納したOneDayShift2次元配列
+                シフトに出現するスタッフ名を格納したString1次元配列
      */
-    func GetSplitShiftAllStaffByDay(charinfoArrays: [[CharInfo]], limit:[Double]) -> [[OneDayShift]]{
+    func GetSplitShiftAllStaffByDay(charinfoArrays: [[CharInfo]], limit:[Double]) -> (onedayshiftArrays: [[OneDayShift]], staffnameArray: [String]) {
         var splitdayshift: [[OneDayShift]] = []
+        var staffnameArray: [String] = []
         
         let staffnumber = DBmethod().StaffNumberGet()
         let staffnameDBArray = DBmethod().StaffNameArrayGet()
@@ -506,6 +509,7 @@ class PDFmethod2: UIViewController {
             for j in 0..<staffnameDBArray!.count {
                 if one_person_textline.containsString(staffnameDBArray![j]) == true {
                     staffname = staffnameDBArray![j]
+                    staffnameArray.append(staffname)
                     break
                 }
             }
@@ -550,7 +554,7 @@ class PDFmethod2: UIViewController {
                 splitdayshift[i].append(onedayshift)
             }
         }
-        return splitdayshift
+        return (splitdayshift,staffnameArray)
     }
     
     
