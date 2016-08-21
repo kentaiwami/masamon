@@ -77,7 +77,10 @@ class PDFmethod2: UIViewController {
             let dayattendanceArray = GetTheDayStaffAttendance(staffnameArray, splitshiftArrays: coordinated)
             
             let shiftyearmonth = shiftyearmonthAndlength.0
-            RegistDataBase(dayattendanceArray, yearmonth: shiftyearmonth, update: false, importname: "test", importpath: "test")
+            
+            //MARK: test
+            //RegistDataBase(dayattendanceArray, yearmonth: shiftyearmonth, update: false, importname: "test", importpath: "test")
+            appDelegate.unknownshiftname = []
         }
     }
     
@@ -705,6 +708,7 @@ class PDFmethod2: UIViewController {
                 }
             }
             splitattendanceArray.append(dayshift)
+            dayshift = ""
         }
         
         return splitattendanceArray
@@ -721,108 +725,97 @@ class PDFmethod2: UIViewController {
         var shiftdetaildbrecordcount = DBmethod().DBRecordCount(ShiftDetailDB)
         let shiftdbrecordcount = DBmethod().DBRecordCount(ShiftDB)
         
-        if(appDelegate.unknownshiftname.count == 0){
+        for i in 0 ..< attendanceArray.count{
+            let shiftdbrecord = ShiftDB()
+            let shiftdetaildbrecord = ShiftDetailDB()
             
-            for i in 0 ..< attendanceArray.count{
-                let shiftdbrecord = ShiftDB()
-                let shiftdetaildbrecord = ShiftDetailDB()
+            if update {
+                let existshiftdb = DBmethod().SearchShiftDB(importname)
                 
-                if(update){
-                    let existshiftdb = DBmethod().SearchShiftDB(importname)
+                shiftdbrecord.id = existshiftdb.id        //取り込みが上書きの場合は使われているidをそのまま使う
+                shiftdbrecord.year = existshiftdb.year
+                shiftdbrecord.month = existshiftdb.month
+                
+                shiftdetaildbrecord.id = existshiftdb.shiftdetail[i].id
+                shiftdetaildbrecord.day = existshiftdb.shiftdetail[i].day
+                
+                switch(flag){
+                case 0:         //11日〜30(31)日までの場合
+                    shiftdetaildbrecord.year = yearmonth.startcoursmonthyear
+                    shiftdetaildbrecord.month = yearmonth.startcoursmonth
+                    date += 1
                     
-                    shiftdbrecord.id = existshiftdb.id        //取り込みが上書きの場合は使われているidをそのまま使う
-                    shiftdbrecord.year = existshiftdb.year
-                    shiftdbrecord.month = existshiftdb.month
-                    
-                    shiftdetaildbrecord.id = existshiftdb.shiftdetail[i].id
-                    shiftdetaildbrecord.day = existshiftdb.shiftdetail[i].day
-                    
-                    switch(flag){
-                    case 0:         //11日〜30(31)日までの場合
-                        shiftdetaildbrecord.year = yearmonth.startcoursmonthyear
-                        shiftdetaildbrecord.month = yearmonth.startcoursmonth
-                        date += 1
-                        
-                        if(date > monthrange.length){
-                            date = 1
-                            flag = 1
-                        }
-                        
-                    case 1:         //11日〜月末日までの場合
-                        shiftdetaildbrecord.year = yearmonth.endcoursmonthyear
-                        shiftdetaildbrecord.month = yearmonth.endcoursmonth
-                        date += 1
-                        
-                    default:
-                        break
+                    if(date > monthrange.length){
+                        date = 1
+                        flag = 1
                     }
                     
+                case 1:         //11日〜月末日までの場合
+                    shiftdetaildbrecord.year = yearmonth.endcoursmonthyear
+                    shiftdetaildbrecord.month = yearmonth.endcoursmonth
+                    date += 1
                     
-                    shiftdetaildbrecord.staff = attendanceArray[i]
-                    shiftdetaildbrecord.shiftDBrelationship = DBmethod().SearchShiftDB(importname)
-                    
-                    //エラーがない時のみ記録を行う
-                    if(appDelegate.errorshiftnamepdf.count == 0){
-                        //                        print(String(shiftdetaildbrecord.year) + "  " + String(shiftdetaildbrecord.month))
-                        
-                        DBmethod().AddandUpdate(shiftdetaildbrecord, update: true)
-                    }
-                    
-                }else{
-                    
-                    shiftdbrecord.id = shiftdbrecordcount
-                    
-                    shiftdbrecord.year = 0
-                    shiftdbrecord.month = 0
-                    shiftdbrecord.shiftimportname = importname
-                    shiftdbrecord.shiftimportpath = importpath
-                    shiftdbrecord.salaly = 0
-                    
-                    shiftdetaildbrecord.id = shiftdetaildbrecordcount
-                    shiftdetaildbrecordcount += 1
-                    
-                    shiftdetaildbrecord.day = date
-                    
-                    switch(flag){
-                    case 0:         //11日〜月末日までの場合
-                        shiftdetaildbrecord.year = yearmonth.startcoursmonthyear
-                        shiftdetaildbrecord.month = yearmonth.startcoursmonth
-                        date += 1
-                        
-                        if(date > monthrange.length){
-                            date = 1
-                            flag = 1
-                        }
-                        
-                    case 1:         //1日〜10日までの場合
-                        shiftdetaildbrecord.year = yearmonth.endcoursmonthyear
-                        shiftdetaildbrecord.month = yearmonth.endcoursmonth
-                        date += 1
-                        
-                    default:
-                        break
-                    }
-                    
-                    shiftdetaildbrecord.staff = attendanceArray[i]
-                    shiftdetaildbrecord.shiftDBrelationship = shiftdbrecord
-                    
-                    //すでに記録してあるListを取得して後ろに現在の記録を追加する
-                    for i in 0 ..< shiftdetailarray.count{
-                        shiftdbrecord.shiftdetail.append(shiftdetailarray[i])
-                    }
-                    shiftdbrecord.shiftdetail.append(shiftdetaildbrecord)
-                    
-                    let ID = shiftdbrecord.id
-                    
-                    //エラーがない場合のみ記録を行う
-                    if(appDelegate.errorstaffnamepdf.count == 0 && appDelegate.errorshiftnamepdf.count == 0){
-                        DBmethod().AddandUpdate(shiftdbrecord, update: true)
-                        DBmethod().AddandUpdate(shiftdetaildbrecord, update: true)
-                        shiftdetailarray = DBmethod().ShiftDBRelationArrayGet(ID)
-                    }
+                default:
+                    break
                 }
                 
+                
+                shiftdetaildbrecord.staff = attendanceArray[i]
+                shiftdetaildbrecord.shiftDBrelationship = DBmethod().SearchShiftDB(importname)
+                
+                DBmethod().AddandUpdate(shiftdetaildbrecord, update: true)
+                
+            }else{
+                
+                shiftdbrecord.id = shiftdbrecordcount
+                
+                shiftdbrecord.year = 0
+                shiftdbrecord.month = 0
+                shiftdbrecord.shiftimportname = importname
+                shiftdbrecord.shiftimportpath = importpath
+                shiftdbrecord.salaly = 0
+                
+                shiftdetaildbrecord.id = shiftdetaildbrecordcount
+                shiftdetaildbrecordcount += 1
+                
+                shiftdetaildbrecord.day = date
+                
+                switch(flag){
+                case 0:         //11日〜月末日までの場合
+                    shiftdetaildbrecord.year = yearmonth.startcoursmonthyear
+                    shiftdetaildbrecord.month = yearmonth.startcoursmonth
+                    date += 1
+                    
+                    if(date > monthrange.length){
+                        date = 1
+                        flag = 1
+                    }
+                    
+                case 1:         //1日〜10日までの場合
+                    shiftdetaildbrecord.year = yearmonth.endcoursmonthyear
+                    shiftdetaildbrecord.month = yearmonth.endcoursmonth
+                    date += 1
+                    
+                default:
+                    break
+                }
+                
+                shiftdetaildbrecord.staff = attendanceArray[i]
+                shiftdetaildbrecord.shiftDBrelationship = shiftdbrecord
+                
+                //すでに記録してあるListを取得して後ろに現在の記録を追加する
+                for i in 0 ..< shiftdetailarray.count{
+                    shiftdbrecord.shiftdetail.append(shiftdetailarray[i])
+                }
+                shiftdbrecord.shiftdetail.append(shiftdetaildbrecord)
+                
+                let ID = shiftdbrecord.id
+                
+                DBmethod().AddandUpdate(shiftdbrecord, update: true)
+                DBmethod().AddandUpdate(shiftdetaildbrecord, update: true)
+                shiftdetailarray = DBmethod().ShiftDBRelationArrayGet(ID)
             }
+            
         }
     }
 }
