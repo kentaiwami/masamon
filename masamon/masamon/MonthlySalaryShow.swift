@@ -302,69 +302,6 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         
     }
     
-    
-    /**
-     PDFでスタッフ名認識エラーがある場合に表示してデータ入力をさせるためのアラート
-     */
-    func StaffNameErrorAlertShowPDF(){
-        let errorstaffnametext = appDelegate.errorstaffnamepdf
-        let donecount = appDelegate.errorstaffnamefastcount - appDelegate.errorstaffnamepdf.count
-        
-        let alert:UIAlertController = UIAlertController(title:"\(donecount+1)/\(appDelegate.errorstaffnamefastcount)人    スタッフ名が認識できませんでした",
-                                                        message: errorstaffnametext[0],
-                                                        preferredStyle: UIAlertControllerStyle.Alert)
-        
-        let addAction:UIAlertAction = UIAlertAction(title: "スタッフ名を登録",
-                                                    style: UIAlertActionStyle.Default,
-                                                    handler:{
-                                                        (action:UIAlertAction!) -> Void in
-                                                        let textFields:Array<UITextField>? =  alert.textFields as Array<UITextField>?
-                                                        if textFields != nil {
-                                                            
-                                                            if textFields![0].text != "" {   //テキストフィールドに値が入っている場合
-                                                                
-                                                                let staffnamerecord = StaffNameDB()
-                                                                staffnamerecord.id = DBmethod().DBRecordCount(StaffNameDB)
-                                                                staffnamerecord.name = textFields![0].text!
-                                                                
-                                                                DBmethod().AddandUpdate(staffnamerecord, update: true)
-                                                                
-                                                                self.savedata()
-                                                            }else{
-                                                                self.StaffNameErrorAlertShowPDF()
-                                                            }
-                                                        }
-        })
-        
-        let cancelAction:UIAlertAction = UIAlertAction(title: "キャンセル", style: UIAlertActionStyle.Cancel) { (UIAlertAction) in
-            //ファイルの削除
-            let libralypath = self.Libralypath + "/"
-            let filename = DBmethod().FilePathTmpGet().lastPathComponent    //ファイル名の抽出
-            
-            //コピーしたファイルの削除
-            do{
-                try self.filemanager.removeItemAtPath(libralypath + filename)
-                ShiftImport().InboxFileCountsDBMinusOne()
-            }catch{
-                print(error)
-            }
-        }
-        
-        alert.addAction(addAction)
-        alert.addAction(cancelAction)
-        
-        //シフト名入力用のtextfieldを追加
-        alert.addTextFieldWithConfigurationHandler({(text:UITextField!) -> Void in
-            text.placeholder = "スタッフ名の入力"
-            text.returnKeyType = .Next
-            text.tag = 0
-            text.delegate = self
-        })
-        
-        self.presentViewController(alert, animated: true, completion: nil)
-    }
-    
-
     /**
      PDFでシフト認識エラーがある場合に表示してデータ入力をさせるためのアラート
      */
@@ -879,7 +816,6 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
      - parameter textField: 対象となるtextField
      */
     func configurationshiftgroupnameTextField(textField: UITextField!){
-        textField.placeholder = "シフトのグループを入力"
         textField.inputView = self.shiftgroupnameUIPicker
         textField.inputAccessoryView = self.pickerviewtoolBar
         textField.tag = 1
@@ -896,8 +832,11 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
      - parameter textField: タップされたtextField
      */
     func textFieldDidBeginEditing(textField: UITextField) {
-        shiftgroupnameUIPicker.selectRow(shiftgroupselectrow, inComponent: 0, animated: true)
-        textField.text = shiftgroupname[shiftgroupselectrow]
+        
+        if textField.tag == 1 {
+            shiftgroupnameUIPicker.selectRow(shiftgroupselectrow, inComponent: 0, animated: true)
+            textField.text = shiftgroupname[shiftgroupselectrow]
+        }
     }
     
     /**
