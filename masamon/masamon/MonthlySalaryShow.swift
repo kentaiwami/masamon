@@ -221,7 +221,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                 progress.show(style: OrangeClearStyle())
                 dispatch_async_global{
                     
-                    //PDF内のデータをテキスト配列に格納＆エラーのチェック
+                    //PDF内のデータを取得して未登録のシフト名をチェック
                     let pdfmethod = PDFmethod()
                     pdfmethod.RunPDFmethod()
                     
