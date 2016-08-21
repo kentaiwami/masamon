@@ -664,4 +664,28 @@ class PDFmethod2: UIViewController {
         
         return coordinatedArray
     }
+    
+    
+    /**
+     データベースに登録されていないシフト名を1次元配列で返す
+     
+     - parameter splitshiftArrays: 1日ごとスタッフごとに分割されたシフトを格納した2次元配列
+     
+     - returns: 登録されていないシフト名を格納した1次元配列
+     */
+    func CheckUnknownShiftName(splitshiftArrays: [[String]]) -> [String] {
+        var unknown_shiftArray:[String] = []
+        
+        for i in 0..<splitshiftArrays.count {
+            for j in 0..<splitshiftArrays[i].count {
+                let search_result = DBmethod().SearchShiftSystem(splitshiftArrays[i][j])
+                
+                if search_result == nil && unknown_shiftArray.indexOf(splitshiftArrays[i][j]) == nil {
+                    unknown_shiftArray.append(splitshiftArrays[i][j])
+                }
+            }
+        }
+        
+        return unknown_shiftArray
+    }
 }
