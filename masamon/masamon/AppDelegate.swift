@@ -27,11 +27,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var errorshiftnamefastcount = 0             //シフトの認識に失敗した場合の最初の失敗数を格納しておく変数
     var errorstaffnamefastcount = 0             //スタッフ名の認識に失敗した場合に、最初の失敗数を格納しておく変数
 
-    /*MonthlySalaryShowとPDFmethodで使用*/
-    var errorstaffnamepdf: [String] = []           //スタッフ名の認識に失敗した場合に、スタッフ名が書かれた1行を格納する
-    var errorshiftnamepdf: [String:String] = [:]   //シフトの認識に失敗した場合に、スタッフ名と認識に失敗した文字列を格納する
-    var skipstaff: [String] = []                //シフトの認識が完了しているが、認識エラーと出てしまうスタッフ名を格納する
-
     /*MonthlySalaryShowとXLSXmethodで使用*/
     var errorshiftnamexlsx: [String] = []       //新規シフト体制名が含まれていた場合に格納する
     
