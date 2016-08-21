@@ -76,45 +76,53 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         //シフト体制データ
         let shiftnamepattern = ["早","早M","早カ","はや","中","中2","中3","遅","遅M","遅カ","公","夏","有"]
-        let shiftstartpattern = [8.0,8.0,8.0,8.0,12.0,13.5,14.5,16.0,16.0,16.0,0.0,0.0,0.0]
-        let shiftendpattern = [16.5,16.5,16.5,16.5,20.5,22.0,23.0,24.5,24.5,24.5,0.0,0.0,0.0]
 
         if DBmethod().DBRecordCount(ShiftSystemDB) == 0 {
             for i in 0 ..< shiftnamepattern.count{
+                let ShiftSystemRecord = ShiftSystemDB()
                 var gid = 0
                 
                 switch(i){
                 //早番
                 case 0...3:
                     gid = 0
+                    ShiftSystemRecord.starttime = 8.0
+                    ShiftSystemRecord.endtime = 16.5
                     
                 //中1番
                 case 4:
                     gid = 1
-                
+                    ShiftSystemRecord.starttime = 12.0
+                    ShiftSystemRecord.endtime = 20.5
+                    
                 //中2番
                 case 5:
                     gid = 2
+                    ShiftSystemRecord.starttime = 13.5
+                    ShiftSystemRecord.endtime = 22.0
                     
                 //中3番
                 case 6:
                     gid = 3
+                    ShiftSystemRecord.starttime = 14.5
+                    ShiftSystemRecord.endtime = 23.0
                     
                 //遅番
                 case 7...9:
                     gid = 4
+                    ShiftSystemRecord.starttime = 16.0
+                    ShiftSystemRecord.endtime = 24.5
                     
                 //休み
                 default:
                     gid = 6
+                    ShiftSystemRecord.starttime = 0.0
+                    ShiftSystemRecord.endtime = 0.0
                 }
                 
-                let ShiftSystemRecord = ShiftSystemDB()
                 ShiftSystemRecord.id = i
                 ShiftSystemRecord.groupid = gid
                 ShiftSystemRecord.name = shiftnamepattern[i]
-                ShiftSystemRecord.starttime = shiftstartpattern[i]
-                ShiftSystemRecord.endtime = shiftendpattern[i]
                 
                 DBmethod().AddandUpdate(ShiftSystemRecord, update: true)
             }
