@@ -276,12 +276,7 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
     
     //pickerに表示する列数を返すデータソースメソッド.
     func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
-        if pickerView.tag == 1 || pickerView.tag == 2 || pickerView.tag == 4{
-            return 1
-        }else{
-            return 3
-        }
-        
+        return 1
     }
     
     //pickerに表示する行数を返すデータソースメソッド.
