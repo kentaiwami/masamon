@@ -105,7 +105,7 @@ class StaffNumberDB: Object{
 }
 
 
-//認識エラーが出てしまうスタッフ名を保存
+//スタッフ名を保存
 class StaffNameDB: Object{
     dynamic var id = 0
     dynamic var name = ""
