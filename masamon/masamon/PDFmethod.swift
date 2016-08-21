@@ -33,13 +33,16 @@ class PDFmethod: UIViewController {
     let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
 
     let tolerance_y = 3.0                         //同じ行と判定させるための許容誤差
-    let tolerance_x = 7.0       //1日ごとのリミット値の許容誤差
+    let tolerance_x = 7.0                         //1日ごとのリミット値の許容誤差
     
-    let tolerance_onedayshift_x = 10.0     //x座標が近いOneDayShift同士の許容誤差
+    let tolerance_onedayshift_x = 10.0            //x座標が近いOneDayShift同士の許容誤差
     
-    //出勤スタッフをスタッフ名：シフト名でまとめた配列
-    var dayattendanceArray:[String] = []
+    var dayattendanceArray:[String] = []          //出勤スタッフをスタッフ名：シフト名でまとめた配列
     
+    var coordinated:[[String]] = []               //セルのマージ処理後のシフト体制名だけが記録された配列
+
+    var staffnameArray:[String] = []              //取り込んだシフトに出現するスタッフ名を記録した配列
+
     //シフトの年月
     var shiftyearmonth:(year: Int, startcoursmonth: Int, startcoursmonthyear: Int, endcoursmonth: Int, endcoursmonthyear: Int) = (0,0,0,0,0)
     
@@ -47,11 +50,8 @@ class PDFmethod: UIViewController {
      実行用のメソッド
      */
     func RunPDFmethod() {
-        //スタッフ名が登録されている場合のみ処理を進める
-        let staffnameDB_count = DBmethod().DBRecordCount(StaffNameDB)
-        
-        if staffnameDB_count != 0 {
-            
+        //初回実行時
+        if dayattendanceArray.count == 0 {
             let charinfoArray = GetPDFGlyphInfo()
             
             let removed_overlap = RemoveOverlapArray(charinfoArray)
@@ -75,17 +75,24 @@ class PDFmethod: UIViewController {
             let limitArray = GetLimitArray(days_charinfo, length: shiftyearmonthAndlength.length)
             let results_GetSplitShiftAllStaffByDay = GetSplitShiftAllStaffByDay(removed_unnecessary, limit: limitArray)
             
-            let staffnameArray = results_GetSplitShiftAllStaffByDay.staffnameArray
+            staffnameArray = results_GetSplitShiftAllStaffByDay.staffnameArray
             
-            let coordinated = CoordinateMergedCell(removed_unnecessary, splitshiftArrays: results_GetSplitShiftAllStaffByDay.onedayshiftArrays)
+            coordinated = CoordinateMergedCell(removed_unnecessary, splitshiftArrays: results_GetSplitShiftAllStaffByDay.onedayshiftArrays)
             
             appDelegate.unknownshiftname = CheckUnknownShiftName(coordinated)
-
+            
             dayattendanceArray = GetTheDayStaffAttendance(staffnameArray, splitshiftArrays: coordinated)
             
             shiftyearmonth = shiftyearmonthAndlength.0
+
+        //2回目(スキップするとこっちを実行)
+        }else {
+            coordinated = ReplaceSkipShiftName(coordinated)
+            appDelegate.unknownshiftname = CheckUnknownShiftName(coordinated)
+            dayattendanceArray = GetTheDayStaffAttendance(staffnameArray, splitshiftArrays: coordinated)
         }
     }
+    
     
     /**
      pdfのテキスト情報を2次元配列に行ごとに格納する
@@ -719,6 +726,29 @@ class PDFmethod: UIViewController {
         
         return splitattendanceArray
     }
+    
+    
+    /**
+     スキップされたシフト体制名を検索して不明に置き換える
+     
+     - parameter coordinatedArrays: 結合処理済みのシフト体制名だけが格納された2次元配列
+     
+     - returns: スキップされたシフト体制名を不明に置き換えた後のcoordinatedArrays
+     */
+    func ReplaceSkipShiftName(coordinatedArrays: [[String]]) -> [[String]] {
+        var replaced_coordinatedArrays = coordinatedArrays
+        for i in 0..<coordinatedArrays.count {
+            for j in 0..<coordinatedArrays[i].count {
+                replaced_coordinatedArrays[i][j] = replaced_coordinatedArrays[i][j].stringByReplacingOccurrencesOfString(appDelegate.skipshiftname, withString: "不明")
+            }
+        }
+        
+        appDelegate.skipshiftname = ""
+        
+        return replaced_coordinatedArrays
+    }
+    
+    
     
     func RegistDataBase(update: Bool, importname: String, importpath: String) {
         var date = 11

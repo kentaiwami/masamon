@@ -156,6 +156,8 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     let Libralypath = NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0] as String
     var staffshiftcountflag = true
     var staffnamecountflag = true
+    
+    let pdfmethod = PDFmethod()
     /**
      バックグラウンドで保存しながらプログレスを表示する
      */
@@ -222,8 +224,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                 dispatch_async_global{
                     
                     //PDF内のデータを取得して未登録のシフト名をチェック
-                    let pdfmethod = PDFmethod()
-                    pdfmethod.RunPDFmethod()
+                    self.pdfmethod.RunPDFmethod()
                     
                     self.dispatch_async_main{
                         self.progress.dismiss({ () -> Void in
@@ -233,8 +234,8 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                                 
                                 //未登録のシフト名がない場合はデータベースへ書き込みを行う
                             } else {
-                                pdfmethod.RegistDataBase(self.appDelegate.update, importname: self.appDelegate.filename, importpath: self.Libralypath+"/"+self.appDelegate.filename)
-                                pdfmethod.UserMonthlySalaryRegist(self.appDelegate.filename)
+                                self.pdfmethod.RegistDataBase(self.appDelegate.update, importname: self.appDelegate.filename, importpath: self.Libralypath+"/"+self.appDelegate.filename)
+                                self.pdfmethod.UserMonthlySalaryRegist(self.appDelegate.filename)
                             }
                             
                             /*pickerview,label,シフトの表示を更新する*/
@@ -303,6 +304,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                                                      style: UIAlertActionStyle.Destructive,
                                                      handler:{
                                                         (action:UIAlertAction!) -> Void in
+                                                        self.appDelegate.skipshiftname = self.appDelegate.unknownshiftname[0]
                                                         self.savedata()
         })
         

@@ -38,6 +38,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     /*VideoViewControllerで使用*/
     var thumbnailnumber = 0     //タップしたサムネイルの番号を格納
     
+    var skipshiftname = ""      //スキップしたシフト体制名
+    
     func application(app: UIApplication, openURL url: NSURL, options: [String : AnyObject]) -> Bool {
         fileURL = ""
         fileURL = String(url.path!)
