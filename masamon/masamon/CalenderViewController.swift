@@ -326,7 +326,7 @@ class CalenderViewController: UIViewController {
                     var gid = 999
                     
                     if usershift == "breaktime" {
-                        gid = 5
+                        gid = 6
                     }else{
                         let resultshift = DBmethod().SearchShiftSystem(usershift)
                         if resultshift != nil {
@@ -357,8 +357,12 @@ class CalenderViewController: UIViewController {
                     case 4:
                         calendarBackGroundColor = UIColor.blackColor()
                         
-                    //休み
+                    //その他
                     case 5:
+                        calendarBackGroundColor = UIColor.hex("8E00CC", alpha: 1.0)
+                        
+                    //休み
+                    case 6:
                         calendarBackGroundColor = UIColor(
                             red: CGFloat(0.831), green: CGFloat(0.349), blue: CGFloat(0.224), alpha: CGFloat(1.0)
                         )
