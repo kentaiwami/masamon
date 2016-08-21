@@ -14,12 +14,14 @@ class Maintenance {
         //クラッシュ等で参照されずに残ってしまったファイルを手動で削除する(保守用)
         let documentspath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
         let Inboxpath = documentspath + "/Inbox/"       //Inboxまでのパス
-        //        let Libralypath = NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0] as String
-        let filepath = Inboxpath  + ".pdf"
-        //
+        let Libralypath = NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0] as String + "/"
+        let filepath = Libralypath  + "85.11〜.pdf"
+        let ABC = Libralypath + "8.11〜.pdf"
         let filemanager:NSFileManager = NSFileManager()
         do{
-            try filemanager.removeItemAtPath(filepath)
+            //try filemanager.removeItemAtPath(filepath)
+            try NSFileManager.defaultManager().moveItemAtURL(NSURL(fileURLWithPath: filepath), toURL: NSURL(fileURLWithPath: ABC))
+
         }catch{
             print(error)
         }
