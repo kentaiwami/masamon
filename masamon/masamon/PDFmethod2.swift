@@ -65,13 +65,15 @@ class PDFmethod2: UIViewController {
             let limitArray = GetLimitArray(days_charinfo, length: shiftyearmonth.length)
             let results_GetSplitShiftAllStaffByDay = GetSplitShiftAllStaffByDay(removed_unnecessary, limit: limitArray)
             
+            let unknown_staffname = results_GetSplitShiftAllStaffByDay.staffnameArray
+            
             let coordinated = CoordinateMergedCell(removed_unnecessary, splitshiftArrays: results_GetSplitShiftAllStaffByDay.onedayshiftArrays)
-
-            //            for i in 0..<coordinated.count {
-//                print(String(i+1) + ": ", terminator:"")
-//                print(coordinated[i])
+            
+            let dayattendanceArray = GetTheDayStaffAttendance(unknown_staffname, splitshiftArrays: coordinated)
+            
+//            for i in 0..<ABC.count {
+//                print(ABC[i])
 //            }
-            //print(removed_results.staffname)
         }
     }
     
@@ -680,9 +682,27 @@ class PDFmethod2: UIViewController {
      - parameter staffnameArray:   取り込んだPDFファイルに出現するスタッフ名が格納されたString1次元配列
      - parameter splitshiftArrays: 1日ごとに分けたシフト名が格納されたString2次元配列
      
-     - returns: 日にちごとに分けたその日出勤するスタッフごとにまとめた2次元配列
+     - returns: 日にちごとに分けたその日出勤するスタッフごとにまとめた1次元配列
      */
-    func aa(staffnameArray: [String], splitshiftArrays: [[String]]) -> [[String]] {
-        <#function body#>
+    func GetTheDayStaffAttendance(staffnameArray: [String], splitshiftArrays: [[String]]) -> [String] {
+        var splitattendanceArray :[String] = []
+        var dayshift = ""
+        
+        //splitshiftArraysを[i][j]と[i+1][j][1+2][j]と縦方向に同時にアクセス
+        for i in 0..<splitshiftArrays[0].count {
+            for j in 0..<splitshiftArrays.count {
+                let staffshift = splitshiftArrays[j][i]
+                let staffname = staffnameArray[j]
+                let holidayarray = DBmethod().ShiftSystemNameArrayGetByGroudid(6)
+                if(staffshift != ""){
+                    if(holidayarray.contains(staffshift) == false){
+                        dayshift += staffname + ":" + staffshift + ","
+                    }
+                }
+            }
+            splitattendanceArray.append(dayshift)
+        }
+        
+        return splitattendanceArray
     }
 }
