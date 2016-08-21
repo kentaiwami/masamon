@@ -52,7 +52,7 @@ class CommonMethod: UIViewController {
      - parameter year:     西暦or和暦
      - parameter calender: 変換処理を判断するための文字列
      
-     - returns: <#return value description#>
+     - returns: 西暦or和暦
      */
     func Changecalendar(year: Int, calender: String) -> Int{
         if calender == "JP" {   //和暦から西暦
