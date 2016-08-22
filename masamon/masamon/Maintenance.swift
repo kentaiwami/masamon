@@ -55,8 +55,15 @@ class Maintenance {
     func DBUpdate() {
         let realm = try! Realm()
         try! realm.write {
-//            realm.create(Book.self, value: ["id": 1, "price": 9000.0], update: true)
-            // タイトルはそのままで値段のプロパティだけを更新することができます。
+            realm.create(ShiftDB.self, value: ["shiftimportname": "8.11〜.pdf", "salaly": 9000], update: true)
+        }
+    }
+    
+    func DBDelete() {
+        let realm = try! Realm()
+        let user = realm.objects(ShiftDB).last!
+        try! realm.write {
+            realm.delete(user)
         }
     }
 }
