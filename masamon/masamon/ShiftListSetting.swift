@@ -204,11 +204,9 @@ class ShiftListSetting: UIViewController, UITableViewDataSource, UITableViewDele
                             DBmethod().DeleteRecord(oldshiftdbrecord)
                             DBmethod().AddandUpdate(newshiftdbrecord, update: true)
                             
-                            //ファイル名を変更する
-                            let filemanager:NSFileManager = NSFileManager()
-                            
+                            //ファイル名を変更する                            
                             do {
-                                try filemanager.moveItemAtPath(oldfilepath, toPath: newshiftdbrecord.shiftimportpath)
+                                try NSFileManager.defaultManager().moveItemAtPath(oldfilepath, toPath: newshiftdbrecord.shiftimportpath)
                             }
                             catch{
                                 print(error)

@@ -354,7 +354,6 @@ class DBmethod: UIViewController {
                 copyrecord.groupid = record.groupid
                 copyrecord.starttime = record.starttime
                 copyrecord.endtime = record.endtime
-                copyrecord.manager = record.manager
                 
                 copyrecordarray.append(copyrecord)
                 
@@ -390,7 +389,6 @@ class DBmethod: UIViewController {
             tmprecord.groupid = sortedresults[i].groupid
             tmprecord.starttime = sortedresults[i].starttime
             tmprecord.endtime = sortedresults[i].endtime
-            tmprecord.manager = sortedresults[i].manager
             
             tmparray.append(tmprecord)
         }

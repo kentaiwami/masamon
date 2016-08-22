@@ -15,6 +15,7 @@
 		370ACE441BDF573500AB73EB /* DB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370ACE431BDF573500AB73EB /* DB.swift */; };
 		370ACE4A1BDF9C8A00AB73EB /* DBmethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370ACE491BDF9C8A00AB73EB /* DBmethod.swift */; };
 		371432A81BE98F060088CDCC /* ShiftImport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371432A71BE98F060088CDCC /* ShiftImport.swift */; };
+		371D62441D5EE79500057416 /* PDFmethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371D62431D5EE79500057416 /* PDFmethod.swift */; };
 		371DE5151C5DBD4D0058F73B /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371DE5141C5DBD4D0058F73B /* Setting.swift */; };
 		371E8C311C8557BF006B7C8C /* sampleshift.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 371E8C2F1C8557BF006B7C8C /* sampleshift.pdf */; };
 		371E8C321C8557BF006B7C8C /* sampleshift.xlsx in Resources */ = {isa = PBXBuildFile; fileRef = 371E8C301C8557BF006B7C8C /* sampleshift.xlsx */; };
@@ -29,8 +30,19 @@
 		374090C01C78641E00B01DC4 /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374090BF1C78641E00B01DC4 /* VideoViewController.swift */; };
 		3742AF561C12D8D1003AB33B /* libz.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3742AF551C12D8D1003AB33B /* libz.1.dylib */; };
 		3742AF901C130391003AB33B /* libXlsxReaderWriter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3742AF8B1C130360003AB33B /* libXlsxReaderWriter.a */; };
+		374977C51D5F57DD005DE58B /* 8.11〜.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 374977C41D5F57DD005DE58B /* 8.11〜.pdf */; };
+		374977CE1D5F580D005DE58B /* 4.11〜.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 374977C81D5F580D005DE58B /* 4.11〜.pdf */; };
+		374977CF1D5F580D005DE58B /* 1.11〜.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 374977C91D5F580D005DE58B /* 1.11〜.pdf */; };
+		374977D01D5F580D005DE58B /* 2.11〜.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 374977CA1D5F580D005DE58B /* 2.11〜.pdf */; };
+		374977D11D5F580D005DE58B /* 5.11〜.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 374977CB1D5F580D005DE58B /* 5.11〜.pdf */; };
+		374977D21D5F580D005DE58B /* 6.11〜.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 374977CC1D5F580D005DE58B /* 6.11〜.pdf */; };
+		374977D31D5F580D005DE58B /* 7.11〜.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 374977CD1D5F580D005DE58B /* 7.11〜.pdf */; };
 		37526DD21CDC4ECB00F180DA /* FileBrowse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37526DD11CDC4ECB00F180DA /* FileBrowse.swift */; };
 		376C92D61BE695D000D45FC2 /* extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376C92D51BE695D000D45FC2 /* extentions.swift */; };
+		3773119E1D696C700027757C /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3773119C1D696C700027757C /* Realm.framework */; };
+		3773119F1D696C700027757C /* Realm.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3773119C1D696C700027757C /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		377311A01D696C700027757C /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3773119D1D696C700027757C /* RealmSwift.framework */; };
+		377311A11D696C700027757C /* RealmSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3773119D1D696C700027757C /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		377D2DAE1C36C08B009CC388 /* BlueDarkStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377D2DAD1C36C08B009CC388 /* BlueDarkStyle.swift */; };
 		377D2DBB1C37EFE6009CC388 /* FileBrowseSelect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377D2DBA1C37EFE5009CC388 /* FileBrowseSelect.swift */; };
 		379955951C14431F00BAAD9E /* XLSXmethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379955941C14431F00BAAD9E /* XLSXmethod.swift */; };
@@ -38,14 +50,11 @@
 		379A2E051C1FDFFC00751425 /* CustomUICollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379A2E041C1FDFFC00751425 /* CustomUICollectionViewCell.swift */; };
 		37A597261CD57F0A00D43D35 /* LaunchScreenImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 37A597251CD57F0A00D43D35 /* LaunchScreenImage.png */; };
 		37A6F9BE1CDE66FA004863FE /* ShiftImportSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A6F9BD1CDE66FA004863FE /* ShiftImportSetting.swift */; };
+		37A76F9B1D6A28AA00ED7AEA /* Maintenance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A76F9A1D6A28AA00ED7AEA /* Maintenance.swift */; };
 		37C8B2401CD4E29D001E3766 /* OriginUITabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C8B23F1CD4E29D001E3766 /* OriginUITabBarController.swift */; };
 		37D4B3101BE0F59900F06759 /* HourlyWageSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D4B30F1BE0F59900F06759 /* HourlyWageSetting.swift */; };
-		37D75C0D1D07BCEA0034B678 /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37D75C0B1D07BCEA0034B678 /* Realm.framework */; };
-		37D75C0E1D07BCEA0034B678 /* Realm.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 37D75C0B1D07BCEA0034B678 /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		37D75C0F1D07BCEA0034B678 /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37D75C0C1D07BCEA0034B678 /* RealmSwift.framework */; };
-		37D75C101D07BCEA0034B678 /* RealmSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 37D75C0C1D07BCEA0034B678 /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		37DD8EFF1C1C29FF007C0E6C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 370ACDFE1BDF486700AB73EB /* Main.storyboard */; };
-		37F75CAB1C3F18C30075F9FD /* PDFmethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F75CAA1C3F18C30075F9FD /* PDFmethod.swift */; };
+		37F75CAB1C3F18C30075F9FD /* PDFmethod_old.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F75CAA1C3F18C30075F9FD /* PDFmethod_old.swift */; };
 		37F75CBF1C3F1E4C0075F9FD /* TET_ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37F75CB61C3F1B610075F9FD /* TET_ios.framework */; };
 		37F75CC01C3F1E650075F9FD /* libstdc++.6.0.9.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 37F75CBD1C3F1C270075F9FD /* libstdc++.6.0.9.tbd */; };
 		D9C8B4DC9FDEB1B892F9B0DD /* Pods_masamon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAD231E854685D75C3F03501 /* Pods_masamon.framework */; };
@@ -83,14 +92,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		37D75C111D07BCEA0034B678 /* Embed Frameworks */ = {
+		377311A21D696C700027757C /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				37D75C101D07BCEA0034B678 /* RealmSwift.framework in Embed Frameworks */,
-				37D75C0E1D07BCEA0034B678 /* Realm.framework in Embed Frameworks */,
+				377311A11D696C700027757C /* RealmSwift.framework in Embed Frameworks */,
+				3773119F1D696C700027757C /* Realm.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -120,6 +129,7 @@
 		370ACE431BDF573500AB73EB /* DB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DB.swift; sourceTree = "<group>"; };
 		370ACE491BDF9C8A00AB73EB /* DBmethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBmethod.swift; sourceTree = "<group>"; };
 		371432A71BE98F060088CDCC /* ShiftImport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShiftImport.swift; sourceTree = "<group>"; };
+		371D62431D5EE79500057416 /* PDFmethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PDFmethod.swift; sourceTree = "<group>"; };
 		371DE5141C5DBD4D0058F73B /* Setting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
 		371E8C2F1C8557BF006B7C8C /* sampleshift.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = sampleshift.pdf; sourceTree = "<group>"; };
 		371E8C301C8557BF006B7C8C /* sampleshift.xlsx */ = {isa = PBXFileReference; lastKnownFileType = file; path = sampleshift.xlsx; sourceTree = "<group>"; };
@@ -134,8 +144,17 @@
 		374090BF1C78641E00B01DC4 /* VideoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VideoViewController.swift; path = ../VideoViewController.swift; sourceTree = "<group>"; };
 		3742AF551C12D8D1003AB33B /* libz.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.dylib; path = ../../../../../../usr/lib/libz.1.dylib; sourceTree = "<group>"; };
 		3742AF831C130360003AB33B /* XlsxReaderWriter.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = XlsxReaderWriter.xcodeproj; path = "XlsxReaderWriter-master/XlsxReaderWriter.xcodeproj"; sourceTree = "<group>"; };
+		374977C41D5F57DD005DE58B /* 8.11〜.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "8.11〜.pdf"; sourceTree = "<group>"; };
+		374977C81D5F580D005DE58B /* 4.11〜.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "4.11〜.pdf"; sourceTree = "<group>"; };
+		374977C91D5F580D005DE58B /* 1.11〜.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "1.11〜.pdf"; sourceTree = "<group>"; };
+		374977CA1D5F580D005DE58B /* 2.11〜.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "2.11〜.pdf"; sourceTree = "<group>"; };
+		374977CB1D5F580D005DE58B /* 5.11〜.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "5.11〜.pdf"; sourceTree = "<group>"; };
+		374977CC1D5F580D005DE58B /* 6.11〜.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "6.11〜.pdf"; sourceTree = "<group>"; };
+		374977CD1D5F580D005DE58B /* 7.11〜.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "7.11〜.pdf"; sourceTree = "<group>"; };
 		37526DD11CDC4ECB00F180DA /* FileBrowse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileBrowse.swift; sourceTree = "<group>"; };
 		376C92D51BE695D000D45FC2 /* extentions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = extentions.swift; sourceTree = "<group>"; };
+		3773119C1D696C700027757C /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Realm.framework; sourceTree = "<group>"; };
+		3773119D1D696C700027757C /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RealmSwift.framework; sourceTree = "<group>"; };
 		377D2DAA1C36BFD2009CC388 /* GradientCircularProgress.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GradientCircularProgress.framework; path = "Pods/../build/Debug-iphoneos/GradientCircularProgress.framework"; sourceTree = "<group>"; };
 		377D2DAD1C36C08B009CC388 /* BlueDarkStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlueDarkStyle.swift; sourceTree = "<group>"; };
 		377D2DAF1C36C14A009CC388 /* GradientCircularProgress.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GradientCircularProgress.framework; path = "Pods/../build/Debug-iphoneos/GradientCircularProgress.framework"; sourceTree = "<group>"; };
@@ -145,13 +164,12 @@
 		379A2E041C1FDFFC00751425 /* CustomUICollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomUICollectionViewCell.swift; sourceTree = "<group>"; };
 		37A597251CD57F0A00D43D35 /* LaunchScreenImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LaunchScreenImage.png; sourceTree = "<group>"; };
 		37A6F9BD1CDE66FA004863FE /* ShiftImportSetting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShiftImportSetting.swift; sourceTree = "<group>"; };
+		37A76F9A1D6A28AA00ED7AEA /* Maintenance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Maintenance.swift; sourceTree = "<group>"; };
 		37C8B23F1CD4E29D001E3766 /* OriginUITabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OriginUITabBarController.swift; sourceTree = "<group>"; };
 		37CB96FE1C40569400171B76 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
 		37CB96FF1C40569400171B76 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		37D4B30F1BE0F59900F06759 /* HourlyWageSetting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HourlyWageSetting.swift; sourceTree = "<group>"; };
-		37D75C0B1D07BCEA0034B678 /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Realm.framework; sourceTree = "<group>"; };
-		37D75C0C1D07BCEA0034B678 /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RealmSwift.framework; sourceTree = "<group>"; };
-		37F75CAA1C3F18C30075F9FD /* PDFmethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PDFmethod.swift; sourceTree = "<group>"; };
+		37F75CAA1C3F18C30075F9FD /* PDFmethod_old.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PDFmethod_old.swift; sourceTree = "<group>"; };
 		37F75CAD1C3F19CE0075F9FD /* TET.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = TET.xcodeproj; path = TET/sample_app/TET.xcodeproj; sourceTree = "<group>"; };
 		37F75CB31C3F1A7D0075F9FD /* libstdc++.6.0.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.0.9.dylib"; path = "../../../../../../usr/lib/libstdc++.6.0.9.dylib"; sourceTree = "<group>"; };
 		37F75CB51C3F1AEE0075F9FD /* masamon-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "masamon-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -170,9 +188,9 @@
 				3726B3941C2FF7F400F22F34 /* QuartzCore.framework in Frameworks */,
 				37F75CBF1C3F1E4C0075F9FD /* TET_ios.framework in Frameworks */,
 				3742AF901C130391003AB33B /* libXlsxReaderWriter.a in Frameworks */,
-				37D75C0D1D07BCEA0034B678 /* Realm.framework in Frameworks */,
+				3773119E1D696C700027757C /* Realm.framework in Frameworks */,
 				3742AF561C12D8D1003AB33B /* libz.1.dylib in Frameworks */,
-				37D75C0F1D07BCEA0034B678 /* RealmSwift.framework in Frameworks */,
+				377311A01D696C700027757C /* RealmSwift.framework in Frameworks */,
 				D9C8B4DC9FDEB1B892F9B0DD /* Pods_masamon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -192,8 +210,8 @@
 		370ACDEE1BDF486600AB73EB = {
 			isa = PBXGroup;
 			children = (
-				37D75C0B1D07BCEA0034B678 /* Realm.framework */,
-				37D75C0C1D07BCEA0034B678 /* RealmSwift.framework */,
+				3773119C1D696C700027757C /* Realm.framework */,
+				3773119D1D696C700027757C /* RealmSwift.framework */,
 				37A597251CD57F0A00D43D35 /* LaunchScreenImage.png */,
 				371E8C2C1C85579F006B7C8C /* sampleshift */,
 				37F75CB51C3F1AEE0075F9FD /* masamon-Bridging-Header.h */,
@@ -227,6 +245,7 @@
 				37C8B23F1CD4E29D001E3766 /* OriginUITabBarController.swift */,
 				374090BF1C78641E00B01DC4 /* VideoViewController.swift */,
 				370ACDFC1BDF486700AB73EB /* MonthlySalaryShow.swift */,
+				37A76F9A1D6A28AA00ED7AEA /* Maintenance.swift */,
 				3721B1161C51499D0002A373 /* CommonMethod.swift */,
 				3726B3991C30009700F22F34 /* CalenderViewController.swift */,
 				376C92D51BE695D000D45FC2 /* extentions.swift */,
@@ -244,7 +263,8 @@
 				377D2DBA1C37EFE5009CC388 /* FileBrowseSelect.swift */,
 				379A2E041C1FDFFC00751425 /* CustomUICollectionViewCell.swift */,
 				379955941C14431F00BAAD9E /* XLSXmethod.swift */,
-				37F75CAA1C3F18C30075F9FD /* PDFmethod.swift */,
+				37F75CAA1C3F18C30075F9FD /* PDFmethod_old.swift */,
+				371D62431D5EE79500057416 /* PDFmethod.swift */,
 				371432A71BE98F060088CDCC /* ShiftImport.swift */,
 				370ACE011BDF486700AB73EB /* Assets.xcassets */,
 				370ACE031BDF486700AB73EB /* LaunchScreen.storyboard */,
@@ -257,6 +277,13 @@
 			isa = PBXGroup;
 			children = (
 				371E8C2F1C8557BF006B7C8C /* sampleshift.pdf */,
+				374977C81D5F580D005DE58B /* 4.11〜.pdf */,
+				374977C91D5F580D005DE58B /* 1.11〜.pdf */,
+				374977CA1D5F580D005DE58B /* 2.11〜.pdf */,
+				374977CB1D5F580D005DE58B /* 5.11〜.pdf */,
+				374977CC1D5F580D005DE58B /* 6.11〜.pdf */,
+				374977CD1D5F580D005DE58B /* 7.11〜.pdf */,
+				374977C41D5F57DD005DE58B /* 8.11〜.pdf */,
 				371E8C301C8557BF006B7C8C /* sampleshift.xlsx */,
 			);
 			name = sampleshift;
@@ -314,7 +341,7 @@
 				37F1E2A21BF21126000A22B0 /* Embed App Extensions */,
 				B7F09A19EA7135B641CC0EC0 /* Embed Pods Frameworks */,
 				8C229A283138099E606A0D3F /* Copy Pods Resources */,
-				37D75C111D07BCEA0034B678 /* Embed Frameworks */,
+				377311A21D696C700027757C /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -401,13 +428,20 @@
 			files = (
 				37A597261CD57F0A00D43D35 /* LaunchScreenImage.png in Resources */,
 				370ACE051BDF486700AB73EB /* LaunchScreen.storyboard in Resources */,
+				374977CF1D5F580D005DE58B /* 1.11〜.pdf in Resources */,
+				374977D21D5F580D005DE58B /* 6.11〜.pdf in Resources */,
+				374977D01D5F580D005DE58B /* 2.11〜.pdf in Resources */,
+				374977CE1D5F580D005DE58B /* 4.11〜.pdf in Resources */,
 				379A2DBE1C1E5F9900751425 /* no_data.png in Resources */,
 				371E8C311C8557BF006B7C8C /* sampleshift.pdf in Resources */,
 				370ACE291BDF4B7700AB73EB /* images in Resources */,
 				374090BC1C7858D800B01DC4 /* video1.mp4 in Resources */,
 				371E8C321C8557BF006B7C8C /* sampleshift.xlsx in Resources */,
+				374977D31D5F580D005DE58B /* 7.11〜.pdf in Resources */,
+				374977D11D5F580D005DE58B /* 5.11〜.pdf in Resources */,
 				37DD8EFF1C1C29FF007C0E6C /* Main.storyboard in Resources */,
 				370ACE021BDF486700AB73EB /* Assets.xcassets in Resources */,
+				374977C51D5F57DD005DE58B /* 8.11〜.pdf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -469,11 +503,12 @@
 				37C8B2401CD4E29D001E3766 /* OriginUITabBarController.swift in Sources */,
 				3726B39A1C30009700F22F34 /* CalenderViewController.swift in Sources */,
 				379955951C14431F00BAAD9E /* XLSXmethod.swift in Sources */,
-				37F75CAB1C3F18C30075F9FD /* PDFmethod.swift in Sources */,
+				37F75CAB1C3F18C30075F9FD /* PDFmethod_old.swift in Sources */,
 				370ACE4A1BDF9C8A00AB73EB /* DBmethod.swift in Sources */,
 				37526DD21CDC4ECB00F180DA /* FileBrowse.swift in Sources */,
 				370ACDFD1BDF486700AB73EB /* MonthlySalaryShow.swift in Sources */,
 				373C10EB1C5E049D0082CB8E /* StaffNameListSetting.swift in Sources */,
+				371D62441D5EE79500057416 /* PDFmethod.swift in Sources */,
 				371DE5151C5DBD4D0058F73B /* Setting.swift in Sources */,
 				374090C01C78641E00B01DC4 /* VideoViewController.swift in Sources */,
 				377D2DAE1C36C08B009CC388 /* BlueDarkStyle.swift in Sources */,
@@ -482,6 +517,7 @@
 				370ACE441BDF573500AB73EB /* DB.swift in Sources */,
 				373C10EF1C5E04D10082CB8E /* ShiftNameListSetting.swift in Sources */,
 				379A2E051C1FDFFC00751425 /* CustomUICollectionViewCell.swift in Sources */,
+				37A76F9B1D6A28AA00ED7AEA /* Maintenance.swift in Sources */,
 				371432A81BE98F060088CDCC /* ShiftImport.swift in Sources */,
 				37D4B3101BE0F59900F06759 /* HourlyWageSetting.swift in Sources */,
 				373C10F11C5E05010082CB8E /* ShiftListSetting.swift in Sources */,

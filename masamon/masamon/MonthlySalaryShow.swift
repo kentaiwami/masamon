@@ -26,66 +26,27 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     
     var currentnsdate = NSDate()        //MonthlySalaryShowがデータ表示している日付を管理
     
-    let wavyline: [String] = ["〜"]
-    let time = CommonMethod().GetTimeNotSpecifiedVer()
     let shiftgroupname = CommonMethod().GetShiftGroupName()
     var shiftgroupnameUIPicker: UIPickerView = UIPickerView()
-    var shifttimeUIPicker: UIPickerView = UIPickerView()
-    var shiftmanagerUIPicker: UIPickerView = UIPickerView()
+
     var pickerviewtoolBar = UIToolbar()
     var pickerdoneButton = UIBarButtonItem()
     
     var shiftgroupnametextfield = UITextField()
-    var shifttimetextfield = UITextField()
-    var shiftmanagertextfield = UITextField()
     
     var CalenderLabel = UILabel()
     
     let shiftarray = [" 早番："," 中1："," 中2："," 中3："," 遅番："," その他："]
-    let shitmanagerarray = ["マネージャーのみ", "それ以外"]
 
     var ShiftLabelArray: [[UILabel]] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        //クラッシュ等で参照されずに残ってしまったファイルを手動で削除する(保守用)
-//        let documentspath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
-//        let Inboxpath = documentspath + "/Inbox/"       //Inboxまでのパス
-////        let Libralypath = NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0] as String
-//        let filepath = Inboxpath  + ".pdf"
-////
-//        let filemanager:NSFileManager = NSFileManager()
-//        do{
-//            try filemanager.removeItemAtPath(filepath)
-//        }catch{
-//            print(error)
-//        }
+        //MARK: 保守用コード
+//        Maintenance().FileRemove()
+//        Maintenance().DBAdd()
         
-        //何回もテストするので楽にするため
-//        let AAA = HourlyPayDB()
-//        AAA.id = 0
-//        AAA.timefrom = 4.5
-//        AAA.timeto = 10.0
-//        AAA.pay = 100
-//        let AAA1 = HourlyPayDB()
-//        AAA1.id = 1
-//        AAA1.timefrom = 4.5
-//        AAA1.timeto = 10.0
-//        AAA1.pay = 200
-//        let AAA2 = UserNameDB()
-//        AAA2.id = 0
-//        AAA2.name = "Aさん"
-//        let AAA3 = StaffNumberDB()
-//        AAA3.id = 0
-//        AAA3.number = 22
-
-//        DBmethod().AddandUpdate(AAA, update: true)
-//        DBmethod().AddandUpdate(AAA1, update: true)
-//        DBmethod().AddandUpdate(AAA2, update: true)
-//        DBmethod().AddandUpdate(AAA3, update: true)
-
-
         self.setupShiftLabel()      //シフトを表示するラベルを設置する
         
         self.setupTapGesture()      //タップを検出するジェスチャーを追加
@@ -94,28 +55,12 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         
         self.SetupDayButton(0)      //1週間分の日付を表示するボタンを設置する
         
-        //シフト時間を選択して表示するテキストフィールドのデフォルト表示を指定
-        starttime = time[0]
-        endtime = time[0]
-        
         //シフトグループを選択するpickerview
         shiftgroupnameUIPicker.frame = CGRectMake(0,0,self.view.bounds.width/2+20, 200.0)
         shiftgroupnameUIPicker.delegate = self
         shiftgroupnameUIPicker.dataSource = self
         shiftgroupnameUIPicker.tag = 2
         
-        //シフト時間を選択するpickerview
-        shifttimeUIPicker.frame = CGRectMake(0,0,self.view.bounds.width/2+20, 200.0)
-        shifttimeUIPicker.delegate = self
-        shifttimeUIPicker.dataSource = self
-        shifttimeUIPicker.tag = 3
-        
-        //シフトがマネージャー専用かを選択するpickerview
-        shiftmanagerUIPicker.frame = CGRectMake(0,0,self.view.bounds.width/2+20, 200.0)
-        shiftmanagerUIPicker.delegate = self
-        shiftmanagerUIPicker.dataSource = self
-        shiftmanagerUIPicker.tag = 4
-
         //pickerviewに表示するツールバー
         pickerviewtoolBar.barStyle = UIBarStyle.Default
         pickerviewtoolBar.translucent = true
@@ -132,7 +77,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         
         let today = NSDate()
         
-        //前日、当日、翌日のラベルにデータをセットする
+        //前日、今日、翌日のラベルにデータをセットする
         let daycontrol = [-1,0,1]
         for i in 0..<ShiftLabelArray.count {
             //control[i]分だけ日付を操作したnsdateを作成する
@@ -177,7 +122,11 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         }
     }
     
-    //pickerview,label,シフトの表示を更新する
+    /**
+     pickerview,label,シフトの表示を更新する
+     
+     - parameter animated:
+     */
     override func viewDidAppear(animated: Bool) {
         
         shiftlist.removeAllObjects()
@@ -202,11 +151,16 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         appDelegate.screennumber = 0
     }
     
-    //バックグラウンドで保存しながらプログレスを表示する
+
     let progress = GradientCircularProgress()
     let Libralypath = NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0] as String
     var staffshiftcountflag = true
     var staffnamecountflag = true
+    
+    let pdfmethod = PDFmethod()
+    /**
+     バックグラウンドで保存しながらプログレスを表示する
+     */
     func savedata() {
         
         if self.appDelegate.filename.containsString(".xlsx") {
@@ -257,134 +211,65 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             }
             //取り込みがPDFの場合
         }else{
-            progress.show(style: OrangeClearStyle())
-            dispatch_async_global{
+            //スタッフが登録されていない場合はエラーアラートを出す
+            if DBmethod().DBRecordCount(StaffNameDB) == 0 {
+                let alert: UIAlertController = UIAlertController(title: "取り込みエラー", message: "スタッフを1名以上登録してください", preferredStyle:  UIAlertControllerStyle.Alert)
+                let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
                 
-                //PDF内のデータをテキスト配列に格納＆エラーのチェック
-                var pdfalltextarray: [String] = []
-                pdfalltextarray = PDFmethod().AllTextGet()
-                let pdfdata = PDFmethod().SplitDayShiftGet(pdfalltextarray)
+                alert.addAction(defaultAction)
                 
-                
-                //エラーがない場合はデータベースへ書き込みを行う
-                if self.appDelegate.errorstaffnamepdf.count == 0 && self.appDelegate.errorshiftnamepdf.count == 0 {
-                    PDFmethod().RegistDataBase(pdfdata.shiftarray, shiftcours: pdfdata.shiftcours, importname: self.appDelegate.filename, importpath: self.Libralypath+"/"+self.appDelegate.filename,update: self.appDelegate.update)
-                    PDFmethod().UserMonthlySalaryRegist(pdfdata.shiftarray, shiftcours: pdfdata.shiftcours,importname: self.appDelegate.filename)
-                }
-                
-                self.dispatch_async_main{
-                    self.progress.dismiss({ () -> Void in
-                        
-                        if self.appDelegate.errorstaffnamepdf.count != 0 {  //スタッフ名認識エラーがある場合
-                            if self.staffnamecountflag {
-                                self.appDelegate.errorstaffnamefastcount = self.appDelegate.errorstaffnamepdf.count
-                                self.staffnamecountflag = false
-                            }
-                            self.StaffNameErrorAlertShowPDF()
-                        }else{
-                            if self.appDelegate.errorshiftnamepdf.count != 0 {  //シフト認識エラーがある場合
-                                if self.staffshiftcountflag {
-                                    self.appDelegate.errorshiftnamefastcount = self.appDelegate.errorshiftnamepdf.count
-                                    self.staffshiftcountflag = false
-                                }
+                presentViewController(alert, animated: true, completion: nil)
+            }else {
+                progress.show(style: OrangeClearStyle())
+                dispatch_async_global{
+                    
+                    //PDF内のデータを取得して未登録のシフト名をチェック
+                    self.pdfmethod.RunPDFmethod()
+                    
+                    self.dispatch_async_main{
+                        self.progress.dismiss({ () -> Void in
+                            
+                            if self.appDelegate.unknownshiftname.count != 0 {  //シフト認識エラーがある場合
                                 self.StaffShiftErrorAlertShowPDF()
+                                
+                                //未登録のシフト名がない場合はデータベースへ書き込みを行う
+                            } else {
+                                self.pdfmethod.RegistDataBase(self.appDelegate.update, importname: self.appDelegate.filename, importpath: self.Libralypath+"/"+self.appDelegate.filename)
+                                self.pdfmethod.UserMonthlySalaryRegist(self.appDelegate.filename)
                             }
-                        }
-                        
-                        /*pickerview,label,シフトの表示を更新する*/
-                        self.shiftlist.removeAllObjects()
-                        if DBmethod().DBRecordCount(ShiftDB) != 0 {
-                            for i in (0 ... DBmethod().DBRecordCount(ShiftDB)-1).reverse(){
-                                self.shiftlist.addObject(DBmethod().ShiftDBGet(i))
+                            
+                            /*pickerview,label,シフトの表示を更新する*/
+                            self.shiftlist.removeAllObjects()
+                            if DBmethod().DBRecordCount(ShiftDB) != 0 {
+                                for i in (0 ... DBmethod().DBRecordCount(ShiftDB)-1).reverse(){
+                                    self.shiftlist.addObject(DBmethod().ShiftDBGet(i))
+                                }
+                                self.SaralyLabel.text = self.GetCommaSalalyString(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB)-1))
                             }
-                            self.SaralyLabel.text = self.GetCommaSalalyString(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB)-1))
-                        }
-                        
-                        self.onecourspicker.reloadAllComponents()
-                        
-                        let today = self.currentnsdate
-                        let date = CommonMethod().ReturnYearMonthDayWeekday(today)
-                        self.ShowAllData(CommonMethod().Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day, arraynumber: 1)
-                        self.SetCalenderLabel(date.year, month: date.month, day: date.day, weekday: date.weekday)
-                        
-                    })
+                            
+                            self.onecourspicker.reloadAllComponents()
+                            
+                            let today = self.currentnsdate
+                            let date = CommonMethod().ReturnYearMonthDayWeekday(today)
+                            self.ShowAllData(CommonMethod().Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day, arraynumber: 1)
+                            self.SetCalenderLabel(date.year, month: date.month, day: date.day, weekday: date.weekday)
+                            
+                        })
+                    }
                 }
             }
         }
         
     }
     
-    //PDFでスタッフ名認識エラーがある場合に表示してデータ入力をさせるためのアラート
-    func StaffNameErrorAlertShowPDF(){
-        let errorstaffnametext = appDelegate.errorstaffnamepdf
-        let donecount = appDelegate.errorstaffnamefastcount - appDelegate.errorstaffnamepdf.count
-        
-        let alert:UIAlertController = UIAlertController(title:"\(donecount+1)/\(appDelegate.errorstaffnamefastcount)人    スタッフ名が認識できませんでした",
-                                                        message: errorstaffnametext[0],
-                                                        preferredStyle: UIAlertControllerStyle.Alert)
-        
-        let addAction:UIAlertAction = UIAlertAction(title: "スタッフ名を登録",
-                                                    style: UIAlertActionStyle.Default,
-                                                    handler:{
-                                                        (action:UIAlertAction!) -> Void in
-                                                        let textFields:Array<UITextField>? =  alert.textFields as Array<UITextField>?
-                                                        if textFields != nil {
-                                                            
-                                                            if textFields![0].text != "" {   //テキストフィールドに値が入っている場合
-                                                                
-                                                                let staffnamerecord = StaffNameDB()
-                                                                staffnamerecord.id = DBmethod().DBRecordCount(StaffNameDB)
-                                                                staffnamerecord.name = textFields![0].text!
-                                                                
-                                                                DBmethod().AddandUpdate(staffnamerecord, update: true)
-                                                                
-                                                                self.savedata()
-                                                            }else{
-                                                                self.StaffNameErrorAlertShowPDF()
-                                                            }
-                                                        }
-        })
-        
-        let cancelAction:UIAlertAction = UIAlertAction(title: "キャンセル", style: UIAlertActionStyle.Cancel) { (UIAlertAction) in
-            //ファイルの削除
-            let libralypath = self.Libralypath + "/"
-            let filename = DBmethod().FilePathTmpGet().lastPathComponent    //ファイル名の抽出
-            
-            //コピーしたファイルの削除
-            do{
-                try self.filemanager.removeItemAtPath(libralypath + filename)
-                ShiftImport().InboxFileCountsDBMinusOne()
-            }catch{
-                print(error)
-            }
-        }
-        
-        alert.addAction(addAction)
-        alert.addAction(cancelAction)
-        
-        //シフト名入力用のtextfieldを追加
-        alert.addTextFieldWithConfigurationHandler({(text:UITextField!) -> Void in
-            text.placeholder = "スタッフ名の入力"
-            text.returnKeyType = .Next
-            text.tag = 0
-            text.delegate = self
-        })
-        
-        self.presentViewController(alert, animated: true, completion: nil)
-    }
-    
-    //PDFでシフト認識エラーがある場合に表示してデータ入力をさせるためのアラート
+    /**
+     PDFでシフト認識エラーがある場合に表示してデータ入力をさせるためのアラート
+     */
     func StaffShiftErrorAlertShowPDF(){
-        
-        let index = self.appDelegate.errorshiftnamepdf.startIndex.advancedBy(0)
-        let keys = self.appDelegate.errorshiftnamepdf.keys[index]
-        let values = self.appDelegate.errorshiftnamepdf.values[index]
-        
         var flag = false
-        let donecount = appDelegate.errorshiftnamefastcount - appDelegate.errorshiftnamepdf.count
         
-        let alert:UIAlertController = UIAlertController(title:"\(donecount+1)/\(appDelegate.errorshiftnamefastcount)人" + "\n" + keys+"さんのシフトが取り込めません",
-                                                        message: values + "\n\n" + "<シフトの名前> \n 例) 出勤 \n",
+        let alert:UIAlertController = UIAlertController(title:"\(appDelegate.unknownshiftname[0])が未登録です",
+                                                        message:"シフトのグループを選択してください",
                                                         preferredStyle: UIAlertControllerStyle.Alert)
         
         let addAction:UIAlertAction = UIAlertAction(title: "追加",
@@ -405,7 +290,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                                                             
                                                             if flag {   //テキストフィールドに値が全て入っている場合
                                                                 
-                                                                let newrecord = CommonMethod().CreateShiftSystemDBRecord(DBmethod().DBRecordCount(ShiftSystemDB),shiftname: textFields![0].text!, shiftgroup: textFields![1].text!, shifttime: textFields![2].text!, shiftstarttimerow: self.shiftstarttimeselectrow,shiftendtimerow: self.shiftendtimeselectrow, shiftmanager: textFields![3].text!)
+                                                                let newrecord = CommonMethod().CreateShiftSystemDBRecord(DBmethod().DBRecordCount(ShiftSystemDB),shiftname: textFields![0].text!, shiftgroup: textFields![1].text!)
                                                                 DBmethod().AddandUpdate(newrecord, update: true)
                                                                 
                                                                 self.savedata()
@@ -419,8 +304,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                                                      style: UIAlertActionStyle.Destructive,
                                                      handler:{
                                                         (action:UIAlertAction!) -> Void in
-                                                        self.appDelegate.skipstaff.append(keys)
-                                                        
+                                                        self.appDelegate.skipshiftname = self.appDelegate.unknownshiftname[0]
                                                         self.savedata()
         })
         
@@ -444,7 +328,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         
         //シフト名入力用のtextfieldを追加
         alert.addTextFieldWithConfigurationHandler({(text:UITextField!) -> Void in
-            text.placeholder = "シフトの名前を入力"
+            text.text = self.appDelegate.unknownshiftname[0]
             text.returnKeyType = .Next
             text.tag = 0
             text.delegate = self
@@ -452,19 +336,14 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         
         //シフトグループの選択内容を入れるテキストフィールドを追加
         alert.addTextFieldWithConfigurationHandler(configurationshiftgroupnameTextField)
-        
-        //シフト時間の選択内容を入れるテキストフィールドを追加
-        alert.addTextFieldWithConfigurationHandler(configurationshifttimeTextField)
-        
-        //シフト名がマネージャー専用かを選択するためのテキストフィールドを追加
-        alert.addTextFieldWithConfigurationHandler(configurationshiftmanagerTextField)
-        
-        
+                
         self.presentViewController(alert, animated: true, completion: nil)
     }
     
     
-    //XLSXで新規シフト体制名が含まれていた場合に表示するアラート
+    /**
+     XLSXで新規シフト体制名が含まれていた場合に表示するアラート
+     */
     func StaffShiftErrorAlertShowXLSX(){
         let errorshiftnamexlsxarray = self.appDelegate.errorshiftnamexlsx
         var flag = false
@@ -492,7 +371,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                                                             
                                                             if flag {   //テキストフィールドに値が全て入っている場合
                                                                 
-                                                                let newrecord = CommonMethod().CreateShiftSystemDBRecord(DBmethod().DBRecordCount(ShiftSystemDB),shiftname: textFields![0].text!, shiftgroup: textFields![1].text!, shifttime: textFields![2].text!, shiftstarttimerow: self.shiftstarttimeselectrow,shiftendtimerow: self.shiftendtimeselectrow, shiftmanager: textFields![3].text!)
+                                                                let newrecord = CommonMethod().CreateShiftSystemDBRecord(DBmethod().DBRecordCount(ShiftSystemDB),shiftname: textFields![0].text!, shiftgroup: textFields![1].text!)
                                                                 DBmethod().AddandUpdate(newrecord, update: true)
                                                                 
                                                                 self.savedata()
@@ -515,16 +394,17 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         //シフトグループの選択内容を入れるテキストフィールドを追加
         alert.addTextFieldWithConfigurationHandler(configurationshiftgroupnameTextField)
         
-        //シフト時間の選択内容を入れるテキストフィールドを追加
-        alert.addTextFieldWithConfigurationHandler(configurationshifttimeTextField)
-        
-        //シフト名がマネージャー専用かを選択するためのテキストフィールドを追加
-        alert.addTextFieldWithConfigurationHandler(configurationshiftmanagerTextField)
-        
         self.presentViewController(alert, animated: true, completion: nil)
     }
     
-    //アラートに表示するテキストフィールドのreturnkeyをタップした時に呼ばれるメソッド
+
+    /**
+     アラートに表示するテキストフィールドのreturnkeyをタップした時に動作
+     
+     - parameter textField: returnkeyをタップしたtextField
+     
+     - returns: returnkeyの有効・無効
+     */
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         
         if (textField.text?.isEmpty) != nil {
@@ -542,12 +422,22 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     }
     
     
-    //並行処理で使用
+
+    /**
+     並行処理で使用
+     
+     - parameter block:
+     */
     func dispatch_async_main(block: () -> ()) {
         dispatch_async(dispatch_get_main_queue(), block)
     }
     
-    //並行処理で使用
+
+    /**
+     並行処理で使用
+     
+     - parameter block:
+     */
     func dispatch_async_global(block: () -> ()) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), block)
     }
@@ -556,69 +446,65 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         super.didReceiveMemoryWarning()
     }
     
-    //pickerviewの属性表示に関する関数
+
+    /**
+     pickerviewの表示設定を行う
+     
+     - parameter pickerView: 対象となるpickerView
+     - parameter row:        行
+     - parameter component:  列
+     
+     - returns: pickerViewに表示する文字列
+     */
     func pickerView(pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
         
         if pickerView.tag == 1 {
             let attributedString = NSAttributedString(string: shiftlist[row] as! String, attributes: [NSForegroundColorAttributeName : UIColor.whiteColor()])
             return attributedString
-        }else if pickerView.tag == 2 {
+        }else {
             let attributedString = NSAttributedString(string: shiftgroupname[row] , attributes: [NSForegroundColorAttributeName : UIColor.blackColor()])
-            return attributedString
-        }else if pickerView.tag == 3{
-            if component == 0 {
-                let attributedString = NSAttributedString(string: time[row] , attributes: [NSForegroundColorAttributeName : UIColor.blackColor()])
-                return attributedString
-            }else if component == 1 {
-                let attributedString = NSAttributedString(string: wavyline[row] , attributes: [NSForegroundColorAttributeName : UIColor.blackColor()])
-                return attributedString
-            }else{
-                let attributedString = NSAttributedString(string: time[row] , attributes: [NSForegroundColorAttributeName : UIColor.blackColor()])
-                return attributedString
-            }
-        }else{
-            let attributedString = NSAttributedString(string: shitmanagerarray[row] , attributes: [NSForegroundColorAttributeName : UIColor.blackColor()])
             return attributedString
         }
     }
     
-    //表示列
+
+    /**
+     pickerViewの表示列を設定
+     
+     - parameter pickerView: シフトグループを選択させるpickerView
+     
+     - returns: 表示する列の数
+     */
     func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
-        
-        if pickerView.tag == 1 || pickerView.tag == 2 || pickerView.tag == 4 {
-            return 1
-        }else{
-            return 3
-        }
+        return 1
     }
     
     //表示個数
+    /**
+     pickerViewに表示する行数
+     
+     - parameter pickerView: 対象となるpickerView
+     - parameter component:  対象となるpickerViewの列指定
+     
+     - returns: 表示する行数
+     */
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         
         if pickerView.tag == 1 {
             return shiftlist.count
-        }else if pickerView.tag == 2 {
+        }else {
             pickerdoneButton.tag = 2
             return shiftgroupname.count
-        }else if pickerView.tag == 3 {
-            pickerdoneButton.tag = 3
-            if component == 0 {
-                return time.count
-            }else if component == 1 {
-                return wavyline.count
-            }else{
-                return time.count
-            }
-        }else{
-            pickerdoneButton.tag = 4
-            return shitmanagerarray.count
         }
     }
-    
-    var starttime = ""
-    var endtime = ""
-    
-    //選択時
+
+    /**
+     pickerViewを選択した際に動作
+     
+     - parameter pickerView: 選択したpickerView
+     - parameter row:        行
+     - parameter component:  列
+     */
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         
         if pickerView.tag == 1 {            //取り込んだシフト
@@ -630,27 +516,14 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             shiftgroupnametextfield.text = shiftgroupname[row]
             pickerdoneButton.tag = 2
             shiftgroupselectrow = row
-            
-        }else if pickerView.tag == 3 {      //シフト時間選択
-            
-            if component == 0 {
-                starttime = time[row]
-                shiftstarttimeselectrow = row
-            }else if component == 2 {
-                endtime = time[row]
-                shiftendtimeselectrow = row
-            }
-            pickerdoneButton.tag = 3
-            
-            shifttimetextfield.text = starttime + " " + wavyline[0] + " " + endtime
-        }else if pickerView.tag == 4 {
-            shiftmanagertextfield.text = shitmanagerarray[row]
-            pickerdoneButton.tag = 4
-            shiftmanagerselectrow = row
         }
     }
     
-    //月給表示画面が表示(アプリがアクティブ)されたら呼ばれる
+
+    /**
+     月給表示画面が表示(アプリがアクティブ)されたら動作
+     ファイルがコピーされていたらimport画面へ遷移させる
+     */
     func MonthlySalaryShowViewActived(){
         
         //ファイル数のカウント
@@ -675,15 +548,24 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         }
     }
     
+    /**
+     ファイルの保存が行われていたらsavedata()を実行する
+     */
     func FileSaveSuccessfulAlertShow(){
-        //ファイルの保存が行われていたら
         if appDelegate.filesavealert {
             self.savedata()
             appDelegate.filesavealert = false
         }
     }
     
-    //受け取った文字列をシフト体制に分別して返す
+
+    /**
+     受け取った文字列をシフト体制に分別して返す
+     
+     - parameter staff: 1日分のスタッフ名とシフト体制名が記述された文字列
+     
+     - returns: シフト体制ごと(早,中1,2,3,遅,その他)に分けてスタッフ名を格納した1次元配列
+     */
     func SplitStaffShift(staff: String) -> Array<String>{
         var staffshiftarray: [String] = ["","","","","",""]         //早番,中1,中2,中3,遅,その他
         let endindex = staff.endIndex       //文字列の最後の場所
@@ -743,7 +625,14 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         return staffshiftarray
     }
     
-    //金額をコンマ付きの文字列として返す関数
+
+    /**
+     金額をコンマ付きの文字列として返す関数
+     
+     - parameter salaly: 月給
+     
+     - returns: コンマ付きの文字列
+     */
     func GetCommaSalalyString(salaly: Int) -> String{
         
         var tmp = String(salaly)
@@ -763,14 +652,14 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         return tmp
     }
     
-    
-    /*
-     引数の説明
-     y: 和暦
-     m: 月
-     d: 日
+    /**
+     受け取った日付のデータ表示を行う
+     
+     - parameter y:           和暦
+     - parameter m:           月
+     - parameter d:           日
+     - parameter arraynumber: 日付を表示するラベルのindex(0:前日 1:今日 2:翌日)
      */
-    //受け取った日付のデータ表示を行う
     func ShowAllData(y: Int, m: Int, d: Int, arraynumber: Int){
         
         let fontsize:CGFloat = 14
@@ -834,7 +723,14 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         }
     }
     
-    //受け取った曜日の数字を実際の曜日に変換する
+
+    /**
+     受け取った曜日の数字を実際の曜日に変換する
+     
+     - parameter weekday: 曜日を表す数値
+     
+     - returns: 月火水木金土日のいずれかの文字列
+     */
     func ReturnWeekday(weekday: Int) ->String{
         switch(weekday){
         case 1:
@@ -856,23 +752,26 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         }
     }
         
-    //ツールバーの完了ボタンを押した時の関数
+
+    /**
+     ツールバーの完了ボタンを押した時に動作
+     
+     - parameter sender: ツールバーのボタン
+     */
     func donePicker(sender:UIButton){
         
         if sender.tag == 2 {            //シフトグループの完了ボタン
             shiftgroupnametextfield.resignFirstResponder()
-            shifttimetextfield.becomeFirstResponder()
-        }else if sender.tag == 3 {      //シフト時間の完了ボタン
-            shifttimetextfield.resignFirstResponder()
-            shiftmanagertextfield.becomeFirstResponder()
-        }else if sender.tag == 4 {      //マネージャー専用の完了ボタン
-            shiftmanagertextfield.resignFirstResponder()
         }
     }
     
-    //シフトのグループを入れるテキストフィールドの設定をする
+
+    /**
+     シフトのグループを入れるテキストフィールドの設定
+     
+     - parameter textField: 対象となるtextField
+     */
     func configurationshiftgroupnameTextField(textField: UITextField!){
-        textField.placeholder = "シフトのグループを入力"
         textField.inputView = self.shiftgroupnameUIPicker
         textField.inputAccessoryView = self.pickerviewtoolBar
         textField.tag = 1
@@ -880,53 +779,37 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         shiftgroupnametextfield = textField
     }
     
-    //シフトの時間を入れるテキストフィールドの設定をする
-    func configurationshifttimeTextField(textField: UITextField!){
-        textField.placeholder = "シフトの時間を入力"
-        textField.inputView = self.shifttimeUIPicker
-        textField.inputAccessoryView = self.pickerviewtoolBar
-        textField.tag = 2
-        textField.delegate = self
-        shifttimetextfield = textField
-    }
-    
-    //シフトがマネージャー専用かを選択するテキストフィールドの設定をする
-    func configurationshiftmanagerTextField(textField: UITextField!){
-        textField.placeholder = "マネージャー専用かを入力"
-        textField.inputView = self.shiftmanagerUIPicker
-        textField.inputAccessoryView = self.pickerviewtoolBar
-        textField.tag = 4
-        textField.delegate = self
-        shiftmanagertextfield = textField
-    }
-    
-    //シフトグループ,シフト時間(開始),シフト時間(終了)の選択箇所を記録する変数
+    //シフトグループの選択箇所を記録する変数
     var shiftgroupselectrow = 0
-    var shiftstarttimeselectrow = 0
-    var shiftendtimeselectrow = 0
-    var shiftmanagerselectrow = 0
-    
-    //textfieldがタップされた時
+
+    /**
+     textfieldがタップされた時に動作
+     
+     - parameter textField: タップされたtextField
+     */
     func textFieldDidBeginEditing(textField: UITextField) {
-        if textField.tag == 1 {             //シフトグループ選択
+        
+        if textField.tag == 1 {
             shiftgroupnameUIPicker.selectRow(shiftgroupselectrow, inComponent: 0, animated: true)
             textField.text = shiftgroupname[shiftgroupselectrow]
-            
-        }else if textField.tag == 2 {       //シフト時間選択
-            shifttimeUIPicker.selectRow(shiftstarttimeselectrow, inComponent: 0, animated: true)
-            shifttimeUIPicker.selectRow(shiftendtimeselectrow, inComponent: 2, animated: true)
-            textField.text = time[shiftstarttimeselectrow] + " " + wavyline[0] + " " + time[shiftendtimeselectrow]
-        }else if textField.tag == 4 {       //マネージャー専用選択
-            shiftmanagerUIPicker.selectRow(shiftmanagerselectrow, inComponent: 0, animated: true)
-            textField.text = shitmanagerarray[shiftmanagerselectrow]
         }
     }
     
-    //シェイクジェスチャーを有効にする
+    /**
+     シェイクジェスチャーを有効にする
+     
+     - returns: 有効:true, 無効:false
+     */
     override func canBecomeFirstResponder() -> Bool {
         return true
     }
     
+    /**
+     シェイクジェスチャーを認識した時に動作
+     
+     - parameter motion:
+     - parameter event:
+     */
     override func motionBegan(motion: UIEventSubtype,withEvent event: UIEvent?){
         
         if motion == UIEventSubtype.MotionShake {
@@ -935,7 +818,10 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         }
     }
     
-    //曜日ラベルを表示するためのメソッド
+
+    /**
+     曜日ラベルを表示する
+     */
     func setupdayofweekLabel(){
         //曜日ラベルの配置
         let monthName:[String] = ["日","月","火","水","木","金","土"]
@@ -993,6 +879,11 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     var buttontilearray:[String] = []
     var buttonobjectarray: [UIButton] = []
     
+    /**
+     1週間分の日付を表示したボタンを設置する
+     
+     - parameter judgeswipe: 1なら日付を進めるスワイプ，-1なら日付を戻すスワイプ
+     */
     func SetupDayButton(judgeswipe: Int){
         
         //todayと一致するボタンタイトルがある場合は常に文字を白表示にする
@@ -1073,7 +964,12 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         tapanimationbuttonflag = false
     }
     
-    //日付ボタンをタップした際に呼ばれる関数
+
+    /**
+     日付ボタンをタップした際に動作
+     
+     - parameter sender: タップしたUIButton
+     */
     func TapDayButton(sender: UIButton){
         let currentsplitday = CommonMethod().ReturnYearMonthDayWeekday(currentnsdate) //日付を西暦,月,日,曜日に分けて取得
         
@@ -1102,7 +998,10 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         }
     }
     
-    //ジェスチャーを検知するメソッド
+
+    /**
+     左右のスワイプと長押しのジェスチャー検知を設定する
+     */
     func setupTapGesture() {
         // 右方向へのスワイプ
         let gestureToRight = UISwipeGestureRecognizer(target: self, action: #selector(MonthlySalaryShow.prevday))
@@ -1123,7 +1022,12 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     
     var tapanimationbuttonflag = false      //タップをした際にbuttontilearray内に今日の日付が含まれているかを記録
     
-    //日付を表示しているLabelをアニメーション表示するメソッド
+
+    /**
+     日付を表示しているLabelに対してアニメーションを行う
+     
+     - parameter beforeposition: 移動前のx座標
+     */
     func AnimationCalenderLabel(beforeposition: CGFloat) {
         CalenderLabel.alpha = 0.0
         CalenderLabel.frame = CGRectMake(beforeposition, 240, 359, 33)
@@ -1134,12 +1038,29 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         }
     }
     
-    //日付を表示しているLabelに日付の内容をセットするメソッド
+
+    /**
+     日付を表示しているLabelに日付の内容をセットする
+     
+     - parameter year:    年
+     - parameter month:   月
+     - parameter day:     日
+     - parameter weekday: 曜日(数値)
+     */
     func SetCalenderLabel(year: Int, month: Int, day: Int, weekday: Int){
         CalenderLabel.text = "\(year)年\(month)月\(day)日 \(self.ReturnWeekday(weekday))曜日"
     }
     
-    //日付を表示するボタンのアニメーションを行うメソッド
+
+    /**
+     日付を表示するボタンのアニメーションを行うメソッド
+     
+     - parameter button:         アニメーションを行うボタン
+     - parameter beforeposition: 移動前のx座標
+     - parameter afterpositon:   移動後のx座標
+     - parameter positionY:      ボタンのy座標(変化なし)
+     - parameter buttonsize:     ボタンのサイズ(変化なし)
+     */
     func AnimationDayButton(button: UIButton, beforeposition: Int, afterpositon: Int, positionY: Int, buttonsize: Int){
         button.frame = CGRectMake(
             CGFloat(beforeposition),
@@ -1158,7 +1079,14 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         })
     }
     
-    //シフトラベルをアニメーションした後に、初期位置に戻す関数
+
+    /**
+     シフトを表示しているラベルをアニメーションした後に、初期位置に戻す関数
+     
+     - parameter prevposition: 前日のシフトを表示しているラベルのx座標
+     - parameter mainposition: 今日のシフトを表示しているラベルのx座標
+     - parameter nextpositon:  翌日のシフトを表示しているラベルのx座標
+     */
     func AnimationShiftLabelCompletion(prevposition: Int, mainposition: Int, nextpositon: Int){
         let positionarray = [prevposition,mainposition,nextpositon]
         var y: CGFloat = 0
@@ -1202,11 +1130,13 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     }
     
     
-    //シフトを表示するラベルを設置する関数
+    
     let shiftlabel_h = [65,35,35,35,65,65]
     let shiftlabel_line = [3,1,1,1,3,3]
     let shiftlabel_x = [-360,8,375]
-    
+    /**
+     シフトを表示するラベル(前日,今日,翌日)を設置する
+     */
     func setupShiftLabel(){
         let space = 7
         
@@ -1229,6 +1159,9 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         }
     }
     
+    /**
+     翌日に移動する関数
+     */
     func nextday(){
         self.DayControl(1)
 
@@ -1237,6 +1170,9 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         self.AnimationShiftLabelCompletion(shiftlabel_x[0], mainposition: shiftlabel_x[0], nextpositon: shiftlabel_x[1])
     }
     
+    /**
+     前日に移動する関数
+     */
     func prevday(){
         self.DayControl(-1)
 
@@ -1245,6 +1181,11 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         self.AnimationShiftLabelCompletion(shiftlabel_x[1], mainposition: shiftlabel_x[2], nextpositon: shiftlabel_x[2])
     }
     
+    /**
+     今日に移動する関数
+     
+     - parameter sender: 長押しのジェスチャー
+     */
     func today(sender: UILongPressGestureRecognizer){
         
         if sender.state == UIGestureRecognizerState.Began {
@@ -1283,7 +1224,12 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     }
 
     
-    //何日進めるかの値を受け取って日付を操作する
+
+    /**
+     何日進めるかの値を受け取って日付を操作する
+     
+     - parameter control: 進める日付の日数
+     */
     func DayControl(control: Int){
         //control分だけ日付を操作したnsdateを作成する
         let calendar = NSCalendar.currentCalendar()
@@ -1299,7 +1245,13 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         self.SetupDayButton(control)
     }
     
-    //1週間分の日付を配列へ格納するメソッド
+
+    /**
+     1週間分の日付を配列へ格納する
+     
+     - parameter pivotnsdate:  今日のnsdate
+     - parameter pivotweekday: 今日の曜日を表す数値
+     */
     func SetDayArray(pivotnsdate: NSDate, pivotweekday: Int){
         var tmparray: [Int] = []
         var j = 0                   //日付を増やすための変数
@@ -1326,7 +1278,10 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         }
     }
     
-    //ボタンオブジェクトを削除するメソッド
+
+    /**
+     1週間分の日付を表示しているボタンオブジェクトを削除する
+     */
     func RemoveButtonObjects(){
         
         for i in 0..<buttonobjectarray.count {

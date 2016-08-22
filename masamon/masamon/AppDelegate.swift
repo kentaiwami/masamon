@@ -27,20 +27,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var errorshiftnamefastcount = 0             //シフトの認識に失敗した場合の最初の失敗数を格納しておく変数
     var errorstaffnamefastcount = 0             //スタッフ名の認識に失敗した場合に、最初の失敗数を格納しておく変数
 
-    /*MonthlySalaryShowとPDFmethodで使用*/
-    var errorstaffnamepdf: [String] = []           //スタッフ名の認識に失敗した場合に、スタッフ名が書かれた1行を格納する
-    var errorshiftnamepdf: [String:String] = [:]   //シフトの認識に失敗した場合に、スタッフ名と認識に失敗した文字列を格納する
-    var skipstaff: [String] = []                //シフトの認識が完了しているが、認識エラーと出てしまうスタッフ名を格納する
-
     /*MonthlySalaryShowとXLSXmethodで使用*/
     var errorshiftnamexlsx: [String] = []       //新規シフト体制名が含まれていた場合に格納する
     
+    var unknownshiftname: [String] = []
     
     /*各画面で使用*/
     var screennumber = 0    //シフト：0, カレンダー：1, 設定：2,　履歴：3
     
     /*VideoViewControllerで使用*/
     var thumbnailnumber = 0     //タップしたサムネイルの番号を格納
+    
+    var skipshiftname = ""      //スキップしたシフト体制名
     
     func application(app: UIApplication, openURL url: NSURL, options: [String : AnyObject]) -> Bool {
         fileURL = ""
@@ -74,52 +72,61 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         //シフト体制データ
-        let shiftnamepattern = ["早","早M","早カ","はや","中","中2","中3","遅","遅M","遅カ","公","夏","有"]
-        let shiftstartpattern = [8.0,8.0,8.0,8.0,12.0,13.5,14.5,16.0,16.0,16.0,0.0,0.0,0.0]
-        let shiftendpattern = [16.5,16.5,16.5,16.5,20.5,22.0,23.0,24.5,24.5,24.5,0.0,0.0,0.0]
+        let shiftnamepattern = ["早","早M","早カ","はや","中","中2","中3","遅","遅M","遅カ","公","夏","有","不明"]
 
         if DBmethod().DBRecordCount(ShiftSystemDB) == 0 {
             for i in 0 ..< shiftnamepattern.count{
+                let ShiftSystemRecord = ShiftSystemDB()
                 var gid = 0
                 
                 switch(i){
                 //早番
                 case 0...3:
                     gid = 0
+                    ShiftSystemRecord.starttime = 8.0
+                    ShiftSystemRecord.endtime = 16.5
                     
                 //中1番
                 case 4:
                     gid = 1
-                
+                    ShiftSystemRecord.starttime = 12.0
+                    ShiftSystemRecord.endtime = 20.5
+                    
                 //中2番
                 case 5:
                     gid = 2
+                    ShiftSystemRecord.starttime = 13.5
+                    ShiftSystemRecord.endtime = 22.0
                     
                 //中3番
                 case 6:
                     gid = 3
+                    ShiftSystemRecord.starttime = 14.5
+                    ShiftSystemRecord.endtime = 23.0
                     
                 //遅番
                 case 7...9:
                     gid = 4
+                    ShiftSystemRecord.starttime = 16.0
+                    ShiftSystemRecord.endtime = 24.5
                     
                 //休み
-                default:
+                case 10...12:
                     gid = 6
+                    ShiftSystemRecord.starttime = 0.0
+                    ShiftSystemRecord.endtime = 0.0
+                    
+                //その他
+                default:
+                    gid = 5
+                    ShiftSystemRecord.starttime = 0.0
+                    ShiftSystemRecord.endtime = 0.0
+                    break
                 }
                 
-                let ShiftSystemRecord = ShiftSystemDB()
                 ShiftSystemRecord.id = i
                 ShiftSystemRecord.groupid = gid
                 ShiftSystemRecord.name = shiftnamepattern[i]
-                ShiftSystemRecord.starttime = shiftstartpattern[i]
-                ShiftSystemRecord.endtime = shiftendpattern[i]
-                
-                if i == 1 || i == 8 {
-                    ShiftSystemRecord.manager = true
-                }else{
-                    ShiftSystemRecord.manager = false
-                }
                 
                 DBmethod().AddandUpdate(ShiftSystemRecord, update: true)
             }
