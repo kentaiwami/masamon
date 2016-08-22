@@ -44,7 +44,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         super.viewDidLoad()
         
         //MARK: 保守用コード
-        let maintenance = Maintenance()
+//        let maintenance = Maintenance()
 //        maintenance.FileRemove()
 //        maintenance.DBAdd()
 //        maintenance.DBUpdate()
