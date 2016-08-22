@@ -55,7 +55,7 @@ class Maintenance {
     func DBUpdate() {
         let realm = try! Realm()
         try! realm.write {
-            realm.create(Book.self, value: ["id": 1, "price": 9000.0], update: true)
+//            realm.create(Book.self, value: ["id": 1, "price": 9000.0], update: true)
             // タイトルはそのままで値段のプロパティだけを更新することができます。
         }
     }
