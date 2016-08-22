@@ -43,7 +43,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //保守用コード
+        //MARK: 保守用コード
 //        Maintenance().FileRemove()
 //        Maintenance().DBAdd()
         
