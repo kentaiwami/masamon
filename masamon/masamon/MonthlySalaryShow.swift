@@ -44,8 +44,11 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         super.viewDidLoad()
         
         //MARK: 保守用コード
-//        Maintenance().FileRemove()
-//        Maintenance().DBAdd()
+        let maintenance = Maintenance()
+//        maintenance.FileRemove()
+//        maintenance.DBAdd()
+//        maintenance.DBUpdate()
+//        maintenance.DBDelete()
         
         self.setupShiftLabel()      //シフトを表示するラベルを設置する
         
