@@ -217,7 +217,21 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             //スタッフが登録されていない場合はエラーアラートを出す
             if DBmethod().DBRecordCount(StaffNameDB) == 0 {
                 let alert: UIAlertController = UIAlertController(title: "取り込みエラー", message: "スタッフを1名以上登録してください", preferredStyle:  UIAlertControllerStyle.Alert)
-                let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
+                let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler:
+                    {
+                        (action:UIAlertAction!) -> Void in
+                        //ファイルの削除
+                        let libralypath = self.Libralypath + "/"
+                        let filename = DBmethod().FilePathTmpGet().lastPathComponent    //ファイル名の抽出
+                        
+                        //コピーしたファイルの削除
+                        do{
+                            try self.filemanager.removeItemAtPath(libralypath + filename)
+                            ShiftImport().InboxFileCountsDBMinusOne()
+                        }catch{
+                            print(error)
+                        }
+                    })
                 
                 alert.addAction(defaultAction)
                 
