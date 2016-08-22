@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 class Maintenance {
     
@@ -49,5 +50,13 @@ class Maintenance {
         DBmethod().AddandUpdate(AAA1, update: true)
         DBmethod().AddandUpdate(AAA2, update: true)
         DBmethod().AddandUpdate(AAA3, update: true)
+    }
+    
+    func DBUpdate() {
+        let realm = try! Realm()
+        try! realm.write {
+            realm.create(Book.self, value: ["id": 1, "price": 9000.0], update: true)
+            // タイトルはそのままで値段のプロパティだけを更新することができます。
+        }
     }
 }
