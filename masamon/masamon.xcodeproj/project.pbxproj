@@ -39,12 +39,12 @@
 		374977D31D5F580D005DE58B /* 7.11〜.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 374977CD1D5F580D005DE58B /* 7.11〜.pdf */; };
 		37526DD21CDC4ECB00F180DA /* FileBrowse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37526DD11CDC4ECB00F180DA /* FileBrowse.swift */; };
 		376C92D61BE695D000D45FC2 /* extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376C92D51BE695D000D45FC2 /* extentions.swift */; };
-		3773119E1D696C700027757C /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3773119C1D696C700027757C /* Realm.framework */; };
-		3773119F1D696C700027757C /* Realm.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3773119C1D696C700027757C /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		377311A01D696C700027757C /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3773119D1D696C700027757C /* RealmSwift.framework */; };
-		377311A11D696C700027757C /* RealmSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3773119D1D696C700027757C /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		377D2DAE1C36C08B009CC388 /* BlueDarkStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377D2DAD1C36C08B009CC388 /* BlueDarkStyle.swift */; };
 		377D2DBB1C37EFE6009CC388 /* FileBrowseSelect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377D2DBA1C37EFE5009CC388 /* FileBrowseSelect.swift */; };
+		3797D5DA1D91B118005CBE3E /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3797D5D81D91B118005CBE3E /* Realm.framework */; };
+		3797D5DB1D91B118005CBE3E /* Realm.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3797D5D81D91B118005CBE3E /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		3797D5DC1D91B118005CBE3E /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3797D5D91D91B118005CBE3E /* RealmSwift.framework */; };
+		3797D5DD1D91B118005CBE3E /* RealmSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3797D5D91D91B118005CBE3E /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		379955951C14431F00BAAD9E /* XLSXmethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379955941C14431F00BAAD9E /* XLSXmethod.swift */; };
 		379A2DBE1C1E5F9900751425 /* no_data.png in Resources */ = {isa = PBXBuildFile; fileRef = 379A2DBD1C1E5F9900751425 /* no_data.png */; };
 		379A2E051C1FDFFC00751425 /* CustomUICollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379A2E041C1FDFFC00751425 /* CustomUICollectionViewCell.swift */; };
@@ -98,8 +98,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				377311A11D696C700027757C /* RealmSwift.framework in Embed Frameworks */,
-				3773119F1D696C700027757C /* Realm.framework in Embed Frameworks */,
+				3797D5DD1D91B118005CBE3E /* RealmSwift.framework in Embed Frameworks */,
+				3797D5DB1D91B118005CBE3E /* Realm.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -153,12 +153,14 @@
 		374977CD1D5F580D005DE58B /* 7.11〜.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "7.11〜.pdf"; sourceTree = "<group>"; };
 		37526DD11CDC4ECB00F180DA /* FileBrowse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileBrowse.swift; sourceTree = "<group>"; };
 		376C92D51BE695D000D45FC2 /* extentions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = extentions.swift; sourceTree = "<group>"; };
-		3773119C1D696C700027757C /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Realm.framework; sourceTree = "<group>"; };
-		3773119D1D696C700027757C /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RealmSwift.framework; sourceTree = "<group>"; };
 		377D2DAA1C36BFD2009CC388 /* GradientCircularProgress.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GradientCircularProgress.framework; path = "Pods/../build/Debug-iphoneos/GradientCircularProgress.framework"; sourceTree = "<group>"; };
 		377D2DAD1C36C08B009CC388 /* BlueDarkStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlueDarkStyle.swift; sourceTree = "<group>"; };
 		377D2DAF1C36C14A009CC388 /* GradientCircularProgress.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GradientCircularProgress.framework; path = "Pods/../build/Debug-iphoneos/GradientCircularProgress.framework"; sourceTree = "<group>"; };
 		377D2DBA1C37EFE5009CC388 /* FileBrowseSelect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileBrowseSelect.swift; sourceTree = "<group>"; };
+		3797D5CE1D91B0A1005CBE3E /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Realm.framework; path = "../../../../Downloads/realm-swift-1.1.0/ios/swift-3.0/Realm.framework"; sourceTree = "<group>"; };
+		3797D5CF1D91B0A1005CBE3E /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealmSwift.framework; path = "../../../../Downloads/realm-swift-1.1.0/ios/swift-3.0/RealmSwift.framework"; sourceTree = "<group>"; };
+		3797D5D81D91B118005CBE3E /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Realm.framework; sourceTree = "<group>"; };
+		3797D5D91D91B118005CBE3E /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RealmSwift.framework; sourceTree = "<group>"; };
 		379955941C14431F00BAAD9E /* XLSXmethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XLSXmethod.swift; sourceTree = "<group>"; };
 		379A2DBD1C1E5F9900751425 /* no_data.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = no_data.png; sourceTree = "<group>"; };
 		379A2E041C1FDFFC00751425 /* CustomUICollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomUICollectionViewCell.swift; sourceTree = "<group>"; };
@@ -188,9 +190,9 @@
 				3726B3941C2FF7F400F22F34 /* QuartzCore.framework in Frameworks */,
 				37F75CBF1C3F1E4C0075F9FD /* TET_ios.framework in Frameworks */,
 				3742AF901C130391003AB33B /* libXlsxReaderWriter.a in Frameworks */,
-				3773119E1D696C700027757C /* Realm.framework in Frameworks */,
+				3797D5DA1D91B118005CBE3E /* Realm.framework in Frameworks */,
 				3742AF561C12D8D1003AB33B /* libz.1.dylib in Frameworks */,
-				377311A01D696C700027757C /* RealmSwift.framework in Frameworks */,
+				3797D5DC1D91B118005CBE3E /* RealmSwift.framework in Frameworks */,
 				D9C8B4DC9FDEB1B892F9B0DD /* Pods_masamon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -210,8 +212,8 @@
 		370ACDEE1BDF486600AB73EB = {
 			isa = PBXGroup;
 			children = (
-				3773119C1D696C700027757C /* Realm.framework */,
-				3773119D1D696C700027757C /* RealmSwift.framework */,
+				3797D5D81D91B118005CBE3E /* Realm.framework */,
+				3797D5D91D91B118005CBE3E /* RealmSwift.framework */,
 				37A597251CD57F0A00D43D35 /* LaunchScreenImage.png */,
 				371E8C2C1C85579F006B7C8C /* sampleshift */,
 				37F75CB51C3F1AEE0075F9FD /* masamon-Bridging-Header.h */,
@@ -317,6 +319,8 @@
 		7423B7CBCF975D0B30BA5249 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3797D5CE1D91B0A1005CBE3E /* Realm.framework */,
+				3797D5CF1D91B0A1005CBE3E /* RealmSwift.framework */,
 				37F75CBD1C3F1C270075F9FD /* libstdc++.6.0.9.tbd */,
 				37F75CB61C3F1B610075F9FD /* TET_ios.framework */,
 				37F75CB31C3F1A7D0075F9FD /* libstdc++.6.0.9.dylib */,
@@ -360,12 +364,13 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0710;
-				LastUpgradeCheck = 0710;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = Kenta;
 				TargetAttributes = {
 					370ACDF61BDF486600AB73EB = {
 						CreatedOnToolsVersion = 7.1;
 						DevelopmentTeam = TLVYAZUQZL;
+						LastSwiftMigration = 0800;
 					};
 				};
 			};
@@ -564,6 +569,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -573,8 +579,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -610,6 +618,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -619,8 +628,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -640,6 +651,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "/Users/Kenta/Documents/swift_workspace/まさもん/masamon/masamon-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				USER_HEADER_SEARCH_PATHS = "\"/Users/Kenta/Documents/swift_workspace/まさもん/masamon/XlsxReaderWriter-master\"/**";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -649,6 +661,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = DB9C07197D395EF38199A0C7 /* Pods-masamon.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -665,6 +678,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.Kenta.masamon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "/Users/Kenta/Documents/swift_workspace/まさもん/masamon/masamon-Bridging-Header.h";
+				SWIFT_VERSION = 2.3;
 				USER_HEADER_SEARCH_PATHS = "\"/Users/Kenta/Documents/swift_workspace/まさもん/masamon/XlsxReaderWriter-master\"/**";
 			};
 			name = Debug;
@@ -673,6 +687,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1B7B2B25D5EE69B36B550A20 /* Pods-masamon.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -689,6 +704,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.Kenta.masamon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "/Users/Kenta/Documents/swift_workspace/まさもん/masamon/masamon-Bridging-Header.h";
+				SWIFT_VERSION = 2.3;
 				USER_HEADER_SEARCH_PATHS = "\"/Users/Kenta/Documents/swift_workspace/まさもん/masamon/XlsxReaderWriter-master\"/**";
 			};
 			name = Release;

@@ -98,11 +98,11 @@ class GradientArcWithClearColorView : UIView {
             CGImageGetBitsPerComponent(maskRef),
             CGImageGetBitsPerPixel(maskRef),
             CGImageGetBytesPerRow(maskRef),
-            CGImageGetDataProvider(maskRef),
+            CGImageGetDataProvider(maskRef)!,
             nil,
             false)!
         
-        let maskedImageRef: CGImageRef = CGImageCreateWithMask(image.CGImage, mask)!
+        let maskedImageRef: CGImageRef = CGImageCreateWithMask(image.CGImage!, mask)!
         let scale = UIScreen.mainScreen().scale
         let maskedImage: UIImage = UIImage.init(CGImage: maskedImageRef, scale: scale, orientation: .Up)
         
@@ -135,6 +135,6 @@ class GradientArcWithClearColorView : UIView {
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
-        return image
+        return image!
     }
 }
