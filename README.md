@@ -15,8 +15,8 @@
 ## デモ
 ![demo](https://github.com/kentaiwami/masamon/blob/master/demo.gif)
 ## サポート情報
-* Xcode 7.3
-* iOS 9.3
+* Xcode 8.0
+* iOS 10.0.1
 * iPhone 6,6s
 * サンプルファイル ([pdf](https://github.com/kentaiwami/masamon/blob/master/masamon/sampleshift.pdf) or [xlsx](https://github.com/kentaiwami/masamon/blob/master/masamon/sampleshift.xlsx))が必要
 
