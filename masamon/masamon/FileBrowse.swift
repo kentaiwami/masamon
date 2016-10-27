@@ -9,7 +9,7 @@
 import UIKit
 
 class FileBrowse: UIViewController, UIWebViewDelegate{
-
+    
     let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得
     
     var myWebView = UIWebView()
@@ -45,7 +45,7 @@ class FileBrowse: UIViewController, UIWebViewDelegate{
         // viewにWebViewを追加.
         self.view.addSubview(myWebView)
     }
-
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         self.title = appDelegate.selectedcellname
@@ -86,7 +86,7 @@ class FileBrowse: UIViewController, UIWebViewDelegate{
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-
+    
     @IBAction func TapBackButton(sender: AnyObject) {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
