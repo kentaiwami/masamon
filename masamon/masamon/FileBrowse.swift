@@ -7,20 +7,43 @@
 //
 
 import UIKit
-import QuickLook
 
-class FileBrowse: UIViewController, QLPreviewControllerDataSource{
+class FileBrowse: UIViewController, UIWebViewDelegate{
 
     let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得
     
+    var myWebView = UIWebView()
+    var myPDFurl =  NSURL()
+    var myRequest = NSURLRequest()
+    var myIndiator = UIActivityIndicatorView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        let ql = QLPreviewController()
-        ql.dataSource = self
         
-        ql.view.frame = CGRectMake(0, 64, self.view.frame.width, self.view.frame.height)
-        self.view.addSubview(ql.view)
+        // PDFを開くためのWebViewを生成.
+        myWebView = UIWebView(frame: CGRectMake(0, 0, self.view.frame.width, self.view.frame.height))
+        myWebView.delegate = self
+        myWebView.scalesPageToFit = true
+        myWebView.layer.position = CGPointMake(self.view.frame.width/2, self.view.frame.height/2)
+        
+        // URLReqestを生成.
+        let Libralypath = NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0] as String
+        let filePath = Libralypath + "/" + appDelegate.selectedcellname
+        
+        myPDFurl = NSURL.fileURLWithPath(filePath)
+        myRequest = NSURLRequest(URL: myPDFurl)
+        
+        // ページ読み込み中に表示させるインジケータを生成.
+        myIndiator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
+        myIndiator.center = self.view.center
+        myIndiator.hidesWhenStopped = true
+        myIndiator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
+        
+        // WebViewのLoad開始.
+        myWebView.loadRequest(myRequest)
+        
+        // viewにWebViewを追加.
+        self.view.addSubview(myWebView)
     }
 
     override func viewDidLayoutSubviews() {
@@ -28,23 +51,40 @@ class FileBrowse: UIViewController, QLPreviewControllerDataSource{
         self.title = appDelegate.selectedcellname
     }
     
+    func startAnimation() {
+        
+        // NetworkActivityIndicatorを表示.
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        
+        // UIACtivityIndicatorを表示.
+        if !myIndiator.isAnimating() {
+            myIndiator.startAnimating()
+        }
+        
+        // viewにインジケータを追加.
+        self.view.addSubview(myIndiator)
+    }
     
+    func stopAnimation() {
+        // NetworkActivityIndicatorを非表示.
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+        
+        // UIACtivityIndicatorを非表示.
+        if myIndiator.isAnimating() {
+            myIndiator.stopAnimating()
+        }
+    }
+    
+    func webViewDidStartLoad(webView: UIWebView) {
+        startAnimation()
+    }
+    
+    func webViewDidFinishLoad(webView: UIWebView) {
+        stopAnimation()
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-    }
-
-    func numberOfPreviewItemsInPreviewController(controller: QLPreviewController) -> Int{
-        return 1
-    }
-    
-    func previewController(controller: QLPreviewController, previewItemAtIndex index: Int) -> QLPreviewItem {
-
-        let Libralypath = NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0] as String
-        let filePath = Libralypath + "/" + appDelegate.selectedcellname
-        
-        let doc = NSURL(fileURLWithPath: filePath)
-        return doc
     }
 
     @IBAction func TapBackButton(sender: AnyObject) {
