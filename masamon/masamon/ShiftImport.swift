@@ -7,9 +7,8 @@
 //
 
 import UIKit
-import QuickLook
 
-class ShiftImport: UIViewController,UITextFieldDelegate,QLPreviewControllerDataSource{
+class ShiftImport: UIViewController,UITextFieldDelegate,UIWebViewDelegate{
     
     @IBOutlet weak var filenamefield: UITextField!
     @IBOutlet weak var staffnumberfield: UITextField!
@@ -21,6 +20,12 @@ class ShiftImport: UIViewController,UITextFieldDelegate,QLPreviewControllerDataS
     let Libralypath = NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0] as String
     let filename = DBmethod().FilePathTmpGet().lastPathComponent    //ファイル名の抽出
     let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得
+    
+    var myWebView = UIWebView()
+    var myPDFurl =  NSURL()
+    var myRequest = NSURLRequest()
+    var myIndiator = UIActivityIndicatorView()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,11 +58,31 @@ class ShiftImport: UIViewController,UITextFieldDelegate,QLPreviewControllerDataS
         numberpadtoolBar.userInteractionEnabled = true
         staffnumberfield.inputAccessoryView = numberpadtoolBar
         
-        //QLpreviewを表示させる
-        let ql = QLPreviewController()
-        ql.dataSource  = self
-        ql.view.frame = CGRectMake(0, self.view.frame.height/2, self.view.frame.width, 400)
-        self.view.addSubview(ql.view)
+        // PDFを開くためのWebViewを生成.
+        myWebView = UIWebView(frame: CGRectMake(0, self.view.frame.height/2, self.view.frame.width, 400))
+        myWebView.delegate = self
+        myWebView.scalesPageToFit = true
+        
+        // URLReqestを生成.
+        let documentspath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
+        let Inboxpath = documentspath + "/Inbox/"       //Inboxまでのパス
+        let filePath = Inboxpath + filenamefield.text!
+
+        myPDFurl = NSURL.fileURLWithPath(filePath)
+        myRequest = NSURLRequest(URL: myPDFurl)
+        
+        // ページ読み込み中に表示させるインジケータを生成.
+        myIndiator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
+        myIndiator.center = self.view.center
+        myIndiator.hidesWhenStopped = true
+        myIndiator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
+        
+        // WebViewのLoad開始.
+        myWebView.loadRequest(myRequest)
+        
+        // viewにWebViewを追加.
+        self.view.addSubview(myWebView)
+
         
         quickfilelabel.text = "取り込み予定のファイル"
         StaffNumberLabel.text = "スタッフ人数"
@@ -199,22 +224,37 @@ class ShiftImport: UIViewController,UITextFieldDelegate,QLPreviewControllerDataS
         textfield.resignFirstResponder()
         return true
     }
-    
-    //プレビューでの表示数
-    func numberOfPreviewItemsInPreviewController(controller: QLPreviewController) -> Int{
-        return 1
+        
+    func startAnimation() {
+        
+        // NetworkActivityIndicatorを表示.
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        
+        // UIACtivityIndicatorを表示.
+        if !myIndiator.isAnimating() {
+            myIndiator.startAnimating()
+        }
+        
+        // viewにインジケータを追加.
+        self.view.addSubview(myIndiator)
     }
     
-    //プレビューで表示するファイルの設定
-    func previewController(controller: QLPreviewController, previewItemAtIndex index: Int) -> QLPreviewItem{
+    func stopAnimation() {
+        // NetworkActivityIndicatorを非表示.
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
         
-        //他アプリからコピーしてきたばかりのファイルを参照
-        let documentspath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
-        let Inboxpath = documentspath + "/Inbox/"       //Inboxまでのパス
-        let url = Inboxpath + filenamefield.text!
-        
-        let doc = NSURL(fileURLWithPath: url)
-        return doc
+        // UIACtivityIndicatorを非表示.
+        if myIndiator.isAnimating() {
+            myIndiator.stopAnimating()
+        }
+    }
+    
+    func webViewDidStartLoad(webView: UIWebView) {
+        startAnimation()
+    }
+    
+    func webViewDidFinishLoad(webView: UIWebView) {
+        stopAnimation()
     }
     
     func FileSaveAndMove(Inboxpath: String, update: Bool){
