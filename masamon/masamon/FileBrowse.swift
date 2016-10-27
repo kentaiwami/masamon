@@ -21,10 +21,9 @@ class FileBrowse: UIViewController, UIWebViewDelegate{
         super.viewDidLoad()
         
         // PDFを開くためのWebViewを生成.
-        myWebView = UIWebView(frame: CGRectMake(0, 0, self.view.frame.width, self.view.frame.height))
+        myWebView = UIWebView(frame: CGRectMake(0, 64, self.view.frame.width, self.view.frame.height))
         myWebView.delegate = self
         myWebView.scalesPageToFit = true
-        myWebView.layer.position = CGPointMake(self.view.frame.width/2, self.view.frame.height/2)
         
         // URLReqestを生成.
         let Libralypath = NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0] as String
