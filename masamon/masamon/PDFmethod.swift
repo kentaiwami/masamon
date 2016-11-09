@@ -520,21 +520,42 @@ class PDFmethod: UIViewController {
         let staffnameDBArray = DBmethod().StaffNameArrayGet()
 
         //登録したスタッフの人数分だけループする
-       
         for i in 0..<staffnumber - 1 {
+            var staffname_candidature: [String:Int] = [:]
+
             splitdayshift.append([])
             var staffname = ""
             let one_person_charinfo = charinfoArrays[i]
             let one_person_textline = GetLineText(one_person_charinfo)
             
-            //名前検索
+            //名前の場所を記録
             for j in 0..<staffnameDBArray!.count {
-                if one_person_textline.containsString(staffnameDBArray![j]) == true {
-                    staffname = staffnameDBArray![j]
-                    staffnameArray.append(staffname)
-                    break
+                let staffname_range = one_person_textline.rangeOfString(staffnameDBArray![j])
+                if staffname_range != nil {
+                    
+                    staffname_candidature[staffnameDBArray![j]] = one_person_textline.startIndex.distanceTo(staffname_range!.startIndex)
                 }
             }
+            
+            //候補が複数ある場合はstartindexが一番小さいスタッフ名を採用する
+            let keys: Array = Array(staffname_candidature.keys)
+            let values: Array = Array(staffname_candidature.values)
+            if staffname_candidature.count == 1 {
+                staffname = keys[0]
+                staffnameArray.append(staffname)
+            }else if staffname_candidature.count > 1 {
+                let minvalue = values.minElement()
+                for (key,value) in staffname_candidature {
+                    if minvalue! == value {
+                        staffname = key;
+                        staffnameArray.append(staffname)
+                        break
+                    }
+                }
+            }
+            
+            print(i)
+            print(staffname_candidature)
             
             //シフト文字の始まりの場所を記録する
             var shift_start = 0
