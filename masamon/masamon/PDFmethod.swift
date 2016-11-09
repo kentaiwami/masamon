@@ -517,10 +517,18 @@ class PDFmethod: UIViewController {
         var staffnameArray: [String] = []
         
         let staffnumber = DBmethod().StaffNumberGet()
-        let staffnameDBArray = DBmethod().StaffNameArrayGet()
-
+        let managerstaffnameDBArray = DBmethod().ManagerStaffNameArrayGet(1)
+        let nomanagerstaffnameDBArray = DBmethod().ManagerStaffNameArrayGet(0)
+        var staffnameDBArray: [String]
+        
         //登録したスタッフの人数分だけループする
-        for i in 0..<staffnumber - 1 {
+        for i in 0..<staffnumber {
+            //スタッフがマネージャーか通常スタッフかで使用する配列を変える
+            if i <= 3 {
+                staffnameDBArray = managerstaffnameDBArray!
+            }else {
+                staffnameDBArray = nomanagerstaffnameDBArray!
+            }
             var staffname_candidature: [String:Int] = [:]
 
             splitdayshift.append([])
@@ -529,11 +537,11 @@ class PDFmethod: UIViewController {
             let one_person_textline = GetLineText(one_person_charinfo)
             
             //名前の場所を記録
-            for j in 0..<staffnameDBArray!.count {
-                let staffname_range = one_person_textline.rangeOfString(staffnameDBArray![j])
+            for j in 0..<staffnameDBArray.count {
+                let staffname_range = one_person_textline.rangeOfString(staffnameDBArray[j])
                 if staffname_range != nil {
                     
-                    staffname_candidature[staffnameDBArray![j]] = one_person_textline.startIndex.distanceTo(staffname_range!.startIndex)
+                    staffname_candidature[staffnameDBArray[j]] = one_person_textline.startIndex.distanceTo(staffname_range!.startIndex)
                 }
             }
             
@@ -553,9 +561,6 @@ class PDFmethod: UIViewController {
                     }
                 }
             }
-            
-            print(i)
-            print(staffname_candidature)
             
             //シフト文字の始まりの場所を記録する
             var shift_start = 0

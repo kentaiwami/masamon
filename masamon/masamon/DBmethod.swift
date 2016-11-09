@@ -558,6 +558,43 @@ class DBmethod: UIViewController {
         }
     }
     
+    /**
+     フラグによってマネージャーと店長のみか、マネージャー以外かのスタッフ名を配列で返す関数
+     
+     - parameter flag: 0はマネージャー以外、1はマネージャーと店長
+     
+     - returns: スタッフ名が格納された1次元配列
+     */
+    func ManagerStaffNameArrayGet(flag: Int) -> Array<String>?{
+        var array: [String] = []
+        let realm = try! Realm()
+        
+        if DBmethod().DBRecordCount(StaffNameDB) == 0 {
+            return nil
+        }else{
+            for i in 0 ..< DBmethod().DBRecordCount(StaffNameDB){
+                var flag_bool = false
+                if flag == 0 {
+                    flag_bool = false
+                }else {
+                    flag_bool = true
+                }
+                
+                let name = realm.objects(StaffNameDB).filter("id = %@",i)[0].name
+                
+                if name.containsString("M") == flag_bool {
+                    array.append(name)
+                }
+            }
+            
+            if flag == 1 {
+                array.append("店長")
+            }
+            
+            return array
+        }
+    }
+    
     //StaffNameDBの全レコードを取得する
     func StaffNameAllRecordGet() -> Results<StaffNameDB>?{
         let realm = try! Realm()
