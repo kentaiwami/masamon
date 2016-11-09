@@ -228,6 +228,14 @@ class DBmethod: UIViewController {
         return count
     }
     
+    //InboxFileCountDBのレコードを初期化する
+    func InitRecordInboxFileCountDB() {
+        let InboxFileCountDBRecord = InboxFileCountDB()
+        InboxFileCountDBRecord.id = 0
+        InboxFileCountDBRecord.counts = 0
+        DBmethod().AddandUpdate(InboxFileCountDBRecord,update: true)
+    }
+    
     
     /****************FilePathTmpDB関連メソッド*************/
 
@@ -238,6 +246,14 @@ class DBmethod: UIViewController {
         let realm = try! Realm()
         path = realm.objects(FilePathTmpDB).filter("id = %@", 0)[0].path
         return path
+    }
+    
+    //FilePathTmpDBのレコードを初期化する
+    func InitRecordFilePathTmpDB() {
+        let FilePathTmpRecord = FilePathTmpDB()
+        FilePathTmpRecord.id = 0
+        FilePathTmpRecord.path = "nil"
+        DBmethod().AddandUpdate(FilePathTmpRecord,update: true)
     }
     
     
