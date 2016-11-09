@@ -203,20 +203,12 @@ class ShiftImport: UIViewController,UITextFieldDelegate,UIWebViewDelegate{
         //コピーしたファイルの削除
         do{
             try filemanager.removeItemAtPath(inboxpath + filename)
-            self.InboxFileCountsDBMinusOne()
+            DBmethod().InitRecordInboxFileCountDB()
         }catch{
             print(error)
         }
         self.dismissViewControllerAnimated(true, completion: nil)
         
-    }
-    
-    //InboxFileCountsの数を1つ減らす
-    func InboxFileCountsDBMinusOne(){
-        let InboxFileCountDBRecord = InboxFileCountDB()
-        InboxFileCountDBRecord.id = 0
-        InboxFileCountDBRecord.counts = DBmethod().InboxFileCountsGet()-1
-        DBmethod().AddandUpdate(InboxFileCountDBRecord,update: true)
     }
     
     //キーボードの完了(改行)を押したらキーボードを閉じる
@@ -268,7 +260,7 @@ class ShiftImport: UIViewController,UITextFieldDelegate,UIWebViewDelegate{
         self.appDelegate.filename = self.filenamefield.text!
         self.appDelegate.update = update
 
-        self.InboxFileCountsDBMinusOne()
+        DBmethod().InitRecordInboxFileCountDB()
 
         //DBへパスを記録
         let filepathrecord = FilePathTmpDB()

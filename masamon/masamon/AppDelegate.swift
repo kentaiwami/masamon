@@ -65,10 +65,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         //FilePathTmpに空レコード(ダミー)を追加
         if DBmethod().DBRecordCount(FilePathTmpDB) == 0 {
-            let FilePathTmpRecord = FilePathTmpDB()
-            FilePathTmpRecord.id = 0
-            FilePathTmpRecord.path = "nil"
-            DBmethod().AddandUpdate(FilePathTmpRecord,update: true)
+            DBmethod().InitRecordFilePathTmpDB()
         }
         
         //シフト体制データ

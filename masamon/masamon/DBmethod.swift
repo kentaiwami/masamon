@@ -228,6 +228,14 @@ class DBmethod: UIViewController {
         return count
     }
     
+    //InboxFileCountDBのレコードを初期化する
+    func InitRecordInboxFileCountDB() {
+        let InboxFileCountDBRecord = InboxFileCountDB()
+        InboxFileCountDBRecord.id = 0
+        InboxFileCountDBRecord.counts = 0
+        DBmethod().AddandUpdate(InboxFileCountDBRecord,update: true)
+    }
+    
     
     /****************FilePathTmpDB関連メソッド*************/
 
@@ -238,6 +246,14 @@ class DBmethod: UIViewController {
         let realm = try! Realm()
         path = realm.objects(FilePathTmpDB).filter("id = %@", 0)[0].path
         return path
+    }
+    
+    //FilePathTmpDBのレコードを初期化する
+    func InitRecordFilePathTmpDB() {
+        let FilePathTmpRecord = FilePathTmpDB()
+        FilePathTmpRecord.id = 0
+        FilePathTmpRecord.path = "nil"
+        DBmethod().AddandUpdate(FilePathTmpRecord,update: true)
     }
     
     
@@ -321,20 +337,6 @@ class DBmethod: UIViewController {
         let realm = try! Realm()
         
         return realm.objects(ShiftSystemDB)
-    }
-    
-    //マネージャーに使用するシフト体制名を取り除いたシフト体制名を配列で返す
-    func ShiftSystemNoManagerNameArrayGet() -> Array<String> {
-        var name: [String] = []
-        
-        let realm = try! Realm()
-        let results = realm.objects(ShiftSystemDB).filter("manager = %@",false)
-        
-        for i in 0 ..< results.count{
-            name.append(results[i].name)
-        }
-        
-        return name
     }
     
     //ShiftSystemDBの虫食い状態を直す関数
@@ -566,6 +568,43 @@ class DBmethod: UIViewController {
             for i in 0 ..< DBmethod().DBRecordCount(StaffNameDB){
                 let name = realm.objects(StaffNameDB).filter("id = %@",i)[0].name
                 array.append(name)
+            }
+            
+            return array
+        }
+    }
+    
+    /**
+     フラグによってマネージャーと店長のみか、マネージャー以外かのスタッフ名を配列で返す関数
+     
+     - parameter flag: 0はマネージャー以外、1はマネージャーと店長
+     
+     - returns: スタッフ名が格納された1次元配列
+     */
+    func ManagerStaffNameArrayGet(flag: Int) -> Array<String>?{
+        var array: [String] = []
+        let realm = try! Realm()
+        
+        if DBmethod().DBRecordCount(StaffNameDB) == 0 {
+            return nil
+        }else{
+            for i in 0 ..< DBmethod().DBRecordCount(StaffNameDB){
+                var flag_bool = false
+                if flag == 0 {
+                    flag_bool = false
+                }else {
+                    flag_bool = true
+                }
+                
+                let name = realm.objects(StaffNameDB).filter("id = %@",i)[0].name
+                
+                if name.containsString("M") == flag_bool {
+                    array.append(name)
+                }
+            }
+            
+            if flag == 1 {
+                array.append("店長")
             }
             
             return array

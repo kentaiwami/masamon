@@ -227,7 +227,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                         //コピーしたファイルの削除
                         do{
                             try self.filemanager.removeItemAtPath(libralypath + filename)
-                            ShiftImport().InboxFileCountsDBMinusOne()
+                            DBmethod().InitRecordInboxFileCountDB()
                         }catch{
                             print(error)
                         }
@@ -333,7 +333,8 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             //コピーしたファイルの削除
             do{
                 try self.filemanager.removeItemAtPath(libralypath + filename)
-                ShiftImport().InboxFileCountsDBMinusOne()
+                DBmethod().InitRecordInboxFileCountDB()
+                DBmethod().InitRecordFilePathTmpDB()
             }catch{
                 print(error)
             }
@@ -555,7 +556,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             //ファイルの数をデータベースへ記録
             let InboxFileCountRecord = InboxFileCountDB()
             InboxFileCountRecord.id = 0
-            InboxFileCountRecord.counts = filecount
+            InboxFileCountRecord.counts = 1
             DBmethod().AddandUpdate(InboxFileCountRecord,update: true)
             
             let targetViewController = self.storyboard!.instantiateViewControllerWithIdentifier("ShiftImport")
