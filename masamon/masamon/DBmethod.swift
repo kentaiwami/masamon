@@ -323,20 +323,6 @@ class DBmethod: UIViewController {
         return realm.objects(ShiftSystemDB)
     }
     
-    //マネージャーに使用するシフト体制名を取り除いたシフト体制名を配列で返す
-    func ShiftSystemNoManagerNameArrayGet() -> Array<String> {
-        var name: [String] = []
-        
-        let realm = try! Realm()
-        let results = realm.objects(ShiftSystemDB).filter("manager = %@",false)
-        
-        for i in 0 ..< results.count{
-            name.append(results[i].name)
-        }
-        
-        return name
-    }
-    
     //ShiftSystemDBの虫食い状態を直す関数
     func ShiftSystemDBFillHole(id: Int){
         do{
