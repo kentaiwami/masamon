@@ -589,6 +589,12 @@ class PDFmethod: UIViewController {
                     sum_x += current_shift_x
                     
                     current_shift_index += 1
+
+                    //one_person_charinfoの要素数以上になったら強制的にループを抜ける
+                    if current_shift_index >=  one_person_charinfo.count{
+                        break
+                    }
+                    
                     current_shift_x = one_person_charinfo[current_shift_index].x
                     current_shift_text = one_person_charinfo[current_shift_index].text
                 }
