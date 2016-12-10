@@ -17,11 +17,11 @@ class Maintenance {
         let Inboxpath = documentspath + "/Inbox/"       //Inboxまでのパス
         let Libralypath = NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0] as String + "/"
         let filepath = Libralypath  + "85.11〜.pdf"
-        let ABC = Libralypath + "8.11〜.pdf"
+        let ABC = Libralypath + "12.11〜1.pdf"
         let filemanager:NSFileManager = NSFileManager()
         do{
-            //try filemanager.removeItemAtPath(filepath)
-            try NSFileManager.defaultManager().moveItemAtURL(NSURL(fileURLWithPath: filepath), toURL: NSURL(fileURLWithPath: ABC))
+            try filemanager.removeItemAtPath(ABC)
+//            try NSFileManager.defaultManager().moveItemAtURL(NSURL(fileURLWithPath: filepath), toURL: NSURL(fileURLWithPath: ABC))
 
         }catch{
             print(error)
@@ -65,5 +65,10 @@ class Maintenance {
         try! realm.write {
             realm.delete(user)
         }
+        for i in 92...122 {
+            let record = DBmethod().GetShiftDetailDBRecordByID(i)
+            DBmethod().DeleteRecord(record)
+        }
+        
     }
 }
