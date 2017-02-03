@@ -1003,13 +1003,12 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         var tagindex_foundflag = false
         var currentdayindex_foundflag = false
         for i in 0..<daybuttonarray.count {
-            let daybuttonObject = daybuttonarray[i]
-            if daybuttonObject.day == sender.tag {
+            if daybuttonarray[i].day == sender.tag {
                 tagindex = i
                 tagindex_foundflag = true
             }
             
-            if daybuttonObject.day == currentsplitday.day {
+            if daybuttonarray[i].day == currentsplitday.day {
                 currentdayindex = i
                 currentdayindex_foundflag = true
             }
@@ -1018,9 +1017,6 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                 break
             }
         }
-        
-//        let tagindex = buttontilearray.indexOf(String(sender.tag))
-//        let currentdayindex = buttontilearray.indexOf(String(currentsplitday.day))
         
         self.DayControl(tagindex-currentdayindex)
         let currentnsdatesplit = CommonMethod().ReturnYearMonthDayWeekday(currentnsdate)
@@ -1246,10 +1242,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             
             var containflag = false
             for i in 0..<daybuttonarray.count {
-                let daybuttonObject = daybuttonarray[i]
-                
-                
-                if daybuttonObject.year == date.year && daybuttonObject.month == date.month && daybuttonObject.day == date.day {
+                if daybuttonarray[i].year == date.year && daybuttonarray[i].month == date.month && daybuttonarray[i].day == date.day {
                     containflag = false
                     break
                 }else {
@@ -1258,10 +1251,6 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             }
             
             tapanimationbuttonflag = containflag
-            
-//            if buttontilearray.contains(String(date.day)) == false {
-//                tapanimationbuttonflag = true
-//            }
             
             //現在表示している日付と今日の日付を比較して、アニメーションを切り替えて表示する
             if compareunit == .OrderedAscending {           //currentnsdateが今日より小さい(前の日付)場合
@@ -1313,7 +1302,6 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
      - parameter pivotweekday: 今日の曜日を表す数値
      */
     func SetDayArray(pivotnsdate: NSDate, pivotweekday: Int){
-//        var tmparray: [Int] = []
         var j = 0                   //日付を増やすための変数
         
         let nsdatesplit = CommonMethod().ReturnYearMonthDayWeekday(pivotnsdate)
@@ -1345,10 +1333,6 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             
             daybuttonarray.append(tmp_daybutton)
         }
-        
-//        for i in 0...6 {
-//            self.buttontilearray.append(String(tmparray[i]))
-//        }
     }
     
 
