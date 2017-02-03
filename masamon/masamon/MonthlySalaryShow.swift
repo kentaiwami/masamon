@@ -10,6 +10,12 @@ import UIKit
 import RealmSwift
 import GradientCircularProgress
 
+class day_button {
+    var year = 0
+    var month = 0
+    var day = 0
+}
+
 class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate{
     
     let shiftdb = ShiftDB()
@@ -949,7 +955,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             if todaysplitday.year == currentsplitdate.year && todaysplitday.month == currentsplitdate.month && todaysplitday.day == Int(buttontilearray[i]) {
                 button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
             }
-            
+                        
             //配置したボタンに押した際のアクションを設定する
             button.addTarget(self, action: #selector(MonthlySalaryShow.TapDayButton(_:)), forControlEvents: .TouchUpInside)
             
