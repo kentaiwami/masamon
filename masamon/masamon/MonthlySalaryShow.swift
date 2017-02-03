@@ -10,6 +10,12 @@ import UIKit
 import RealmSwift
 import GradientCircularProgress
 
+class day_button {
+    var year = 0
+    var month = 0
+    var day = 0
+}
+
 class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate{
     
     let shiftdb = ShiftDB()
@@ -894,7 +900,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         }
     }
     
-    var buttontilearray:[String] = []
+    var daybuttonarray:[day_button] = []
     var buttonobjectarray: [UIButton] = []
     
     /**
@@ -935,18 +941,18 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             button.setTitleColor(UIColor.grayColor(), forState: .Normal)
             button.titleLabel!.font = UIFont.systemFontOfSize(19)
             button.layer.cornerRadius = CGFloat(buttonSize/2)
-            button.tag = Int(buttontilearray[i])!
+            button.tag = daybuttonarray[i].day
             
-            button.setTitle(buttontilearray[i], forState: .Normal)
+            button.setTitle(String(daybuttonarray[i].day), forState: .Normal)
             
             //currentnsdateと一致するボタンがある場合
-            if currentsplitdate.day == Int(buttontilearray[i]) {
+            if currentsplitdate.year == daybuttonarray[i].year && currentsplitdate.month == daybuttonarray[i].month && currentsplitdate.day == daybuttonarray[i].day {
                 button.backgroundColor = UIColor.hex("FF8E92", alpha: 1.0)
                 button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
             }
             
             //今日の年月日と一致するボタンがある場合は文字色を白にする
-            if todaysplitday.year == currentsplitdate.year && todaysplitday.month == currentsplitdate.month && todaysplitday.day == Int(buttontilearray[i]) {
+            if todaysplitday.year == daybuttonarray[i].year && todaysplitday.month ==  daybuttonarray[i].month && todaysplitday.day == daybuttonarray[i].day {
                 button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
             }
             
@@ -992,20 +998,37 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         let currentsplitday = CommonMethod().ReturnYearMonthDayWeekday(currentnsdate) //日付を西暦,月,日,曜日に分けて取得
         
         //タップした日付ボタンと表示中の日付の配列位置を比較
-        let tagindex = buttontilearray.indexOf(String(sender.tag))
-        let currentdayindex = buttontilearray.indexOf(String(currentsplitday.day))
+        var tagindex = 0
+        var currentdayindex = 0
+        var tagindex_foundflag = false
+        var currentdayindex_foundflag = false
+        for i in 0..<daybuttonarray.count {
+            if daybuttonarray[i].day == sender.tag {
+                tagindex = i
+                tagindex_foundflag = true
+            }
+            
+            if daybuttonarray[i].day == currentsplitday.day {
+                currentdayindex = i
+                currentdayindex_foundflag = true
+            }
+            
+            if tagindex_foundflag && currentdayindex_foundflag {
+                break
+            }
+        }
         
-        self.DayControl(tagindex!-currentdayindex!)
+        self.DayControl(tagindex-currentdayindex)
         let currentnsdatesplit = CommonMethod().ReturnYearMonthDayWeekday(currentnsdate)
 
         //今日の日付より大きい日付(翌日以降)のボタンがタップされた場合
-        if tagindex! - currentdayindex! > 0 {
+        if tagindex - currentdayindex > 0 {
             self.AnimationCalenderLabel(20)
             self.ShowAllData(CommonMethod().Changecalendar(currentnsdatesplit.year, calender: "A.D"), m: currentnsdatesplit.month, d: currentnsdatesplit.day, arraynumber: 2)
             self.AnimationShiftLabelCompletion(shiftlabel_x[0], mainposition: shiftlabel_x[0], nextpositon: shiftlabel_x[1])
         
         //今日の日付より小さい日付(前日以降)のボタンがタップされた場合
-        }else if tagindex! - currentdayindex! < 0 {
+        }else if tagindex - currentdayindex < 0 {
             self.AnimationCalenderLabel(-4)
             self.ShowAllData(CommonMethod().Changecalendar(currentnsdatesplit.year, calender: "A.D"), m: currentnsdatesplit.month, d: currentnsdatesplit.day, arraynumber: 0)
             self.AnimationShiftLabelCompletion(shiftlabel_x[1], mainposition: shiftlabel_x[2], nextpositon: shiftlabel_x[2])
@@ -1217,9 +1240,17 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             
             currentnsdate = today
             
-            if buttontilearray.contains(String(date.day)) == false {
-                tapanimationbuttonflag = true
+            var containflag = false
+            for i in 0..<daybuttonarray.count {
+                if daybuttonarray[i].year == date.year && daybuttonarray[i].month == date.month && daybuttonarray[i].day == date.day {
+                    containflag = false
+                    break
+                }else {
+                    containflag = true
+                }
             }
+            
+            tapanimationbuttonflag = containflag
             
             //現在表示している日付と今日の日付を比較して、アニメーションを切り替えて表示する
             if compareunit == .OrderedAscending {           //currentnsdateが今日より小さい(前の日付)場合
@@ -1271,28 +1302,36 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
      - parameter pivotweekday: 今日の曜日を表す数値
      */
     func SetDayArray(pivotnsdate: NSDate, pivotweekday: Int){
-        var tmparray: [Int] = []
         var j = 0                   //日付を増やすための変数
         
         let nsdatesplit = CommonMethod().ReturnYearMonthDayWeekday(pivotnsdate)
         
         //今日の日付から日曜日までの日付を追加する
         for i in (1..<pivotweekday).reverse() {
+            let tmp_daybutton = day_button()
+            
             let newnsdate = CommonMethod().CreateNSDate(nsdatesplit.year, month: nsdatesplit.month, day: nsdatesplit.day-i)
             let newnsdatesplit = CommonMethod().ReturnYearMonthDayWeekday(newnsdate)
-            tmparray.append(newnsdatesplit.day)
+            
+            tmp_daybutton.year = newnsdatesplit.year
+            tmp_daybutton.month = newnsdatesplit.month
+            tmp_daybutton.day = newnsdatesplit.day
+            daybuttonarray.append(tmp_daybutton)
         }
         
         //今日の日付から土曜日までの日付を追加する
         for _ in pivotweekday...7 {
+            let tmp_daybutton = day_button()
+            
             let newnsdate = CommonMethod().CreateNSDate(nsdatesplit.year, month: nsdatesplit.month, day: nsdatesplit.day+j)
             j += 1
             let newnsdatesplit = CommonMethod().ReturnYearMonthDayWeekday(newnsdate)
-            tmparray.append(newnsdatesplit.day)
-        }
-        
-        for i in 0...6 {
-            self.buttontilearray.append(String(tmparray[i]))
+            
+            tmp_daybutton.year = newnsdatesplit.year
+            tmp_daybutton.month = newnsdatesplit.month
+            tmp_daybutton.day = newnsdatesplit.day
+            
+            daybuttonarray.append(tmp_daybutton)
         }
     }
     
@@ -1306,7 +1345,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             buttonobjectarray[i].removeFromSuperview()
         }
         
-        self.buttontilearray.removeAll()
+        self.daybuttonarray.removeAll()
     }
 }
 
