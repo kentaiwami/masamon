@@ -900,7 +900,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         }
     }
     
-    var buttontilearray:[String] = []
+    var daybuttonarray:[day_button] = []
     var buttonobjectarray: [UIButton] = []
     
     /**
@@ -955,7 +955,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             if todaysplitday.year == currentsplitdate.year && todaysplitday.month == currentsplitdate.month && todaysplitday.day == Int(buttontilearray[i]) {
                 button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
             }
-                        
+            
             //配置したボタンに押した際のアクションを設定する
             button.addTarget(self, action: #selector(MonthlySalaryShow.TapDayButton(_:)), forControlEvents: .TouchUpInside)
             
@@ -1277,29 +1277,42 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
      - parameter pivotweekday: 今日の曜日を表す数値
      */
     func SetDayArray(pivotnsdate: NSDate, pivotweekday: Int){
-        var tmparray: [Int] = []
+//        var tmparray: [Int] = []
         var j = 0                   //日付を増やすための変数
         
         let nsdatesplit = CommonMethod().ReturnYearMonthDayWeekday(pivotnsdate)
         
         //今日の日付から日曜日までの日付を追加する
         for i in (1..<pivotweekday).reverse() {
+            let tmp_daybutton = day_button()
+            
             let newnsdate = CommonMethod().CreateNSDate(nsdatesplit.year, month: nsdatesplit.month, day: nsdatesplit.day-i)
             let newnsdatesplit = CommonMethod().ReturnYearMonthDayWeekday(newnsdate)
-            tmparray.append(newnsdatesplit.day)
+            
+            tmp_daybutton.year = newnsdatesplit.year
+            tmp_daybutton.month = newnsdatesplit.month
+            tmp_daybutton.day = newnsdatesplit.day
+            daybuttonarray.append(tmp_daybutton)
         }
         
         //今日の日付から土曜日までの日付を追加する
         for _ in pivotweekday...7 {
+            let tmp_daybutton = day_button()
+            
             let newnsdate = CommonMethod().CreateNSDate(nsdatesplit.year, month: nsdatesplit.month, day: nsdatesplit.day+j)
             j += 1
             let newnsdatesplit = CommonMethod().ReturnYearMonthDayWeekday(newnsdate)
-            tmparray.append(newnsdatesplit.day)
+            
+            tmp_daybutton.year = newnsdatesplit.year
+            tmp_daybutton.month = newnsdatesplit.month
+            tmp_daybutton.day = newnsdatesplit.day
+            
+            daybuttonarray.append(tmp_daybutton)
         }
         
-        for i in 0...6 {
-            self.buttontilearray.append(String(tmparray[i]))
-        }
+//        for i in 0...6 {
+//            self.buttontilearray.append(String(tmparray[i]))
+//        }
     }
     
 
@@ -1312,7 +1325,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             buttonobjectarray[i].removeFromSuperview()
         }
         
-        self.buttontilearray.removeAll()
+        self.daybuttonarray.removeAll()
     }
 }
 
