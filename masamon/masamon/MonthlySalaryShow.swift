@@ -998,20 +998,41 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         let currentsplitday = CommonMethod().ReturnYearMonthDayWeekday(currentnsdate) //日付を西暦,月,日,曜日に分けて取得
         
         //タップした日付ボタンと表示中の日付の配列位置を比較
-        let tagindex = buttontilearray.indexOf(String(sender.tag))
-        let currentdayindex = buttontilearray.indexOf(String(currentsplitday.day))
+        var tagindex = 0
+        var currentdayindex = 0
+        var tagindex_foundflag = false
+        var currentdayindex_foundflag = false
+        for i in 0..<daybuttonarray.count {
+            let daybuttonObject = daybuttonarray[i]
+            if daybuttonObject.day == sender.tag {
+                tagindex = i
+                tagindex_foundflag = true
+            }
+            
+            if daybuttonObject.day == currentsplitday.day {
+                currentdayindex = i
+                currentdayindex_foundflag = true
+            }
+            
+            if tagindex_foundflag && currentdayindex_foundflag {
+                break
+            }
+        }
         
-        self.DayControl(tagindex!-currentdayindex!)
+//        let tagindex = buttontilearray.indexOf(String(sender.tag))
+//        let currentdayindex = buttontilearray.indexOf(String(currentsplitday.day))
+        
+        self.DayControl(tagindex-currentdayindex)
         let currentnsdatesplit = CommonMethod().ReturnYearMonthDayWeekday(currentnsdate)
 
         //今日の日付より大きい日付(翌日以降)のボタンがタップされた場合
-        if tagindex! - currentdayindex! > 0 {
+        if tagindex - currentdayindex > 0 {
             self.AnimationCalenderLabel(20)
             self.ShowAllData(CommonMethod().Changecalendar(currentnsdatesplit.year, calender: "A.D"), m: currentnsdatesplit.month, d: currentnsdatesplit.day, arraynumber: 2)
             self.AnimationShiftLabelCompletion(shiftlabel_x[0], mainposition: shiftlabel_x[0], nextpositon: shiftlabel_x[1])
         
         //今日の日付より小さい日付(前日以降)のボタンがタップされた場合
-        }else if tagindex! - currentdayindex! < 0 {
+        }else if tagindex - currentdayindex < 0 {
             self.AnimationCalenderLabel(-4)
             self.ShowAllData(CommonMethod().Changecalendar(currentnsdatesplit.year, calender: "A.D"), m: currentnsdatesplit.month, d: currentnsdatesplit.day, arraynumber: 0)
             self.AnimationShiftLabelCompletion(shiftlabel_x[1], mainposition: shiftlabel_x[2], nextpositon: shiftlabel_x[2])
