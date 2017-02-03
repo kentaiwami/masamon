@@ -941,18 +941,18 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             button.setTitleColor(UIColor.grayColor(), forState: .Normal)
             button.titleLabel!.font = UIFont.systemFontOfSize(19)
             button.layer.cornerRadius = CGFloat(buttonSize/2)
-            button.tag = Int(buttontilearray[i])!
+            button.tag = daybuttonarray[i].day
             
-            button.setTitle(buttontilearray[i], forState: .Normal)
+            button.setTitle(String(daybuttonarray[i].day), forState: .Normal)
             
             //currentnsdateと一致するボタンがある場合
-            if currentsplitdate.day == Int(buttontilearray[i]) {
+            if currentsplitdate.year == daybuttonarray[i].year && currentsplitdate.month == daybuttonarray[i].month && currentsplitdate.day == daybuttonarray[i].day {
                 button.backgroundColor = UIColor.hex("FF8E92", alpha: 1.0)
                 button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
             }
             
             //今日の年月日と一致するボタンがある場合は文字色を白にする
-            if todaysplitday.year == currentsplitdate.year && todaysplitday.month == currentsplitdate.month && todaysplitday.day == Int(buttontilearray[i]) {
+            if todaysplitday.year == daybuttonarray[i].year && todaysplitday.month ==  daybuttonarray[i].month && todaysplitday.day == daybuttonarray[i].day {
                 button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
             }
             
