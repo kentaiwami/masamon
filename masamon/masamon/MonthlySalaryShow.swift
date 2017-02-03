@@ -1223,9 +1223,24 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             
             currentnsdate = today
             
-            if buttontilearray.contains(String(date.day)) == false {
-                tapanimationbuttonflag = true
+            var containflag = false
+            for i in 0..<daybuttonarray.count {
+                let daybuttonObject = daybuttonarray[i]
+                
+                
+                if daybuttonObject.year == date.year && daybuttonObject.month == date.month && daybuttonObject.day == date.day {
+                    containflag = false
+                    break
+                }else {
+                    containflag = true
+                }
             }
+            
+            tapanimationbuttonflag = containflag
+            
+//            if buttontilearray.contains(String(date.day)) == false {
+//                tapanimationbuttonflag = true
+//            }
             
             //現在表示している日付と今日の日付を比較して、アニメーションを切り替えて表示する
             if compareunit == .OrderedAscending {           //currentnsdateが今日より小さい(前の日付)場合
