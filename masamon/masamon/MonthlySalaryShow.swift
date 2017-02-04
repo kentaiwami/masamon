@@ -1056,7 +1056,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         
         //長押し
         let myLongPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(MonthlySalaryShow.today))
-        myLongPressGesture.minimumPressDuration = 0.2
+        myLongPressGesture.minimumPressDuration = 0.6
         myLongPressGesture.allowableMovement = 150
         self.view.addGestureRecognizer(myLongPressGesture)
     }

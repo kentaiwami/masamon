@@ -741,7 +741,7 @@ class CalenderViewController: UIViewController {
         
         //長押し
         let myLongPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(CalenderViewController.NowCalendarSettings))
-        myLongPressGesture.minimumPressDuration = 0.2
+        myLongPressGesture.minimumPressDuration = 0.6
         myLongPressGesture.allowableMovement = 150
         self.view.addGestureRecognizer(myLongPressGesture)
     }
