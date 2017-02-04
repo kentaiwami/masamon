@@ -526,9 +526,7 @@ class CalenderViewController: UIViewController {
             currentComps.day   = 1
             
             let currentDate: NSDate = currentCalendar.dateFromComponents(currentComps)!
-            recreateCalendarParameter(currentCalendar, currentDate: currentDate, calendarnumber: i)
-            
-            print(String(year[i]) + " " + String(month[i]))
+            recreateCalendarParameter(currentCalendar, currentDate: currentDate, calendarnumber: i)            
         }
     }
     
