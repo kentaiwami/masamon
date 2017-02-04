@@ -381,7 +381,8 @@ class CalenderViewController: UIViewController {
                 
                 
                 //今日の日付と合致するボタンがあったら装飾する
-                let nowdate = NSDate()
+                var nowdate = NSDate()
+                nowdate = CommonMethod().CreateNSDate(2016, month: 1, day: 4)
                 let calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)
                 let comps:NSDateComponents = calendar!.components([NSCalendarUnit.Year,NSCalendarUnit.Month,NSCalendarUnit.Day],
                                                                   fromDate: nowdate)
@@ -454,23 +455,46 @@ class CalenderViewController: UIViewController {
     //年月を増減するパラメータを受け取りパラメータに応じたNSDateを返す(先月，今月，来月)
     func GetPrevCurrentNextNSDate(i: Int) -> NSDate {
         var tmp_nsdate = NSDate()
+        tmp_nsdate = CommonMethod().CreateNSDate(2016, month: 1, day: 4)
+        
         var tmp_nsdate_split = CommonMethod().ReturnYearMonthDayWeekday(tmp_nsdate)
         
         //先月を設定する場合の処理
-        if tmp_nsdate_split.month == 1 && i == 0{
-            tmp_nsdate_split.year = tmp_nsdate_split.year + for_parameter[i]
-            tmp_nsdate_split.month = 12
-        }else if tmp_nsdate_split.month >= 2 && i == 0 {
-            tmp_nsdate_split.month = tmp_nsdate_split.month + for_parameter[i]
+        switch i {
+        case 0:
+            if tmp_nsdate_split.month == 1 {
+                tmp_nsdate_split.year = tmp_nsdate_split.year + for_parameter[i]
+                tmp_nsdate_split.month = 12
+            }else {
+                tmp_nsdate_split.month = tmp_nsdate_split.month + for_parameter[i]
+            }
+            
+        case 2:
+            if tmp_nsdate_split.month == 12 {
+                tmp_nsdate_split.year = tmp_nsdate_split.year + for_parameter[i]
+                tmp_nsdate_split.month = 1
+            }else {
+                tmp_nsdate_split.month = tmp_nsdate_split.month + for_parameter[i]
+            }
+            
+        default:
+            break
         }
         
+//        if tmp_nsdate_split.month == 1 && i == 0{
+//            tmp_nsdate_split.year = tmp_nsdate_split.year + for_parameter[i]
+//            tmp_nsdate_split.month = 12
+//        }else if tmp_nsdate_split.month >= 2 && i == 0 {
+//            tmp_nsdate_split.month = tmp_nsdate_split.month + for_parameter[i]
+//        }
+        
         //来月を設定する場合の処理
-        if tmp_nsdate_split.month == 12 && i == 2{
-            tmp_nsdate_split.year = tmp_nsdate_split.year + for_parameter[i]
-            tmp_nsdate_split.month = 1
-        }else if tmp_nsdate_split.month >= 2 && i == 2 {
-            tmp_nsdate_split.month = tmp_nsdate_split.month + for_parameter[i]
-        }
+//        if tmp_nsdate_split.month == 12 && i == 2{
+//            tmp_nsdate_split.year = tmp_nsdate_split.year + for_parameter[i]
+//            tmp_nsdate_split.month = 1
+//        }else if tmp_nsdate_split.month >= 2 && i == 2 {
+//            tmp_nsdate_split.month = tmp_nsdate_split.month + for_parameter[i]
+//        }
         
         tmp_nsdate_split.day = 1
         
@@ -494,6 +518,7 @@ class CalenderViewController: UIViewController {
         
         //現在の日付を取得する
         now_nsdate = NSDate()
+        now_nsdate = CommonMethod().CreateNSDate(2016, month: 1, day: 4)
         
         //inUnit:で指定した単位（月）の中で、rangeOfUnit:で指定した単位（日）が取り得る範囲
         let calendar: NSCalendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
@@ -520,6 +545,8 @@ class CalenderViewController: UIViewController {
             
             let currentDate: NSDate = currentCalendar.dateFromComponents(currentComps)!
             recreateCalendarParameter(currentCalendar, currentDate: currentDate, calendarnumber: i)
+            
+            print(String(year[i]) + " " + String(month[i]))
         }
     }
     
