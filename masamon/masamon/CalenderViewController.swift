@@ -454,22 +454,29 @@ class CalenderViewController: UIViewController {
     //年月を増減するパラメータを受け取りパラメータに応じたNSDateを返す(先月，今月，来月)
     func GetPrevCurrentNextNSDate(i: Int) -> NSDate {
         var tmp_nsdate = NSDate()
+        
         var tmp_nsdate_split = CommonMethod().ReturnYearMonthDayWeekday(tmp_nsdate)
         
         //先月を設定する場合の処理
-        if tmp_nsdate_split.month == 1 && i == 0{
-            tmp_nsdate_split.year = tmp_nsdate_split.year + for_parameter[i]
-            tmp_nsdate_split.month = 12
-        }else if tmp_nsdate_split.month >= 2 && i == 0 {
-            tmp_nsdate_split.month = tmp_nsdate_split.month + for_parameter[i]
-        }
-        
-        //来月を設定する場合の処理
-        if tmp_nsdate_split.month == 12 && i == 2{
-            tmp_nsdate_split.year = tmp_nsdate_split.year + for_parameter[i]
-            tmp_nsdate_split.month = 1
-        }else if tmp_nsdate_split.month >= 2 && i == 2 {
-            tmp_nsdate_split.month = tmp_nsdate_split.month + for_parameter[i]
+        switch i {
+        case 0:
+            if tmp_nsdate_split.month == 1 {
+                tmp_nsdate_split.year = tmp_nsdate_split.year + for_parameter[i]
+                tmp_nsdate_split.month = 12
+            }else {
+                tmp_nsdate_split.month = tmp_nsdate_split.month + for_parameter[i]
+            }
+            
+        case 2:
+            if tmp_nsdate_split.month == 12 {
+                tmp_nsdate_split.year = tmp_nsdate_split.year + for_parameter[i]
+                tmp_nsdate_split.month = 1
+            }else {
+                tmp_nsdate_split.month = tmp_nsdate_split.month + for_parameter[i]
+            }
+            
+        default:
+            break
         }
         
         tmp_nsdate_split.day = 1
@@ -519,7 +526,7 @@ class CalenderViewController: UIViewController {
             currentComps.day   = 1
             
             let currentDate: NSDate = currentCalendar.dateFromComponents(currentComps)!
-            recreateCalendarParameter(currentCalendar, currentDate: currentDate, calendarnumber: i)
+            recreateCalendarParameter(currentCalendar, currentDate: currentDate, calendarnumber: i)            
         }
     }
     
