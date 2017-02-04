@@ -381,8 +381,7 @@ class CalenderViewController: UIViewController {
                 
                 
                 //今日の日付と合致するボタンがあったら装飾する
-                var nowdate = NSDate()
-                nowdate = CommonMethod().CreateNSDate(2016, month: 1, day: 4)
+                let nowdate = NSDate()
                 let calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)
                 let comps:NSDateComponents = calendar!.components([NSCalendarUnit.Year,NSCalendarUnit.Month,NSCalendarUnit.Day],
                                                                   fromDate: nowdate)
@@ -455,7 +454,6 @@ class CalenderViewController: UIViewController {
     //年月を増減するパラメータを受け取りパラメータに応じたNSDateを返す(先月，今月，来月)
     func GetPrevCurrentNextNSDate(i: Int) -> NSDate {
         var tmp_nsdate = NSDate()
-        tmp_nsdate = CommonMethod().CreateNSDate(2016, month: 1, day: 4)
         
         var tmp_nsdate_split = CommonMethod().ReturnYearMonthDayWeekday(tmp_nsdate)
         
@@ -518,7 +516,6 @@ class CalenderViewController: UIViewController {
         
         //現在の日付を取得する
         now_nsdate = NSDate()
-        now_nsdate = CommonMethod().CreateNSDate(2016, month: 1, day: 4)
         
         //inUnit:で指定した単位（月）の中で、rangeOfUnit:で指定した単位（日）が取り得る範囲
         let calendar: NSCalendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
