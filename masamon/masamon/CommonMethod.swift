@@ -89,7 +89,10 @@ class CommonMethod: UIViewController {
         
         //平成何年かを取得
         let P1NSString = P1String as NSString
-        let year = P1NSString.substringWithRange(NSRange(location: 2, length: 2))
+        let year_position = P1NSString.rangeOfString("年度").location
+        let year_first_digit = String(P1String[P1String.startIndex.advancedBy(year_position-1)])
+        let year_second_digit = String(P1String[P1String.startIndex.advancedBy(year_position-2)])
+        let year = year_second_digit + year_first_digit
         
         //"月度"が出る場所を記録
         let positionmonth = P1NSString.rangeOfString("月度").location
