@@ -8,7 +8,7 @@
 注)アプリ名は中身と全く関係ありません:bow:
 
 ## 注意事項
-* サンプルファイル([PDF](https://github.com/kentaiwami/masamon/blob/master/masamon/sampleshift.pdf)もしくは[XLSX](https://github.com/kentaiwami/masamon/blob/master/masamon/sampleshift.xlsx))の形式でなければ動作しません。
+* サンプルファイル([pdf](https://github.com/kentaiwami/masamon/blob/master/masamon/sampleshift.pdf)もしくは[xlsx](https://github.com/kentaiwami/masamon/blob/master/masamon/sampleshift.xlsx))の形式でなければ動作しません。
 * まさもんは.pdfか.xlsxにしか対応していません。
 * まさもん起動後、画面遷移をせずにシェイクジェスチャーでムービー画面へと遷移しますが、個人情報を含んでいるため関連するファイルをignoreしています。そのため、シェイクジェスチャーを行うとアプリがクラッシュします。
 
