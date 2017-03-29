@@ -465,7 +465,8 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
      - parameter block:
      */
     func dispatch_async_global(_ block: @escaping () -> ()) {
-        DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async(execute: block)
+//        DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async(execute: block)
+        DispatchQueue.global(qos: DispatchQoS.QoSClass.default).async(execute: block)
     }
     
     override func didReceiveMemoryWarning() {
