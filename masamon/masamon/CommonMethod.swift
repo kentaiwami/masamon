@@ -61,7 +61,6 @@ class CommonMethod: UIViewController {
         }else{                  //西暦から和暦
             let yeartemp = String(year + 12)
             let lastcharacter = String(yeartemp[yeartemp.characters.index(before: yeartemp.endIndex)])                   //最後の桁
-//            let lastcharacterminus = String(yeartemp[yeartemp.endIndex.predecessor().predecessor()])     //最後から1つ前の桁
             let lastcharacterminus = String(yeartemp[yeartemp.index(yeartemp.endIndex, offsetBy: -2)])     //最後から1つ前の桁
 
             return Int(lastcharacterminus+lastcharacter)!

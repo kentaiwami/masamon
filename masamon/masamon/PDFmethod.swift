@@ -921,8 +921,6 @@ class PDFmethod: UIViewController {
                 
                 while(String(dayattendanceArray[i][index]) != ","){
                     dayshift += String(dayattendanceArray[i][index])
-//                    index = index.successor()
-                    //TODO:
                     index = dayattendanceArray[i].characters.index(after: index)
                 }
                 

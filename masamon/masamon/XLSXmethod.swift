@@ -194,10 +194,6 @@ class XLSXmethod: UIViewController {
         
         let shiftyearandmonth = CommonMethod().JudgeYearAndMonth(worksheet.P1)
         let monthrange = CommonMethod().GetShiftCoursMonthRange(shiftyearandmonth.startcoursmonthyear, shiftstartmonth: shiftyearandmonth.startcoursmonth)
-
-//        let shiftnsdate = MonthlySalaryShow().DateSerial(CommonMethod().Changecalendar(shiftyearandmonth.year, calender: "JP"), month: shiftyearandmonth.startcoursmonth, day: 1)
-//        let c = NSCalendar.currentCalendar()
-//        let monthrange = c.rangeOfUnit([NSCalendarUnit.Day],  inUnit: [NSCalendarUnit.Month], forDate: shiftnsdate)
         
         //F列からユーザ名と合致する箇所を探す
         for i in 0 ..< DBmethod().StaffNumberGet(){
@@ -309,9 +305,6 @@ class XLSXmethod: UIViewController {
         let shiftyearandmonth = CommonMethod().JudgeYearAndMonth(worksheet.P1)
         let monthrange = CommonMethod().GetShiftCoursMonthRange(shiftyearandmonth.startcoursmonthyear, shiftstartmonth: shiftyearandmonth.startcoursmonth)
 
-//        let shiftnsdate = MonthlySalaryShow().DateSerial(CommonMethod().Changecalendar(shiftyearandmonth.year, calender: "JP"), month: shiftyearandmonth.startcoursmonth, day: 1)
-//        let c = NSCalendar.currentCalendar()
-//        let monthrange = c.rangeOfUnit([NSCalendarUnit.Day],  inUnit: [NSCalendarUnit.Month], forDate: shiftnsdate)
         let staffcellposition = self.StaffCellPositionGet()     //スタッフの名前が記載されているセル場所 ex.)F8,F9
 
         for i in 0 ..< monthrange.length{

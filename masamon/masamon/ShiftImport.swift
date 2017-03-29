@@ -22,8 +22,6 @@ class ShiftImport: UIViewController,UITextFieldDelegate,UIWebViewDelegate{
     let appDelegate:AppDelegate = UIApplication.shared.delegate as! AppDelegate //AppDelegateのインスタンスを取得
     
     var myWebView = UIWebView()
-//    var myPDFurl =  URL("")
-//    var myRequest = URLRequest(url: <#URL#>)
     var myIndiator = UIActivityIndicatorView()
 
     

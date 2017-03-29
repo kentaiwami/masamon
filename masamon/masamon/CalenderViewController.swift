@@ -5,7 +5,6 @@ class CalenderViewController: UIViewController {
     
     //メンバ変数の設定（配列格納用）
     var count: Int!
-//    var mArray: NSMutableArray!
     var mArray: [[UIButton]] = [[],[],[]]
     let for_parameter: [Int] = [-1,0,1]
     
@@ -400,7 +399,6 @@ class CalenderViewController: UIViewController {
                 
                 //ボタンを配置する
                 self.view.addSubview(button)
-                //            mArray.addObject(button)
                 mArray[i].append(button)
                 self.view.bringSubview(toFront: alertview)
             }
@@ -428,7 +426,6 @@ class CalenderViewController: UIViewController {
             
             //ユーザのシフトが出る場所までindexを進めるループ
             for _ in 0 ..< shiftstartposition{
-//                nowindex = nowindex.index(after: nowindex)
                 nowindex = staff.index(after: nowindex)
             }
             

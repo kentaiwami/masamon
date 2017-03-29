@@ -603,16 +603,13 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             
             while(staff[nowindex] != ":"){                            //スタッフ名を抽出するループ
                 staffname = staffname + String(staff[nowindex])
-//                nowindex = nowindex.successor()
                 nowindex = staff.index(after: nowindex)
             }
             
-//            nowindex = nowindex.successor()
             nowindex = staff.index(after: nowindex)
             
             while(staff[nowindex] != ","){                            //シフトを抽出するループ
                 staffshift = staffshift + String(staff[nowindex])
-//                nowindex = nowindex.successor()
                 nowindex = staff.index(after: nowindex)
             }
             
@@ -638,7 +635,6 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                 }
             }
             
-//            nowindex = nowindex.successor()
             nowindex = staff.index(after: nowindex)
         }
         
@@ -676,7 +672,6 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             }
             
             i += 1
-//            index = index.predecessor()
             index = tmp.index(before: index)
         }
         

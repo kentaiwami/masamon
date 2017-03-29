@@ -13,8 +13,6 @@ class FileBrowse: UIViewController, UIWebViewDelegate{
     let appDelegate:AppDelegate = UIApplication.shared.delegate as! AppDelegate //AppDelegateのインスタンスを取得
     
     var myWebView = UIWebView()
-//    var myPDFurl =  URL()
-//    var myRequest = URLRequest(url: "")
     var myIndiator = UIActivityIndicatorView()
     
     override func viewDidLoad() {
