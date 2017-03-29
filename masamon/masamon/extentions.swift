@@ -2,28 +2,28 @@
 import UIKit
 
 extension UIColor {
-    class func hex ( hexStr : NSString, alpha : CGFloat) -> UIColor {
+    class func hex ( _ hexStr : NSString, alpha : CGFloat) -> UIColor {
         var hexString = hexStr
         
-        hexString = hexString.stringByReplacingOccurrencesOfString("#", withString: "")
-        let scanner = NSScanner(string: hexString as String)
+        hexString = hexString.replacingOccurrences(of: "#", with: "") as NSString
+        let scanner = Scanner(string: hexString as String)
         var color: UInt32 = 0
-        if scanner.scanHexInt(&color) {
+        if scanner.scanHexInt32(&color) {
             let r = CGFloat((color & 0xFF0000) >> 16) / 255.0
             let g = CGFloat((color & 0x00FF00) >> 8) / 255.0
             let b = CGFloat(color & 0x0000FF) / 255.0
             return UIColor(red:r,green:g,blue:b,alpha:alpha)
         } else {
             print("invalid hex string")
-            return UIColor.whiteColor();
+            return UIColor.white;
         }
     }
 }
 
 extension Array {
-    mutating func removeObject<U: Equatable>(object: U) {
+    mutating func removeObject<U: Equatable>(_ object: U) {
         var index: Int?
-        for (idx, objectToCompare) in enumerate() {
+        for (idx, objectToCompare) in enumerated() {
             if let to = objectToCompare as? U {
                 if object == to {
                     index = idx
@@ -32,13 +32,13 @@ extension Array {
         }
         
         if index != nil {
-            self.removeAtIndex(index!)
+            self.remove(at: index!)
         }
     }
 }
 
 extension String {
-    private func convertFullWidthToHalfWidth(reverse: Bool) -> String {
+    fileprivate func convertFullWidthToHalfWidth(_ reverse: Bool) -> String {
         let str = NSMutableString(string: self) as CFMutableString
         CFStringTransform(str, nil, kCFStringTransformFullwidthHalfwidth, reverse)
         return str as String
@@ -52,7 +52,7 @@ extension String {
         return convertFullWidthToHalfWidth(true)
     }
     
-    private func convertFullWidthToHalfWidthOnlyNumber(fullWidth: Bool) -> String {
+    fileprivate func convertFullWidthToHalfWidthOnlyNumber(_ fullWidth: Bool) -> String {
         var str = self
         
         let pattern_number = fullWidth ? "[0-9]+" : "[０-９]+"
@@ -62,13 +62,13 @@ extension String {
         
         for i in 0...1 {
             let regex = try! NSRegularExpression(pattern: patternarray[i], options: [])
-            let results = regex.matchesInString(str, options: [], range: NSMakeRange(0, str.characters.count))
+            let results = regex.matches(in: str, options: [], range: NSMakeRange(0, str.characters.count))
             
-            results.reverse().forEach {
-                let subStr = (str as NSString).substringWithRange($0.range)
-                str = str.stringByReplacingOccurrencesOfString(
-                    subStr,
-                    withString: (fullWidth ? subStr.zenkaku : subStr.hankaku))
+            results.reversed().forEach {
+                let subStr = (str as NSString).substring(with: $0.range)
+                str = str.replacingOccurrences(
+                    of: subStr,
+                    with: (fullWidth ? subStr.zenkaku : subStr.hankaku))
             }
         }
         

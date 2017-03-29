@@ -23,7 +23,7 @@ class XLSXmethod: UIViewController {
     var spreadsheet = BRAOfficeDocumentPackage()
     var worksheet = BRAWorksheet()
     var P1String: String = ""
-    let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得
+    let appDelegate:AppDelegate = UIApplication.shared.delegate as! AppDelegate //AppDelegateのインスタンスを取得
 
     //XLSXファイルのインスタンスをセットするメソッド
     func SetXLSX() -> (sheet: BRAWorksheet, P1:String){
@@ -32,7 +32,7 @@ class XLSXmethod: UIViewController {
             documentPath = DBmethod().FilePathTmpGet() as String
             spreadsheet = BRAOfficeDocumentPackage.open(documentPath)
             worksheet = spreadsheet.workbook.worksheets[0] as! BRAWorksheet
-            P1String = worksheet.cellForCellReference("P1").stringValue()
+            P1String = worksheet.cell(forCellReference: "P1").stringValue()
             P1String = P1String.hankakuOnly
             
             flag = false
@@ -44,7 +44,7 @@ class XLSXmethod: UIViewController {
     }
     
     //ワンクール分のシフトをShiftDetailDBとShiftDBへ記録する
-    func ShiftDBOneCoursRegist(importname: String, importpath: String, update: Bool){
+    func ShiftDBOneCoursRegist(_ importname: String, importpath: String, update: Bool){
         let worksheet = self.SetXLSX()
         let shiftyearandmonth = CommonMethod().JudgeYearAndMonth(worksheet.P1)
         
@@ -53,8 +53,8 @@ class XLSXmethod: UIViewController {
         var date = 11
         let staffcellposition = self.StaffCellPositionGet()     //スタッフの名前が記載されているセル場所 ex.)F8,F9
         var shiftdetailarray = List<ShiftDetailDB>()
-        var shiftdetailrecordcount = DBmethod().DBRecordCount(ShiftDetailDB)
-        let shiftdbrecordcount = DBmethod().DBRecordCount(ShiftDB)
+        var shiftdetailrecordcount = DBmethod().DBRecordCount(ShiftDetailDB.self)
+        let shiftdbrecordcount = DBmethod().DBRecordCount(ShiftDB.self)
 
         var flag = 0
         
@@ -165,7 +165,7 @@ class XLSXmethod: UIViewController {
         var array:[String] = []
         
         while(true){
-            let Fcell: String = worksheet.sheet.cellForCellReference(mark+String(number)).stringValue()
+            let Fcell: String = worksheet.sheet.cell(forCellReference: mark+String(number)).stringValue()
             if Fcell.isEmpty {       //セルが空なら進めるだけ
                 number += 1
             }else{
@@ -182,7 +182,7 @@ class XLSXmethod: UIViewController {
     
     
     //入力したユーザ名の月給を計算して結果をDBへ記録する
-    func UserMonthlySalaryRegist(importname: String){
+    func UserMonthlySalaryRegist(_ importname: String){
         var usershift:[String] = []
         
         let username = DBmethod().UserNameGet()
@@ -194,14 +194,10 @@ class XLSXmethod: UIViewController {
         
         let shiftyearandmonth = CommonMethod().JudgeYearAndMonth(worksheet.P1)
         let monthrange = CommonMethod().GetShiftCoursMonthRange(shiftyearandmonth.startcoursmonthyear, shiftstartmonth: shiftyearandmonth.startcoursmonth)
-
-//        let shiftnsdate = MonthlySalaryShow().DateSerial(CommonMethod().Changecalendar(shiftyearandmonth.year, calender: "JP"), month: shiftyearandmonth.startcoursmonth, day: 1)
-//        let c = NSCalendar.currentCalendar()
-//        let monthrange = c.rangeOfUnit([NSCalendarUnit.Day],  inUnit: [NSCalendarUnit.Month], forDate: shiftnsdate)
         
         //F列からユーザ名と合致する箇所を探す
         for i in 0 ..< DBmethod().StaffNumberGet(){
-            var nowcell: String = worksheet.sheet.cellForCellReference(staffcellposition[i]).stringValue()
+            var nowcell: String = worksheet.sheet.cell(forCellReference: staffcellposition[i]).stringValue()
             nowcell = nowcell.hankakuOnly
             
             if nowcell == username {
@@ -212,8 +208,8 @@ class XLSXmethod: UIViewController {
         
         //1クール分行う
         for i in 0 ..< monthrange.length{
-            let replaceday = userposition.stringByReplacingOccurrencesOfString("F", withString: cellrow[i])
-            var dayshift: String = worksheet.sheet.cellForCellReference(replaceday).stringValue()
+            let replaceday = userposition.replacingOccurrences(of: "F", with: cellrow[i])
+            var dayshift: String = worksheet.sheet.cell(forCellReference: replaceday).stringValue()
             dayshift = dayshift.hankakuOnly
             
             
@@ -268,16 +264,16 @@ class XLSXmethod: UIViewController {
     staffcellpositionarray  =>スタッフのセル位置を配列で記録したもの
     worksheet               =>対象となるエクセルファイルのワークシート
     */
-    func TheDayStaffAttendance(day: Int, staffcellpositionarray: Array<String>, worksheet: BRAWorksheet) -> String{
+    func TheDayStaffAttendance(_ day: Int, staffcellpositionarray: Array<String>, worksheet: BRAWorksheet) -> String{
         
         var staffstring = ""
         
         for i in 0 ..< DBmethod().StaffNumberGet(){
             let nowstaff = staffcellpositionarray[i]
-            let replaceday = nowstaff.stringByReplacingOccurrencesOfString("F", withString: cellrow[day])
+            let replaceday = nowstaff.replacingOccurrences(of: "F", with: cellrow[day])
             
-            var dayshift: String = worksheet.cellForCellReference(replaceday).stringValue()
-            var staffname: String = worksheet.cellForCellReference(nowstaff).stringValue()
+            var dayshift: String = worksheet.cell(forCellReference: replaceday).stringValue()
+            var staffname: String = worksheet.cell(forCellReference: nowstaff).stringValue()
             
             dayshift = dayshift.hankakuOnly
             staffname = staffname.hankakuOnly
@@ -309,9 +305,6 @@ class XLSXmethod: UIViewController {
         let shiftyearandmonth = CommonMethod().JudgeYearAndMonth(worksheet.P1)
         let monthrange = CommonMethod().GetShiftCoursMonthRange(shiftyearandmonth.startcoursmonthyear, shiftstartmonth: shiftyearandmonth.startcoursmonth)
 
-//        let shiftnsdate = MonthlySalaryShow().DateSerial(CommonMethod().Changecalendar(shiftyearandmonth.year, calender: "JP"), month: shiftyearandmonth.startcoursmonth, day: 1)
-//        let c = NSCalendar.currentCalendar()
-//        let monthrange = c.rangeOfUnit([NSCalendarUnit.Day],  inUnit: [NSCalendarUnit.Month], forDate: shiftnsdate)
         let staffcellposition = self.StaffCellPositionGet()     //スタッフの名前が記載されているセル場所 ex.)F8,F9
 
         for i in 0 ..< monthrange.length{
@@ -325,14 +318,14 @@ class XLSXmethod: UIViewController {
         let worksheet = self.SetXLSX()
         
         for i in 0 ..< staffpositionarray.count{
-            var staffname: String = worksheet.sheet.cellForCellReference(staffpositionarray[i]).stringValue()
+            var staffname: String = worksheet.sheet.cell(forCellReference: staffpositionarray[i]).stringValue()
             staffname = staffname.hankakuOnly
             
             let array = CommonMethod().IncludeShiftNameInStaffName(staffname)
             
             if array.count != 0 {
                 let record = StaffNameDB()
-                record.id = DBmethod().DBRecordCount(StaffNameDB)
+                record.id = DBmethod().DBRecordCount(StaffNameDB.self)
                 record.name = staffname
                 
                 if DBmethod().StaffNameArrayGet() == nil {                                  //まだ1件も登録されていない場合
@@ -346,7 +339,7 @@ class XLSXmethod: UIViewController {
     }
     
     //シフト名を受け取って休暇に含まれているか返す関数
-    func SearchContainsHolidayArray(shiftname: String) -> Bool{
+    func SearchContainsHolidayArray(_ shiftname: String) -> Bool{
         
         var holidayflag = false
         

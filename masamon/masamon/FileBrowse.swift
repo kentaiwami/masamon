@@ -10,33 +10,31 @@ import UIKit
 
 class FileBrowse: UIViewController, UIWebViewDelegate{
     
-    let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得
+    let appDelegate:AppDelegate = UIApplication.shared.delegate as! AppDelegate //AppDelegateのインスタンスを取得
     
     var myWebView = UIWebView()
-    var myPDFurl =  NSURL()
-    var myRequest = NSURLRequest()
     var myIndiator = UIActivityIndicatorView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // PDFを開くためのWebViewを生成.
-        myWebView = UIWebView(frame: CGRectMake(0, 64, self.view.frame.width, self.view.frame.height))
+        myWebView = UIWebView(frame: CGRect(x: 0, y: 64, width: self.view.frame.width, height: self.view.frame.height))
         myWebView.delegate = self
         myWebView.scalesPageToFit = true
         
         // URLReqestを生成.
-        let Libralypath = NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0] as String
+        let Libralypath = NSSearchPathForDirectoriesInDomains(.libraryDirectory, .userDomainMask, true)[0] as String
         let filePath = Libralypath + "/" + appDelegate.selectedcellname
         
-        myPDFurl = NSURL.fileURLWithPath(filePath)
-        myRequest = NSURLRequest(URL: myPDFurl)
+        let myPDFurl = URL(fileURLWithPath: filePath)
+        let myRequest = URLRequest(url: myPDFurl)
         
         // ページ読み込み中に表示させるインジケータを生成.
-        myIndiator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
+        myIndiator = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
         myIndiator.center = self.view.center
         myIndiator.hidesWhenStopped = true
-        myIndiator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
+        myIndiator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
         
         // WebViewのLoad開始.
         myWebView.loadRequest(myRequest)
@@ -53,10 +51,10 @@ class FileBrowse: UIViewController, UIWebViewDelegate{
     func startAnimation() {
         
         // NetworkActivityIndicatorを表示.
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
         
         // UIACtivityIndicatorを表示.
-        if !myIndiator.isAnimating() {
+        if !myIndiator.isAnimating {
             myIndiator.startAnimating()
         }
         
@@ -66,19 +64,19 @@ class FileBrowse: UIViewController, UIWebViewDelegate{
     
     func stopAnimation() {
         // NetworkActivityIndicatorを非表示.
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
         
         // UIACtivityIndicatorを非表示.
-        if myIndiator.isAnimating() {
+        if myIndiator.isAnimating {
             myIndiator.stopAnimating()
         }
     }
     
-    func webViewDidStartLoad(webView: UIWebView) {
+    func webViewDidStartLoad(_ webView: UIWebView) {
         startAnimation()
     }
     
-    func webViewDidFinishLoad(webView: UIWebView) {
+    func webViewDidFinishLoad(_ webView: UIWebView) {
         stopAnimation()
     }
     
@@ -86,7 +84,7 @@ class FileBrowse: UIViewController, UIWebViewDelegate{
         super.didReceiveMemoryWarning()
     }
     
-    @IBAction func TapBackButton(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func TapBackButton(_ sender: AnyObject) {
+        self.dismiss(animated: true, completion: nil)
     }
 }

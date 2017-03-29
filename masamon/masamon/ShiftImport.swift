@@ -15,15 +15,13 @@ class ShiftImport: UIViewController,UITextFieldDelegate,UIWebViewDelegate{
     @IBOutlet weak var quickfilelabel: UILabel!
     @IBOutlet weak var StaffNumberLabel: UILabel!
     
-    let filemanager:NSFileManager = NSFileManager()
-    let documentspath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
-    let Libralypath = NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0] as String
+    let filemanager:FileManager = FileManager()
+    let documentspath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
+    let Libralypath = NSSearchPathForDirectoriesInDomains(.libraryDirectory, .userDomainMask, true)[0] as String
     let filename = DBmethod().FilePathTmpGet().lastPathComponent    //ファイル名の抽出
-    let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得
+    let appDelegate:AppDelegate = UIApplication.shared.delegate as! AppDelegate //AppDelegateのインスタンスを取得
     
     var myWebView = UIWebView()
-    var myPDFurl =  NSURL()
-    var myRequest = NSURLRequest()
     var myIndiator = UIActivityIndicatorView()
 
     
@@ -34,48 +32,48 @@ class ShiftImport: UIViewController,UITextFieldDelegate,UIWebViewDelegate{
         
         //テキストフィールドの設定
         filenamefield.delegate = self
-        filenamefield.returnKeyType = .Done
+        filenamefield.returnKeyType = .done
         staffnumberfield.delegate = self
-        staffnumberfield.returnKeyType = .Done
-        staffnumberfield.keyboardType = .NumberPad
+        staffnumberfield.returnKeyType = .done
+        staffnumberfield.keyboardType = .numberPad
         
         if DBmethod().FilePathTmpGet() != "" {
             filenamefield.text = DBmethod().FilePathTmpGet().lastPathComponent
         }
         
-        if DBmethod().DBRecordCount(StaffNumberDB) != 0 {
+        if DBmethod().DBRecordCount(StaffNumberDB.self) != 0 {
             staffnumberfield.text = String(DBmethod().StaffNumberGet())
         }
         
-        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
-        let salalyButton = UIBarButtonItem(title: "保存", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(ShiftImport.TapDoneButton(_:)))
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
+        let salalyButton = UIBarButtonItem(title: "保存", style: UIBarButtonItemStyle.plain, target: self, action: #selector(ShiftImport.TapDoneButton(_:)))
 
         let numberpadtoolBar = UIToolbar()
-        numberpadtoolBar.barStyle = UIBarStyle.Default
-        numberpadtoolBar.translucent = true
+        numberpadtoolBar.barStyle = UIBarStyle.default
+        numberpadtoolBar.isTranslucent = true
         numberpadtoolBar.sizeToFit()
         numberpadtoolBar.setItems([flexSpace,salalyButton], animated: false)
-        numberpadtoolBar.userInteractionEnabled = true
+        numberpadtoolBar.isUserInteractionEnabled = true
         staffnumberfield.inputAccessoryView = numberpadtoolBar
         
         // PDFを開くためのWebViewを生成.
-        myWebView = UIWebView(frame: CGRectMake(0, self.view.frame.height/2, self.view.frame.width, 400))
+        myWebView = UIWebView(frame: CGRect(x: 0, y: self.view.frame.height/2, width: self.view.frame.width, height: 400))
         myWebView.delegate = self
         myWebView.scalesPageToFit = true
         
         // URLReqestを生成.
-        let documentspath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
+        let documentspath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
         let Inboxpath = documentspath + "/Inbox/"       //Inboxまでのパス
         let filePath = Inboxpath + filenamefield.text!
 
-        myPDFurl = NSURL.fileURLWithPath(filePath)
-        myRequest = NSURLRequest(URL: myPDFurl)
+        let myPDFurl = URL(fileURLWithPath: filePath)
+        let myRequest = URLRequest(url: myPDFurl)
         
         // ページ読み込み中に表示させるインジケータを生成.
-        myIndiator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
+        myIndiator = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
         myIndiator.center = self.view.center
         myIndiator.hidesWhenStopped = true
-        myIndiator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
+        myIndiator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
         
         // WebViewのLoad開始.
         myWebView.loadRequest(myRequest)
@@ -93,126 +91,126 @@ class ShiftImport: UIViewController,UITextFieldDelegate,UIWebViewDelegate{
     }
     
     //取り込むボタンを押したら動作
-    @IBAction func xlsximport(sender: AnyObject) {
+    @IBAction func xlsximport(_ sender: AnyObject) {
         
         //設定が登録されていない場合
-        if DBmethod().DBRecordCount(UserNameDB) == 0 || DBmethod().DBRecordCount(HourlyPayDB) == 0 {
-            let alertController = UIAlertController(title: "取り込みエラー", message: "先に設定画面で情報の登録をして下さい", preferredStyle: .Alert)
+        if DBmethod().DBRecordCount(UserNameDB.self) == 0 || DBmethod().DBRecordCount(HourlyPayDB.self) == 0 {
+            let alertController = UIAlertController(title: "取り込みエラー", message: "先に設定画面で情報の登録をして下さい", preferredStyle: .alert)
             
-            let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+            let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
             alertController.addAction(defaultAction)
             
-            presentViewController(alertController, animated: true, completion: nil)
+            present(alertController, animated: true, completion: nil)
             
         }else{
             //ファイル形式がpdfの場合
-            if filename.containsString(".pdf") || filename.containsString(".PDF") {
+            if filename.contains(".pdf") || filename.contains(".PDF") {
                 if filenamefield.text != "" {
                     let Inboxpath = documentspath + "/Inbox/"       //Inboxまでのパス
-                    let filemanager = NSFileManager()
+                    let filemanager = FileManager()
                     
-                    if filemanager.fileExistsAtPath(Libralypath+"/"+filenamefield.text!) {       //入力したファイル名が既に存在する場合
+                    if filemanager.fileExists(atPath: Libralypath+"/"+filenamefield.text!) {       //入力したファイル名が既に存在する場合
                         //アラートを表示して上書きかキャンセルかを選択させる
                         let alert:UIAlertController = UIAlertController(title:"取り込みエラー",
                             message: "既に同じファイル名が存在します",
-                            preferredStyle: UIAlertControllerStyle.Alert)
+                            preferredStyle: UIAlertControllerStyle.alert)
                         
                         let cancelAction:UIAlertAction = UIAlertAction(title: "キャンセル",
-                            style: UIAlertActionStyle.Cancel,
+                            style: UIAlertActionStyle.cancel,
                             handler:{
                                 (action:UIAlertAction!) -> Void in
                         })
                         let updateAction:UIAlertAction = UIAlertAction(title: "上書き",
-                            style: UIAlertActionStyle.Default,
+                            style: UIAlertActionStyle.default,
                             handler:{
                                 (action:UIAlertAction!) -> Void in
 
                                 do{
-                                    try filemanager.removeItemAtPath(self.Libralypath+"/"+self.filenamefield.text!)
+                                    try filemanager.removeItem(atPath: self.Libralypath+"/"+self.filenamefield.text!)
                                     self.FileSaveAndMove(Inboxpath, update: true)
                                 }catch{
                                     print(error)
                                 }
-                                self.dismissViewControllerAnimated(true, completion: nil)
+                                self.dismiss(animated: true, completion: nil)
                         })
                         
                         alert.addAction(cancelAction)
                         alert.addAction(updateAction)
-                        presentViewController(alert, animated: true, completion: nil)
+                        present(alert, animated: true, completion: nil)
                     }else{      //入力したファイル名が被ってない場合
                         self.FileSaveAndMove(Inboxpath, update: false)
-                        self.dismissViewControllerAnimated(true, completion: nil)
+                        self.dismiss(animated: true, completion: nil)
                     }
                 }
             }else{
                 if filenamefield.text != "" {
                     let Inboxpath = documentspath + "/Inbox/"       //Inboxまでのパス
                     
-                    let filemanager = NSFileManager()
+                    let filemanager = FileManager()
                     
-                    if filemanager.fileExistsAtPath(Libralypath+"/"+filenamefield.text!) {       //入力したファイル名が既に存在する場合
+                    if filemanager.fileExists(atPath: Libralypath+"/"+filenamefield.text!) {       //入力したファイル名が既に存在する場合
                         //アラートを表示して上書きかキャンセルかを選択させる
                         let alert:UIAlertController = UIAlertController(title:"取り込みエラー",
                             message: "既に同じファイル名が存在します",
-                            preferredStyle: UIAlertControllerStyle.Alert)
+                            preferredStyle: UIAlertControllerStyle.alert)
                         
                         let cancelAction:UIAlertAction = UIAlertAction(title: "キャンセル",
-                            style: UIAlertActionStyle.Cancel,
+                            style: UIAlertActionStyle.cancel,
                             handler:{
                                 (action:UIAlertAction!) -> Void in
                         })
                         let updateAction:UIAlertAction = UIAlertAction(title: "上書き",
-                            style: UIAlertActionStyle.Default,
+                            style: UIAlertActionStyle.default,
                             handler:{
                                 (action:UIAlertAction!) -> Void in
 
                                 do{
-                                    try filemanager.removeItemAtPath(self.Libralypath+"/"+self.filenamefield.text!)
+                                    try filemanager.removeItem(atPath: self.Libralypath+"/"+self.filenamefield.text!)
                                     self.FileSaveAndMove(Inboxpath, update: true)
                                 }catch{
                                     print(error)
                                 }
                                 
-                                self.dismissViewControllerAnimated(true, completion: nil)
+                                self.dismiss(animated: true, completion: nil)
                         })
                         
                         alert.addAction(cancelAction)
                         alert.addAction(updateAction)
-                        presentViewController(alert, animated: true, completion: nil)
+                        present(alert, animated: true, completion: nil)
                     }else{      //入力したファイル名が被ってない場合
                         self.FileSaveAndMove(Inboxpath, update: false)
-                        self.dismissViewControllerAnimated(true, completion: nil)
+                        self.dismiss(animated: true, completion: nil)
                     }
                     
                 }else{      //テキストフィールドが空の場合
-                    let alertController = UIAlertController(title: "取り込みエラー", message: "ファイル名を入力して下さい", preferredStyle: .Alert)
+                    let alertController = UIAlertController(title: "取り込みエラー", message: "ファイル名を入力して下さい", preferredStyle: .alert)
                     
-                    let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                    let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
                     alertController.addAction(defaultAction)
                     
-                    presentViewController(alertController, animated: true, completion: nil)
+                    present(alertController, animated: true, completion: nil)
                 }
             }
         }
     }
     
     //キャンセルボタンをタップしたら動作
-    @IBAction func cancel(sender: AnyObject) {
+    @IBAction func cancel(_ sender: AnyObject) {
         let inboxpath = documentspath + "/Inbox/"   //Inboxまでのパス
         
         //コピーしたファイルの削除
         do{
-            try filemanager.removeItemAtPath(inboxpath + filename)
+            try filemanager.removeItem(atPath: inboxpath + filename)
             DBmethod().InitRecordInboxFileCountDB()
         }catch{
             print(error)
         }
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
         
     }
     
     //キーボードの完了(改行)を押したらキーボードを閉じる
-    func textFieldShouldReturn(textfield: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textfield: UITextField) -> Bool {
         textfield.resignFirstResponder()
         return true
     }
@@ -220,10 +218,10 @@ class ShiftImport: UIViewController,UITextFieldDelegate,UIWebViewDelegate{
     func startAnimation() {
         
         // NetworkActivityIndicatorを表示.
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
         
         // UIACtivityIndicatorを表示.
-        if !myIndiator.isAnimating() {
+        if !myIndiator.isAnimating {
             myIndiator.startAnimating()
         }
         
@@ -233,25 +231,25 @@ class ShiftImport: UIViewController,UITextFieldDelegate,UIWebViewDelegate{
     
     func stopAnimation() {
         // NetworkActivityIndicatorを非表示.
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
         
         // UIACtivityIndicatorを非表示.
-        if myIndiator.isAnimating() {
+        if myIndiator.isAnimating {
             myIndiator.stopAnimating()
         }
     }
     
-    func webViewDidStartLoad(webView: UIWebView) {
+    func webViewDidStartLoad(_ webView: UIWebView) {
         startAnimation()
     }
     
-    func webViewDidFinishLoad(webView: UIWebView) {
+    func webViewDidFinishLoad(_ webView: UIWebView) {
         stopAnimation()
     }
     
-    func FileSaveAndMove(Inboxpath: String, update: Bool){
+    func FileSaveAndMove(_ Inboxpath: String, update: Bool){
         do{
-            try filemanager.moveItemAtPath(Inboxpath+self.filename, toPath: self.Libralypath+"/"+self.filenamefield.text!)
+            try filemanager.moveItem(atPath: Inboxpath+self.filename, toPath: self.Libralypath+"/"+self.filenamefield.text!)
 
         }catch{
             print(error)
@@ -265,11 +263,11 @@ class ShiftImport: UIViewController,UITextFieldDelegate,UIWebViewDelegate{
         //DBへパスを記録
         let filepathrecord = FilePathTmpDB()
         filepathrecord.id = 0
-        filepathrecord.path = self.Libralypath+"/"+self.filenamefield.text!
+        filepathrecord.path = self.Libralypath+"/"+self.filenamefield.text! as NSString
         DBmethod().AddandUpdate(filepathrecord,update: true)
     }
     
-    func TapDoneButton(sender: UIButton){
+    func TapDoneButton(_ sender: UIButton){
         //スタッフ人数に値が入っていれば上書きする
         if staffnumberfield.text != "" {
             let staffnumberrecord = StaffNumberDB()

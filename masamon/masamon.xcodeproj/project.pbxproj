@@ -39,12 +39,12 @@
 		374977D31D5F580D005DE58B /* 7.11〜.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 374977CD1D5F580D005DE58B /* 7.11〜.pdf */; };
 		37526DD21CDC4ECB00F180DA /* FileBrowse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37526DD11CDC4ECB00F180DA /* FileBrowse.swift */; };
 		376C92D61BE695D000D45FC2 /* extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376C92D51BE695D000D45FC2 /* extentions.swift */; };
+		377471F31E8B7C9900993CA8 /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 377471F11E8B7C9900993CA8 /* Realm.framework */; };
+		377471F41E8B7C9900993CA8 /* Realm.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 377471F11E8B7C9900993CA8 /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		377471F51E8B7C9900993CA8 /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 377471F21E8B7C9900993CA8 /* RealmSwift.framework */; };
+		377471F61E8B7C9900993CA8 /* RealmSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 377471F21E8B7C9900993CA8 /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		377D2DAE1C36C08B009CC388 /* BlueDarkStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377D2DAD1C36C08B009CC388 /* BlueDarkStyle.swift */; };
 		377D2DBB1C37EFE6009CC388 /* FileBrowseSelect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377D2DBA1C37EFE5009CC388 /* FileBrowseSelect.swift */; };
-		3797D5DA1D91B118005CBE3E /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3797D5D81D91B118005CBE3E /* Realm.framework */; };
-		3797D5DB1D91B118005CBE3E /* Realm.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3797D5D81D91B118005CBE3E /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		3797D5DC1D91B118005CBE3E /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3797D5D91D91B118005CBE3E /* RealmSwift.framework */; };
-		3797D5DD1D91B118005CBE3E /* RealmSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3797D5D91D91B118005CBE3E /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		379955951C14431F00BAAD9E /* XLSXmethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379955941C14431F00BAAD9E /* XLSXmethod.swift */; };
 		379A2DBE1C1E5F9900751425 /* no_data.png in Resources */ = {isa = PBXBuildFile; fileRef = 379A2DBD1C1E5F9900751425 /* no_data.png */; };
 		379A2E051C1FDFFC00751425 /* CustomUICollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379A2E041C1FDFFC00751425 /* CustomUICollectionViewCell.swift */; };
@@ -57,7 +57,7 @@
 		37F75CAB1C3F18C30075F9FD /* PDFmethod_old.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F75CAA1C3F18C30075F9FD /* PDFmethod_old.swift */; };
 		37F75CBF1C3F1E4C0075F9FD /* TET_ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37F75CB61C3F1B610075F9FD /* TET_ios.framework */; };
 		37F75CC01C3F1E650075F9FD /* libstdc++.6.0.9.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 37F75CBD1C3F1C270075F9FD /* libstdc++.6.0.9.tbd */; };
-		D9C8B4DC9FDEB1B892F9B0DD /* Pods_masamon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAD231E854685D75C3F03501 /* Pods_masamon.framework */; };
+		490FD6C287F4CD3D17370479 /* Pods_masamon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FB65C1733F9DC817ECE7C1E /* Pods_masamon.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -92,14 +92,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		377311A21D696C700027757C /* Embed Frameworks */ = {
+		377471F71E8B7C9900993CA8 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				3797D5DD1D91B118005CBE3E /* RealmSwift.framework in Embed Frameworks */,
-				3797D5DB1D91B118005CBE3E /* Realm.framework in Embed Frameworks */,
+				377471F61E8B7C9900993CA8 /* RealmSwift.framework in Embed Frameworks */,
+				377471F41E8B7C9900993CA8 /* Realm.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -117,7 +117,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		1B7B2B25D5EE69B36B550A20 /* Pods-masamon.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-masamon.release.xcconfig"; path = "Pods/Target Support Files/Pods-masamon/Pods-masamon.release.xcconfig"; sourceTree = "<group>"; };
 		370ACDF71BDF486600AB73EB /* masamon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = masamon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		370ACDFA1BDF486700AB73EB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		370ACDFC1BDF486700AB73EB /* MonthlySalaryShow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlySalaryShow.swift; sourceTree = "<group>"; };
@@ -153,14 +152,14 @@
 		374977CD1D5F580D005DE58B /* 7.11〜.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "7.11〜.pdf"; sourceTree = "<group>"; };
 		37526DD11CDC4ECB00F180DA /* FileBrowse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileBrowse.swift; sourceTree = "<group>"; };
 		376C92D51BE695D000D45FC2 /* extentions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = extentions.swift; sourceTree = "<group>"; };
+		377471F11E8B7C9900993CA8 /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Realm.framework; sourceTree = "<group>"; };
+		377471F21E8B7C9900993CA8 /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RealmSwift.framework; sourceTree = "<group>"; };
 		377D2DAA1C36BFD2009CC388 /* GradientCircularProgress.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GradientCircularProgress.framework; path = "Pods/../build/Debug-iphoneos/GradientCircularProgress.framework"; sourceTree = "<group>"; };
 		377D2DAD1C36C08B009CC388 /* BlueDarkStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlueDarkStyle.swift; sourceTree = "<group>"; };
 		377D2DAF1C36C14A009CC388 /* GradientCircularProgress.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GradientCircularProgress.framework; path = "Pods/../build/Debug-iphoneos/GradientCircularProgress.framework"; sourceTree = "<group>"; };
 		377D2DBA1C37EFE5009CC388 /* FileBrowseSelect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileBrowseSelect.swift; sourceTree = "<group>"; };
 		3797D5CE1D91B0A1005CBE3E /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Realm.framework; path = "../../../../Downloads/realm-swift-1.1.0/ios/swift-3.0/Realm.framework"; sourceTree = "<group>"; };
 		3797D5CF1D91B0A1005CBE3E /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealmSwift.framework; path = "../../../../Downloads/realm-swift-1.1.0/ios/swift-3.0/RealmSwift.framework"; sourceTree = "<group>"; };
-		3797D5D81D91B118005CBE3E /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Realm.framework; sourceTree = "<group>"; };
-		3797D5D91D91B118005CBE3E /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RealmSwift.framework; sourceTree = "<group>"; };
 		379955941C14431F00BAAD9E /* XLSXmethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XLSXmethod.swift; sourceTree = "<group>"; };
 		379A2DBD1C1E5F9900751425 /* no_data.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = no_data.png; sourceTree = "<group>"; };
 		379A2E041C1FDFFC00751425 /* CustomUICollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomUICollectionViewCell.swift; sourceTree = "<group>"; };
@@ -177,8 +176,9 @@
 		37F75CB51C3F1AEE0075F9FD /* masamon-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "masamon-Bridging-Header.h"; sourceTree = "<group>"; };
 		37F75CB61C3F1B610075F9FD /* TET_ios.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TET_ios.framework; path = TET/TET_ios/TET_ios.framework; sourceTree = "<group>"; };
 		37F75CBD1C3F1C270075F9FD /* libstdc++.6.0.9.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.6.0.9.tbd"; path = "usr/lib/libstdc++.6.0.9.tbd"; sourceTree = SDKROOT; };
-		DB9C07197D395EF38199A0C7 /* Pods-masamon.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-masamon.debug.xcconfig"; path = "Pods/Target Support Files/Pods-masamon/Pods-masamon.debug.xcconfig"; sourceTree = "<group>"; };
-		FAD231E854685D75C3F03501 /* Pods_masamon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_masamon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3FB65C1733F9DC817ECE7C1E /* Pods_masamon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_masamon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		97ECC2764EE614BF6022FAAD /* Pods-masamon.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-masamon.release.xcconfig"; path = "Pods/Target Support Files/Pods-masamon/Pods-masamon.release.xcconfig"; sourceTree = "<group>"; };
+		B54718201B4AD485E835042F /* Pods-masamon.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-masamon.debug.xcconfig"; path = "Pods/Target Support Files/Pods-masamon/Pods-masamon.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -190,30 +190,21 @@
 				3726B3941C2FF7F400F22F34 /* QuartzCore.framework in Frameworks */,
 				37F75CBF1C3F1E4C0075F9FD /* TET_ios.framework in Frameworks */,
 				3742AF901C130391003AB33B /* libXlsxReaderWriter.a in Frameworks */,
-				3797D5DA1D91B118005CBE3E /* Realm.framework in Frameworks */,
+				377471F31E8B7C9900993CA8 /* Realm.framework in Frameworks */,
 				3742AF561C12D8D1003AB33B /* libz.1.dylib in Frameworks */,
-				3797D5DC1D91B118005CBE3E /* RealmSwift.framework in Frameworks */,
-				D9C8B4DC9FDEB1B892F9B0DD /* Pods_masamon.framework in Frameworks */,
+				377471F51E8B7C9900993CA8 /* RealmSwift.framework in Frameworks */,
+				490FD6C287F4CD3D17370479 /* Pods_masamon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		273B5D0506CACB8F3F46583C /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				DB9C07197D395EF38199A0C7 /* Pods-masamon.debug.xcconfig */,
-				1B7B2B25D5EE69B36B550A20 /* Pods-masamon.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		370ACDEE1BDF486600AB73EB = {
 			isa = PBXGroup;
 			children = (
-				3797D5D81D91B118005CBE3E /* Realm.framework */,
-				3797D5D91D91B118005CBE3E /* RealmSwift.framework */,
+				377471F11E8B7C9900993CA8 /* Realm.framework */,
+				377471F21E8B7C9900993CA8 /* RealmSwift.framework */,
 				37A597251CD57F0A00D43D35 /* LaunchScreenImage.png */,
 				371E8C2C1C85579F006B7C8C /* sampleshift */,
 				37F75CB51C3F1AEE0075F9FD /* masamon-Bridging-Header.h */,
@@ -227,8 +218,8 @@
 				370ACE281BDF4B7700AB73EB /* images */,
 				370ACDF91BDF486600AB73EB /* masamon */,
 				370ACDF81BDF486600AB73EB /* Products */,
-				273B5D0506CACB8F3F46583C /* Pods */,
 				7423B7CBCF975D0B30BA5249 /* Frameworks */,
+				E54026D95886FFBECAB48A22 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -326,9 +317,18 @@
 				37F75CB31C3F1A7D0075F9FD /* libstdc++.6.0.9.dylib */,
 				377D2DAF1C36C14A009CC388 /* GradientCircularProgress.framework */,
 				377D2DAA1C36BFD2009CC388 /* GradientCircularProgress.framework */,
-				FAD231E854685D75C3F03501 /* Pods_masamon.framework */,
+				3FB65C1733F9DC817ECE7C1E /* Pods_masamon.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E54026D95886FFBECAB48A22 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				B54718201B4AD485E835042F /* Pods-masamon.debug.xcconfig */,
+				97ECC2764EE614BF6022FAAD /* Pods-masamon.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -338,14 +338,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 370ACE1F1BDF486700AB73EB /* Build configuration list for PBXNativeTarget "masamon" */;
 			buildPhases = (
-				CBB0530458E4D93A5A6FCB3D /* Check Pods Manifest.lock */,
+				A91B6CD2FB3CE90696098E10 /* [CP] Check Pods Manifest.lock */,
 				370ACDF31BDF486600AB73EB /* Sources */,
 				370ACDF41BDF486600AB73EB /* Frameworks */,
 				370ACDF51BDF486600AB73EB /* Resources */,
 				37F1E2A21BF21126000A22B0 /* Embed App Extensions */,
-				B7F09A19EA7135B641CC0EC0 /* Embed Pods Frameworks */,
-				8C229A283138099E606A0D3F /* Copy Pods Resources */,
-				377311A21D696C700027757C /* Embed Frameworks */,
+				C4617B4701E76F1597B4125B /* [CP] Embed Pods Frameworks */,
+				A975A4C60C420D6F07C39A08 /* [CP] Copy Pods Resources */,
+				377471F71E8B7C9900993CA8 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -370,7 +370,7 @@
 					370ACDF61BDF486600AB73EB = {
 						CreatedOnToolsVersion = 7.1;
 						DevelopmentTeam = TLVYAZUQZL;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0830;
 					};
 				};
 			};
@@ -453,14 +453,29 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		8C229A283138099E606A0D3F /* Copy Pods Resources */ = {
+		A91B6CD2FB3CE90696098E10 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		A975A4C60C420D6F07C39A08 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -468,34 +483,19 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-masamon/Pods-masamon-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		B7F09A19EA7135B641CC0EC0 /* Embed Pods Frameworks */ = {
+		C4617B4701E76F1597B4125B /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-masamon/Pods-masamon-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		CBB0530458E4D93A5A6FCB3D /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -659,9 +659,8 @@
 		};
 		370ACE201BDF486700AB73EB /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DB9C07197D395EF38199A0C7 /* Pods-masamon.debug.xcconfig */;
+			baseConfigurationReference = B54718201B4AD485E835042F /* Pods-masamon.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -670,24 +669,27 @@
 					"$(SRCROOT)/",
 					"$(PROJECT_DIR)/TET/TET_ios",
 					"$(PROJECT_DIR)",
+					"$(inherited)",
 				);
 				INFOPLIST_FILE = masamon/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_LDFLAGS = "-all_load";
+				OTHER_LDFLAGS = (
+					"-all_load",
+					"$(inherited)",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.Kenta.masamon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "/Users/Kenta/Documents/swift_workspace/まさもん/masamon/masamon-Bridging-Header.h";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				USER_HEADER_SEARCH_PATHS = "\"/Users/Kenta/Documents/swift_workspace/まさもん/masamon/XlsxReaderWriter-master\"/**";
 			};
 			name = Debug;
 		};
 		370ACE211BDF486700AB73EB /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1B7B2B25D5EE69B36B550A20 /* Pods-masamon.release.xcconfig */;
+			baseConfigurationReference = 97ECC2764EE614BF6022FAAD /* Pods-masamon.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -696,15 +698,19 @@
 					"$(SRCROOT)/",
 					"$(PROJECT_DIR)/TET/TET_ios",
 					"$(PROJECT_DIR)",
+					"$(inherited)",
 				);
 				INFOPLIST_FILE = masamon/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_LDFLAGS = "-all_load";
+				OTHER_LDFLAGS = (
+					"-all_load",
+					"$(inherited)",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.Kenta.masamon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "/Users/Kenta/Documents/swift_workspace/まさもん/masamon/masamon-Bridging-Header.h";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				USER_HEADER_SEARCH_PATHS = "\"/Users/Kenta/Documents/swift_workspace/まさもん/masamon/XlsxReaderWriter-master\"/**";
 			};
 			name = Release;

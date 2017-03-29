@@ -12,14 +12,14 @@ import AVFoundation
 
 class VideoViewController: AVPlayerViewController {
 
-    let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    let appDelegate:AppDelegate = UIApplication.shared.delegate as! AppDelegate
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         var filename = ""
         
-        let mainbundle = NSBundle.mainBundle()
+        let mainbundle = Bundle.main
         
         if appDelegate.thumbnailnumber == 1 {
             filename = "video1"
@@ -27,10 +27,10 @@ class VideoViewController: AVPlayerViewController {
             filename = "video2"
         }
         
-        let url = mainbundle.pathForResource(filename, ofType: "mp4")!
+        let url = mainbundle.path(forResource: filename, ofType: "mp4")!
         
-        let nsurl = NSURL(fileURLWithPath: url)
-        let playerItem = AVPlayerItem(URL: nsurl)
+        let nsurl = URL(fileURLWithPath: url)
+        let playerItem = AVPlayerItem(url: nsurl)
 
         self.player = AVPlayer(playerItem: playerItem)
         player!.play()

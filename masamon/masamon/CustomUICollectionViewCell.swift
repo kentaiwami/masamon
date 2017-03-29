@@ -22,14 +22,14 @@ class CustomUICollectionViewCell: UICollectionViewCell{
         super.init(frame: frame)
         
         // UILabelを生成.
-        textLabel = UILabel(frame: CGRectMake(0, 0, frame.width, 30))
+        textLabel = UILabel(frame: CGRect(x: 0, y: 0, width: frame.width, height: 30))
         textLabel?.text = "nil"
-        textLabel?.backgroundColor = UIColor.clearColor()
-        textLabel?.textColor = UIColor.whiteColor()
-        textLabel?.textAlignment = NSTextAlignment.Center
+        textLabel?.backgroundColor = UIColor.clear
+        textLabel?.textColor = UIColor.white
+        textLabel?.textAlignment = NSTextAlignment.center
         
         //QLpreviewを表示させる
-        ql.view.frame = CGRectMake(0,30,frame.width,frame.height-10)
+        ql.view.frame = CGRect(x: 0,y: 30,width: frame.width,height: frame.height-10)
         self.contentView.addSubview(ql.view)
         self.contentView.addSubview(textLabel!)
     }

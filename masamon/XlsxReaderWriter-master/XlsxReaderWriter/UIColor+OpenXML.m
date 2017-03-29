@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 René Bigot. All rights reserved.
 //
 
-#import "UIColor+OpenXml.h"
+#import "UIColor+OpenXML.h"
 
 @implementation UIColor (OpenXml)
 

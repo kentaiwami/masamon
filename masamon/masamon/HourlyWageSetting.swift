@@ -17,7 +17,7 @@ class HourlyWageSetting: UIViewController, UIPickerViewDelegate, UIPickerViewDat
     @IBOutlet weak var Salaly1: UITextField!
     @IBOutlet weak var Salaly2: UITextField!
     
-    let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得
+    let appDelegate:AppDelegate = UIApplication.shared.delegate as! AppDelegate //AppDelegateのインスタンスを取得
 
     var timeUIPicker: UIPickerView = UIPickerView()
     
@@ -43,27 +43,27 @@ class HourlyWageSetting: UIViewController, UIPickerViewDelegate, UIPickerViewDat
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = UIColor.blackColor()
+        self.view.backgroundColor = UIColor.black
         
         SetText()
       
         //区切るための枠線を追加
         for i in 0 ..< 2{
             let frameborderline = UIView()
-            frameborderline.frame = CGRectMake(0, CGFloat(frameborder[i]), self.view.frame.width, 135)
-            frameborderline.backgroundColor = UIColor.clearColor()
-            frameborderline.layer.borderColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.4).CGColor
+            frameborderline.frame = CGRect(x: 0, y: CGFloat(frameborder[i]), width: self.view.frame.width, height: 135)
+            frameborderline.backgroundColor = UIColor.clear
+            frameborderline.layer.borderColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.4).cgColor
             frameborderline.layer.borderWidth = 2
             frameborderline.layer.cornerRadius = 30
             self.view.addSubview(frameborderline)
-            self.view.sendSubviewToBack(frameborderline)
+            self.view.sendSubview(toBack: frameborderline)
         }
 
         //時計アイコンの設置
         for i in 0 ..< 2{
             let clockicon = UIImageView()
             clockicon.image = UIImage(named: "../images/clock.png")
-            clockicon.frame = CGRectMake(24, CGFloat(clock[i]), 42, 40)
+            clockicon.frame = CGRect(x: 24, y: CGFloat(clock[i]), width: 42, height: 40)
             self.view.addSubview(clockicon)
         }
         
@@ -71,16 +71,16 @@ class HourlyWageSetting: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         for i in 0 ..< 2{
             let yenicon = UIImageView()
             yenicon.image = UIImage(named: "../images/yen.png")
-            yenicon.frame = CGRectMake(24, CGFloat(yen[i]), 42, 40)
+            yenicon.frame = CGRect(x: 24, y: CGFloat(yen[i]), width: 42, height: 40)
             self.view.addSubview(yenicon)
         }
         
         //セーブボタンの追加
         savebutton.tag = 0
-        savebutton.frame = CGRectMake(0, 0, 70, 70)
+        savebutton.frame = CGRect(x: 0, y: 0, width: 70, height: 70)
         savebutton.layer.position = CGPoint(x: self.view.frame.width/2, y:500)
-        savebutton.setImage(saveimage, forState: .Normal)
-        savebutton.addTarget(self, action: #selector(HourlyWageSetting.SaveButtontapped(_:)), forControlEvents:.TouchUpInside)
+        savebutton.setImage(saveimage, for: UIControlState())
+        savebutton.addTarget(self, action: #selector(HourlyWageSetting.SaveButtontapped(_:)), for:.touchUpInside)
         self.view.addSubview(savebutton)
         
         TimeFrom1.delegate = self
@@ -101,19 +101,19 @@ class HourlyWageSetting: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         
         //Toolbarの作成
         let pickertoolBar = UIToolbar()
-        pickertoolBar.barStyle = UIBarStyle.Default
-        pickertoolBar.translucent = true
+        pickertoolBar.barStyle = UIBarStyle.default
+        pickertoolBar.isTranslucent = true
         pickertoolBar.sizeToFit()
         let numberpadtoolBar = UIToolbar()
-        numberpadtoolBar.barStyle = UIBarStyle.Default
-        numberpadtoolBar.translucent = true
+        numberpadtoolBar.barStyle = UIBarStyle.default
+        numberpadtoolBar.isTranslucent = true
         numberpadtoolBar.sizeToFit()
         
         //Toolbarにつけるボタンの作成
-        let pickerdoneButton = UIBarButtonItem(title: "完了", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(HourlyWageSetting.TapButton(_:)))
-        let pickercancelButton = UIBarButtonItem(title: "キャンセル", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(HourlyWageSetting.TapButton(_:)))
-        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
-        let salalyButton = UIBarButtonItem(title: "完了", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(HourlyWageSetting.TapButton(_:)))
+        let pickerdoneButton = UIBarButtonItem(title: "完了", style: UIBarButtonItemStyle.plain, target: self, action: #selector(HourlyWageSetting.TapButton(_:)))
+        let pickercancelButton = UIBarButtonItem(title: "キャンセル", style: UIBarButtonItemStyle.plain, target: self, action: #selector(HourlyWageSetting.TapButton(_:)))
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
+        let salalyButton = UIBarButtonItem(title: "完了", style: UIBarButtonItemStyle.plain, target: self, action: #selector(HourlyWageSetting.TapButton(_:)))
         
         pickerdoneButton.tag = 10
         pickercancelButton.tag = 11
@@ -121,17 +121,17 @@ class HourlyWageSetting: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         
         //Toolbarへボタンの追加
         pickertoolBar.setItems([pickercancelButton,flexSpace,pickerdoneButton], animated: false)
-        pickertoolBar.userInteractionEnabled = true
+        pickertoolBar.isUserInteractionEnabled = true
         numberpadtoolBar.setItems([flexSpace,salalyButton], animated: false)
-        numberpadtoolBar.userInteractionEnabled = true
+        numberpadtoolBar.isUserInteractionEnabled = true
         
         //PickerViewの追加
-        timeUIPicker.frame = CGRectMake(0,0,self.view.bounds.width/2+20, 260.0)
+        timeUIPicker.frame = CGRect(x: 0,y: 0,width: self.view.bounds.width/2+20, height: 260.0)
         timeUIPicker.delegate = self
         timeUIPicker.dataSource = self
         
-        Salaly1.keyboardType = .NumberPad
-        Salaly2.keyboardType = .NumberPad
+        Salaly1.keyboardType = .numberPad
+        Salaly2.keyboardType = .numberPad
         Salaly1.inputAccessoryView = numberpadtoolBar
         Salaly2.inputAccessoryView = numberpadtoolBar
         
@@ -150,12 +150,12 @@ class HourlyWageSetting: UIViewController, UIPickerViewDelegate, UIPickerViewDat
     }
     
     //表示列
-    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 3
     }
     
     //表示個数
-    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         if component == 0 {
             return time.count
         }else if component == 1 {
@@ -166,7 +166,7 @@ class HourlyWageSetting: UIViewController, UIPickerViewDelegate, UIPickerViewDat
     }
     
     //表示内容
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         
         if component == 0 {
             return time[row]
@@ -178,7 +178,7 @@ class HourlyWageSetting: UIViewController, UIPickerViewDelegate, UIPickerViewDat
     }
     
     //選択時
-    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
 
         if component == 0 {
             if selecttextfieldtag == 1 {
@@ -200,16 +200,16 @@ class HourlyWageSetting: UIViewController, UIPickerViewDelegate, UIPickerViewDat
     }
     
     //幅を変更
-    func pickerView(pickerView: UIPickerView, widthForComponent component: Int) -> CGFloat {
+    func pickerView(_ pickerView: UIPickerView, widthForComponent component: Int) -> CGFloat {
         return 80
     }
     //高さを変更
-    func pickerView(pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
+    func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
         return 50
     }
     
     //pickerviewやツールバー上のボタン動作
-    func TapButton(sender: UIButton){
+    func TapButton(_ sender: UIButton){
         
         if selecttextfieldtag == 1 {            //日中のテキストフィールドが選択されている状態
             switch(sender.tag){
@@ -261,7 +261,7 @@ class HourlyWageSetting: UIViewController, UIPickerViewDelegate, UIPickerViewDat
     
     var selecttextfieldtag = 0
     //textfieldがタップされた時
-    func textFieldDidBeginEditing(textField: UITextField) {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
         selecttextfieldtag = textField.tag
         if textField.tag == 1 {
             timeUIPicker.selectRow(textfieldrowfrom1, inComponent: 0, animated: true)
@@ -277,64 +277,64 @@ class HourlyWageSetting: UIViewController, UIPickerViewDelegate, UIPickerViewDat
     }
     
     //セーブボタンを押した時
-    func SaveButtontapped(sender: UIButton){
+    func SaveButtontapped(_ sender: UIButton){
         
         if TimeFrom1.text?.isEmpty == true || TimeTo1.text?.isEmpty == true || TimeFrom2.text?.isEmpty == true || TimeTo2.text?.isEmpty == true || Salaly1.text?.isEmpty == true || Salaly2.text?.isEmpty == true {
             
-            let alertController = UIAlertController(title: "ニャ!!", message: "項目を埋めてから押すニャ", preferredStyle: .Alert)
+            let alertController = UIAlertController(title: "ニャ!!", message: "項目を埋めてから押すニャ", preferredStyle: .alert)
             
-            let defaultAction = UIAlertAction(title: "ニャーさんに土下座する", style: .Default, handler: nil)
+            let defaultAction = UIAlertAction(title: "ニャーさんに土下座する", style: .default, handler: nil)
             alertController.addAction(defaultAction)
             
-            presentViewController(alertController, animated: true, completion: nil)
+            present(alertController, animated: true, completion: nil)
         }else{
             let hourlypayrecord1 = HourlyPayDB()
             let hourlypayrecord2 = HourlyPayDB()
             hourlypayrecord1.id = 1
-            hourlypayrecord1.timefrom = Double(time.indexOf(TimeFrom1.text!)!)-(Double(time.indexOf(TimeFrom1.text!)!)*0.5) + 1.0
-            hourlypayrecord1.timeto = Double(time.indexOf(TimeTo1.text!)!)-(Double(time.indexOf(TimeTo1.text!)!)*0.5) + 1.0
+            hourlypayrecord1.timefrom = Double(time.index(of: TimeFrom1.text!)!)-(Double(time.index(of: TimeFrom1.text!)!)*0.5) + 1.0
+            hourlypayrecord1.timeto = Double(time.index(of: TimeTo1.text!)!)-(Double(time.index(of: TimeTo1.text!)!)*0.5) + 1.0
             hourlypayrecord1.pay = Int(Salaly1.text!)!
             hourlypayrecord2.id = 2
-            hourlypayrecord2.timefrom = Double(time.indexOf(TimeFrom2.text!)!)-(Double(time.indexOf(TimeFrom2.text!)!)*0.5) + 1.0
-            hourlypayrecord2.timeto = Double(time.indexOf(TimeTo2.text!)!)-(Double(time.indexOf(TimeTo2.text!)!)*0.5) + 1.0
+            hourlypayrecord2.timefrom = Double(time.index(of: TimeFrom2.text!)!)-(Double(time.index(of: TimeFrom2.text!)!)*0.5) + 1.0
+            hourlypayrecord2.timeto = Double(time.index(of: TimeTo2.text!)!)-(Double(time.index(of: TimeTo2.text!)!)*0.5) + 1.0
             hourlypayrecord2.pay = Int(Salaly2.text!)!
             
             DBmethod().AddandUpdate(hourlypayrecord1,update: true)
             DBmethod().AddandUpdate(hourlypayrecord2,update: true)
             
-            let alertController = UIAlertController(title: "保存完了", message: "設定情報の登録に成功しました", preferredStyle: .Alert)
+            let alertController = UIAlertController(title: "保存完了", message: "設定情報の登録に成功しました", preferredStyle: .alert)
             
-            let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+            let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
             alertController.addAction(defaultAction)
             
-            presentViewController(alertController, animated: true, completion: nil)
+            present(alertController, animated: true, completion: nil)
         }
     }
     
     //テキストフィールドが入力状態になった際に動作
-    func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         txtActiveField = textField
         return true
     }
     //リターンキーを押した時に動作
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         view.endEditing(true)
         return true
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
-        let notificationCenter = NSNotificationCenter.defaultCenter()
-        notificationCenter.removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
-        notificationCenter.removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        notificationCenter.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
         SetText()
     }
     
     func SetText(){
         //既に登録されていたら登録内容を表示する
-        if DBmethod().DBRecordCount(HourlyPayDB) == 0 {
+        if DBmethod().DBRecordCount(HourlyPayDB.self) == 0 {
             TimeFrom1.placeholder = "no data"
             TimeFrom2.placeholder = "no data"
             TimeTo1.placeholder = "no data"

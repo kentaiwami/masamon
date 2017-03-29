@@ -54,14 +54,15 @@ class CommonMethod: UIViewController {
      
      - returns: 西暦or和暦
      */
-    func Changecalendar(year: Int, calender: String) -> Int{
+    func Changecalendar(_ year: Int, calender: String) -> Int{
         if calender == "JP" {   //和暦から西暦
             let yeartemp = String(year - 12)
             return Int("20"+yeartemp)!
         }else{                  //西暦から和暦
             let yeartemp = String(year + 12)
-            let lastcharacter = String(yeartemp[yeartemp.endIndex.predecessor()])                   //最後の桁
-            let lastcharacterminus = String(yeartemp[yeartemp.endIndex.predecessor().predecessor()])     //最後から1つ前の桁
+            let lastcharacter = String(yeartemp[yeartemp.characters.index(before: yeartemp.endIndex)])                   //最後の桁
+            let lastcharacterminus = String(yeartemp[yeartemp.index(yeartemp.endIndex, offsetBy: -2)])     //最後から1つ前の桁
+
             return Int(lastcharacterminus+lastcharacter)!
         }
     }
@@ -79,29 +80,29 @@ class CommonMethod: UIViewController {
                 endcoursmonthyear   シフト終了月の年
 
      */
-    func JudgeYearAndMonth( P1: String) -> (year: Int, startcoursmonth: Int, startcoursmonthyear: Int, endcoursmonth: Int, endcoursmonthyear: Int){
+    func JudgeYearAndMonth( _ P1: String) -> (year: Int, startcoursmonth: Int, startcoursmonthyear: Int, endcoursmonth: Int, endcoursmonthyear: Int){
         
         var P1String = P1
 
         //スペースがあった場合は削除
-        P1String = P1String.stringByReplacingOccurrencesOfString(" ", withString: "")
-        P1String = P1String.stringByReplacingOccurrencesOfString("　", withString: "")
+        P1String = P1String.replacingOccurrences(of: " ", with: "")
+        P1String = P1String.replacingOccurrences(of: "　", with: "")
         
         //平成何年かを取得
         let P1NSString = P1String as NSString
-        let year_position = P1NSString.rangeOfString("年度").location
-        let year_first_digit = String(P1String[P1String.startIndex.advancedBy(year_position-1)])
-        let year_second_digit = String(P1String[P1String.startIndex.advancedBy(year_position-2)])
+        let year_position = P1NSString.range(of: "年度").location
+        let year_first_digit = String(P1String[P1String.characters.index(P1String.startIndex, offsetBy: year_position-1)])
+        let year_second_digit = String(P1String[P1String.characters.index(P1String.startIndex, offsetBy: year_position-2)])
         let year = year_second_digit + year_first_digit
         
         //"月度"が出る場所を記録
-        let positionmonth = P1NSString.rangeOfString("月度").location
+        let positionmonth = P1NSString.range(of: "月度").location
         
         //月の文字取得(1の位)
-        let monthfirstdigit = String(P1String[P1String.startIndex.advancedBy(positionmonth-1)])
+        let monthfirstdigit = String(P1String[P1String.characters.index(P1String.startIndex, offsetBy: positionmonth-1)])
         
         //月の文字取得(10の位)
-        let monthseconddigit = String(P1String[P1String.startIndex.advancedBy(positionmonth-2)])
+        let monthseconddigit = String(P1String[P1String.characters.index(P1String.startIndex, offsetBy: positionmonth-2)])
         
 
         //年度の月が4月度〜9月度ならば年度の操作をせずに返す
@@ -143,7 +144,7 @@ class CommonMethod: UIViewController {
      
      - returns: シフトのグループidを格納したArray
      */
-    func IncludeShiftNameInStaffName( staffname: String) -> Array<Int>{
+    func IncludeShiftNameInStaffName( _ staffname: String) -> Array<Int>{
         
         let shiftarray = DBmethod().ShiftSystemAllRecordGet()
         let holiday = DBmethod().ShiftSystemRecordArrayGetByGroudid(6)
@@ -158,8 +159,8 @@ class CommonMethod: UIViewController {
             if staffnamestring.characters.count == 0 {
                 return groupidarray
                 
-            }else if staffnamestring.containsString(shiftarray[i].name) {
-                staffnamestring = staffnamestring.stringByReplacingOccurrencesOfString(shiftarray[i].name, withString: "")
+            }else if staffnamestring.contains(shiftarray[i].name) {
+                staffnamestring = staffnamestring.replacingOccurrences(of: shiftarray[i].name, with: "")
                 groupidarray.append(shiftarray[i].groupid)
             }
         }
@@ -170,8 +171,8 @@ class CommonMethod: UIViewController {
             if staffnamestring.characters.count == 0 {
                 return groupidarray
                 
-            }else if staffnamestring.containsString(holiday[i].name) {
-                staffnamestring = staffnamestring.stringByReplacingOccurrencesOfString(holiday[i].name, withString: "")
+            }else if staffnamestring.contains(holiday[i].name) {
+                staffnamestring = staffnamestring.replacingOccurrences(of: holiday[i].name, with: "")
                 groupidarray.append(6)
             }
         }
@@ -189,7 +190,7 @@ class CommonMethod: UIViewController {
      
      - returns: 生成したShiftSystemDBレコード
      */
-    func CreateShiftSystemDBRecord(id: Int, shiftname: String, shiftgroup: String) -> ShiftSystemDB{
+    func CreateShiftSystemDBRecord(_ id: Int, shiftname: String, shiftgroup: String) -> ShiftSystemDB{
         let record = ShiftSystemDB()
         var gid = 0
         var start = 0.0
@@ -253,10 +254,10 @@ class CommonMethod: UIViewController {
      
      - returns: シフト範囲
      */
-    func GetShiftCoursMonthRange(shiftstartyear: Int, shiftstartmonth: Int) -> NSRange{
+    func GetShiftCoursMonthRange(_ shiftstartyear: Int, shiftstartmonth: Int) -> NSRange{
         let shiftnsdate = self.CreateNSDate(CommonMethod().Changecalendar(shiftstartyear, calender: "JP"), month: shiftstartmonth, day: 1)
-        let c = NSCalendar.currentCalendar()
-        let monthrange = c.rangeOfUnit([NSCalendarUnit.Day],  inUnit: [NSCalendarUnit.Month], forDate: shiftnsdate)
+        let c = Calendar.current
+        let monthrange = (c as NSCalendar).range(of: [NSCalendar.Unit.day],  in: [NSCalendar.Unit.month], for: shiftnsdate)
         
         return monthrange
     }
@@ -271,13 +272,13 @@ class CommonMethod: UIViewController {
      
      - returns: 生成したNSDate
      */
-    func CreateNSDate(year : Int, month : Int, day : Int) -> NSDate {
-        let comp = NSDateComponents()
+    func CreateNSDate(_ year : Int, month : Int, day : Int) -> Date {
+        var comp = DateComponents()
         comp.year = year
         comp.month = month
         comp.day = day
-        let cal = NSCalendar.currentCalendar()
-        let date = cal.dateFromComponents(comp)
+        let cal = Calendar.current
+        let date = cal.date(from: comp)
         
         return date!
     }
@@ -290,11 +291,11 @@ class CommonMethod: UIViewController {
      
      - returns: 年,月,日,曜日
      */
-    func ReturnYearMonthDayWeekday(date : NSDate) -> (year: Int, month: Int, day: Int, weekday: Int) {
-        let calendar = NSCalendar.currentCalendar()
-        let comp : NSDateComponents = calendar.components(
-            [.Year,.Month,.Day,.Weekday], fromDate: date)
-        return (comp.year,comp.month,comp.day,comp.weekday)
+    func ReturnYearMonthDayWeekday(_ date : Date) -> (year: Int, month: Int, day: Int, weekday: Int) {
+        let calendar = Calendar.current
+        let comp : DateComponents = (calendar as NSCalendar).components(
+            [.year,.month,.day,.weekday], from: date)
+        return (comp.year!,comp.month!,comp.day!,comp.weekday!)
     }
 
 }

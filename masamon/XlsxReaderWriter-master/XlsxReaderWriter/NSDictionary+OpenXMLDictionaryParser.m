@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 René Bigot. All rights reserved.
 //
 
-#import "NSDictionary+OpenXmlDictionaryParser.h"
+#import "NSDictionary+OpenXMLDictionaryParser.h"
 
 @implementation NSDictionary (OpenXmlDictionaryParser)
 

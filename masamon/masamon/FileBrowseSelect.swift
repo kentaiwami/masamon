@@ -12,7 +12,7 @@ class FileBrowseSelect: UIViewController, UITableViewDataSource, UITableViewDele
     
     @IBOutlet weak var tableview: UITableView!
     
-    let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得
+    let appDelegate:AppDelegate = UIApplication.shared.delegate as! AppDelegate //AppDelegateのインスタンスを取得
     
     // セルに表示するテキスト
     var shiftlist: [String] = []
@@ -27,9 +27,9 @@ class FileBrowseSelect: UIViewController, UITableViewDataSource, UITableViewDele
         SetShiftListArray()
         
         //ナビゲーションバーの色などを設定する
-        self.navigationController!.navigationBar.barTintColor = UIColor.blackColor()
-        self.navigationController!.navigationBar.tintColor = UIColor.whiteColor()
-        self.navigationController!.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
+        self.navigationController!.navigationBar.barTintColor = UIColor.black
+        self.navigationController!.navigationBar.tintColor = UIColor.white
+        self.navigationController!.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
         
     }
     
@@ -37,7 +37,7 @@ class FileBrowseSelect: UIViewController, UITableViewDataSource, UITableViewDele
         super.didReceiveMemoryWarning()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
                 
         shiftlist.removeAll()
         
@@ -46,15 +46,15 @@ class FileBrowseSelect: UIViewController, UITableViewDataSource, UITableViewDele
         self.tableview.reloadData()
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         appDelegate.screennumber = 3
     }
     
     func SetShiftListArray() {
-        if DBmethod().DBRecordCount(ShiftDB) != 0 {
+        if DBmethod().DBRecordCount(ShiftDB.self) != 0 {
             
             let results = DBmethod().GetShiftDBAllRecordArray()
-            for i in (0..<results!.count).reverse() {
+            for i in (0..<results!.count).reversed() {
                 shiftlist.append(results![i].shiftimportname)
             }
         }
@@ -63,16 +63,16 @@ class FileBrowseSelect: UIViewController, UITableViewDataSource, UITableViewDele
     var flag = false
     
     // セルの行数
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return shiftlist.count
     }
     
     // セルの内容を変更
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "Cell")
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.subtitle, reuseIdentifier: "Cell")
         
         cell.textLabel?.text = shiftlist[indexPath.row]
-        cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+        cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
         
         return cell
     }
@@ -80,15 +80,15 @@ class FileBrowseSelect: UIViewController, UITableViewDataSource, UITableViewDele
     let shiftdbrecord: ShiftDB = ShiftDB()
     
     //セルが選択された時に呼ばれる
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         var shiftdbrecord: ShiftDB = ShiftDB()
         shiftdbrecord = DBmethod().SearchShiftDB(shiftlist[indexPath.row])
         
         appDelegate.selectedcellname = shiftdbrecord.shiftimportname
         
-        let targetViewController = self.storyboard!.instantiateViewControllerWithIdentifier("FileBrowse")
+        let targetViewController = self.storyboard!.instantiateViewController(withIdentifier: "FileBrowse")
         self.navigationController!.pushViewController(targetViewController, animated: true)
 
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
