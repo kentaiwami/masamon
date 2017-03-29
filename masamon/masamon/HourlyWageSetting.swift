@@ -334,7 +334,7 @@ class HourlyWageSetting: UIViewController, UIPickerViewDelegate, UIPickerViewDat
     
     func SetText(){
         //既に登録されていたら登録内容を表示する
-        if DBmethod().DBRecordCount(HourlyPayDB) == 0 {
+        if DBmethod().DBRecordCount(HourlyPayDB.self) == 0 {
             TimeFrom1.placeholder = "no data"
             TimeFrom2.placeholder = "no data"
             TimeTo1.placeholder = "no data"

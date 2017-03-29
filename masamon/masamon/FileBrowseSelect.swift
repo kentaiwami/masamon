@@ -51,7 +51,7 @@ class FileBrowseSelect: UIViewController, UITableViewDataSource, UITableViewDele
     }
     
     func SetShiftListArray() {
-        if DBmethod().DBRecordCount(ShiftDB) != 0 {
+        if DBmethod().DBRecordCount(ShiftDB.self) != 0 {
             
             let results = DBmethod().GetShiftDBAllRecordArray()
             for i in (0..<results!.count).reversed() {

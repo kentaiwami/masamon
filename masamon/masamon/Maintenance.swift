@@ -61,7 +61,7 @@ class Maintenance {
     
     func DBDelete() {
         let realm = try! Realm()
-        let user = realm.objects(ShiftDB).last!
+        let user = realm.objects(ShiftDB.self).last!
         try! realm.write {
             realm.delete(user)
         }

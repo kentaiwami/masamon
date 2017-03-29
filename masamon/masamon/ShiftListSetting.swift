@@ -280,7 +280,7 @@ class ShiftListSetting: UIViewController, UITableViewDataSource, UITableViewDele
                         //ShiftDetailDB内の11日であるレコードを配列で取得
                         let shiftdetaildb_day_array = DBmethod().GetShiftDetailDBRecordByDay(11)
                         
-                        for i in 0..<DBmethod().DBRecordCount(ShiftDetailDB) {
+                        for i in 0..<DBmethod().DBRecordCount(ShiftDetailDB.self) {
                             
                             let shitdb_record = DBmethod().GetShiftDBRecordByID(shiftdb_id_count)
                             

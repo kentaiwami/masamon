@@ -56,6 +56,8 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
 //        maintenance.DBUpdate()
 //        maintenance.DBDelete()
         
+        
+        
         self.setupShiftLabel()      //シフトを表示するラベルを設置する
         
         self.setupTapGesture()      //タップを検出するジェスチャーを追加
@@ -121,13 +123,13 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         self.view.addSubview(onecourspicker)
         
         //NSArrayへの追加
-        if DBmethod().DBRecordCount(ShiftDB) != 0 {
-            for i in (0 ... DBmethod().DBRecordCount(ShiftDB)-1).reversed(){
+        if DBmethod().DBRecordCount(ShiftDB.self) != 0 {
+            for i in (0 ... DBmethod().DBRecordCount(ShiftDB.self)-1).reversed(){
                 shiftlist.add(DBmethod().ShiftDBGet(i))
             }
             
             //pickerviewのデフォルト表示
-            SaralyLabel.text = self.GetCommaSalalyString(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB)-1))
+            SaralyLabel.text = self.GetCommaSalalyString(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB.self)-1))
         }
     }
     
@@ -139,13 +141,13 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     override func viewDidAppear(_ animated: Bool) {
         
         shiftlist.removeAllObjects()
-        if DBmethod().DBRecordCount(ShiftDB) != 0 {
-            for i in (0 ... DBmethod().DBRecordCount(ShiftDB)-1).reversed(){
+        if DBmethod().DBRecordCount(ShiftDB.self) != 0 {
+            for i in (0 ... DBmethod().DBRecordCount(ShiftDB.self)-1).reversed(){
                 shiftlist.add(DBmethod().ShiftDBGet(i))
             }
             
             //pickerviewのデフォルト表示
-            SaralyLabel.text = self.GetCommaSalalyString(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB)-1))
+            SaralyLabel.text = self.GetCommaSalalyString(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB.self)-1))
         }else{
             SaralyLabel.text = ""
         }
@@ -173,7 +175,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     func savedata() {
         
         if self.appDelegate.filename.contains(".xlsx") {
-            progress.show(style: OrangeClearStyle())
+            progress.show(OrangeClearStyle())
             dispatch_async_global { // ここからバックグラウンドスレッド
                 
                 //新規シフトがあるか確認する
@@ -194,11 +196,11 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                         
                         /*pickerview,label,シフトの表示を更新する*/
                         self.shiftlist.removeAllObjects()
-                        if DBmethod().DBRecordCount(ShiftDB) != 0 {
-                            for i in (0 ... DBmethod().DBRecordCount(ShiftDB)-1).reverse(){
-                                self.shiftlist.addObject(DBmethod().ShiftDBGet(i))
+                        if DBmethod().DBRecordCount(ShiftDB.self) != 0 {
+                            for i in (0 ... DBmethod().DBRecordCount(ShiftDB.self)-1).reversed(){
+                                self.shiftlist.add(DBmethod().ShiftDBGet(i))
                             }
-                            self.SaralyLabel.text = self.GetCommaSalalyString(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB)-1))
+                            self.SaralyLabel.text = self.GetCommaSalalyString(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB.self)-1))
                         }
                         
                         self.onecourspicker.reloadAllComponents()
@@ -221,7 +223,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             //取り込みがPDFの場合
         }else{
             //スタッフが登録されていない場合はエラーアラートを出す
-            if DBmethod().DBRecordCount(StaffNameDB) == 0 {
+            if DBmethod().DBRecordCount(StaffNameDB.self) == 0 {
                 let alert: UIAlertController = UIAlertController(title: "取り込みエラー", message: "スタッフを1名以上登録してください", preferredStyle:  UIAlertControllerStyle.alert)
                 let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler:
                     {
@@ -243,7 +245,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                 
                 present(alert, animated: true, completion: nil)
             }else {
-                progress.show(style: OrangeClearStyle())
+                progress.show(OrangeClearStyle())
                 dispatch_async_global{
                     
                     //PDF内のデータを取得して未登録のシフト名をチェック
@@ -263,11 +265,11 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                             
                             /*pickerview,label,シフトの表示を更新する*/
                             self.shiftlist.removeAllObjects()
-                            if DBmethod().DBRecordCount(ShiftDB) != 0 {
-                                for i in (0 ... DBmethod().DBRecordCount(ShiftDB)-1).reverse(){
-                                    self.shiftlist.addObject(DBmethod().ShiftDBGet(i))
+                            if DBmethod().DBRecordCount(ShiftDB.self) != 0 {
+                                for i in (0 ... DBmethod().DBRecordCount(ShiftDB.self)-1).reversed(){
+                                    self.shiftlist.add(DBmethod().ShiftDBGet(i))
                                 }
-                                self.SaralyLabel.text = self.GetCommaSalalyString(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB)-1))
+                                self.SaralyLabel.text = self.GetCommaSalalyString(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB.self)-1))
                             }
                             
                             self.onecourspicker.reloadAllComponents()
@@ -313,7 +315,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                                                             
                                                             if flag {   //テキストフィールドに値が全て入っている場合
                                                                 
-                                                                let newrecord = CommonMethod().CreateShiftSystemDBRecord(DBmethod().DBRecordCount(ShiftSystemDB),shiftname: textFields![0].text!, shiftgroup: textFields![1].text!)
+                                                                let newrecord = CommonMethod().CreateShiftSystemDBRecord(DBmethod().DBRecordCount(ShiftSystemDB.self),shiftname: textFields![0].text!, shiftgroup: textFields![1].text!)
                                                                 DBmethod().AddandUpdate(newrecord, update: true)
                                                                 
                                                                 self.savedata()
@@ -395,7 +397,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                                                             
                                                             if flag {   //テキストフィールドに値が全て入っている場合
                                                                 
-                                                                let newrecord = CommonMethod().CreateShiftSystemDBRecord(DBmethod().DBRecordCount(ShiftSystemDB),shiftname: textFields![0].text!, shiftgroup: textFields![1].text!)
+                                                                let newrecord = CommonMethod().CreateShiftSystemDBRecord(DBmethod().DBRecordCount(ShiftSystemDB.self),shiftname: textFields![0].text!, shiftgroup: textFields![1].text!)
                                                                 DBmethod().AddandUpdate(newrecord, update: true)
                                                                 
                                                                 self.savedata()
@@ -452,7 +454,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
      
      - parameter block:
      */
-    func dispatch_async_main(_ block: () -> ()) {
+    func dispatch_async_main(_ block: @escaping () -> ()) {
         DispatchQueue.main.async(execute: block)
     }
     
@@ -462,7 +464,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
      
      - parameter block:
      */
-    func dispatch_async_global(_ block: () -> ()) {
+    func dispatch_async_global(_ block: @escaping () -> ()) {
         DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async(execute: block)
     }
     
@@ -532,8 +534,8 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         
         if pickerView.tag == 1 {            //取り込んだシフト
-            if DBmethod().DBRecordCount(ShiftDB) != 0 {         //レコードが0のときは何もしない
-                SaralyLabel.text = self.GetCommaSalalyString(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB)-1-row))
+            if DBmethod().DBRecordCount(ShiftDB.self) != 0 {         //レコードが0のときは何もしない
+                SaralyLabel.text = self.GetCommaSalalyString(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB.self)-1-row))
             }
             
         }else if pickerView.tag == 2 {      //シフトグループ選択
@@ -601,14 +603,17 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             
             while(staff[nowindex] != ":"){                            //スタッフ名を抽出するループ
                 staffname = staffname + String(staff[nowindex])
-                nowindex = <#T##Collection corresponding to `nowindex`##Collection#>.index(after: nowindex)
+//                nowindex = nowindex.successor()
+                nowindex = staff.index(after: nowindex)
             }
             
-            nowindex = <#T##Collection corresponding to `nowindex`##Collection#>.index(after: nowindex)
+//            nowindex = nowindex.successor()
+            nowindex = staff.index(after: nowindex)
             
             while(staff[nowindex] != ","){                            //シフトを抽出するループ
                 staffshift = staffshift + String(staff[nowindex])
-                nowindex = <#T##Collection corresponding to `nowindex`##Collection#>.index(after: nowindex)
+//                nowindex = nowindex.successor()
+                nowindex = staff.index(after: nowindex)
             }
             
             if DBmethod().SearchShiftSystem(staffshift) == nil {     //シフト体制になかったらその他に分類
@@ -633,7 +638,8 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                 }
             }
             
-            nowindex = <#T##Collection corresponding to `nowindex`##Collection#>.index(after: nowindex)
+//            nowindex = nowindex.successor()
+            nowindex = staff.index(after: nowindex)
         }
         
         //最後の文字を削除するための処理
@@ -670,7 +676,8 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             }
             
             i += 1
-            index = <#T##Collection corresponding to `index`##Collection#>.index(before: index)
+//            index = index.predecessor()
+            index = tmp.index(before: index)
         }
         
         return tmp
@@ -1235,7 +1242,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             let date = CommonMethod().ReturnYearMonthDayWeekday(today)
             self.SetCalenderLabel(date.year, month: date.month, day: date.day, weekday: date.weekday)
             
-            let calendar = Calendar(identifier: Calendar.Identifier.gregorian)!
+            let calendar = Calendar(identifier: Calendar.Identifier.gregorian)
             let compareunit = (calendar as NSCalendar).compare(currentnsdate, to: today, toUnitGranularity: .day)
             
             currentnsdate = today

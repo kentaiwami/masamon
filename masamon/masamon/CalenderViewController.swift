@@ -168,7 +168,7 @@ class CalenderViewController: UIViewController {
         
         
         //inUnit:で指定した単位（月）の中で、rangeOfUnit:で指定した単位（日）が取り得る範囲
-        let calendar: Calendar = Calendar(identifier: Calendar.Identifier.gregorian)!
+        let calendar: Calendar = Calendar(identifier: Calendar.Identifier.gregorian)
         
         //年月日と最後の日付と曜日を取得(NSIntegerをintへのキャスト不要)
         for i in 0..<for_parameter.count {
@@ -183,10 +183,10 @@ class CalenderViewController: UIViewController {
             //最初にメンバ変数に格納するための現在日付の情報を取得する
             comps[i] = (calendar as NSCalendar).components([NSCalendar.Unit.year, NSCalendar.Unit.month, NSCalendar.Unit.day, NSCalendar.Unit.weekday],from:tmp_nsdate)
 
-            let orgYear: NSInteger      = comps[i].year
-            let orgMonth: NSInteger     = comps[i].month
-            let orgDay: NSInteger       = comps[i].day
-            let orgDayOfWeek: NSInteger = comps[i].weekday
+            let orgYear: NSInteger      = comps[i].year!
+            let orgMonth: NSInteger     = comps[i].month!
+            let orgDay: NSInteger       = comps[i].day!
+            let orgDayOfWeek: NSInteger = comps[i].weekday!
             let max: NSInteger          = range.length
             
             year.append(orgYear)
@@ -200,7 +200,7 @@ class CalenderViewController: UIViewController {
         let monthName:[String] = ["日","月","火","水","木","金","土"]
         
         //曜日ラベルを動的に配置
-        setupCalendarLabel(monthName)
+        setupCalendarLabel(monthName as NSArray)
         
         //初期表示時のカレンダーをセットアップする
         setupCurrentCalendar()
@@ -288,8 +288,8 @@ class CalenderViewController: UIViewController {
                 button.frame = CGRect(
                     x: CGFloat(positionX),
                     y: CGFloat(positionY),
-                    width: CGFloat(buttonSizeX),
-                    height: CGFloat(buttonSizeY)
+                    width: CGFloat(buttonSizeX!),
+                    height: CGFloat(buttonSizeY!)
                 );
                 
                 //ボタンの初期設定をする
@@ -383,7 +383,7 @@ class CalenderViewController: UIViewController {
                 //今日の日付と合致するボタンがあったら装飾する
                 let nowdate = Date()
                 let calendar = Calendar(identifier: Calendar.Identifier.gregorian)
-                let comps:DateComponents = (calendar! as NSCalendar).components([NSCalendar.Unit.year,NSCalendar.Unit.month,NSCalendar.Unit.day],
+                let comps:DateComponents = (calendar as NSCalendar).components([NSCalendar.Unit.year,NSCalendar.Unit.month,NSCalendar.Unit.day],
                                                                   from: nowdate)
                 let buttonyear = comps.year
                 let buttonmonth = comps.month
@@ -428,7 +428,8 @@ class CalenderViewController: UIViewController {
             
             //ユーザのシフトが出る場所までindexを進めるループ
             for _ in 0 ..< shiftstartposition{
-                nowindex = nowindex.successor()
+//                nowindex = nowindex.index(after: nowindex)
+                nowindex = staff.index(after: nowindex)
             }
             
             var usershift = ""
@@ -436,7 +437,7 @@ class CalenderViewController: UIViewController {
             //ユーザのシフトを抽出するループ
             while(staff[nowindex] != ","){
                 usershift = usershift + String(staff[nowindex])
-                nowindex = nowindex.successor()
+                nowindex = staff.index(after: nowindex)
             }
             
             return usershift
@@ -496,14 +497,14 @@ class CalenderViewController: UIViewController {
          * yyyy年mm月1日のデータを作成する。
          * 後述の関数 setupPrevCalendarData, setupNextCalendarData も同様です。
          *************/
-        let currentCalendar: Calendar = Calendar(identifier: Calendar.Identifier.gregorian)!
-        let currentComps: DateComponents = DateComponents()
+        let currentCalendar: Calendar = Calendar(identifier: Calendar.Identifier.gregorian)
+        var currentComps: DateComponents = DateComponents()
         
         //現在の日付を取得する
         now_nsdate = Date()
         
         //inUnit:で指定した単位（月）の中で、rangeOfUnit:で指定した単位（日）が取り得る範囲
-        let calendar: Calendar = Calendar(identifier: Calendar.Identifier.gregorian)!
+        let calendar: Calendar = Calendar(identifier: Calendar.Identifier.gregorian)
         
         for i in 0..<for_parameter.count {
 
@@ -515,8 +516,8 @@ class CalenderViewController: UIViewController {
             comps[i] = (calendar as NSCalendar).components([NSCalendar.Unit.year, NSCalendar.Unit.month, NSCalendar.Unit.day, NSCalendar.Unit.weekday],from:tmp_nsdate)
             
             //年月日と最後の日付と曜日を取得(NSIntegerをintへのキャスト不要)
-            let orgYear: NSInteger      = comps[i].year
-            let orgMonth: NSInteger     = comps[i].month
+            let orgYear: NSInteger      = comps[i].year!
+            let orgMonth: NSInteger     = comps[i].month!
             
             year[i]      = orgYear
             month[i]     = orgMonth
@@ -549,8 +550,8 @@ class CalenderViewController: UIViewController {
         
         //setupCurrentCalendarData()と同様の処理を行う
         for i in 0..<for_parameter.count {
-            let prevCalendar: Calendar = Calendar(identifier: Calendar.Identifier.gregorian)!
-            let prevComps: DateComponents = DateComponents()
+            let prevCalendar: Calendar = Calendar(identifier: Calendar.Identifier.gregorian)
+            var prevComps: DateComponents = DateComponents()
             
             prevComps.year  = year[i]
             prevComps.month = month[i]
@@ -580,8 +581,8 @@ class CalenderViewController: UIViewController {
         
         //setupCurrentCalendarData()と同様の処理を行う
         for i in 0..<for_parameter.count {
-            let nextCalendar: Calendar = Calendar(identifier: Calendar.Identifier.gregorian)!
-            let nextComps: DateComponents = DateComponents()
+            let nextCalendar: Calendar = Calendar(identifier: Calendar.Identifier.gregorian)
+            var nextComps: DateComponents = DateComponents()
             
             nextComps.year  = year[i]
             nextComps.month = month[i]
@@ -601,10 +602,10 @@ class CalenderViewController: UIViewController {
         comps[calendarnumber] = (currentCalendar as NSCalendar).components([NSCalendar.Unit.year, NSCalendar.Unit.month, NSCalendar.Unit.day, NSCalendar.Unit.weekday],from:currentDate)
         
         //年月日と最後の日付と曜日を取得(NSIntegerをintへのキャスト不要)
-        let currentYear: NSInteger      = comps[calendarnumber].year
-        let currentMonth: NSInteger     = comps[calendarnumber].month
-        let currentDay: NSInteger       = comps[calendarnumber].day
-        let currentDayOfWeek: NSInteger = comps[calendarnumber].weekday
+        let currentYear: NSInteger      = comps[calendarnumber].year!
+        let currentMonth: NSInteger     = comps[calendarnumber].month!
+        let currentDay: NSInteger       = comps[calendarnumber].day!
+        let currentDayOfWeek: NSInteger = comps[calendarnumber].weekday!
         let currentMax: NSInteger       = currentRange.length
         
         year[calendarnumber]      = currentYear
@@ -776,7 +777,7 @@ class CalenderViewController: UIViewController {
                     let buttonSizeX = self.calendarSize;
                     let buttonSizeY = self.calendarSize;
 
-                    self.mArray[i][j].frame = CGRect(x: CGFloat(positionX), y: CGFloat(positionY), width: CGFloat(buttonSizeX), height: CGFloat(buttonSizeY))
+                    self.mArray[i][j].frame = CGRect(x: CGFloat(positionX), y: CGFloat(positionY), width: CGFloat(buttonSizeX!), height: CGFloat(buttonSizeY!))
                 }
             }
             }, completion: { (value: Bool) in
@@ -844,7 +845,7 @@ class CalenderViewController: UIViewController {
     
     //日付を比較してcalendarBarのアニメーション開始前の場所を返す
     func CompareDay() -> CGFloat{
-        let calendar = Calendar(identifier: Calendar.Identifier.gregorian)!
+        let calendar = Calendar(identifier: Calendar.Identifier.gregorian)
         let currentNSDate = CommonMethod().CreateNSDate(year[1], month: month[1], day: day[1])
         let compareunit = (calendar as NSCalendar).compare(now_nsdate, to: currentNSDate, toUnitGranularity: .day)
         var position:CGFloat = 0

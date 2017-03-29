@@ -13,8 +13,8 @@ class FileBrowse: UIViewController, UIWebViewDelegate{
     let appDelegate:AppDelegate = UIApplication.shared.delegate as! AppDelegate //AppDelegateのインスタンスを取得
     
     var myWebView = UIWebView()
-    var myPDFurl =  URL()
-    var myRequest = URLRequest()
+//    var myPDFurl =  URL()
+//    var myRequest = URLRequest(url: "")
     var myIndiator = UIActivityIndicatorView()
     
     override func viewDidLoad() {
@@ -29,8 +29,8 @@ class FileBrowse: UIViewController, UIWebViewDelegate{
         let Libralypath = NSSearchPathForDirectoriesInDomains(.libraryDirectory, .userDomainMask, true)[0] as String
         let filePath = Libralypath + "/" + appDelegate.selectedcellname
         
-        myPDFurl = URL(fileURLWithPath: filePath)
-        myRequest = URLRequest(url: myPDFurl)
+        let myPDFurl = URL(fileURLWithPath: filePath)
+        let myRequest = URLRequest(url: myPDFurl)
         
         // ページ読み込み中に表示させるインジケータを生成.
         myIndiator = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))

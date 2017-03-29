@@ -53,8 +53,8 @@ class XLSXmethod: UIViewController {
         var date = 11
         let staffcellposition = self.StaffCellPositionGet()     //スタッフの名前が記載されているセル場所 ex.)F8,F9
         var shiftdetailarray = List<ShiftDetailDB>()
-        var shiftdetailrecordcount = DBmethod().DBRecordCount(ShiftDetailDB)
-        let shiftdbrecordcount = DBmethod().DBRecordCount(ShiftDB)
+        var shiftdetailrecordcount = DBmethod().DBRecordCount(ShiftDetailDB.self)
+        let shiftdbrecordcount = DBmethod().DBRecordCount(ShiftDB.self)
 
         var flag = 0
         
@@ -332,7 +332,7 @@ class XLSXmethod: UIViewController {
             
             if array.count != 0 {
                 let record = StaffNameDB()
-                record.id = DBmethod().DBRecordCount(StaffNameDB)
+                record.id = DBmethod().DBRecordCount(StaffNameDB.self)
                 record.name = staffname
                 
                 if DBmethod().StaffNameArrayGet() == nil {                                  //まだ1件も登録されていない場合

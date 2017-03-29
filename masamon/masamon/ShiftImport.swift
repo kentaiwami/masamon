@@ -22,8 +22,8 @@ class ShiftImport: UIViewController,UITextFieldDelegate,UIWebViewDelegate{
     let appDelegate:AppDelegate = UIApplication.shared.delegate as! AppDelegate //AppDelegateのインスタンスを取得
     
     var myWebView = UIWebView()
-    var myPDFurl =  URL()
-    var myRequest = URLRequest()
+//    var myPDFurl =  URL("")
+//    var myRequest = URLRequest(url: <#URL#>)
     var myIndiator = UIActivityIndicatorView()
 
     
@@ -43,7 +43,7 @@ class ShiftImport: UIViewController,UITextFieldDelegate,UIWebViewDelegate{
             filenamefield.text = DBmethod().FilePathTmpGet().lastPathComponent
         }
         
-        if DBmethod().DBRecordCount(StaffNumberDB) != 0 {
+        if DBmethod().DBRecordCount(StaffNumberDB.self) != 0 {
             staffnumberfield.text = String(DBmethod().StaffNumberGet())
         }
         
@@ -68,8 +68,8 @@ class ShiftImport: UIViewController,UITextFieldDelegate,UIWebViewDelegate{
         let Inboxpath = documentspath + "/Inbox/"       //Inboxまでのパス
         let filePath = Inboxpath + filenamefield.text!
 
-        myPDFurl = URL(fileURLWithPath: filePath)
-        myRequest = URLRequest(url: myPDFurl)
+        let myPDFurl = URL(fileURLWithPath: filePath)
+        let myRequest = URLRequest(url: myPDFurl)
         
         // ページ読み込み中に表示させるインジケータを生成.
         myIndiator = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
@@ -96,7 +96,7 @@ class ShiftImport: UIViewController,UITextFieldDelegate,UIWebViewDelegate{
     @IBAction func xlsximport(_ sender: AnyObject) {
         
         //設定が登録されていない場合
-        if DBmethod().DBRecordCount(UserNameDB) == 0 || DBmethod().DBRecordCount(HourlyPayDB) == 0 {
+        if DBmethod().DBRecordCount(UserNameDB.self) == 0 || DBmethod().DBRecordCount(HourlyPayDB.self) == 0 {
             let alertController = UIAlertController(title: "取り込みエラー", message: "先に設定画面で情報の登録をして下さい", preferredStyle: .alert)
             
             let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
@@ -265,7 +265,7 @@ class ShiftImport: UIViewController,UITextFieldDelegate,UIWebViewDelegate{
         //DBへパスを記録
         let filepathrecord = FilePathTmpDB()
         filepathrecord.id = 0
-        filepathrecord.path = self.Libralypath+"/"+self.filenamefield.text!
+        filepathrecord.path = self.Libralypath+"/"+self.filenamefield.text! as NSString
         DBmethod().AddandUpdate(filepathrecord,update: true)
     }
     

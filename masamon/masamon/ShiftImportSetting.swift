@@ -83,7 +83,7 @@ class ShiftImportSetting: UIViewController ,UITextFieldDelegate{
     }
     
     func SetText(){
-        if DBmethod().DBRecordCount(UserNameDB) == 0 {
+        if DBmethod().DBRecordCount(UserNameDB.self) == 0 {
             usernametextfield.placeholder = "シフト表上での名前を入力"
             staffnumbertextfield.placeholder = "スタッフの人数を入力"
         }else {

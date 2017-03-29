@@ -5,7 +5,7 @@ extension UIColor {
     class func hex ( _ hexStr : NSString, alpha : CGFloat) -> UIColor {
         var hexString = hexStr
         
-        hexString = hexString.replacingOccurrences(of: "#", with: "")
+        hexString = hexString.replacingOccurrences(of: "#", with: "") as NSString
         let scanner = Scanner(string: hexString as String)
         var color: UInt32 = 0
         if scanner.scanHexInt32(&color) {

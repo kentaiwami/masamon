@@ -61,7 +61,9 @@ class CommonMethod: UIViewController {
         }else{                  //西暦から和暦
             let yeartemp = String(year + 12)
             let lastcharacter = String(yeartemp[yeartemp.characters.index(before: yeartemp.endIndex)])                   //最後の桁
-            let lastcharacterminus = String(yeartemp[<#T##Collection corresponding to your index##Collection#>.index(before: yeartemp.characters.index(before: yeartemp.endIndex))])     //最後から1つ前の桁
+//            let lastcharacterminus = String(yeartemp[yeartemp.endIndex.predecessor().predecessor()])     //最後から1つ前の桁
+            let lastcharacterminus = String(yeartemp[yeartemp.index(yeartemp.endIndex, offsetBy: -2)])     //最後から1つ前の桁
+
             return Int(lastcharacterminus+lastcharacter)!
         }
     }
@@ -272,7 +274,7 @@ class CommonMethod: UIViewController {
      - returns: 生成したNSDate
      */
     func CreateNSDate(_ year : Int, month : Int, day : Int) -> Date {
-        let comp = DateComponents()
+        var comp = DateComponents()
         comp.year = year
         comp.month = month
         comp.day = day
@@ -294,7 +296,7 @@ class CommonMethod: UIViewController {
         let calendar = Calendar.current
         let comp : DateComponents = (calendar as NSCalendar).components(
             [.year,.month,.day,.weekday], from: date)
-        return (comp.year,comp.month,comp.day,comp.weekday)
+        return (comp.year!,comp.month!,comp.day!,comp.weekday!)
     }
 
 }

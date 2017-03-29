@@ -243,7 +243,7 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
                     }
 
                     if textflag {
-                        let newrecord = CommonMethod().CreateShiftSystemDBRecord(DBmethod().DBRecordCount(ShiftSystemDB),shiftname: textFields![0].text!, shiftgroup: textFields![1].text!)
+                        let newrecord = CommonMethod().CreateShiftSystemDBRecord(DBmethod().DBRecordCount(ShiftSystemDB.self),shiftname: textFields![0].text!, shiftgroup: textFields![1].text!)
 
                         DBmethod().AddandUpdate(newrecord, update: true)
                     }

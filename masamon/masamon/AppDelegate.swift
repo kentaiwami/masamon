@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Realm
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -42,20 +43,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any]) -> Bool {
         fileURL = ""
-        fileURL = String(url.path!)
+        fileURL = String(url.path)
         
         //DBへパスを記録
         let filepathrecord = FilePathTmpDB()
         filepathrecord.id = 0
-        filepathrecord.path = fileURL
+        filepathrecord.path = fileURL as NSString
         DBmethod().AddandUpdate(filepathrecord,update: true)
         return true
     }
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
+        
         //InboxFileCountに空レコード(ダミー)を追加
-        if DBmethod().DBRecordCount(InboxFileCountDB) == 0 {
+        if DBmethod().DBRecordCount(InboxFileCountDB.self) == 0 {
             //レコードを追加
             let InboxFileCountRecord = InboxFileCountDB()
             InboxFileCountRecord.id = 0
@@ -64,14 +66,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         //FilePathTmpに空レコード(ダミー)を追加
-        if DBmethod().DBRecordCount(FilePathTmpDB) == 0 {
+        if DBmethod().DBRecordCount(FilePathTmpDB.self) == 0 {
             DBmethod().InitRecordFilePathTmpDB()
         }
         
         //シフト体制データ
         let shiftnamepattern = ["早","早M","早カ","はや","中","中2","中3","遅","遅M","遅カ","公","夏","有","不明"]
 
-        if DBmethod().DBRecordCount(ShiftSystemDB) == 0 {
+        if DBmethod().DBRecordCount(ShiftSystemDB.self) == 0 {
             for i in 0 ..< shiftnamepattern.count{
                 let ShiftSystemRecord = ShiftSystemDB()
                 var gid = 0

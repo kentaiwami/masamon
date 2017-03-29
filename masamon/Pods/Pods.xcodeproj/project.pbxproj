@@ -54,21 +54,21 @@
 		4192D784E8F7D51226F55D529739A801 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		475856809DAA496C716758A3101D29CE /* BlueIndicatorStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BlueIndicatorStyle.swift; path = Sources/GradientCircularProgress/Styles/BlueIndicatorStyle.swift; sourceTree = "<group>"; };
 		53986573FE50D8C9EB6370A036306D21 /* BlueDarkStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BlueDarkStyle.swift; path = Sources/GradientCircularProgress/Styles/BlueDarkStyle.swift; sourceTree = "<group>"; };
-		5ECE60EB4B0591F10B715F8D3CFC8228 /* GradientCircularProgress.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GradientCircularProgress.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		68208486CFBE16E3063CA1EF56474251 /* GradientCircularProgress.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = GradientCircularProgress.modulemap; sourceTree = "<group>"; };
+		5ECE60EB4B0591F10B715F8D3CFC8228 /* GradientCircularProgress.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = GradientCircularProgress.framework; path = GradientCircularProgress.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		68208486CFBE16E3063CA1EF56474251 /* GradientCircularProgress.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = GradientCircularProgress.modulemap; sourceTree = "<group>"; };
 		726149DD8B2B7CD489E52DFB23634954 /* Property.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Property.swift; path = Sources/GradientCircularProgress/Progress/Property.swift; sourceTree = "<group>"; };
 		72FBB4A5212EEAD70D1EBD890D7431A7 /* GradientCircularProgress-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "GradientCircularProgress-prefix.pch"; sourceTree = "<group>"; };
 		77A836D1A068FB606E1E3F2D7648EBBF /* Background.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Background.swift; path = Sources/GradientCircularProgress/Progress/Elements/Background.swift; sourceTree = "<group>"; };
-		78B7AEEAF45D62DEE50FEFABDA2A0280 /* Pods-masamon.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-masamon.modulemap"; sourceTree = "<group>"; };
+		78B7AEEAF45D62DEE50FEFABDA2A0280 /* Pods-masamon.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-masamon.modulemap"; sourceTree = "<group>"; };
 		7E19263A08806EB1DB40BC734C3C1CD0 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		84C8E537C4BD75A2766DAA59DFB830AD /* GradientArcWithClearColorView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = GradientArcWithClearColorView.swift; path = Sources/GradientCircularProgress/Progress/Elements/GradientArcWithClearColorView.swift; sourceTree = "<group>"; };
 		85A759263F1DC60F8F7DB647CE870651 /* GradientCircularProgress.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = GradientCircularProgress.swift; path = Sources/GradientCircularProgress/GradientCircularProgress.swift; sourceTree = "<group>"; };
 		8A22136CA18D891C4C3C130AEDCF5BEC /* Pods-masamon-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-masamon-dummy.m"; sourceTree = "<group>"; };
-		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9932ED6BC1A06541E4A6E7196344F7E8 /* Pods-masamon-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-masamon-acknowledgements.plist"; sourceTree = "<group>"; };
 		A128B2B9CFAE2CE03122EFFFF7E31DEE /* Pods-masamon-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-masamon-umbrella.h"; sourceTree = "<group>"; };
 		A371546F04F2CBD69C82AFF89348B199 /* GradientCircularProgress-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "GradientCircularProgress-umbrella.h"; sourceTree = "<group>"; };
-		B5E265D6DF1AB6556D921E3E8871374F /* Pods_masamon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_masamon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B5E265D6DF1AB6556D921E3E8871374F /* Pods_masamon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_masamon.framework; path = "Pods-masamon.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B941FEEE84BE3A5A7370EE94D348A770 /* GradientCircularProgress.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = GradientCircularProgress.xcconfig; sourceTree = "<group>"; };
 		C1206C9B80C548BA553CE6381CFEB5CB /* Pods-masamon-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-masamon-acknowledgements.markdown"; sourceTree = "<group>"; };
 		CBB3DE36805AF21409EC968A9691732F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
@@ -141,6 +141,7 @@
 				1964548FD9944B8208CF09563244E10A /* Style.swift */,
 				18E426514CEC540A1F3719ED15E113A5 /* Support Files */,
 			);
+			name = GradientCircularProgress;
 			path = GradientCircularProgress;
 			sourceTree = "<group>";
 		};
@@ -280,14 +281,6 @@
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
 				LastUpgradeCheck = 0700;
-				TargetAttributes = {
-					079324337E7058C8AD638741E4E5632F = {
-						LastSwiftMigration = 0830;
-					};
-					C30406512C7D73EFB78E63A9792E2DA0 = {
-						LastSwiftMigration = 0830;
-					};
-				};
 			};
 			buildConfigurationList = 2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 3.2";

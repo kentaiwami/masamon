@@ -116,11 +116,11 @@ class PDFmethod: UIViewController {
         var text = tet.get_text(page)
         
         //全テキストを検査するループ
-        while(text != nil && text.characters.count > 0){
+        while(text != nil && (text?.characters.count)! > 0){
             while(tet.get_char_info(page) > 0){
                 
                 var charinfo = CharInfo()
-                charinfo.text = text.hankakuOnly
+                charinfo.text = (text?.hankakuOnly)!
                 charinfo.text = ReplaceHankakuSymbol(charinfo.text)
                 charinfo.size = tet.fontsize()
                 charinfo.x = tet.x()
@@ -798,8 +798,8 @@ class PDFmethod: UIViewController {
         //1クールが全部で何日間あるかを判断するため
         let monthrange = CommonMethod().GetShiftCoursMonthRange(shiftyearmonth.startcoursmonthyear, shiftstartmonth: shiftyearmonth.startcoursmonth)
         
-        var shiftdetaildbrecordcount = DBmethod().DBRecordCount(ShiftDetailDB)
-        let shiftdbrecordcount = DBmethod().DBRecordCount(ShiftDB)
+        var shiftdetaildbrecordcount = DBmethod().DBRecordCount(ShiftDetailDB.self)
+        let shiftdbrecordcount = DBmethod().DBRecordCount(ShiftDB.self)
         
         for i in 0 ..< dayattendanceArray.count{
             let shiftdbrecord = ShiftDB()
@@ -921,7 +921,9 @@ class PDFmethod: UIViewController {
                 
                 while(String(dayattendanceArray[i][index]) != ","){
                     dayshift += String(dayattendanceArray[i][index])
-                    index = <#T##Collection corresponding to `index`##Collection#>.index(after: index)
+//                    index = index.successor()
+                    //TODO:
+                    index = dayattendanceArray[i].characters.index(after: index)
                 }
                 
                 if(holiday.contains(dayshift) == false){      //holiday以外なら

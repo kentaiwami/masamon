@@ -20,7 +20,7 @@ class OriginUITabBarController: UITabBarController {
         let fontFamily: UIFont! = UIFont.systemFont(ofSize: 10)
         let selectedColor:UIColor = UIColor.hex("FF8E92", alpha: 1.0)
 
-        let selectedAttributes = [NSFontAttributeName: fontFamily, NSForegroundColorAttributeName: selectedColor]
+        let selectedAttributes = [NSFontAttributeName: fontFamily, NSForegroundColorAttributeName: selectedColor] as [String : Any]
 
         self.tabBarItem.setTitleTextAttributes(selectedAttributes, for: UIControlState.selected)
         UITabBar.appearance().tintColor = selectedColor

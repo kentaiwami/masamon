@@ -54,7 +54,7 @@ class StaffNameListSetting: UIViewController, UITableViewDataSource, UITableView
     
     //プラスボタンを押したとき
     func TapPlusButton(_ sender: UIButton) {
-        self.alert("スタッフ名を新規追加します", messagetext: "追加するスタッフ名を入力して下さい", index: DBmethod().DBRecordCount(StaffNameDB), flag: 2)
+        self.alert("スタッフ名を新規追加します", messagetext: "追加するスタッフ名を入力して下さい", index: DBmethod().DBRecordCount(StaffNameDB.self), flag: 2)
     }
     
     
