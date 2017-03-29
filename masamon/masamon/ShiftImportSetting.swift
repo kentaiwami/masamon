@@ -21,45 +21,45 @@ class ShiftImportSetting: UIViewController ,UITextFieldDelegate{
 
         SetText()
         
-        self.view.backgroundColor = UIColor.blackColor()
+        self.view.backgroundColor = UIColor.black
         
         let toolBar = UIToolbar()
-        toolBar.barStyle = UIBarStyle.Default
-        toolBar.translucent = true
+        toolBar.barStyle = UIBarStyle.default
+        toolBar.isTranslucent = true
         toolBar.sizeToFit()
 
-        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
-        let salalyButton = UIBarButtonItem(title: "完了", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(ShiftImportSetting.TapButton(_:)))
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
+        let salalyButton = UIBarButtonItem(title: "完了", style: UIBarButtonItemStyle.plain, target: self, action: #selector(ShiftImportSetting.TapButton(_:)))
 
         toolBar.setItems([flexSpace,salalyButton], animated: false)
-        toolBar.userInteractionEnabled = true
+        toolBar.isUserInteractionEnabled = true
 
         //シフト関連のアイコンを設置
         for i in 0 ..< 2{
             let usericon = UIImageView()
             usericon.image = UIImage(named: usericonfilename[i])
-            usericon.frame = CGRectMake(35, CGFloat(usericonposition[i]), 42, 40)
+            usericon.frame = CGRect(x: 35, y: CGFloat(usericonposition[i]), width: 42, height: 40)
             self.view.addSubview(usericon)
             
         }
         
         //区切り線を追加
         let frameborderline = UIView()
-        frameborderline.frame = CGRectMake(0, 100, self.view.frame.width, 155)
-        frameborderline.backgroundColor = UIColor.clearColor()
-        frameborderline.layer.borderColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.4).CGColor
+        frameborderline.frame = CGRect(x: 0, y: 100, width: self.view.frame.width, height: 155)
+        frameborderline.backgroundColor = UIColor.clear
+        frameborderline.layer.borderColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.4).cgColor
         frameborderline.layer.borderWidth = 2
         frameborderline.layer.cornerRadius = 30
         self.view.addSubview(frameborderline)
-        self.view.sendSubviewToBack(frameborderline)
+        self.view.sendSubview(toBack: frameborderline)
 
         //セーブボタンの追加
         let savebutton = UIButton()
         savebutton.tag = 0
-        savebutton.frame = CGRectMake(0, 0, 70, 70)
+        savebutton.frame = CGRect(x: 0, y: 0, width: 70, height: 70)
         savebutton.layer.position = CGPoint(x: self.view.frame.width/2, y:self.view.frame.height/2)
-        savebutton.setImage(UIImage(named: "../images/save.png"), forState: .Normal)
-        savebutton.addTarget(self, action: #selector(ShiftImportSetting.SaveButtontapped(_:)), forControlEvents:.TouchUpInside)
+        savebutton.setImage(UIImage(named: "../images/save.png"), for: UIControlState())
+        savebutton.addTarget(self, action: #selector(ShiftImportSetting.SaveButtontapped(_:)), for:.touchUpInside)
         self.view.addSubview(savebutton)
 
         
@@ -67,14 +67,14 @@ class ShiftImportSetting: UIViewController ,UITextFieldDelegate{
         staffnumbertextfield.delegate = self
         staffnumbertextfield.tag = 5
         
-        usernametextfield.returnKeyType = .Done
+        usernametextfield.returnKeyType = .done
         
-        staffnumbertextfield.keyboardType = .NumberPad
+        staffnumbertextfield.keyboardType = .numberPad
         staffnumbertextfield.inputAccessoryView = toolBar
 
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         SetText()
     }
     
@@ -93,25 +93,25 @@ class ShiftImportSetting: UIViewController ,UITextFieldDelegate{
     }
     
     //リターンキーを押した時に動作
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         view.endEditing(true)
         return true
     }
 
-    func TapButton(sender: UIButton) {
+    func TapButton(_ sender: UIButton) {
         usernametextfield.resignFirstResponder()
         staffnumbertextfield.resignFirstResponder()
     }
     
     //セーブボタンを押した時
-    func SaveButtontapped(sender: UIButton){
+    func SaveButtontapped(_ sender: UIButton){
         if usernametextfield.text?.isEmpty == true || staffnumbertextfield.text?.isEmpty == true {
-            let alertController = UIAlertController(title: "ニャ!!", message: "項目を埋めてから押すニャ", preferredStyle: .Alert)
+            let alertController = UIAlertController(title: "ニャ!!", message: "項目を埋めてから押すニャ", preferredStyle: .alert)
             
-            let defaultAction = UIAlertAction(title: "ニャーさんに土下座する", style: .Default, handler: nil)
+            let defaultAction = UIAlertAction(title: "ニャーさんに土下座する", style: .default, handler: nil)
             alertController.addAction(defaultAction)
             
-            presentViewController(alertController, animated: true, completion: nil)
+            present(alertController, animated: true, completion: nil)
 
         }else {
             let staffnumberrecord = StaffNumberDB()
@@ -124,12 +124,12 @@ class ShiftImportSetting: UIViewController ,UITextFieldDelegate{
             DBmethod().AddandUpdate(usernamerecord, update: true)
             DBmethod().AddandUpdate(staffnumberrecord, update: true)
             
-            let alertController = UIAlertController(title: "保存完了", message: "設定情報の登録に成功しました", preferredStyle: .Alert)
+            let alertController = UIAlertController(title: "保存完了", message: "設定情報の登録に成功しました", preferredStyle: .alert)
             
-            let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+            let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
             alertController.addAction(defaultAction)
             
-            presentViewController(alertController, animated: true, completion: nil)
+            present(alertController, animated: true, completion: nil)
 
         }
     }

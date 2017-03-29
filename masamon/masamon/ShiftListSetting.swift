@@ -34,7 +34,7 @@ class ShiftListSetting: UIViewController, UITableViewDataSource, UITableViewDele
         if DBmethod().GetShiftDBAllRecordArray() != nil {
             let results = DBmethod().GetShiftDBAllRecordArray()
             
-            for i in (0 ..< results!.count).reverse() {
+            for i in (0 ..< results!.count).reversed() {
                 self.texts.append(results![i])
             }
         }
@@ -49,19 +49,19 @@ class ShiftListSetting: UIViewController, UITableViewDataSource, UITableViewDele
     let sections = ["最新順"]
     
     //セクションの数を返す.
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return sections.count
     }
     
     //セクションのタイトルを返す.
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return sections[section]
     }
     
     
     // セルの内容を変更
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "Cell")
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: "Cell")
         
         cell.textLabel?.text = texts[indexPath.row].shiftimportname
         
@@ -69,53 +69,53 @@ class ShiftListSetting: UIViewController, UITableViewDataSource, UITableViewDele
     }
     
     // セルの行数
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return texts.count
     }
     
     
     //セルの削除を許可
-    func tableView(tableView: UITableView,canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool
+    func tableView(_ tableView: UITableView,canEditRowAt indexPath: IndexPath) -> Bool
     {
         return true
     }
     
     //セルの選択を禁止する
-    func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         return nil;
     }
     
     //セルを横スクロールした際に表示されるアクションを管理するメソッド
-    func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         
         // Editボタン.
-        let EditButton: UITableViewRowAction = UITableViewRowAction(style: .Normal, title: "編集") { (action, index) -> Void in
+        let EditButton: UITableViewRowAction = UITableViewRowAction(style: .normal, title: "編集") { (action, index) -> Void in
             
-            tableView.editing = false
+            tableView.isEditing = false
             self.alert(self.texts[indexPath.row].shiftimportname + "を編集します", messagetext: "新しいシフト取り込み名を入力して下さい\nxlxsやpdfなどはつけてもつけなくても大丈夫です。", index: indexPath.row, flag: 0)
         }
-        EditButton.backgroundColor = UIColor.greenColor()
+        EditButton.backgroundColor = UIColor.green
         
         // Deleteボタン.
-        let DeleteButton: UITableViewRowAction = UITableViewRowAction(style: .Normal, title: "削除") { (action, index) -> Void in
+        let DeleteButton: UITableViewRowAction = UITableViewRowAction(style: .normal, title: "削除") { (action, index) -> Void in
             
-            tableView.editing = false
+            tableView.isEditing = false
             
             self.alert(self.texts[indexPath.row].shiftimportname + "を削除します", messagetext: "関連する情報が全て削除されます。よろしいですか？", index: indexPath.row, flag: 1)
         }
-        DeleteButton.backgroundColor = UIColor.redColor()
+        DeleteButton.backgroundColor = UIColor.red
         
         return [EditButton, DeleteButton]
     }
     
     //アラートを表示する関数
-    func alert(titletext: String, messagetext: String, index: Int, flag: Int){
+    func alert(_ titletext: String, messagetext: String, index: Int, flag: Int){
         
         var buttontitle = ""
         
         let alert:UIAlertController = UIAlertController(title: titletext,
             message: messagetext,
-            preferredStyle: UIAlertControllerStyle.Alert)
+            preferredStyle: UIAlertControllerStyle.alert)
         
         //flagが0は編集、flagが1は削除
         switch(flag){
@@ -123,7 +123,7 @@ class ShiftListSetting: UIViewController, UITableViewDataSource, UITableViewDele
             buttontitle = "編集完了"
             
             let Action:UIAlertAction = UIAlertAction(title: buttontitle,
-                style: UIAlertActionStyle.Default,
+                style: UIAlertActionStyle.default,
                 handler:{
                     (action:UIAlertAction!) -> Void in
                     let textFields:Array<UITextField>? =  alert.textFields as Array<UITextField>?
@@ -145,11 +145,11 @@ class ShiftListSetting: UIViewController, UITableViewDataSource, UITableViewDele
                             newshiftdbrecord.month = oldshiftdbrecord.month
                             
                             //変更前のファイルの拡張子を判断
-                            if self.texts[index].shiftimportname.containsString(".xlsx") {
+                            if self.texts[index].shiftimportname.contains(".xlsx") {
                                 oldfileextension = ".xlsx"
-                            }else if self.texts[index].shiftimportname.containsString(".pdf") {
+                            }else if self.texts[index].shiftimportname.contains(".pdf") {
                                 oldfileextension = ".pdf"
-                            }else if self.texts[index].shiftimportname.containsString(".PDF") {
+                            }else if self.texts[index].shiftimportname.contains(".PDF") {
                                 oldfileextension = ".PDF"
                             }
                             
@@ -157,20 +157,20 @@ class ShiftListSetting: UIViewController, UITableViewDataSource, UITableViewDele
                             //ユーザが入力した新規取り込み名に拡張子が含まれているか調べる
                             switch(oldfileextension){
                             case ".xlsx":
-                                if textFields![0].text!.containsString(".xlsx") == false {
-                                    newpath = newpath.stringByReplacingOccurrencesOfString(self.texts[index].shiftimportname, withString: textFields![0].text! + oldfileextension)
+                                if textFields![0].text!.contains(".xlsx") == false {
+                                    newpath = newpath.replacingOccurrences(of: self.texts[index].shiftimportname, with: textFields![0].text! + oldfileextension)
                                     newshiftdbrecord.shiftimportname = textFields![0].text! + oldfileextension
                                 }
                                 
                             case ".pdf":
-                                if textFields![0].text!.containsString(".pdf") == false {
-                                    newpath = newpath.stringByReplacingOccurrencesOfString(self.texts[index].shiftimportname, withString: textFields![0].text! + oldfileextension)
+                                if textFields![0].text!.contains(".pdf") == false {
+                                    newpath = newpath.replacingOccurrences(of: self.texts[index].shiftimportname, with: textFields![0].text! + oldfileextension)
                                     newshiftdbrecord.shiftimportname = textFields![0].text! + oldfileextension
                                 }
                                 
                             case ".PDF":
-                                if textFields![0].text!.containsString(".PDF") == false {
-                                    newpath = newpath.stringByReplacingOccurrencesOfString(self.texts[index].shiftimportname, withString: textFields![0].text! + oldfileextension)
+                                if textFields![0].text!.contains(".PDF") == false {
+                                    newpath = newpath.replacingOccurrences(of: self.texts[index].shiftimportname, with: textFields![0].text! + oldfileextension)
                                     newshiftdbrecord.shiftimportname = textFields![0].text! + oldfileextension
                                 }
                                 
@@ -206,7 +206,7 @@ class ShiftListSetting: UIViewController, UITableViewDataSource, UITableViewDele
                             
                             //ファイル名を変更する                            
                             do {
-                                try NSFileManager.defaultManager().moveItemAtPath(oldfilepath, toPath: newshiftdbrecord.shiftimportpath)
+                                try FileManager.default.moveItem(atPath: oldfilepath, toPath: newshiftdbrecord.shiftimportpath)
                             }
                             catch{
                                 print(error)
@@ -220,15 +220,15 @@ class ShiftListSetting: UIViewController, UITableViewDataSource, UITableViewDele
             alert.addAction(Action)
             
             //シフト取り込み名入力用のtextfieldを追加
-            alert.addTextFieldWithConfigurationHandler({(text:UITextField!) -> Void in
+            alert.addTextField(configurationHandler: {(text:UITextField!) -> Void in
                 text.placeholder = "新規取り込み名の入力"
-                text.returnKeyType = .Next
+                text.returnKeyType = .next
             })
             
         case 1:
             buttontitle = "削除する"
             
-            let Action: UIAlertAction = UIAlertAction(title: buttontitle, style: UIAlertActionStyle.Destructive, handler: { (action:UIAlertAction!) -> Void in
+            let Action: UIAlertAction = UIAlertAction(title: buttontitle, style: UIAlertActionStyle.destructive, handler: { (action:UIAlertAction!) -> Void in
                 
                 var filename = ""
                 
@@ -311,12 +311,12 @@ class ShiftListSetting: UIViewController, UITableViewDataSource, UITableViewDele
 
                         
                         //ファイルの削除
-                        let Libralypath = NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0] as String
+                        let Libralypath = NSSearchPathForDirectoriesInDomains(.libraryDirectory, .userDomainMask, true)[0] as String
                         let filepath = Libralypath + "/" + filename
                         
-                        let filemanager:NSFileManager = NSFileManager()
+                        let filemanager:FileManager = FileManager()
                         do{
-                            try filemanager.removeItemAtPath(filepath)
+                            try filemanager.removeItem(atPath: filepath)
                         }catch{
                             print(error)
                         }
@@ -337,20 +337,20 @@ class ShiftListSetting: UIViewController, UITableViewDataSource, UITableViewDele
         }
         
         
-        let Back: UIAlertAction = UIAlertAction(title: "戻る", style: UIAlertActionStyle.Cancel, handler: nil)
+        let Back: UIAlertAction = UIAlertAction(title: "戻る", style: UIAlertActionStyle.cancel, handler: nil)
         alert.addAction(Back)
         
-        self.presentViewController(alert, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: nil)
     }
     
     //削除エラーを表示するアラート
-    func ShowDeleteError(importname: String){
-        let alertController = UIAlertController(title: "削除エラー", message: importname+"の削除に失敗しました", preferredStyle: .Alert)
+    func ShowDeleteError(_ importname: String){
+        let alertController = UIAlertController(title: "削除エラー", message: importname+"の削除に失敗しました", preferredStyle: .alert)
         
-        let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
         alertController.addAction(defaultAction)
         
-        presentViewController(alertController, animated: true, completion: nil)
+        present(alertController, animated: true, completion: nil)
 
     }
 }

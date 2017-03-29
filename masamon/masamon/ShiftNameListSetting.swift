@@ -36,23 +36,23 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
         self.RefreshData()
         
         //シフトグループを選択するpickerview
-        shiftgroupnameUIPicker.frame = CGRectMake(0,0,self.view.bounds.width/2+20, 200.0)
+        shiftgroupnameUIPicker.frame = CGRect(x: 0,y: 0,width: self.view.bounds.width/2+20, height: 200.0)
         shiftgroupnameUIPicker.delegate = self
         shiftgroupnameUIPicker.dataSource = self
         shiftgroupnameUIPicker.tag = 2
         
         //pickerviewに表示するツールバー
-        pickerviewtoolBar.barStyle = UIBarStyle.Default
-        pickerviewtoolBar.translucent = true
+        pickerviewtoolBar.barStyle = UIBarStyle.default
+        pickerviewtoolBar.isTranslucent = true
         pickerviewtoolBar.sizeToFit()
         
-        pickerdoneButton = UIBarButtonItem(title: "完了", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(ShiftNameListSetting.donePicker(_:)))
-        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
+        pickerdoneButton = UIBarButtonItem(title: "完了", style: UIBarButtonItemStyle.plain, target: self, action: #selector(ShiftNameListSetting.donePicker(_:)))
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
         
         pickerviewtoolBar.setItems([flexSpace,pickerdoneButton], animated: false)
-        pickerviewtoolBar.userInteractionEnabled = true
+        pickerviewtoolBar.isUserInteractionEnabled = true
         
-        let add = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(ShiftNameListSetting.TapPlusButton(_:)))
+        let add = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(ShiftNameListSetting.TapPlusButton(_:)))
         navigationItem.rightBarButtonItems = [add]
     }
     
@@ -88,25 +88,25 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
     /*
     セクションの数を返す.
     */
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return sections.count
     }
     
     /*
     セクションのタイトルを返す.
     */
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return sections[section]
     }
     
     // セルの行数
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return records[section].count
     }
     
     // セルの内容を変更
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: "Cell")
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.value1, reuseIdentifier: "Cell")
         
         cell.textLabel?.text = records[indexPath.section][indexPath.row].name
         
@@ -114,7 +114,7 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
     }
     
     //セルの削除を許可
-    func tableView(tableView: UITableView,canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool
+    func tableView(_ tableView: UITableView,canEditRowAt indexPath: IndexPath) -> Bool
     {
         let cellname = self.records[indexPath.section][indexPath.row].name
         
@@ -126,37 +126,37 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
     }
     
     //セルを横スクロールした際に表示されるアクションを管理するメソッド
-    func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         
         // Editボタン.
-        let EditButton: UITableViewRowAction = UITableViewRowAction(style: .Normal, title: "編集") { (action, index) -> Void in
+        let EditButton: UITableViewRowAction = UITableViewRowAction(style: .normal, title: "編集") { (action, index) -> Void in
             
-            tableView.editing = false
+            tableView.isEditing = false
             self.alert(self.records[indexPath.section][indexPath.row].name + "を編集します", messagetext: "新しいシフト名を入力して下さい", section: indexPath.section, row: indexPath.row, flag: 0)
         }
-        EditButton.backgroundColor = UIColor.greenColor()
+        EditButton.backgroundColor = UIColor.green
         
         // Deleteボタン.
-        let DeleteButton: UITableViewRowAction = UITableViewRowAction(style: .Normal, title: "削除") { (action, index) -> Void in
+        let DeleteButton: UITableViewRowAction = UITableViewRowAction(style: .normal, title: "削除") { (action, index) -> Void in
             
-            tableView.editing = false
+            tableView.isEditing = false
             
             self.alert(self.records[indexPath.section][indexPath.row].name + "を削除します", messagetext: "本当に削除してよろしいですか？", section: indexPath.section, row: indexPath.row, flag: 1)
             
         }
-        DeleteButton.backgroundColor = UIColor.redColor()
+        DeleteButton.backgroundColor = UIColor.red
         
         return [EditButton, DeleteButton]
     }
     
     //アラートを表示する関数
-    func alert(titletext: String, messagetext: String, section: Int, row: Int, flag: Int){
+    func alert(_ titletext: String, messagetext: String, section: Int, row: Int, flag: Int){
         
         var buttontitle = ""
         
         let alert:UIAlertController = UIAlertController(title: titletext,
             message: messagetext,
-            preferredStyle: UIAlertControllerStyle.Alert)
+            preferredStyle: UIAlertControllerStyle.alert)
         
         var textflag = false
         //flagが0は編集、flagが1は削除, flagが3は追加
@@ -165,7 +165,7 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
             buttontitle = "編集完了"
             
             let Action:UIAlertAction = UIAlertAction(title: buttontitle,
-                style: UIAlertActionStyle.Default,
+                style: UIAlertActionStyle.default,
                 handler:{
                     (action:UIAlertAction!) -> Void in
                     let textFields:Array<UITextField>? =  alert.textFields as Array<UITextField>?
@@ -202,18 +202,18 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
             alert.addAction(Action)
             
             //シフト名入力用のtextfieldを追加
-            alert.addTextFieldWithConfigurationHandler({(text:UITextField!) -> Void in
+            alert.addTextField(configurationHandler: {(text:UITextField!) -> Void in
                 text.placeholder = "新規シフト名の入力"
-                text.returnKeyType = .Next
+                text.returnKeyType = .next
             })
             
             //シフトグループの選択内容を入れるテキストフィールドを追加
-            alert.addTextFieldWithConfigurationHandler(configurationshiftgroupnameTextField)
+            alert.addTextField(configurationHandler: configurationshiftgroupnameTextField)
                         
         case 1:
             buttontitle = "削除する"
             
-            let Action: UIAlertAction = UIAlertAction(title: buttontitle, style: UIAlertActionStyle.Destructive, handler: { (action:UIAlertAction!) -> Void in
+            let Action: UIAlertAction = UIAlertAction(title: buttontitle, style: UIAlertActionStyle.destructive, handler: { (action:UIAlertAction!) -> Void in
                 
                 let pivot = self.records[section][row].id                  //削除前にずらす元となるidを記録する
                 
@@ -229,7 +229,7 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
         case 2:
             buttontitle = "追加する"
             
-            let Action: UIAlertAction = UIAlertAction(title: buttontitle, style: UIAlertActionStyle.Default, handler: { (action:UIAlertAction!) -> Void in
+            let Action: UIAlertAction = UIAlertAction(title: buttontitle, style: UIAlertActionStyle.default, handler: { (action:UIAlertAction!) -> Void in
                 let textFields:Array<UITextField>? =  alert.textFields as Array<UITextField>?
                 if textFields != nil {
                     
@@ -253,13 +253,13 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
             })
             
             //シフト名入力用のtextfieldを追加
-            alert.addTextFieldWithConfigurationHandler({(text:UITextField!) -> Void in
+            alert.addTextField(configurationHandler: {(text:UITextField!) -> Void in
                 text.placeholder = "新規シフト名の入力"
-                text.returnKeyType = .Next
+                text.returnKeyType = .next
             })
             
             //シフトグループの選択内容を入れるテキストフィールドを追加
-            alert.addTextFieldWithConfigurationHandler(configurationshiftgroupnameTextField)
+            alert.addTextField(configurationHandler: configurationshiftgroupnameTextField)
             
             alert.addAction(Action)
             
@@ -268,31 +268,31 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
         }
         
         
-        let Back: UIAlertAction = UIAlertAction(title: "戻る", style: UIAlertActionStyle.Cancel, handler: nil)
+        let Back: UIAlertAction = UIAlertAction(title: "戻る", style: UIAlertActionStyle.cancel, handler: nil)
         alert.addAction(Back)
         
-        self.presentViewController(alert, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: nil)
     }
     
     
     //プラスボタンを押したとき
-    func TapPlusButton(sender: AnyObject) {
+    func TapPlusButton(_ sender: AnyObject) {
         self.alert("シフト名を新規追加します", messagetext: "追加するシフト名の情報を入力して下さい", section: 0, row: 0, flag: 2)
     }
     
     //pickerに表示する列数を返すデータソースメソッド.
-    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
     
     //pickerに表示する行数を返すデータソースメソッド.
-    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         pickerdoneButton.tag = 2
         return shiftgroupname.count
     }
     
     //pickerに表示する値を返すデリゲートメソッド.
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return shiftgroupname[row]
     }
     
@@ -300,14 +300,14 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
     var shiftgroupselectrow = 0
     
     //pickerが選択されたとき
-    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         shiftgroupnametextfield.text = shiftgroupname[row]
         pickerdoneButton.tag = 2
         shiftgroupselectrow = row
     }
     
     //シフトのグループを入れるテキストフィールドの設定をする
-    func configurationshiftgroupnameTextField(textField: UITextField!){
+    func configurationshiftgroupnameTextField(_ textField: UITextField!){
         textField.placeholder = "シフトのグループを入力"
         textField.inputView = self.shiftgroupnameUIPicker
         textField.inputAccessoryView = self.pickerviewtoolBar
@@ -317,12 +317,12 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
     }
     
     //ツールバーの完了ボタンを押した時の関数
-    func donePicker(sender:UIButton){
+    func donePicker(_ sender:UIButton){
         shiftgroupnametextfield.resignFirstResponder()
     }
     
     //textfieldがタップされた時
-    func textFieldDidBeginEditing(textField: UITextField) {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
         shiftgroupnameUIPicker.selectRow(shiftgroupselectrow, inComponent: 0, animated: true)
         textField.text = shiftgroupname[shiftgroupselectrow]
     }

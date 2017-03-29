@@ -24,13 +24,13 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     var onecourspicker: UIPickerView = UIPickerView()
     @IBOutlet weak var SaralyLabel: UILabel!
     
-    let filemanager:NSFileManager = NSFileManager()
+    let filemanager:FileManager = FileManager()
 
-    let notificationCenter = NSNotificationCenter.defaultCenter()
-    let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate //AppDelegateのインスタンスを取得
+    let notificationCenter = NotificationCenter.default
+    let appDelegate:AppDelegate = UIApplication.shared.delegate as! AppDelegate //AppDelegateのインスタンスを取得
     let alertview = UIImageView()
     
-    var currentnsdate = NSDate()        //MonthlySalaryShowがデータ表示している日付を管理
+    var currentnsdate = Date()        //MonthlySalaryShowがデータ表示している日付を管理
     
     let shiftgroupname = CommonMethod().GetShiftGroupName()
     var shiftgroupnameUIPicker: UIPickerView = UIPickerView()
@@ -65,33 +65,33 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         self.SetupDayButton(0)      //1週間分の日付を表示するボタンを設置する
         
         //シフトグループを選択するpickerview
-        shiftgroupnameUIPicker.frame = CGRectMake(0,0,self.view.bounds.width/2+20, 200.0)
+        shiftgroupnameUIPicker.frame = CGRect(x: 0,y: 0,width: self.view.bounds.width/2+20, height: 200.0)
         shiftgroupnameUIPicker.delegate = self
         shiftgroupnameUIPicker.dataSource = self
         shiftgroupnameUIPicker.tag = 2
         
         //pickerviewに表示するツールバー
-        pickerviewtoolBar.barStyle = UIBarStyle.Default
-        pickerviewtoolBar.translucent = true
+        pickerviewtoolBar.barStyle = UIBarStyle.default
+        pickerviewtoolBar.isTranslucent = true
         pickerviewtoolBar.sizeToFit()
         
-        pickerdoneButton = UIBarButtonItem(title: "完了", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(MonthlySalaryShow.donePicker(_:)))
-        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
+        pickerdoneButton = UIBarButtonItem(title: "完了", style: UIBarButtonItemStyle.plain, target: self, action: #selector(MonthlySalaryShow.donePicker(_:)))
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
         
         pickerviewtoolBar.setItems([flexSpace,pickerdoneButton], animated: false)
-        pickerviewtoolBar.userInteractionEnabled = true
+        pickerviewtoolBar.isUserInteractionEnabled = true
         
         
-        currentnsdate = NSDate()
+        currentnsdate = Date()
         
-        let today = NSDate()
+        let today = Date()
         
         //前日、今日、翌日のラベルにデータをセットする
         let daycontrol = [-1,0,1]
         for i in 0..<ShiftLabelArray.count {
             //control[i]分だけ日付を操作したnsdateを作成する
-            let calendar = NSCalendar.currentCalendar()
-            let daycontroled_nsdate = calendar.dateByAddingUnit(.Day, value: daycontrol[i], toDate: today, options: [])
+            let calendar = Calendar.current
+            let daycontroled_nsdate = (calendar as NSCalendar).date(byAdding: .day, value: daycontrol[i], to: today, options: [])
             let daycontroled_splitday = CommonMethod().ReturnYearMonthDayWeekday(daycontroled_nsdate!)
 
             self.ShowAllData(CommonMethod().Changecalendar(daycontroled_splitday.year, calender: "A.D"), m: daycontroled_splitday.month, d: daycontroled_splitday.day, arraynumber: i)
@@ -99,22 +99,22 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         
         let date = CommonMethod().ReturnYearMonthDayWeekday(today)
         //日付を表示するラベルの初期設定
-        CalenderLabel.frame = CGRectMake(8, 240, 359, 33)
-        CalenderLabel.backgroundColor = UIColor.clearColor()
-        CalenderLabel.textColor = UIColor.whiteColor()
-        CalenderLabel.textAlignment = NSTextAlignment.Center
+        CalenderLabel.frame = CGRect(x: 8, y: 240, width: 359, height: 33)
+        CalenderLabel.backgroundColor = UIColor.clear
+        CalenderLabel.textColor = UIColor.white
+        CalenderLabel.textAlignment = NSTextAlignment.center
         self.SetCalenderLabel(date.year, month: date.month, day: date.day, weekday: date.weekday)
 
         self.view.addSubview(CalenderLabel)
         
-        NSTimer.scheduledTimerWithTimeInterval(1.0,target:self,selector:#selector(MonthlySalaryShow.FileSaveSuccessfulAlertShow),
+        Timer.scheduledTimer(timeInterval: 1.0,target:self,selector:#selector(MonthlySalaryShow.FileSaveSuccessfulAlertShow),
                                                userInfo: nil, repeats: true);
         
         //アプリがアクティブになったとき
-        notificationCenter.addObserver(self,selector: #selector(MonthlySalaryShow.MonthlySalaryShowViewActived),name:UIApplicationDidBecomeActiveNotification,object: nil)
+        notificationCenter.addObserver(self,selector: #selector(MonthlySalaryShow.MonthlySalaryShowViewActived),name:NSNotification.Name.UIApplicationDidBecomeActive,object: nil)
         
         //PickerViewの追加
-        onecourspicker.frame = CGRectMake(-20,35,self.view.bounds.width/2+20, 150.0)
+        onecourspicker.frame = CGRect(x: -20,y: 35,width: self.view.bounds.width/2+20, height: 150.0)
         onecourspicker.delegate = self
         onecourspicker.dataSource = self
         onecourspicker.tag = 1
@@ -122,8 +122,8 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         
         //NSArrayへの追加
         if DBmethod().DBRecordCount(ShiftDB) != 0 {
-            for i in (0 ... DBmethod().DBRecordCount(ShiftDB)-1).reverse(){
-                shiftlist.addObject(DBmethod().ShiftDBGet(i))
+            for i in (0 ... DBmethod().DBRecordCount(ShiftDB)-1).reversed(){
+                shiftlist.add(DBmethod().ShiftDBGet(i))
             }
             
             //pickerviewのデフォルト表示
@@ -136,12 +136,12 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
      
      - parameter animated:
      */
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         
         shiftlist.removeAllObjects()
         if DBmethod().DBRecordCount(ShiftDB) != 0 {
-            for i in (0 ... DBmethod().DBRecordCount(ShiftDB)-1).reverse(){
-                shiftlist.addObject(DBmethod().ShiftDBGet(i))
+            for i in (0 ... DBmethod().DBRecordCount(ShiftDB)-1).reversed(){
+                shiftlist.add(DBmethod().ShiftDBGet(i))
             }
             
             //pickerviewのデフォルト表示
@@ -162,7 +162,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     
 
     let progress = GradientCircularProgress()
-    let Libralypath = NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0] as String
+    let Libralypath = NSSearchPathForDirectoriesInDomains(.libraryDirectory, .userDomainMask, true)[0] as String
     var staffshiftcountflag = true
     var staffnamecountflag = true
     
@@ -172,7 +172,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
      */
     func savedata() {
         
-        if self.appDelegate.filename.containsString(".xlsx") {
+        if self.appDelegate.filename.contains(".xlsx") {
             progress.show(style: OrangeClearStyle())
             dispatch_async_global { // ここからバックグラウンドスレッド
                 
@@ -222,8 +222,8 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         }else{
             //スタッフが登録されていない場合はエラーアラートを出す
             if DBmethod().DBRecordCount(StaffNameDB) == 0 {
-                let alert: UIAlertController = UIAlertController(title: "取り込みエラー", message: "スタッフを1名以上登録してください", preferredStyle:  UIAlertControllerStyle.Alert)
-                let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler:
+                let alert: UIAlertController = UIAlertController(title: "取り込みエラー", message: "スタッフを1名以上登録してください", preferredStyle:  UIAlertControllerStyle.alert)
+                let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler:
                     {
                         (action:UIAlertAction!) -> Void in
                         //ファイルの削除
@@ -232,7 +232,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                         
                         //コピーしたファイルの削除
                         do{
-                            try self.filemanager.removeItemAtPath(libralypath + filename)
+                            try self.filemanager.removeItem(atPath: libralypath + filename)
                             DBmethod().InitRecordInboxFileCountDB()
                         }catch{
                             print(error)
@@ -241,7 +241,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                 
                 alert.addAction(defaultAction)
                 
-                presentViewController(alert, animated: true, completion: nil)
+                present(alert, animated: true, completion: nil)
             }else {
                 progress.show(style: OrangeClearStyle())
                 dispatch_async_global{
@@ -293,10 +293,10 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         
         let alert:UIAlertController = UIAlertController(title:"\(appDelegate.unknownshiftname[0])が未登録です",
                                                         message:"シフトのグループを選択してください",
-                                                        preferredStyle: UIAlertControllerStyle.Alert)
+                                                        preferredStyle: UIAlertControllerStyle.alert)
         
         let addAction:UIAlertAction = UIAlertAction(title: "追加",
-                                                    style: UIAlertActionStyle.Default,
+                                                    style: UIAlertActionStyle.default,
                                                     handler:{
                                                         (action:UIAlertAction!) -> Void in
                                                         let textFields:Array<UITextField>? =  alert.textFields as Array<UITextField>?
@@ -324,21 +324,21 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         })
         
         let skipAction:UIAlertAction = UIAlertAction(title: "スキップ",
-                                                     style: UIAlertActionStyle.Destructive,
+                                                     style: UIAlertActionStyle.destructive,
                                                      handler:{
                                                         (action:UIAlertAction!) -> Void in
                                                         self.appDelegate.skipshiftname = self.appDelegate.unknownshiftname[0]
                                                         self.savedata()
         })
         
-        let cancelAction: UIAlertAction = UIAlertAction(title: "キャンセル", style: UIAlertActionStyle.Cancel) { (UIAlertAction) in
+        let cancelAction: UIAlertAction = UIAlertAction(title: "キャンセル", style: UIAlertActionStyle.cancel) { (UIAlertAction) in
             //ファイルの削除
             let libralypath = self.Libralypath + "/"
             let filename = DBmethod().FilePathTmpGet().lastPathComponent    //ファイル名の抽出
 
             //コピーしたファイルの削除
             do{
-                try self.filemanager.removeItemAtPath(libralypath + filename)
+                try self.filemanager.removeItem(atPath: libralypath + filename)
                 DBmethod().InitRecordInboxFileCountDB()
                 DBmethod().InitRecordFilePathTmpDB()
             }catch{
@@ -351,17 +351,17 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         alert.addAction(cancelAction)
         
         //シフト名入力用のtextfieldを追加
-        alert.addTextFieldWithConfigurationHandler({(text:UITextField!) -> Void in
+        alert.addTextField(configurationHandler: {(text:UITextField!) -> Void in
             text.text = self.appDelegate.unknownshiftname[0]
-            text.returnKeyType = .Next
+            text.returnKeyType = .next
             text.tag = 0
             text.delegate = self
         })
         
         //シフトグループの選択内容を入れるテキストフィールドを追加
-        alert.addTextFieldWithConfigurationHandler(configurationshiftgroupnameTextField)
+        alert.addTextField(configurationHandler: configurationshiftgroupnameTextField)
                 
-        self.presentViewController(alert, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: nil)
     }
     
     
@@ -375,10 +375,10 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         
         let alert:UIAlertController = UIAlertController(title:"\(donecount+1)/\(appDelegate.errorshiftnamefastcount)個" + "\n" + errorshiftnamexlsxarray[0]+"のシフトに関する情報を入力して下さい",
                                                         message: "<シフトの名前> \n 例) 出勤 \n",
-                                                        preferredStyle: UIAlertControllerStyle.Alert)
+                                                        preferredStyle: UIAlertControllerStyle.alert)
         
         let addAction:UIAlertAction = UIAlertAction(title: "追加",
-                                                    style: UIAlertActionStyle.Default,
+                                                    style: UIAlertActionStyle.default,
                                                     handler:{
                                                         (action:UIAlertAction!) -> Void in
                                                         let textFields:Array<UITextField>? =  alert.textFields as Array<UITextField>?
@@ -408,17 +408,17 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         alert.addAction(addAction)
         
         //シフト名入力用のtextfieldを追加
-        alert.addTextFieldWithConfigurationHandler({(text:UITextField!) -> Void in
+        alert.addTextField(configurationHandler: {(text:UITextField!) -> Void in
             text.placeholder = "シフトの名前を入力"
-            text.returnKeyType = .Next
+            text.returnKeyType = .next
             text.tag = 0
             text.delegate = self
         })
         
         //シフトグループの選択内容を入れるテキストフィールドを追加
-        alert.addTextFieldWithConfigurationHandler(configurationshiftgroupnameTextField)
+        alert.addTextField(configurationHandler: configurationshiftgroupnameTextField)
         
-        self.presentViewController(alert, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: nil)
     }
     
 
@@ -429,7 +429,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
      
      - returns: returnkeyの有効・無効
      */
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
         if (textField.text?.isEmpty) != nil {
             
@@ -452,8 +452,8 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
      
      - parameter block:
      */
-    func dispatch_async_main(block: () -> ()) {
-        dispatch_async(dispatch_get_main_queue(), block)
+    func dispatch_async_main(_ block: () -> ()) {
+        DispatchQueue.main.async(execute: block)
     }
     
 
@@ -462,8 +462,8 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
      
      - parameter block:
      */
-    func dispatch_async_global(block: () -> ()) {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), block)
+    func dispatch_async_global(_ block: () -> ()) {
+        DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async(execute: block)
     }
     
     override func didReceiveMemoryWarning() {
@@ -480,13 +480,13 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
      
      - returns: pickerViewに表示する文字列
      */
-    func pickerView(pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
         
         if pickerView.tag == 1 {
-            let attributedString = NSAttributedString(string: shiftlist[row] as! String, attributes: [NSForegroundColorAttributeName : UIColor.whiteColor()])
+            let attributedString = NSAttributedString(string: shiftlist[row] as! String, attributes: [NSForegroundColorAttributeName : UIColor.white])
             return attributedString
         }else {
-            let attributedString = NSAttributedString(string: shiftgroupname[row] , attributes: [NSForegroundColorAttributeName : UIColor.blackColor()])
+            let attributedString = NSAttributedString(string: shiftgroupname[row] , attributes: [NSForegroundColorAttributeName : UIColor.black])
             return attributedString
         }
     }
@@ -499,7 +499,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
      
      - returns: 表示する列の数
      */
-    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
     
@@ -512,7 +512,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
      
      - returns: 表示する行数
      */
-    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         
         if pickerView.tag == 1 {
             return shiftlist.count
@@ -529,7 +529,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
      - parameter row:        行
      - parameter component:  列
      */
-    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         
         if pickerView.tag == 1 {            //取り込んだシフト
             if DBmethod().DBRecordCount(ShiftDB) != 0 {         //レコードが0のときは何もしない
@@ -551,8 +551,8 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     func MonthlySalaryShowViewActived(){
         
         //ファイル数のカウント
-        let filemanager:NSFileManager = NSFileManager()
-        let files = filemanager.enumeratorAtPath(NSHomeDirectory() + "/Documents/Inbox")
+        let filemanager:FileManager = FileManager()
+        let files = filemanager.enumerator(atPath: NSHomeDirectory() + "/Documents/Inbox")
         var filecount = 0
         while let _ = files?.nextObject() {
             filecount += 1
@@ -565,8 +565,8 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             InboxFileCountRecord.counts = 1
             DBmethod().AddandUpdate(InboxFileCountRecord,update: true)
             
-            let targetViewController = self.storyboard!.instantiateViewControllerWithIdentifier("ShiftImport")
-            self.presentViewController( targetViewController, animated: true, completion: nil)
+            let targetViewController = self.storyboard!.instantiateViewController(withIdentifier: "ShiftImport")
+            self.present( targetViewController, animated: true, completion: nil)
         }else{
             
         }
@@ -590,7 +590,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
      
      - returns: シフト体制ごと(早,中1,2,3,遅,その他)に分けてスタッフ名を格納した1次元配列
      */
-    func SplitStaffShift(staff: String) -> Array<String>{
+    func SplitStaffShift(_ staff: String) -> Array<String>{
         var staffshiftarray: [String] = ["","","","","",""]         //早番,中1,中2,中3,遅,その他
         let endindex = staff.endIndex       //文字列の最後の場所
         var nowindex = staff.startIndex     //文字列の現在地
@@ -601,14 +601,14 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             
             while(staff[nowindex] != ":"){                            //スタッフ名を抽出するループ
                 staffname = staffname + String(staff[nowindex])
-                nowindex = nowindex.successor()
+                nowindex = <#T##Collection corresponding to `nowindex`##Collection#>.index(after: nowindex)
             }
             
-            nowindex = nowindex.successor()
+            nowindex = <#T##Collection corresponding to `nowindex`##Collection#>.index(after: nowindex)
             
             while(staff[nowindex] != ","){                            //シフトを抽出するループ
                 staffshift = staffshift + String(staff[nowindex])
-                nowindex = nowindex.successor()
+                nowindex = <#T##Collection corresponding to `nowindex`##Collection#>.index(after: nowindex)
             }
             
             if DBmethod().SearchShiftSystem(staffshift) == nil {     //シフト体制になかったらその他に分類
@@ -633,7 +633,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                 }
             }
             
-            nowindex = nowindex.successor()
+            nowindex = <#T##Collection corresponding to `nowindex`##Collection#>.index(after: nowindex)
         }
         
         //最後の文字を削除するための処理
@@ -641,7 +641,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             if staffshiftarray[i] != "" {
                 var str = staffshiftarray[i]
                 let endPoint = str.characters.count - 1
-                str = str.substringToIndex(str.startIndex.advancedBy(endPoint))
+                str = str.substring(to: str.characters.index(str.startIndex, offsetBy: endPoint))
                 staffshiftarray[i] = str
             }
         }
@@ -657,20 +657,20 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
      
      - returns: コンマ付きの文字列
      */
-    func GetCommaSalalyString(salaly: Int) -> String{
+    func GetCommaSalalyString(_ salaly: Int) -> String{
         
         var tmp = String(salaly)
-        var index = tmp.endIndex.predecessor()
+        var index = tmp.characters.index(before: tmp.endIndex)
         var i = 1
         
         while(tmp.startIndex != index){
             
             if i % 3 == 0 {
-                tmp.insert(",", atIndex: index)
+                tmp.insert(",", at: index)
             }
             
             i += 1
-            index = index.predecessor()
+            index = <#T##Collection corresponding to `index`##Collection#>.index(before: index)
         }
         
         return tmp
@@ -684,12 +684,12 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
      - parameter d:           日
      - parameter arraynumber: 日付を表示するラベルのindex(0:前日 1:今日 2:翌日)
      */
-    func ShowAllData(y: Int, m: Int, d: Int, arraynumber: Int){
+    func ShowAllData(_ y: Int, m: Int, d: Int, arraynumber: Int){
         
         let fontsize:CGFloat = 14
         
         if DBmethod().TheDayStaffGet(y, month: m, date: d) == nil {
-            let whiteAttribute = [ NSForegroundColorAttributeName: UIColor.hex("BEBEBE", alpha: 1.0),NSFontAttributeName: UIFont.systemFontOfSize(fontsize)]
+            let whiteAttribute = [ NSForegroundColorAttributeName: UIColor.hex("BEBEBE", alpha: 1.0),NSFontAttributeName: UIFont.systemFont(ofSize: fontsize)]
             
             for i in 0..<ShiftLabelArray[arraynumber].count {
                 ShiftLabelArray[arraynumber][i].attributedText = NSMutableAttributedString(string: shiftarray[i] + "No Data", attributes: whiteAttribute)
@@ -709,13 +709,13 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             //テキストビューにスタッフ名を羅列するためのループ
             for i in 0 ..< splitedstaffarray.count{
                 var myString = NSMutableAttributedString()
-                if (splitedstaffarray[i].rangeOfString(DBmethod().UserNameGet())) != nil {
+                if (splitedstaffarray[i].range(of: DBmethod().UserNameGet())) != nil {
                     
                     let textviewnsstring = (shiftarray[i] + splitedstaffarray[i]) as NSString
-                    let usernamelocation = textviewnsstring.rangeOfString(DBmethod().UserNameGet()).location
-                    let usernamelength = textviewnsstring.rangeOfString(DBmethod().UserNameGet()).length
-                    let myAttribute = [ NSFontAttributeName: UIFont.systemFontOfSize(fontsize+3) ]
-                    let whiteAttribute = [ NSForegroundColorAttributeName: UIColor.whiteColor()]
+                    let usernamelocation = textviewnsstring.range(of: DBmethod().UserNameGet()).location
+                    let usernamelength = textviewnsstring.range(of: DBmethod().UserNameGet()).length
+                    let myAttribute = [ NSFontAttributeName: UIFont.systemFont(ofSize: fontsize+3) ]
+                    let whiteAttribute = [ NSForegroundColorAttributeName: UIColor.white]
                     
                     myString = NSMutableAttributedString(string: shiftarray[i] + splitedstaffarray[i], attributes: myAttribute )
                     
@@ -735,7 +735,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                     ShiftLabelArray[arraynumber][i].attributedText = myString
                     
                 }else{      //ユーザ名が含まれていない場合の表示
-                    let myAttribute = [ NSFontAttributeName: UIFont.systemFontOfSize(fontsize) ]
+                    let myAttribute = [ NSFontAttributeName: UIFont.systemFont(ofSize: fontsize) ]
                     let myRange = NSRange(location: 0, length: (shiftarray[i] + splitedstaffarray[i]).characters.count)
                     
                     myString = NSMutableAttributedString(string: shiftarray[i] + splitedstaffarray[i], attributes: myAttribute )
@@ -755,7 +755,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
      
      - returns: 月火水木金土日のいずれかの文字列
      */
-    func ReturnWeekday(weekday: Int) ->String{
+    func ReturnWeekday(_ weekday: Int) ->String{
         switch(weekday){
         case 1:
             return "日"
@@ -782,7 +782,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
      
      - parameter sender: ツールバーのボタン
      */
-    func donePicker(sender:UIButton){
+    func donePicker(_ sender:UIButton){
         
         if sender.tag == 2 {            //シフトグループの完了ボタン
             shiftgroupnametextfield.resignFirstResponder()
@@ -795,7 +795,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
      
      - parameter textField: 対象となるtextField
      */
-    func configurationshiftgroupnameTextField(textField: UITextField!){
+    func configurationshiftgroupnameTextField(_ textField: UITextField!){
         textField.inputView = self.shiftgroupnameUIPicker
         textField.inputAccessoryView = self.pickerviewtoolBar
         textField.tag = 1
@@ -811,7 +811,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
      
      - parameter textField: タップされたtextField
      */
-    func textFieldDidBeginEditing(textField: UITextField) {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
         
         if textField.tag == 1 {
             shiftgroupnameUIPicker.selectRow(shiftgroupselectrow, inComponent: 0, animated: true)
@@ -824,7 +824,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
      
      - returns: 有効:true, 無効:false
      */
-    override func canBecomeFirstResponder() -> Bool {
+    override var canBecomeFirstResponder : Bool {
         return true
     }
     
@@ -834,11 +834,11 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
      - parameter motion:
      - parameter event:
      */
-    override func motionBegan(motion: UIEventSubtype,withEvent event: UIEvent?){
+    override func motionBegan(_ motion: UIEventSubtype,with event: UIEvent?){
         
-        if motion == UIEventSubtype.MotionShake {
-            let targetViewController = self.storyboard!.instantiateViewControllerWithIdentifier("Video")
-            self.presentViewController( targetViewController, animated: true, completion: nil)
+        if motion == UIEventSubtype.motionShake {
+            let targetViewController = self.storyboard!.instantiateViewController(withIdentifier: "Video")
+            self.present( targetViewController, animated: true, completion: nil)
         }
     }
     
@@ -861,11 +861,11 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             let calendarBaseLabel: UILabel = UILabel()
             
             //X座標の値をCGFloat型へ変換して設定
-            calendarBaseLabel.frame = CGRectMake(
-                CGFloat(calendarLabelIntervalX + calendarLabelX * (i % 7)),
-                CGFloat(calendarLabelY),
-                CGFloat(calendarLabelWidth),
-                CGFloat(calendarLabelHeight)
+            calendarBaseLabel.frame = CGRect(
+                x: CGFloat(calendarLabelIntervalX + calendarLabelX * (i % 7)),
+                y: CGFloat(calendarLabelY),
+                width: CGFloat(calendarLabelWidth),
+                height: CGFloat(calendarLabelHeight)
             )
             
             //日曜日の場合は赤色を指定
@@ -888,14 +888,14 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             }else{
                 
                 //既に用意されている配色パターンの場合
-                calendarBaseLabel.textColor = UIColor.whiteColor()
+                calendarBaseLabel.textColor = UIColor.white
                 
             }
             
             //曜日ラベルの配置
             calendarBaseLabel.text = String(monthName[i] as NSString)
-            calendarBaseLabel.textAlignment = NSTextAlignment.Center
-            calendarBaseLabel.font = UIFont.systemFontOfSize(UIFont.smallSystemFontSize())
+            calendarBaseLabel.textAlignment = NSTextAlignment.center
+            calendarBaseLabel.font = UIFont.systemFont(ofSize: UIFont.smallSystemFontSize)
             self.view.addSubview(calendarBaseLabel)
         }
     }
@@ -908,10 +908,10 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
      
      - parameter judgeswipe: 1なら日付を進めるスワイプ，-1なら日付を戻すスワイプ
      */
-    func SetupDayButton(judgeswipe: Int){
+    func SetupDayButton(_ judgeswipe: Int){
         
         //todayと一致するボタンタイトルがある場合は常に文字を白表示にする
-        let totayNSDate = NSDate()
+        let totayNSDate = Date()
         let todaysplitday = CommonMethod().ReturnYearMonthDayWeekday(totayNSDate) //日付を西暦,月,日,曜日に分けて取得
         
         self.RemoveButtonObjects()
@@ -929,39 +929,39 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             
             //ボタンをつくる
             let button: UIButton = UIButton()
-            button.frame = CGRectMake(
-                CGFloat(positionX),
-                CGFloat(positionY),
-                CGFloat(buttonSize),
-                CGFloat(buttonSize)
+            button.frame = CGRect(
+                x: CGFloat(positionX),
+                y: CGFloat(positionY),
+                width: CGFloat(buttonSize),
+                height: CGFloat(buttonSize)
             );
             
             //ボタンのデザインを決定する
-            button.backgroundColor = UIColor.clearColor()
-            button.setTitleColor(UIColor.grayColor(), forState: .Normal)
-            button.titleLabel!.font = UIFont.systemFontOfSize(19)
+            button.backgroundColor = UIColor.clear
+            button.setTitleColor(UIColor.gray, for: UIControlState())
+            button.titleLabel!.font = UIFont.systemFont(ofSize: 19)
             button.layer.cornerRadius = CGFloat(buttonSize/2)
             button.tag = daybuttonarray[i].day
             
-            button.setTitle(String(daybuttonarray[i].day), forState: .Normal)
+            button.setTitle(String(daybuttonarray[i].day), for: UIControlState())
             
             //currentnsdateと一致するボタンがある場合
             if currentsplitdate.year == daybuttonarray[i].year && currentsplitdate.month == daybuttonarray[i].month && currentsplitdate.day == daybuttonarray[i].day {
                 button.backgroundColor = UIColor.hex("FF8E92", alpha: 1.0)
-                button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+                button.setTitleColor(UIColor.white, for: UIControlState())
             }
             
             //今日の年月日と一致するボタンがある場合は文字色を白にする
             if todaysplitday.year == daybuttonarray[i].year && todaysplitday.month ==  daybuttonarray[i].month && todaysplitday.day == daybuttonarray[i].day {
-                button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+                button.setTitleColor(UIColor.white, for: UIControlState())
             }
             
             //配置したボタンに押した際のアクションを設定する
-            button.addTarget(self, action: #selector(MonthlySalaryShow.TapDayButton(_:)), forControlEvents: .TouchUpInside)
+            button.addTarget(self, action: #selector(MonthlySalaryShow.TapDayButton(_:)), for: .touchUpInside)
             
             //ボタンを配置する
             self.view.addSubview(button)
-            self.view.bringSubviewToFront(button)
+            self.view.bringSubview(toFront: button)
             
             //土曜日を表示中に、日付を進めるスワイプが発生したら
             if judgeswipe == 1 && currentsplitdate.weekday == 1 {
@@ -994,7 +994,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
      
      - parameter sender: タップしたUIButton
      */
-    func TapDayButton(sender: UIButton){
+    func TapDayButton(_ sender: UIButton){
         let currentsplitday = CommonMethod().ReturnYearMonthDayWeekday(currentnsdate) //日付を西暦,月,日,曜日に分けて取得
         
         //タップした日付ボタンと表示中の日付の配列位置を比較
@@ -1046,12 +1046,12 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     func setupTapGesture() {
         // 右方向へのスワイプ
         let gestureToRight = UISwipeGestureRecognizer(target: self, action: #selector(MonthlySalaryShow.prevday))
-        gestureToRight.direction = UISwipeGestureRecognizerDirection.Right
+        gestureToRight.direction = UISwipeGestureRecognizerDirection.right
         self.view.addGestureRecognizer(gestureToRight)
         
         // 左方向へのスワイプ
         let gestureToLeft = UISwipeGestureRecognizer(target: self, action: #selector(MonthlySalaryShow.nextday))
-        gestureToLeft.direction = UISwipeGestureRecognizerDirection.Left
+        gestureToLeft.direction = UISwipeGestureRecognizerDirection.left
         self.view.addGestureRecognizer(gestureToLeft)
         
         //長押し
@@ -1069,14 +1069,14 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
      
      - parameter beforeposition: 移動前のx座標
      */
-    func AnimationCalenderLabel(beforeposition: CGFloat) {
+    func AnimationCalenderLabel(_ beforeposition: CGFloat) {
         CalenderLabel.alpha = 0.0
-        CalenderLabel.frame = CGRectMake(beforeposition, 240, 359, 33)
+        CalenderLabel.frame = CGRect(x: beforeposition, y: 240, width: 359, height: 33)
         
-        UIView.animateWithDuration(0.5) {
-            self.CalenderLabel.frame = CGRectMake(8, 240, 359, 33)
+        UIView.animate(withDuration: 0.5, animations: {
+            self.CalenderLabel.frame = CGRect(x: 8, y: 240, width: 359, height: 33)
             self.CalenderLabel.alpha = 1.0
-        }
+        }) 
     }
     
 
@@ -1088,7 +1088,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
      - parameter day:     日
      - parameter weekday: 曜日(数値)
      */
-    func SetCalenderLabel(year: Int, month: Int, day: Int, weekday: Int){
+    func SetCalenderLabel(_ year: Int, month: Int, day: Int, weekday: Int){
         CalenderLabel.text = "\(year)年\(month)月\(day)日 \(self.ReturnWeekday(weekday))曜日"
     }
     
@@ -1102,20 +1102,20 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
      - parameter positionY:      ボタンのy座標(変化なし)
      - parameter buttonsize:     ボタンのサイズ(変化なし)
      */
-    func AnimationDayButton(button: UIButton, beforeposition: Int, afterpositon: Int, positionY: Int, buttonsize: Int){
-        button.frame = CGRectMake(
-            CGFloat(beforeposition),
-            CGFloat(positionY),
-            CGFloat(buttonsize),
-            CGFloat(buttonsize)
+    func AnimationDayButton(_ button: UIButton, beforeposition: Int, afterpositon: Int, positionY: Int, buttonsize: Int){
+        button.frame = CGRect(
+            x: CGFloat(beforeposition),
+            y: CGFloat(positionY),
+            width: CGFloat(buttonsize),
+            height: CGFloat(buttonsize)
         );
         
-        UIView.animateWithDuration(0.3, animations: {
-            button.frame = CGRectMake(
-                CGFloat(afterpositon),
-                CGFloat(positionY),
-                CGFloat(buttonsize),
-                CGFloat(buttonsize)
+        UIView.animate(withDuration: 0.3, animations: {
+            button.frame = CGRect(
+                x: CGFloat(afterpositon),
+                y: CGFloat(positionY),
+                width: CGFloat(buttonsize),
+                height: CGFloat(buttonsize)
             );
         })
     }
@@ -1128,19 +1128,19 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
      - parameter mainposition: 今日のシフトを表示しているラベルのx座標
      - parameter nextpositon:  翌日のシフトを表示しているラベルのx座標
      */
-    func AnimationShiftLabelCompletion(prevposition: Int, mainposition: Int, nextpositon: Int){
+    func AnimationShiftLabelCompletion(_ prevposition: Int, mainposition: Int, nextpositon: Int){
         let positionarray = [prevposition,mainposition,nextpositon]
         var y: CGFloat = 0
         var w: CGFloat = 0
         var h: CGFloat = 0
         
-        UIView.animateWithDuration(0.4, animations: {
+        UIView.animate(withDuration: 0.4, animations: {
             for i in 0..<self.ShiftLabelArray.count {
                 for j in 0..<self.ShiftLabelArray[i].count {
                     y = self.ShiftLabelArray[i][j].frame.origin.y
                     w = self.ShiftLabelArray[i][j].frame.size.width
                     h = self.ShiftLabelArray[i][j].frame.size.height
-                    self.ShiftLabelArray[i][j].frame = CGRectMake(CGFloat(positionarray[i]), y, w, h)
+                    self.ShiftLabelArray[i][j].frame = CGRect(x: CGFloat(positionarray[i]), y: y, width: w, height: h)
                 }
             }
 
@@ -1153,7 +1153,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                         y = self.ShiftLabelArray[i][j].frame.origin.y
                         w = self.ShiftLabelArray[i][j].frame.size.width
                         h = self.ShiftLabelArray[i][j].frame.size.height
-                        self.ShiftLabelArray[i][j].frame = CGRectMake(CGFloat(self.shiftlabel_x[i]), y, w, h)
+                        self.ShiftLabelArray[i][j].frame = CGRect(x: CGFloat(self.shiftlabel_x[i]), y: y, width: w, height: h)
                     }
                 }
                 
@@ -1161,8 +1161,8 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                 let daycontrol = [-1,0,1]
                 for i in 0..<self.ShiftLabelArray.count {
                     //control[i]分だけ日付を操作したnsdateを作成する
-                    let calendar = NSCalendar.currentCalendar()
-                    let daycontroled_nsdate = calendar.dateByAddingUnit(.Day, value: daycontrol[i], toDate: self.currentnsdate, options: [])
+                    let calendar = Calendar.current
+                    let daycontroled_nsdate = (calendar as NSCalendar).date(byAdding: .day, value: daycontrol[i], to: self.currentnsdate, options: [])
                     let daycontroled_splitday = CommonMethod().ReturnYearMonthDayWeekday(daycontroled_nsdate!)
 
                     self.ShowAllData(CommonMethod().Changecalendar(daycontroled_splitday.year, calender: "A.D"), m: daycontroled_splitday.month, d: daycontroled_splitday.day, arraynumber: i)
@@ -1188,7 +1188,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             
             for j in 0..<shiftlabel_line.count {
                 let label = UILabel()
-                label.frame = CGRectMake(CGFloat(shiftlabel_x[i]), CGFloat(startheight + j*space), 359, CGFloat(shiftlabel_h[j]))
+                label.frame = CGRect(x: CGFloat(shiftlabel_x[i]), y: CGFloat(startheight + j*space), width: 359, height: CGFloat(shiftlabel_h[j]))
                 label.backgroundColor = UIColor.hex("4C4C4C", alpha: 1.0)
                 label.numberOfLines = shiftlabel_line[j]
                 
@@ -1227,16 +1227,16 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
      
      - parameter sender: 長押しのジェスチャー
      */
-    func today(sender: UILongPressGestureRecognizer){
+    func today(_ sender: UILongPressGestureRecognizer){
         
-        if sender.state == UIGestureRecognizerState.Began {
+        if sender.state == UIGestureRecognizerState.began {
             
-            let today = NSDate()
+            let today = Date()
             let date = CommonMethod().ReturnYearMonthDayWeekday(today)
             self.SetCalenderLabel(date.year, month: date.month, day: date.day, weekday: date.weekday)
             
-            let calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)!
-            let compareunit = calendar.compareDate(currentnsdate, toDate: today, toUnitGranularity: .Day)
+            let calendar = Calendar(identifier: Calendar.Identifier.gregorian)!
+            let compareunit = (calendar as NSCalendar).compare(currentnsdate, to: today, toUnitGranularity: .day)
             
             currentnsdate = today
             
@@ -1253,13 +1253,13 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             tapanimationbuttonflag = containflag
             
             //現在表示している日付と今日の日付を比較して、アニメーションを切り替えて表示する
-            if compareunit == .OrderedAscending {           //currentnsdateが今日より小さい(前の日付)場合
+            if compareunit == .orderedAscending {           //currentnsdateが今日より小さい(前の日付)場合
                 self.ShowAllData(CommonMethod().Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day, arraynumber: 2)
                 self.AnimationCalenderLabel(20)
                 self.SetupDayButton(1)
                 self.AnimationShiftLabelCompletion(shiftlabel_x[0], mainposition: shiftlabel_x[0], nextpositon: shiftlabel_x[1])
                 
-            }else if compareunit == .OrderedDescending{     //currentnsdateが今日より大きい(後の日付)場合
+            }else if compareunit == .orderedDescending{     //currentnsdateが今日より大きい(後の日付)場合
                 self.ShowAllData(CommonMethod().Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day, arraynumber: 0)
                 self.AnimationCalenderLabel(-4)
                 self.SetupDayButton(-1)
@@ -1279,10 +1279,10 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
      
      - parameter control: 進める日付の日数
      */
-    func DayControl(control: Int){
+    func DayControl(_ control: Int){
         //control分だけ日付を操作したnsdateを作成する
-        let calendar = NSCalendar.currentCalendar()
-        let daycontroled_nsdate = calendar.dateByAddingUnit(.Day, value: control, toDate: self.currentnsdate, options: [])
+        let calendar = Calendar.current
+        let daycontroled_nsdate = (calendar as NSCalendar).date(byAdding: .day, value: control, to: self.currentnsdate, options: [])
         
         currentnsdate = daycontroled_nsdate!
 
@@ -1301,13 +1301,13 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
      - parameter pivotnsdate:  今日のnsdate
      - parameter pivotweekday: 今日の曜日を表す数値
      */
-    func SetDayArray(pivotnsdate: NSDate, pivotweekday: Int){
+    func SetDayArray(_ pivotnsdate: Date, pivotweekday: Int){
         var j = 0                   //日付を増やすための変数
         
         let nsdatesplit = CommonMethod().ReturnYearMonthDayWeekday(pivotnsdate)
         
         //今日の日付から日曜日までの日付を追加する
-        for i in (1..<pivotweekday).reverse() {
+        for i in (1..<pivotweekday).reversed() {
             let tmp_daybutton = day_button()
             
             let newnsdate = CommonMethod().CreateNSDate(nsdatesplit.year, month: nsdatesplit.month, day: nsdatesplit.day-i)

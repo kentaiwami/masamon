@@ -30,7 +30,7 @@ struct OneDayShift {
 
 class PDFmethod: UIViewController {
     
-    let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    let appDelegate:AppDelegate = UIApplication.shared.delegate as! AppDelegate
 
     let tolerance_y = 3.0                         //同じ行と判定させるための許容誤差
     let tolerance_x = 7.0                         //1日ごとのリミット値の許容誤差
@@ -70,7 +70,7 @@ class PDFmethod: UIViewController {
             var removed_unnecessary = RemoveUnnecessaryLines(unioned)
             
             let shiftyearmonthAndlength = GetShiftYearMonth(GetLineText(removed_unnecessary[0]))
-            removed_unnecessary.removeAtIndex(0)
+            removed_unnecessary.remove(at: 0)
             
             let limitArray = GetLimitArray(days_charinfo, length: shiftyearmonthAndlength.length)
             let results_GetSplitShiftAllStaffByDay = GetSplitShiftAllStaffByDay(removed_unnecessary, limit: limitArray)
@@ -151,13 +151,13 @@ class PDFmethod: UIViewController {
      
      - returns: 半角記号に置き換えた後の文字列
      */
-    func ReplaceHankakuSymbol(text: String) -> String {
+    func ReplaceHankakuSymbol(_ text: String) -> String {
         let pattern_zenkaku = ["（", "）", "／"]
         let pattern_hankaku = ["(", ")", "/"]
 
         var hankaku_text = text
         for i in 0..<pattern_hankaku.count {
-            hankaku_text = hankaku_text.stringByReplacingOccurrencesOfString(pattern_zenkaku[i], withString: pattern_hankaku[i])
+            hankaku_text = hankaku_text.replacingOccurrences(of: pattern_zenkaku[i], with: pattern_hankaku[i])
         }
         
         return hankaku_text
@@ -170,7 +170,7 @@ class PDFmethod: UIViewController {
      
      - returns: テキストは完全一致,y座標は近似している配列(余分に存在する配列)を削除した配列
      */
-    func RemoveOverlapArray(charinfoArrays: [[CharInfo]]) -> [[CharInfo]] {
+    func RemoveOverlapArray(_ charinfoArrays: [[CharInfo]]) -> [[CharInfo]] {
         
         var removedcharinfoArray = charinfoArrays
         var matchKeyArray: [Int] = []               //比較対象元(添字が小さい)
@@ -202,14 +202,14 @@ class PDFmethod: UIViewController {
         }
         
         //matchkey,value配列からY座標の平均値が全く異なるものを外す処理
-        for i in (0..<matchKeyArray.count).reverse() {
+        for i in (0..<matchKeyArray.count).reversed() {
             let key_Yave = Get_Y_Average(charinfoArrays[matchKeyArray[i]])
             let value_Yave = Get_Y_Average(charinfoArrays[matchValueArray[i]])
             
             //テキストは完全一致でもY座標が近似でない場合
             if !(value_Yave-tolerance_y...value_Yave+tolerance_y ~= key_Yave) {
-                matchKeyArray.removeAtIndex(i)
-                matchValueArray.removeAtIndex(i)
+                matchKeyArray.remove(at: i)
+                matchValueArray.remove(at: i)
             }
         }
         
@@ -220,8 +220,8 @@ class PDFmethod: UIViewController {
         
         
         //重複と判断されたcharinfoArrayの添字をもとに削除する
-        for i in (0..<matchValueArray.count).reverse() {
-            removedcharinfoArray.removeAtIndex(matchValueArray[i])
+        for i in (0..<matchValueArray.count).reversed() {
+            removedcharinfoArray.remove(at: matchValueArray[i])
         }
         
         return removedcharinfoArray
@@ -235,13 +235,13 @@ class PDFmethod: UIViewController {
      
      - returns: ソート後のCharInfoが格納された2次元配列
      */
-    func SortcharinfoArray(charinfoArrays: [[CharInfo]]) -> [[CharInfo]] {
+    func SortcharinfoArray(_ charinfoArrays: [[CharInfo]]) -> [[CharInfo]] {
         var sorted = charinfoArrays
         
-        sorted.sortInPlace { $0[0].y > $1[0].y }
+        sorted.sort { $0[0].y > $1[0].y }
         
         for i in 0..<sorted.count {
-            sorted[i].sortInPlace { $0.x < $1.x }
+            sorted[i].sort { $0.x < $1.x }
         }
         
         return sorted
@@ -255,7 +255,7 @@ class PDFmethod: UIViewController {
      
      - returns: y座標の平均値
      */
-    func Get_Y_Average(charinfoArray: [CharInfo]) -> Double {
+    func Get_Y_Average(_ charinfoArray: [CharInfo]) -> Double {
         var sum = 0.0
         for i in 0..<charinfoArray.count {
             sum += charinfoArray[i].y
@@ -273,7 +273,7 @@ class PDFmethod: UIViewController {
      
      - returns: y座標が近似している配列を結合した2次元配列
      */
-    func UnionArrayByY(aveArray: [Double], charinfoArrays: [[CharInfo]]) -> [[CharInfo]]{
+    func UnionArrayByY(_ aveArray: [Double], charinfoArrays: [[CharInfo]]) -> [[CharInfo]]{
         var unionedArray = charinfoArrays
         var pivot_index = 0
         var pivot = 0.0
@@ -295,9 +295,9 @@ class PDFmethod: UIViewController {
         }
         
         //grouping内の空配列を削除する
-        for i in (0..<grouping.count).reverse() {
+        for i in (0..<grouping.count).reversed() {
             if grouping[i].isEmpty {
-                grouping.removeAtIndex(i)
+                grouping.remove(at: i)
             }
         }
         
@@ -310,12 +310,12 @@ class PDFmethod: UIViewController {
         }
         
         //groupingをもとにunionedArrayの配列同士を結合する
-        for i in (0..<grouping.count).reverse() {
-            for j in (0..<grouping[i].count - 1).reverse() {
+        for i in (0..<grouping.count).reversed() {
+            for j in (0..<grouping[i].count - 1).reversed() {
                 let index1 = grouping[i][j]
                 let index2 = grouping[i][j+1]
                 unionedArray[index1] += unionedArray[index2]
-                unionedArray.removeAtIndex(index2)
+                unionedArray.remove(at: index2)
             }
         }
         
@@ -331,7 +331,7 @@ class PDFmethod: UIViewController {
      
      - parameter charinfoArrays: 表示したいCharInfoが格納された2次元配列
      */
-    func ShowAllcharinfoArray(charinfoArrays: [[CharInfo]]) {
+    func ShowAllcharinfoArray(_ charinfoArrays: [[CharInfo]]) {
         for i in 0..<charinfoArrays.count {
             print(String(i) + ": ", terminator: "")
             for j in 0..<charinfoArrays[i].count {
@@ -350,7 +350,7 @@ class PDFmethod: UIViewController {
      
      - returns: 結合した文字列
      */
-    func GetLineText(charinfoArray: [CharInfo]) -> String {
+    func GetLineText(_ charinfoArray: [CharInfo]) -> String {
         var linetext = ""
         for i in 0..<charinfoArray.count {
             linetext += charinfoArray[i].text
@@ -367,7 +367,7 @@ class PDFmethod: UIViewController {
      
      - returns: 日付が記述されているcharinfo1次元配列
      */
-    func GetDaysCharInfo(charinfoArrays: [[CharInfo]]) -> [CharInfo] {
+    func GetDaysCharInfo(_ charinfoArrays: [[CharInfo]]) -> [CharInfo] {
         for i in 0..<charinfoArrays.count {
             var count = 0
             for j in 0..<charinfoArrays[i].count {
@@ -395,7 +395,7 @@ class PDFmethod: UIViewController {
      
      - returns: 不要な行を削除したCharInfoを格納している2次元配列
      */
-    func RemoveUnnecessaryLines(charinfoArrays: [[CharInfo]]) -> [[CharInfo]] {
+    func RemoveUnnecessaryLines(_ charinfoArrays: [[CharInfo]]) -> [[CharInfo]] {
         var removed = charinfoArrays
         var pivot_index = 0
         
@@ -403,15 +403,15 @@ class PDFmethod: UIViewController {
         for i in 0..<charinfoArrays.count {
             let linetext = GetLineText(charinfoArrays[i])
             
-            if linetext.containsString("平成") {
+            if linetext.contains("平成") {
                 pivot_index = i
                 break
             }
         }
         
         //平成xx年度の行より上の行を取り除く
-        for i in (0..<pivot_index).reverse() {
-            removed.removeAtIndex(i)
+        for i in (0..<pivot_index).reversed() {
+            removed.remove(at: i)
         }
         
         //各行にスタッフ名が含まれているかを検索して記録する
@@ -421,7 +421,7 @@ class PDFmethod: UIViewController {
             let linetext = GetLineText(removed[i])
             
             for j in 0..<staffnameArray!.count {
-                if linetext.containsString(staffnameArray![j]) {
+                if linetext.contains(staffnameArray![j]) {
                     contains_staffname_line.append(i)
                     break
                 }
@@ -429,16 +429,16 @@ class PDFmethod: UIViewController {
         }
         
         //スタッフ名が含まれていない行を削除
-        for i in (1..<removed.count).reverse() {
-            if contains_staffname_line.indexOf(i) == nil {
-                removed.removeAtIndex(i)
+        for i in (1..<removed.count).reversed() {
+            if contains_staffname_line.index(of: i) == nil {
+                removed.remove(at: i)
             }
         }
         
         //先頭文字が数字でない行を削除
-        for i in (1..<removed.count).reverse() {
+        for i in (1..<removed.count).reversed() {
             if Int(removed[i][0].text) == nil {
-                removed.removeAtIndex(i)
+                removed.remove(at: i)
             }
         }
         
@@ -459,7 +459,7 @@ class PDFmethod: UIViewController {
                 endcoursmonthyear:     1日〜10日までの年(和暦)
                 length:                1クールの日数
      */
-    func GetShiftYearMonth(text: String) -> ((year: Int, startcoursmonth: Int, startcoursmonthyear: Int, endcoursmonth: Int, endcoursmonthyear: Int), length: Int){
+    func GetShiftYearMonth(_ text: String) -> ((year: Int, startcoursmonth: Int, startcoursmonthyear: Int, endcoursmonth: Int, endcoursmonthyear: Int), length: Int){
         //1クールが全部で何日間あるかを判断するため
         let shiftyearandmonth = CommonMethod().JudgeYearAndMonth(text)
         let monthrange = CommonMethod().GetShiftCoursMonthRange(shiftyearandmonth.startcoursmonthyear, shiftstartmonth: shiftyearandmonth.startcoursmonth)
@@ -475,7 +475,7 @@ class PDFmethod: UIViewController {
      - parameter length: 1クールの最大日数
      - returns: 1日ごとのリミット値(x座標)が格納されたDouble1次元配列
      */
-    func GetLimitArray(charinfodaysArray: [CharInfo], length: Int) -> [Double] {
+    func GetLimitArray(_ charinfodaysArray: [CharInfo], length: Int) -> [Double] {
         var limitArray:[Double] = []
         var day = 11
         var index = -1
@@ -512,7 +512,7 @@ class PDFmethod: UIViewController {
      - returns: スタッフごとにシフト名を格納したOneDayShift2次元配列
                 シフトに出現するスタッフ名を格納したString1次元配列
      */
-    func GetSplitShiftAllStaffByDay(charinfoArrays: [[CharInfo]], limit:[Double]) -> (onedayshiftArrays: [[OneDayShift]], staffnameArray: [String]) {
+    func GetSplitShiftAllStaffByDay(_ charinfoArrays: [[CharInfo]], limit:[Double]) -> (onedayshiftArrays: [[OneDayShift]], staffnameArray: [String]) {
         var splitdayshift: [[OneDayShift]] = []
         var staffnameArray: [String] = []
         
@@ -538,10 +538,10 @@ class PDFmethod: UIViewController {
             
             //名前の場所を記録
             for j in 0..<staffnameDBArray.count {
-                let staffname_range = one_person_textline.rangeOfString(staffnameDBArray[j])
+                let staffname_range = one_person_textline.range(of: staffnameDBArray[j])
                 if staffname_range != nil {
                     
-                    staffname_candidature[staffnameDBArray[j]] = one_person_textline.startIndex.distanceTo(staffname_range!.startIndex)
+                    staffname_candidature[staffnameDBArray[j]] = one_person_textline.characters.distance(from: one_person_textline.startIndex, to: staffname_range!.lowerBound)
                 }
             }
             
@@ -552,7 +552,7 @@ class PDFmethod: UIViewController {
                 staffname = keys[0]
                 staffnameArray.append(staffname)
             }else if staffname_candidature.count > 1 {
-                let minvalue = values.minElement()
+                let minvalue = values.min()
                 for (key,value) in staffname_candidature {
                     if minvalue! == value {
                         staffname = key;
@@ -564,7 +564,7 @@ class PDFmethod: UIViewController {
             
             //シフト文字の始まりの場所を記録する
             var shift_start = 0
-            let staffname_end_char = staffname[staffname.endIndex.predecessor()]
+            let staffname_end_char = staffname[staffname.characters.index(before: staffname.endIndex)]
             for j in 0..<one_person_charinfo.count {
                 let text = one_person_charinfo[j].text
                 
@@ -620,7 +620,7 @@ class PDFmethod: UIViewController {
      
      - returns: 等しいならtrue、等しくないならfalse
      */
-    func EqualOneDayShift(obj1: OneDayShift, obj2: OneDayShift) -> Bool {
+    func EqualOneDayShift(_ obj1: OneDayShift, obj2: OneDayShift) -> Bool {
         if (obj1.text == obj2.text) && (obj1.x == obj2.x) {
             return true
         }else {
@@ -637,7 +637,7 @@ class PDFmethod: UIViewController {
      
      - returns: 結合修正済みの2次元配列
      */
-    func CoordinateMergedCell(charinfoArrays: [[CharInfo]], splitshiftArrays: [[OneDayShift]]) -> [[String]] {
+    func CoordinateMergedCell(_ charinfoArrays: [[CharInfo]], splitshiftArrays: [[OneDayShift]]) -> [[String]] {
         var splitshiftArrays = splitshiftArrays
         var coordinatedArray:[[String]] = []
         var current_onedayshiftArray:[OneDayShift] = []
@@ -662,7 +662,7 @@ class PDFmethod: UIViewController {
                 let current_obj = current_onedayshiftArray[j]
                 let next_obj = next_onedayshiftArray[j]
                 
-                for k in (0..<splitshiftArrays[i].count).reverse() {
+                for k in (0..<splitshiftArrays[i].count).reversed() {
                     if EqualOneDayShift(current_obj, obj2: splitshiftArrays[i][k]) {
                         current_obj_index = k
                     }
@@ -672,8 +672,8 @@ class PDFmethod: UIViewController {
                     }
                     
                     if current_obj_index != -1 && next_obj_index != -1 {
-                        splitshiftArrays[i].removeAtIndex(next_obj_index)
-                        splitshiftArrays[i].removeAtIndex(current_obj_index)
+                        splitshiftArrays[i].remove(at: next_obj_index)
+                        splitshiftArrays[i].remove(at: current_obj_index)
                         break
                     }
                 }
@@ -684,8 +684,8 @@ class PDFmethod: UIViewController {
                 var new_onedayshift = OneDayShift()
                 new_onedayshift.text = combine_text
                 new_onedayshift.x = ave_x
-                splitshiftArrays[i].insert(new_onedayshift, atIndex: current_obj_index)
-                splitshiftArrays[i].insert(new_onedayshift, atIndex: next_obj_index)
+                splitshiftArrays[i].insert(new_onedayshift, at: current_obj_index)
+                splitshiftArrays[i].insert(new_onedayshift, at: next_obj_index)
             }
             current_onedayshiftArray.removeAll()
             next_onedayshiftArray.removeAll()
@@ -711,14 +711,14 @@ class PDFmethod: UIViewController {
      
      - returns: 登録されていないシフト名を格納した1次元配列
      */
-    func CheckUnknownShiftName(splitshiftArrays: [[String]]) -> [String] {
+    func CheckUnknownShiftName(_ splitshiftArrays: [[String]]) -> [String] {
         var unknown_shiftArray:[String] = []
         
         for i in 0..<splitshiftArrays.count {
             for j in 0..<splitshiftArrays[i].count {
                 let search_result = DBmethod().SearchShiftSystem(splitshiftArrays[i][j])
                 
-                if search_result == nil && unknown_shiftArray.indexOf(splitshiftArrays[i][j]) == nil {
+                if search_result == nil && unknown_shiftArray.index(of: splitshiftArrays[i][j]) == nil {
                     unknown_shiftArray.append(splitshiftArrays[i][j])
                 }
             }
@@ -738,7 +738,7 @@ class PDFmethod: UIViewController {
      
      - returns: 日にちごとに分けたその日出勤するスタッフごとにまとめた1次元配列
      */
-    func GetTheDayStaffAttendance(staffnameArray: [String], splitshiftArrays: [[String]]) -> [String] {
+    func GetTheDayStaffAttendance(_ staffnameArray: [String], splitshiftArrays: [[String]]) -> [String] {
         var splitattendanceArray :[String] = []
         var dayshift = ""
         
@@ -769,11 +769,11 @@ class PDFmethod: UIViewController {
      
      - returns: スキップされたシフト体制名を不明に置き換えた後のcoordinatedArrays
      */
-    func ReplaceSkipShiftName(coordinatedArrays: [[String]]) -> [[String]] {
+    func ReplaceSkipShiftName(_ coordinatedArrays: [[String]]) -> [[String]] {
         var replaced_coordinatedArrays = coordinatedArrays
         for i in 0..<coordinatedArrays.count {
             for j in 0..<coordinatedArrays[i].count {
-                replaced_coordinatedArrays[i][j] = replaced_coordinatedArrays[i][j].stringByReplacingOccurrencesOfString(appDelegate.skipshiftname, withString: "不明")
+                replaced_coordinatedArrays[i][j] = replaced_coordinatedArrays[i][j].replacingOccurrences(of: appDelegate.skipshiftname, with: "不明")
             }
         }
         
@@ -790,7 +790,7 @@ class PDFmethod: UIViewController {
      - parameter importname: 取り込み時のファイル名+拡張子
      - parameter importpath: 取り込んだファイルのフルパス
      */
-    func RegistDataBase(update: Bool, importname: String, importpath: String) {
+    func RegistDataBase(_ update: Bool, importname: String, importpath: String) {
         var date = 11
         var flag = 0
         var shiftdetailarray = List<ShiftDetailDB>()
@@ -901,7 +901,7 @@ class PDFmethod: UIViewController {
      
      - parameter importname: 取り込み時のファイル名+拡張子
      */
-    func UserMonthlySalaryRegist(importname: String){
+    func UserMonthlySalaryRegist(_ importname: String){
         var usershift:[String] = []
         
         let username = DBmethod().UserNameGet()
@@ -913,15 +913,15 @@ class PDFmethod: UIViewController {
             var dayshift = ""
             
             let nsstring = dayattendanceArray[i] as NSString
-            if(nsstring.containsString(username)){
+            if(nsstring.contains(username)){
                 
-                let userlocation = nsstring.rangeOfString(username).location
+                let userlocation = nsstring.range(of: username).location
                 
-                var index = dayattendanceArray[i].startIndex.advancedBy(userlocation + username.characters.count + 1)
+                var index = dayattendanceArray[i].characters.index(dayattendanceArray[i].startIndex, offsetBy: userlocation + username.characters.count + 1)
                 
                 while(String(dayattendanceArray[i][index]) != ","){
                     dayshift += String(dayattendanceArray[i][index])
-                    index = index.successor()
+                    index = <#T##Collection corresponding to `index`##Collection#>.index(after: index)
                 }
                 
                 if(holiday.contains(dayshift) == false){      //holiday以外なら

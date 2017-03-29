@@ -6,28 +6,27 @@
 //  Copyright (c) 2015年 keygx. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
-class GradientArcView : UIView {
+class GradientArcView: UIView {
     
     internal var prop: Property?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        self.backgroundColor = UIColor.clearColor()
-        self.layer.masksToBounds = true
+        backgroundColor = UIColor.clear
+        layer.masksToBounds = true
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func getGradientPointColor(ratio: CGFloat, startColor: UIColor, endColor: UIColor) -> UIColor {
+    fileprivate func getGradientPointColor(_ ratio: CGFloat, startColor: UIColor, endColor: UIColor) -> UIColor {
         
-        let sColor = ColorUtil.toRGBA(color: startColor)
-        let eColor = ColorUtil.toRGBA(color: endColor)
+        let sColor = ColorUtil.toRGBA(startColor)
+        let eColor = ColorUtil.toRGBA(endColor)
         
         let r = (eColor.r - sColor.r) * ratio + sColor.r
         let g = (eColor.g - sColor.g) * ratio + sColor.g
@@ -37,7 +36,7 @@ class GradientArcView : UIView {
         return UIColor(red: r, green: g, blue: b, alpha: a)
     }
     
-    override func drawRect(rect: CGRect) {
+    override func draw(_ rect: CGRect) {
         
         guard let prop = prop else {
             return
@@ -49,11 +48,13 @@ class GradientArcView : UIView {
         
         // workaround
         var limit: CGFloat = 1.0 // 32bit
-        if sizeof(limit.dynamicType) == 8 {
+        if MemoryLayout<CGFloat>.size == 8 {
             limit = 1.01 // 64bit
         }
         
-        for var i: CGFloat = 0.0; i <= limit; i += 0.01 {
+        var i: CGFloat = 0.0
+        
+        while i <= limit {
             
             let arcPoint: CGPoint = CGPoint(x: rect.width/2, y: rect.height/2)
             let arcRadius: CGFloat = circularRect.width/2 + prop.arcLineWidth/2
@@ -67,10 +68,10 @@ class GradientArcView : UIView {
             }
             
             let arc: UIBezierPath = UIBezierPath(arcCenter: arcPoint,
-                radius: arcRadius,
-                startAngle: currentAngle,
-                endAngle: arcEndAngle,
-                clockwise: true)
+                                                 radius: arcRadius,
+                                                 startAngle: currentAngle,
+                                                 endAngle: arcEndAngle,
+                                                 clockwise: true)
             
             let strokeColor: UIColor = getGradientPointColor(i, startColor: prop.startArcColor, endColor: prop.endArcColor)
             strokeColor.setStroke()
@@ -78,6 +79,8 @@ class GradientArcView : UIView {
             arc.lineWidth = prop.arcLineWidth
             arc.lineCapStyle = prop.arcLineCapStyle
             arc.stroke()
+            
+            i += 0.01
         }
     }
 }

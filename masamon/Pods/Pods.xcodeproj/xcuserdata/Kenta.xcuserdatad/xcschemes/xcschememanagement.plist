@@ -8,25 +8,21 @@
 		<dict>
 			<key>isShown</key>
 			<false/>
-			<key>orderHint</key>
-			<integer>3</integer>
 		</dict>
 		<key>Pods-masamon.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
-			<key>orderHint</key>
-			<integer>4</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>3072085E18758A0DEC2A7C35367B3619</key>
+		<key>079324337E7058C8AD638741E4E5632F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>3A8610C88F4C8CAA41643562438BEBFE</key>
+		<key>C30406512C7D73EFB78E63A9792E2DA0</key>
 		<dict>
 			<key>primary</key>
 			<true/>

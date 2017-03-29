@@ -14,15 +14,15 @@ class OriginUITabBarController: UITabBarController {
         super.viewDidLoad()
 
         self.tabBar.barTintColor = UIColor.hex("191919", alpha: 1.0)
-        self.tabBar.translucent = false
+        self.tabBar.isTranslucent = false
         
         
-        let fontFamily: UIFont! = UIFont.systemFontOfSize(10)
+        let fontFamily: UIFont! = UIFont.systemFont(ofSize: 10)
         let selectedColor:UIColor = UIColor.hex("FF8E92", alpha: 1.0)
 
         let selectedAttributes = [NSFontAttributeName: fontFamily, NSForegroundColorAttributeName: selectedColor]
 
-        self.tabBarItem.setTitleTextAttributes(selectedAttributes, forState: UIControlState.Selected)
+        self.tabBarItem.setTitleTextAttributes(selectedAttributes, for: UIControlState.selected)
         UITabBar.appearance().tintColor = selectedColor
     }
 

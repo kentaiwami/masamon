@@ -13,14 +13,14 @@ class Maintenance {
     
     func FileRemove() {
         //クラッシュ等で参照されずに残ってしまったファイルを手動で削除する(保守用)
-        let documentspath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
+        let documentspath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
         let Inboxpath = documentspath + "/Inbox/"       //Inboxまでのパス
-        let Libralypath = NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0] as String + "/"
+        let Libralypath = NSSearchPathForDirectoriesInDomains(.libraryDirectory, .userDomainMask, true)[0] as String + "/"
         let filepath = Libralypath  + "85.11〜.pdf"
         let ABC = Libralypath + "12.11〜1.pdf"
-        let filemanager:NSFileManager = NSFileManager()
+        let filemanager:FileManager = FileManager()
         do{
-            try filemanager.removeItemAtPath(ABC)
+            try filemanager.removeItem(atPath: ABC)
 //            try NSFileManager.defaultManager().moveItemAtURL(NSURL(fileURLWithPath: filepath), toURL: NSURL(fileURLWithPath: ABC))
 
         }catch{

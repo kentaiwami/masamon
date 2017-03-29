@@ -16,7 +16,7 @@ class DBmethod: UIViewController {
     /****************データベース全般メソッド*************/
     
     //データベースへの追加(ID重複の場合は上書き)
-    func AddandUpdate(record: Object, update: Bool){
+    func AddandUpdate(_ record: Object, update: Bool){
         do{
             let realm = try Realm()
             try realm.write{
@@ -28,7 +28,7 @@ class DBmethod: UIViewController {
     }
     
     //指定したオブジェクトを削除する
-    func DeleteRecord(object: Object) {
+    func DeleteRecord(_ object: Object) {
         
         do{
             let realm = try Realm()
@@ -42,7 +42,7 @@ class DBmethod: UIViewController {
     }
     
     //指定したDBのレコード数を返す
-    func DBRecordCount(DBName: Object.Type) -> Int {
+    func DBRecordCount(_ DBName: Object.Type) -> Int {
         var dbrecordcount = 0
         
         do{
@@ -57,7 +57,7 @@ class DBmethod: UIViewController {
     /****************ShiftDB関連メソッド*************/
 
     //ShiftDBのリレーションシップリストをUpdateする
-    func ShiftDB_relationshipUpdate(importname: String, array: [ShiftDetailDB]){
+    func ShiftDB_relationshipUpdate(_ importname: String, array: [ShiftDetailDB]){
         
         //配列で渡されるのでListへ変換する
         let list = List(array)
@@ -69,12 +69,12 @@ class DBmethod: UIViewController {
             }
         }catch{
             //Error
-            print(ErrorType)
+            print(ErrorProtocol)
         }
     }
 
     //レコードのIDを受け取って名前を返す
-    func ShiftDBGet(id: Int) -> String{
+    func ShiftDBGet(_ id: Int) -> String{
         var shiftimportname = ""
         
         let realm = try! Realm()
@@ -83,7 +83,7 @@ class DBmethod: UIViewController {
     }
     
     //ShiftDBのリレーションシップ配列を返す
-    func ShiftDBRelationArrayGet(id: Int) -> List<ShiftDetailDB>{
+    func ShiftDBRelationArrayGet(_ id: Int) -> List<ShiftDetailDB>{
         var list = List<ShiftDetailDB>()
         let realm = try! Realm()
         
@@ -94,7 +94,7 @@ class DBmethod: UIViewController {
     }
     
     //レコードのIDを受け取って月給を返す
-    func ShiftDBSaralyGet(id: Int) ->Int{
+    func ShiftDBSaralyGet(_ id: Int) ->Int{
         var saraly = 0
         
         let realm = try! Realm()
@@ -104,14 +104,14 @@ class DBmethod: UIViewController {
     }
     
     //id受け取ってレコードを返す
-    func GetShiftDBRecordByID(id: Int) -> ShiftDB{
+    func GetShiftDBRecordByID(_ id: Int) -> ShiftDB{
         let realm = try! Realm()
         let record = realm.objects(ShiftDB).filter("id = %@",id)[0]
         return record
     }
     
     //受け取った文字列をShiftDBから検索し、該当するレコードを返す
-    func SearchShiftDB(importname: String) -> ShiftDB{
+    func SearchShiftDB(_ importname: String) -> ShiftDB{
         var shiftdb = ShiftDB()
         
         let realm = try! Realm()
@@ -132,7 +132,7 @@ class DBmethod: UIViewController {
     }
     
     //ShiftDBの虫食い状態を直す
-    func ShiftDBFillHole(id: Int){
+    func ShiftDBFillHole(_ id: Int){
         do{
             let realm = try Realm()
             let count = DBmethod().DBRecordCount(ShiftDB)
@@ -274,7 +274,7 @@ class DBmethod: UIViewController {
     /****************ShiftSystemDB関連メソッド*************/
 
     //受け取った文字列をShiftSystemから検索し、該当するレコードを返す
-    func SearchShiftSystem(shift: String) -> Results<ShiftSystemDB>?{
+    func SearchShiftSystem(_ shift: String) -> Results<ShiftSystemDB>?{
         
         let realm = try! Realm()
         let shiftsystem = realm.objects(ShiftSystemDB).filter("name = %@",shift)
@@ -287,7 +287,7 @@ class DBmethod: UIViewController {
     }
     
     //受け取ったIDをShiftSystemから検索し、該当するShiftSystemのレコードを返す
-    func ShiftSystemNameGet(id: Int) -> ShiftSystemDB{
+    func ShiftSystemNameGet(_ id: Int) -> ShiftSystemDB{
         
         let realm = try! Realm()
         let record = realm.objects(ShiftSystemDB).filter("id = %@",id)[0]
@@ -296,7 +296,7 @@ class DBmethod: UIViewController {
     }
     
     //受け取ったgroupidをShiftSystemから検索し、該当するShiftSystemのレコードを配列で返す
-    func ShiftSystemRecordArrayGetByGroudid(groupid: Int) -> Results<ShiftSystemDB>{
+    func ShiftSystemRecordArrayGetByGroudid(_ groupid: Int) -> Results<ShiftSystemDB>{
         
         let realm = try! Realm()
         let name = realm.objects(ShiftSystemDB).filter("groupid = %@",groupid)
@@ -305,7 +305,7 @@ class DBmethod: UIViewController {
     }
     
     //受け取ったgroupidをShiftSystemから検索し、該当するShiftSystemの名前を配列で返す
-    func ShiftSystemNameArrayGetByGroudid(groupid: Int) -> Array<String>{
+    func ShiftSystemNameArrayGetByGroudid(_ groupid: Int) -> Array<String>{
         
         var name: [String] = []
         
@@ -340,7 +340,7 @@ class DBmethod: UIViewController {
     }
     
     //ShiftSystemDBの虫食い状態を直す関数
-    func ShiftSystemDBFillHole(id: Int){
+    func ShiftSystemDBFillHole(_ id: Int){
         do{
             let realm = try Realm()
             let count = DBmethod().DBRecordCount(ShiftSystemDB)
@@ -428,7 +428,7 @@ class DBmethod: UIViewController {
     /****************ShiftDetailDB関連メソッド*************/
     
     //受け取った日付に該当するレコードを配列にして返す
-    func GetShiftDetailDBRecordByDay(day: Int) -> Results<ShiftDetailDB> {
+    func GetShiftDetailDBRecordByDay(_ day: Int) -> Results<ShiftDetailDB> {
         let realm = try! Realm()
         let results = realm.objects(ShiftDetailDB).filter("day = %@",day)
         
@@ -436,7 +436,7 @@ class DBmethod: UIViewController {
     }
     
     //受け取ったidに対応するShiftDetailDBのレコードを返す
-    func GetShiftDetailDBRecordByID(id: Int) -> ShiftDetailDB{
+    func GetShiftDetailDBRecordByID(_ id: Int) -> ShiftDetailDB{
         let realm = try! Realm()
         let record = realm.objects(ShiftDetailDB).filter("id = %@",id)[0]
         
@@ -444,7 +444,7 @@ class DBmethod: UIViewController {
     }
     
     //ShiftDetailDBのリレーションシップをUpdateする
-    func ShiftDetaiDB_relationshipUpdate(id: Int, record: ShiftDB){
+    func ShiftDetaiDB_relationshipUpdate(_ id: Int, record: ShiftDB){
         do{
             let realm = try Realm()
             try realm.write{
@@ -457,7 +457,7 @@ class DBmethod: UIViewController {
 
     
     //year,month,dateを受け取ってその日のレコードを返す
-    func TheDayStaffGet(year: Int, month: Int, date: Int) -> Results<ShiftDetailDB>?{
+    func TheDayStaffGet(_ year: Int, month: Int, date: Int) -> Results<ShiftDetailDB>?{
         
         let realm = try! Realm()
         let stafflist = realm.objects(ShiftDetailDB).filter("year = %@ AND month = %@ AND day = %@",year,month,date)
@@ -471,7 +471,7 @@ class DBmethod: UIViewController {
     
     
     //受け取ったリストに該当するレコードを削除する
-    func DeleteShiftDetailDBRecords(objects: List<ShiftDetailDB>) {
+    func DeleteShiftDetailDBRecords(_ objects: List<ShiftDetailDB>) {
         
         do{
             let realm = try Realm()
@@ -520,7 +520,7 @@ class DBmethod: UIViewController {
     }
     
     //ShiftDetailDBの虫食い状態を直す
-    func ShiftDetailDBFillHole(id: Int, deleterecords: Int){
+    func ShiftDetailDBFillHole(_ id: Int, deleterecords: Int){
         do{
             let realm = try Realm()
             let count = DBmethod().DBRecordCount(ShiftDetailDB)
@@ -581,7 +581,7 @@ class DBmethod: UIViewController {
      
      - returns: スタッフ名が格納された1次元配列
      */
-    func ManagerStaffNameArrayGet(flag: Int) -> Array<String>?{
+    func ManagerStaffNameArrayGet(_ flag: Int) -> Array<String>?{
         var array: [String] = []
         let realm = try! Realm()
         
@@ -598,7 +598,7 @@ class DBmethod: UIViewController {
                 
                 let name = realm.objects(StaffNameDB).filter("id = %@",i)[0].name
                 
-                if name.containsString("M") == flag_bool {
+                if name.contains("M") == flag_bool {
                     array.append(name)
                 }
             }
@@ -619,7 +619,7 @@ class DBmethod: UIViewController {
     }
     
     //StaffNameDBの虫食い状態を直す関数
-    func StaffNameDBFillHole(id: Int){
+    func StaffNameDBFillHole(_ id: Int){
         do{
             let realm = try Realm()
             let count = DBmethod().DBRecordCount(StaffNameDB)
