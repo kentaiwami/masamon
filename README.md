@@ -15,10 +15,10 @@
 ## デモ
 ![demo](https://github.com/kentaiwami/masamon/blob/master/demo.gif)
 ## サポート情報
-* Xcode 8.2
-* iOS 10.2.1
+* Xcode 8.3
+* iOS 10.3.1
 * iPhone 6,6s
-* Swift2.3
+* Swift3.2
 * サンプルファイル ([pdf](https://github.com/kentaiwami/masamon/blob/master/masamon/sampleshift.pdf) or [xlsx](https://github.com/kentaiwami/masamon/blob/master/masamon/sampleshift.xlsx))が必要
 
 ## 使い方
