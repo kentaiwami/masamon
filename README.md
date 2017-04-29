@@ -28,7 +28,7 @@
 4. インジケータが消えて取り込みが完了します。
 
 ## 使用しているライブラリ
-* XlsxReaderWriter(https://github.com/renebigot/XlsxReaderWriter)
-* handMadeCalendarOfSwift(https://github.com/fumiyasac/handMadeCalendarOfSwift)
-* Gradient Circular Progress(https://github.com/keygx/GradientCircularProgress)
-* TET(http://www.infotek.co.jp/pdflib/pdflib_download.html#TET)
+* [XlsxReaderWriter](https://github.com/renebigot/XlsxReaderWriter)
+* [handMadeCalendarOfSwift](https://github.com/fumiyasac/handMadeCalendarOfSwift)
+* [Gradient Circular Progress](https://github.com/keygx/GradientCircularProgress)
+* [TET](http://www.infotek.co.jp/pdflib/pdflib_download.html#TET)
