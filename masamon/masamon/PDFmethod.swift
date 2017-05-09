@@ -522,7 +522,7 @@ class PDFmethod: UIViewController {
         var staffnameDBArray: [String]
         
         //登録したスタッフの人数分だけループする
-        for i in 0..<staffnumber {
+        for i in 0..<staffnumber-1 {
             //スタッフがマネージャーか通常スタッフかで使用する配列を変える
             if i <= 3 {
                 staffnameDBArray = managerstaffnameDBArray!
