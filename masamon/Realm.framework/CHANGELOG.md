@@ -1,3 +1,281 @@
+2.10.1 Release notes (2017-09-14)
+=============================================================
+
+Swift binaries are now produced for Swift 3.0, 3.0.1, 3.0.2, 3.1, 3.2 and 4.0.
+
+### Enhancements
+
+* Auxiliary files are excluded from backup by default.
+
+### Bugfixes
+
+* Fix more cases where assigning an RLMArray property to itself would clear the
+  RLMArray.
+
+2.10.0 Release notes (2017-08-21)
+=============================================================
+
+### API Breaking Changes
+
+* None.
+
+### Enhancements
+
+* Expose additional authentication-related errors that might be reported by
+  a Realm Object Server.
+* An error handler can now be registered on `{RLM}SyncUser`s in order to
+  report authentication-related errors that affect the user.
+
+### Bugfixes
+
+* Sorting Realm collection types no longer throws an exception on iOS 7.
+* Sync users are now automatically logged out upon receiving certain types
+  of errors that indicate they are no longer logged into the server. For
+  example, users who are authenticated using third-party credentials will find
+  themselves logged out of the Realm Object Server if the third-party identity
+  service indicates that their credential is no longer valid.
+* Address high CPU usage and hangs in certain cases when processing collection
+  notifications in highly-connected object graphs.
+
+2.9.1 Release notes (2017-08-01)
+=============================================================
+
+### API Breaking Changes
+
+* None.
+
+### Enhancements
+
+* None.
+
+### Bugfixes
+
+* The `shouldCompactOnLaunch` block is no longer invoked if the Realm at that
+  path is already open on other threads.
+* Fix an assertion failure in collection notifications when changes are made to
+  the schema via sync while the notification block is active.
+
+2.9.0 Release notes (2017-07-26)
+=============================================================
+
+### API Breaking Changes
+
+* None.
+
+### Enhancements
+
+* Add a new error code to denote 'permission denied' errors when working
+  with synchronized Realms, as well as an accompanying block that can be
+  called to inform the binding that the offending Realm's files should be
+  deleted immediately. This allows recovering from 'permission denied'
+  errors in a more robust manner. See the documentation for
+  `RLMSyncErrorPermissionDeniedError` for more information.
+* Add `-[RLMSyncPermissionValue initWithRealmPath:username:accessLevel:]`
+  API allowing permissions to be applied to a user based on their username
+  (usually, an email address). Requires any edition of the Realm Object
+  Server 1.6.0 or later.
+* Improve performance of creating Swift objects which contain at least one List
+  property.
+* It is now possible to create and log in multiple Realm Object Server users
+  with the same identity if they originate from different servers. Note that
+  if the URLs are different aliases for the same authentication server each
+  user will still be treated as separate (e.g. they will have their own copy
+  of each synchronized Realm opened using them). It is highly encouraged that
+  users defined using the access token credential type be logged in with an
+  authentication server URL specified; this parameter will become mandatory
+  in a future version of the SDK.
+* Add `-[RLMSyncUser retrieveInfoForUser:identityProvider:completion:]`
+  API allowing administrator users to retrieve information about a user based
+  on their provider identity (for example, a username). Requires any edition
+  of the Realm Object Server 1.8.2 or later.
+
+### Bugfixes
+
+* `List.description` now reports the correct types for nested lists.
+* Fix unmanaged object initialization when a nested property type returned
+  `false` from `Object.shouldIncludeInDefaultSchema()`.
+* Don't clear RLMArrays on self-assignment.
+
+2.8.3 Release notes (2017-06-20)
+=============================================================
+
+### Bugfixes
+
+* Properly update RealmOptional properties when adding an object with `add(update: true)`.
+* Add some missing quotes in error messages.
+* Fix a performance regression when creating objects with primary keys.
+
+2.8.2 Release notes (2017-06-16)
+=============================================================
+
+### Bugfixes
+
+* Fix an issue where synchronized Realms would eventually disconnect from the
+  remote server if the user object used to define their sync configuration
+  was destroyed.
+* Restore support for changing primary keys in migrations (broken in 2.8.0).
+* Revert handling of adding objects with nil properties to a Realm to the
+  pre-2.8.0 behavior.
+
+2.8.1 Release notes (2017-06-12)
+=============================================================
+
+Add support for building with Xcode 9 Beta 1.
+
+### Bugfixes
+
+* Fix setting a float property to NaN.
+* Fix a crash when using compact on launch in combination with collection
+  notifications.
+
+2.8.0 Release notes (2017-06-02)
+=============================================================
+
+### API Breaking Changes
+
+* None.
+
+### Enhancements
+
+* Enable encryption on watchOS.
+* Add `-[RLMSyncUser changePassword:forUserID:completion:]` API to change an
+  arbitrary user's password if the current user has administrative privileges
+  and using Realm's 'password' authentication provider.
+  Requires any edition of the Realm Object Server 1.6.0 or later.
+
+### Bugfixes
+
+* Suppress `-Wdocumentation` warnings in Realm C++ headers when using CocoaPods
+  with Xcode 8.3.2.
+* Throw an appropriate error rather than crashing when an RLMArray is assigned
+  to an RLMArray property of a different type.
+* Fix crash in large (>4GB) encrypted Realm files.
+* Improve accuracy of sync progress notifications.
+* Fix an issue where synchronized Realms did not connect to the remote server
+  in certain situations, such as when an application was offline when the Realms
+  were opened but later regained network connectivity.
+
+2.7.0 Release notes (2017-05-03)
+=============================================================
+
+### API Breaking Changes
+
+* None.
+
+### Enhancements
+
+* Use reachability API to minimize the reconnection delay if the network
+  connection was lost.
+* Add `-[RLMSyncUser changePassword:completion:]` API to change the current
+  user's password if using Realm's 'password' authentication provider.
+  Requires any edition of the Realm Object Server 1.4.0 or later.
+* `{RLM}SyncConfiguration` now has an `enableSSLValidation` property
+  (and default parameter in the Swift initializer) to allow SSL validation
+  to be specified on a per-server basis.
+* Transactions between a synced Realm and a Realm Object Server can now
+  exceed 16 MB in size.
+* Add new APIs for changing and retrieving permissions for synchronized Realms.
+  These APIs are intended to replace the existing Realm Object-based permissions
+  system. Requires any edition of the Realm Object Server 1.1.0 or later.
+
+### Bugfixes
+
+* Support Realm model classes defined in Swift with overridden Objective-C
+  names (e.g. `@objc(Foo) class SwiftFoo: Object {}`).
+* Fix `-[RLMMigration enumerateObjects:block:]` returning incorrect `oldObject`
+  objects when enumerating a class name after previously deleting a `newObject`.
+* Fix an issue where `Realm.asyncOpen(...)` would fail to work when opening a
+  synchronized Realm for which the user only had read permissions.
+* Using KVC to set a `List` property to `nil` now clears it to match the
+  behavior of `RLMArray` properties.
+* Fix crash from `!m_awaiting_pong` assertion failure when using synced Realms.
+* Fix poor performance or hangs when performing case-insensitive queries on
+  indexed string properties that contain many characters that don't differ
+  between upper and lower case (e.g., numbers, punctuation).
+
+2.6.2 Release notes (2017-04-21)
+=============================================================
+
+### API Breaking Changes
+
+* None.
+
+### Enhancements
+
+* None.
+
+### Bugfixes
+
+* Fix an issue where calling `Realm.asyncOpen(...)` with a synchronized Realm
+  configuration would fail with an "Operation canceled" error.
+* Fix initial collection notification sometimes not being delivered for synced
+  Realms.
+* Fix circular links sometimes resulting in objects not being marked as
+  modified in change notifications.
+
+2.6.1 Release notes (2017-04-18)
+=============================================================
+
+### API Breaking Changes
+
+* None.
+
+### Enhancements
+
+* None.
+
+### Bugfixes
+
+* Fix an issue where calling `Realm.asyncOpen(...)` with a synchronized Realm
+  configuration would crash in error cases rather than report the error.
+  This is a small source breaking change if you were relying on the error
+  being reported to be a `Realm.Error`.
+
+2.6.0 Release notes (2017-04-18)
+=============================================================
+
+### API Breaking Changes
+
+* None.
+
+### Enhancements
+
+* Add a `{RLM}SyncUser.isAdmin` property indicating whether a user is a Realm
+  Object Server administrator.
+* Add an API to asynchronously open a Realm and deliver it to a block on a
+  given queue. This performs all work needed to get the Realm to
+  a usable state (such as running potentially time-consuming migrations) on a
+  background thread before dispatching to the given queue. In addition,
+  synchronized Realms wait for all remote content available at the time the
+  operation began to be downloaded and available locally.
+* Add `shouldCompactOnLaunch` block property when configuring a Realm to
+  determine if it should be compacted before being returned.
+* Speed up case-insensitive queries on indexed string properties.
+* Add RLMResults's collection aggregate methods to RLMArray.
+* Add support for calling the aggregate methods on unmanaged Lists.
+
+### Bugfixes
+
+* Fix a deadlock when multiple processes open a Realm at the same time.
+* Fix `value(forKey:)`/`value(forKeyPath:)` returning incorrect values for `List` properties.
+
+2.5.1 Release notes (2017-04-05)
+=============================================================
+
+### API Breaking Changes
+
+* None.
+
+### Enhancements
+
+* None.
+
+### Bugfixes
+
+* Fix CocoaPods installation with static libraries and multiple platforms.
+* Fix uncaught "Bad version number" exceptions on the notification worker thread
+  followed by deadlocks when Realms refresh.
+
 2.5.0 Release notes (2017-03-28)
 =============================================================
 

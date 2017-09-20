@@ -485,10 +485,10 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
         
         if pickerView.tag == 1 {
-            let attributedString = NSAttributedString(string: shiftlist[row] as! String, attributes: [NSForegroundColorAttributeName : UIColor.white])
+            let attributedString = NSAttributedString(string: shiftlist[row] as! String, attributes: [NSAttributedStringKey.foregroundColor : UIColor.white])
             return attributedString
         }else {
-            let attributedString = NSAttributedString(string: shiftgroupname[row] , attributes: [NSForegroundColorAttributeName : UIColor.black])
+            let attributedString = NSAttributedString(string: shiftgroupname[row] , attributes: [NSAttributedStringKey.foregroundColor : UIColor.black])
             return attributedString
         }
     }
@@ -550,7 +550,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
      月給表示画面が表示(アプリがアクティブ)されたら動作
      ファイルがコピーされていたらimport画面へ遷移させる
      */
-    func MonthlySalaryShowViewActived(){
+    @objc func MonthlySalaryShowViewActived(){
         
         //ファイル数のカウント
         let filemanager:FileManager = FileManager()
@@ -577,7 +577,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     /**
      ファイルの保存が行われていたらsavedata()を実行する
      */
-    func FileSaveSuccessfulAlertShow(){
+    @objc func FileSaveSuccessfulAlertShow(){
         if appDelegate.filesavealert {
             self.savedata()
             appDelegate.filesavealert = false
@@ -691,7 +691,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         let fontsize:CGFloat = 14
         
         if DBmethod().TheDayStaffGet(y, month: m, date: d) == nil {
-            let whiteAttribute = [ NSForegroundColorAttributeName: UIColor.hex("BEBEBE", alpha: 1.0),NSFontAttributeName: UIFont.systemFont(ofSize: fontsize)]
+            let whiteAttribute = [ NSAttributedStringKey.foregroundColor: UIColor.hex("BEBEBE", alpha: 1.0),NSAttributedStringKey.font: UIFont.systemFont(ofSize: fontsize)]
             
             for i in 0..<ShiftLabelArray[arraynumber].count {
                 ShiftLabelArray[arraynumber][i].attributedText = NSMutableAttributedString(string: shiftarray[i] + "No Data", attributes: whiteAttribute)
@@ -716,8 +716,8 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                     let textviewnsstring = (shiftarray[i] + splitedstaffarray[i]) as NSString
                     let usernamelocation = textviewnsstring.range(of: DBmethod().UserNameGet()).location
                     let usernamelength = textviewnsstring.range(of: DBmethod().UserNameGet()).length
-                    let myAttribute = [ NSFontAttributeName: UIFont.systemFont(ofSize: fontsize+3) ]
-                    let whiteAttribute = [ NSForegroundColorAttributeName: UIColor.white]
+                    let myAttribute = [ NSAttributedStringKey.font: UIFont.systemFont(ofSize: fontsize+3) ]
+                    let whiteAttribute = [ NSAttributedStringKey.foregroundColor: UIColor.white]
                     
                     myString = NSMutableAttributedString(string: shiftarray[i] + splitedstaffarray[i], attributes: myAttribute )
                     
@@ -732,16 +732,16 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                     }
                     
                     myString.addAttributes(whiteAttribute, range: myRange2)
-                    myString.addAttribute(NSForegroundColorAttributeName, value: UIColor.hex("ff33ff", alpha: 1.0), range: myRange)                //ユーザ名強調表示
+                    myString.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor.hex("ff33ff", alpha: 1.0), range: myRange)                //ユーザ名強調表示
                     
                     ShiftLabelArray[arraynumber][i].attributedText = myString
                     
                 }else{      //ユーザ名が含まれていない場合の表示
-                    let myAttribute = [ NSFontAttributeName: UIFont.systemFont(ofSize: fontsize) ]
+                    let myAttribute = [ NSAttributedStringKey.font: UIFont.systemFont(ofSize: fontsize) ]
                     let myRange = NSRange(location: 0, length: (shiftarray[i] + splitedstaffarray[i]).characters.count)
                     
                     myString = NSMutableAttributedString(string: shiftarray[i] + splitedstaffarray[i], attributes: myAttribute )
-                    myString.addAttribute(NSForegroundColorAttributeName, value: UIColor.hex("BEBEBE", alpha: 1.0), range: myRange)
+                    myString.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor.hex("BEBEBE", alpha: 1.0), range: myRange)
                     
                     ShiftLabelArray[arraynumber][i].attributedText = myString
                 }
@@ -784,7 +784,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
      
      - parameter sender: ツールバーのボタン
      */
-    func donePicker(_ sender:UIButton){
+    @objc func donePicker(_ sender:UIButton){
         
         if sender.tag == 2 {            //シフトグループの完了ボタン
             shiftgroupnametextfield.resignFirstResponder()
@@ -996,7 +996,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
      
      - parameter sender: タップしたUIButton
      */
-    func TapDayButton(_ sender: UIButton){
+    @objc func TapDayButton(_ sender: UIButton){
         let currentsplitday = CommonMethod().ReturnYearMonthDayWeekday(currentnsdate) //日付を西暦,月,日,曜日に分けて取得
         
         //タップした日付ボタンと表示中の日付の配列位置を比較
@@ -1205,7 +1205,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     /**
      翌日に移動する関数
      */
-    func nextday(){
+    @objc func nextday(){
         self.DayControl(1)
 
         //日付表示ラベルを画面右側からアニメーション表示させる
@@ -1216,7 +1216,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     /**
      前日に移動する関数
      */
-    func prevday(){
+    @objc func prevday(){
         self.DayControl(-1)
 
         //日付表示ラベルを画面左側からアニメーション表示させる
@@ -1229,7 +1229,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
      
      - parameter sender: 長押しのジェスチャー
      */
-    func today(_ sender: UILongPressGestureRecognizer){
+    @objc func today(_ sender: UILongPressGestureRecognizer){
         
         if sender.state == UIGestureRecognizerState.began {
             

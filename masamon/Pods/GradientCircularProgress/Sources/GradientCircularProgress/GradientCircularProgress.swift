@@ -146,7 +146,7 @@ extension GradientCircularProgress {
             vc.dismiss(prop.dismissTimeInterval!)
         }
         
-        cleanup(prop.dismissTimeInterval!) { Void in
+        cleanup(prop.dismissTimeInterval!) {
             completionHandler()
         }
     }
@@ -257,7 +257,7 @@ extension GradientCircularProgress {
             return
         }
         
-        cleanup(prop.dismissTimeInterval!, view: view) { Void in
+        cleanup(prop.dismissTimeInterval!, view: view) {
             completionHandler()
         }
     }
