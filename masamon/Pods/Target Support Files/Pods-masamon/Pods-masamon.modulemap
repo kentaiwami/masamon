@@ -1,6 +1,0 @@
-framework module Pods_masamon {
-  umbrella header "Pods-masamon-umbrella.h"
-
-  export *
-  module * { export * }
-}
