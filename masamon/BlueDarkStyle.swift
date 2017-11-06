@@ -15,7 +15,7 @@ public struct BlueDarkStyle : StyleProperty {
     
     // Gradient Circular
     public var arcLineWidth: CGFloat = 4.0
-    public var startArcColor: UIColor = ColorUtil.toUIColor(0.0, g: 122.0, b: 255.0, a: 1.0)
+    public var startArcColor: UIColor = ColorUtil.toUIColor(r: 0.0, g: 122.0, b: 255.0, a: 1.0)
     public var endArcColor: UIColor = UIColor.cyan
     
     // Base Circular

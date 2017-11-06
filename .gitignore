@@ -13,4 +13,4 @@ masamon/images/thumbnail2.png
 masamon/*.pdf
 !sampleshift.pdf
 !sampleshift.xlsx
-masamon/Pods/
+masamon/Pods/*
