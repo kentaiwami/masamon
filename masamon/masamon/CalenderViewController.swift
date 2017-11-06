@@ -796,7 +796,7 @@ class CalenderViewController: UIViewController {
     }
     
     //次月を表示するメソッド
-    func nextCalendarSettings() {
+    @objc func nextCalendarSettings() {
         let prevX = (15+50*(41%7)+60)
         let mainX = (15+50*(41%7)+60)
         let nextX = 15
@@ -809,7 +809,7 @@ class CalenderViewController: UIViewController {
     }
     
     //今月を表示するメソッド
-    func NowCalendarSettings(_ sender: UILongPressGestureRecognizer){
+    @objc func NowCalendarSettings(_ sender: UILongPressGestureRecognizer){
         if sender.state == UIGestureRecognizerState.began {
             
             let rightX = (15+50*(41%7)+60)

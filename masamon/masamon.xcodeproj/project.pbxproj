@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		37082F091FAB69CA00571216 /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37082F071FAB69C900571216 /* Realm.framework */; };
+		37082F0A1FAB69CA00571216 /* Realm.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 37082F071FAB69C900571216 /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		37082F0B1FAB69CA00571216 /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37082F081FAB69CA00571216 /* RealmSwift.framework */; };
+		37082F0C1FAB69CA00571216 /* RealmSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 37082F081FAB69CA00571216 /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		370ACDFB1BDF486700AB73EB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370ACDFA1BDF486700AB73EB /* AppDelegate.swift */; };
 		370ACDFD1BDF486700AB73EB /* MonthlySalaryShow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370ACDFC1BDF486700AB73EB /* MonthlySalaryShow.swift */; };
 		370ACE021BDF486700AB73EB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 370ACE011BDF486700AB73EB /* Assets.xcassets */; };
@@ -88,12 +92,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		377471F71E8B7C9900993CA8 /* Embed Frameworks */ = {
+		371D926C1F723CF10090325C /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+<<<<<<< HEAD
+=======
+				37082F0C1FAB69CA00571216 /* RealmSwift.framework in Embed Frameworks */,
+				37082F0A1FAB69CA00571216 /* Realm.framework in Embed Frameworks */,
+>>>>>>> master
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -111,6 +120,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		37082F071FAB69C900571216 /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Realm.framework; sourceTree = "<group>"; };
+		37082F081FAB69CA00571216 /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RealmSwift.framework; sourceTree = "<group>"; };
 		370ACDF71BDF486600AB73EB /* masamon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = masamon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		370ACDFA1BDF486700AB73EB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		370ACDFC1BDF486700AB73EB /* MonthlySalaryShow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlySalaryShow.swift; sourceTree = "<group>"; };
@@ -182,7 +193,13 @@
 				3726B3941C2FF7F400F22F34 /* QuartzCore.framework in Frameworks */,
 				37F75CBF1C3F1E4C0075F9FD /* TET_ios.framework in Frameworks */,
 				3742AF901C130391003AB33B /* libXlsxReaderWriter.a in Frameworks */,
+<<<<<<< HEAD
 				3742AF561C12D8D1003AB33B /* libz.1.dylib in Frameworks */,
+=======
+				37082F091FAB69CA00571216 /* Realm.framework in Frameworks */,
+				3742AF561C12D8D1003AB33B /* libz.1.dylib in Frameworks */,
+				37082F0B1FAB69CA00571216 /* RealmSwift.framework in Frameworks */,
+>>>>>>> master
 				490FD6C287F4CD3D17370479 /* Pods_masamon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -193,6 +210,11 @@
 		370ACDEE1BDF486600AB73EB = {
 			isa = PBXGroup;
 			children = (
+<<<<<<< HEAD
+=======
+				37082F071FAB69C900571216 /* Realm.framework */,
+				37082F081FAB69CA00571216 /* RealmSwift.framework */,
+>>>>>>> master
 				37A597251CD57F0A00D43D35 /* LaunchScreenImage.png */,
 				371E8C2C1C85579F006B7C8C /* sampleshift */,
 				37F75CB51C3F1AEE0075F9FD /* masamon-Bridging-Header.h */,
@@ -333,7 +355,7 @@
 				37F1E2A21BF21126000A22B0 /* Embed App Extensions */,
 				C4617B4701E76F1597B4125B /* [CP] Embed Pods Frameworks */,
 				A975A4C60C420D6F07C39A08 /* [CP] Copy Pods Resources */,
-				377471F71E8B7C9900993CA8 /* Embed Frameworks */,
+				371D926C1F723CF10090325C /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -352,13 +374,13 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0710;
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = Kenta;
 				TargetAttributes = {
 					370ACDF61BDF486600AB73EB = {
 						CreatedOnToolsVersion = 7.1;
 						DevelopmentTeam = TLVYAZUQZL;
-						LastSwiftMigration = 0830;
+						LastSwiftMigration = 0900;
 					};
 				};
 			};
@@ -572,14 +594,20 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -621,14 +649,20 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -680,7 +714,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.Kenta.masamon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "/Users/Kenta/Documents/swift_workspace/まさもん/masamon/masamon-Bridging-Header.h";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				USER_HEADER_SEARCH_PATHS = "\"/Users/Kenta/Documents/swift_workspace/まさもん/masamon/XlsxReaderWriter-master\"/**";
 			};
 			name = Debug;
@@ -710,7 +745,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.Kenta.masamon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "/Users/Kenta/Documents/swift_workspace/まさもん/masamon/masamon-Bridging-Header.h";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				USER_HEADER_SEARCH_PATHS = "\"/Users/Kenta/Documents/swift_workspace/まさもん/masamon/XlsxReaderWriter-master\"/**";
 			};
 			name = Release;

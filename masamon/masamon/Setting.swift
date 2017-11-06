@@ -20,7 +20,7 @@ class Setting: UIViewController, UITableViewDataSource, UITableViewDelegate {
         //ナビゲーションバーの色などを設定する
         self.navigationController!.navigationBar.barTintColor = UIColor.black
         self.navigationController!.navigationBar.tintColor = UIColor.white
-        self.navigationController!.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
+        self.navigationController!.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white]
         
         tableview.delegate = self
         tableview.dataSource = self
