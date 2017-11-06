@@ -175,7 +175,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     func savedata() {
         
         if self.appDelegate.filename.contains(".xlsx") {
-            progress.show(OrangeClearStyle())
+            progress.show(message: "", style: OrangeClearStyle() as StyleProperty)
             dispatch_async_global { // ここからバックグラウンドスレッド
                 
                 //新規シフトがあるか確認する
@@ -245,7 +245,8 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                 
                 present(alert, animated: true, completion: nil)
             }else {
-                progress.show(OrangeClearStyle())
+//                progress.show(OrangeClearStyle())
+                progress.show(message: "", style: OrangeClearStyle() as StyleProperty)
                 dispatch_async_global{
                     
                     //PDF内のデータを取得して未登録のシフト名をチェック
