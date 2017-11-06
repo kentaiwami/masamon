@@ -12,7 +12,5 @@ masamon/images/thumbnail2.png
 アイコン素材/
 masamon/*.pdf
 !sampleshift.pdf
-<<<<<<< HEAD
 !sampleshift.xlsx
-=======
->>>>>>> af678dc4c231a8ee50d42e8117ca3afea9124b17
+masamon/Pods/
