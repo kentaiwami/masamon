@@ -1,5 +1,5 @@
 PODS:
-  - GradientCircularProgress (3.6.0)
+  - GradientCircularProgress (3.9.0)
   - Realm (3.0.1):
     - Realm/Headers (= 3.0.1)
   - Realm/Headers (3.0.1)
@@ -16,11 +16,11 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   GradientCircularProgress:
-    :commit: c90cb4044637127b0d66aab4a7bab9178684d79e
+    :commit: 811ef9c81eb5619c42654d05dc6a7788924ae1cb
     :git: https://github.com/keygx/GradientCircularProgress
 
 SPEC CHECKSUMS:
-  GradientCircularProgress: 259d46ec93c2a3fe629199bbbdba98004afc8963
+  GradientCircularProgress: 41eda5d2752fdba7b65826e193518ef5aa9df02e
   Realm: ba6144c74f835f7497791f6599d63a7755377b83
   RealmSwift: 7d13b1ac4b6022a13f841e3143e7789c9e40ad0d
 
