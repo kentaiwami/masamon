@@ -26,7 +26,6 @@
 		373C10EF1C5E04D10082CB8E /* ShiftNameListSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373C10EE1C5E04D10082CB8E /* ShiftNameListSetting.swift */; };
 		373C10F11C5E05010082CB8E /* ShiftListSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373C10F01C5E05010082CB8E /* ShiftListSetting.swift */; };
 		374090A01C784EEA00B01DC4 /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3740909F1C784EEA00B01DC4 /* Video.swift */; };
-		374090BC1C7858D800B01DC4 /* video1.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 374090BB1C7858D800B01DC4 /* video1.mp4 */; };
 		374090C01C78641E00B01DC4 /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374090BF1C78641E00B01DC4 /* VideoViewController.swift */; };
 		3742AF561C12D8D1003AB33B /* libz.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3742AF551C12D8D1003AB33B /* libz.1.dylib */; };
 		3742AF901C130391003AB33B /* libXlsxReaderWriter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3742AF8B1C130360003AB33B /* libXlsxReaderWriter.a */; };
@@ -133,7 +132,6 @@
 		373C10EE1C5E04D10082CB8E /* ShiftNameListSetting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShiftNameListSetting.swift; sourceTree = "<group>"; };
 		373C10F01C5E05010082CB8E /* ShiftListSetting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShiftListSetting.swift; sourceTree = "<group>"; };
 		3740909F1C784EEA00B01DC4 /* Video.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Video.swift; sourceTree = "<group>"; };
-		374090BB1C7858D800B01DC4 /* video1.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = video1.mp4; sourceTree = "<group>"; };
 		374090BF1C78641E00B01DC4 /* VideoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VideoViewController.swift; path = ../VideoViewController.swift; sourceTree = "<group>"; };
 		3742AF551C12D8D1003AB33B /* libz.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.dylib; path = ../../../../../../usr/lib/libz.1.dylib; sourceTree = "<group>"; };
 		3742AF831C130360003AB33B /* XlsxReaderWriter.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = XlsxReaderWriter.xcodeproj; path = "XlsxReaderWriter-master/XlsxReaderWriter.xcodeproj"; sourceTree = "<group>"; };
@@ -203,7 +201,6 @@
 				379A2DBD1C1E5F9900751425 /* no_data.png */,
 				3742AF831C130360003AB33B /* XlsxReaderWriter.xcodeproj */,
 				3742AF551C12D8D1003AB33B /* libz.1.dylib */,
-				374090B81C7858AD00B01DC4 /* videos */,
 				370ACE281BDF4B7700AB73EB /* images */,
 				370ACDF91BDF486600AB73EB /* masamon */,
 				370ACDF81BDF486600AB73EB /* Products */,
@@ -269,14 +266,6 @@
 				371E8C301C8557BF006B7C8C /* sampleshift.xlsx */,
 			);
 			name = sampleshift;
-			sourceTree = "<group>";
-		};
-		374090B81C7858AD00B01DC4 /* videos */ = {
-			isa = PBXGroup;
-			children = (
-				374090BB1C7858D800B01DC4 /* video1.mp4 */,
-			);
-			path = videos;
 			sourceTree = "<group>";
 		};
 		3742AF841C130360003AB33B /* Products */ = {
@@ -429,7 +418,6 @@
 				379A2DBE1C1E5F9900751425 /* no_data.png in Resources */,
 				371E8C311C8557BF006B7C8C /* sampleshift.pdf in Resources */,
 				370ACE291BDF4B7700AB73EB /* images in Resources */,
-				374090BC1C7858D800B01DC4 /* video1.mp4 in Resources */,
 				371E8C321C8557BF006B7C8C /* sampleshift.xlsx in Resources */,
 				374977D31D5F580D005DE58B /* 7.11〜.pdf in Resources */,
 				374977D11D5F580D005DE58B /* 5.11〜.pdf in Resources */,
