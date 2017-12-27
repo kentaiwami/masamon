@@ -9,7 +9,7 @@ target 'masamon' do
     use_frameworks!
 
     pod 'RealmSwift'
-    
+    pod 'Eureka'
     pod 'GradientCircularProgress', :git => 'https://github.com/keygx/GradientCircularProgress'
     
     post_install do |installer|
