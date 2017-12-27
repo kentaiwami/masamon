@@ -60,7 +60,10 @@ class DBmethod: UIViewController {
     func ShiftDB_relationshipUpdate(_ importname: String, array: [ShiftDetailDB]){
         
         //配列で渡されるのでListへ変換する
-        let list = List(array)
+        let list = List<ShiftDetailDB>()
+        for detail in array {
+            list.append(detail)
+        }
         
         do{
             let realm = try Realm()

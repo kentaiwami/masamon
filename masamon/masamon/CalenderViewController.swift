@@ -317,10 +317,10 @@ class CalenderViewController: UIViewController {
                 //ボタンの配色の設定
                 //@remark:このサンプルでは正円のボタンを作っていますが、背景画像の設定等も可能です。
                 
-                if DBmethod().TheDayStaffGet(CommonMethod().Changecalendar(year[i], calender: "A.D"), month: month[i], date: button.tag) == nil {
+                if DBmethod().TheDayStaffGet(Utility().Changecalendar(year[i], calender: "A.D"), month: month[i], date: button.tag) == nil {
                     calendarBackGroundColor = UIColor.lightGray
                 }else{
-                    let usershift = self.ReturnUserShift(DBmethod().TheDayStaffGet(CommonMethod().Changecalendar(year[i], calender: "A.D"), month: month[i], date: button.tag)![0].staff)
+                    let usershift = self.ReturnUserShift(DBmethod().TheDayStaffGet(Utility().Changecalendar(year[i], calender: "A.D"), month: month[i], date: button.tag)![0].staff)
                     
                     var gid = 999
                     
@@ -453,7 +453,7 @@ class CalenderViewController: UIViewController {
     func GetPrevCurrentNextNSDate(_ i: Int) -> Date {
         var tmp_nsdate = Date()
         
-        var tmp_nsdate_split = CommonMethod().ReturnYearMonthDayWeekday(tmp_nsdate)
+        var tmp_nsdate_split = Utility().ReturnYearMonthDayWeekday(tmp_nsdate)
         
         //先月を設定する場合の処理
         switch i {
@@ -479,7 +479,7 @@ class CalenderViewController: UIViewController {
         
         tmp_nsdate_split.day = 1
         
-        tmp_nsdate = CommonMethod().CreateNSDate(tmp_nsdate_split.year, month: tmp_nsdate_split.month, day: tmp_nsdate_split.day)
+        tmp_nsdate = Utility().CreateNSDate(tmp_nsdate_split.year, month: tmp_nsdate_split.month, day: tmp_nsdate_split.day)
         
         return tmp_nsdate
 
@@ -653,14 +653,14 @@ class CalenderViewController: UIViewController {
     
     //カレンダーボタンをタップした時のアクション
     func buttonTapped(_ button: UIButton){
-        if DBmethod().TheDayStaffGet(CommonMethod().Changecalendar(year[1], calender: "A.D"), month: month[1], date: button.tag) == nil {
+        if DBmethod().TheDayStaffGet(Utility().Changecalendar(year[1], calender: "A.D"), month: month[1], date: button.tag) == nil {
             let alertController = UIAlertController(title: "\(year[1])年\(month[1])月\(button.tag)日", message: "データなし", preferredStyle: .alert)
             let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
             alertController.addAction(defaultAction)
             
             present(alertController, animated: true, completion: nil)
         }else{
-            let staffstring = DBmethod().TheDayStaffGet(CommonMethod().Changecalendar(year[1], calender: "A.D"),month: month[1],date: button.tag)![0].staff
+            let staffstring = DBmethod().TheDayStaffGet(Utility().Changecalendar(year[1], calender: "A.D"),month: month[1],date: button.tag)![0].staff
             let splitedstaffarray = MonthlySalaryShow().SplitStaffShift(staffstring)
             
             let alertviewtitle = "\(year[1])年\(month[1])月\(button.tag)日"
@@ -843,7 +843,7 @@ class CalenderViewController: UIViewController {
     //日付を比較してcalendarBarのアニメーション開始前の場所を返す
     func CompareDay() -> CGFloat{
         let calendar = Calendar(identifier: Calendar.Identifier.gregorian)
-        let currentNSDate = CommonMethod().CreateNSDate(year[1], month: month[1], day: day[1])
+        let currentNSDate = Utility().CreateNSDate(year[1], month: month[1], day: day[1])
         let compareunit = (calendar as NSCalendar).compare(now_nsdate, to: currentNSDate, toUnitGranularity: .day)
         var position:CGFloat = 0
         
@@ -858,7 +858,7 @@ class CalenderViewController: UIViewController {
         }
         
         //同じ月かどうかを判定する
-        let nsdatesplit = CommonMethod().ReturnYearMonthDayWeekday(now_nsdate)
+        let nsdatesplit = Utility().ReturnYearMonthDayWeekday(now_nsdate)
         if year[1] ==  nsdatesplit.year && month[1] == nsdatesplit.month {
             position = 0
         }

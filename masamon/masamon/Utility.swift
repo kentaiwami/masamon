@@ -9,7 +9,7 @@
 import UIKit
 import RealmSwift
 
-class CommonMethod: UIViewController {
+class Utility: UIViewController {
     
     /**
      30分ごとの時間を返す
@@ -255,7 +255,7 @@ class CommonMethod: UIViewController {
      - returns: シフト範囲
      */
     func GetShiftCoursMonthRange(_ shiftstartyear: Int, shiftstartmonth: Int) -> NSRange{
-        let shiftnsdate = self.CreateNSDate(CommonMethod().Changecalendar(shiftstartyear, calender: "JP"), month: shiftstartmonth, day: 1)
+        let shiftnsdate = self.CreateNSDate(Utility().Changecalendar(shiftstartyear, calender: "JP"), month: shiftstartmonth, day: 1)
         let c = Calendar.current
         let monthrange = (c as NSCalendar).range(of: [NSCalendar.Unit.day],  in: [NSCalendar.Unit.month], for: shiftnsdate)
         
@@ -299,3 +299,22 @@ class CommonMethod: UIViewController {
     }
 
 }
+
+class Indicator {
+    let indicator = UIActivityIndicatorView()
+    
+    func showIndicator(view: UIView) {
+        indicator.activityIndicatorViewStyle = .whiteLarge
+        indicator.center = view.center
+        indicator.color = UIColor.gray
+        indicator.hidesWhenStopped = true
+        view.addSubview(indicator)
+        view.bringSubview(toFront: indicator)
+        indicator.startAnimating()
+    }
+    
+    func stopIndicator() {
+        self.indicator.stopAnimating()
+    }
+}
+

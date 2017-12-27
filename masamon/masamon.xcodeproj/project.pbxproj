@@ -19,7 +19,7 @@
 		371DE5151C5DBD4D0058F73B /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371DE5141C5DBD4D0058F73B /* Setting.swift */; };
 		371E8C311C8557BF006B7C8C /* sampleshift.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 371E8C2F1C8557BF006B7C8C /* sampleshift.pdf */; };
 		371E8C321C8557BF006B7C8C /* sampleshift.xlsx in Resources */ = {isa = PBXBuildFile; fileRef = 371E8C301C8557BF006B7C8C /* sampleshift.xlsx */; };
-		3721B1171C51499D0002A373 /* CommonMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3721B1161C51499D0002A373 /* CommonMethod.swift */; };
+		3721B1171C51499D0002A373 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3721B1161C51499D0002A373 /* Utility.swift */; };
 		3726B3941C2FF7F400F22F34 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3726B3931C2FF7F400F22F34 /* QuartzCore.framework */; };
 		3726B39A1C30009700F22F34 /* CalenderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3726B3991C30009700F22F34 /* CalenderViewController.swift */; };
 		373C10EB1C5E049D0082CB8E /* StaffNameListSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373C10EA1C5E049D0082CB8E /* StaffNameListSetting.swift */; };
@@ -36,7 +36,6 @@
 		374977D31D5F580D005DE58B /* 7.11〜.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 374977CD1D5F580D005DE58B /* 7.11〜.pdf */; };
 		37526DD21CDC4ECB00F180DA /* FileBrowse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37526DD11CDC4ECB00F180DA /* FileBrowse.swift */; };
 		376C92D61BE695D000D45FC2 /* extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376C92D51BE695D000D45FC2 /* extentions.swift */; };
-		377D2DAE1C36C08B009CC388 /* BlueDarkStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377D2DAD1C36C08B009CC388 /* BlueDarkStyle.swift */; };
 		377D2DBB1C37EFE6009CC388 /* FileBrowseSelect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377D2DBA1C37EFE5009CC388 /* FileBrowseSelect.swift */; };
 		379955951C14431F00BAAD9E /* XLSXmethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379955941C14431F00BAAD9E /* XLSXmethod.swift */; };
 		379A2DBE1C1E5F9900751425 /* no_data.png in Resources */ = {isa = PBXBuildFile; fileRef = 379A2DBD1C1E5F9900751425 /* no_data.png */; };
@@ -123,7 +122,7 @@
 		371DE5141C5DBD4D0058F73B /* Setting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
 		371E8C2F1C8557BF006B7C8C /* sampleshift.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = sampleshift.pdf; sourceTree = "<group>"; };
 		371E8C301C8557BF006B7C8C /* sampleshift.xlsx */ = {isa = PBXFileReference; lastKnownFileType = file; path = sampleshift.xlsx; sourceTree = "<group>"; };
-		3721B1161C51499D0002A373 /* CommonMethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonMethod.swift; sourceTree = "<group>"; };
+		3721B1161C51499D0002A373 /* Utility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		3726B3931C2FF7F400F22F34 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		3726B3991C30009700F22F34 /* CalenderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalenderViewController.swift; sourceTree = "<group>"; };
 		373C10EA1C5E049D0082CB8E /* StaffNameListSetting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StaffNameListSetting.swift; sourceTree = "<group>"; };
@@ -141,7 +140,6 @@
 		37526DD11CDC4ECB00F180DA /* FileBrowse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileBrowse.swift; sourceTree = "<group>"; };
 		376C92D51BE695D000D45FC2 /* extentions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = extentions.swift; sourceTree = "<group>"; };
 		377D2DAA1C36BFD2009CC388 /* GradientCircularProgress.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GradientCircularProgress.framework; path = "Pods/../build/Debug-iphoneos/GradientCircularProgress.framework"; sourceTree = "<group>"; };
-		377D2DAD1C36C08B009CC388 /* BlueDarkStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlueDarkStyle.swift; sourceTree = "<group>"; };
 		377D2DAF1C36C14A009CC388 /* GradientCircularProgress.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GradientCircularProgress.framework; path = "Pods/../build/Debug-iphoneos/GradientCircularProgress.framework"; sourceTree = "<group>"; };
 		377D2DBA1C37EFE5009CC388 /* FileBrowseSelect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileBrowseSelect.swift; sourceTree = "<group>"; };
 		3797D5CE1D91B0A1005CBE3E /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Realm.framework; path = "../../../../Downloads/realm-swift-1.1.0/ios/swift-3.0/Realm.framework"; sourceTree = "<group>"; };
@@ -192,7 +190,6 @@
 				371E8C2C1C85579F006B7C8C /* sampleshift */,
 				37F75CB51C3F1AEE0075F9FD /* masamon-Bridging-Header.h */,
 				37F75CAD1C3F19CE0075F9FD /* TET.xcodeproj */,
-				377D2DAD1C36C08B009CC388 /* BlueDarkStyle.swift */,
 				3726B3931C2FF7F400F22F34 /* QuartzCore.framework */,
 				379A2DBD1C1E5F9900751425 /* no_data.png */,
 				3742AF831C130360003AB33B /* XlsxReaderWriter.xcodeproj */,
@@ -220,7 +217,7 @@
 				37C8B23F1CD4E29D001E3766 /* OriginUITabBarController.swift */,
 				370ACDFC1BDF486700AB73EB /* MonthlySalaryShow.swift */,
 				37A76F9A1D6A28AA00ED7AEA /* Maintenance.swift */,
-				3721B1161C51499D0002A373 /* CommonMethod.swift */,
+				3721B1161C51499D0002A373 /* Utility.swift */,
 				3726B3991C30009700F22F34 /* CalenderViewController.swift */,
 				376C92D51BE695D000D45FC2 /* extentions.swift */,
 				370ACE431BDF573500AB73EB /* DB.swift */,
@@ -496,7 +493,6 @@
 				373C10EB1C5E049D0082CB8E /* StaffNameListSetting.swift in Sources */,
 				371D62441D5EE79500057416 /* PDFmethod.swift in Sources */,
 				371DE5151C5DBD4D0058F73B /* Setting.swift in Sources */,
-				377D2DAE1C36C08B009CC388 /* BlueDarkStyle.swift in Sources */,
 				376C92D61BE695D000D45FC2 /* extentions.swift in Sources */,
 				370ACE441BDF573500AB73EB /* DB.swift in Sources */,
 				373C10EF1C5E04D10082CB8E /* ShiftNameListSetting.swift in Sources */,
@@ -506,7 +502,7 @@
 				37D4B3101BE0F59900F06759 /* HourlyWageSetting.swift in Sources */,
 				373C10F11C5E05010082CB8E /* ShiftListSetting.swift in Sources */,
 				37A6F9BE1CDE66FA004863FE /* ShiftImportSetting.swift in Sources */,
-				3721B1171C51499D0002A373 /* CommonMethod.swift in Sources */,
+				3721B1171C51499D0002A373 /* Utility.swift in Sources */,
 				377D2DBB1C37EFE6009CC388 /* FileBrowseSelect.swift in Sources */,
 				370ACDFB1BDF486700AB73EB /* AppDelegate.swift in Sources */,
 			);

@@ -285,7 +285,7 @@ class ShiftListSetting: UIViewController, UITableViewDataSource, UITableViewDele
                             let shitdb_record = DBmethod().GetShiftDBRecordByID(shiftdb_id_count)
                             
                             //shiftdb_recordの年月を持ってきて何日まであるかを把握
-                            let shiftrange = CommonMethod().GetShiftCoursMonthRange(shiftdetaildb_day_array[shiftdb_id_count].year, shiftstartmonth: shiftdetaildb_day_array[shiftdb_id_count].month)
+                            let shiftrange = Utility().GetShiftCoursMonthRange(shiftdetaildb_day_array[shiftdb_id_count].year, shiftstartmonth: shiftdetaildb_day_array[shiftdb_id_count].month)
 
                             //ShiftDetailDBのrelationshipを更新する
                             DBmethod().ShiftDetaiDB_relationshipUpdate(i, record: shitdb_record)

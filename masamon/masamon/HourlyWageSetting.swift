@@ -21,7 +21,7 @@ class HourlyWageSetting: UIViewController, UIPickerViewDelegate, UIPickerViewDat
 
     var timeUIPicker: UIPickerView = UIPickerView()
     
-    let time = CommonMethod().GetTime()
+    let time = Utility().GetTime()
     let wavyline: [String] = ["〜"]
     var textfieldrowfrom1 = 8
     var textfieldrowto1 = 42

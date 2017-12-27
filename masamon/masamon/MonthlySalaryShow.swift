@@ -8,7 +8,6 @@
 
 import UIKit
 import RealmSwift
-import GradientCircularProgress
 
 class day_button {
     var year = 0
@@ -32,7 +31,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     
     var currentnsdate = Date()        //MonthlySalaryShowがデータ表示している日付を管理
     
-    let shiftgroupname = CommonMethod().GetShiftGroupName()
+    let shiftgroupname = Utility().GetShiftGroupName()
     var shiftgroupnameUIPicker: UIPickerView = UIPickerView()
 
     var pickerviewtoolBar = UIToolbar()
@@ -94,12 +93,12 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             //control[i]分だけ日付を操作したnsdateを作成する
             let calendar = Calendar.current
             let daycontroled_nsdate = (calendar as NSCalendar).date(byAdding: .day, value: daycontrol[i], to: today, options: [])
-            let daycontroled_splitday = CommonMethod().ReturnYearMonthDayWeekday(daycontroled_nsdate!)
+            let daycontroled_splitday = Utility().ReturnYearMonthDayWeekday(daycontroled_nsdate!)
 
-            self.ShowAllData(CommonMethod().Changecalendar(daycontroled_splitday.year, calender: "A.D"), m: daycontroled_splitday.month, d: daycontroled_splitday.day, arraynumber: i)
+            self.ShowAllData(Utility().Changecalendar(daycontroled_splitday.year, calender: "A.D"), m: daycontroled_splitday.month, d: daycontroled_splitday.day, arraynumber: i)
         }
         
-        let date = CommonMethod().ReturnYearMonthDayWeekday(today)
+        let date = Utility().ReturnYearMonthDayWeekday(today)
         //日付を表示するラベルの初期設定
         CalenderLabel.frame = CGRect(x: 8, y: 240, width: 359, height: 33)
         CalenderLabel.backgroundColor = UIColor.clear
@@ -155,15 +154,16 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         onecourspicker.reloadAllComponents()
         
         let today = self.currentnsdate
-        let date = CommonMethod().ReturnYearMonthDayWeekday(today)         //日付を西暦,月,日,曜日に分けて取得
-        self.ShowAllData(CommonMethod().Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day, arraynumber: 1)           //データ表示へ分けた日付を渡す
+        let date = Utility().ReturnYearMonthDayWeekday(today)         //日付を西暦,月,日,曜日に分けて取得
+        self.ShowAllData(Utility().Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day, arraynumber: 1)           //データ表示へ分けた日付を渡す
         self.SetCalenderLabel(date.year, month: date.month, day: date.day, weekday: date.weekday)
         
         appDelegate.screennumber = 0
     }
     
 
-    let progress = GradientCircularProgress()
+//    let progress = GradientCircularProgress()
+    let indicator = Indicator()
     let Libralypath = NSSearchPathForDirectoriesInDomains(.libraryDirectory, .userDomainMask, true)[0] as String
     var staffshiftcountflag = true
     var staffnamecountflag = true
@@ -175,7 +175,8 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     func savedata() {
         
         if self.appDelegate.filename.contains(".xlsx") {
-            progress.show(message: "", style: OrangeClearStyle() as StyleProperty)
+            indicator.showIndicator(view: self.view)
+            
             dispatch_async_global { // ここからバックグラウンドスレッド
                 
                 //新規シフトがあるか確認する
@@ -192,32 +193,31 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                 
                 
                 self.dispatch_async_main { // ここからメインスレッド
-                    self.progress.dismiss({ () -> Void in
-                        
-                        /*pickerview,label,シフトの表示を更新する*/
-                        self.shiftlist.removeAllObjects()
-                        if DBmethod().DBRecordCount(ShiftDB.self) != 0 {
-                            for i in (0 ... DBmethod().DBRecordCount(ShiftDB.self)-1).reversed(){
-                                self.shiftlist.add(DBmethod().ShiftDBGet(i))
-                            }
-                            self.SaralyLabel.text = self.GetCommaSalalyString(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB.self)-1))
+                    self.indicator.stopIndicator()
+                    
+                    /*pickerview,label,シフトの表示を更新する*/
+                    self.shiftlist.removeAllObjects()
+                    if DBmethod().DBRecordCount(ShiftDB.self) != 0 {
+                        for i in (0 ... DBmethod().DBRecordCount(ShiftDB.self)-1).reversed(){
+                            self.shiftlist.add(DBmethod().ShiftDBGet(i))
                         }
-                        
-                        self.onecourspicker.reloadAllComponents()
-                        
-                        let today = self.currentnsdate
-                        let date = CommonMethod().ReturnYearMonthDayWeekday(today)
-                        self.ShowAllData(CommonMethod().Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day, arraynumber: 1)
-                        self.SetCalenderLabel(date.year, month: date.month, day: date.day, weekday: date.weekday)
-                        
-                        if self.appDelegate.errorshiftnamexlsx.count != 0 {  //新規シフト名がある場合
-                            if self.staffshiftcountflag {
-                                self.appDelegate.errorshiftnamefastcount = self.appDelegate.errorshiftnamexlsx.count
-                                self.staffshiftcountflag = false
-                            }
-                            self.StaffShiftErrorAlertShowXLSX()
+                        self.SaralyLabel.text = self.GetCommaSalalyString(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB.self)-1))
+                    }
+                    
+                    self.onecourspicker.reloadAllComponents()
+                    
+                    let today = self.currentnsdate
+                    let date = Utility().ReturnYearMonthDayWeekday(today)
+                    self.ShowAllData(Utility().Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day, arraynumber: 1)
+                    self.SetCalenderLabel(date.year, month: date.month, day: date.day, weekday: date.weekday)
+                    
+                    if self.appDelegate.errorshiftnamexlsx.count != 0 {  //新規シフト名がある場合
+                        if self.staffshiftcountflag {
+                            self.appDelegate.errorshiftnamefastcount = self.appDelegate.errorshiftnamexlsx.count
+                            self.staffshiftcountflag = false
                         }
-                    })
+                        self.StaffShiftErrorAlertShowXLSX()
+                    }
                 }
             }
             //取り込みがPDFの場合
@@ -245,42 +245,40 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                 
                 present(alert, animated: true, completion: nil)
             }else {
-//                progress.show(OrangeClearStyle())
-                progress.show(message: "", style: OrangeClearStyle() as StyleProperty)
+                indicator.showIndicator(view: self.view)
+                
                 dispatch_async_global{
                     
                     //PDF内のデータを取得して未登録のシフト名をチェック
                     self.pdfmethod.RunPDFmethod()
                     
                     self.dispatch_async_main{
-                        self.progress.dismiss({ () -> Void in
+                        self.indicator.stopIndicator()
+                        
+                        if self.appDelegate.unknownshiftname.count != 0 {  //シフト認識エラーがある場合
+                            self.StaffShiftErrorAlertShowPDF()
                             
-                            if self.appDelegate.unknownshiftname.count != 0 {  //シフト認識エラーがある場合
-                                self.StaffShiftErrorAlertShowPDF()
-                                
-                                //未登録のシフト名がない場合はデータベースへ書き込みを行う
-                            } else {
-                                self.pdfmethod.RegistDataBase(self.appDelegate.update, importname: self.appDelegate.filename, importpath: self.Libralypath+"/"+self.appDelegate.filename)
-                                self.pdfmethod.UserMonthlySalaryRegist(self.appDelegate.filename)
+                            //未登録のシフト名がない場合はデータベースへ書き込みを行う
+                        } else {
+                            self.pdfmethod.RegistDataBase(self.appDelegate.update, importname: self.appDelegate.filename, importpath: self.Libralypath+"/"+self.appDelegate.filename)
+                            self.pdfmethod.UserMonthlySalaryRegist(self.appDelegate.filename)
+                        }
+                        
+                        /*pickerview,label,シフトの表示を更新する*/
+                        self.shiftlist.removeAllObjects()
+                        if DBmethod().DBRecordCount(ShiftDB.self) != 0 {
+                            for i in (0 ... DBmethod().DBRecordCount(ShiftDB.self)-1).reversed(){
+                                self.shiftlist.add(DBmethod().ShiftDBGet(i))
                             }
-                            
-                            /*pickerview,label,シフトの表示を更新する*/
-                            self.shiftlist.removeAllObjects()
-                            if DBmethod().DBRecordCount(ShiftDB.self) != 0 {
-                                for i in (0 ... DBmethod().DBRecordCount(ShiftDB.self)-1).reversed(){
-                                    self.shiftlist.add(DBmethod().ShiftDBGet(i))
-                                }
-                                self.SaralyLabel.text = self.GetCommaSalalyString(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB.self)-1))
-                            }
-                            
-                            self.onecourspicker.reloadAllComponents()
-                            
-                            let today = self.currentnsdate
-                            let date = CommonMethod().ReturnYearMonthDayWeekday(today)
-                            self.ShowAllData(CommonMethod().Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day, arraynumber: 1)
-                            self.SetCalenderLabel(date.year, month: date.month, day: date.day, weekday: date.weekday)
-                            
-                        })
+                            self.SaralyLabel.text = self.GetCommaSalalyString(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB.self)-1))
+                        }
+                        
+                        self.onecourspicker.reloadAllComponents()
+                        
+                        let today = self.currentnsdate
+                        let date = Utility().ReturnYearMonthDayWeekday(today)
+                        self.ShowAllData(Utility().Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day, arraynumber: 1)
+                        self.SetCalenderLabel(date.year, month: date.month, day: date.day, weekday: date.weekday)
                     }
                 }
             }
@@ -316,7 +314,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                                                             
                                                             if flag {   //テキストフィールドに値が全て入っている場合
                                                                 
-                                                                let newrecord = CommonMethod().CreateShiftSystemDBRecord(DBmethod().DBRecordCount(ShiftSystemDB.self),shiftname: textFields![0].text!, shiftgroup: textFields![1].text!)
+                                                                let newrecord = Utility().CreateShiftSystemDBRecord(DBmethod().DBRecordCount(ShiftSystemDB.self),shiftname: textFields![0].text!, shiftgroup: textFields![1].text!)
                                                                 DBmethod().AddandUpdate(newrecord, update: true)
                                                                 
                                                                 self.savedata()
@@ -398,7 +396,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                                                             
                                                             if flag {   //テキストフィールドに値が全て入っている場合
                                                                 
-                                                                let newrecord = CommonMethod().CreateShiftSystemDBRecord(DBmethod().DBRecordCount(ShiftSystemDB.self),shiftname: textFields![0].text!, shiftgroup: textFields![1].text!)
+                                                                let newrecord = Utility().CreateShiftSystemDBRecord(DBmethod().DBRecordCount(ShiftSystemDB.self),shiftname: textFields![0].text!, shiftgroup: textFields![1].text!)
                                                                 DBmethod().AddandUpdate(newrecord, update: true)
                                                                 
                                                                 self.savedata()
@@ -901,12 +899,12 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         
         //todayと一致するボタンタイトルがある場合は常に文字を白表示にする
         let totayNSDate = Date()
-        let todaysplitday = CommonMethod().ReturnYearMonthDayWeekday(totayNSDate) //日付を西暦,月,日,曜日に分けて取得
+        let todaysplitday = Utility().ReturnYearMonthDayWeekday(totayNSDate) //日付を西暦,月,日,曜日に分けて取得
         
         self.RemoveButtonObjects()
         
         //ボタンのタイトルを日付から計算して生成する
-        let currentsplitdate = CommonMethod().ReturnYearMonthDayWeekday(currentnsdate)
+        let currentsplitdate = Utility().ReturnYearMonthDayWeekday(currentnsdate)
         self.SetDayArray(currentnsdate,pivotweekday:currentsplitdate.weekday)      //buttontilearrayへ値を格納する
         
         for i in 0...6{
@@ -984,7 +982,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
      - parameter sender: タップしたUIButton
      */
     @objc func TapDayButton(_ sender: UIButton){
-        let currentsplitday = CommonMethod().ReturnYearMonthDayWeekday(currentnsdate) //日付を西暦,月,日,曜日に分けて取得
+        let currentsplitday = Utility().ReturnYearMonthDayWeekday(currentnsdate) //日付を西暦,月,日,曜日に分けて取得
         
         //タップした日付ボタンと表示中の日付の配列位置を比較
         var tagindex = 0
@@ -1008,18 +1006,18 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         }
         
         self.DayControl(tagindex-currentdayindex)
-        let currentnsdatesplit = CommonMethod().ReturnYearMonthDayWeekday(currentnsdate)
+        let currentnsdatesplit = Utility().ReturnYearMonthDayWeekday(currentnsdate)
 
         //今日の日付より大きい日付(翌日以降)のボタンがタップされた場合
         if tagindex - currentdayindex > 0 {
             self.AnimationCalenderLabel(20)
-            self.ShowAllData(CommonMethod().Changecalendar(currentnsdatesplit.year, calender: "A.D"), m: currentnsdatesplit.month, d: currentnsdatesplit.day, arraynumber: 2)
+            self.ShowAllData(Utility().Changecalendar(currentnsdatesplit.year, calender: "A.D"), m: currentnsdatesplit.month, d: currentnsdatesplit.day, arraynumber: 2)
             self.AnimationShiftLabelCompletion(shiftlabel_x[0], mainposition: shiftlabel_x[0], nextpositon: shiftlabel_x[1])
         
         //今日の日付より小さい日付(前日以降)のボタンがタップされた場合
         }else if tagindex - currentdayindex < 0 {
             self.AnimationCalenderLabel(-4)
-            self.ShowAllData(CommonMethod().Changecalendar(currentnsdatesplit.year, calender: "A.D"), m: currentnsdatesplit.month, d: currentnsdatesplit.day, arraynumber: 0)
+            self.ShowAllData(Utility().Changecalendar(currentnsdatesplit.year, calender: "A.D"), m: currentnsdatesplit.month, d: currentnsdatesplit.day, arraynumber: 0)
             self.AnimationShiftLabelCompletion(shiftlabel_x[1], mainposition: shiftlabel_x[2], nextpositon: shiftlabel_x[2])
         
         //今日の日付と同じボタンがタップされた場合
@@ -1152,9 +1150,9 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                     //control[i]分だけ日付を操作したnsdateを作成する
                     let calendar = Calendar.current
                     let daycontroled_nsdate = (calendar as NSCalendar).date(byAdding: .day, value: daycontrol[i], to: self.currentnsdate, options: [])
-                    let daycontroled_splitday = CommonMethod().ReturnYearMonthDayWeekday(daycontroled_nsdate!)
+                    let daycontroled_splitday = Utility().ReturnYearMonthDayWeekday(daycontroled_nsdate!)
 
-                    self.ShowAllData(CommonMethod().Changecalendar(daycontroled_splitday.year, calender: "A.D"), m: daycontroled_splitday.month, d: daycontroled_splitday.day, arraynumber: i)
+                    self.ShowAllData(Utility().Changecalendar(daycontroled_splitday.year, calender: "A.D"), m: daycontroled_splitday.month, d: daycontroled_splitday.day, arraynumber: i)
                 }
         })
     }
@@ -1221,7 +1219,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         if sender.state == UIGestureRecognizerState.began {
             
             let today = Date()
-            let date = CommonMethod().ReturnYearMonthDayWeekday(today)
+            let date = Utility().ReturnYearMonthDayWeekday(today)
             self.SetCalenderLabel(date.year, month: date.month, day: date.day, weekday: date.weekday)
             
             let calendar = Calendar(identifier: Calendar.Identifier.gregorian)
@@ -1243,13 +1241,13 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
             
             //現在表示している日付と今日の日付を比較して、アニメーションを切り替えて表示する
             if compareunit == .orderedAscending {           //currentnsdateが今日より小さい(前の日付)場合
-                self.ShowAllData(CommonMethod().Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day, arraynumber: 2)
+                self.ShowAllData(Utility().Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day, arraynumber: 2)
                 self.AnimationCalenderLabel(20)
                 self.SetupDayButton(1)
                 self.AnimationShiftLabelCompletion(shiftlabel_x[0], mainposition: shiftlabel_x[0], nextpositon: shiftlabel_x[1])
                 
             }else if compareunit == .orderedDescending{     //currentnsdateが今日より大きい(後の日付)場合
-                self.ShowAllData(CommonMethod().Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day, arraynumber: 0)
+                self.ShowAllData(Utility().Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day, arraynumber: 0)
                 self.AnimationCalenderLabel(-4)
                 self.SetupDayButton(-1)
                 self.AnimationShiftLabelCompletion(shiftlabel_x[1], mainposition: shiftlabel_x[2], nextpositon: shiftlabel_x[2])
@@ -1275,7 +1273,7 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         
         currentnsdate = daycontroled_nsdate!
 
-        let currentnsdatesplit = CommonMethod().ReturnYearMonthDayWeekday(currentnsdate)
+        let currentnsdatesplit = Utility().ReturnYearMonthDayWeekday(currentnsdate)
         
         //日付を表示しているラベルの内容を変更する
         self.SetCalenderLabel(currentnsdatesplit.year, month: currentnsdatesplit.month, day: currentnsdatesplit.day, weekday: currentnsdatesplit.weekday)
@@ -1293,14 +1291,14 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     func SetDayArray(_ pivotnsdate: Date, pivotweekday: Int){
         var j = 0                   //日付を増やすための変数
         
-        let nsdatesplit = CommonMethod().ReturnYearMonthDayWeekday(pivotnsdate)
+        let nsdatesplit = Utility().ReturnYearMonthDayWeekday(pivotnsdate)
         
         //今日の日付から日曜日までの日付を追加する
         for i in (1..<pivotweekday).reversed() {
             let tmp_daybutton = day_button()
             
-            let newnsdate = CommonMethod().CreateNSDate(nsdatesplit.year, month: nsdatesplit.month, day: nsdatesplit.day-i)
-            let newnsdatesplit = CommonMethod().ReturnYearMonthDayWeekday(newnsdate)
+            let newnsdate = Utility().CreateNSDate(nsdatesplit.year, month: nsdatesplit.month, day: nsdatesplit.day-i)
+            let newnsdatesplit = Utility().ReturnYearMonthDayWeekday(newnsdate)
             
             tmp_daybutton.year = newnsdatesplit.year
             tmp_daybutton.month = newnsdatesplit.month
@@ -1312,9 +1310,9 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         for _ in pivotweekday...7 {
             let tmp_daybutton = day_button()
             
-            let newnsdate = CommonMethod().CreateNSDate(nsdatesplit.year, month: nsdatesplit.month, day: nsdatesplit.day+j)
+            let newnsdate = Utility().CreateNSDate(nsdatesplit.year, month: nsdatesplit.month, day: nsdatesplit.day+j)
             j += 1
-            let newnsdatesplit = CommonMethod().ReturnYearMonthDayWeekday(newnsdate)
+            let newnsdatesplit = Utility().ReturnYearMonthDayWeekday(newnsdate)
             
             tmp_daybutton.year = newnsdatesplit.year
             tmp_daybutton.month = newnsdatesplit.month
