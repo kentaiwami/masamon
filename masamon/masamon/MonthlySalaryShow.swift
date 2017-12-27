@@ -831,20 +831,6 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         return true
     }
     
-    /**
-     シェイクジェスチャーを認識した時に動作
-     
-     - parameter motion:
-     - parameter event:
-     */
-    override func motionBegan(_ motion: UIEventSubtype,with event: UIEvent?){
-        
-        if motion == UIEventSubtype.motionShake {
-            let targetViewController = self.storyboard!.instantiateViewController(withIdentifier: "Video")
-            self.present( targetViewController, animated: true, completion: nil)
-        }
-    }
-    
 
     /**
      曜日ラベルを表示する
