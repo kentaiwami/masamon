@@ -1,6 +1,5 @@
 PODS:
   - Eureka (4.0.1)
-  - GradientCircularProgress (3.9.0)
   - Realm (3.0.1):
     - Realm/Headers (= 3.0.1)
   - Realm/Headers (3.0.1)
@@ -9,24 +8,13 @@ PODS:
 
 DEPENDENCIES:
   - Eureka
-  - GradientCircularProgress (from `https://github.com/keygx/GradientCircularProgress`)
   - RealmSwift
-
-EXTERNAL SOURCES:
-  GradientCircularProgress:
-    :git: https://github.com/keygx/GradientCircularProgress
-
-CHECKOUT OPTIONS:
-  GradientCircularProgress:
-    :commit: 811ef9c81eb5619c42654d05dc6a7788924ae1cb
-    :git: https://github.com/keygx/GradientCircularProgress
 
 SPEC CHECKSUMS:
   Eureka: c8bd5cc07143b6f66268c208d28a246c99b41955
-  GradientCircularProgress: 41eda5d2752fdba7b65826e193518ef5aa9df02e
   Realm: ba6144c74f835f7497791f6599d63a7755377b83
   RealmSwift: 7d13b1ac4b6022a13f841e3143e7789c9e40ad0d
 
-PODFILE CHECKSUM: 0dd7d96b7572dcc957d4f0c8c9f0aa1d5f051682
+PODFILE CHECKSUM: 0c28aa9b7f82a398ace264a4820fe3385eab3381
 
 COCOAPODS: 1.3.1
