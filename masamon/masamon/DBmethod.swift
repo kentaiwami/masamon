@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 import UIKit
 
-class DBmethod: UIViewController {
+class DBmethod {
 
     
     /****************データベース全般メソッド*************/
