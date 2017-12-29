@@ -69,7 +69,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print("******************")
         let debug_key = try! keychain.getData("db_key")
         print(debug_key!.map { String(format: "%.2hhx", $0) }.joined())
-        
         print("******************")
         
         //InboxFileCountに空レコード(ダミー)を追加
