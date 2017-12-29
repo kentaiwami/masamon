@@ -14,6 +14,24 @@ class DBmethod {
 
     
     /****************データベース全般メソッド*************/
+    func GetKey() -> Data {
+        var key = Data(count: 64)
+        _ = key.withUnsafeMutableBytes { bytes in
+            SecRandomCopyBytes(kSecRandomDefault, 64, bytes)
+        }
+        
+        return key
+    }
+    
+    func OpenRealm(key: Data) -> Realm {
+        let config = Realm.Configuration(encryptionKey: key)
+        do {
+            let realm = try Realm(configuration: config)
+            return realm
+        } catch let error as NSError {
+            fatalError("Error opening realm: \(error)")
+        }
+    }
     
     //データベースへの追加(ID重複の場合は上書き)
     func AddandUpdate(_ record: Object, update: Bool){
