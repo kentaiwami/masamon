@@ -35,7 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     /*各画面で使用*/
     var screennumber = 0    //シフト：0, カレンダー：1, 設定：2,　履歴：3
-        
+    
     var skipshiftname = ""      //スキップしたシフト体制名
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any]) -> Bool {
@@ -52,6 +52,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
+        //TODO: keychainに値があるかを確認
         
         //InboxFileCountに空レコード(ダミー)を追加
         if DBmethod().DBRecordCount(InboxFileCountDB.self) == 0 {
