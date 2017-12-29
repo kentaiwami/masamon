@@ -35,10 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     /*各画面で使用*/
     var screennumber = 0    //シフト：0, カレンダー：1, 設定：2,　履歴：3
-    
-    /*VideoViewControllerで使用*/
-    var thumbnailnumber = 0     //タップしたサムネイルの番号を格納
-    
+        
     var skipshiftname = ""      //スキップしたシフト体制名
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any]) -> Bool {
