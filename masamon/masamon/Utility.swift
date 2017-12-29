@@ -8,6 +8,7 @@
 
 import UIKit
 import RealmSwift
+import KeychainAccess
 
 class Utility: UIViewController {
     
@@ -296,6 +297,19 @@ class Utility: UIViewController {
         let comp : DateComponents = (calendar as NSCalendar).components(
             [.year,.month,.day,.weekday], from: date)
         return (comp.year!,comp.month!,comp.day!,comp.weekday!)
+    }
+    
+    func GenerateKey() -> Data {
+        let uuid = NSUUID().uuidString.components(separatedBy: "-").joined()
+        let key = uuid + uuid
+        
+        return key.data(using: String.Encoding.utf8, allowLossyConversion: false)!
+    }
+    
+    func GetKey() -> Data {
+        let keychain = Keychain()
+        let key = try! keychain.getData("db_key")
+        return key!
     }
 
 }

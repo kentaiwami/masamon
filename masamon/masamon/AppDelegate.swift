@@ -8,6 +8,7 @@
 
 import UIKit
 import Realm
+import KeychainAccess
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -52,7 +53,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
-        //TODO: keychainに値があるかを確認
+        let reset = false
+        let keychain = Keychain()
+        
+        if reset {
+            try! keychain.remove("db_key")
+        }
+        
+        let key = try! keychain.getData("db_key")
+        
+        if key == nil {
+            try! keychain.set(Utility().GenerateKey(), key: "db_key")
+        }
+        
+        print("******************")
+        let debug_key = try! keychain.getData("db_key")
+        print(debug_key!.map { String(format: "%.2hhx", $0) }.joined())
+        
+        print("******************")
         
         //InboxFileCountに空レコード(ダミー)を追加
         if DBmethod().DBRecordCount(InboxFileCountDB.self) == 0 {

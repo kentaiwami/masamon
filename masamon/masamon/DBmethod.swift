@@ -9,21 +9,14 @@
 import Foundation
 import RealmSwift
 import UIKit
+import KeychainAccess
 
 class DBmethod {
 
     
     /****************データベース全般メソッド*************/
-    func GetKey() -> Data {
-        var key = Data(count: 64)
-        _ = key.withUnsafeMutableBytes { bytes in
-            SecRandomCopyBytes(kSecRandomDefault, 64, bytes)
-        }
-        
-        return key
-    }
-    
-    func OpenRealm(key: Data) -> Realm {
+    func OpenRealm() -> Realm {
+        let key = Utility().GetKey()
         let config = Realm.Configuration(encryptionKey: key)
         do {
             let realm = try Realm(configuration: config)
@@ -36,7 +29,7 @@ class DBmethod {
     //データベースへの追加(ID重複の場合は上書き)
     func AddandUpdate(_ record: Object, update: Bool){
         do{
-            let realm = try Realm()
+            let realm = OpenRealm()
             try realm.write{
                 realm.add(record, update: update)
             }
@@ -49,7 +42,7 @@ class DBmethod {
     func DeleteRecord(_ object: Object) {
         
         do{
-            let realm = try Realm()
+            let realm = OpenRealm()
             
             try realm.write {
                 realm.delete(object)
@@ -64,7 +57,8 @@ class DBmethod {
         var dbrecordcount = 0
         
         do{
-            dbrecordcount = try (Realm().objects(DBName).count)
+            let realm = OpenRealm()
+            dbrecordcount = try! (realm.objects(DBName).count)
 
         }catch{
             //Error
@@ -84,7 +78,7 @@ class DBmethod {
         }
         
         do{
-            let realm = try Realm()
+            let realm = OpenRealm()
             try realm.write{
                 realm.create(ShiftDB.self, value: ["shiftimportname":importname, "shiftdetail":list], update: true)
             }
@@ -98,7 +92,7 @@ class DBmethod {
     func ShiftDBGet(_ id: Int) -> String{
         var shiftimportname = ""
         
-        let realm = try! Realm()
+        let realm = OpenRealm()
         shiftimportname = realm.objects(ShiftDB.self).filter("id = %@",id)[0].shiftimportname
         return shiftimportname
     }
@@ -106,7 +100,7 @@ class DBmethod {
     //ShiftDBのリレーションシップ配列を返す
     func ShiftDBRelationArrayGet(_ id: Int) -> List<ShiftDetailDB>{
         var list = List<ShiftDetailDB>()
-        let realm = try! Realm()
+        let realm = OpenRealm()
         
         list = realm.objects(ShiftDB.self).filter("id = %@", id)[0].shiftdetail
         
@@ -118,7 +112,7 @@ class DBmethod {
     func ShiftDBSaralyGet(_ id: Int) ->Int{
         var saraly = 0
         
-        let realm = try! Realm()
+        let realm = OpenRealm()
         saraly = realm.objects(ShiftDB.self).filter("id = %@", id)[0].salaly
         
         return saraly
@@ -126,7 +120,7 @@ class DBmethod {
     
     //id受け取ってレコードを返す
     func GetShiftDBRecordByID(_ id: Int) -> ShiftDB{
-        let realm = try! Realm()
+        let realm = OpenRealm()
         let record = realm.objects(ShiftDB.self).filter("id = %@",id)[0]
         return record
     }
@@ -135,7 +129,7 @@ class DBmethod {
     func SearchShiftDB(_ importname: String) -> ShiftDB{
         var shiftdb = ShiftDB()
         
-        let realm = try! Realm()
+        let realm = OpenRealm()
         shiftdb = realm.objects(ShiftDB.self).filter("shiftimportname = %@",importname)[0]
         
         return shiftdb
@@ -143,7 +137,7 @@ class DBmethod {
     
     //ShiftDBのレコードを配列にして返す
     func GetShiftDBAllRecordArray() -> Results<ShiftDB>?{
-        let realm = try! Realm()
+        let realm = OpenRealm()
         
         if DBmethod().DBRecordCount(ShiftDB.self) != 0 {
             return realm.objects(ShiftDB.self)
@@ -155,7 +149,7 @@ class DBmethod {
     //ShiftDBの虫食い状態を直す
     func ShiftDBFillHole(_ id: Int){
         do{
-            let realm = try Realm()
+            let realm = OpenRealm()
             let count = DBmethod().DBRecordCount(ShiftDB.self)
             var copyrecordarray: [ShiftDB] = []
             
@@ -190,7 +184,7 @@ class DBmethod {
     
     //ShiftDBのソートを行う
     func ShiftDBSort(){
-        let realm = try! Realm()
+        let realm = OpenRealm()
         
         let sortedresults = realm.objects(ShiftDB.self).sorted(byKeyPath: "id")         //ソート後の結果を取得
         let nonsortedresults = realm.objects(ShiftDB.self)                   //ソート前の結果を取得
@@ -231,7 +225,7 @@ class DBmethod {
 
     //時給設定の情報を配列にして返す
     func HourlyPayRecordGet() -> Results<HourlyPayDB>{
-        let realm = try! Realm()
+        let realm = OpenRealm()
         return realm.objects(HourlyPayDB.self)
     }
     
@@ -243,7 +237,7 @@ class DBmethod {
     func InboxFileCountsGet() -> Int{
         var count = 0
         
-        let realm = try! Realm()
+        let realm = OpenRealm()
         count = realm.objects(InboxFileCountDB.self).filter("id = %@", 0)[0].counts
         
         return count
@@ -264,7 +258,7 @@ class DBmethod {
     func FilePathTmpGet() -> NSString{
         var path: NSString = ""
         
-        let realm = try! Realm()
+        let realm = OpenRealm()
         path = realm.objects(FilePathTmpDB.self).filter("id = %@", 0)[0].path
         return path
     }
@@ -284,7 +278,7 @@ class DBmethod {
     func UserNameGet() -> String{
         var name = ""
         
-        let realm = try! Realm()
+        let realm = OpenRealm()
         name = realm.objects(UserNameDB.self).filter("id = %@",0)[0].name
         
         return name
@@ -297,7 +291,7 @@ class DBmethod {
     //受け取った文字列をShiftSystemから検索し、該当するレコードを返す
     func SearchShiftSystem(_ shift: String) -> Results<ShiftSystemDB>?{
         
-        let realm = try! Realm()
+        let realm = OpenRealm()
         let shiftsystem = realm.objects(ShiftSystemDB.self).filter("name = %@",shift)
         
         if shiftsystem.count == 0 {
@@ -310,7 +304,7 @@ class DBmethod {
     //受け取ったIDをShiftSystemから検索し、該当するShiftSystemのレコードを返す
     func ShiftSystemNameGet(_ id: Int) -> ShiftSystemDB{
         
-        let realm = try! Realm()
+        let realm = OpenRealm()
         let record = realm.objects(ShiftSystemDB.self).filter("id = %@",id)[0]
         
         return record
@@ -319,7 +313,7 @@ class DBmethod {
     //受け取ったgroupidをShiftSystemから検索し、該当するShiftSystemのレコードを配列で返す
     func ShiftSystemRecordArrayGetByGroudid(_ groupid: Int) -> Results<ShiftSystemDB>{
         
-        let realm = try! Realm()
+        let realm = OpenRealm()
         let name = realm.objects(ShiftSystemDB.self).filter("groupid = %@",groupid)
 
         return name
@@ -330,7 +324,7 @@ class DBmethod {
         
         var name: [String] = []
         
-        let realm = try! Realm()
+        let realm = OpenRealm()
         let results = realm.objects(ShiftSystemDB.self).filter("groupid = %@",groupid)
         
         for i in 0 ..< results.count{
@@ -344,7 +338,7 @@ class DBmethod {
     //シフト名を配列で返す関数
     func ShiftSystemNameArrayGet() -> Array<String>{
         var array: [String] = []
-        let realm = try! Realm()
+        let realm = OpenRealm()
         
         for i in 0 ..< DBmethod().DBRecordCount(ShiftSystemDB.self){
             let name = realm.objects(ShiftSystemDB.self).filter("id = %@",i)[0].name
@@ -355,7 +349,7 @@ class DBmethod {
     }
     
     func ShiftSystemAllRecordGet() -> Results<ShiftSystemDB>{
-        let realm = try! Realm()
+        let realm = OpenRealm()
         
         return realm.objects(ShiftSystemDB.self)
     }
@@ -363,7 +357,7 @@ class DBmethod {
     //ShiftSystemDBの虫食い状態を直す関数
     func ShiftSystemDBFillHole(_ id: Int){
         do{
-            let realm = try Realm()
+            let realm = OpenRealm()
             let count = DBmethod().DBRecordCount(ShiftSystemDB.self)
             var copyrecordarray: [ShiftSystemDB] = []
             
@@ -397,7 +391,7 @@ class DBmethod {
     
     //ShiftSystemDBのソートを行う
     func ShiftSystemDBSort(){
-        let realm = try! Realm()
+        let realm = OpenRealm()
         
         let sortedresults = realm.objects(ShiftSystemDB.self).sorted(byKeyPath: "id")         //ソート後の結果を取得
         let nonsortedresults = realm.objects(ShiftSystemDB.self)                   //ソート前の結果を取得
@@ -439,7 +433,7 @@ class DBmethod {
     func StaffNumberGet() -> Int{
         var number = 0
         
-        let realm = try! Realm()
+        let realm = OpenRealm()
         number = realm.objects(StaffNumberDB.self).filter("id = %@",0)[0].number
         
         return number
@@ -450,7 +444,7 @@ class DBmethod {
     
     //受け取った日付に該当するレコードを配列にして返す
     func GetShiftDetailDBRecordByDay(_ day: Int) -> Results<ShiftDetailDB> {
-        let realm = try! Realm()
+        let realm = OpenRealm()
         let results = realm.objects(ShiftDetailDB.self).filter("day = %@",day)
         
         return results
@@ -458,7 +452,7 @@ class DBmethod {
     
     //受け取ったidに対応するShiftDetailDBのレコードを返す
     func GetShiftDetailDBRecordByID(_ id: Int) -> ShiftDetailDB{
-        let realm = try! Realm()
+        let realm = OpenRealm()
         let record = realm.objects(ShiftDetailDB.self).filter("id = %@",id)[0]
         
         return record
@@ -467,7 +461,7 @@ class DBmethod {
     //ShiftDetailDBのリレーションシップをUpdateする
     func ShiftDetaiDB_relationshipUpdate(_ id: Int, record: ShiftDB){
         do{
-            let realm = try Realm()
+            let realm = OpenRealm()
             try realm.write{
                 realm.create(ShiftDetailDB.self, value: ["id":id, "shiftDBrelationship":record], update: true)
             }
@@ -480,7 +474,7 @@ class DBmethod {
     //year,month,dateを受け取ってその日のレコードを返す
     func TheDayStaffGet(_ year: Int, month: Int, date: Int) -> Results<ShiftDetailDB>?{
         
-        let realm = try! Realm()
+        let realm = OpenRealm()
         let stafflist = realm.objects(ShiftDetailDB.self).filter("year = %@ AND month = %@ AND day = %@",year,month,date)
         
         if stafflist.count == 0 {
@@ -495,7 +489,7 @@ class DBmethod {
     func DeleteShiftDetailDBRecords(_ objects: List<ShiftDetailDB>) {
         
         do{
-            let realm = try Realm()
+            let realm = OpenRealm()
             
             try realm.write {
                 realm.delete(objects)
@@ -507,7 +501,7 @@ class DBmethod {
     
     //ShiftDetailDBのソートを行う
     func ShiftDetailDBSort(){
-        let realm = try! Realm()
+        let realm = OpenRealm()
         
         let sortedresults = realm.objects(ShiftDetailDB.self).sorted(byKeyPath: "id")         //ソート後の結果を取得
         let nonsortedresults = realm.objects(ShiftDetailDB.self)                   //ソート前の結果を取得
@@ -543,7 +537,7 @@ class DBmethod {
     //ShiftDetailDBの虫食い状態を直す
     func ShiftDetailDBFillHole(_ id: Int, deleterecords: Int){
         do{
-            let realm = try Realm()
+            let realm = OpenRealm()
             let count = DBmethod().DBRecordCount(ShiftDetailDB.self)
             var copyrecordarray: [ShiftDetailDB] = []
             
@@ -581,7 +575,7 @@ class DBmethod {
     //StaffNameDBに保存されているスタッフ名を配列で返す関数
     func StaffNameArrayGet() -> Array<String>?{
         var array: [String] = []
-        let realm = try! Realm()
+        let realm = OpenRealm()
         
         if DBmethod().DBRecordCount(StaffNameDB.self) == 0 {
             return nil
@@ -604,7 +598,7 @@ class DBmethod {
      */
     func ManagerStaffNameArrayGet(_ flag: Int) -> Array<String>?{
         var array: [String] = []
-        let realm = try! Realm()
+        let realm = OpenRealm()
         
         if DBmethod().DBRecordCount(StaffNameDB.self) == 0 {
             return nil
@@ -634,7 +628,7 @@ class DBmethod {
     
     //StaffNameDBの全レコードを取得する
     func StaffNameAllRecordGet() -> Results<StaffNameDB>?{
-        let realm = try! Realm()
+        let realm = OpenRealm()
         
         return realm.objects(StaffNameDB.self)
     }
@@ -662,7 +656,7 @@ class DBmethod {
 
     //StaffNameDBのソートを行う
     func StaffNameDBSort(){
-        let realm = try! Realm()
+        let realm = OpenRealm()
         
         let sortedresults = realm.objects(StaffNameDB.self).sorted(byKeyPath: "id")         //ソート後の結果を取得
         let nonsortedresults = realm.objects(StaffNameDB.self)                   //ソート前の結果を取得

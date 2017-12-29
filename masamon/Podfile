@@ -10,5 +10,6 @@ target 'masamon' do
 
     pod 'RealmSwift'
     pod 'Eureka'
+    pod 'KeychainAccess'
 end
 
