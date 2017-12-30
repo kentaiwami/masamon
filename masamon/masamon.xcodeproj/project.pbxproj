@@ -37,14 +37,12 @@
 		376C92D61BE695D000D45FC2 /* extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376C92D51BE695D000D45FC2 /* extentions.swift */; };
 		377D2DBB1C37EFE6009CC388 /* FileBrowseSelect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377D2DBA1C37EFE5009CC388 /* FileBrowseSelect.swift */; };
 		379955951C14431F00BAAD9E /* XLSXmethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379955941C14431F00BAAD9E /* XLSXmethod.swift */; };
-		379A2E051C1FDFFC00751425 /* CustomUICollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379A2E041C1FDFFC00751425 /* CustomUICollectionViewCell.swift */; };
 		37A597261CD57F0A00D43D35 /* LaunchScreenImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 37A597251CD57F0A00D43D35 /* LaunchScreenImage.png */; };
 		37A6F9BE1CDE66FA004863FE /* ShiftImportSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A6F9BD1CDE66FA004863FE /* ShiftImportSetting.swift */; };
 		37A76F9B1D6A28AA00ED7AEA /* Maintenance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A76F9A1D6A28AA00ED7AEA /* Maintenance.swift */; };
 		37C8B2401CD4E29D001E3766 /* OriginUITabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C8B23F1CD4E29D001E3766 /* OriginUITabBarController.swift */; };
 		37D4B3101BE0F59900F06759 /* HourlyWageSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D4B30F1BE0F59900F06759 /* HourlyWageSetting.swift */; };
 		37DD8EFF1C1C29FF007C0E6C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 370ACDFE1BDF486700AB73EB /* Main.storyboard */; };
-		37F75CAB1C3F18C30075F9FD /* PDFmethod_old.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F75CAA1C3F18C30075F9FD /* PDFmethod_old.swift */; };
 		37F75CBF1C3F1E4C0075F9FD /* TET_ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37F75CB61C3F1B610075F9FD /* TET_ios.framework */; };
 		37F75CC01C3F1E650075F9FD /* libstdc++.6.0.9.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 37F75CBD1C3F1C270075F9FD /* libstdc++.6.0.9.tbd */; };
 		490FD6C287F4CD3D17370479 /* Pods_masamon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FB65C1733F9DC817ECE7C1E /* Pods_masamon.framework */; };
@@ -142,7 +140,6 @@
 		3797D5CE1D91B0A1005CBE3E /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Realm.framework; path = "../../../../Downloads/realm-swift-1.1.0/ios/swift-3.0/Realm.framework"; sourceTree = "<group>"; };
 		3797D5CF1D91B0A1005CBE3E /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealmSwift.framework; path = "../../../../Downloads/realm-swift-1.1.0/ios/swift-3.0/RealmSwift.framework"; sourceTree = "<group>"; };
 		379955941C14431F00BAAD9E /* XLSXmethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XLSXmethod.swift; sourceTree = "<group>"; };
-		379A2E041C1FDFFC00751425 /* CustomUICollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomUICollectionViewCell.swift; sourceTree = "<group>"; };
 		37A597251CD57F0A00D43D35 /* LaunchScreenImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LaunchScreenImage.png; sourceTree = "<group>"; };
 		37A6F9BD1CDE66FA004863FE /* ShiftImportSetting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShiftImportSetting.swift; sourceTree = "<group>"; };
 		37A76F9A1D6A28AA00ED7AEA /* Maintenance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Maintenance.swift; sourceTree = "<group>"; };
@@ -150,7 +147,6 @@
 		37CB96FE1C40569400171B76 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
 		37CB96FF1C40569400171B76 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		37D4B30F1BE0F59900F06759 /* HourlyWageSetting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HourlyWageSetting.swift; sourceTree = "<group>"; };
-		37F75CAA1C3F18C30075F9FD /* PDFmethod_old.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PDFmethod_old.swift; sourceTree = "<group>"; };
 		37F75CAD1C3F19CE0075F9FD /* TET.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = TET.xcodeproj; path = TET/sample_app/TET.xcodeproj; sourceTree = "<group>"; };
 		37F75CB31C3F1A7D0075F9FD /* libstdc++.6.0.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.0.9.dylib"; path = "../../../../../../usr/lib/libstdc++.6.0.9.dylib"; sourceTree = "<group>"; };
 		37F75CB51C3F1AEE0075F9FD /* masamon-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "masamon-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -225,9 +221,7 @@
 				371DE5141C5DBD4D0058F73B /* Setting.swift */,
 				37526DD11CDC4ECB00F180DA /* FileBrowse.swift */,
 				377D2DBA1C37EFE5009CC388 /* FileBrowseSelect.swift */,
-				379A2E041C1FDFFC00751425 /* CustomUICollectionViewCell.swift */,
 				379955941C14431F00BAAD9E /* XLSXmethod.swift */,
-				37F75CAA1C3F18C30075F9FD /* PDFmethod_old.swift */,
 				371D62431D5EE79500057416 /* PDFmethod.swift */,
 				371432A71BE98F060088CDCC /* ShiftImport.swift */,
 				370ACE011BDF486700AB73EB /* Assets.xcassets */,
@@ -480,7 +474,6 @@
 				37C8B2401CD4E29D001E3766 /* OriginUITabBarController.swift in Sources */,
 				3726B39A1C30009700F22F34 /* CalenderViewController.swift in Sources */,
 				379955951C14431F00BAAD9E /* XLSXmethod.swift in Sources */,
-				37F75CAB1C3F18C30075F9FD /* PDFmethod_old.swift in Sources */,
 				370ACE4A1BDF9C8A00AB73EB /* DBmethod.swift in Sources */,
 				37526DD21CDC4ECB00F180DA /* FileBrowse.swift in Sources */,
 				370ACDFD1BDF486700AB73EB /* MonthlySalaryShow.swift in Sources */,
@@ -490,7 +483,6 @@
 				376C92D61BE695D000D45FC2 /* extentions.swift in Sources */,
 				370ACE441BDF573500AB73EB /* DB.swift in Sources */,
 				373C10EF1C5E04D10082CB8E /* ShiftNameListSetting.swift in Sources */,
-				379A2E051C1FDFFC00751425 /* CustomUICollectionViewCell.swift in Sources */,
 				37A76F9B1D6A28AA00ED7AEA /* Maintenance.swift in Sources */,
 				371432A81BE98F060088CDCC /* ShiftImport.swift in Sources */,
 				37D4B3101BE0F59900F06759 /* HourlyWageSetting.swift in Sources */,
