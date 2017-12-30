@@ -162,8 +162,6 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     }
     
 
-//    let progress = GradientCircularProgress()
-    let indicator = Indicator()
     let Libralypath = NSSearchPathForDirectoriesInDomains(.libraryDirectory, .userDomainMask, true)[0] as String
     var staffshiftcountflag = true
     var staffnamecountflag = true
@@ -175,53 +173,42 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     func savedata() {
         
         if self.appDelegate.filename.contains(".xlsx") {
-            indicator.showIndicator(view: self.view)
+            //新規シフトがあるか確認する
+            XLSXmethod().CheckShift()
             
-            dispatch_async_global { // ここからバックグラウンドスレッド
-                
-                //新規シフトがあるか確認する
-                XLSXmethod().CheckShift()
-                
-                //スタッフ名にシフト文字が含まれていたら記録する
-                XLSXmethod().CheckStaffName()
-                
-                //新規シフト認識エラーがない場合は月給計算を行う
-                if self.appDelegate.errorshiftnamexlsx.count == 0 {
-                    XLSXmethod().ShiftDBOneCoursRegist(self.appDelegate.filename, importpath: self.Libralypath+"/"+self.appDelegate.filename, update: self.appDelegate.update)
-                    XLSXmethod().UserMonthlySalaryRegist(self.appDelegate.filename)
-                }
-                
-                
-                self.dispatch_async_main { // ここからメインスレッド
-                    self.indicator.stopIndicator()
-                    
-                    /*pickerview,label,シフトの表示を更新する*/
-                    self.shiftlist.removeAllObjects()
-                    if DBmethod().DBRecordCount(ShiftDB.self) != 0 {
-                        for i in (0 ... DBmethod().DBRecordCount(ShiftDB.self)-1).reversed(){
-                            self.shiftlist.add(DBmethod().ShiftDBGet(i))
-                        }
-                        self.SaralyLabel.text = self.GetCommaSalalyString(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB.self)-1))
-                    }
-                    
-                    self.onecourspicker.reloadAllComponents()
-                    
-                    let today = self.currentnsdate
-                    let date = Utility().ReturnYearMonthDayWeekday(today)
-                    self.ShowAllData(Utility().Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day, arraynumber: 1)
-                    self.SetCalenderLabel(date.year, month: date.month, day: date.day, weekday: date.weekday)
-                    
-                    if self.appDelegate.errorshiftnamexlsx.count != 0 {  //新規シフト名がある場合
-                        if self.staffshiftcountflag {
-                            self.appDelegate.errorshiftnamefastcount = self.appDelegate.errorshiftnamexlsx.count
-                            self.staffshiftcountflag = false
-                        }
-                        self.StaffShiftErrorAlertShowXLSX()
-                    }
-                }
+            //スタッフ名にシフト文字が含まれていたら記録する
+            XLSXmethod().CheckStaffName()
+            
+            //新規シフト認識エラーがない場合は月給計算を行う
+            if self.appDelegate.errorshiftnamexlsx.count == 0 {
+                XLSXmethod().ShiftDBOneCoursRegist(self.appDelegate.filename, importpath: self.Libralypath+"/"+self.appDelegate.filename, update: self.appDelegate.update)
+                XLSXmethod().UserMonthlySalaryRegist(self.appDelegate.filename)
             }
-            //取り込みがPDFの場合
-        }else{
+                    
+            /*pickerview,label,シフトの表示を更新する*/
+            self.shiftlist.removeAllObjects()
+            if DBmethod().DBRecordCount(ShiftDB.self) != 0 {
+                for i in (0 ... DBmethod().DBRecordCount(ShiftDB.self)-1).reversed(){
+                    self.shiftlist.add(DBmethod().ShiftDBGet(i))
+                }
+                self.SaralyLabel.text = self.GetCommaSalalyString(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB.self)-1))
+            }
+            
+            self.onecourspicker.reloadAllComponents()
+                    
+            let today = self.currentnsdate
+            let date = Utility().ReturnYearMonthDayWeekday(today)
+            self.ShowAllData(Utility().Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day, arraynumber: 1)
+            self.SetCalenderLabel(date.year, month: date.month, day: date.day, weekday: date.weekday)
+                    
+            if self.appDelegate.errorshiftnamexlsx.count != 0 {  //新規シフト名がある場合
+                if self.staffshiftcountflag {
+                    self.appDelegate.errorshiftnamefastcount = self.appDelegate.errorshiftnamexlsx.count
+                    self.staffshiftcountflag = false
+                }
+                self.StaffShiftErrorAlertShowXLSX()
+            }
+        }else{ //取り込みがPDFの場合
             //スタッフが登録されていない場合はエラーアラートを出す
             if DBmethod().DBRecordCount(StaffNameDB.self) == 0 {
                 let alert: UIAlertController = UIAlertController(title: "取り込みエラー", message: "スタッフを1名以上登録してください", preferredStyle:  UIAlertControllerStyle.alert)
@@ -245,45 +232,35 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
                 
                 present(alert, animated: true, completion: nil)
             }else {
-                indicator.showIndicator(view: self.view)
+                //PDF内のデータを取得して未登録のシフト名をチェック
+                self.pdfmethod.RunPDFmethod()
                 
-                dispatch_async_global{
+                if self.appDelegate.unknownshiftname.count != 0 {  //シフト認識エラーがある場合
+                    self.StaffShiftErrorAlertShowPDF()
                     
-                    //PDF内のデータを取得して未登録のシフト名をチェック
-                    self.pdfmethod.RunPDFmethod()
-                    
-                    self.dispatch_async_main{
-                        self.indicator.stopIndicator()
-                        
-                        if self.appDelegate.unknownshiftname.count != 0 {  //シフト認識エラーがある場合
-                            self.StaffShiftErrorAlertShowPDF()
-                            
-                            //未登録のシフト名がない場合はデータベースへ書き込みを行う
-                        } else {
-                            self.pdfmethod.RegistDataBase(self.appDelegate.update, importname: self.appDelegate.filename, importpath: self.Libralypath+"/"+self.appDelegate.filename)
-                            self.pdfmethod.UserMonthlySalaryRegist(self.appDelegate.filename)
-                        }
-                        
-                        /*pickerview,label,シフトの表示を更新する*/
-                        self.shiftlist.removeAllObjects()
-                        if DBmethod().DBRecordCount(ShiftDB.self) != 0 {
-                            for i in (0 ... DBmethod().DBRecordCount(ShiftDB.self)-1).reversed(){
-                                self.shiftlist.add(DBmethod().ShiftDBGet(i))
-                            }
-                            self.SaralyLabel.text = self.GetCommaSalalyString(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB.self)-1))
-                        }
-                        
-                        self.onecourspicker.reloadAllComponents()
-                        
-                        let today = self.currentnsdate
-                        let date = Utility().ReturnYearMonthDayWeekday(today)
-                        self.ShowAllData(Utility().Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day, arraynumber: 1)
-                        self.SetCalenderLabel(date.year, month: date.month, day: date.day, weekday: date.weekday)
-                    }
+                    //未登録のシフト名がない場合はデータベースへ書き込みを行う
+                } else {
+                    self.pdfmethod.RegistDataBase(self.appDelegate.update, importname: self.appDelegate.filename, importpath: self.Libralypath+"/"+self.appDelegate.filename)
+                    self.pdfmethod.UserMonthlySalaryRegist(self.appDelegate.filename)
                 }
+                
+                /*pickerview,label,シフトの表示を更新する*/
+                self.shiftlist.removeAllObjects()
+                if DBmethod().DBRecordCount(ShiftDB.self) != 0 {
+                    for i in (0 ... DBmethod().DBRecordCount(ShiftDB.self)-1).reversed(){
+                        self.shiftlist.add(DBmethod().ShiftDBGet(i))
+                    }
+                    self.SaralyLabel.text = self.GetCommaSalalyString(DBmethod().ShiftDBSaralyGet(DBmethod().DBRecordCount(ShiftDB.self)-1))
+                }
+                
+                self.onecourspicker.reloadAllComponents()
+                
+                let today = self.currentnsdate
+                let date = Utility().ReturnYearMonthDayWeekday(today)
+                self.ShowAllData(Utility().Changecalendar(date.year, calender: "A.D"), m: date.month, d: date.day, arraynumber: 1)
+                self.SetCalenderLabel(date.year, month: date.month, day: date.day, weekday: date.weekday)
             }
         }
-        
     }
     
     /**
