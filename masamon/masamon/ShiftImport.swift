@@ -57,20 +57,20 @@ class ShiftImport: FormViewController, UIWebViewDelegate{
         let Inboxpath = documentspath + "/Inbox/"
         let filePath = Inboxpath + filename_new
 
-//        let myPDFurl = URL(fileURLWithPath: filePath)
-//        let myRequest = URLRequest(url: myPDFurl)
+        let myPDFurl = URL(fileURLWithPath: filePath)
+        let myRequest = URLRequest(url: myPDFurl)
         
         // ページ読み込み中に表示させるインジケータを生成.
-//        myIndiator = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
-//        myIndiator.center = self.view.center
-//        myIndiator.hidesWhenStopped = true
-//        myIndiator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
+        myIndiator = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
+        myIndiator.center = self.view.center
+        myIndiator.hidesWhenStopped = true
+        myIndiator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
         
         // WebViewのLoad開始.
-//        myWebView.loadRequest(myRequest)
+        myWebView.loadRequest(myRequest)
         
         // viewにWebViewを追加.
-//        self.view.addSubview(myWebView)
+        self.view.addSubview(myWebView)
     }
     
     func CreateForm() {
