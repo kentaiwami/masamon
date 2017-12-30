@@ -46,7 +46,9 @@ class HourlyWageSetting: FormViewController {
         
         self.view.backgroundColor = UIColor.black
         
-        SetText()
+        CreateForm()
+        
+//        SetText()
       
         //区切るための枠線を追加
 //        for i in 0 ..< 2{
@@ -98,36 +100,36 @@ class HourlyWageSetting: FormViewController {
 //        Salaly1.tag = 3
 //        Salaly2.tag = 4
         
-        timeUIPicker.tag = 1
+//        timeUIPicker.tag = 1
         
         //Toolbarの作成
-        let pickertoolBar = UIToolbar()
-        pickertoolBar.barStyle = UIBarStyle.default
-        pickertoolBar.isTranslucent = true
-        pickertoolBar.sizeToFit()
-        let numberpadtoolBar = UIToolbar()
-        numberpadtoolBar.barStyle = UIBarStyle.default
-        numberpadtoolBar.isTranslucent = true
-        numberpadtoolBar.sizeToFit()
+//        let pickertoolBar = UIToolbar()
+//        pickertoolBar.barStyle = UIBarStyle.default
+//        pickertoolBar.isTranslucent = true
+//        pickertoolBar.sizeToFit()
+//        let numberpadtoolBar = UIToolbar()
+//        numberpadtoolBar.barStyle = UIBarStyle.default
+//        numberpadtoolBar.isTranslucent = true
+//        numberpadtoolBar.sizeToFit()
         
         //Toolbarにつけるボタンの作成
-        let pickerdoneButton = UIBarButtonItem(title: "完了", style: UIBarButtonItemStyle.plain, target: self, action: #selector(HourlyWageSetting.TapButton(_:)))
-        let pickercancelButton = UIBarButtonItem(title: "キャンセル", style: UIBarButtonItemStyle.plain, target: self, action: #selector(HourlyWageSetting.TapButton(_:)))
-        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
-        let salalyButton = UIBarButtonItem(title: "完了", style: UIBarButtonItemStyle.plain, target: self, action: #selector(HourlyWageSetting.TapButton(_:)))
+//        let pickerdoneButton = UIBarButtonItem(title: "完了", style: UIBarButtonItemStyle.plain, target: self, action: #selector(HourlyWageSetting.TapButton(_:)))
+//        let pickercancelButton = UIBarButtonItem(title: "キャンセル", style: UIBarButtonItemStyle.plain, target: self, action: #selector(HourlyWageSetting.TapButton(_:)))
+//        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
+//        let salalyButton = UIBarButtonItem(title: "完了", style: UIBarButtonItemStyle.plain, target: self, action: #selector(HourlyWageSetting.TapButton(_:)))
         
-        pickerdoneButton.tag = 10
-        pickercancelButton.tag = 11
-        salalyButton.tag = 30
+//        pickerdoneButton.tag = 10
+//        pickercancelButton.tag = 11
+//        salalyButton.tag = 30
         
         //Toolbarへボタンの追加
-        pickertoolBar.setItems([pickercancelButton,flexSpace,pickerdoneButton], animated: false)
-        pickertoolBar.isUserInteractionEnabled = true
-        numberpadtoolBar.setItems([flexSpace,salalyButton], animated: false)
-        numberpadtoolBar.isUserInteractionEnabled = true
+//        pickertoolBar.setItems([pickercancelButton,flexSpace,pickerdoneButton], animated: false)
+//        pickertoolBar.isUserInteractionEnabled = true
+//        numberpadtoolBar.setItems([flexSpace,salalyButton], animated: false)
+//        numberpadtoolBar.isUserInteractionEnabled = true
         
         //PickerViewの追加
-        timeUIPicker.frame = CGRect(x: 0,y: 0,width: self.view.bounds.width/2+20, height: 260.0)
+//        timeUIPicker.frame = CGRect(x: 0,y: 0,width: self.view.bounds.width/2+20, height: 260.0)
 //        timeUIPicker.delegate = self
 //        timeUIPicker.dataSource = self
         
@@ -146,37 +148,176 @@ class HourlyWageSetting: FormViewController {
 //        TimeTo2.inputAccessoryView = pickertoolBar
     }
     
+    func CreateForm() {
+        let RuleRequired_M = "必須項目です"
+        LabelRow.defaultCellUpdate = { cell, row in
+            cell.contentView.backgroundColor = .red
+            cell.textLabel?.textColor = .white
+            cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 13)
+            cell.textLabel?.textAlignment = .right
+        }
+
+        form +++ Section("日中")
+            <<< TimeRow(){
+                $0.title = "開始時間"
+                $0.value = Date(timeIntervalSinceReferenceDate: 0)
+                $0.tag = "daytime_s"
+            }
+            .onRowValidationChanged { cell, row in
+                let rowIndex = row.indexPath!.row
+                while row.section!.count > rowIndex + 1 && row.section?[rowIndex  + 1] is LabelRow {
+                    row.section?.remove(at: rowIndex + 1)
+                }
+                if !row.isValid {
+                    for (index, _) in row.validationErrors.map({ $0.msg }).enumerated() {
+                        let labelRow = LabelRow() {
+                            $0.title = RuleRequired_M
+                            $0.cell.height = { 30 }
+                        }
+                        row.section?.insert(labelRow, at: row.indexPath!.row + index + 1)
+                    }
+                }
+            }
+                
+            <<< TimeRow(){
+                $0.title = "終了時間"
+                $0.value = Date(timeIntervalSinceReferenceDate: 0)
+                $0.tag = "daytime_e"
+            }
+            .onRowValidationChanged { cell, row in
+                let rowIndex = row.indexPath!.row
+                while row.section!.count > rowIndex + 1 && row.section?[rowIndex  + 1] is LabelRow {
+                    row.section?.remove(at: rowIndex + 1)
+                }
+                if !row.isValid {
+                    for (index, _) in row.validationErrors.map({ $0.msg }).enumerated() {
+                        let labelRow = LabelRow() {
+                            $0.title = RuleRequired_M
+                            $0.cell.height = { 30 }
+                        }
+                        row.section?.insert(labelRow, at: row.indexPath!.row + index + 1)
+                    }
+                }
+            }
+        
+            <<< IntRow(){
+                $0.title = "時給"
+                $0.value = 0
+                $0.tag = "daytime_wage"
+            }
+            .onRowValidationChanged { cell, row in
+                let rowIndex = row.indexPath!.row
+                while row.section!.count > rowIndex + 1 && row.section?[rowIndex  + 1] is LabelRow {
+                    row.section?.remove(at: rowIndex + 1)
+                }
+                if !row.isValid {
+                    for (index, _) in row.validationErrors.map({ $0.msg }).enumerated() {
+                        let labelRow = LabelRow() {
+                            $0.title = RuleRequired_M
+                            $0.cell.height = { 30 }
+                        }
+                        row.section?.insert(labelRow, at: row.indexPath!.row + index + 1)
+                    }
+                }
+            }
+        
+        form +++ Section("深夜")
+            <<< TimeRow(){
+                $0.title = "開始時間"
+                $0.value = Date(timeIntervalSinceReferenceDate: 0)
+                $0.tag = "nighttime_s"
+                }
+                .onRowValidationChanged { cell, row in
+                    let rowIndex = row.indexPath!.row
+                    while row.section!.count > rowIndex + 1 && row.section?[rowIndex  + 1] is LabelRow {
+                        row.section?.remove(at: rowIndex + 1)
+                    }
+                    if !row.isValid {
+                        for (index, _) in row.validationErrors.map({ $0.msg }).enumerated() {
+                            let labelRow = LabelRow() {
+                                $0.title = RuleRequired_M
+                                $0.cell.height = { 30 }
+                            }
+                            row.section?.insert(labelRow, at: row.indexPath!.row + index + 1)
+                        }
+                    }
+            }
+            
+            <<< TimeRow(){
+                $0.title = "終了時間"
+                $0.value = Date(timeIntervalSinceReferenceDate: 0)
+                $0.tag = "nighttime_e"
+                }
+                .onRowValidationChanged { cell, row in
+                    let rowIndex = row.indexPath!.row
+                    while row.section!.count > rowIndex + 1 && row.section?[rowIndex  + 1] is LabelRow {
+                        row.section?.remove(at: rowIndex + 1)
+                    }
+                    if !row.isValid {
+                        for (index, _) in row.validationErrors.map({ $0.msg }).enumerated() {
+                            let labelRow = LabelRow() {
+                                $0.title = RuleRequired_M
+                                $0.cell.height = { 30 }
+                            }
+                            row.section?.insert(labelRow, at: row.indexPath!.row + index + 1)
+                        }
+                    }
+            }
+            
+            <<< IntRow(){
+                $0.title = "時給"
+                $0.value = 0
+                $0.tag = "nighttime_wage"
+                }
+                .onRowValidationChanged { cell, row in
+                    let rowIndex = row.indexPath!.row
+                    while row.section!.count > rowIndex + 1 && row.section?[rowIndex  + 1] is LabelRow {
+                        row.section?.remove(at: rowIndex + 1)
+                    }
+                    if !row.isValid {
+                        for (index, _) in row.validationErrors.map({ $0.msg }).enumerated() {
+                            let labelRow = LabelRow() {
+                                $0.title = RuleRequired_M
+                                $0.cell.height = { 30 }
+                            }
+                            row.section?.insert(labelRow, at: row.indexPath!.row + index + 1)
+                        }
+                    }
+        }
+    }
+    
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
     //表示列
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 3
-    }
+//    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+//        return 3
+//    }
     
     //表示個数
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        if component == 0 {
-            return time.count
-        }else if component == 1 {
-            return wavyline.count
-        }else{
-            return time.count
-        }
-    }
+//    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+//        if component == 0 {
+//            return time.count
+//        }else if component == 1 {
+//            return wavyline.count
+//        }else{
+//            return time.count
+//        }
+//    }
     
     //表示内容
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        
-        if component == 0 {
-            return time[row]
-        }else if component == 1 {
-            return wavyline[row]
-        }else{
-            return time[row]
-        }
-    }
+//    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+//
+//        if component == 0 {
+//            return time[row]
+//        }else if component == 1 {
+//            return wavyline[row]
+//        }else{
+//            return time[row]
+//        }
+//    }
     
     //選択時
 //    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
@@ -201,83 +342,83 @@ class HourlyWageSetting: FormViewController {
 //    }
     
     //幅を変更
-    func pickerView(_ pickerView: UIPickerView, widthForComponent component: Int) -> CGFloat {
-        return 80
-    }
-    //高さを変更
-    func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
-        return 50
-    }
+//    func pickerView(_ pickerView: UIPickerView, widthForComponent component: Int) -> CGFloat {
+//        return 80
+//    }
+//    //高さを変更
+//    func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
+//        return 50
+//    }
     
     //pickerviewやツールバー上のボタン動作
-    func TapButton(_ sender: UIButton){
-        
-        if selecttextfieldtag == 1 {            //日中のテキストフィールドが選択されている状態
-            switch(sender.tag){
-            case 10:    //Doneボタン
-                break
-//                TimeFrom1.text = time[textfieldrowfrom1]
-//                TimeTo1.text = time[textfieldrowto1]
-//                TimeFrom1.resignFirstResponder()
-//                TimeTo1.resignFirstResponder()
-
-            case 11:    //Cancelボタン
-                textfieldrowfrom1 = 8
-                textfieldrowto1 = 42
-
-//                TimeFrom1.text = ""
-//                TimeTo1.text = ""
-//                TimeFrom1.resignFirstResponder()
-//                TimeTo1.resignFirstResponder()
-                
-            default:
-                break
-            }
-        }else if selecttextfieldtag == 2 {      //深夜のテキストフィールドが選択されている状態
-            switch(sender.tag){
-            case 10:    //Doneボタン
-                break
-//                TimeFrom2.text = time[textfieldrowfrom2]
-//                TimeTo2.text = time[textfieldrowto2]
-//                TimeFrom2.resignFirstResponder()
-//                TimeTo2.resignFirstResponder()
-                
-            case 11:    //Cancelボタン
-                textfieldrowfrom2 = 42
-                textfieldrowto2 = 8
-
-//                TimeFrom2.text = ""
-//                TimeTo2.text = ""
-//                TimeFrom2.resignFirstResponder()
-//                TimeTo2.resignFirstResponder()
-                
-            default:
-                break
-            }
-
-        }else if selecttextfieldtag == 3 {      //日中の時給テキストフィールドが選択されている
-//            Salaly1.resignFirstResponder()
-        }else if selecttextfieldtag == 4 {      //深夜の時給テキストフィールドが選択されている
-//            Salaly2.resignFirstResponder()
-        }
-    }
+//    func TapButton(_ sender: UIButton){
+//
+//        if selecttextfieldtag == 1 {            //日中のテキストフィールドが選択されている状態
+//            switch(sender.tag){
+//            case 10:    //Doneボタン
+//                break
+////                TimeFrom1.text = time[textfieldrowfrom1]
+////                TimeTo1.text = time[textfieldrowto1]
+////                TimeFrom1.resignFirstResponder()
+////                TimeTo1.resignFirstResponder()
+//
+//            case 11:    //Cancelボタン
+//                textfieldrowfrom1 = 8
+//                textfieldrowto1 = 42
+//
+////                TimeFrom1.text = ""
+////                TimeTo1.text = ""
+////                TimeFrom1.resignFirstResponder()
+////                TimeTo1.resignFirstResponder()
+//
+//            default:
+//                break
+//            }
+//        }else if selecttextfieldtag == 2 {      //深夜のテキストフィールドが選択されている状態
+//            switch(sender.tag){
+//            case 10:    //Doneボタン
+//                break
+////                TimeFrom2.text = time[textfieldrowfrom2]
+////                TimeTo2.text = time[textfieldrowto2]
+////                TimeFrom2.resignFirstResponder()
+////                TimeTo2.resignFirstResponder()
+//
+//            case 11:    //Cancelボタン
+//                textfieldrowfrom2 = 42
+//                textfieldrowto2 = 8
+//
+////                TimeFrom2.text = ""
+////                TimeTo2.text = ""
+////                TimeFrom2.resignFirstResponder()
+////                TimeTo2.resignFirstResponder()
+//
+//            default:
+//                break
+//            }
+//
+//        }else if selecttextfieldtag == 3 {      //日中の時給テキストフィールドが選択されている
+////            Salaly1.resignFirstResponder()
+//        }else if selecttextfieldtag == 4 {      //深夜の時給テキストフィールドが選択されている
+////            Salaly2.resignFirstResponder()
+//        }
+//    }
     
-    var selecttextfieldtag = 0
-    //textfieldがタップされた時
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        selecttextfieldtag = textField.tag
-        if textField.tag == 1 {
-            timeUIPicker.selectRow(textfieldrowfrom1, inComponent: 0, animated: true)
-            timeUIPicker.selectRow(textfieldrowto1, inComponent: 2, animated: true)
-//            TimeFrom1.text = time[textfieldrowfrom1]
-//            TimeTo1.text = time[textfieldrowto1]
-        }else if textField.tag == 2 {
-            timeUIPicker.selectRow(textfieldrowfrom2, inComponent: 0, animated: true)
-            timeUIPicker.selectRow(textfieldrowto2, inComponent: 2, animated: true)
-//            TimeFrom2.text = time[textfieldrowfrom2]
-//            TimeTo2.text = time[textfieldrowto2]
-        }
-    }
+//    var selecttextfieldtag = 0
+//    //textfieldがタップされた時
+//    func textFieldDidBeginEditing(_ textField: UITextField) {
+//        selecttextfieldtag = textField.tag
+//        if textField.tag == 1 {
+//            timeUIPicker.selectRow(textfieldrowfrom1, inComponent: 0, animated: true)
+//            timeUIPicker.selectRow(textfieldrowto1, inComponent: 2, animated: true)
+////            TimeFrom1.text = time[textfieldrowfrom1]
+////            TimeTo1.text = time[textfieldrowto1]
+//        }else if textField.tag == 2 {
+//            timeUIPicker.selectRow(textfieldrowfrom2, inComponent: 0, animated: true)
+//            timeUIPicker.selectRow(textfieldrowto2, inComponent: 2, animated: true)
+////            TimeFrom2.text = time[textfieldrowfrom2]
+////            TimeTo2.text = time[textfieldrowto2]
+//        }
+//    }
     
     //セーブボタンを押した時
     func SaveButtontapped(_ sender: UIButton){
@@ -315,24 +456,24 @@ class HourlyWageSetting: FormViewController {
     }
     
     //テキストフィールドが入力状態になった際に動作
-    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        txtActiveField = textField
-        return true
-    }
+//    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+//        txtActiveField = textField
+//        return true
+//    }
     //リターンキーを押した時に動作
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        view.endEditing(true)
-        return true
-    }
+//    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+//        view.endEditing(true)
+//        return true
+//    }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
-        let notificationCenter = NotificationCenter.default
-        notificationCenter.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        notificationCenter.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+//        let notificationCenter = NotificationCenter.default
+//        notificationCenter.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+//        notificationCenter.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
-        SetText()
+//        SetText()
     }
     
     func SetText(){
