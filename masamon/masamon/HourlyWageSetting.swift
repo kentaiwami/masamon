@@ -165,7 +165,13 @@ class HourlyWageSetting: FormViewController {
         var default_nighttime_wage = 0
     
         if DBmethod().DBRecordCount(HourlyPayDB.self) != 0 {
-            //TODO: レコードが既に登録されている場合の処理
+            let hourlypayarray = DBmethod().HourlyPayRecordGet()
+            default_daytime_s = time[Int(hourlypayarray[0].timefrom * 2) - 2]
+            default_daytime_e = time[Int(hourlypayarray[0].timeto * 2) - 2]
+            default_nighttime_s = time[Int(hourlypayarray[1].timefrom * 2) - 2]
+            default_nighttime_e = time[Int(hourlypayarray[1].timeto * 2) - 2]
+            default_daytime_wage = hourlypayarray[0].pay
+            default_nighttime_wage = hourlypayarray[1].pay
         }
 
         form +++ Section("日中")
