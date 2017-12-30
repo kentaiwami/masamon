@@ -30,6 +30,7 @@ class ShiftImport: FormViewController, UIWebViewDelegate{
         let cancel_button = UIBarButtonItem(image: UIImage(named: "icon_cancel"), style: .plain, target: self, action: #selector(self.TapCancelButton(sender:)))
         let do_import_button = UIBarButtonItem(image: UIImage(named: "icon_import"), style: .plain, target: self, action: #selector(self.TapDoImportButton(sender:)))
         
+        self.navigationItem.title = "シフトの取り込み"
         self.navigationController?.navigationBar.barTintColor = UIColor.black
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white]
         self.navigationController?.navigationBar.tintColor = UIColor.white
