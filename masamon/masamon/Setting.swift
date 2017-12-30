@@ -20,8 +20,6 @@ class Setting: FormViewController {
         self.navigationController!.navigationBar.tintColor = UIColor.white
         self.navigationController!.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white]
         
-        self.tableView.isScrollEnabled = false
-        
         let storyboard: UIStoryboard = self.storyboard!
         let HourlyWageSetting_VC = storyboard.instantiateViewController(withIdentifier: "HourlyWageSetting")
         let ShiftImportSetting_VC = storyboard.instantiateViewController(withIdentifier: "ShiftImportSetting")
