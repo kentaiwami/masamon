@@ -636,7 +636,7 @@ class DBmethod {
     //StaffNameDBの虫食い状態を直す関数
     func StaffNameDBFillHole(_ id: Int){
         do{
-            let realm = try Realm()
+            let realm = OpenRealm()
             let count = DBmethod().DBRecordCount(StaffNameDB.self)
             
             for i in id ..< count{
