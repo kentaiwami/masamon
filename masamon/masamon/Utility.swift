@@ -8,8 +8,9 @@
 
 import UIKit
 import RealmSwift
+import KeychainAccess
 
-class CommonMethod: UIViewController {
+class Utility: UIViewController {
     
     /**
      30分ごとの時間を返す
@@ -255,7 +256,7 @@ class CommonMethod: UIViewController {
      - returns: シフト範囲
      */
     func GetShiftCoursMonthRange(_ shiftstartyear: Int, shiftstartmonth: Int) -> NSRange{
-        let shiftnsdate = self.CreateNSDate(CommonMethod().Changecalendar(shiftstartyear, calender: "JP"), month: shiftstartmonth, day: 1)
+        let shiftnsdate = self.CreateNSDate(Utility().Changecalendar(shiftstartyear, calender: "JP"), month: shiftstartmonth, day: 1)
         let c = Calendar.current
         let monthrange = (c as NSCalendar).range(of: [NSCalendar.Unit.day],  in: [NSCalendar.Unit.month], for: shiftnsdate)
         
@@ -297,5 +298,46 @@ class CommonMethod: UIViewController {
             [.year,.month,.day,.weekday], from: date)
         return (comp.year!,comp.month!,comp.day!,comp.weekday!)
     }
+    
+    func GenerateKey() -> Data {
+        let uuid = NSUUID().uuidString.components(separatedBy: "-").joined()
+        let key = uuid + uuid
+        
+        return key.data(using: String.Encoding.utf8, allowLossyConversion: false)!
+    }
+    
+    func GetKey() -> Data {
+        let keychain = Keychain()
+        let key = try! keychain.getData("db_key")
+        return key!
+    }
+    
+    func GetStandardAlert(title: String, message: String, b_title: String) -> UIAlertController {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        let ok = UIAlertAction(title: b_title, style:UIAlertActionStyle.default)
+        
+        alertController.addAction(ok)
+        
+        return alertController
+    }
 
 }
+
+class Indicator {
+    let indicator = UIActivityIndicatorView()
+    
+    func showIndicator(view: UIView) {
+        indicator.activityIndicatorViewStyle = .whiteLarge
+        indicator.center = view.center
+        indicator.color = UIColor.gray
+        indicator.hidesWhenStopped = true
+        view.addSubview(indicator)
+        view.bringSubview(toFront: indicator)
+        indicator.startAnimating()
+    }
+    
+    func stopIndicator() {
+        self.indicator.stopAnimating()
+    }
+}
+

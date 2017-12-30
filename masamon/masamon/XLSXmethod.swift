@@ -46,9 +46,9 @@ class XLSXmethod: UIViewController {
     //ワンクール分のシフトをShiftDetailDBとShiftDBへ記録する
     func ShiftDBOneCoursRegist(_ importname: String, importpath: String, update: Bool){
         let worksheet = self.SetXLSX()
-        let shiftyearandmonth = CommonMethod().JudgeYearAndMonth(worksheet.P1)
+        let shiftyearandmonth = Utility().JudgeYearAndMonth(worksheet.P1)
         
-        let monthrange = CommonMethod().GetShiftCoursMonthRange(shiftyearandmonth.startcoursmonthyear, shiftstartmonth: shiftyearandmonth.startcoursmonth)
+        let monthrange = Utility().GetShiftCoursMonthRange(shiftyearandmonth.startcoursmonthyear, shiftstartmonth: shiftyearandmonth.startcoursmonth)
         
         var date = 11
         let staffcellposition = self.StaffCellPositionGet()     //スタッフの名前が記載されているセル場所 ex.)F8,F9
@@ -77,8 +77,8 @@ class XLSXmethod: UIViewController {
 
                 switch(flag){
                 case 0:         //11日〜月末までの場合
-                    newshiftdetaildb.year = CommonMethod().JudgeYearAndMonth(worksheet.P1).startcoursmonthyear
-                    newshiftdetaildb.month = CommonMethod().JudgeYearAndMonth(worksheet.P1).startcoursmonth
+                    newshiftdetaildb.year = Utility().JudgeYearAndMonth(worksheet.P1).startcoursmonthyear
+                    newshiftdetaildb.month = Utility().JudgeYearAndMonth(worksheet.P1).startcoursmonth
                     date += 1
                     
                     if date > monthrange.length {
@@ -87,8 +87,8 @@ class XLSXmethod: UIViewController {
                     }
                     
                 case 1:         //1日〜10日までの場合
-                    newshiftdetaildb.year = CommonMethod().JudgeYearAndMonth(worksheet.P1).endcoursmonthyear
-                    newshiftdetaildb.month = CommonMethod().JudgeYearAndMonth(worksheet.P1).endcoursmonth
+                    newshiftdetaildb.year = Utility().JudgeYearAndMonth(worksheet.P1).endcoursmonthyear
+                    newshiftdetaildb.month = Utility().JudgeYearAndMonth(worksheet.P1).endcoursmonth
                     date += 1
                     
                 default:
@@ -118,8 +118,8 @@ class XLSXmethod: UIViewController {
 
                 switch(flag){
                 case 0:         //11日〜30(31)日までの場合
-                    shiftdetaildb.year = CommonMethod().JudgeYearAndMonth(worksheet.P1).startcoursmonthyear
-                    shiftdetaildb.month = CommonMethod().JudgeYearAndMonth(worksheet.P1).startcoursmonth
+                    shiftdetaildb.year = Utility().JudgeYearAndMonth(worksheet.P1).startcoursmonthyear
+                    shiftdetaildb.month = Utility().JudgeYearAndMonth(worksheet.P1).startcoursmonth
                     date += 1
                     
                     if date > monthrange.length {
@@ -128,8 +128,8 @@ class XLSXmethod: UIViewController {
                     }
                     
                 case 1:         //1日〜10日までの場合
-                    shiftdetaildb.year = CommonMethod().JudgeYearAndMonth(worksheet.P1).endcoursmonthyear
-                    shiftdetaildb.month = CommonMethod().JudgeYearAndMonth(worksheet.P1).endcoursmonth
+                    shiftdetaildb.year = Utility().JudgeYearAndMonth(worksheet.P1).endcoursmonthyear
+                    shiftdetaildb.month = Utility().JudgeYearAndMonth(worksheet.P1).endcoursmonth
                     date += 1
                     
                 default:
@@ -192,8 +192,8 @@ class XLSXmethod: UIViewController {
         
         var userposition = ""
         
-        let shiftyearandmonth = CommonMethod().JudgeYearAndMonth(worksheet.P1)
-        let monthrange = CommonMethod().GetShiftCoursMonthRange(shiftyearandmonth.startcoursmonthyear, shiftstartmonth: shiftyearandmonth.startcoursmonth)
+        let shiftyearandmonth = Utility().JudgeYearAndMonth(worksheet.P1)
+        let monthrange = Utility().GetShiftCoursMonthRange(shiftyearandmonth.startcoursmonthyear, shiftstartmonth: shiftyearandmonth.startcoursmonth)
         
         //F列からユーザ名と合致する箇所を探す
         for i in 0 ..< DBmethod().StaffNumberGet(){
@@ -251,8 +251,8 @@ class XLSXmethod: UIViewController {
         newshiftdbsalalyadd.shiftimportname = oldshiftdbsalalynone.shiftimportname
         newshiftdbsalalyadd.shiftimportpath = oldshiftdbsalalynone.shiftimportpath
         newshiftdbsalalyadd.salaly = Int(monthlysalary)
-        newshiftdbsalalyadd.year = CommonMethod().JudgeYearAndMonth(worksheet.P1).year
-        newshiftdbsalalyadd.month = CommonMethod().JudgeYearAndMonth(worksheet.P1).endcoursmonth
+        newshiftdbsalalyadd.year = Utility().JudgeYearAndMonth(worksheet.P1).year
+        newshiftdbsalalyadd.month = Utility().JudgeYearAndMonth(worksheet.P1).endcoursmonth
         
         DBmethod().AddandUpdate(newshiftdbsalalyadd, update: true)
     }
@@ -302,8 +302,8 @@ class XLSXmethod: UIViewController {
     //新規シフト名があるか調べるメソッド
     func CheckShift(){
         let worksheet = self.SetXLSX()
-        let shiftyearandmonth = CommonMethod().JudgeYearAndMonth(worksheet.P1)
-        let monthrange = CommonMethod().GetShiftCoursMonthRange(shiftyearandmonth.startcoursmonthyear, shiftstartmonth: shiftyearandmonth.startcoursmonth)
+        let shiftyearandmonth = Utility().JudgeYearAndMonth(worksheet.P1)
+        let monthrange = Utility().GetShiftCoursMonthRange(shiftyearandmonth.startcoursmonthyear, shiftstartmonth: shiftyearandmonth.startcoursmonth)
 
         let staffcellposition = self.StaffCellPositionGet()     //スタッフの名前が記載されているセル場所 ex.)F8,F9
 
@@ -321,7 +321,7 @@ class XLSXmethod: UIViewController {
             var staffname: String = worksheet.sheet.cell(forCellReference: staffpositionarray[i]).stringValue()
             staffname = staffname.hankakuOnly
             
-            let array = CommonMethod().IncludeShiftNameInStaffName(staffname)
+            let array = Utility().IncludeShiftNameInStaffName(staffname)
             
             if array.count != 0 {
                 let record = StaffNameDB()

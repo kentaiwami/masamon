@@ -18,7 +18,7 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
     var pickerviewtoolBar = UIToolbar()
     var pickerdoneButton = UIBarButtonItem()
     
-    let shiftgroupname = CommonMethod().GetShiftGroupName()
+    let shiftgroupname = Utility().GetShiftGroupName()
     
     var shiftgroupnametextfield = UITextField()
 
@@ -83,7 +83,7 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
     var records: [[ShiftSystemDB]] = []
     
     // Sectionで使用する配列を定義する.
-    let sections = CommonMethod().GetShiftGroupNameAndTime()
+    let sections = Utility().GetShiftGroupNameAndTime()
     
     /*
     セクションの数を返す.
@@ -182,7 +182,7 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
                         
                         if textflag {
                             //新規レコードの作成
-                            let newrecord = CommonMethod().CreateShiftSystemDBRecord(self.records[section][row].id,shiftname: textFields![0].text!, shiftgroup: textFields![1].text!)
+                            let newrecord = Utility().CreateShiftSystemDBRecord(self.records[section][row].id,shiftname: textFields![0].text!, shiftgroup: textFields![1].text!)
 
                             //編集前のレコードを削除
                             DBmethod().DeleteRecord(self.records[section][row])
@@ -243,7 +243,7 @@ class ShiftNameListSetting: UIViewController, UITableViewDataSource, UITableView
                     }
 
                     if textflag {
-                        let newrecord = CommonMethod().CreateShiftSystemDBRecord(DBmethod().DBRecordCount(ShiftSystemDB.self),shiftname: textFields![0].text!, shiftgroup: textFields![1].text!)
+                        let newrecord = Utility().CreateShiftSystemDBRecord(DBmethod().DBRecordCount(ShiftSystemDB.self),shiftname: textFields![0].text!, shiftgroup: textFields![1].text!)
 
                         DBmethod().AddandUpdate(newrecord, update: true)
                     }

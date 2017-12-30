@@ -461,8 +461,8 @@ class PDFmethod: UIViewController {
      */
     func GetShiftYearMonth(_ text: String) -> ((year: Int, startcoursmonth: Int, startcoursmonthyear: Int, endcoursmonth: Int, endcoursmonthyear: Int), length: Int){
         //1クールが全部で何日間あるかを判断するため
-        let shiftyearandmonth = CommonMethod().JudgeYearAndMonth(text)
-        let monthrange = CommonMethod().GetShiftCoursMonthRange(shiftyearandmonth.startcoursmonthyear, shiftstartmonth: shiftyearandmonth.startcoursmonth)
+        let shiftyearandmonth = Utility().JudgeYearAndMonth(text)
+        let monthrange = Utility().GetShiftCoursMonthRange(shiftyearandmonth.startcoursmonthyear, shiftstartmonth: shiftyearandmonth.startcoursmonth)
         let length = monthrange.length
         return (shiftyearandmonth,length)
     }
@@ -796,7 +796,7 @@ class PDFmethod: UIViewController {
         var shiftdetailarray = List<ShiftDetailDB>()
 
         //1クールが全部で何日間あるかを判断するため
-        let monthrange = CommonMethod().GetShiftCoursMonthRange(shiftyearmonth.startcoursmonthyear, shiftstartmonth: shiftyearmonth.startcoursmonth)
+        let monthrange = Utility().GetShiftCoursMonthRange(shiftyearmonth.startcoursmonthyear, shiftstartmonth: shiftyearmonth.startcoursmonth)
         
         var shiftdetaildbrecordcount = DBmethod().DBRecordCount(ShiftDetailDB.self)
         let shiftdbrecordcount = DBmethod().DBRecordCount(ShiftDB.self)
