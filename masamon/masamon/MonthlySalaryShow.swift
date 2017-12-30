@@ -45,6 +45,12 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
 
     var ShiftLabelArray: [[UILabel]] = []
     
+    let Libralypath = NSSearchPathForDirectoriesInDomains(.libraryDirectory, .userDomainMask, true)[0] as String
+    var staffshiftcountflag = true
+    var staffnamecountflag = true
+    
+    let pdfmethod = PDFmethod()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -162,11 +168,6 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
     }
     
 
-    let Libralypath = NSSearchPathForDirectoriesInDomains(.libraryDirectory, .userDomainMask, true)[0] as String
-    var staffshiftcountflag = true
-    var staffnamecountflag = true
-    
-    let pdfmethod = PDFmethod()
     /**
      バックグラウンドで保存しながらプログレスを表示する
      */
