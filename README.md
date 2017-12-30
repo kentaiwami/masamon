@@ -30,5 +30,6 @@
 ## 使用しているライブラリ
 * [XlsxReaderWriter](https://github.com/renebigot/XlsxReaderWriter)
 * [handMadeCalendarOfSwift](https://github.com/fumiyasac/handMadeCalendarOfSwift)
-* [Gradient Circular Progress](https://github.com/keygx/GradientCircularProgress)
+* [eureka](https://github.com/xmartlabs/Eureka)
+* [KeychainAccess](https://github.com/kishikawakatsumi/KeychainAccess/)
 * [TET](http://www.infotek.co.jp/pdflib/pdflib_download.html#TET)
