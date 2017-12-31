@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import RealmSwift
 
 class day_button {
     var year = 0
@@ -422,27 +421,6 @@ class MonthlySalaryShow: UIViewController,UIPickerViewDelegate, UIPickerViewData
         }else{
             return false
         }
-    }
-    
-    
-
-    /**
-     並行処理で使用
-     
-     - parameter block:
-     */
-    func dispatch_async_main(_ block: @escaping () -> ()) {
-        DispatchQueue.main.async(execute: block)
-    }
-    
-
-    /**
-     並行処理で使用
-     
-     - parameter block:
-     */
-    func dispatch_async_global(_ block: @escaping () -> ()) {
-        DispatchQueue.global(qos: DispatchQoS.QoSClass.default).async(execute: block)
     }
     
     override func didReceiveMemoryWarning() {
