@@ -28,7 +28,7 @@ struct OneDayShift {
 }
 
 
-class PDFmethod: UIViewController {
+class PDFmethod {
     
     let appDelegate:AppDelegate = UIApplication.shared.delegate as! AppDelegate
 
