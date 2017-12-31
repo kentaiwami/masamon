@@ -11,3 +11,4 @@ masamon/*.pdf
 !sampleshift.pdf
 !sampleshift.xlsx
 masamon/Pods/*
+release/
