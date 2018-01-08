@@ -12,3 +12,4 @@ masamon/*.pdf
 !sampleshift.xlsx
 masamon/Pods/*
 release/
+Maintenance.swift
