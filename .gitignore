@@ -4,7 +4,6 @@
 .DS_Store
 *UserInterfaceState.xcuserstate
 
-icon/
 masamon/*.pdf
 !sampleshift.pdf
 !sampleshift.xlsx
