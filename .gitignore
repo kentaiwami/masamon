@@ -2,11 +2,9 @@
 !*xcodeproj/project.pbxproj
 !*xcworkspace/contents.xcworkspacedata
 .DS_Store
-/*.xmind
 *UserInterfaceState.xcuserstate
-/*.asta
-/*.asta.lock
-アイコン素材/
+
+icon/
 masamon/*.pdf
 !sampleshift.pdf
 !sampleshift.xlsx
