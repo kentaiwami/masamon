@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		23E348E4E865A2B23590A0C3 /* Pods_masamon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84AB609F000B01F031667558 /* Pods_masamon.framework */; };
 		379B4A8E202D4F1F005697F3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379B4A8D202D4F1F005697F3 /* AppDelegate.swift */; };
 		379B4A90202D4F1F005697F3 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379B4A8F202D4F1F005697F3 /* FirstViewController.swift */; };
 		379B4A92202D4F1F005697F3 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379B4A91202D4F1F005697F3 /* SecondViewController.swift */; };
@@ -24,6 +25,9 @@
 		379B4A96202D4F20005697F3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		379B4A99202D4F20005697F3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		379B4A9B202D4F20005697F3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		83E8DE3DF8828A0E623029E7 /* Pods-masamon.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-masamon.debug.xcconfig"; path = "Pods/Target Support Files/Pods-masamon/Pods-masamon.debug.xcconfig"; sourceTree = "<group>"; };
+		84AB609F000B01F031667558 /* Pods_masamon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_masamon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E65346223591DAE80AD9A77F /* Pods-masamon.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-masamon.release.xcconfig"; path = "Pods/Target Support Files/Pods-masamon/Pods-masamon.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,17 +35,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				23E348E4E865A2B23590A0C3 /* Pods_masamon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		16ABD72B9991BD1C7616DFB1 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				84AB609F000B01F031667558 /* Pods_masamon.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		379B4A81202D4F1F005697F3 = {
 			isa = PBXGroup;
 			children = (
 				379B4A8C202D4F1F005697F3 /* masamon */,
 				379B4A8B202D4F1F005697F3 /* Products */,
+				555345DACE8307928FDF7061 /* Pods */,
+				16ABD72B9991BD1C7616DFB1 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -67,6 +82,15 @@
 			path = masamon;
 			sourceTree = "<group>";
 		};
+		555345DACE8307928FDF7061 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				83E8DE3DF8828A0E623029E7 /* Pods-masamon.debug.xcconfig */,
+				E65346223591DAE80AD9A77F /* Pods-masamon.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -74,9 +98,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 379B4A9E202D4F20005697F3 /* Build configuration list for PBXNativeTarget "masamon" */;
 			buildPhases = (
+				04A4E063C720B286A042D7CC /* [CP] Check Pods Manifest.lock */,
 				379B4A86202D4F1F005697F3 /* Sources */,
 				379B4A87202D4F1F005697F3 /* Frameworks */,
 				379B4A88202D4F1F005697F3 /* Resources */,
+				DD23D7EBA460E36B6BB2385B /* [CP] Embed Pods Frameworks */,
+				50EE37AC7DF5D6205509F6E8 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -133,6 +160,64 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		04A4E063C720B286A042D7CC /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-masamon-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		50EE37AC7DF5D6205509F6E8 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-masamon/Pods-masamon-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DD23D7EBA460E36B6BB2385B /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-masamon/Pods-masamon-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/Eureka/Eureka.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Eureka.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-masamon/Pods-masamon-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		379B4A86202D4F1F005697F3 /* Sources */ = {
@@ -276,6 +361,7 @@
 		};
 		379B4A9F202D4F20005697F3 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 83E8DE3DF8828A0E623029E7 /* Pods-masamon.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -284,13 +370,14 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Kenta.masamon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
 		379B4AA0202D4F20005697F3 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E65346223591DAE80AD9A77F /* Pods-masamon.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -299,7 +386,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Kenta.masamon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
