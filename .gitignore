@@ -1,12 +1,2 @@
-*xcodeproj/*
-!*xcodeproj/project.pbxproj
-!*xcworkspace/contents.xcworkspacedata
 .DS_Store
-*UserInterfaceState.xcuserstate
-
-masamon/*.pdf
-!sampleshift.pdf
-!sampleshift.xlsx
-masamon/Pods/*
 release/
-Maintenance.swift
