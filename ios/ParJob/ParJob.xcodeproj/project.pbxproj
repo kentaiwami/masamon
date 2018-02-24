@@ -13,6 +13,7 @@
 		37237E8B204143AC00472CE2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 37237E89204143AC00472CE2 /* Main.storyboard */; };
 		37237E8D204143AC00472CE2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 37237E8C204143AC00472CE2 /* Assets.xcassets */; };
 		37237E90204143AC00472CE2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 37237E8E204143AC00472CE2 /* LaunchScreen.storyboard */; };
+		E4BFC7E460A7DED877514E37 /* Pods_ParJob.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 393EC2E17DB641F5E3ED6585 /* Pods_ParJob.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,9 @@
 		37237E8C204143AC00472CE2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		37237E8F204143AC00472CE2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		37237E91204143AC00472CE2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		393EC2E17DB641F5E3ED6585 /* Pods_ParJob.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ParJob.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6D4C88F0201E418FE8F178EE /* Pods-ParJob.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ParJob.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ParJob/Pods-ParJob.debug.xcconfig"; sourceTree = "<group>"; };
+		FF6A86E4DB5C1BE6FAB91D8B /* Pods-ParJob.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ParJob.release.xcconfig"; path = "Pods/Target Support Files/Pods-ParJob/Pods-ParJob.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,17 +35,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E4BFC7E460A7DED877514E37 /* Pods_ParJob.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		01D6A65300E7566ECCEED526 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				6D4C88F0201E418FE8F178EE /* Pods-ParJob.debug.xcconfig */,
+				FF6A86E4DB5C1BE6FAB91D8B /* Pods-ParJob.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		37237E77204143AC00472CE2 = {
 			isa = PBXGroup;
 			children = (
 				37237E82204143AC00472CE2 /* ParJob */,
 				37237E81204143AC00472CE2 /* Products */,
+				01D6A65300E7566ECCEED526 /* Pods */,
+				C8C1FC5365F89B2FAE0E07A2 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -67,6 +83,14 @@
 			path = ParJob;
 			sourceTree = "<group>";
 		};
+		C8C1FC5365F89B2FAE0E07A2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				393EC2E17DB641F5E3ED6585 /* Pods_ParJob.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -74,9 +98,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 37237E94204143AC00472CE2 /* Build configuration list for PBXNativeTarget "ParJob" */;
 			buildPhases = (
+				F0D3D4D992C4E2DDC0B31685 /* [CP] Check Pods Manifest.lock */,
 				37237E7C204143AC00472CE2 /* Sources */,
 				37237E7D204143AC00472CE2 /* Frameworks */,
 				37237E7E204143AC00472CE2 /* Resources */,
+				0E1FF27D13D26EF4C502356D /* [CP] Embed Pods Frameworks */,
+				772DBE6B2660912428F63A61 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -133,6 +160,64 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0E1FF27D13D26EF4C502356D /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-ParJob/Pods-ParJob-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/Eureka/Eureka.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Eureka.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ParJob/Pods-ParJob-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		772DBE6B2660912428F63A61 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ParJob/Pods-ParJob-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F0D3D4D992C4E2DDC0B31685 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ParJob-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		37237E7C204143AC00472CE2 /* Sources */ = {
@@ -276,6 +361,7 @@
 		};
 		37237E95204143AC00472CE2 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6D4C88F0201E418FE8F178EE /* Pods-ParJob.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -284,13 +370,14 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Kenta.ParJob;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
 		37237E96204143AC00472CE2 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FF6A86E4DB5C1BE6FAB91D8B /* Pods-ParJob.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -299,7 +386,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Kenta.ParJob;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
