@@ -1,6 +1,7 @@
 from datetime import datetime
 from ParJob.database import db
 
+
 class Company(db.Model):
     __tablename__ = 'company'
 
@@ -9,6 +10,16 @@ class Company(db.Model):
     code = db.Column(db.String(255), nullable=False, unique=True)
 
     employees = db.relationship('Employee', backref='company', lazy='dynamic')
+    shift_tables = db.relationship('ShiftTable', backref='company', lazy='dynamic')
+
+
+class ShiftTable(db.Model):
+    __tablename__ = 'shifttable'
+
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(255), nullable=False)
+    path = db.Column(db.String(255), nullable=False)
+    company_id = db.Column(db.Integer, db.ForeignKey('company.id'), nullable=False)
 
 
 class Employee(db.Model):
