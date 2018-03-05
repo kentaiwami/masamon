@@ -5,8 +5,8 @@ class Company(db.Model):
     __tablename__ = 'Company'
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(255), nullable=False)
-    code = db.Column(db.String(255), nullable=False)
+    name = db.Column(db.String(255), nullable=False, unique=True)
+    code = db.Column(db.String(255), nullable=False, unique=True)
 
     employees = db.relationship('Employee', backref='Company', lazy='dynamic')
 
@@ -16,7 +16,7 @@ class Employee(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), nullable=False)
-    code = db.Column(db.String(255), nullable=False)
+    code = db.Column(db.String(255), nullable=False, unique=True)
     password = db.Column(db.String(255), nullable=False)
     daytime_start = db.Column(db.Time, nullable=True)
     daytime_end = db.Column(db.Time, nullable=True)
