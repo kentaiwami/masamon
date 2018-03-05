@@ -2,7 +2,7 @@ from datetime import datetime
 from ParJob.database import db
 
 
-class User(db.Model):
+class Employee(db.Model):
 
     __tablename__ = 'Employee'
 
