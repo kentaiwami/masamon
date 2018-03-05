@@ -14,7 +14,7 @@ def create_app():
 
     init_db(app_tmp)
 
-    admin = Admin(app_tmp, name='microblog', template_mode='bootstrap3')
+    admin = Admin(app_tmp, name='ParJob', template_mode='bootstrap3')
     admin.add_view(ModelView(Company, db.session))
     admin.add_view(ModelView(Employee, db.session))
 
