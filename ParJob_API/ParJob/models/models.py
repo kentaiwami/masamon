@@ -36,6 +36,7 @@ class Employee(db.Model):
     updated_at = db.Column(db.DateTime, nullable=False, default=datetime.now, onupdate=datetime.now)
 
     salaries = db.relationship('Salary', backref='employee', lazy='dynamic', cascade='all, delete-orphan')
+    color_schemes = db.relationship('ColorScheme', backref='employee', lazy='dynamic', cascade='all, delete-orphan')
 
     def __repr__(self):
         return self.name
@@ -82,3 +83,11 @@ class ShiftCategory(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), nullable=False)
     company_id = db.Column(db.Integer, db.ForeignKey('company.id'), nullable=False)
+
+
+class ColorScheme(db.Model):
+    __tablename__ = 'colorscheme'
+
+    id = db.Column(db.Integer, primary_key=True)
+    color = db.Column(db.String(255), nullable=False)
+    employee_id = db.Column(db.Integer, db.ForeignKey('employee.id'), nullable=False)
