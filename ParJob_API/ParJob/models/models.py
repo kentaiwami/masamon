@@ -9,8 +9,8 @@ class Company(db.Model):
     name = db.Column(db.String(255), nullable=False, unique=True)
     code = db.Column(db.String(255), nullable=False, unique=True)
 
-    employees = db.relationship('Employee', backref='company', lazy='dynamic')
-    shift_tables = db.relationship('ShiftTable', backref='company', lazy='dynamic')
+    employees = db.relationship('Employee', backref='company', lazy='dynamic', cascade='all, delete-orphan')
+    shift_tables = db.relationship('ShiftTable', backref='company', lazy='dynamic', cascade='all, delete-orphan')
 
 
 class ShiftTable(db.Model):
@@ -20,6 +20,17 @@ class ShiftTable(db.Model):
     title = db.Column(db.String(255), nullable=False)
     path = db.Column(db.String(255), nullable=False)
     company_id = db.Column(db.Integer, db.ForeignKey('company.id'), nullable=False)
+
+    salaries = db.relationship('Salary', backref='shifttable', lazy='dynamic', cascade='all, delete-orphan')
+
+
+class Salary(db.Model):
+    __tablename__ = 'salary'
+
+    id = db.Column(db.Integer, primary_key=True)
+    pay = db.Column(db.Integer, nullable=True)
+    employee_id = db.Column(db.Integer, db.ForeignKey('employee.id'), nullable=False)
+    shifttable_id = db.Column(db.Integer, db.ForeignKey('shifttable.id'), nullable=False)
 
 
 class Employee(db.Model):
@@ -38,3 +49,5 @@ class Employee(db.Model):
     company_id = db.Column(db.Integer, db.ForeignKey('company.id'), nullable=False)
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.now)
     updated_at = db.Column(db.DateTime, nullable=False, default=datetime.now, onupdate=datetime.now)
+
+    salaries = db.relationship('Salary', backref='employee', lazy='dynamic', cascade='all, delete-orphan')
