@@ -11,6 +11,7 @@ class Company(db.Model):
 
     employees = db.relationship('Employee', backref='company', lazy='dynamic', cascade='all, delete-orphan')
     shift_tables = db.relationship('ShiftTable', backref='company', lazy='dynamic', cascade='all, delete-orphan')
+    shift_categories = db.relationship('ShiftCategory', backref='company', lazy='dynamic', cascade='all, delete-orphan')
 
     def __repr__(self):
         return '{}({})'.format(self.name, self.code)
@@ -46,7 +47,7 @@ class Role(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     role = db.Column(db.String(255), nullable=False)
 
-    salaries = db.relationship('Employee', backref='role', lazy='dynamic', cascade='all, delete-orphan')
+    employees = db.relationship('Employee', backref='role', lazy='dynamic', cascade='all, delete-orphan')
 
     def __repr__(self):
         return self.role
@@ -73,3 +74,11 @@ class Salary(db.Model):
     pay = db.Column(db.Integer, nullable=True)
     employee_id = db.Column(db.Integer, db.ForeignKey('employee.id'), nullable=False)
     shifttable_id = db.Column(db.Integer, db.ForeignKey('shifttable.id'), nullable=False)
+
+
+class ShiftCategory(db.Model):
+    __tablename__ = 'shiftcategory'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(255), nullable=False)
+    company_id = db.Column(db.Integer, db.ForeignKey('company.id'), nullable=False)
