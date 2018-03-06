@@ -12,6 +12,9 @@ class Company(db.Model):
     employees = db.relationship('Employee', backref='company', lazy='dynamic', cascade='all, delete-orphan')
     shift_tables = db.relationship('ShiftTable', backref='company', lazy='dynamic', cascade='all, delete-orphan')
 
+    def __repr__(self):
+        return '{}({})'.format(self.name, self.code)
+
 
 class ShiftTable(db.Model):
     __tablename__ = 'shifttable'
