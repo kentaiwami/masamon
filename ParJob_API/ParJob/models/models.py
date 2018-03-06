@@ -57,3 +57,6 @@ class Employee(db.Model):
     updated_at = db.Column(db.DateTime, nullable=False, default=datetime.now, onupdate=datetime.now)
 
     salaries = db.relationship('Salary', backref='employee', lazy='dynamic', cascade='all, delete-orphan')
+
+    def __repr__(self):
+        return self.name
