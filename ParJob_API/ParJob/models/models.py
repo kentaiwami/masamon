@@ -37,6 +37,7 @@ class Employee(db.Model):
 
     salaries = db.relationship('Salary', backref='employee', lazy='dynamic', cascade='all, delete-orphan')
     color_schemes = db.relationship('ColorScheme', backref='employee', lazy='dynamic', cascade='all, delete-orphan')
+    employee_shifts = db.relationship('EmployeeShift', backref='employee', lazy='dynamic', cascade='all, delete-orphan')
 
     def __repr__(self):
         return self.name
@@ -63,6 +64,7 @@ class ShiftTable(db.Model):
     company_id = db.Column(db.Integer, db.ForeignKey('company.id'), nullable=False)
 
     salaries = db.relationship('Salary', backref='shifttable', lazy='dynamic', cascade='all, delete-orphan')
+    employee_shifts = db.relationship('EmployeeShift', backref='shifttable', lazy='dynamic', cascade='all, delete-orphan')
 
     def __repr__(self):
         return '{}'.format(self.title)
@@ -93,6 +95,17 @@ class Shift(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), nullable=False)
     shift_category_id = db.Column(db.Integer, db.ForeignKey('shiftcategory.id'), nullable=False)
+
+    employee_shifts = db.relationship('EmployeeShift', backref='shift', lazy='dynamic', cascade='all, delete-orphan')
+
+class EmployeeShift(db.Model):
+    __tablename__ = 'employeeshift'
+
+    id = db.Column(db.Integer, primary_key=True)
+    date = db.Column(db.Date, nullable=False)
+    shift_id = db.Column(db.Integer, db.ForeignKey('shift.id'), nullable=False)
+    employee_id = db.Column(db.Integer, db.ForeignKey('employee.id'), nullable=False)
+    shift_table_id = db.Column(db.Integer, db.ForeignKey('shifttable.id'), nullable=False)
 
 
 class ColorScheme(db.Model):
