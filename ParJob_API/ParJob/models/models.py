@@ -84,6 +84,16 @@ class ShiftCategory(db.Model):
     name = db.Column(db.String(255), nullable=False)
     company_id = db.Column(db.Integer, db.ForeignKey('company.id'), nullable=False)
 
+    shifts = db.relationship('Shift', backref='shiftcategory', lazy='dynamic', cascade='all, delete-orphan')
+
+
+class Shift(db.Model):
+    __tablename__ = 'shift'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(255), nullable=False)
+    shift_category_id = db.Column(db.Integer, db.ForeignKey('shiftcategory.id'), nullable=False)
+
 
 class ColorScheme(db.Model):
     __tablename__ = 'colorscheme'
