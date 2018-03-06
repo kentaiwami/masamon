@@ -26,6 +26,9 @@ class ShiftTable(db.Model):
 
     salaries = db.relationship('Salary', backref='shifttable', lazy='dynamic', cascade='all, delete-orphan')
 
+    def __repr__(self):
+        return '{}'.format(self.title)
+
 
 class Salary(db.Model):
     __tablename__ = 'salary'

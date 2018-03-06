@@ -2,5 +2,5 @@ from .models import *
 
 
 __all__ = [
-    Employee, Company
+    Employee, Company, ShiftTable, Salary
 ]
