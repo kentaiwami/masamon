@@ -16,41 +16,6 @@ class Company(db.Model):
         return '{}({})'.format(self.name, self.code)
 
 
-class ShiftTable(db.Model):
-    __tablename__ = 'shifttable'
-
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(255), nullable=False)
-    path = db.Column(db.String(255), nullable=False)
-    company_id = db.Column(db.Integer, db.ForeignKey('company.id'), nullable=False)
-
-    salaries = db.relationship('Salary', backref='shifttable', lazy='dynamic', cascade='all, delete-orphan')
-
-    def __repr__(self):
-        return '{}'.format(self.title)
-
-
-class Salary(db.Model):
-    __tablename__ = 'salary'
-
-    id = db.Column(db.Integer, primary_key=True)
-    pay = db.Column(db.Integer, nullable=True)
-    employee_id = db.Column(db.Integer, db.ForeignKey('employee.id'), nullable=False)
-    shifttable_id = db.Column(db.Integer, db.ForeignKey('shifttable.id'), nullable=False)
-
-
-class Role(db.Model):
-    __tablename__ = 'role'
-
-    id = db.Column(db.Integer, primary_key=True)
-    role = db.Column(db.String(255), nullable=False)
-
-    salaries = db.relationship('Employee', backref='role', lazy='dynamic', cascade='all, delete-orphan')
-
-    def __repr__(self):
-        return self.role
-
-
 class Employee(db.Model):
     __tablename__ = 'employee'
 
@@ -73,3 +38,38 @@ class Employee(db.Model):
 
     def __repr__(self):
         return self.name
+
+
+class Role(db.Model):
+    __tablename__ = 'role'
+
+    id = db.Column(db.Integer, primary_key=True)
+    role = db.Column(db.String(255), nullable=False)
+
+    salaries = db.relationship('Employee', backref='role', lazy='dynamic', cascade='all, delete-orphan')
+
+    def __repr__(self):
+        return self.role
+
+
+class ShiftTable(db.Model):
+    __tablename__ = 'shifttable'
+
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(255), nullable=False)
+    path = db.Column(db.String(255), nullable=False)
+    company_id = db.Column(db.Integer, db.ForeignKey('company.id'), nullable=False)
+
+    salaries = db.relationship('Salary', backref='shifttable', lazy='dynamic', cascade='all, delete-orphan')
+
+    def __repr__(self):
+        return '{}'.format(self.title)
+
+
+class Salary(db.Model):
+    __tablename__ = 'salary'
+
+    id = db.Column(db.Integer, primary_key=True)
+    pay = db.Column(db.Integer, nullable=True)
+    employee_id = db.Column(db.Integer, db.ForeignKey('employee.id'), nullable=False)
+    shifttable_id = db.Column(db.Integer, db.ForeignKey('shifttable.id'), nullable=False)
