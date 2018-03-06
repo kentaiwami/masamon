@@ -39,6 +39,18 @@ class Salary(db.Model):
     shifttable_id = db.Column(db.Integer, db.ForeignKey('shifttable.id'), nullable=False)
 
 
+class Role(db.Model):
+    __tablename__ = 'role'
+
+    id = db.Column(db.Integer, primary_key=True)
+    role = db.Column(db.String(255), nullable=False)
+
+    salaries = db.relationship('Employee', backref='role', lazy='dynamic', cascade='all, delete-orphan')
+
+    def __repr__(self):
+        return self.role
+
+
 class Employee(db.Model):
     __tablename__ = 'employee'
 
@@ -53,6 +65,7 @@ class Employee(db.Model):
     night_end = db.Column(db.Time, nullable=True)
     night_hourly_wage = db.Column(db.Integer, nullable=True)
     company_id = db.Column(db.Integer, db.ForeignKey('company.id'), nullable=False)
+    role_id = db.Column(db.Integer, db.ForeignKey('role.id'), nullable=False)
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.now)
     updated_at = db.Column(db.DateTime, nullable=False, default=datetime.now, onupdate=datetime.now)
 
