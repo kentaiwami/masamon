@@ -39,6 +39,7 @@ class Employee(db.Model):
     color_schemes = db.relationship('ColorScheme', backref='employee', lazy='dynamic', cascade='all, delete-orphan')
     employee_shifts = db.relationship('EmployeeShift', backref='employee', lazy='dynamic', cascade='all, delete-orphan')
     histories = db.relationship('History', backref='employee', lazy='dynamic', cascade='all, delete-orphan')
+    comments = db.relationship('Comment', backref='employee', lazy='dynamic', cascade='all, delete-orphan')
 
     def __repr__(self):
         return self.name
@@ -66,9 +67,23 @@ class ShiftTable(db.Model):
 
     salaries = db.relationship('Salary', backref='shifttable', lazy='dynamic', cascade='all, delete-orphan')
     employee_shifts = db.relationship('EmployeeShift', backref='shifttable', lazy='dynamic', cascade='all, delete-orphan')
+    comments = db.relationship('Comment', backref='shifttable', lazy='dynamic', cascade='all, delete-orphan')
 
     def __repr__(self):
         return '{}'.format(self.title)
+
+
+class Comment(db.Model):
+    __tablename__ = 'comment'
+
+    id = db.Column(db.Integer, primary_key=True)
+    text = db.Column(db.String(255), nullable=False)
+    created_at = db.Column(db.DateTime, nullable=False, default=datetime.now)
+    updated_at = db.Column(db.DateTime, nullable=False, default=datetime.now, onupdate=datetime.now)
+    employee_id = db.Column(db.Integer, db.ForeignKey('employee.id'), nullable=False)
+    shifttable_id = db.Column(db.Integer, db.ForeignKey('shifttable.id'), nullable=False)
+
+
 
 
 class Salary(db.Model):

@@ -3,7 +3,7 @@ from ParJob.database import init_db
 from ParJob.database import db
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
-from .models import Company, Employee, ShiftTable, Salary, Role, ShiftCategory, Shift, ColorScheme, EmployeeShift, History
+from .models import Company, Employee, ShiftTable, Salary, Role, ShiftCategory, Shift, ColorScheme, EmployeeShift, History, Comment
 from .config import secret_key
 
 
@@ -25,6 +25,7 @@ def create_app():
     admin.add_view(ModelView(ColorScheme, db.session))
     admin.add_view(ModelView(EmployeeShift, db.session))
     admin.add_view(ModelView(History, db.session))
+    admin.add_view(ModelView(Comment, db.session))
 
     return app_tmp
 
