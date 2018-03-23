@@ -33,7 +33,6 @@ def init_app():
     app_obj = Flask(__name__)
     app_obj.config.from_pyfile('config.cfg')
     app_obj.secret_key = secret_key
-    app_obj.debug = True
 
     init_db(app_obj)
     init_admin(app_obj)
@@ -45,14 +44,17 @@ def init_app():
 def init_admin(app_obj):
     admin = Admin(app_obj, name='ParJob', template_mode='bootstrap3')
     admin.add_view(ModelView(Company, db.session))
-    admin.add_view(ModelView(Employee, db.session))
-    admin.add_view(ModelView(Role, db.session))
-    admin.add_view(ModelView(ShiftTable, db.session))
+
+    admin.add_view(ModelView(Role, db.session, category='Employee'))
+    admin.add_view(ModelView(Employee, db.session, category='Employee'))
+    admin.add_view(ModelView(Salary, db.session, category='Employee'))
+
+    admin.add_view(ModelView(ShiftTable, db.session, category='Shift'))
+    admin.add_view(ModelView(ShiftCategory, db.session, category='Shift'))
+    admin.add_view(ModelView(Shift, db.session, category='Shift'))
+    admin.add_view(ModelView(EmployeeShift, db.session, category='Shift'))
+
     admin.add_view(ModelView(Comment, db.session))
-    admin.add_view(ModelView(Salary, db.session))
-    admin.add_view(ModelView(ShiftCategory, db.session))
-    admin.add_view(ModelView(Shift, db.session))
-    admin.add_view(ModelView(EmployeeShift, db.session))
     admin.add_view(ModelView(ColorScheme, db.session))
     admin.add_view(ModelView(History, db.session))
 
