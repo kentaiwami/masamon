@@ -4,7 +4,6 @@ from flask_basicauth import BasicAuth
 from flask_admin import Admin
 from flask_admin.contrib import sqla
 from werkzeug.exceptions import HTTPException
-from model import Thing, Book
 from flask_migrate import Migrate
 from secret import secret_key
 from views.hello import hello
@@ -44,8 +43,6 @@ def init_app():
 
 def init_admin(app_obj):
     admin = Admin(app_obj, name='ParJob', template_mode='bootstrap3')
-    admin.add_view(ModelView(Thing, db.session))
-    admin.add_view(ModelView(Book, db.session))
 
 
 def regist_bp(app_obj):
