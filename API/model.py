@@ -1,5 +1,11 @@
+import random
+import string
 from database import db
 from datetime import datetime
+
+
+def code_generator():
+    return ''.join(random.choice(string.digits) for _ in range(7))
 
 
 class Company(db.Model):
@@ -7,7 +13,7 @@ class Company(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), nullable=False, unique=True)
-    code = db.Column(db.String(255), nullable=False, unique=True)
+    code = db.Column(db.String(255), nullable=False, unique=True, default=code_generator)
 
     employees = db.relationship('Employee', backref='company', cascade='all, delete-orphan')
     shift_tables = db.relationship('ShiftTable', backref='company', cascade='all, delete-orphan')
@@ -22,7 +28,7 @@ class Employee(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), nullable=False)
-    code = db.Column(db.String(255), nullable=False, unique=True)
+    code = db.Column(db.String(255), nullable=False, unique=True, default=code_generator)
     password = db.Column(db.String(255), nullable=False)
     daytime_start = db.Column(db.Time, nullable=True)
     daytime_end = db.Column(db.Time, nullable=True)
