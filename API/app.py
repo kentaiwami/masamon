@@ -45,13 +45,13 @@ def init_admin(app_obj):
     admin = Admin(app_obj, name='ParJob', template_mode='bootstrap3')
     admin.add_view(ModelView(Company, db.session))
 
-    admin.add_view(ModelView(Role, db.session, category='Employee'))
     admin.add_view(ModelView(Employee, db.session, category='Employee'))
+    admin.add_view(ModelView(Role, db.session, category='Employee'))
     admin.add_view(ModelView(Salary, db.session, category='Employee'))
 
-    admin.add_view(ModelView(ShiftTable, db.session, category='Shift'))
-    admin.add_view(ModelView(ShiftCategory, db.session, category='Shift'))
     admin.add_view(ModelView(Shift, db.session, category='Shift'))
+    admin.add_view(ModelView(ShiftCategory, db.session, category='Shift'))
+    admin.add_view(ModelView(ShiftTable, db.session, category='Shift'))
     admin.add_view(ModelView(EmployeeShift, db.session, category='Shift'))
 
     admin.add_view(ModelView(Comment, db.session))
