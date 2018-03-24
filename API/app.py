@@ -7,7 +7,7 @@ from werkzeug.exceptions import HTTPException
 from flask_migrate import Migrate
 from model import *
 from secret import secret_key
-from views.login import login
+from views.v1 import login
 
 
 class AuthException(HTTPException):
@@ -60,7 +60,7 @@ def init_admin(app_obj):
 
 
 def regist_bp(app_obj):
-    app_obj.register_blueprint(login)
+    app_obj.register_blueprint(login.app)
 
 
 app = init_app()
