@@ -8,6 +8,10 @@ def code_generator():
     return ''.join(random.choice(string.digits) for _ in range(7))
 
 
+def password_generator():
+    return ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(7))
+
+
 class Company(db.Model):
     __tablename__ = 'company'
 
@@ -29,7 +33,7 @@ class Employee(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), nullable=False)
     code = db.Column(db.String(255), nullable=False, unique=True, default=code_generator)
-    password = db.Column(db.String(255), nullable=False)
+    password = db.Column(db.String(255), nullable=False, default=password_generator)
     daytime_start = db.Column(db.Time, nullable=True)
     daytime_end = db.Column(db.Time, nullable=True)
     daytime_hourly_wage = db.Column(db.Integer, nullable=True)
