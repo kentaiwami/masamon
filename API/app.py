@@ -6,7 +6,7 @@ from flask_admin.contrib import sqla
 from werkzeug.exceptions import HTTPException
 from flask_migrate import Migrate
 from model import *
-from secret import secret_key
+from config import secret_key
 from views.v1 import login
 
 
@@ -31,7 +31,7 @@ class ModelView(sqla.ModelView):
 
 def init_app():
     app_obj = Flask(__name__)
-    app_obj.config.from_pyfile('config.cfg')
+    app_obj.config.from_object('config.BaseConfig')
     app_obj.secret_key = secret_key
 
     init_db(app_obj)
