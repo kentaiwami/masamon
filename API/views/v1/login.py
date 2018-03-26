@@ -1,5 +1,8 @@
 from flask import Blueprint, request, jsonify
 from jsonschema import validate, ValidationError
+from werkzeug.security import generate_password_hash
+from model import *
+from database import session
 
 
 app = Blueprint('login', __name__)
@@ -23,4 +26,14 @@ def login():
         return jsonify({'msg': e.message}), 400
 
     # ログイン処理
+    # Employeeを検索
+    # ヒットしなかったら404
+    # ヒットしたら、そのオブジェクトのパスワードをハッシュ化する
+
+
+    user_tomo = session.query(Employee.name).all()
+    print(user_tomo)
+
+
+
     return jsonify({'msg': 'OK'})
