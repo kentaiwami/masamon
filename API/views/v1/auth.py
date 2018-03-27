@@ -9,7 +9,7 @@ app = Blueprint('auth', __name__)
 
 
 @app.route('/api/v1/auth', methods=['POST'])
-def login():
+def auth():
     schema = {'type': 'object',
               'properties':
                   {'company_code': {'type': 'string', 'minLength': 7, 'maxLength': 7},
