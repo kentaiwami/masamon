@@ -5,10 +5,10 @@ from model import *
 from database import session
 
 
-app = Blueprint('login', __name__)
+app = Blueprint('auth', __name__)
 
 
-@app.route('/api/v1/login', methods=['POST'])
+@app.route('/api/v1/auth', methods=['POST'])
 def login():
     schema = {'type': 'object',
               'properties':
@@ -25,15 +25,17 @@ def login():
     except ValidationError as e:
         return jsonify({'msg': e.message}), 400
 
-    # ログイン処理
-    # Employeeを検索
-    # ヒットしなかったら404
-    # ヒットしたら、そのオブジェクトのパスワードをハッシュ化する
+    user = session.query(Employee).join(Company.employees)\
+        .filter(Company.code == request.json['company_code'],
+                Employee.name == request.json['username'],
+                Employee.code == request.json['user_code'],
+                Employee.password == request.json['password']).first()
 
-
-    user_tomo = session.query(Employee.name).all()
-    print(user_tomo)
-
-
-
-    return jsonify({'msg': 'OK'})
+    if user:
+        user.password = generate_password_hash(request.json['password'])
+        session.commit()
+        session.close()
+        return jsonify({'msg': 'OK'}), 200
+    else:
+        session.close()
+        return jsonify({'msg': 'ログインに失敗しました'}), 404
